@@ -1,6 +1,5 @@
-# CyberDash数据结构开源代码
+﻿# CyberDash数据结构开源代码
 ## 1 简介
-本项目
 ### 1.1 配套书籍
 清华大学出版社《数据结构(用面向对象方法与C++语言描述)(第2版)》(殷人昆主编)  
 
@@ -18,7 +17,8 @@
 ### 1.2 代码运行环境
 Linux/Mac环境已经测试通过。
 ### 1.3 升级与优化
-**代码规范**
+**编程规范**
+https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
 
 **使用STL**
 
