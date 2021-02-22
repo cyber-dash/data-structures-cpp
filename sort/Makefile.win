@@ -1,0 +1,52 @@
+# Project: sort
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = bubble_sort.o heap_sort.o insert_sort.o main.o merge_sort.o quick_sort.o select_sort.o test.o util.o
+LINKOBJ  = bubble_sort.o heap_sort.o insert_sort.o main.o merge_sort.o quick_sort.o select_sort.o test.o util.o
+LIBS     = -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"D:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = sort.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+bubble_sort.o: bubble_sort.cpp
+	$(CPP) -c bubble_sort.cpp -o bubble_sort.o $(CXXFLAGS)
+
+heap_sort.o: heap_sort.cpp
+	$(CPP) -c heap_sort.cpp -o heap_sort.o $(CXXFLAGS)
+
+insert_sort.o: insert_sort.cpp
+	$(CPP) -c insert_sort.cpp -o insert_sort.o $(CXXFLAGS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+merge_sort.o: merge_sort.cpp
+	$(CPP) -c merge_sort.cpp -o merge_sort.o $(CXXFLAGS)
+
+quick_sort.o: quick_sort.cpp
+	$(CPP) -c quick_sort.cpp -o quick_sort.o $(CXXFLAGS)
+
+select_sort.o: select_sort.cpp
+	$(CPP) -c select_sort.cpp -o select_sort.o $(CXXFLAGS)
+
+test.o: test.cpp
+	$(CPP) -c test.cpp -o test.o $(CXXFLAGS)
+
+util.o: util.cpp
+	$(CPP) -c util.cpp -o util.o $(CXXFLAGS)
