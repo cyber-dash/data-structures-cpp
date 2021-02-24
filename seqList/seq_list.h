@@ -2,10 +2,50 @@
 // Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/14.
 //
 
-#include "SeqList.h"
+#ifndef CYBER_DASH_SEQ_LIST_H
+#define CYBER_DASH_SEQ_LIST_H
+
+
+#include <iostream>
+#include <cstdlib>
+#include "LinearList.h"
 
 
 using namespace std;
+
+
+const int kDefaultSize = 100;
+
+
+template<class T>
+class SeqList: public LinearList<T> {
+
+public:
+  SeqList();
+  SeqList(int sz = kDefaultSize);
+  SeqList(SeqList<T>& L);
+  ~SeqList() { delete[] data_array_; }
+  int Size() const;
+  int Length() const;
+  int Search(T& x) const;
+  int Locate(int pos) const;
+  bool GetData(int pos, T& data) const;
+  bool SetData(int pos, const T& data) const;
+  bool Insert(int i, const T& x);
+  bool Remove(int i, T& x);
+  bool IsEmpty();
+  bool IsFull();
+  int Resize(int new_size);
+  void Input();
+  void Output();
+  SeqList<T>& operator= (const SeqList<T>& seq_list);
+  void CyberDashShow();
+
+private:
+  T* data_array_;
+  int max_size_;
+  int last_idx_;
+};
 
 
 template<class T>
@@ -16,6 +56,11 @@ SeqList<T>::SeqList() {
 }
 
 
+/**
+ * 构造函数
+ * @tparam T 顺序表元素类型
+ * @param size 顺序表size
+ */
 template<class T>
 SeqList<T>::SeqList(int size) {
 
@@ -126,7 +171,8 @@ bool SeqList<T>::GetData(int pos, T& data) const {
 
 
 template<class T>
-bool SeqList<T>::SetData(int pos, T& data) const {
+// bool SeqList<T>::SetData(int pos, T& data) const {
+bool SeqList<T>::SetData(int pos, const T& data) const {
   if (pos > 0 && pos <= last_idx_ + 1) {
     data_array_[pos - 1] = data;
     return true;
@@ -137,7 +183,7 @@ bool SeqList<T>::SetData(int pos, T& data) const {
 
 
 template<class T>
-bool SeqList<T>::Insert(int pos, T& data) {
+bool SeqList<T>::Insert(int pos, const T& data) {
 
   if (last_idx_ == max_size_ - 1) {
     return false;
@@ -203,20 +249,19 @@ bool SeqList<T>::IsFull() {
 
 
 template<class T>
-SeqList<T>& SeqList<T>::operator=(const SeqList<T> &L) {
+SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
 
-  int p_size = L.Size();
-  int p_length = L.Length();
+  this->max_size_ = seq_list.Size();
+  int p_length = seq_list.Length();
 
-  int curData;
-
-  SeqList<T> new_seq_list(p_size);
   for (int i = 0; i < p_length; i++) {
-    L.GetData(i, curData);
-    new_seq_list.SetData(i, curData);
+    int curData;
+    seq_list.GetData(i, curData);
+
+    this->SetData(i, curData);
   }
 
-  return new_seq_list;
+  return *this;
 }
 
 
@@ -235,7 +280,7 @@ int SeqList<T>::Length() const {
 template<class T>
 void SeqList<T>::Output() {
 
-  cout<<"顺序表当前元素最后位置为:"<<last_idx_<<endl;
+  cout<<"顺序表最后元素位置:"<<last_idx_ + 1<<endl;
 
   if (last_idx_ == -1) {
     cout<<"顺序表为空表:"<<endl;
@@ -251,11 +296,13 @@ void SeqList<T>::Output() {
 template<class T>
 void SeqList<T>::CyberDashShow() {
   cout<<endl
-    <<"*************************************** CyberDash ***************************************"<<endl<<endl
-    <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl
-    <<"CyberDash成员:"<<endl
-    <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
-    <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
-    <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-    <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+      <<"*************************************** CyberDash ***************************************"<<endl<<endl
+      <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash成员:"<<endl
+      <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
+      <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
+      <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
+
+#endif //CYBER_DASH_YUAN_SEQ_LIST_H
