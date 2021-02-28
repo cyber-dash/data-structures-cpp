@@ -1,4 +1,13 @@
+# CMakeFile
 *cmake-build-debug/
+
+# idea IDE
 *.idea/
+
+# DevC++
+*.ini
+*.win
+*.layout
+
 *.o
 main
