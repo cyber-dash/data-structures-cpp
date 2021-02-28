@@ -24,8 +24,8 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-link_queue.o: link_queue.cpp
+link_queue.o: src/link_queue.cpp
 	$(CPP) -c link_queue.cpp -o link_queue.o $(CXXFLAGS)
 
-main.o: main.cpp
+main.o: src/main.cpp
 	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
