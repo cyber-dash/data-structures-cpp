@@ -2,8 +2,8 @@
 // Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/14.
 //
 
-#ifndef CYBER_DASH_YUAN_LINEAR_LIST_H
-#define CYBER_DASH_YUAN_LINEAR_LIST_H
+#ifndef CYBER_DASH_LINEAR_LIST_H
+#define CYBER_DASH_LINEAR_LIST_H
 
 
 template <class T>
@@ -27,4 +27,4 @@ public:
 };
 
 
-#endif //CYBER_DASH_YUAN_LINEAR_LIST_H
+#endif //CYBER_DASH_LINEAR_LIST_H

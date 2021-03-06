@@ -217,3 +217,8 @@ void TestCyberDashShow() {
 
   seq_list.CyberDashShow();
 }
+
+
+void TestUnionSeqList() {
+
+}

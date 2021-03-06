@@ -30,5 +30,7 @@ void TestSetData();
 
 void TestCyberDashShow();
 
+void TestUnionSeqList();
+
 
 #endif // CYBER_DASH_SEQ_LIST_TEST_H
