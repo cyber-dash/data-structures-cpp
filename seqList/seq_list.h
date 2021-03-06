@@ -280,7 +280,7 @@ int SeqList<T>::Length() const {
 template<class T>
 void SeqList<T>::Output() {
 
-  cout<<"顺序表最后元素位置:"<<last_idx_ + 1<<endl;
+  // cout<<"顺序表最后元素位置:"<<last_idx_ + 1<<endl;
 
   if (last_idx_ == -1) {
     cout<<"顺序表为空表:"<<endl;

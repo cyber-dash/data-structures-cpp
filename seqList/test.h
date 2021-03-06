@@ -7,6 +7,7 @@
 
 
 #include "seq_list.h"
+#include "seq_list_algorithm.h"
 #include <iostream>
 
 
@@ -28,9 +29,11 @@ void TestGetData();
 
 void TestSetData();
 
-void TestCyberDashShow();
+void TestSeqListUnion();
 
-void TestUnionSeqList();
+void TestSeqListIntersection();
+
+void TestCyberDashShow();
 
 
 #endif // CYBER_DASH_SEQ_LIST_TEST_H

@@ -219,6 +219,53 @@ void TestCyberDashShow() {
 }
 
 
-void TestUnionSeqList() {
+void TestSeqListUnion() {
 
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                      Test SeqList Union                     "<<endl;
+  cout<<"                        测试顺序表Union                        "<<endl<<endl<<endl;
+
+  SeqList<int> seq_list_a(10);
+  SeqList<int> seq_list_b(10);
+
+  seq_list_a.Insert(0, 1);
+  seq_list_a.Insert(1, 3);
+  seq_list_a.Insert(2, 5);
+
+  seq_list_b.Insert(0, 2);
+  seq_list_b.Insert(1, 4);
+  seq_list_b.Insert(2, 6);
+
+  SeqListUnion(seq_list_a, seq_list_b);
+
+  seq_list_a.Output();
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
+
+
+void TestSeqListIntersection() {
+
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"               Test SeqList SeqListIntersection              "<<endl;
+  cout<<"                         测试顺序表交集                        "<<endl<<endl<<endl;
+
+  SeqList<int> seq_list_a(10);
+  SeqList<int> seq_list_b(10);
+
+  seq_list_a.Insert(0, 1);
+  seq_list_a.Insert(1, 2);
+  seq_list_a.Insert(2, 3);
+
+  seq_list_b.Insert(0, 2);
+  seq_list_b.Insert(1, 4);
+  seq_list_b.Insert(2, 6);
+
+  SeqListIntersection(seq_list_a, seq_list_b);
+
+  seq_list_a.Output();
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

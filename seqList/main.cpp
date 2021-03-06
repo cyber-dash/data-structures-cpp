@@ -28,6 +28,10 @@ int main() {
 
   TestSetData();
 
+  TestSeqListUnion();
+
+  TestSeqListIntersection();
+
   TestCyberDashShow();
 
   return 0;
