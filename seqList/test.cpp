@@ -11,10 +11,9 @@ using namespace std;
 
 void TestInsert() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                     Test SeqList Insert                   *"<<endl;
-  cout<<"*                        测试顺序表插入                       *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList Insert                     "<<endl;
+  cout<<"                         测试顺序表插入                        "<<endl<<endl<<endl;
 
   SeqList<int> seq_list(3);
 
@@ -27,15 +26,16 @@ void TestInsert() {
   seq_list.Insert(2, num3);
 
   seq_list.Output();
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestRemove() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                     Test SeqList Remove                   *"<<endl;
-  cout<<"*                        测试顺序表删除                       *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList Remove                     "<<endl;
+  cout<<"                         测试顺序表删除                         "<<endl<<endl<<endl;
 
   SeqList<int> seq_list(3);
 
@@ -52,28 +52,30 @@ void TestRemove() {
   seq_list.Remove(3, delete_num);
 
   seq_list.Output();
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestSize() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                     Test SeqList Size                     *"<<endl;
-  cout<<"*                       测试顺序表Size                        *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                      Test SeqList Size                      "<<endl;
+  cout<<"                        测试顺序表Size                         "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
 
   cout<<"seq_list size: "<<seq_list.Size()<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestLength() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                    Test SeqList Length                    *"<<endl;
-  cout<<"*                      测试顺序表Length                       *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList Length                     "<<endl;
+  cout<<"                       测试顺序表Length                        "<<endl<<endl<<endl;
 
   SeqList<string> seq_list(3);
 
@@ -86,15 +88,16 @@ void TestLength() {
   seq_list.Insert(1, SH);
 
   cout<<"seq_list length: "<<seq_list.Length()<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestEmpty() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                    Test SeqList Empty                     *"<<endl;
-  cout<<"*                      测试顺序表Empty                       *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList Empty                      "<<endl;
+  cout<<"                        测试顺序表Empty                        "<<endl<<endl<<endl;
 
   SeqList<string> seq_list(3);
 
@@ -118,15 +121,16 @@ void TestEmpty() {
   } else {
     cout<<"The seq_list isn't empty."<<endl;
   }
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestSearch() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                    Test SeqList Search                    *"<<endl;
-  cout<<"*                        测试顺序表查找                       *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList Search                     "<<endl;
+  cout<<"                         测试顺序表查找                        "<<endl<<endl<<endl;
 
   SeqList<int> seq_list(3);
 
@@ -141,15 +145,16 @@ void TestSearch() {
   int pos = seq_list.Search(num3);
 
   cout<<"The pos of "<<num3<<" is "<<pos<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestLocate() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                    Test SeqList Locate                    *"<<endl;
-  cout<<"*                       测试顺序表Locate                     *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList Locate                     "<<endl;
+  cout<<"                        测试顺序表Locate                       "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
 
@@ -164,15 +169,16 @@ void TestLocate() {
   int pos = seq_list.Locate(2);
 
   cout<<"The pos is: "<<pos<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestGetData() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                    Test SeqList GetData                   *"<<endl;
-  cout<<"*                      测试顺序表GetData                     *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList GetData                    "<<endl;
+  cout<<"                       测试顺序表GetData                       "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
 
@@ -188,17 +194,20 @@ void TestGetData() {
   seq_list.GetData(1, num_of_pos_1);
 
   cout<<"The num of pos 1 is: "<<num_of_pos_1<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestSetData() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                   Test SeqList SetData                    *"<<endl;
-  cout<<"*                      测试顺序表SetData                     *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                     Test SeqList SetData                    "<<endl;
+  cout<<"                       测试顺序表SetData                       "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
+
+  cout<<"Init the seq list:"<<endl;
 
   seq_list.Insert(0, 1.1);
   seq_list.Insert(1, 2.2);
@@ -206,9 +215,38 @@ void TestSetData() {
 
   seq_list.Output();
 
+  cout<<endl;
+
+  cout<<"Set the item of pos 2 to 4.4:"<<endl;
+
   seq_list.SetData(2, 4.4);
 
   seq_list.Output();
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
+
+
+void TestSort() {
+
+    cout<<endl;
+    cout<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<"                      Test SeqList Sort                      "<<endl;
+    cout<<"                         测试顺序表Sort                        "<<endl<<endl<<endl;
+
+    SeqList<double> seq_list(5);
+
+    seq_list.Insert(0, 4.4);
+    seq_list.Insert(1, 2.2);
+    seq_list.Insert(2, 3.3);
+    seq_list.Insert(3, 6.6);
+    seq_list.Insert(4, 5.5);
+
+    seq_list.Sort();
+
+    seq_list.Output();
+
+    cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 

@@ -24,7 +24,7 @@ void SeqListUnion(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
   int a_length = seq_list_a.Length();
   int b_length = seq_list_b.Length();
 
-  for (int i = 0; i <= b_length; i++) {
+  for (int i = 1; i <= b_length; i++) {
 
     int list_b_item;
     seq_list_b.GetData(i, list_b_item);

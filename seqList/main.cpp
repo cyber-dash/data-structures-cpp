@@ -28,6 +28,8 @@ int main() {
 
   TestSetData();
 
+  TestSort();
+
   TestSeqListUnion();
 
   TestSeqListIntersection();

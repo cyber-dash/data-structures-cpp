@@ -29,6 +29,8 @@ void TestGetData();
 
 void TestSetData();
 
+void TestSort();
+
 void TestSeqListUnion();
 
 void TestSeqListIntersection();

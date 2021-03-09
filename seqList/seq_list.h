@@ -37,6 +37,7 @@ public:
   bool IsFull();
   int Resize(int new_size);
   void Input();
+  void Sort();
   void Output();
   SeqList<T>& operator= (const SeqList<T>& seq_list);
   void CyberDashShow();
@@ -290,6 +291,28 @@ void SeqList<T>::Output() {
     }
   }
 
+}
+
+
+template<class T>
+void SeqList<T>::Sort() {
+
+    int length = this->Length();
+    for (int i = 1; i < length; i++) {
+        for (int j = 1; j <= length - i; j++) {
+
+            T j_data;
+            this->GetData(j, j_data);
+
+            T j_next_data;
+            this->GetData(j + 1, j_next_data);
+
+            if (j_data > j_next_data) {
+                this->SetData(j, j_next_data);
+                this->SetData(j + 1, j_data);
+            }
+        }
+    }
 }
 
 
