@@ -6,7 +6,11 @@
 
 
 DisjointSet::DisjointSet(int size) {
-
+  size_ = size;
+  this->parent_ = new int[size];
+  for (int i = 0; i < size; i++) {
+    parent_[i] = -1;
+  }
 }
 
 
@@ -16,12 +20,53 @@ DisjointSet& DisjointSet::operator=(const DisjointSet& disjoint_set) {
 }
 
 
-int DisjointSet::Find(int value) {
+int DisjointSet::FindNonRecursive(int value) {
 
-  return -1;
+  while (parent_[value] >= 0) {
+    value = parent_[value];
+  }
+
+  return value;
 }
 
 
-void DisjointSet::WeightedUnion(int root1, int root2) {
+int DisjointSet::Find(int value) {
+  if (parent_[value] < 0) {
+    return value;
+  } else {
+    return Find(parent_[value]);
+  }
+}
 
+
+void DisjointSet::WeightedUnion(int node1, int node2) {
+  int root1 = Find(node1);
+  int root2 = Find(node2);
+
+  if (root1 == root2) {
+    return;
+  }
+
+  int weighted_union_root = parent_[root1] + parent_[root2];
+
+  if (parent_[root2] < parent_[root1]) {
+    parent_[root1] = root2;
+    parent_[root2] = weighted_union_root;
+  } else {
+    parent_[root2] = root1;
+    parent_[root1] = weighted_union_root;
+  }
+}
+
+
+void DisjointSet::Union(int node1, int node2) {
+  int root1 = Find(node1);
+  int root2 = Find(node2);
+
+  if (root1 == root2) {
+    return;
+  }
+
+  parent_[root1] += parent_[root2];
+  parent_[root2] = root1; // 将根root2连接到另一根root1下面
 }

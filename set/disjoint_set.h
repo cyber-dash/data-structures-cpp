@@ -15,12 +15,15 @@ public:
   DisjointSet(int size = DEFAULT_SIZE);
   ~DisjointSet() { delete[] parent_; }
 
+  void Union(int root1, int root2);
   DisjointSet& operator=(const DisjointSet& disjoint_set);
   int Find(int value);
-  void WeightedUnion(int root1, int root2);
+  int FindNonRecursive(int value);
+  void WeightedUnion(int node1, int node2);
+
 private:
   int* parent_;
-  int size;
+  int size_;
 };
 
 
