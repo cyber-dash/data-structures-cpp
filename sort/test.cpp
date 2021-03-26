@@ -73,6 +73,22 @@ void TestInsertSort() {
 
 void TestMergeSort() {
 
+  cout<<endl;
+  cout<<"************************* CyberDash *************************"<<endl;
+  cout<<"*                      Test Merge Sort                     *"<<endl;
+  cout<<"*                         测试归并排序                        *"<<endl;
+  cout<<"************************* CyberDash *************************"<<endl<<endl;
+
+  int array[] = { 1, 4, 2, 8, 5, 7 };
+  int array_size = sizeof(array) / sizeof(int);
+
+  cout<<"Before merge sort:"<<endl;
+  array_show(array, array_size);
+
+  merge_sort(array, array_size);
+
+  cout<<"After merge sort:"<<endl;
+  array_show(array, array_size);
 }
 
 

@@ -39,6 +39,11 @@ int DisjointSet::Find(int value) {
 }
 
 
+/**
+ *
+ * @param node1
+ * @param node2
+ */
 void DisjointSet::WeightedUnion(int node1, int node2) {
   int root1 = Find(node1);
   int root2 = Find(node2);
@@ -59,6 +64,11 @@ void DisjointSet::WeightedUnion(int node1, int node2) {
 }
 
 
+/**
+ * 对原书进行优化
+ * @param node1
+ * @param node2
+ */
 void DisjointSet::Union(int node1, int node2) {
   int root1 = Find(node1);
   int root2 = Find(node2);

@@ -16,7 +16,7 @@ int main() {
 
   TestInsertSort();
 
-  // TestMergeSort();
+  TestMergeSort();
 
   TestQuickSort();
 

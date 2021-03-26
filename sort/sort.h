@@ -14,6 +14,8 @@ void insert_sort(int *arr, int arr_size);
 
 void quick_sort(int *arr, int begin, int end);
 
+void merge_sort(int* arr, int arr_size);
+
 void heap_sort(int* array, int array_size);
 
 
