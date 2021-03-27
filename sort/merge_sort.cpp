@@ -5,47 +5,56 @@
 #include "util.h"
 
 
-void merge(int* sort_array, int* unsort_array, int left, int mid, int right) {
-  for (int k = left; k <= right; k++) {
-    unsort_array[k] = sort_array[k];
+void merge(int* array, int* cache_array, int left, int mid, int right) {
+
+  for (int i = left; i <= right; i++) {
+    cache_array[i] = array[i];
   }
 
-  int index1 = left;
-  int index2 = mid + 1;
-  int index = left;
+  int left_cache_index = left;
+  int right_cache_index = mid + 1;
 
-  while (index1 <= mid && index2 <= right) {
-    if (unsort_array[index1] <= unsort_array[index2]) {
-      sort_array[index] = unsort_array[index1];
-      index++;
-      index1++;
+  int array_index = left;
+
+  while (left_cache_index <= mid && right_cache_index <= right) {
+
+    if (cache_array[left_cache_index] <= cache_array[right_cache_index]) {
+      array[array_index] = cache_array[left_cache_index];
+      left_cache_index++;
     } else {
-      sort_array[index] = unsort_array[index2];
-      index++;
-      index2++;
+      array[array_index] = cache_array[right_cache_index];
+      right_cache_index++;
     }
+
+    array_index++;
   }
 
-  while (index1 <= mid) {
-    sort_array[index++] = unsort_array[index1++];
+  while (left_cache_index <= mid) {
+    array[array_index] = cache_array[left_cache_index];
+    left_cache_index++;
+    array_index++;
   }
 
-  while (index2 <= right) {
-    sort_array[index++] = unsort_array[index2++];
+  while (right_cache_index <= right) {
+    array[array_index] = cache_array[right_cache_index];
+    right_cache_index++;
+    array_index++;
   }
 }
 
 
-void merge_sort_recur(int* arr1, int* arr2, int left, int right) {
+void merge_sort_recur(int* array, int* cache_array, int left, int right) {
+
   if (left >= right) {
     return;
   }
 
   int mid = (left + right) / 2;
-  merge_sort_recur(arr1, arr2, left, mid);
-  merge_sort_recur(arr1, arr2, mid + 1, right);
 
-  merge(arr1, arr2, left, mid, right);
+  merge_sort_recur(array, cache_array, left, mid);
+  merge_sort_recur(array, cache_array, mid + 1, right);
+
+  merge(array, cache_array, left, mid, right);
 }
 
 
