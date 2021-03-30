@@ -60,10 +60,10 @@ void merge_sort_recur(int* array, int* cache_array, int left, int right) {
 
 void merge_sort(int *arr, int array_size) {
 
-  int* arr2 = new int[array_size];
+  int* cache_array = new int[array_size];
 
   int left = 0;
   int right = array_size - 1;
 
-  merge_sort_recur(arr, arr2, left, right);
+  merge_sort_recur(arr, cache_array, left, right);
 }
