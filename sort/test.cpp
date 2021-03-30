@@ -85,7 +85,8 @@ void TestMergeSort() {
   cout<<"Before merge sort:"<<endl;
   array_show(array, array_size);
 
-  merge_sort(array, array_size);
+  // merge_sort(array, array_size);
+  merge_sort_unrecur(array, array_size);
 
   cout<<"After merge sort:"<<endl;
   array_show(array, array_size);
