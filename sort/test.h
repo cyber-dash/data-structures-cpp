@@ -21,6 +21,9 @@ void TestInsertSort();
 // 测试归并排序
 void TestMergeSort();
 
+// 测试归并排序(非递归)
+void TestMergeSortNonRecursive();
+
 // 测试快速排序
 void TestQuickSort();
 

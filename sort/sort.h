@@ -6,16 +6,17 @@
 #define CYBER_DASH_SORT_H
 
 
-void bubble_sort(int *arr, int arr_size);
+void bubble_sort(int* arr, int arr_size);
 
-void select_sort(int *arr, int arr_size);
+void select_sort(int* arr, int arr_size);
 
-void insert_sort(int *arr, int arr_size);
+void insert_sort(int* arr, int arr_size);
 
-void quick_sort(int *arr, int begin, int end);
+void quick_sort(int* arr, int begin, int end);
 
 void merge_sort(int* arr, int arr_size);
-void merge_sort_unrecur(int* array, int array_size);
+
+void merge_sort_nonrecursive(int* array, int array_size);
 
 void heap_sort(int* array, int array_size);
 

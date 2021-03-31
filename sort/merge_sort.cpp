@@ -2,9 +2,6 @@
 // Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/6/2.
 //
 
-#include "util.h"
-#include <math.h>
-
 
 void merge(int* array, int* cache_array, int left, int mid, int right) {
 
@@ -70,46 +67,30 @@ void merge_sort(int *arr, int array_size) {
 }
 
 
-int get_merge_count(int array_size) {
-  /*
-  int reduction = array_size%2;
-  int merge_count;
+int get_next_array_count(int array_count) {
 
-  if (reduction == 0) {
-    merge_count = array_size / 2;
+  int rem = array_count % 2;
+  int next_array_count;
+
+  if (rem == 0) {
+    next_array_count = array_count / 2;
   } else {
-    merge_count = array_size / 2 + 1;
+    next_array_count = array_count / 2 + 1;
   }
-   */
-  int merge_count = array_size / 2;
 
-  return merge_count;
+  return next_array_count;
 }
 
 
-int get_array_num(int num) {
-  int reduction = num%2;
-  int merge_count;
-
-  if (reduction == 0) {
-    merge_count = num / 2;
-  } else {
-    merge_count = num / 2 + 1;
-  }
-}
-
-
-void merge_sort_unrecur(int* array, int array_size) {
+void merge_sort_nonrecursive(int* array, int array_size) {
 
   int* cache_array = new int[array_size];
 
   int merge_array_length = 1;
-  int merge_count;
-
   int array_count = array_size;
 
   do {
-    merge_count = get_merge_count(array_count);
+    int merge_count = array_count / 2;
 
     for (int i = 0; i < merge_count; i++) {
       int left = 2 * i * merge_array_length;
@@ -125,9 +106,9 @@ void merge_sort_unrecur(int* array, int array_size) {
       merge(array, cache_array, left, mid, right);
     }
 
-    array_count = get_array_num(array_count);
+    array_count = get_next_array_count(array_count);
 
     merge_array_length = merge_array_length * 2;
 
-  } while (merge_count != 0);
+  } while (array_count != 1);
 }

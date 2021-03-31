@@ -18,6 +18,8 @@ int main() {
 
   TestMergeSort();
 
+  TestMergeSortNonRecursive();
+
   TestQuickSort();
 
   TestHeapSort();
