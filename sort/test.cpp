@@ -14,9 +14,9 @@ using namespace std;
 void TestBubbleSort() {
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                       Test Bubble Sort                      "<<endl;
-  cout<<"                         测试冒泡排序                          "<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test Bubble Sort                     |"<<endl;
+  cout<<"|                        测试冒泡排序                         |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
@@ -36,9 +36,9 @@ void TestBubbleSort() {
 void TestSelectSort() {
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                       Test Select Sort                      "<<endl;
-  cout<<"                         测试选择排序                          "<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test Select Sort                     |"<<endl;
+  cout<<"|                        测试选择排序                         |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
@@ -58,9 +58,9 @@ void TestSelectSort() {
 void TestInsertSort() {
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                       Test Insert Sort                      "<<endl;
-  cout<<"                          测试插入排序                         "<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test Insert Sort                     |"<<endl;
+  cout<<"|                         测试插入排序                        |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
@@ -80,9 +80,9 @@ void TestInsertSort() {
 void TestMergeSort() {
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                       Test Merge Sort                       "<<endl;
-  cout<<"                          测试归并排序                         "<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test Merge Sort                      |"<<endl;
+  cout<<"|                         测试归并排序                        |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
@@ -117,7 +117,7 @@ void TestMergeSortNonRecursive() {
   cout<<"归并排序(非递归)后:"<<endl;
   array_show(array, array_size);
 
-  cout<<"|-----------------------------------------------------------|"<<endl;
+  cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
@@ -138,16 +138,16 @@ void TestQuickSort() {
   cout<<"快速排序后:"<<endl;
   array_show(array, array_size);
 
-  cout<<"|-----------------------------------------------------------|"<<endl;
+  cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
 
 void TestHeapSort() {
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                        Test Heap Sort                       "<<endl;
-  cout<<"                          测试堆排序                           "<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                       Test Heap Sort                      |"<<endl;
+  cout<<"|                         测试堆排序                          |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);

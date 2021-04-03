@@ -14,7 +14,7 @@ void insert_sort(int* arr, int arr_size);
 
 void quick_sort(int* arr, int begin, int end);
 
-void merge_sort(int* arr, int arr_size);
+void merge_sort(int* array, int arr_size);
 
 void merge_sort_nonrecursive(int* array, int array_size);
 

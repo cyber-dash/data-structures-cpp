@@ -3,6 +3,15 @@
 //
 
 
+/**
+ * @brief 合并函数
+ * array内的两个有序数组(左子数组和右子数组,以left/mid/right划分), 合并成为一个有序数组
+ * @param array 待合并数组(包含两个子数组)
+ * @param cache_array 缓存数组
+ * @param left 左子数组左侧
+ * @param mid 左子数组右侧
+ * @param right 右子数组右侧
+ */
 void merge(int* array, int* cache_array, int left, int mid, int right) {
 
   for (int i = left; i <= right; i++) {
@@ -41,56 +50,76 @@ void merge(int* array, int* cache_array, int left, int mid, int right) {
 }
 
 
-void merge_sort_recur(int* array, int* cache_array, int left, int right) {
+/**
+ * @brief 子数组归并排序(递归/二分)
+ * 使用待排序数组的左右边界, 和缓存数组.
+ * 使用二分分治法, 分别对左右两个子数组(sub array)执行递归, 将递归后的两个已排序数组执行merge
+ * @param array 待排序数组
+ * @param cache_array 缓存数组(用于辅助归并操作)
+ * @param left 待排序数组左边界
+ * @param right 待排序数组右边界
+ */
+void sub_array_merge_sort_recursive(int* array, int* cache_array, int left, int right) {
 
   if (left >= right) {
     return;
   }
 
-  int mid = (left + right) / 2;
+  int mid = (left + right) / 2; // 使用mid划分左右子数组
 
-  merge_sort_recur(array, cache_array, left, mid);
-  merge_sort_recur(array, cache_array, mid + 1, right);
+  sub_array_merge_sort_recursive(array, cache_array, left, mid); // 左侧子数组递归
+  sub_array_merge_sort_recursive(array, cache_array, mid + 1, right); // 右侧子数组递归
 
   merge(array, cache_array, left, mid, right);
 }
 
 
-void merge_sort(int *arr, int array_size) {
+/**
+ * @brief 归并排序(使用递归/二分)
+ * 调用sub_array_merge_sort_recursive实现归并排序
+ * @param array 待排序数组
+ * @param array_size 待排序数组长度
+ */
+void merge_sort(int *array, int array_size) {
 
   int* cache_array = new int[array_size];
 
   int left = 0;
   int right = array_size - 1;
 
-  merge_sort_recur(arr, cache_array, left, right);
+  sub_array_merge_sort_recursive(array, cache_array, left, right);
 }
 
 
-int get_next_array_count(int array_count) {
+int get_next_turn_array_count(int array_count) {
 
   int rem = array_count % 2;
-  int next_array_count;
+  int next_turn_array_count;
 
   if (rem == 0) {
-    next_array_count = array_count / 2;
+    next_turn_array_count = array_count / 2;
   } else {
-    next_array_count = array_count / 2 + 1;
+    next_turn_array_count = array_count / 2 + 1;
   }
 
-  return next_array_count;
+  return next_turn_array_count;
 }
 
 
+/**
+ * @brief 归并排序(非递归/二分)
+ * @param array 待排序数组
+ * @param array_size 待排序数组长度
+ */
 void merge_sort_nonrecursive(int* array, int array_size) {
 
   int* cache_array = new int[array_size];
 
   int merge_array_length = 1;
-  int array_count = array_size;
+  int sub_array_count = array_size;
 
   do {
-    int merge_count = array_count / 2;
+    int merge_count = sub_array_count / 2;
 
     for (int i = 0; i < merge_count; i++) {
       int left = 2 * i * merge_array_length;
@@ -106,9 +135,9 @@ void merge_sort_nonrecursive(int* array, int array_size) {
       merge(array, cache_array, left, mid, right);
     }
 
-    array_count = get_next_array_count(array_count);
+    sub_array_count = get_next_turn_array_count(sub_array_count);
 
     merge_array_length = merge_array_length * 2;
 
-  } while (array_count != 1);
+  } while (sub_array_count != 1);
 }
