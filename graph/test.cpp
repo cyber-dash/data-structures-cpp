@@ -97,16 +97,19 @@ void TestPrim() {
 
   graph_adjacency_list.InsertEdge("A", "B", 7);
   graph_adjacency_list.InsertEdge("B", "C", 8);
+  graph_adjacency_list.InsertEdge("E", "C", 5);
   graph_adjacency_list.InsertEdge("A", "D", 5);
   graph_adjacency_list.InsertEdge("B", "D", 9);
   graph_adjacency_list.InsertEdge("B", "E", 7);
   graph_adjacency_list.InsertEdge("D", "E", 15);
+  graph_adjacency_list.InsertEdge("D", "F", 6);
   graph_adjacency_list.InsertEdge("E", "F", 8);
   graph_adjacency_list.InsertEdge("G", "F", 11);
   graph_adjacency_list.InsertEdge("G", "E", 9);
 
   MinSpanTree<string, double> min_span_tree(100);
-  Prim(graph_adjacency_list, D, min_span_tree);
+  // Prim(graph_adjacency_list, D, min_span_tree);
+  Prim2(graph_adjacency_list, D, min_span_tree);
 
   min_span_tree.Show();
 }

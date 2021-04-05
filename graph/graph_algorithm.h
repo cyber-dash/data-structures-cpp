@@ -92,6 +92,10 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
 
 
 template<class T, class E>
+void Prim2(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
+
+
+template<class T, class E>
 void ShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]);
 
 

@@ -116,6 +116,7 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
  */
 
 
+// 书中的代码, 已经是经过调优的代码
 template<class T, class E>
 void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 
@@ -167,6 +168,60 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
         break;
       }
     }
+  } while (count < vertex_num);
+}
+
+
+template<class T, class E>
+void Prim2(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
+
+  MSTEdgeNode<T, E> mst_edge_node;
+
+  int count = 1; // 起始vertex进入mst节点集合, count=1
+  int vertex_num = graph.NumberOfVertices();
+  int edge_num = graph.NumberOfEdges();
+
+  set<T> mst_vertex_set; // 原书中的Vmst
+  mst_vertex_set.insert(vertex);
+
+  do {
+
+    MinHeap<MSTEdgeNode<T, E> > min_heap(edge_num);
+
+    for (typename set<T>::iterator set_iter = mst_vertex_set.begin(); set_iter != mst_vertex_set.end(); set_iter++) {
+      vertex = *set_iter;
+
+      T neighbor_vertex;
+      bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
+
+      while (has_neighbor) {
+        if (mst_vertex_set.find(neighbor_vertex) == mst_vertex_set.end()) {
+
+          mst_edge_node.tail = vertex;
+          mst_edge_node.head = neighbor_vertex;
+
+          graph.GetWeight(mst_edge_node.weight_, vertex, neighbor_vertex);
+
+          min_heap.Insert(mst_edge_node);
+        }
+
+        T next_neighbor_vertex;
+        has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
+
+        if (has_neighbor) {
+          neighbor_vertex = next_neighbor_vertex;
+        }
+      }
+    }
+
+    min_heap.RemoveMin(mst_edge_node);
+
+    min_span_tree.Insert(mst_edge_node);
+
+    vertex = mst_edge_node.head;
+    mst_vertex_set.insert(vertex);
+    count++;
+
   } while (count < vertex_num);
 }
 
