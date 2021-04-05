@@ -20,13 +20,13 @@ public:
   int NumberOfVertices();
   int NumberOfEdges();
 
-  virtual bool GetVertexValue(T& vertex, int vertex_index) = 0;
+  virtual bool GetVertex(T& vertex, int vertex_index) = 0;
 
   virtual bool GetWeight(E& weight, T v1, T v2) = 0;
 
-  virtual bool GetFirstNeighbor(T& first_neighbor, const T& vertex) = 0;
+  virtual bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex) = 0;
 
-  virtual bool GetNextNeighbor(T& next_neighbor, const T& vertex, const T& neighbor_vertex) = 0;
+  virtual bool GetNextNeighborVertex(T& next_neighbor, const T& vertex, const T& neighbor_vertex) = 0;
 
   virtual bool InsertVertex(const T& vertex) = 0;
 

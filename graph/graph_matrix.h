@@ -92,7 +92,7 @@ E GraphMatrix<T, E>::GetWeight(int v1, int v2) {
 
 
 template<class T, class E>
-int GraphMatrix<T, E>::GetFirstNeighbor(int v) {
+int GraphMatrix<T, E>::GetFirstNeighborVertex(int v) {
 
   int col = -1;
 
@@ -111,7 +111,7 @@ int GraphMatrix<T, E>::GetFirstNeighbor(int v) {
 
 
 template<class T, class E>
-int GraphMatrix<T, E>::GetNextNeighbor(int v, int w) {
+int GraphMatrix<T, E>::GetNextNeighborVertex(int v, int w) {
 
   int col = -1;
 

@@ -11,11 +11,16 @@ using namespace std;
 
 
 void TestComponents() {
+
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                      Test Components                      *"<<endl;
-  cout<<"*                        测试连通分量                         *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test Components                      |"<<endl;
+  cout<<"|                        测试连通分量                         |"<<endl;
+  cout<<"|  节点:                                                    |"<<endl;
+  cout<<"|    0, 1, 2, 3                                             |"<<endl;
+  cout<<"|  边:                                                      |"<<endl;
+  cout<<"|    0-1权值: 0.8                                            |"<<endl<<endl;
+  cout<<"|    2-3权值: 7.3                                            |"<<endl<<endl;
 
   GraphAdjacencyList<int, double> graph_adjacency_list;
 
@@ -28,15 +33,24 @@ void TestComponents() {
   graph_adjacency_list.InsertEdge(2, 3, 7.3);
 
   Components(graph_adjacency_list);
+
+  cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
 void TestPrim() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                         Test Prim                         *"<<endl;
-  cout<<"*                        测试Prim算法                        *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                         Test Prim                         |"<<endl;
+  cout<<"|                        测试Prim算法                        |"<<endl;
+  cout<<"|  节点:                                                    |"<<endl;
+  cout<<"|    \"北京\", \"上海\", \"广州\", \"深圳\"                           |"<<endl;
+  cout<<"|  边:                                                      |"<<endl;
+  cout<<"|    \"北京\"-\"上海\"权值: 0.8                                   |"<<endl<<endl;
+  cout<<"|    \"上海\"-\"广州\"权值: 3.9                                   |"<<endl<<endl;
+  cout<<"|    \"广州\"-\"深圳\"权值: 7.3                                   |"<<endl<<endl;
+  cout<<"|    \"北京\"-\"广州\"权值: 11.3                                  |"<<endl<<endl;
+  cout<<"|    \"上海\"-\"深圳\"权值: 0.3                                   |"<<endl<<endl;
 
   GraphAdjacencyList<string, double> graph_adjacency_list;
 
@@ -60,6 +74,8 @@ void TestPrim() {
   Prim(graph_adjacency_list, BJ, min_span_tree);
 
   min_span_tree.Show();
+
+  cout<<"-------------------------------------------------------------"<<endl;
 }
 
 

@@ -44,7 +44,7 @@ public:
 
   ~GraphAdjacencyList();
 
-  bool GetVertexValue(T& value, int vertex_index);
+  bool GetVertex(T& value, int vertex_index);
 
   bool GetWeight(E& weight, T vertex1, T vertex2);
 
@@ -56,9 +56,9 @@ public:
 
   bool RemoveEdge(T v1, T v2);
 
-  bool GetFirstNeighbor(T& first_neighbor, const T& vertex);
+  bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
 
-  bool GetNextNeighbor(T& next_neighbor, const T& vertex, const T& neighbor_vertex);
+  bool GetNextNeighborVertex(T& next_neighbor, const T& vertex, const T& neighbor_vertex);
 
   int GetVertexIndex(T vertex);
 
@@ -107,7 +107,7 @@ GraphAdjacencyList<T, E>::~GraphAdjacencyList() {
 
 
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::GetVertexValue(T& vertex, int index) {
+bool GraphAdjacencyList<T, E>::GetVertex(T& vertex, int index) {
   if (index >= 0 && index < this->vertices_num_) {
     vertex = this->vertex_table_[index].value_;
 
@@ -324,7 +324,7 @@ bool GraphAdjacencyList<T, E>::RemoveEdge(T vertex1, T vertex2) {
 
 
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::GetFirstNeighbor(T& first_neighbor, const T& vertex) {
+bool GraphAdjacencyList<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
 
   int vertex_index = this->GetVertexIndex(vertex);
 
@@ -334,10 +334,9 @@ bool GraphAdjacencyList<T, E>::GetFirstNeighbor(T& first_neighbor, const T& vert
 
       int neighbor_index = edge_ptr->dest_index_;
 
-      bool get_first_neighbor_done = false;
-      get_first_neighbor_done = this->GetVertexValue(first_neighbor, neighbor_index);
+      bool has_vertex = this->GetVertex(first_neighbor, neighbor_index);
 
-      return get_first_neighbor_done;
+      return has_vertex;
     }
   }
 
@@ -346,7 +345,7 @@ bool GraphAdjacencyList<T, E>::GetFirstNeighbor(T& first_neighbor, const T& vert
 
 
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::GetNextNeighbor(T& next_neighbor, const T& vertex, const T& neighbor_vertex) {
+bool GraphAdjacencyList<T, E>::GetNextNeighborVertex(T& next_neighbor, const T& vertex, const T& neighbor_vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
   int neighbor_index = GetVertexIndex(neighbor_vertex);
@@ -363,10 +362,9 @@ bool GraphAdjacencyList<T, E>::GetNextNeighbor(T& next_neighbor, const T& vertex
     if (edge_ptr != NULL && edge_ptr->next_ != NULL) {
       int next_neighbor_index = edge_ptr->next_->dest_index_;
 
-      bool get_next_neighbor_done = false;
-      get_next_neighbor_done = this->GetVertexValue(next_neighbor, next_neighbor_index);
+      bool has_next_neighbor = this->GetVertex(next_neighbor, next_neighbor_index);
 
-      return get_next_neighbor_done;
+      return has_next_neighbor;
     }
   }
 
@@ -441,8 +439,8 @@ ostream& operator<<(ostream& out, GraphAdjacencyList<T, E>& graph_adjacency_list
       T src_vertex;
       T dest_vertex;
 
-      bool get_src_value_done = graph_adjacency_list.GetVertexValue(src_vertex, src_vertex_index);
-      bool get_dest_value_done = graph_adjacency_list.GetVertexValue(dest_vertex, dest_vertex_index);
+      bool get_src_value_done = graph_adjacency_list.GetVertex(src_vertex, src_vertex_index);
+      bool get_dest_value_done = graph_adjacency_list.GetVertex(dest_vertex, dest_vertex_index);
 
       if (get_src_value_done && get_dest_value_done) {
 

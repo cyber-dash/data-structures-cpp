@@ -15,6 +15,14 @@ void DFS(Graph<T, E>& graph, const T& vertex) {
 }
 
 
+/**
+ * @brief 图节点深度优先遍历(递归)
+ * @tparam T 节点模板类型
+ * @tparam E 边模板类型
+ * @param graph 图
+ * @param vertex 图节点
+ * @param visited_vertex_set 已访问节点集合
+ */
 template<class T, class E>
 void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set) {
 
@@ -23,16 +31,19 @@ void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set) {
   visited_vertex_set.insert(vertex);
 
   T neighbor_vertex;
-  bool done = graph.GetFirstNeighbor(neighbor_vertex, vertex);
+  bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
 
-  while (done == true) {
+  while (has_neighbor) {
     if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
       DFSOnVertex(graph, neighbor_vertex, visited_vertex_set);
     }
 
     T next_neighbor_vertex;
-    done = graph.GetNextNeighbor(next_neighbor_vertex, vertex, neighbor_vertex);
-    neighbor_vertex = next_neighbor_vertex;
+    has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
+
+    if (has_neighbor) {
+      neighbor_vertex = next_neighbor_vertex;
+    }
   }
 }
 
@@ -53,9 +64,9 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
     vertex_queue.pop();
 
     T neighbor_vertex;
-    bool done = graph.GetFirstNeighbor(neighbor_vertex, vertex);
+    bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
 
-    while (done) {
+    while (has_neighbor) {
       if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
         cout<<"Vertex "<<neighbor_vertex<<endl;
 
@@ -65,7 +76,7 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
       }
 
       T next_neighbor_vertex;
-      done = graph.GetNextNeighbor(next_neighbor_vertex, vertex, neighbor_vertex);
+      has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
       neighbor_vertex = next_neighbor_vertex;
     }
   }
@@ -82,7 +93,7 @@ void Components(Graph<T, E>& graph) {
 
   for (int i = 0; i < vertices_num; i++) {
     T vertex;
-    bool done = graph.GetVertexValue(vertex, i);
+    bool done = graph.GetVertex(vertex, i);
 
     if (done) {
       if (visited_vertex_set.find(vertex) == visited_vertex_set.end()) {
@@ -121,22 +132,25 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 
   do {
     T neighbor_vertex;
-    bool done = graph.GetFirstNeighbor(neighbor_vertex, vertex);
+    bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
 
-    while (done) {
+    while (has_neighbor) {
       if (vertex_set.find(neighbor_vertex) == vertex_set.end()) {
 
         edge_node.tail = vertex;
         edge_node.head = neighbor_vertex;
+
         graph.GetWeight(edge_node.weight_, vertex, neighbor_vertex);
 
         min_heap.Insert(edge_node);
       }
 
       T next_neighbor_vertex;
-      done = graph.GetNextNeighbor(next_neighbor_vertex, vertex, neighbor_vertex);
+      has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
 
-      neighbor_vertex = next_neighbor_vertex;
+      if (has_neighbor) {
+        neighbor_vertex = next_neighbor_vertex;
+      }
     }
 
     while (min_heap.IsEmpty() == false && count < vertex_num) {
@@ -166,7 +180,7 @@ void ShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
 
   for (int i = 0; i < vertex_num; i++) {
     T cur_vertex;
-    graph.GetVertexValue(cur_vertex, i);
+    graph.GetVertex(cur_vertex, i);
 
     bool get_weight_done = graph.GetWeight(dist[i], vertex, cur_vertex);
 
@@ -186,7 +200,7 @@ void ShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
     T src_vertex = vertex;
     for (int j = 0; j < vertex_num; j++) {
       T cur_vertex;
-      graph.GetVertexValue(cur_vertex, j);
+      graph.GetVertex(cur_vertex, j);
       if (vertex_set.find(cur_vertex) == vertex_set.end() && dist[cur_vertex] < min) {
         src_vertex = cur_vertex;
         min = dist[cur_vertex];
@@ -197,7 +211,7 @@ void ShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
 
     for (int j = 0; j < vertex_num; j++) {
       T cur_vertex;
-      graph.GetVertexValue(cur_vertex, j);
+      graph.GetVertex(cur_vertex, j);
 
       E weight;
       bool get_weight_done = graph.GetWeight(weight, src_vertex, cur_vertex);
@@ -236,10 +250,10 @@ void PrintShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
       }
 
       T cur_vertex;
-      graph.GetVertexValue(cur_vertex, i);
+      graph.GetVertex(cur_vertex, i);
       cout<<"顶点"<<cur_vertex<<"的最短路径为:"<<vertex<<" ";
       while (k > 0) {
-        graph.GetVertexValue(cur_vertex, d[--k]);
+        graph.GetVertex(cur_vertex, d[--k]);
         cout<<cur_vertex<<" ";
       }
 
