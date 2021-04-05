@@ -38,6 +38,7 @@ void TestComponents() {
 }
 
 
+/*
 void TestPrim() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -76,6 +77,38 @@ void TestPrim() {
   min_span_tree.Show();
 
   cout<<"-------------------------------------------------------------"<<endl;
+}
+ */
+
+
+void TestPrim() {
+
+  GraphAdjacencyList<string, double> graph_adjacency_list;
+
+  string D = "D";
+
+  graph_adjacency_list.InsertVertex("A");
+  graph_adjacency_list.InsertVertex("B");
+  graph_adjacency_list.InsertVertex("C");
+  graph_adjacency_list.InsertVertex("D");
+  graph_adjacency_list.InsertVertex("E");
+  graph_adjacency_list.InsertVertex("F");
+  graph_adjacency_list.InsertVertex("G");
+
+  graph_adjacency_list.InsertEdge("A", "B", 7);
+  graph_adjacency_list.InsertEdge("B", "C", 8);
+  graph_adjacency_list.InsertEdge("A", "D", 5);
+  graph_adjacency_list.InsertEdge("B", "D", 9);
+  graph_adjacency_list.InsertEdge("B", "E", 7);
+  graph_adjacency_list.InsertEdge("D", "E", 15);
+  graph_adjacency_list.InsertEdge("E", "F", 8);
+  graph_adjacency_list.InsertEdge("G", "F", 11);
+  graph_adjacency_list.InsertEdge("G", "E", 9);
+
+  MinSpanTree<string, double> min_span_tree(100);
+  Prim(graph_adjacency_list, D, min_span_tree);
+
+  min_span_tree.Show();
 }
 
 

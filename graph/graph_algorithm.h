@@ -71,10 +71,14 @@ public:
   }
 
   void Show() {
+    E sum = 0;
     for (int i = 0; i < current_count_; i++) {
+      sum += edge_node_ptr_[i].weight_;
       cout<<"head: "<<edge_node_ptr_[i].head<<", tail: "<<edge_node_ptr_[i].tail<<", weight: "
         <<edge_node_ptr_[i].weight_<<endl;
     }
+
+    cout<<"sum: "<<sum<<endl;
   }
 };
 
