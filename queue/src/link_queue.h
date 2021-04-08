@@ -7,7 +7,6 @@
 
 
 #include <cstdlib>
-// #include "link_node.h"
 #include "queue.h"
 #include <iostream>
 
@@ -41,7 +40,7 @@ public:
   LinkQueue(): front_ptr_(NULL), rear_ptr_(NULL)  {}
   ~LinkQueue();
   bool EnQueue(const T& data);
-  bool DeQueue(T& x);
+  bool DeQueue(T& data);
   bool GetFront(T& data) const;
   bool IsEmpty() const;
   int GetSize() const;
@@ -58,9 +57,7 @@ public:
 private:
   LinkNode<T>* front_ptr_;
   LinkNode<T>* rear_ptr_;
-
 };
-
 
 
 template<class T>

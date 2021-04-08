@@ -9,28 +9,29 @@
 void TestGetSize() {
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                     Test Queue GetSize                      "<<endl;
-  cout<<"                         测试队列Size                         "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                    Test Queue GetSize                     |"<<endl;
+  cout<<"|                        测试队列Size                        |"<<endl<<endl<<endl;
 
   LinkQueue<string> old_memory_queue;
 
-  old_memory_queue.EnQueue("反反复复月光太迷惑");
-  old_memory_queue.EnQueue("却还挂在天一边嘲笑我");
-  old_memory_queue.EnQueue("过分在意别人给的冷漠");
-  old_memory_queue.EnQueue("我该开始为自己而活");
+  string old_memory[12] = {
+      "反反复复月光太迷惑", "却还挂在天一边嘲笑我",
+      "过分在意别人给的冷漠", "我该开始为自己而活",
 
-  old_memory_queue.EnQueue("轻轻把沉重的过去上锁");
-  old_memory_queue.EnQueue("离开曾经被你溺爱的我");
-  old_memory_queue.EnQueue("离开那离不开你的懦弱");
-  old_memory_queue.EnQueue("继续往前找另一个自我");
+      "轻轻把沉重的过去上锁", "离开曾经被你溺爱的我",
+      "离开那离不开你的懦弱", "继续往前找另一个自我",
 
-  old_memory_queue.EnQueue("终于把心痛的过去挣脱");
-  old_memory_queue.EnQueue("离开自己看清真假对错");
-  old_memory_queue.EnQueue("不是飞蛾没资格扑火");
-  old_memory_queue.EnQueue("伤到了底总有清醒时候");
+      "终于把心痛的过去挣脱", "离开自己看清真假对错",
+      "不是飞蛾没资格扑火", "伤到了底总有清醒时候"
+  };
 
-  cout<<"Old memory queue size: "<<old_memory_queue.GetSize()<<endl;
+  for (int i = 0; i < 12; i++) {
+    cout<<"Old memory enqueue: "<<old_memory[i]<<endl;
+    old_memory_queue.EnQueue(old_memory[i]);
+  }
+
+  cout<<endl<<"Old memory queue size: "<<old_memory_queue.GetSize()<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -38,9 +39,9 @@ void TestGetSize() {
 
 void TestEnQueue() {
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                     Test Queue Enqueue                      "<<endl;
-  cout<<"                         测试队列入队                          "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                    Test Queue Enqueue                     |"<<endl;
+  cout<<"|                        测试队列入队                         |"<<endl<<endl<<endl;
 
   LinkQueue<int> int_queue;
 
@@ -59,9 +60,9 @@ void TestEnQueue() {
 
 void TestDeQueue() {
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                     Test Queue Dequeue                      "<<endl;
-  cout<<"                         测试队列出队                          "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                    Test Queue Dequeue                     |"<<endl;
+  cout<<"|                        测试队列出队                         |"<<endl<<endl<<endl;
 
   LinkQueue<double> double_queue;
 
@@ -87,9 +88,9 @@ void TestDeQueue() {
 
 void TestGetFront() {
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                     Test Queue Dequeue                      "<<endl;
-  cout<<"                         测试队列队头                          "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                    Test Queue Dequeue                     |"<<endl;
+  cout<<"|                        测试队列队头                         |"<<endl<<endl<<endl;
 
   LinkQueue<string> string_queue;
 
@@ -112,9 +113,9 @@ void TestGetFront() {
 
 void TestIsEmpty() {
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                    Test Queue MakeEmpty                     "<<endl;
-  cout<<"                         测试清空队列                          "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test Queue MakeEmpty                    |"<<endl;
+  cout<<"|                        测试清空队列                         |"<<endl<<endl<<endl;
   LinkQueue<string> LinkinPark_song_queue;
 
   LinkinPark_song_queue.EnQueue("<In the end>");
