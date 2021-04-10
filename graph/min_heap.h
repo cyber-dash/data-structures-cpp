@@ -5,16 +5,14 @@
 #ifndef CYBER_DASH_MIN_HEAP_H
 #define CYBER_DASH_MIN_HEAP_H
 
-
 #include <iostream>
 #include <cstdlib>
-#include "min_heap.h"
-
 
 using namespace std;
 
 
 #define DEFAULT_SIZE 10
+
 
 template <class E>
 class MinHeap {
