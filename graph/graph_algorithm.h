@@ -12,7 +12,6 @@
 #include <queue>
 
 #include "min_heap.h"
-#include "min_heap.cpp"
 
 
 using namespace std;
