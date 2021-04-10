@@ -11,8 +11,8 @@
 #include <set>
 #include <queue>
 
-#include "../tree/heap/min_heap.h"
-#include "../tree/heap/min_heap.cpp"
+#include "min_heap.h"
+#include "min_heap.cpp"
 
 
 using namespace std;
