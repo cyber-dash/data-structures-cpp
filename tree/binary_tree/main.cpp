@@ -5,25 +5,22 @@
 #include <iostream>
 #include <fstream>
 #include "binary_tree.h"
-#include "bin_tree_node.h"
-#include "binary_tree.cpp"
 
 
 using namespace std;
 
 
-void visit(BinTreeNode<int> *p) {
-  cout << p->data_ << " ";
+void visit(BinTreeNode<int>* node_ptr) {
+  cout << node_ptr->data_ << " ";
 };
 
 
 int main() {
 
-  int num;
+  int num = 12;
   BinaryTree<int> binTree(0);
 
-  cout << "Input the nodes num in the binary tree: ";
-  cin >> num;
+  cout << "The nodes num in the binary tree is "<<num<<endl;
 
   int i = 0;
   for (i = 0 ; i < num; i++) {
@@ -38,11 +35,7 @@ int main() {
   cout << "pre order: " << endl;
   binTree.PreOrder(visit);
   cout << endl;
-  /*
-  cout << "pre order 1: " << endl;
-  binTree.PreOrder1(visit);
-  cout << endl;
-   */
+
   cout << "pre order 2: " << endl;
   binTree.PreOrderNonRecursive(visit);
   cout << endl;
