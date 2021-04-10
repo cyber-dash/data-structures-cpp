@@ -13,6 +13,8 @@
 // 测试连通分量
 void TestComponents();
 
+void TestKruskal();
+
 // 测试Prim算法
 void TestPrim();
 

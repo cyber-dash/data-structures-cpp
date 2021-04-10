@@ -12,7 +12,7 @@
 #include <queue>
 
 #include "min_heap.h"
-
+#include "disjoint_set.h"
 
 using namespace std;
 

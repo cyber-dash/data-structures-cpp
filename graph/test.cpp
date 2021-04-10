@@ -38,12 +38,54 @@ void TestComponents() {
 }
 
 
+void TestKruskal() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                        Test Kruskal                       |"<<endl;
+  cout<<"|                        测试Kruskal算法                     |"<<endl;
+  cout<<"|  节点:                                                     |"<<endl;
+  cout<<"|    \"北京\", \"上海\", \"广州\", \"深圳\"                           |"<<endl;
+  cout<<"|  边:                                                      |"<<endl;
+  cout<<"|    \"北京\"-\"上海\"权值: 0.8                                   |"<<endl<<endl;
+  cout<<"|    \"上海\"-\"广州\"权值: 3.9                                   |"<<endl<<endl;
+  cout<<"|    \"广州\"-\"深圳\"权值: 7.3                                   |"<<endl<<endl;
+  cout<<"|    \"北京\"-\"广州\"权值: 11.3                                  |"<<endl<<endl;
+  cout<<"|    \"上海\"-\"深圳\"权值: 0.3                                   |"<<endl<<endl;
+
+  GraphAdjacencyList<string, double> graph_adjacency_list;
+
+  string BJ = "北京";
+  string SH = "上海";
+  string GZ = "广州";
+  string SZ = "深圳";
+
+  graph_adjacency_list.InsertVertex(BJ);
+  graph_adjacency_list.InsertVertex(SH);
+  graph_adjacency_list.InsertVertex(GZ);
+  graph_adjacency_list.InsertVertex(SZ);
+
+  graph_adjacency_list.InsertEdge(BJ, SH, 0.8);
+  graph_adjacency_list.InsertEdge(SH, GZ, 3.9);
+  graph_adjacency_list.InsertEdge(GZ, SZ, 7.3);
+  graph_adjacency_list.InsertEdge(BJ, GZ, 11.3);
+  graph_adjacency_list.InsertEdge(SH, SZ, 0.3);
+
+  MinSpanTree<string, double> min_span_tree(100);
+  // Prim(graph_adjacency_list, BJ, min_span_tree);
+  Kruskal(graph_adjacency_list, min_span_tree);
+
+  min_span_tree.Show();
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
 void TestPrim() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                         Test Prim                         |"<<endl;
   cout<<"|                        测试Prim算法                        |"<<endl;
-  cout<<"|  节点:                                                    |"<<endl;
+  cout<<"|  节点:                                                     |"<<endl;
   cout<<"|    \"北京\", \"上海\", \"广州\", \"深圳\"                           |"<<endl;
   cout<<"|  边:                                                      |"<<endl;
   cout<<"|    \"北京\"-\"上海\"权值: 0.8                                   |"<<endl<<endl;
