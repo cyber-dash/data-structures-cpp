@@ -42,7 +42,7 @@ void TestKruskal() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                        Test Kruskal                       |"<<endl;
-  cout<<"|                        测试Kruskal算法                     |"<<endl;
+  cout<<"|                       测试Kruskal算法                      |"<<endl;
   cout<<"|  节点:                                                     |"<<endl;
   cout<<"|    \"北京\", \"上海\", \"广州\", \"深圳\"                           |"<<endl;
   cout<<"|  边:                                                      |"<<endl;
@@ -123,10 +123,10 @@ void TestPrim() {
 
 void TestShortestPath() {
   cout<<endl;
-  cout<<"************************* CyberDash *************************"<<endl;
-  cout<<"*                       Test Dijkstra                       *"<<endl;
-  cout<<"*                   测试Dijkstra最小生成树算法                 *"<<endl;
-  cout<<"************************* CyberDash *************************"<<endl<<endl;
+  cout<<"|************************ CyberDash ************************|"<<endl;
+  cout<<"|                       Test DijkstraShortestPath                       |"<<endl;
+  cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
+  cout<<"|************************ CyberDash ************************|"<<endl<<endl;
 
   GraphAdjacencyList<int, int> graph_adjacency_list;
 
@@ -157,6 +157,7 @@ void TestShortestPath() {
 
   int path[5];
 
-  ShortestPath(graph_adjacency_list, v0, dist, path);
+  DijkstraShortestPath(graph_adjacency_list, v0, dist, path);
+
   PrintShortestPath(graph_adjacency_list, v0, dist, path);
 }
