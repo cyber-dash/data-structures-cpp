@@ -108,12 +108,60 @@ void Components(Graph<T, E>& graph) {
 }
 
 
-// todo
-/*
 template<class T, class E>
 void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
+
+  MSTEdgeNode<T, E> edge_node;
+
+  int vertex_num = graph.NumberOfVertices();
+  int edge_num = graph.NumberOfEdges();
+
+  MinHeap<MSTEdgeNode<T, E> > min_heap(edge_num);
+
+  DisjointSet disjoint_set(vertex_num);
+
+  for (int u = 0; u < vertex_num; ++u) {
+    for (int v = u + 1; v < vertex_num; v++) {
+      T vertex_u;
+      T vertex_v;
+      // bool done = graph.GetVertex(vertex_u, u);
+      // done = graph.GetVertex(vertex_v, v);
+      graph.GetVertex(vertex_u, u);
+      graph.GetVertex(vertex_v, v);
+
+      E weight;
+      bool get_weight_done = graph.GetWeight(weight, vertex_u, vertex_v);
+      if (get_weight_done) {
+        edge_node.tail = vertex_u;
+        edge_node.head = vertex_v;
+        edge_node.weight_ = weight;
+
+        min_heap.Insert(edge_node);
+      }
+
+    }
+  }
+
+  int count = 1;
+
+  while (count < vertex_num) {
+    min_heap.RemoveMin(edge_node);
+
+
+    int tail_idx = graph.GetVertexIndex(edge_node.tail);
+    int head_idx = graph.GetVertexIndex(edge_node.head);
+
+    int tail_root_idx = disjoint_set.Find(tail_idx);
+    int head_root_idx = disjoint_set.Find(head_idx);
+
+    if (tail_root_idx != head_root_idx) {
+      disjoint_set.Union(tail_root_idx, head_root_idx);
+
+      min_span_tree.Insert(edge_node);
+      count++;
+    }
+  }
 }
- */
 
 
 // 书中的代码, 已经是经过调优的代码
@@ -227,58 +275,63 @@ void Prim2(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 
 
 template<class T, class E>
-void ShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
+void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E *dist, int *path) {
 
+  T cur_vertex;
   int vertex_num = graph.NumberOfVertices();
 
   set<T> vertex_set;
 
+  // 初始化
   for (int i = 0; i < vertex_num; i++) {
-    T cur_vertex;
-    graph.GetVertex(cur_vertex, i);
 
+    // vertex到当前节点cur_vertex的距离, 保存到dist[i]
+    graph.GetVertex(cur_vertex, i);
     bool get_weight_done = graph.GetWeight(dist[i], vertex, cur_vertex);
 
-    if (cur_vertex != vertex && dist[i] < (E)MAX_WEIGHT && get_weight_done) {
+    // 如果dist[i]存在, 则path[i]为vertex对应的索引
+    // if (cur_vertex != vertex && dist[i] < (E)MAX_WEIGHT && get_weight_done) {
+    if (cur_vertex != vertex && get_weight_done) {
       path[i] = graph.GetVertexIndex(vertex);
     } else {
       path[i] = -1;
     }
   }
 
+  // vertex到vertex的距离(dist)为0
   vertex_set.insert(vertex);
-  dist[vertex] = 0;
+
+  int vertex_idx = graph.GetVertexIndex(vertex);
+  dist[vertex_idx] = 0;
 
   for (int i = 0; i < vertex_num - 1; i++) {
     E min = (E)MAX_WEIGHT;
 
-    T src_vertex = vertex;
+    T cur_min_vertex = vertex;
     for (int j = 0; j < vertex_num; j++) {
-      T cur_vertex;
       graph.GetVertex(cur_vertex, j);
       if (vertex_set.find(cur_vertex) == vertex_set.end() && dist[cur_vertex] < min) {
-        src_vertex = cur_vertex;
+        cur_min_vertex = cur_vertex;
         min = dist[cur_vertex];
       }
     }
 
-    vertex_set.insert(src_vertex);
+    vertex_set.insert(cur_min_vertex);
 
     for (int j = 0; j < vertex_num; j++) {
-      T cur_vertex;
       graph.GetVertex(cur_vertex, j);
 
       E weight;
-      bool get_weight_done = graph.GetWeight(weight, src_vertex, cur_vertex);
+      bool get_weight_done = graph.GetWeight(weight, cur_min_vertex, cur_vertex);
 
       if (vertex_set.find(cur_vertex) == vertex_set.end()
         && weight < (E)MAX_WEIGHT
-        && dist[src_vertex] + weight < dist[cur_vertex]
+        && dist[cur_min_vertex] + weight < dist[cur_vertex]
         && get_weight_done
         )
       {
-        dist[cur_vertex] = dist[src_vertex] + weight;
-        path[j] = graph.GetVertexIndex(src_vertex);
+        dist[cur_vertex] = dist[cur_min_vertex] + weight;
+        path[j] = graph.GetVertexIndex(cur_min_vertex);
       }
     }
   }

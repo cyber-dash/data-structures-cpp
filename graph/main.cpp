@@ -54,6 +54,8 @@ int main(int argc, char** argv) {
 
   TestPrim();
 
+  TestKruskal();
+
   TestShortestPath();
 
   return 0;
