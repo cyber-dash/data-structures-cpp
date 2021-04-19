@@ -5,18 +5,24 @@
 #include <iostream>
 #include "thread_node.h"
 #include "thread_tree.h"
-#include "thread_tree.cpp"
+#include "test.h"
 
 
 using namespace std;
 
 
+/*
 void visit(ThreadNode<int> *p) {
-  cout << p->data << " ";
+  cout << p->data_ << " ";
 };
+ */
 
 
-int main(void) {
+int main() {
+
+  CreateInOrderThreadTreeTest();
+
+  /*
   int num;
   int i = 0;
 
@@ -29,14 +35,14 @@ int main(void) {
     tree.Insert(i);
   }
 
-  tree.createInThread();
+  tree.CreateInOrderThread();
 
 
   cout  << "pre order: " << endl;
-  tree.PreOrder(visit);
+  tree.PreOrderTraverse(visit);
   cout << endl;
   cout  << "in order: " << endl;
-  tree.InOrder(visit);
+  tree.InOrderTraverse(visit);
   cout << endl;
   cout  << "post order: " << endl;
   tree.PostOrder(visit);
@@ -44,16 +50,16 @@ int main(void) {
 
 
   ThreadNode<int> *node = tree.First(tree.GetRoot());
-  cout << "first element is :" << node->data << endl;
+  cout << "first element is :" << node->data_ << endl;
 
   node = tree.Next(node);
-  cout << "next element is :" << node->data << endl;
+  cout << "next element is :" << node->data_ << endl;
 
   node = tree.Last(tree.GetRoot());
-  cout << "last element is :" << node->data << endl;
+  cout << "last element is :" << node->data_ << endl;
 
   node = tree.Prior(node);
-  cout << "prior element is :" << node->data << endl;
+  cout << "prior element is :" << node->data_ << endl;
 
   ThreadNode<int> *t_first = tree.First(tree.GetRoot());
   ThreadNode<int> *tmp = new ThreadNode<int>(111);
@@ -64,15 +70,16 @@ int main(void) {
   tree.InsertLeft(tree.First(tree.GetRoot()), tmp);
 
   cout  << "in order: " << endl;
-  tree.InOrder(visit);
+  tree.InOrderTraverse(visit);
   cout << endl;
 
   tree.DeleteRight(t_first);
   tree.DeleteLeft(t_first);
 
   cout  << "in order: " << endl;
-  tree.InOrder(visit);
+  tree.InOrderTraverse(visit);
   cout << endl;
 
   tree.CyberDashShow();
+   */
 }

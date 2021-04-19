@@ -7,14 +7,27 @@
 
 
 #include <iostream>
+
+
+const int IS_CHILD = 0;
+const int IS_THREAD_NODE = 1;
+
+
 template <class T>
 struct ThreadNode {
-  int ltag, rtag;
-  ThreadNode<T> *leftChild, *rightChild;
-  T data;
-  ThreadNode(const T item) : data(item), leftChild(NULL), 
-  rightChild(NULL), ltag(0), rtag(0) {}
+
+  int left_tag_;
+  int right_tag_;
+
+  ThreadNode<T>* left_child_;
+  ThreadNode<T>* right_child_;
+  T data_;
+
+  ThreadNode(const T data):
+      data_(data),
+      left_child_(NULL), right_child_(NULL),
+      left_tag_(IS_CHILD), right_tag_(IS_CHILD) {}
 };
 
-#endif //CYBER_DASH_THREAD_TREE_NODE_H
 
+#endif //CYBER_DASH_THREAD_TREE_NODE_H

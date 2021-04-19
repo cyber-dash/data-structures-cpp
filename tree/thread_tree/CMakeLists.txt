@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main thread_tree.cpp main.cpp thread_tree.h)
+add_executable(main main.cpp thread_tree.h test.cpp test.h)
