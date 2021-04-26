@@ -11,6 +11,13 @@
 
 void visit(ThreadNode<int> *p);
 
+void FirstNodeTest();
+
+void LastNodeTest();
+
+void NextNodeTest();
+
+
 
 void CreateInOrderThreadTreeTest();
 

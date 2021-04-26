@@ -20,6 +20,9 @@ void visit(ThreadNode<int> *p) {
 
 int main() {
 
+  LastNodeTest();
+  NextNodeTest();
+  FirstNodeTest();
   CreateInOrderThreadTreeTest();
 
   /*
