@@ -171,7 +171,7 @@ void TestPrior() {
 }
 
 
-void TestCreateInOrderThreadTree() {
+void TestCreateInOrderThread() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;

@@ -19,7 +19,7 @@ void TestNext();
 
 void TestPrior();
 
-void TestCreateInOrderThreadTree();
+void TestCreateInOrderThread();
 
 
 #endif //CYBER_DASH_THREAD_TREE_TEST_H

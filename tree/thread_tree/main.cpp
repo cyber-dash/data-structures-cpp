@@ -26,14 +26,14 @@ int main() {
   // 测试Last
   TestLast();
 
-  // 测试Next
+  // 测试Next(中序)
   TestNext();
 
-  // 测试Prior
+  // 测试Prior(中序)
   TestPrior();
 
-  //
-  TestCreateInOrderThreadTree();
+  // 测试创建中序线索
+  TestCreateInOrderThread();
 
   /*
   int num;
