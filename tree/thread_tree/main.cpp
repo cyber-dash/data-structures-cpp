@@ -20,10 +20,20 @@ void visit(ThreadNode<int> *p) {
 
 int main() {
 
-  LastNodeTest();
-  NextNodeTest();
-  FirstNodeTest();
-  CreateInOrderThreadTreeTest();
+  // 测试First
+  TestFirst();
+
+  // 测试Last
+  TestLast();
+
+  // 测试Next
+  TestNext();
+
+  // 测试Prior
+  TestPrior();
+
+  //
+  TestCreateInOrderThreadTree();
 
   /*
   int num;
@@ -48,7 +58,7 @@ int main() {
   tree.InOrderTraverse(visit);
   cout << endl;
   cout  << "post order: " << endl;
-  tree.PostOrder(visit);
+  tree.PostOrderTraverse(visit);
   cout << endl;
 
 

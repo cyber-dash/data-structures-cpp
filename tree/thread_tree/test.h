@@ -1,5 +1,5 @@
 //
-// Created by svenlee on 2021/4/19.
+// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2021/4/19.
 //
 
 #ifndef CYBER_DASH_THREAD_TREE_TEST_H
@@ -11,15 +11,15 @@
 
 void visit(ThreadNode<int> *p);
 
-void FirstNodeTest();
+void TestFirst();
 
-void LastNodeTest();
+void TestLast();
 
-void NextNodeTest();
+void TestNext();
 
+void TestPrior();
 
-
-void CreateInOrderThreadTreeTest();
+void TestCreateInOrderThreadTree();
 
 
 #endif //CYBER_DASH_THREAD_TREE_TEST_H

@@ -17,22 +17,29 @@ using namespace std;
 template <class T>
 class ThreadTree {
 public:
-  ThreadTree(): root_(NULL) {}
+  ThreadTree(): root_() {}
+
+  ThreadNode<T>* GetRoot() { return root_; }
+
   void CreateInOrderThread();
   void CreatePreOrderThread();
   void CreatePostThread();
-  ThreadNode<T>* GetRoot() {return root_;}
+
   ThreadNode<T>* First(ThreadNode<T>* node_ptr);
   ThreadNode<T>* Last(ThreadNode<T>* node_ptr);
+
   ThreadNode<T>* Next(ThreadNode<T>* node_ptr);
-  ThreadNode<T>* Prior(ThreadNode<T>* current);
+  ThreadNode<T>* Prior(ThreadNode<T>* node_ptr);
+
   ThreadNode<T>* PreOrderNext(ThreadNode<T> *current);
   ThreadNode<T>* PreOrderPrior(ThreadNode<T> *current);
+
   ThreadNode<T>* PostOrderNext(ThreadNode<T> *current);
   ThreadNode<T>* PostOrderPrior(ThreadNode<T> *current);
+
   void InOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
   void PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
-  void PostOrder(void (*visit)(ThreadNode<T> *p));
+  void PostOrderTraverse(void (*visit)(ThreadNode<T> *p));
 
   bool Insert(T& item) { return Insert(root_, item);}
   void InsertRight(ThreadNode<T> *s, ThreadNode<T> *r);
@@ -47,7 +54,7 @@ protected:
   void CreateInOrderSubThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
   void CreatePreOrderSubThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
   void createPostOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
-  ThreadNode<T>* Parent(ThreadNode<T>* node_ptr);
+  ThreadNode<T>* Parent_(ThreadNode<T>* node_ptr);
 
   bool Insert(ThreadNode<T>*& node_ptr, T& data);
 };
@@ -126,18 +133,18 @@ ThreadNode<T>* ThreadTree<T>::Last(ThreadNode<T> *node_ptr) {
 /**
  * @brief
  * @tparam T
- * @param current
+ * @param node_ptr
  * @return
  */
 template <class T>
-ThreadNode<T>* ThreadTree<T>::Prior(ThreadNode<T> *current) {
-  ThreadNode<T> *p = current->left_child_;
+ThreadNode<T>* ThreadTree<T>::Prior(ThreadNode<T> *node_ptr) {
+  ThreadNode<T>* left_node_ptr = node_ptr->left_child_;
 
-  if (current->left_tag_ == 0) {
-    return Last(p);
+  if (node_ptr->left_tag_ == IS_CHILD) {
+    return Last(left_node_ptr);
   }
 
-  return p;
+  return left_node_ptr;
 }
 
 
@@ -147,11 +154,9 @@ ThreadNode<T>* ThreadTree<T>::Prior(ThreadNode<T> *current) {
  * @param visit
  */
 template <class T>
-void ThreadTree<T>::InOrderTraverse(void (*visit)(ThreadNode<T> *p)) {
-  ThreadNode<T> *p;
-
-  for (p = First(root_); p != NULL; p = Next(p)) {
-    visit(p);
+void ThreadTree<T>::InOrderTraverse(void (*visit)(ThreadNode<T>*)) {
+  for (ThreadNode<T>* node_ptr = First(root_); node_ptr != NULL; node_ptr = Next(node_ptr)) {
+    visit(node_ptr);
   }
 }
 
@@ -172,7 +177,7 @@ void ThreadTree<T>::CreateInOrderThread() {
 
   if (pre_node_ptr != NULL) {
     pre_node_ptr->right_child_ = NULL;
-    pre_node_ptr->right_tag_ = 1;
+    pre_node_ptr->right_tag_ = IS_THREAD_NODE;
   }
 }
 
@@ -342,7 +347,7 @@ void ThreadTree<T>::PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr)) {
  * @param visit
  */
 template <class T>
-void ThreadTree<T>::PostOrder(void (*visit)(ThreadNode<T> *p)) {
+void ThreadTree<T>::PostOrderTraverse(void (*visit)(ThreadNode<T> *p)) {
   ThreadNode<T> *t = root_;
 
   while (t->left_tag_ == 0 || t->right_tag_ == 0) {
@@ -357,7 +362,7 @@ void ThreadTree<T>::PostOrder(void (*visit)(ThreadNode<T> *p)) {
 
   ThreadNode<T> *p;
 
-  while ((p = Parent(t)) != NULL) {
+  while ((p = Parent_(t)) != NULL) {
     if (p->right_child_ == t || p->right_tag_ == 1) {
       t = p;
     } else {
@@ -376,7 +381,7 @@ void ThreadTree<T>::PostOrder(void (*visit)(ThreadNode<T> *p)) {
 }
 
 template <class T>
-ThreadNode<T> *ThreadTree<T>::Parent(ThreadNode<T> *t) {
+ThreadNode<T> *ThreadTree<T>::Parent_(ThreadNode<T> *t) {
   ThreadNode<T> *p;
 
   if (t == root_) {
@@ -403,6 +408,13 @@ ThreadNode<T> *ThreadTree<T>::Parent(ThreadNode<T> *t) {
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @param node_ptr
+ * @param data
+ * @return
+ */
 template<class T>
 bool ThreadTree<T>::Insert(ThreadNode<T>*& node_ptr, T& data) {
 
@@ -414,8 +426,6 @@ bool ThreadTree<T>::Insert(ThreadNode<T>*& node_ptr, T& data) {
 
   int left_sub_tree_height = Height(node_ptr->left_child_);
   int right_sub_tree_height = Height(node_ptr->right_child_);
-
-  // return (left_sub_tree_height > j) ? Insert(node_ptr->right_child_, data) : Insert(node_ptr->left_child_, data);
 
   if (left_sub_tree_height > right_sub_tree_height) {
     return Insert(node_ptr->right_child_, data);
@@ -576,7 +586,7 @@ ThreadNode<T> *ThreadTree<T>::PreOrderPrior(ThreadNode<T> *current) {
     return current->left_child_;
   }
 
-  ThreadNode<T> *parent = Parent(current);
+  ThreadNode<T> *parent = Parent_(current);
 
   if (parent == NULL) {
     return NULL;
@@ -595,7 +605,7 @@ ThreadNode<T> *ThreadTree<T>::PostOrderNext(ThreadNode<T> *current) {
     return current->right_child_;
   }
 
-  ThreadNode<T> *parent = Parent(current);
+  ThreadNode<T> *parent = Parent_(current);
   if (parent == NULL) {
     return NULL;
   }
