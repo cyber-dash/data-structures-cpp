@@ -14,8 +14,8 @@ void TestFirst() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                 Test ThreadTree First Node                |"<<endl;
-  cout<<"|                     测试线索树第一个线索节点                  |"<<endl;
+  cout<<"|              Test InOrder ThreadTree First Node           |"<<endl;
+  cout<<"|                  测试中序线索树第一个线索节点                 |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -51,8 +51,8 @@ void TestLast() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                 Test ThreadTree Last Node                 |"<<endl;
-  cout<<"|                    测试线索树最后一个线索节点                  |"<<endl;
+  cout<<"|              Test InOrder ThreadTree Last Node            |"<<endl;
+  cout<<"|                 测试中序线索树最后一个线索节点                 |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -88,8 +88,8 @@ void TestNext() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                 Test ThreadTree Next Node                 |"<<endl;
-  cout<<"|                    测试线索树下一个线索节点                    |"<<endl;
+  cout<<"|              Test InOrder ThreadTree Next Node            |"<<endl;
+  cout<<"|                  测试中序线索树下一个线索节点                 |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -103,8 +103,6 @@ void TestNext() {
   int count = 7;
 
   ThreadTree<int> in_order_thread_tree;
-
-  cout<<"The nodes count in the binary tree: "<<count<<endl;
 
   for (int i = 0 ; i < count; i++) {
     in_order_thread_tree.Insert(i);
@@ -132,7 +130,7 @@ void TestPrior() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                 Test ThreadTree Prior Node                |"<<endl;
+  cout<<"|             Test InOrder ThreadTree Prior Node            |"<<endl;
   cout<<"|                  测试中序线索树前一个线索节点                 |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
@@ -171,12 +169,63 @@ void TestPrior() {
 }
 
 
-void TestCreateInOrderThread() {
+/*
+ * 中序线索二叉树Parent
+ */
+void TestParent() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                Test ThreadTree CreateInOrder              |"<<endl;
-  cout<<"|                    测试线索树创建中序线索                     |"<<endl;
+  cout<<"|             Test InOrder ThreadTree Parent Node           |"<<endl;
+  cout<<"|                     测试中序线索树父节点                     |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int count = 7;
+
+  ThreadTree<int> in_order_thread_tree;
+
+  for (int i = 0 ; i < count; i++) {
+    in_order_thread_tree.Insert(i);
+  }
+
+  in_order_thread_tree.CreateInOrderThread();
+
+  ThreadNode<int>* root_ptr = in_order_thread_tree.GetRoot();
+  ThreadNode<int>* root_parent_ptr = in_order_thread_tree.Parent(root_ptr);
+
+  ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(root_ptr);
+  ThreadNode<int>* first_parent_ptr = in_order_thread_tree.Parent(first_node_ptr);
+  ThreadNode<int>* first_parent_parent_ptr = in_order_thread_tree.Parent(first_parent_ptr);
+
+  if (root_parent_ptr != NULL) {
+    cout<<"根节点的父节点: "<<root_parent_ptr->data_<<endl;
+  } else {
+    cout<<"根节点的父节点为NULL"<<endl;
+  }
+
+  cout<<"第一个线索节点: "<<first_node_ptr->data_<<endl;
+  cout<<"第一个线索节点的父节点: "<<first_parent_ptr->data_<<endl;
+  cout<<"第一个线索节点的父节点的父节点: "<<first_parent_parent_ptr->data_<<endl;
+
+  cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestInOrderTraverseOfInOrderThread() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|          Test InOrder ThreadTree InOrderTraverse          |"<<endl;
+  cout<<"|                    测试中序线索树中序遍历                     |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -196,8 +245,74 @@ void TestCreateInOrderThread() {
 
   in_order_thread_tree.CreateInOrderThread();
 
-  cout<<"中序线索树, 线索遍历: "<<endl;
+  cout<<"中序线索树, 中序遍历: "<<endl;
   in_order_thread_tree.InOrderTraverse(visit);
+
+  cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestPreOrderTraverseOfInOrderThread() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|          Test InOrder ThreadTree PreOrderTraverse         |"<<endl;
+  cout<<"|                    测试中序线索树前序遍历                     |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int count = 7;
+  ThreadTree<int> in_order_thread_tree;
+
+  for (int i = 0 ; i < count; i++) {
+    in_order_thread_tree.Insert(i);
+  }
+
+  in_order_thread_tree.CreateInOrderThread();
+
+  cout<<"中序线索树, 前序遍历: "<<endl;
+  in_order_thread_tree.PreOrderTraverse(visit);
+
+  cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestPostOrderTraverseOfInOrderThread() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|          Test InOrder ThreadTree PostOrderTraverse        |"<<endl;
+  cout<<"|                    测试中序线索树后序遍历                     |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int count = 7;
+  ThreadTree<int> in_order_thread_tree;
+
+  for (int i = 0 ; i < count; i++) {
+    in_order_thread_tree.Insert(i);
+  }
+
+  in_order_thread_tree.CreateInOrderThread();
+
+  cout<<"中序线索树, 后序遍历: "<<endl;
+  in_order_thread_tree.PostOrderTraverse(visit);
 
   cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;

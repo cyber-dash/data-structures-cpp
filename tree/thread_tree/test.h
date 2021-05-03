@@ -19,7 +19,13 @@ void TestNext();
 
 void TestPrior();
 
-void TestCreateInOrderThread();
+void TestParent();
+
+void TestInOrderTraverseOfInOrderThread();
+
+void TestPreOrderTraverseOfInOrderThread();
+
+void TestPostOrderTraverseOfInOrderThread();
 
 
 #endif //CYBER_DASH_THREAD_TREE_TEST_H

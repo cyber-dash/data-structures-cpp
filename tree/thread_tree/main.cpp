@@ -2,20 +2,10 @@
 // Created by alei_go@163.com(抖音: cyberdash_yuan) on 2020/11/1.
 //
 
-#include <iostream>
-#include "thread_node.h"
-#include "thread_tree.h"
 #include "test.h"
 
 
 using namespace std;
-
-
-/*
-void visit(ThreadNode<int> *p) {
-  cout << p->data_ << " ";
-};
- */
 
 
 int main() {
@@ -32,8 +22,17 @@ int main() {
   // 测试Prior(中序)
   TestPrior();
 
-  // 测试创建中序线索
-  TestCreateInOrderThread();
+  // 测试Parent(中序)
+  TestParent();
+
+  // 测试中序线索树中序遍历
+  TestInOrderTraverseOfInOrderThread();
+
+  // 测试中序线索树前序遍历
+  TestPreOrderTraverseOfInOrderThread();
+
+  // 测试中序线索树后序遍历
+  TestPostOrderTraverseOfInOrderThread();
 
   /*
   int num;
@@ -45,11 +44,10 @@ int main() {
   cin >> num;
 
   for (i = 0 ; i < num; i++) {
-    tree.Insert(i);
+    tree.Insert_(i);
   }
 
   tree.CreateInOrderThread();
-
 
   cout  << "pre order: " << endl;
   tree.PreOrderTraverse(visit);
@@ -60,7 +58,6 @@ int main() {
   cout  << "post order: " << endl;
   tree.PostOrderTraverse(visit);
   cout << endl;
-
 
   ThreadNode<int> *node = tree.First(tree.GetRoot());
   cout << "first element is :" << node->data_ << endl;

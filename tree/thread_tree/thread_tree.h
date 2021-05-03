@@ -31,34 +31,40 @@ public:
   ThreadNode<T>* Next(ThreadNode<T>* node_ptr);
   ThreadNode<T>* Prior(ThreadNode<T>* node_ptr);
 
-  ThreadNode<T>* PreOrderNext(ThreadNode<T> *current);
+  ThreadNode<T>* Parent(ThreadNode<T>* node_ptr) { return Parent_(node_ptr); }
+
+  ThreadNode<T>* PreOrderNext(ThreadNode<T> *node_ptr);
   ThreadNode<T>* PreOrderPrior(ThreadNode<T> *current);
 
   ThreadNode<T>* PostOrderNext(ThreadNode<T> *current);
   ThreadNode<T>* PostOrderPrior(ThreadNode<T> *current);
 
+  // 中序线索二叉树中序遍历
   void InOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
+  // 中序线索二叉树前序遍历
   void PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
+  // 中序线索二叉树后序遍历
   void PostOrderTraverse(void (*visit)(ThreadNode<T> *p));
 
-  bool Insert(T& item) { return Insert(root_, item);}
-  void InsertRight(ThreadNode<T> *s, ThreadNode<T> *r);
-  void InsertLeft(ThreadNode<T> *s, ThreadNode<T> *r);
-  void DeleteRight(ThreadNode<T> *s);
-  void DeleteLeft(ThreadNode<T> *s);
+  bool Insert(T& data) { return Insert_(root_, data);}
+  void InsertRight(ThreadNode<T>* s, ThreadNode<T> *r);
+  void InsertLeft(ThreadNode<T>* s, ThreadNode<T> *r);
+  void DeleteRight(ThreadNode<T>* s);
+  void DeleteLeft(ThreadNode<T>* s);
 
   void CyberDashShow();
 
 protected:
   ThreadNode<T>* root_;
-  void CreateInOrderSubThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
-  void CreatePreOrderSubThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
-  void createPostOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
+  // void CreateSubInOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
+  void CreateSubInOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr);
+  // void CreateSubPreOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr);
+  void CreateSubPreOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
+  void CreatePostOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr);
   ThreadNode<T>* Parent_(ThreadNode<T>* node_ptr);
 
-  bool Insert(ThreadNode<T>*& node_ptr, T& data);
+  bool Insert_(ThreadNode<T>*& node_ptr, T& data);
 };
-
 
 
 /**
@@ -84,12 +90,11 @@ ThreadNode<T>* ThreadTree<T>::First(ThreadNode<T>* node_ptr) {
 
 
 /**
- * @brief 线索树下一节点
- * 原书未做空指针处理, 已做补充
- *
+ * @brief 中序线索树的下一节点
+ * 最右子节点的First()
  * @tparam T 树节点数据类型
  * @param node_ptr 当前选中节点
- * @return
+ * @return Next节点指针
  */
 template <class T>
 ThreadNode<T>* ThreadTree<T>::Next(ThreadNode<T> *node_ptr) {
@@ -162,7 +167,7 @@ void ThreadTree<T>::InOrderTraverse(void (*visit)(ThreadNode<T>*)) {
 
 
 /**
- * @brief 调用CreateInOrderSubThread_创建线索树
+ * @brief 调用CreateInOrderSubThread_创建中序线索
  * @tparam T 树节点数据类型
  */
 template <class T>
@@ -173,8 +178,9 @@ void ThreadTree<T>::CreateInOrderThread() {
 
   ThreadNode<T>* pre_node_ptr = NULL;
 
-  CreateInOrderSubThread_(root_, pre_node_ptr);
+  CreateSubInOrderThread_(root_, pre_node_ptr);
 
+  // 最后一个线索节点, 收尾工作
   if (pre_node_ptr != NULL) {
     pre_node_ptr->right_child_ = NULL;
     pre_node_ptr->right_tag_ = IS_THREAD_NODE;
@@ -195,40 +201,46 @@ void ThreadTree<T>::CreateInOrderThread() {
  * @param pre_node_ptr 当前节点的前驱节点
  */
 template <class T>
-void ThreadTree<T>::CreateInOrderSubThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr) {
+void ThreadTree<T>::CreateSubInOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr) {
+
   if (node_ptr == NULL) {
     return;
   }
 
-  CreateInOrderSubThread_(node_ptr->left_child_, pre_node_ptr);
+  // 左子树分治
+  CreateSubInOrderThread_(node_ptr->left_child_, pre_node_ptr);
 
-  // 如果left_child_指针为NULL, 则将node_ptr->left_child_指向pre_node_ptr, 加入线索树
+  // (利用left_child_)
+  // 如果left_child_指针为NULL,
+  // 则将node_ptr->left_child_指向pre_node_ptr, 加入线索树
   if (node_ptr->left_child_ == NULL) {
     node_ptr->left_child_ = pre_node_ptr;
     node_ptr->left_tag_ = IS_THREAD_NODE;
   }
 
-  // 如果前一节点pre_node_ptr不为NULL, 并且它的right_child_不为NULL, 则前一节点的right_child_指向node_ptr
+  // (利用right_child_)
+  // 如果前一节点pre_node_ptr不为NULL, 并且它的right_child_不为NULL,
+  // 则前一节点的right_child_指向node_ptr, 加入线索树
   if (pre_node_ptr != NULL && pre_node_ptr->right_child_ == NULL) {
     pre_node_ptr->right_child_ = node_ptr;
     pre_node_ptr->right_tag_ = IS_THREAD_NODE;
   }
 
-  pre_node_ptr = node_ptr;
+  pre_node_ptr = node_ptr; // pre_node_ptr节点后移
 
-  CreateInOrderSubThread_(node_ptr->right_child_, pre_node_ptr);
+  // 右子树分治
+  CreateSubInOrderThread_(node_ptr->right_child_, pre_node_ptr);
 }
-
 
 
 template <class T>
 void ThreadTree<T>::CreatePreOrderThread() {
-  ThreadNode<T> *pre = NULL;
+  ThreadNode<T> *node_ptr = NULL;
 
   if (root_ != NULL) {
-    CreatePreOrderSubThread_(root_, pre);
-    pre->right_child_ = NULL;
-    pre->right_tag_ = 1;
+    CreateSubPreOrderThread_(root_, node_ptr);
+    node_ptr->right_child_ = NULL;
+    node_ptr->right_tag_ = 1;
   }
 }
 
@@ -240,26 +252,38 @@ void ThreadTree<T>::CreatePreOrderThread() {
  * @param pre_node_ptr
  */
 template <class T>
-void ThreadTree<T>::CreatePreOrderSubThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr) {
+void ThreadTree<T>::CreateSubPreOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr) {
+
   if (node_ptr == NULL) {
     return;
   }
 
-  if (node_ptr->left_child_ == NULL) { // 左孩子可以指向前驱
-    node_ptr->left_child_ = pre_node_ptr; // 指向前驱
+  // (利用left_child_)
+  // 如果left_child_指针为NULL,
+  // 则将node_ptr->left_child_指向pre_node_ptr, 加入线索树
+  if (node_ptr->left_child_ == NULL) {
+    node_ptr->left_child_ = pre_node_ptr;
     node_ptr->left_tag_ = IS_THREAD_NODE;
   }
 
-  if (pre_node_ptr != NULL && pre_node_ptr->right_child_ == NULL) { // 前驱存在且前驱右孩子可以指向后继
-    pre_node_ptr->right_child_ = node_ptr; // 指向后继
+  // (利用right_child_)
+  // 如果前一节点pre_node_ptr不为NULL, 并且它的right_child_不为NULL,
+  // 则前一节点的right_child_指向node_ptr, 加入线索树
+  if (pre_node_ptr != NULL && pre_node_ptr->right_child_ == NULL) {
+    pre_node_ptr->right_child_ = node_ptr;
     pre_node_ptr->right_tag_ = IS_THREAD_NODE;
   }
 
-  pre_node_ptr = node_ptr; // 前驱更新至node_ptr
+  pre_node_ptr = node_ptr; // pre_node_ptr节点后移
 
-  CreatePreOrderSubThread_(node_ptr->left_child_, pre_node_ptr); // 左子树遍历
+  // 左子树分治
+  // CreateSubPreOrderThread_(node_ptr->left_child_, pre_node_ptr); // 左子树遍历
+  if (node_ptr->left_tag_ == IS_CHILD) {
+    CreateSubPreOrderThread_(node_ptr->left_child_, pre_node_ptr); // 左子树遍历
+  }
 
-  CreatePreOrderSubThread_(node_ptr->right_child_, pre_node_ptr); // 右子树遍历
+  // 右子树分治
+  CreateSubPreOrderThread_(node_ptr->right_child_, pre_node_ptr); // 右子树遍历
 }
 
 
@@ -275,7 +299,7 @@ void ThreadTree<T>::CreatePostThread() {
 
   ThreadNode<T>* pre_node_ptr = NULL;
 
-  createPostOrderThread_(root_, pre_node_ptr);
+  CreatePostOrderThread_(root_, pre_node_ptr);
 
   pre_node_ptr->right_child_ = NULL;
   pre_node_ptr->right_tag_ = 1;
@@ -289,14 +313,14 @@ void ThreadTree<T>::CreatePostThread() {
  * @param pre_node_ptr
  */
 template <class T>
-void ThreadTree<T>::createPostOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr) {
+void ThreadTree<T>::CreatePostOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr) {
   if (node_ptr == NULL) {
     return;
   }
 
-  createPostOrderThread_(node_ptr->left_child_, pre_node_ptr);
+  CreatePostOrderThread_(node_ptr->left_child_, pre_node_ptr);
 
-  createPostOrderThread_(node_ptr->right_child_, pre_node_ptr);
+  CreatePostOrderThread_(node_ptr->right_child_, pre_node_ptr);
 
   if (node_ptr->left_child_ == NULL) {
     node_ptr->left_child_ = pre_node_ptr;
@@ -312,8 +336,40 @@ void ThreadTree<T>::createPostOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T
 }
 
 
+template <class T>
+ThreadNode<T> *ThreadTree<T>::PreOrderNext(ThreadNode<T>* node_ptr) {
+
+  if (node_ptr->left_tag_ != IS_THREAD_NODE) {
+    return node_ptr->left_child_;
+  }
+
+  return node_ptr->right_child_;
+}
+
+
+template <class T>
+ThreadNode<T> *ThreadTree<T>::PreOrderPrior(ThreadNode<T> *current) {
+
+  if (current->left_tag_ == IS_THREAD_NODE) {
+    return current->left_child_;
+  }
+
+  ThreadNode<T> *parent = Parent_(current);
+
+  if (parent == NULL) {
+    return NULL;
+  }
+
+  if (parent->left_tag_ == 1 || parent->left_child_ == current) {
+    return parent;
+  }
+
+  return Last(parent->left_child_);
+}
+
+
 /**
- * @brief
+ * @brief 中序线索二叉树前序遍历
  * @tparam T
  * @param visit
  */
@@ -380,31 +436,66 @@ void ThreadTree<T>::PostOrderTraverse(void (*visit)(ThreadNode<T> *p)) {
   }
 }
 
-template <class T>
-ThreadNode<T> *ThreadTree<T>::Parent_(ThreadNode<T> *t) {
-  ThreadNode<T> *p;
 
-  if (t == root_) {
+/**
+ * @brief 中序线索二叉树求父节点
+ * 两条路径:
+ *   1: 从当前结点走到树上层的一个中序前驱(不一定是直接前驱), 然后向右下找父节点
+ *   2: 从当前结点走到书上层的一个中序后继(不一定是直接后继), 然后向左下找父节点
+ * @tparam T
+ * @param node_ptr
+ * @return
+ */
+template <class T>
+ThreadNode<T> *ThreadTree<T>::Parent_(ThreadNode<T>* node_ptr) {
+
+  if (node_ptr == root_) {
     return NULL;
   }
 
-  for (p = t; p->left_tag_ == 0; p = p->left_child_);
-
-  if (p->left_child_ != NULL) {
-    for (p = p->left_child_;
-         p != NULL && p->left_child_ != t && p->right_child_ != t;
-         p = p->right_child_);
+  /*
+   * 尝试路径1
+   */
+  // 遍历至最左子节点
+  ThreadNode<T>* left_side_child_ptr = node_ptr;
+  while (left_side_child_ptr->left_tag_ == IS_CHILD) {
+    left_side_child_ptr = left_side_child_ptr->left_child_;
   }
 
-  if (p == NULL || p->left_child_ == NULL) {
-    for (p = t; p->right_tag_ == 0; p = p->right_child_);
-    for (p = p->right_child_;
-         p != NULL && p->left_child_ != t && p->right_child_ != t;
-         p = p->left_child_);
+  if (left_side_child_ptr->left_child_ != NULL) { // 如果等于NULL, 则寻找树上层的中序前驱失败, 路径1失败
+    ThreadNode<T>* upper_level_pre_node = left_side_child_ptr->left_child_; // 树上层的中序前驱
 
+    // 向右下找父节点
+    while (upper_level_pre_node != NULL &&
+           upper_level_pre_node->left_child_ != node_ptr &&
+           upper_level_pre_node->right_child_ != node_ptr) {
+      upper_level_pre_node = upper_level_pre_node->right_child_;
+    }
+
+    if (upper_level_pre_node != NULL) { // 如果不等于NULL, 则找到父节点, 否则路径1失败
+      return upper_level_pre_node;
+    }
   }
 
-  return p;
+  /*
+   * 尝试路径2
+   */
+  // 遍历至最右子节点
+  ThreadNode<T>* right_side_child_ptr = node_ptr;
+  while (right_side_child_ptr->right_tag_ == IS_CHILD) {
+    right_side_child_ptr = right_side_child_ptr->right_child_;
+  }
+
+  ThreadNode<T>* upper_level_post_node = right_side_child_ptr->right_child_; // 树上层的中序后继
+
+  // 向左下找父节点
+  while (upper_level_post_node != NULL &&
+         upper_level_post_node->left_child_ != node_ptr &&
+         upper_level_post_node->right_child_ != node_ptr) {
+    upper_level_post_node = upper_level_post_node->left_child_;
+  }
+
+  return upper_level_post_node;
 }
 
 
@@ -416,7 +507,7 @@ ThreadNode<T> *ThreadTree<T>::Parent_(ThreadNode<T> *t) {
  * @return
  */
 template<class T>
-bool ThreadTree<T>::Insert(ThreadNode<T>*& node_ptr, T& data) {
+bool ThreadTree<T>::Insert_(ThreadNode<T>*& node_ptr, T& data) {
 
   if (node_ptr == NULL) {
     node_ptr = new ThreadNode<T>(data);
@@ -428,9 +519,9 @@ bool ThreadTree<T>::Insert(ThreadNode<T>*& node_ptr, T& data) {
   int right_sub_tree_height = Height(node_ptr->right_child_);
 
   if (left_sub_tree_height > right_sub_tree_height) {
-    return Insert(node_ptr->right_child_, data);
+    return Insert_(node_ptr->right_child_, data);
   } else {
-    return Insert(node_ptr->left_child_, data);
+    return Insert_(node_ptr->left_child_, data);
   }
 }
 
@@ -461,22 +552,23 @@ int Height(ThreadNode<T>* node_ptr) {
  * @param r
  */
 template<class T>
-void ThreadTree<T>::InsertRight(ThreadNode<T> *s, ThreadNode<T> *r) {
+void ThreadTree<T>::InsertRight(ThreadNode<T>* s, ThreadNode<T>* r) {
   r->right_child_ = s->right_child_;
   r->right_tag_ = s->right_tag_;
 
   r->left_child_ = s;
-  r->left_tag_ = 1;
+  r->left_tag_ = IS_THREAD_NODE;
 
   s->right_child_ = r;
-  s->right_tag_ = 0;
+  s->right_tag_ = IS_CHILD;
 
-  if (r->right_tag_ == 0) {
+  if (r->right_tag_ == IS_CHILD) {
     ThreadNode<T> *temp;
     temp = First(r->right_child_);
     temp->left_child_ = r;
   }
 }
+
 
 template<class T>
 void ThreadTree<T>::InsertLeft(ThreadNode<T> *s, ThreadNode<T> *l) {
@@ -495,6 +587,7 @@ void ThreadTree<T>::InsertLeft(ThreadNode<T> *s, ThreadNode<T> *l) {
     temp->right_child_ = l;
   }
 }
+
 
 template<class T>
 void ThreadTree<T>::DeleteRight(ThreadNode<T> *s) {
@@ -534,6 +627,7 @@ void ThreadTree<T>::DeleteRight(ThreadNode<T> *s) {
   delete r;
 }
 
+
 template<class T>
 void ThreadTree<T>::DeleteLeft(ThreadNode<T> *s) {
   ThreadNode<T> *l = s->left_child_;
@@ -571,33 +665,6 @@ void ThreadTree<T>::DeleteLeft(ThreadNode<T> *s) {
   delete l;
 }
 
-template <class T>
-ThreadNode<T> *ThreadTree<T>::PreOrderNext(ThreadNode<T> *current) {
-  if (current->left_tag_ != 1) {
-    return current->left_child_;
-  }
-
-  return current->right_child_;
-}
-
-template <class T>
-ThreadNode<T> *ThreadTree<T>::PreOrderPrior(ThreadNode<T> *current) {
-  if (current->left_tag_ == 1) {
-    return current->left_child_;
-  }
-
-  ThreadNode<T> *parent = Parent_(current);
-
-  if (parent == NULL) {
-    return NULL;
-  }
-
-  if (parent->left_tag_ == 1 || parent->left_child_ == current) {
-    return parent;
-  }
-
-  return Last(parent->left_child_);
-}
 
 template <class T>
 ThreadNode<T> *ThreadTree<T>::PostOrderNext(ThreadNode<T> *current) {
@@ -616,6 +683,7 @@ ThreadNode<T> *ThreadTree<T>::PostOrderNext(ThreadNode<T> *current) {
 
   return First(parent->right_child_);
 }
+
 
 template <class T>
 ThreadNode<T> *ThreadTree<T>::PostOrderPrior(ThreadNode<T> *current) {
