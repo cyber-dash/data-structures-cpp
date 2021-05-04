@@ -6,6 +6,11 @@
 #include "binary_tree.h"
 
 
+void visit(BinTreeNode<int>* node_ptr) {
+  cout<<node_ptr->data_ <<" ";
+};
+
+
 // 测试二叉树深度
 void TestBinaryTreeHeight() {
 
@@ -122,6 +127,141 @@ void TestParent() {
 
   cout<<target_ptr->data_<<"的父节点： "<<target_parent_ptr->data_<<endl;
 
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestPreOrder() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                  Test BinaryTree PreOrder                 |"<<endl;
+  cout<<"|                      测试二叉树前序遍历                      |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int num = 7;
+  BinaryTree<int> bin_tree;
+
+  int i = 0;
+  for (i = 0 ; i < num; i++) {
+    bin_tree.Insert(i);
+  }
+
+  cout<<"前序遍历(递归):"<<endl;
+  bin_tree.PreOrder(visit);
+  cout<<endl;
+
+  cout<<"前序遍历(非递归):"<<endl;
+  bin_tree.PreOrderNonRecursive(visit);
+  cout<<endl;
+
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestInOrder() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test BinaryTree InOrder                 |"<<endl;
+  cout<<"|                      测试二叉树中序遍历                      |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int num = 7;
+  BinaryTree<int> bin_tree;
+
+  int i = 0;
+  for (i = 0 ; i < num; i++) {
+    bin_tree.Insert(i);
+  }
+
+  cout<<"中序遍历(递归):"<<endl;
+  bin_tree.InOrder(visit);
+  cout<<endl;
+
+  cout<<"中序遍历(非递归):"<<endl;
+  bin_tree.InOrderNonRecursive(visit);
+  cout<<endl;
+
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestPostOrder() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                 Test BinaryTree PostOrder                 |"<<endl;
+  cout<<"|                      测试二叉树后序遍历                      |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int num = 7;
+  BinaryTree<int> bin_tree;
+
+  int i = 0;
+  for (i = 0 ; i < num; i++) {
+    bin_tree.Insert(i);
+  }
+
+  cout<<"后序遍历(递归):"<<endl;
+  bin_tree.PostOrder(visit);
+  cout<<endl;
+
+  cout<<"后序遍历(非递归):"<<endl;
+  bin_tree.PostOrderNonRecursive(visit);
+  cout<<endl;
+
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestCreateBinTreeByPreAndInOrderString() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|  Test BinaryTree TestCreateBinTreeByPreAndInOrderString   |"<<endl;
+  cout<<"|                测试前序遍历与中序遍历生成二叉树                |"<<endl;
+
+  BinaryTree<int> bin_tree;
+
+  int pre_order_traverse_arr[] = { 0, 1, 3, 6, 5, 9, 2, 4, 8, 7 };
+  int in_order_traverse_arr[] = { 6, 3, 1, 9, 5, 0, 8, 4, 2, 7 };
+  bin_tree.createBinTreeByPreAndInOrderString(
+      pre_order_traverse_arr,
+      in_order_traverse_arr,
+      10);
+
+  cout<<"打印二叉树:"<<endl;
+  bin_tree.Print();
+
+  cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;
 }

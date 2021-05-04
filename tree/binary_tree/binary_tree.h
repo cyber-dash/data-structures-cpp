@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <stack>
 #include <queue>
-// #include "bin_tree_node.h"
 #include "binary_tree.h"
 
 
@@ -65,7 +64,7 @@ public:
   void PreOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreePreOrderNonRecursive_(root_ptr_, visit); }
   bool Insert(T& item) { return SubTreeInsert_(root_ptr_, item); }
   bool Find(T item) { return SubTreeFind_(root_ptr_, item); }
-  void CreateBinTree(istream &in) { CreateBinTree(in, root_ptr_); }
+  void CreateBinTree(istream &in) { CreateBinTree_(in, root_ptr_); }
   void Traverse(BinTreeNode<T>* subTree, ostream& out);
   void Print(void) { SubTreePrint_(root_ptr_); };
   void createBinTreeByPreAndInOrderString(T *pre_order_str_ptr, T *in_order_str_ptr, int str_length) {
@@ -82,15 +81,15 @@ protected:
   BinTreeNode<T>* root_ptr_;
   T value_;
 
-  void CreateBinTree(istream& in, BinTreeNode<T> *& subTree);
+  void CreateBinTree_(istream& in, BinTreeNode<T> *& subTree);
   BinTreeNode<T>* CreateSubBinTreeByPreAndInOrderString_(T* pre_order_str_ptr, T* in_order_str_ptr, int str_length, BinTreeNode<T> *& node_ptr);
   bool SubTreeInsert_(BinTreeNode<T> *& node_ptr, T& value);
   void Destroy(BinTreeNode<T> *& subTree);
   bool SubTreeFind_(BinTreeNode<T> *node_ptr, T value) const;
-  BinTreeNode<T> *Copy(BinTreeNode<T> *orignode);
+  BinTreeNode<T>* Copy(BinTreeNode<T> *orignode);
   int SubTreeHeight_(BinTreeNode<T> *subTree) const;
   int SubTreeSize_(BinTreeNode<T> *subTree) const;
-  BinTreeNode<T> *Parent_(BinTreeNode<T> *sub_tree_root_ptr, BinTreeNode<T> *node_ptr);
+  BinTreeNode<T>* Parent_(BinTreeNode<T> *sub_tree_root_ptr, BinTreeNode<T> *node_ptr);
 
   void PreOrder_(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T> *p));
   void InOrder(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T> *p));
@@ -260,7 +259,7 @@ bool equal(BinTreeNode<T> *a, BinTreeNode<T> *b) {
 
 
 template<class T>
-void BinaryTree<T>::CreateBinTree(istream& in, BinTreeNode<T> *& subTree) {
+void BinaryTree<T>::CreateBinTree_(istream& in, BinTreeNode<T>*& subTree) {
   T item;
 
   if (!in.eof()) {
@@ -271,8 +270,8 @@ void BinaryTree<T>::CreateBinTree(istream& in, BinTreeNode<T> *& subTree) {
         cerr << "存储分配错误!" << endl;
         exit(1);
       }
-      CreateBinTree(in, subTree->left_child_);
-      CreateBinTree(in, subTree->right_child_);
+      CreateBinTree_(in, subTree->left_child_);
+      CreateBinTree_(in, subTree->right_child_);
     } else {
       subTree = NULL;
     }

@@ -9,10 +9,6 @@
 using namespace std;
 
 
-void visit(BinTreeNode<int>* node_ptr) {
-  cout<<node_ptr->data_ <<" ";
-};
-
 
 int main() {
 
@@ -21,6 +17,14 @@ int main() {
   TestBinaryTreeChildFunction();
 
   TestParent();
+
+  TestPreOrder();
+
+  TestInOrder();
+
+  TestPostOrder();
+
+  TestCreateBinTreeByPreAndInOrderString();
 
   /*
   int num = 7;
@@ -95,7 +99,7 @@ int main() {
   cout << endl;
    */
 
-  /* CreateBinTree   CreateSubBinTreeByPreAndInOrderString_ */
+  /* CreateBinTree_   CreateSubBinTreeByPreAndInOrderString_ */
 
   /*
   BinaryTree<int> binTree_3(0);
@@ -105,7 +109,7 @@ int main() {
   filebuf fbuf;
   fbuf.open("data_.txt", ios::in);
   istream iss(&fbuf);
-  binTree_3.CreateBinTree(iss);
+  binTree_3.CreateBinTree_(iss);
   cout << "size: " << binTree_3.Size() << endl;
   binTree_3.Print();
   fbuf.close();
