@@ -352,6 +352,13 @@ void BinaryTree<T>::SubTreePrint_(BinTreeNode<T> *node_ptr) {
 }
 
 
+/**
+ * @brief 二叉子树前序遍历(非递归)
+ *
+ * @tparam T
+ * @param node_ptr
+ * @param visit
+ */
 template<class T>
 void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T> *node_ptr, void (*visit)(BinTreeNode<T>*)) {
 

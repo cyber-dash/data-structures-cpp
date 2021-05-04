@@ -45,6 +45,7 @@ public:
   void PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
   // 中序线索二叉树后序遍历
   void PostOrderTraverse(void (*visit)(ThreadNode<T> *p));
+  ThreadNode<T>* FindFirstNodeForPostOrderTraverse(ThreadNode<T>* node_ptr);
 
   bool Insert(T& data) { return Insert_(root_, data);}
   void InsertRight(ThreadNode<T>* s, ThreadNode<T> *r);
@@ -370,27 +371,30 @@ ThreadNode<T> *ThreadTree<T>::PreOrderPrior(ThreadNode<T> *current) {
 
 /**
  * @brief 中序线索二叉树前序遍历
+ * 若当前结点有左子女, 则前序的后继结点为左孩子节点
+ * 否则, 若当前结点有右子女, 则前序的后继结点为右孩子节点
+ * 对于叶子结点, 沿着中序后继线索, 走到一个有右子女结点的结点, 这个右子女结点就是当前结点的前序后继结点
  * @tparam T
  * @param visit
  */
 template <class T>
 void ThreadTree<T>::PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr)) {
-  ThreadNode<T> *cur_node_ptr = root_;
+  ThreadNode<T> *cur = root_;
 
-  while (cur_node_ptr != NULL) {
-    visit(cur_node_ptr);
+  while (cur != NULL) {
+    visit(cur);
 
-    if (cur_node_ptr->left_tag_ == IS_CHILD) {
-      cur_node_ptr = cur_node_ptr->left_child_;
-    } else if (cur_node_ptr->right_tag_ == IS_CHILD) {
-      cur_node_ptr = cur_node_ptr->right_child_;
-    } else {
-      while (cur_node_ptr != NULL && cur_node_ptr->right_tag_ == IS_THREAD_NODE) {
-        cur_node_ptr = cur_node_ptr->right_child_;
+    if (cur->left_tag_ == IS_CHILD) { // 若有左子女, 则为前序后继
+      cur = cur->left_child_;
+    } else if (cur->right_tag_ == IS_CHILD) { // 否则若有右子女, 则为前序后继
+      cur = cur->right_child_;
+    } else { // 对于叶子结点, 沿着中序后继线索, 走到一个有右子女结点的结点, 这个右子女结点就是当前结点的前序后继结点
+      while (cur != NULL && cur->right_tag_ == IS_THREAD_NODE) {
+        cur = cur->right_child_;
       }
 
-      if (cur_node_ptr != NULL) {
-        cur_node_ptr = cur_node_ptr->right_child_;
+      if (cur != NULL) {
+        cur = cur->right_child_;
       }
     }
   }
@@ -398,42 +402,62 @@ void ThreadTree<T>::PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr)) {
 
 
 /**
- * @brief
+ * @brief 中序线索二叉树, 后续遍历
+ * 重复下述过程, 直到叶结点为止:
+ *    从根出发, 沿着左子树链一直找下去, 找到左孩子不再是做孩子指针的结点
+ *    再找到该结点的右孩子, 以此结点为根的子树上,
+ * 接着, 从此结点开始后序遍历, 每次先找到当前节点的父节点
+ *    如果当前结点是父节点的右孩子or虽然是这个父节点的左孩子, 但这个父节点没有右孩子
+ *       则后序下的后继为该父节点
+ *    否则, 在当前结点的右子树(如果存在)上重复执行上面的操作
  * @tparam T
  * @param visit
  */
 template <class T>
-void ThreadTree<T>::PostOrderTraverse(void (*visit)(ThreadNode<T> *p)) {
-  ThreadNode<T> *t = root_;
+void ThreadTree<T>::PostOrderTraverse(void (*visit)(ThreadNode<T>*)) {
 
-  while (t->left_tag_ == 0 || t->right_tag_ == 0) {
-    if (t->left_tag_ == 0) {
-      t = t->left_child_;
-    } else if (t->right_tag_ == 0) {
-      t = t->right_child_;
-    }
-  }
+  ThreadNode<T>* cur = FindFirstNodeForPostOrderTraverse(root_);
+  ThreadNode<T> *cur_parent;
 
-  visit(t);
+  visit(cur); // 访问第一个结点
 
-  ThreadNode<T> *p;
-
-  while ((p = Parent_(t)) != NULL) {
-    if (p->right_child_ == t || p->right_tag_ == 1) {
-      t = p;
+  while ((cur_parent = Parent_(cur)) != NULL) {
+    if (cur_parent->right_child_ == cur ||  // 当前结点是父节点的右孩子
+        cur_parent->right_tag_ == IS_THREAD_NODE) // 当前结点是父节点左孩子, 并且父节点没有右孩子
+    {
+      cur = cur_parent;
     } else {
-      t = p->right_child_;
-      while (t->left_tag_ == 0 || t->right_tag_ == 0) {
-        if (t->left_tag_ == 0) {
-          t = t->left_child_;
-        } else if (t->right_tag_ == 0) {
-          t = t->right_child_;
-        }
-      }
+      cur = FindFirstNodeForPostOrderTraverse(cur_parent->right_child_);
     }
 
-    visit(t);
+    visit(cur);
   }
+}
+
+
+/**
+ * @brief 中序线索树后续遍历, 找到第一个遍历结点(以node_ptr为根)
+ * 重复下述过程, 直到叶结点为止:
+ *    沿着左子树链一直找下去, 找到左孩子不再是做孩子指针的结点
+ *    再找到该结点的右孩子, 以此结点为根的子树上,
+ * @tparam T
+ * @param node_ptr
+ * @return
+ */
+template<class T>
+ThreadNode<T>* ThreadTree<T>::FindFirstNodeForPostOrderTraverse(ThreadNode<T>* node_ptr) {
+
+  ThreadNode<T>* cur = node_ptr;
+
+  while (cur->left_tag_ == IS_CHILD || cur->right_tag_ == IS_CHILD) {
+    if (cur->left_tag_ == IS_CHILD) {
+      cur = cur->left_child_;
+    } else if (cur->right_tag_ == IS_CHILD) {
+      cur = cur->right_child_;
+    }
+  }
+
+  return cur;
 }
 
 
@@ -500,9 +524,9 @@ ThreadNode<T> *ThreadTree<T>::Parent_(ThreadNode<T>* node_ptr) {
 
 
 /**
- * @brief
+ * @brief 二叉树插入(建立线索之前)
  * @tparam T
- * @param node_ptr
+ * @param node_ptr 被插入的子树的根结点
  * @param data
  * @return
  */
@@ -527,10 +551,10 @@ bool ThreadTree<T>::Insert_(ThreadNode<T>*& node_ptr, T& data) {
 
 
 /**
- *
+ * @brief 二叉子树的深度
  * @tparam T
- * @param node_ptr
- * @return
+ * @param node_ptr 二叉子树的根
+ * @return 深度
  */
 template<class T>
 int Height(ThreadNode<T>* node_ptr) {
