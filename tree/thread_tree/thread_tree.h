@@ -19,51 +19,73 @@ class ThreadTree {
 public:
   ThreadTree(): root_() {}
 
+  // 根结点指针
   ThreadNode<T>* GetRoot() { return root_; }
+  // 二叉树插入
+  bool Insert(T& data) { return Insert_(root_, data);}
 
+  // 我们是CyberDash
+  void CyberDashShow();
+
+  /* 中序线索树 */
+
+  // 创建中序线索
   void CreateInOrderThread();
-  void CreatePreOrderThread();
-  void CreatePostThread();
-
+  // 中序线索第一个线索结点
   ThreadNode<T>* First(ThreadNode<T>* node_ptr);
+  // 中序线索最后一个线索结点
   ThreadNode<T>* Last(ThreadNode<T>* node_ptr);
-
+  // 中序线索下一个线索结点
   ThreadNode<T>* Next(ThreadNode<T>* node_ptr);
+  // 中序线索前一个线索结点
   ThreadNode<T>* Prior(ThreadNode<T>* node_ptr);
-
+  // 中序线索父结点
   ThreadNode<T>* Parent(ThreadNode<T>* node_ptr) { return Parent_(node_ptr); }
-
-  ThreadNode<T>* PreOrderNext(ThreadNode<T> *node_ptr);
-  ThreadNode<T>* PreOrderPrior(ThreadNode<T> *current);
-
-  ThreadNode<T>* PostOrderNext(ThreadNode<T> *current);
-  ThreadNode<T>* PostOrderPrior(ThreadNode<T> *current);
-
   // 中序线索二叉树中序遍历
   void InOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
   // 中序线索二叉树前序遍历
   void PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
   // 中序线索二叉树后序遍历
   void PostOrderTraverse(void (*visit)(ThreadNode<T> *p));
+  // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
   ThreadNode<T>* FindFirstNodeForPostOrderTraverse(ThreadNode<T>* node_ptr);
-
-  bool Insert(T& data) { return Insert_(root_, data);}
+  //
   void InsertRight(ThreadNode<T>* s, ThreadNode<T> *r);
+  //
   void InsertLeft(ThreadNode<T>* s, ThreadNode<T> *r);
+  //
   void DeleteRight(ThreadNode<T>* s);
+  //
   void DeleteLeft(ThreadNode<T>* s);
 
-  void CyberDashShow();
+  /* 前序线索树 */
+
+  // 创建前序线索
+  void CreatePreOrderThread();
+  // 前序线索二叉树下一个结点
+  ThreadNode<T>* PreOrderNext(ThreadNode<T> *node_ptr);
+  // 前序线索二叉树前一个结点
+  ThreadNode<T>* PreOrderPrior(ThreadNode<T> *current);
+
+  /* 后序线索树 */
+  // 创建后序线索
+  void CreatePostThread();
+  // 后序线索二叉树下一个结点
+  ThreadNode<T>* PostOrderNext(ThreadNode<T> *current);
+  // 后序线索二叉树前一个结点
+  ThreadNode<T>* PostOrderPrior(ThreadNode<T> *current);
 
 protected:
   ThreadNode<T>* root_;
-  // void CreateSubInOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
+  // 子树创建中序线索
   void CreateSubInOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr);
-  // void CreateSubPreOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr);
+  // 子树创建前序线索
   void CreateSubPreOrderThread_(ThreadNode<T>* node_ptr, ThreadNode<T>*& pre_node_ptr);
+  // 子树创建后序线索
   void CreatePostOrderThread_(ThreadNode<T>*& node_ptr, ThreadNode<T>*& pre_node_ptr);
+  // 父节点指针
   ThreadNode<T>* Parent_(ThreadNode<T>* node_ptr);
-
+  // 子树插入
   bool Insert_(ThreadNode<T>*& node_ptr, T& data);
 };
 
