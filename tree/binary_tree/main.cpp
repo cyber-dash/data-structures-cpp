@@ -2,23 +2,29 @@
 // Created by alei_go@163.com(抖音: cyberdash_yuan) on 2020/11/1.
 //
 
-#include <iostream>
-#include <fstream>
 #include "binary_tree.h"
+#include "test.h"
 
 
 using namespace std;
 
 
 void visit(BinTreeNode<int>* node_ptr) {
-  cout << node_ptr->data_ << " ";
+  cout<<node_ptr->data_ <<" ";
 };
 
 
 int main() {
 
-  int num = 12;
-  BinaryTree<int> binTree(0);
+  TestBinaryTreeHeight();
+
+  TestBinaryTreeChildFunction();
+
+  TestParent();
+
+  /*
+  int num = 7;
+  BinaryTree<int> binTree;
 
   cout << "The nodes num in the binary tree is "<<num<<endl;
 
@@ -67,7 +73,7 @@ int main() {
   cout << binTree_1 << endl;
   cout << "is equal: " << (binTree_1 == binTree) << endl;
 
-  BinTreeNode<int> *root = binTree_1.getRoot();
+  BinTreeNode<int> *root = binTree_1.GetRoot();
   BinTreeNode<int> *node = binTree_1.LeftChild(root);
   if (node != NULL) {
     cout << "left child for node: " << root->data_ << " is " << node->data_ << endl;
@@ -77,7 +83,7 @@ int main() {
     cout << "right child for node: " << root->data_ << " is " << node->data_ << endl;
   }
 
-  cout << "parent of node: " << node->data_ << " is " << binTree_1.Parent(node)->data_ << endl;
+  cout << "parent of node: " << node->data_ << " is " << binTree_1.Parent_(node)->data_ << endl;
 
   ifstream fin("data_.txt");
   BinaryTree<int> binTree_2(0);
@@ -87,7 +93,11 @@ int main() {
 
   binTree_2.Print();
   cout << endl;
+   */
+
   /* CreateBinTree   CreateSubBinTreeByPreAndInOrderString_ */
+
+  /*
   BinaryTree<int> binTree_3(0);
 
   binTree_3.Print();
@@ -111,6 +121,7 @@ int main() {
   cout << endl;
 
   binTree_4.CyberDashShow();
+   */
 
   return 0;
 }

@@ -18,13 +18,13 @@ using namespace std;
 
 template <class T>
 struct BinTreeNode {
-  BinTreeNode(): left_child_ptr_(NULL), right_child_ptr_(NULL) {}
-  explicit BinTreeNode(T data, BinTreeNode<T> *left_child_ptr = NULL, BinTreeNode<T> *right_child_ptr = NULL):
-    data_(data), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr) {}
+  BinTreeNode(): left_child_(NULL), right_child_(NULL) {}
+  BinTreeNode(T data, BinTreeNode<T>* left_child_ptr = NULL, BinTreeNode<T>* right_child_ptr = NULL):
+    data_(data), left_child_(left_child_ptr), right_child_(right_child_ptr) {}
 
   T data_;
-  BinTreeNode<T>* left_child_ptr_;
-  BinTreeNode<T>* right_child_ptr_;
+  BinTreeNode<T>* left_child_;
+  BinTreeNode<T>* right_child_;
 };
 
 
@@ -50,10 +50,11 @@ public:
 
   bool IsEmpty() { return (root_ptr_ == NULL) ? true : false; }
 
-  BinTreeNode<T>* getRoot() const { return root_ptr_; }
-  BinTreeNode<T>* Parent(BinTreeNode<T> *current) { return (root_ptr_ == NULL || root_ptr_ == current) ? NULL : Parent(root_ptr_, current); }
-  BinTreeNode<T>* LeftChild(BinTreeNode<T> *current) { return (current != NULL) ? current->left_child_ptr_ : NULL; }
-  BinTreeNode<T>* RightChild(BinTreeNode<T> *current) { return (current != NULL) ? current->right_child_ptr_ : NULL; }
+  BinTreeNode<T>* GetRoot() const { return root_ptr_; }
+  BinTreeNode<T>* Parent(BinTreeNode<T> *current) { return (root_ptr_ == NULL || root_ptr_ == current) ? NULL : Parent_(
+      root_ptr_, current); }
+  BinTreeNode<T>* LeftChild(BinTreeNode<T> *current) { return (current != NULL) ? current->left_child_ : NULL; }
+  BinTreeNode<T>* RightChild(BinTreeNode<T> *current) { return (current != NULL) ? current->right_child_ : NULL; }
 
   int Height() { return SubTreeHeight_(root_ptr_); }
   int Size() { return SubTreeSize_(root_ptr_); }
@@ -89,7 +90,7 @@ protected:
   BinTreeNode<T> *Copy(BinTreeNode<T> *orignode);
   int SubTreeHeight_(BinTreeNode<T> *subTree) const;
   int SubTreeSize_(BinTreeNode<T> *subTree) const;
-  BinTreeNode<T> *Parent(BinTreeNode<T> *subTree, BinTreeNode<T> *current);
+  BinTreeNode<T> *Parent_(BinTreeNode<T> *sub_tree_root_ptr, BinTreeNode<T> *node_ptr);
 
   void PreOrder_(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T> *p));
   void InOrder(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T> *p));
@@ -115,27 +116,50 @@ protected:
 template<class T>
 void BinaryTree<T>::Destroy(BinTreeNode<T> *& subTree) {
   if (subTree != NULL) {
-    Destroy(subTree->left_child_ptr_);
-    Destroy(subTree->right_child_ptr_);
+    Destroy(subTree->left_child_);
+    Destroy(subTree->right_child_);
     delete subTree;
   }
 }
 
 
+/**
+ * @brief 二叉子树查找父节点
+ *
+ * @tparam T
+ * @param sub_tree_root_ptr
+ * @param node_ptr
+ * @return
+ */
 template<class T>
-BinTreeNode<T> *BinaryTree<T>::
-Parent(BinTreeNode<T> *subTree, BinTreeNode<T> *current) {
-  if (subTree == NULL) return NULL;
-  if (subTree->left_child_ptr_ == current || subTree->right_child_ptr_ == current)
-    return subTree;
+BinTreeNode<T>* BinaryTree<T>::Parent_(BinTreeNode<T>* sub_tree_root_ptr, BinTreeNode<T>* node_ptr) {
 
-  BinTreeNode<T> *p;
-
-  if ((p = Parent(subTree->left_child_ptr_, current)) != NULL) {
-    return p;
-  } else {
-    return Parent(subTree->right_child_ptr_, current);
+  // 如果子树根为NULL, 则返回NULL
+  if (sub_tree_root_ptr == NULL) {
+    return NULL;
   }
+
+  // 如果子树根的左孩子or右孩子, 就是node_ptr的父节点, 则返回子树根结点
+  if (sub_tree_root_ptr->left_child_ == node_ptr || sub_tree_root_ptr->right_child_ == node_ptr) {
+    return sub_tree_root_ptr;
+  }
+
+  BinTreeNode<T>* parent_ptr = Parent_(sub_tree_root_ptr->left_child_, node_ptr);
+
+  if (parent_ptr == NULL) {
+    parent_ptr = Parent_(sub_tree_root_ptr->right_child_, node_ptr);
+  }
+
+  return parent_ptr;
+
+  /*
+  // 左右子树递归调用Parent_
+  if ((parent_ptr = Parent_(sub_tree_root_ptr->left_child_, node_ptr)) != NULL) {
+    return parent_ptr;
+  } else {
+    return Parent_(sub_tree_root_ptr->right_child_, node_ptr);
+  }
+   */
 }
 
 
@@ -143,8 +167,8 @@ template<class T>
 void BinaryTree<T>::Traverse(BinTreeNode<T> *subTree, ostream& out) {
   if (subTree != NULL) {
     out << subTree->data_ << ' ';
-    Traverse(subTree->left_child_ptr_, out);
-    Traverse(subTree->right_child_ptr_, out);
+    Traverse(subTree->left_child_, out);
+    Traverse(subTree->right_child_, out);
   }
 }
 
@@ -153,8 +177,8 @@ template<class T>
 void BinaryTree<T>::PreOrder_(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T>*)) {
   if (subTree != NULL) {
     visit(subTree);
-    PreOrder_(subTree->left_child_ptr_, visit);
-    PreOrder_(subTree->right_child_ptr_, visit);
+    PreOrder_(subTree->left_child_, visit);
+    PreOrder_(subTree->right_child_, visit);
   }
 }
 
@@ -163,9 +187,9 @@ template<class T>
 void BinaryTree<T>::InOrder(BinTreeNode<T> *node_ptr, void (*visit)(BinTreeNode<T>*))
 {
   if (node_ptr!= NULL) {
-    InOrder(node_ptr->left_child_ptr_, visit);
+    InOrder(node_ptr->left_child_, visit);
     visit(node_ptr);
-    InOrder(node_ptr->right_child_ptr_, visit);
+    InOrder(node_ptr->right_child_, visit);
   }
 }
 
@@ -174,8 +198,8 @@ template<class T>
 void BinaryTree<T>::PostOrder_(BinTreeNode<T> *subTree,
                                void (*visit)(BinTreeNode<T> *p)) {
   if (subTree != NULL) {
-    PostOrder_(subTree->left_child_ptr_, visit);
-    PostOrder_(subTree->right_child_ptr_, visit);
+    PostOrder_(subTree->left_child_, visit);
+    PostOrder_(subTree->right_child_, visit);
     visit(subTree);
   }
 }
@@ -187,8 +211,8 @@ int BinaryTree<T>::SubTreeSize_(BinTreeNode<T> *sub_tree) const {
     return 0;
   }
 
-  int left_sub_tree_size = SubTreeSize_(sub_tree->left_child_ptr_);
-  int right_sub_tree_size = SubTreeSize_(sub_tree->right_child_ptr_);
+  int left_sub_tree_size = SubTreeSize_(sub_tree->left_child_);
+  int right_sub_tree_size = SubTreeSize_(sub_tree->right_child_);
 
   int sub_tree_size = 1 + left_sub_tree_size + right_sub_tree_size;
 
@@ -201,8 +225,8 @@ int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T> *subTree) const {
   if (subTree == NULL) {
     return 0;
   } else {
-    int i = SubTreeHeight_(subTree->left_child_ptr_);
-    int j = SubTreeHeight_(subTree->right_child_ptr_);
+    int i = SubTreeHeight_(subTree->left_child_);
+    int j = SubTreeHeight_(subTree->right_child_);
     return (i < j) ? j + 1 : i + 1;
   }
 }
@@ -214,8 +238,8 @@ BinTreeNode<T> *BinaryTree<T>::Copy(BinTreeNode<T> *orignode) {
 
   BinTreeNode<T> *temp = new BinTreeNode<T>;
   temp->data_ = orignode->data_;
-  temp->left_child_ptr_ = Copy(orignode->left_child_ptr_);
-  temp->right_child_ptr_ = Copy(orignode->right_child_ptr_);
+  temp->left_child_ = Copy(orignode->left_child_);
+  temp->right_child_ = Copy(orignode->right_child_);
 
   return temp;
 }
@@ -226,8 +250,8 @@ bool equal(BinTreeNode<T> *a, BinTreeNode<T> *b) {
   if (a == NULL && b == NULL) return true;
 
   if (a != NULL && b != NULL && a->data_ == b->data_
-      && equal(a->left_child_ptr_, b->left_child_ptr_)
-      && equal(a->right_child_ptr_, b->right_child_ptr_)) {
+      && equal(a->left_child_, b->left_child_)
+      && equal(a->right_child_, b->right_child_)) {
     return true;
   } else {
     return false;
@@ -247,8 +271,8 @@ void BinaryTree<T>::CreateBinTree(istream& in, BinTreeNode<T> *& subTree) {
         cerr << "存储分配错误!" << endl;
         exit(1);
       }
-      CreateBinTree(in, subTree->left_child_ptr_);
-      CreateBinTree(in, subTree->right_child_ptr_);
+      CreateBinTree(in, subTree->left_child_);
+      CreateBinTree(in, subTree->right_child_);
     } else {
       subTree = NULL;
     }
@@ -258,7 +282,7 @@ void BinaryTree<T>::CreateBinTree(istream& in, BinTreeNode<T> *& subTree) {
 
 template<class T>
 int operator == (const BinaryTree<T>& s, const BinaryTree<T>& t) {
-  return (equal(s.getRoot(), t.getRoot())) ? true : false;
+  return (equal(s.GetRoot(), t.GetRoot())) ? true : false;
 }
 
 
@@ -272,7 +296,7 @@ istream& operator >> (istream& in, BinaryTree<T>& Tree) {
 template<class T>
 ostream& operator << (ostream& out, BinaryTree<T>& Tree) {
   out << "二叉树的前序遍历\n";
-  Tree.Traverse(Tree.getRoot(), out);
+  Tree.Traverse(Tree.GetRoot(), out);
   out << endl;
   return out;
 }
@@ -294,13 +318,13 @@ bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& node_ptr, T& value) {
 
   bool insert_res = false;
 
-  int left_sub_tree_height = SubTreeHeight_(node_ptr->left_child_ptr_);
-  int right_sub_tree_height = SubTreeHeight_(node_ptr->right_child_ptr_);
+  int left_sub_tree_height = SubTreeHeight_(node_ptr->left_child_);
+  int right_sub_tree_height = SubTreeHeight_(node_ptr->right_child_);
 
   if (left_sub_tree_height > right_sub_tree_height) {
-    insert_res = SubTreeInsert_(node_ptr->right_child_ptr_, value);
+    insert_res = SubTreeInsert_(node_ptr->right_child_, value);
   } else {
-    insert_res = SubTreeInsert_(node_ptr->left_child_ptr_, value);
+    insert_res = SubTreeInsert_(node_ptr->left_child_, value);
   }
 
   return insert_res;
@@ -318,11 +342,11 @@ bool BinaryTree<T>::SubTreeFind_(BinTreeNode<T> *node_ptr, T value) const {
     return true;
   }
 
-  if (SubTreeFind_(node_ptr->left_child_ptr_, value)) {
+  if (SubTreeFind_(node_ptr->left_child_, value)) {
     return true;
   }
 
-  return SubTreeFind_(node_ptr->right_child_ptr_, value);
+  return SubTreeFind_(node_ptr->right_child_, value);
 }
 
 
@@ -335,16 +359,16 @@ void BinaryTree<T>::SubTreePrint_(BinTreeNode<T> *node_ptr) {
 
   cout<<node_ptr->data_;
 
-  if (node_ptr->left_child_ptr_ != NULL || node_ptr->right_child_ptr_ != NULL) {
+  if (node_ptr->left_child_ != NULL || node_ptr->right_child_ != NULL) {
 
     cout << '(';
 
-    SubTreePrint_(node_ptr->left_child_ptr_);
+    SubTreePrint_(node_ptr->left_child_);
 
     cout << ',';
 
-    if (node_ptr->right_child_ptr_ != NULL) {
-      SubTreePrint_(node_ptr->right_child_ptr_);
+    if (node_ptr->right_child_ != NULL) {
+      SubTreePrint_(node_ptr->right_child_);
     }
 
     cout << ')';
@@ -373,12 +397,12 @@ void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T> *node_ptr, void 
 
     visit(cur_node_ptr);
 
-    if (cur_node_ptr->right_child_ptr_ != NULL) {
-      pre_traverse_stack.push(cur_node_ptr->right_child_ptr_);
+    if (cur_node_ptr->right_child_ != NULL) {
+      pre_traverse_stack.push(cur_node_ptr->right_child_);
     }
 
-    if (cur_node_ptr->left_child_ptr_ != NULL) {
-      pre_traverse_stack.push(cur_node_ptr->left_child_ptr_);
+    if (cur_node_ptr->left_child_ != NULL) {
+      pre_traverse_stack.push(cur_node_ptr->left_child_);
     }
   }
 }
@@ -398,12 +422,12 @@ void BinaryTree<T>::SubTreeLevelOrder_(BinTreeNode<T> *root, void (*visit)(BinTr
 
     visit(cur_node_ptr);
 
-    if (cur_node_ptr->left_child_ptr_ != NULL) {
-      level_traverse_queue.push(cur_node_ptr->left_child_ptr_);
+    if (cur_node_ptr->left_child_ != NULL) {
+      level_traverse_queue.push(cur_node_ptr->left_child_);
     }
 
-    if (cur_node_ptr->right_child_ptr_ != NULL) {
-      level_traverse_queue.push(cur_node_ptr->right_child_ptr_);
+    if (cur_node_ptr->right_child_ != NULL) {
+      level_traverse_queue.push(cur_node_ptr->right_child_);
     }
   }
 }
@@ -419,7 +443,7 @@ void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T> *node_ptr, void (
 
     while (cur_node_ptr != NULL) {
       in_traverse_stack.push(cur_node_ptr);
-      cur_node_ptr = cur_node_ptr->left_child_ptr_;
+      cur_node_ptr = cur_node_ptr->left_child_;
     }
 
     if (!in_traverse_stack.empty()) {
@@ -429,7 +453,7 @@ void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T> *node_ptr, void (
 
       visit(cur_node_ptr);
 
-      cur_node_ptr = cur_node_ptr->right_child_ptr_;
+      cur_node_ptr = cur_node_ptr->right_child_;
     }
   }
 }
@@ -446,7 +470,7 @@ void BinaryTree<T>::SubTreePostOrderNonRecursive_(BinTreeNode<T> *node_ptr, void
     while (cur_node_ptr != NULL) {
       PostOrderStackNode<T> traverse_node(cur_node_ptr);
       post_traverse_stack.push(traverse_node);
-      cur_node_ptr = cur_node_ptr->left_child_ptr_;
+      cur_node_ptr = cur_node_ptr->left_child_;
     }
 
     bool left_unfinished = true;
@@ -461,7 +485,7 @@ void BinaryTree<T>::SubTreePostOrderNonRecursive_(BinTreeNode<T> *node_ptr, void
         case PostOrderStackNode<T>::LEFT:
           cur_traverse_node.tag = PostOrderStackNode<T>::RIGHT;
           post_traverse_stack.push(cur_traverse_node);
-          cur_node_ptr = cur_node_ptr->right_child_ptr_;
+          cur_node_ptr = cur_node_ptr->right_child_;
 
           left_unfinished = false;
 
@@ -500,12 +524,12 @@ BinTreeNode<T>* BinaryTree<T>::CreateSubBinTreeByPreAndInOrderString_(
   CreateSubBinTreeByPreAndInOrderString_(pre_order_str_ptr + 1,
                                          in_order_str_ptr,
                                          pivot,
-                                         node_ptr->left_child_ptr_);
+                                         node_ptr->left_child_);
 
   CreateSubBinTreeByPreAndInOrderString_(pre_order_str_ptr + pivot + 1,
                                          in_order_str_ptr + pivot + 1,
                                          str_length - pivot - 1,
-                                         node_ptr->right_child_ptr_);
+                                         node_ptr->right_child_);
 
   return node_ptr;
 }
