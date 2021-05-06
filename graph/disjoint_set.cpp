@@ -7,7 +7,7 @@
 
 DisjointSet::DisjointSet(int size) {
   size_ = size;
-  this->parent_ = new int[size];
+  this->parent_ = new int[this->size_];
   for (int i = 0; i < size; i++) {
     parent_[i] = -1;
   }

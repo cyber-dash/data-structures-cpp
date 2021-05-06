@@ -93,7 +93,7 @@ void Components(Graph<T, E>& graph) {
 
   for (int i = 0; i < vertices_num; i++) {
     T vertex;
-    bool done = graph.GetVertex(vertex, i);
+    bool done = graph.GetVertexByIndex(vertex, i);
 
     if (done) {
       if (visited_vertex_set.find(vertex) == visited_vertex_set.end()) {
@@ -124,10 +124,8 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
     for (int v = u + 1; v < vertex_num; v++) {
       T vertex_u;
       T vertex_v;
-      // bool done = graph.GetVertex(vertex_u, u);
-      // done = graph.GetVertex(vertex_v, v);
-      graph.GetVertex(vertex_u, u);
-      graph.GetVertex(vertex_v, v);
+      graph.GetVertexByIndex(vertex_u, u);
+      graph.GetVertexByIndex(vertex_v, v);
 
       E weight;
       bool get_weight_done = graph.GetWeight(weight, vertex_u, vertex_v);
@@ -286,7 +284,7 @@ void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E *dist, int *path) {
   for (int i = 0; i < vertex_num; i++) {
 
     // vertex到当前节点cur_vertex的距离, 保存到dist[i]
-    graph.GetVertex(cur_vertex, i);
+    graph.GetVertexByIndex(cur_vertex, i);
     bool get_weight_done = graph.GetWeight(dist[i], vertex, cur_vertex);
 
     // 如果dist[i]存在, 则path[i]为vertex对应的索引
@@ -309,7 +307,7 @@ void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E *dist, int *path) {
 
     T cur_min_vertex = vertex;
     for (int j = 0; j < vertex_num; j++) {
-      graph.GetVertex(cur_vertex, j);
+      graph.GetVertexByIndex(cur_vertex, j);
       if (vertex_set.find(cur_vertex) == vertex_set.end() && dist[cur_vertex] < min) {
         cur_min_vertex = cur_vertex;
         min = dist[cur_vertex];
@@ -319,7 +317,7 @@ void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E *dist, int *path) {
     vertex_set.insert(cur_min_vertex);
 
     for (int j = 0; j < vertex_num; j++) {
-      graph.GetVertex(cur_vertex, j);
+      graph.GetVertexByIndex(cur_vertex, j);
 
       E weight;
       bool get_weight_done = graph.GetWeight(weight, cur_min_vertex, cur_vertex);
@@ -358,10 +356,10 @@ void PrintShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
       }
 
       T cur_vertex;
-      graph.GetVertex(cur_vertex, i);
+      graph.GetVertexByIndex(cur_vertex, i);
       cout<<"顶点"<<cur_vertex<<"的最短路径为:"<<vertex<<" ";
       while (k > 0) {
-        graph.GetVertex(cur_vertex, d[--k]);
+        graph.GetVertexByIndex(cur_vertex, d[--k]);
         cout<<cur_vertex<<" ";
       }
 

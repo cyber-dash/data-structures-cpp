@@ -20,7 +20,7 @@ public:
   int NumberOfVertices();
   int NumberOfEdges();
 
-  virtual bool GetVertex(T& vertex, int vertex_index) = 0;
+  virtual bool GetVertexByIndex(T& vertex, int vertex_index) = 0;
 
   virtual bool GetWeight(E& weight, T v1, T v2) = 0;
 
@@ -40,7 +40,7 @@ public:
 
 protected:
   int max_vertices_num_;
-  int edges_num_;
+  int edge_count_;
   int vertices_num_;
 };
 
@@ -63,7 +63,7 @@ int Graph<T, E>::NumberOfVertices() {
 
 template<class T, class E>
 int Graph<T, E>::NumberOfEdges() {
-  return edges_num_;
+  return edge_count_;
 }
 
 #endif //CYBER_DASH_GRAPH_H

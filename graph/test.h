@@ -10,9 +10,16 @@
 #include <iostream>
 
 
+// 测试使用结点索引获取结点
+void TestGetVertexByIndex();
+
+// 测试插入结点
+bool InsertVertex();
+
 // 测试连通分量
 void TestComponents();
 
+// 测试KrusKal
 void TestKruskal();
 
 // 测试Prim算法

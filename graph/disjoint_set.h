@@ -15,7 +15,12 @@ public:
   void Union(int root1, int root2);
   DisjointSet& operator=(const DisjointSet& disjoint_set);
   int Find(int value);
-  XZ
+
+  void WeightedUnion(int node1, int node2);
+  int FindNonRecursive(int value);
+private:
+  int size_;
+  int* parent_;
 };
 
 

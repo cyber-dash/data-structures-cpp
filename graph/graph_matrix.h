@@ -47,7 +47,7 @@ GraphMatrix<T, E>::GraphMatrix(int size, bool is_weighted) {
 
   this->max_vertices_num_ = size;
   this->vertices_num_ = 0;
-  this->edges_num_ = 0;
+  this->edge_count_ = 0;
 
   this->vertices_list_ = new T[this->max_vertices_num_];
   /* error handler */
@@ -151,7 +151,7 @@ bool GraphMatrix<T, E>::InsertEdge(int v1, int v2, E weight) {
     this->edge_matrix_[v1][v2] = weight;
     this->edge_matrix_[v2][v1] = weight;
 
-    this->edges_num_++;
+    this->edge_count_++;
 
     return true;
   } else {
@@ -176,7 +176,7 @@ bool GraphMatrix<T, E>::RemoveVertex(int vertex_index) {
 
   for (int i = 0; i < this->vertices_num_; i++) {
     if (this->edge_matrix_[i][vertex_index] > 0 && this->edge_matrix_[i][vertex_index] < MAX_WEIGHT) {
-      this->edges_num_--;
+      this->edge_count_--;
     }
   }
 
@@ -204,7 +204,7 @@ bool GraphMatrix<T, E>::RemoveEdge(int v1, int v2) {
     this->edge_matrix_[v1][v2] = MAX_WEIGHT;
     this->edge_matrix_[v2][v1] = MAX_WEIGHT;
 
-    this->edges_num_--;
+    this->edge_count_--;
 
     return true;
   } else {
