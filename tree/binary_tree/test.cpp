@@ -11,7 +11,9 @@ void visit(BinTreeNode<int>* node_ptr) {
 };
 
 
-// 测试二叉树深度
+/**
+ * 测试二叉树深度
+ */
 void TestBinaryTreeHeight() {
 
   cout<<endl;
@@ -243,6 +245,87 @@ void TestPostOrder() {
 }
 
 
+// 测试层序遍历
+void TestLevelOrder() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                 Test BinaryTree LevelOrder                |"<<endl;
+  cout<<"|                      测试二叉树层序遍历                      |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int num = 7;
+  BinaryTree<int> bin_tree;
+
+  int i = 0;
+  for (i = 0 ; i < num; i++) {
+    bin_tree.Insert(i);
+  }
+
+  bin_tree.LevelOrder(visit);
+
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestFind() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                    Test BinaryTree Find                   |"<<endl;
+  cout<<"|                        测试二叉树查找                       |"<<endl;
+  cout<<"|                                                           |"<<endl;
+  cout<<"|                             0                             |"<<endl;
+  cout<<"|                            / \\                            |"<<endl;
+  cout<<"|                           /   \\                           |"<<endl;
+  cout<<"|                          1     2                          |"<<endl;
+  cout<<"|                         / \\   /                           |"<<endl;
+  cout<<"|                        3   5 4                            |"<<endl;
+  cout<<"|                       /                                   |"<<endl;
+  cout<<"|                      6                                    |"<<endl<<endl;
+
+  int num = 7;
+  BinaryTree<int> bin_tree;
+
+  int i = 0;
+  for (i = 0 ; i < num; i++) {
+    bin_tree.Insert(i);
+  }
+
+  bool in_tree = bin_tree.Find(5);
+
+  if (in_tree) {
+    cout<<"5 is in the tree"<<endl;
+  } else {
+    cout<<"5 isn't in the tree"<<endl;
+  }
+
+  in_tree = bin_tree.Find(7);
+
+  if (in_tree) {
+    cout<<"7 is in the tree"<<endl;
+  } else {
+    cout << "7 isn't in the tree" << endl;
+  }
+
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl;
+}
+
+
+void TestPrint();
+
+
 void TestCreateBinTreeByPreAndInOrderString() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -251,9 +334,9 @@ void TestCreateBinTreeByPreAndInOrderString() {
 
   BinaryTree<int> bin_tree;
 
-  int pre_order_traverse_arr[] = { 0, 1, 3, 6, 5, 9, 2, 4, 8, 7 };
-  int in_order_traverse_arr[] = { 6, 3, 1, 9, 5, 0, 8, 4, 2, 7 };
-  bin_tree.createBinTreeByPreAndInOrderString(
+  int pre_order_traverse_arr[] = { 0, 1, 3, 6, 5, 9, 2, 4, 8, 7 }; // 前序遍历结果
+  int in_order_traverse_arr[] = { 6, 3, 1, 9, 5, 0, 8, 4, 2, 7 }; // 中序遍历结果
+  bin_tree.CreateBinTreeByPreAndInOrderString(
       pre_order_traverse_arr,
       in_order_traverse_arr,
       10);

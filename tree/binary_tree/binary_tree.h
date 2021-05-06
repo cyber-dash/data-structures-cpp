@@ -44,36 +44,55 @@ public:
   BinaryTree(): root_ptr_(NULL) {}
   BinaryTree(T value): value_(value), root_ptr_(NULL) {}
   BinaryTree(BinaryTree<T>& binary_tree) { root_ptr_ = Copy(binary_tree.root_ptr_); }
-
   ~BinaryTree() { Destroy(root_ptr_); }
 
+  // 是否为空树
   bool IsEmpty() { return (root_ptr_ == NULL) ? true : false; }
-
+  // 获取根节点
   BinTreeNode<T>* GetRoot() const { return root_ptr_; }
-  BinTreeNode<T>* Parent(BinTreeNode<T> *current) { return (root_ptr_ == NULL || root_ptr_ == current) ? NULL : Parent_(
-      root_ptr_, current); }
+  // 父节点
+  BinTreeNode<T>* Parent(BinTreeNode<T> *current) { return (root_ptr_ == NULL || root_ptr_ == current) ? NULL :
+    Parent_(root_ptr_, current); }
+  // 左孩子
   BinTreeNode<T>* LeftChild(BinTreeNode<T> *current) { return (current != NULL) ? current->left_child_ : NULL; }
+  // 右孩子
   BinTreeNode<T>* RightChild(BinTreeNode<T> *current) { return (current != NULL) ? current->right_child_ : NULL; }
-
+  // 深度
   int Height() { return SubTreeHeight_(root_ptr_); }
+  // Size
   int Size() { return SubTreeSize_(root_ptr_); }
-
-  void PreOrder(void (*visit)(BinTreeNode<T>*)) { PreOrder_(root_ptr_, visit); }
-  void InOrder(void (*visit)(BinTreeNode<T>*)) { InOrder(root_ptr_, visit); }
-  void PostOrder(void (*visit)(BinTreeNode<T>*)) { PostOrder_(root_ptr_, visit); }
-  void PreOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreePreOrderNonRecursive_(root_ptr_, visit); }
+  // 插入结点
   bool Insert(T& item) { return SubTreeInsert_(root_ptr_, item); }
+  // 查询结点(是否在树中)
   bool Find(T item) { return SubTreeFind_(root_ptr_, item); }
-  void CreateBinTree(istream &in) { CreateBinTree_(in, root_ptr_); }
-  void Traverse(BinTreeNode<T>* subTree, ostream& out);
-  void Print(void) { SubTreePrint_(root_ptr_); };
-  void createBinTreeByPreAndInOrderString(T *pre_order_str_ptr, T *in_order_str_ptr, int str_length) {
+
+  /* 遍历系列 */
+  // 前序遍历(递归)
+  void PreOrder(void (*visit)(BinTreeNode<T>*)) { PreOrder_(root_ptr_, visit); }
+  // 前序遍历(非递归)
+  void PreOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreePreOrderNonRecursive_(root_ptr_, visit); }
+  // 中序遍历(递归)
+  void InOrder(void (*visit)(BinTreeNode<T>*)) { InOrder(root_ptr_, visit); }
+  // 中序遍历(非递归)
+  void InOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreeInOrderNonRecursive_(root_ptr_, visit); }
+  // 后序遍历(递归)
+  void PostOrder(void (*visit)(BinTreeNode<T>*)) { PostOrder_(root_ptr_, visit); }
+  // 后序遍历(非递归)
+  void PostOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreePostOrderNonRecursive_(root_ptr_, visit); }
+  // 层序遍历
+  void LevelOrder(void (*visit)(BinTreeNode<T> *p)) { SubTreeLevelOrder_(root_ptr_, visit); }
+
+  // 使用前序遍历和中序遍历结果,创建二叉树
+  void CreateBinTreeByPreAndInOrderString(T *pre_order_str_ptr, T *in_order_str_ptr, int str_length) {
     CreateSubBinTreeByPreAndInOrderString_(pre_order_str_ptr, in_order_str_ptr, str_length, root_ptr_);
   }
 
-  void LevelOrder(void (*visit)(BinTreeNode<T> *p)) { SubTreeLevelOrder_(root_ptr_, visit); }
-  void InOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreeInOrderNonRecursive_(root_ptr_, visit); }
-  void PostOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreePostOrderNonRecursive_(root_ptr_, visit); }
+  // 打印二叉树(使用'(', ',',')')
+  void Print(void) { SubTreePrint_(root_ptr_); };
+  // 使用输入流创建二叉树
+  void CreateBinTree(istream &in) { CreateBinTree_(in, root_ptr_); }
+  // 使用输出流打印二叉树(前序)
+  void Traverse(BinTreeNode<T>* subTree, ostream& out);
 
   void CyberDashShow();
 
@@ -108,7 +127,6 @@ protected:
   friend istream& operator >> (istream& in, BinTreeNode<T>& Tree);
   template<class U>
   friend ostream& operator << (ostream& in, BinTreeNode<T>& Tree);
-
 };
 
 
@@ -308,8 +326,7 @@ bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& node_ptr, T& value) {
     node_ptr = new BinTreeNode<T>(value);
     if (node_ptr == NULL) {
       cerr << "存储分配错误!" << endl;
-      exit(1);
-      // return false; // todo: use this?
+      return false;
     }
 
     return true;

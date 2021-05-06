@@ -24,10 +24,13 @@ void TestInOrder();
 // 测试后序遍历
 void TestPostOrder();
 
+// 测试层序遍历
+void TestLevelOrder();
+
+// 测试查找是否在二叉树
 void TestFind();
 
-void TestPrint();
-
+// 测试使用前序遍历和后序遍历结果创建二叉树
 void TestCreateBinTreeByPreAndInOrderString();
 
 
