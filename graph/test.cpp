@@ -10,6 +10,124 @@
 using namespace std;
 
 
+// 测试使用结点索引获取结点
+void TestGetVertexByIndex() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test GetVertexByIndex                   |"<<endl;
+  cout<<"|                   测试使用结点索引获取结点                    |"<<endl;
+
+  GraphAdjacencyList<string, double> graph_adjacency_list;
+
+  /*
+  string BJ = "北京";
+  string SH = "上海";
+  string GZ = "广州";
+  string SZ = "深圳";
+   */
+
+  graph_adjacency_list.InsertVertex("北京");
+  graph_adjacency_list.InsertVertex("上海");
+  graph_adjacency_list.InsertVertex("广州");
+  graph_adjacency_list.InsertVertex("深圳");
+
+  graph_adjacency_list.InsertEdge("北京", "上海", 0.8);
+  graph_adjacency_list.InsertEdge("上海", "广州", 3.9);
+  graph_adjacency_list.InsertEdge("广州", "深圳", 7.3);
+  graph_adjacency_list.InsertEdge("北京", "广州", 11.3);
+  graph_adjacency_list.InsertEdge("上海", "深圳", 0.3);
+
+  string BJ;
+  string SH;
+  string GZ;
+  string SZ;
+
+  bool done;
+
+  done = graph_adjacency_list.GetVertexByIndex(BJ, 0);
+  done = graph_adjacency_list.GetVertexByIndex(SH, 1);
+  done = graph_adjacency_list.GetVertexByIndex(GZ, 2);
+  done = graph_adjacency_list.GetVertexByIndex(SZ, 3);
+
+  cout<<"结点0: "<<BJ<<endl;
+  cout<<"结点1: "<<SH<<endl;
+  cout<<"结点2: "<<GZ<<endl;
+  cout<<"结点3: "<<SZ<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+// 测试DFS
+void TestDFS() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                          Test DFS                         |"<<endl;
+  cout<<"|                       测试深度优先遍历                      |"<<endl;
+
+  GraphAdjacencyList<int, int> graph_adjacency_list;
+
+  int v0 = 0;
+  int v1 = 1;
+  int v2 = 2;
+  int v3 = 3;
+  int v4 = 4;
+
+  graph_adjacency_list.InsertVertex(v0);
+  graph_adjacency_list.InsertVertex(v1);
+  graph_adjacency_list.InsertVertex(v2);
+  graph_adjacency_list.InsertVertex(v3);
+  graph_adjacency_list.InsertVertex(v4);
+
+  graph_adjacency_list.InsertEdge(v0, v1, 100);
+  graph_adjacency_list.InsertEdge(v1, v2, 50);
+  graph_adjacency_list.InsertEdge(v2, v3, 20);
+  graph_adjacency_list.InsertEdge(v3, v4, 60);
+  graph_adjacency_list.InsertEdge(v0, v3, 30);
+  graph_adjacency_list.InsertEdge(v0, v4, 100);
+  graph_adjacency_list.InsertEdge(v2, v4, 10);
+
+  DFS(graph_adjacency_list, v0);
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+// 测试BFS
+void TestBFS() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                          Test BFS                         |"<<endl;
+  cout<<"|                       测试广度优先遍历                      |"<<endl;
+
+  GraphAdjacencyList<int, int> graph_adjacency_list;
+
+  int v0 = 0;
+  int v1 = 1;
+  int v2 = 2;
+  int v3 = 3;
+  int v4 = 4;
+
+  graph_adjacency_list.InsertVertex(v0);
+  graph_adjacency_list.InsertVertex(v1);
+  graph_adjacency_list.InsertVertex(v2);
+  graph_adjacency_list.InsertVertex(v3);
+  graph_adjacency_list.InsertVertex(v4);
+
+  graph_adjacency_list.InsertEdge(v0, v1, 100);
+  graph_adjacency_list.InsertEdge(v1, v2, 50);
+  graph_adjacency_list.InsertEdge(v2, v3, 20);
+  graph_adjacency_list.InsertEdge(v3, v4, 60);
+  graph_adjacency_list.InsertEdge(v0, v3, 30);
+  graph_adjacency_list.InsertEdge(v0, v4, 100);
+  graph_adjacency_list.InsertEdge(v2, v4, 10);
+
+  BFS(graph_adjacency_list, v0);
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
 void TestComponents() {
 
   cout<<endl;
@@ -71,7 +189,6 @@ void TestKruskal() {
   graph_adjacency_list.InsertEdge(SH, SZ, 0.3);
 
   MinSpanTree<string, double> min_span_tree(100);
-  // Prim(graph_adjacency_list, BJ, min_span_tree);
   Kruskal(graph_adjacency_list, min_span_tree);
 
   min_span_tree.Show();

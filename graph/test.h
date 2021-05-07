@@ -13,8 +13,11 @@
 // 测试使用结点索引获取结点
 void TestGetVertexByIndex();
 
-// 测试插入结点
-bool InsertVertex();
+// 测试DFS
+void TestDFS();
+
+// 测试BFS
+void TestBFS();
 
 // 测试连通分量
 void TestComponents();
