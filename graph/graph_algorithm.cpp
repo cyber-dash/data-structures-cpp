@@ -6,6 +6,13 @@
 #include <iostream>
 
 
+/**
+ * @brief 图深度优先遍历
+ * @tparam T 结点模板类型
+ * @tparam E 边模板类型
+ * @param graph 图
+ * @param vertex 遍历起始结点
+ */
 template<class T, class E>
 void DFS(Graph<T, E>& graph, const T& vertex) {
 
@@ -48,6 +55,14 @@ void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set) {
 }
 
 
+/**
+ * @brief 图广度优先遍历
+ *   使用队列进行广度优先遍历
+ * @tparam T 结点模板类型
+ * @tparam E 边模板类型
+ * @param graph 图
+ * @param vertex 遍历起始结点
+ */
 template<class T, class E>
 void BFS(Graph<T, E>& graph, const T& vertex) {
 
@@ -55,14 +70,15 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
   visited_vertex_set.insert(vertex);
 
   queue<T> vertex_queue;
-  vertex_queue.push(vertex);
+  vertex_queue.push(vertex); // 遍历起始结点入队列
 
   cout<<"Vertex "<<vertex<<endl;
 
   while (!vertex_queue.empty()) {
-    T front_vertex = vertex_queue.front();
+    T front_vertex = vertex_queue.front(); // 每次取队头
     vertex_queue.pop();
 
+    // 已取出的队头结点的相邻结点入队
     T neighbor_vertex;
     bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, front_vertex);
 
@@ -83,6 +99,12 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
 }
 
 
+/**
+ * @brief 求图的连通分量
+ * @tparam T 结点模板类型
+ * @tparam E 边模板类型
+ * @param graph 图
+ */
 template<class T, class E>
 void Components(Graph<T, E>& graph) {
 
@@ -97,7 +119,7 @@ void Components(Graph<T, E>& graph) {
 
     if (done) {
       if (visited_vertex_set.find(vertex) == visited_vertex_set.end()) {
-        cout<<"Component "<<component_index<<":"<<endl;
+        cout<<"连通分量"<<component_index<<":"<<endl;
         DFSOnVertex(graph, vertex, visited_vertex_set);
 
         component_index++;
@@ -132,7 +154,7 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
       if (get_weight_done) {
         edge_node.tail = vertex_u;
         edge_node.head = vertex_v;
-        edge_node.weight_ = weight;
+        edge_node.weight = weight;
 
         min_heap.Insert(edge_node);
       }
@@ -187,7 +209,7 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
         mst_edge_node.tail = vertex;
         mst_edge_node.head = neighbor_vertex;
 
-        graph.GetWeight(mst_edge_node.weight_, vertex, neighbor_vertex);
+        graph.GetWeight(mst_edge_node.weight, vertex, neighbor_vertex);
 
         min_heap.Insert(mst_edge_node);
       }
@@ -246,7 +268,7 @@ void Prim2(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
           mst_edge_node.tail = vertex;
           mst_edge_node.head = neighbor_vertex;
 
-          graph.GetWeight(mst_edge_node.weight_, vertex, neighbor_vertex);
+          graph.GetWeight(mst_edge_node.weight, vertex, neighbor_vertex);
 
           min_heap.Insert(mst_edge_node);
         }

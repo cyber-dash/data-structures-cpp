@@ -134,7 +134,7 @@ void TestComponents() {
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Components                      |"<<endl;
   cout<<"|                        测试连通分量                         |"<<endl;
-  cout<<"|  节点:                                                    |"<<endl;
+  cout<<"|  节点:                                                     |"<<endl;
   cout<<"|    0, 1, 2, 3                                             |"<<endl;
   cout<<"|  边:                                                      |"<<endl;
   cout<<"|    0-1权值: 0.8                                            |"<<endl<<endl;
