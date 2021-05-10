@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
 
   TestDFS();
 
-  // TestBFS();
+  TestBFS();
 
   TestComponents();
 

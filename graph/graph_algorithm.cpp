@@ -64,7 +64,7 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
     vertex_queue.pop();
 
     T neighbor_vertex;
-    bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
+    bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, front_vertex);
 
     while (has_neighbor) {
       if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
@@ -76,7 +76,7 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
       }
 
       T next_neighbor_vertex;
-      has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
+      has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, front_vertex, neighbor_vertex);
       neighbor_vertex = next_neighbor_vertex;
     }
   }
