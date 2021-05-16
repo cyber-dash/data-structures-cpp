@@ -4,6 +4,6 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main graph.h graph_matrix.h graph_adjacency_list.h graph_algorithm.h graph_algorithm.cpp
-    disjoint_set.h disjoint_set.cpp
-    test.h test.cpp main.cpp)
+add_executable(main src/graph.h src/graph_matrix.h src/graph_adjacency_list.h src/graph_algorithm.h src/graph_algorithm.cpp
+        src/disjoint_set.h src/disjoint_set.cpp
+        src/test.h src/test.cpp src/main.cpp)

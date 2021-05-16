@@ -21,7 +21,8 @@ public:
   ~GraphMatrix();
   T GetValue(int i);
   E GetWeight(int v1, int v2);
-  int GetFirstNeighbor(int v);
+  // int GetFirstNeighborVertex(int v);
+  bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
   int GetNextNeighbor(int v, int w);
   bool InsertVertex(const T& vertex);
   bool InsertEdge(int v1, int v2, E weight);
