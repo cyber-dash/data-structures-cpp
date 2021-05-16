@@ -2,13 +2,12 @@
 #include <iostream>
 
 #include "BSTNode.h"
-#include "BSTNode.cpp"
 #include "person.h"
 
 using namespace std;
 
 void visit(BSTNode<person, long> *p) {
-  cout << p->data << " ";
+  cout << p->data_ << " ";
 };
 
 int main(void)
@@ -46,7 +45,7 @@ int main(void)
   if (node == NULL) {
     cout << "Do not found node for key: " + id;
   } else {
-    cout << "Found node: " << node->data << endl;
+    cout << "Found node: " << node->data_ << endl;
   }
   cout << "input id to delete" << endl;
   cin >> id;
