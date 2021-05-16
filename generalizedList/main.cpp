@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "gen_list.cpp"
+#include "gen_list.h"
 
 
 using namespace std;
@@ -13,7 +13,7 @@ int main() {
 
   GenList<char> gen_list;
 
-  gen_list.CyberDashShow();
+  // gen_list.CyberDashShow();
 
   cin>>gen_list;
 
