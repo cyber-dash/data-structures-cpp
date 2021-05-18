@@ -20,7 +20,6 @@ class GenList {
 
 public:
   GenList();
-  // ~GenList();
 
   bool Head(Item<T>& item);
   bool Tail(GenList<T>& tail_list);
@@ -31,6 +30,7 @@ public:
 
   // void CreateList(istream& in, GenListNode<T>*& list_node_ptr, bool& inExistedList);
   void CreateListByQueue(queue<T>& char_queue, GenListNode<T>*& node_ptr, bool& in_referred_list);
+  void CreateListByString(string gen_string);
 
   void Remove(GenListNode<T>* node_ptr);
 
@@ -234,7 +234,7 @@ bool GenList<T>::IsGenListNameChar_(T chr) {
 
 template<class T>
 bool GenList<T>::IsGenListBeginChar_(T chr) {
-  return isalpha(chr) && isupper(chr) || chr == '(';
+  return (isalpha(chr) && isupper(chr)) || chr == '(';
 }
 
 
@@ -293,11 +293,26 @@ void GenList<T>::CreateListByQueue(queue<T>& char_queue, GenListNode<T>*& node_p
     in_referred_list = false;
   } else if (chr == '#') {
     if (!in_referred_list) {
-      node_ptr == NULL;
+      // node_ptr == NULL;
+      node_ptr = NULL;
     }
   }
 }
 
+
+template<class T>
+void GenList<T>::CreateListByString(string gen_string) {
+  queue<T> char_queue;
+  for (int i = 0; i < gen_string.length(); i++) {
+    char_queue.push(gen_string[i]);
+  }
+
+  bool in_referred_list = false;
+
+  this->CreateListByQueue(char_queue, this->ref_node_ptr_->next_, in_referred_list);
+
+  this->ref_node_ptr_ = this->ref_node_ptr_->next_->union_info_.ref_node_ptr_;
+}
 
 /*
 template<class T>

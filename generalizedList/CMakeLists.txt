@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main gen_list.h gen_list.cpp main.cpp)
+add_executable(main gen_list.h main.cpp)

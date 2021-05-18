@@ -15,7 +15,11 @@ int main() {
 
   // gen_list.CyberDashShow();
 
-  cin>>gen_list;
+  // cin>>gen_list;
+
+  string string1 = "A(B(C(#)))";
+
+  gen_list.CreateListByString(string1);
 
   cout<<"gen_list length: "<<gen_list.Length()<<endl;
   cout<<"gen_list depth: "<<gen_list.Depth()<<endl;
