@@ -305,7 +305,6 @@ void GenList<T>::CreateListByQueue(queue<T>& char_queue, GenListNode<T>*& node_p
     in_referred_list = false;
   } else if (chr == '#') {
     if (!in_referred_list) {
-      // node_ptr == NULL;
       node_ptr = NULL;
     }
   }
@@ -316,14 +315,13 @@ template<class T>
 void GenList<T>::CreateListByString(string gen_string) {
   queue<T> char_queue;
   for (int i = 0; i < gen_string.length(); i++) {
-    char_queue.push(gen_string[i]);
+    char cur_chr = gen_string[i];
+    char_queue.push(cur_chr);
   }
 
   bool in_referred_list = false;
 
   this->CreateListByQueue(char_queue, this->ref_node_ptr->next, in_referred_list);
-
-  this->ref_node_ptr = this->ref_node_ptr->next->union_info.ref_node_ptr;
 }
 
 /*
@@ -409,6 +407,7 @@ istream& operator>>(istream& in, GenList<T>& gen_list) {
   gen_list.ref_node_ptr = gen_list.ref_node_ptr->next->union_info.ref_node_ptr;
 }
  */
+
 template<class T>
 istream& operator>>(istream& in, GenList<T>& gen_list) {
 
@@ -467,6 +466,11 @@ GenListNode<T>* GenList<T>::GenerateElemNode_(T chr) {
 }
 
 
+/**
+ * @brief 创建子表节点
+ * @tparam T
+ * @return
+ */
 template<class T>
 GenListNode<T>* GenList<T>::GenerateChildListNode_() {
 

@@ -6,9 +6,14 @@
 #define CYBER_DASH_GEN_LIST_TEST_H
 
 
+#include "gen_list.h"
+
+
 void TestCreateListByString();
 
 void TestHeadAndTail();
+
+void TestDepth();
 
 
 #endif // CYBER_DASH_GEN_LIST_TEST_H

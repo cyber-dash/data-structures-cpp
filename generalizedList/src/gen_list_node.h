@@ -14,6 +14,10 @@ template<class T>
 class GenListNode;
 
 
+/**
+ * @brief 广义表节点Union类型
+ * @tparam T 广义表数据模板类型
+ */
 template<class T>
 union GenNodeUnion {
   int ref_count; // 引用计数
@@ -22,6 +26,10 @@ union GenNodeUnion {
 };
 
 
+/**
+ * @brief
+ * @tparam T
+ */
 template<class T>
 class Item {
 public:
