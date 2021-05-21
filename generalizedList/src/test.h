@@ -15,5 +15,7 @@ void TestHeadAndTail();
 
 void TestDepth();
 
+void TestLength();
+
 
 #endif // CYBER_DASH_GEN_LIST_TEST_H

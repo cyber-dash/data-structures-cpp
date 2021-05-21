@@ -184,9 +184,16 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
 }
 
 
-// 书中的代码, 已经是经过调优的代码
+/**
+ * @brief 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
+ * @tparam T 图节点数据模板类型
+ * @tparam E 边模板类型
+ * @param graph 图
+ * @param vertex 起始节点(起始可以不用这个参数, 参考教科书, 此处保留)
+ * @param min_span_tree 最小生成树
+ */
 template<class T, class E>
-void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
+void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 
   MSTEdgeNode<T, E> mst_edge_node;
 
@@ -240,8 +247,16 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 }
 
 
+/**
+ * @brief Prim算法朴素实现
+ * @tparam T 图节点数据模板类型
+ * @tparam E 边模板类型
+ * @param graph 图
+ * @param vertex 起始节点(其实可以不用这个参数, 参照教科书, 此处保留)
+ * @param min_span_tree 最小生成树
+ */
 template<class T, class E>
-void Prim2(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
+void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 
   MSTEdgeNode<T, E> mst_edge_node;
 
@@ -310,7 +325,6 @@ void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E *dist, int *path) {
     bool get_weight_done = graph.GetWeight(dist[i], vertex, cur_vertex);
 
     // 如果dist[i]存在, 则path[i]为vertex对应的索引
-    // if (cur_vertex != vertex && dist[i] < (E)MAX_WEIGHT && get_weight_done) {
     if (cur_vertex != vertex && get_weight_done) {
       path[i] = graph.GetVertexIndex(vertex);
     } else {

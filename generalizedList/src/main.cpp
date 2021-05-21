@@ -20,6 +20,7 @@ int main() {
    */
 
   TestDepth();
+  TestLength();
 
   /*
   queue<char> charQueue;

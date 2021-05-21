@@ -231,7 +231,7 @@ void TestPrim() {
 
   MinSpanTree<string, double> min_span_tree(100);
   // Prim(graph_adjacency_list, BJ, min_span_tree); // 殷书原版实现
-  Prim2(graph_adjacency_list, BJ, min_span_tree); // 朴素版Prim
+  Prim(graph_adjacency_list, BJ, min_span_tree); // 朴素版Prim
 
   min_span_tree.Show();
 
