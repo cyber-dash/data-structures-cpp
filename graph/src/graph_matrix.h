@@ -14,11 +14,11 @@ using namespace std;
 
 
 template<class T, class E>
-class GraphMatrix: public Graph<T, E> {
+class MatrixGraph: public Graph<T, E> {
 
 public:
-  explicit GraphMatrix(int size = DEFAULT_VERTICES);
-  ~GraphMatrix();
+  explicit MatrixGraph(int size = DEFAULT_VERTICES);
+  ~MatrixGraph();
 
   bool GetVertexByIndex(T& vertex, int vertex_index);
 
@@ -87,9 +87,9 @@ public:
   int GetVertexIndex(T vertex);
 
   template<class U>
-  friend istream& operator>>(istream& in, GraphMatrix<T, E>& graph_matrix);
+  friend istream& operator>>(istream& in, MatrixGraph<T, E>& graph_matrix);
   template<class U>
-  friend ostream& operator<<(ostream& out, GraphMatrix<T, E>& graph_matrix);
+  friend ostream& operator<<(ostream& out, MatrixGraph<T, E>& graph_matrix);
 
   void PrintMatrix();
 
@@ -100,7 +100,7 @@ private:
 
 
 template<class T, class E>
-GraphMatrix<T, E>::GraphMatrix(int size) {
+MatrixGraph<T, E>::MatrixGraph(int size) {
 
   this->max_vertices_num_ = size;
   this->vertices_num_ = 0;
@@ -123,7 +123,7 @@ GraphMatrix<T, E>::GraphMatrix(int size) {
 
 
 template<class T, class E>
-GraphMatrix<T, E>::~GraphMatrix() {
+MatrixGraph<T, E>::~MatrixGraph() {
   delete[] this->vertices_list_;
   delete[] this->edge_matrix_;
 }
@@ -136,7 +136,7 @@ GraphMatrix<T, E>::~GraphMatrix() {
  * @return 是否获取成功
  */
 template<class T, class E>
-bool GraphMatrix<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
+bool MatrixGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
   if (vertex_index >= 0 && vertex_index <= this->vertices_num_) {
     vertex = this->vertices_list_[vertex_index];
     return true;
@@ -147,7 +147,7 @@ bool GraphMatrix<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
+bool MatrixGraph<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
@@ -167,7 +167,7 @@ bool GraphMatrix<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
+bool MatrixGraph<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
 
@@ -196,7 +196,7 @@ bool GraphMatrix<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& verte
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& vertex, const T& neighbor_vertex) {
+bool MatrixGraph<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& vertex, const T& neighbor_vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
   int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);
@@ -226,7 +226,7 @@ bool GraphMatrix<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& 
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::InsertVertex(const T& vertex) {
+bool MatrixGraph<T, E>::InsertVertex(const T& vertex) {
   if (this->vertices_num_ >= this->max_vertices_num_) {
     return false;
   }
@@ -239,7 +239,7 @@ bool GraphMatrix<T, E>::InsertVertex(const T& vertex) {
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
+bool MatrixGraph<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
@@ -259,7 +259,7 @@ bool GraphMatrix<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::RemoveVertex(T vertex) {
+bool MatrixGraph<T, E>::RemoveVertex(T vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
 
@@ -295,7 +295,7 @@ bool GraphMatrix<T, E>::RemoveVertex(T vertex) {
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::RemoveEdge(T vertex1, T vertex2) {
+bool MatrixGraph<T, E>::RemoveEdge(T vertex1, T vertex2) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
@@ -316,7 +316,7 @@ bool GraphMatrix<T, E>::RemoveEdge(T vertex1, T vertex2) {
 
 
 template<class T, class E>
-istream& operator>>(istream& in, GraphMatrix<T, E>& graph_matrix) {
+istream& operator>>(istream& in, MatrixGraph<T, E>& graph_matrix) {
 
   int vertex_num;
   int edge_num;
@@ -354,7 +354,7 @@ istream& operator>>(istream& in, GraphMatrix<T, E>& graph_matrix) {
 
 
 template<class T, class E>
-ostream& operator<<(ostream& out, GraphMatrix<T, E>& graph_matrix) {
+ostream& operator<<(ostream& out, MatrixGraph<T, E>& graph_matrix) {
 
   int vertex_num = graph_matrix.NumberOfVertices();
   int edge_num = graph_matrix.NumberOfEdges();
@@ -379,7 +379,7 @@ ostream& operator<<(ostream& out, GraphMatrix<T, E>& graph_matrix) {
 
 
 template<class T, class E>
-int GraphMatrix<T, E>::GetVertexIndex(T vertex) {
+int MatrixGraph<T, E>::GetVertexIndex(T vertex) {
 
   int vertex_index = -1;
 
@@ -395,7 +395,7 @@ int GraphMatrix<T, E>::GetVertexIndex(T vertex) {
 
 
 template<class T, class E>
-void GraphMatrix<T, E>::PrintMatrix() {
+void MatrixGraph<T, E>::PrintMatrix() {
   for (int i = 0; i < this->vertices_num_; i++) {
     for (int j = 0; j < this->vertices_num_; j++) {
       cout<<this->edge_matrix_[i][j]<<"  ";

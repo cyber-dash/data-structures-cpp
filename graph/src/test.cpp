@@ -17,7 +17,7 @@ void TestMatrixGraphMatrix() {
   cout<<"|                      Test PrintMatrix                     |"<<endl;
   cout<<"|                       测试矩阵图的矩阵                      |"<<endl;
 
-  GraphMatrix<string, double> matrix_graph(10);
+  MatrixGraph<string, double> matrix_graph(10);
   matrix_graph.InsertVertex("地球");
   matrix_graph.InsertVertex("火星");
   matrix_graph.InsertVertex("木星");
@@ -41,30 +41,28 @@ void TestGetVertexByIndex() {
   cout<<"|                   测试使用结点索引获取结点                    |"<<endl;
 
   cout<<"**邻接表图**"<<endl;
-  GraphAdjacencyList<string, double> graph_adjacency_list;
+  AdjacencyListGraph<string, double> adjacency_list_graph;
 
-  graph_adjacency_list.InsertVertex("北京");
-  graph_adjacency_list.InsertVertex("上海");
-  graph_adjacency_list.InsertVertex("广州");
-  graph_adjacency_list.InsertVertex("深圳");
+  adjacency_list_graph.InsertVertex("北京");
+  adjacency_list_graph.InsertVertex("上海");
+  adjacency_list_graph.InsertVertex("广州");
+  adjacency_list_graph.InsertVertex("深圳");
 
-  graph_adjacency_list.InsertEdge("北京", "上海", 0.8);
-  graph_adjacency_list.InsertEdge("上海", "广州", 3.9);
-  graph_adjacency_list.InsertEdge("广州", "深圳", 7.3);
-  graph_adjacency_list.InsertEdge("北京", "广州", 11.3);
-  graph_adjacency_list.InsertEdge("上海", "深圳", 0.3);
+  adjacency_list_graph.InsertEdge("北京", "上海", 0.8);
+  adjacency_list_graph.InsertEdge("上海", "广州", 3.9);
+  adjacency_list_graph.InsertEdge("广州", "深圳", 7.3);
+  adjacency_list_graph.InsertEdge("北京", "广州", 11.3);
+  adjacency_list_graph.InsertEdge("上海", "深圳", 0.3);
 
   string BJ;
   string SH;
   string GZ;
   string SZ;
 
-  bool done;
-
-  done = graph_adjacency_list.GetVertexByIndex(BJ, 0);
-  done = graph_adjacency_list.GetVertexByIndex(SH, 1);
-  done = graph_adjacency_list.GetVertexByIndex(GZ, 2);
-  done = graph_adjacency_list.GetVertexByIndex(SZ, 3);
+  adjacency_list_graph.GetVertexByIndex(BJ, 0);
+  adjacency_list_graph.GetVertexByIndex(SH, 1);
+  adjacency_list_graph.GetVertexByIndex(GZ, 2);
+  adjacency_list_graph.GetVertexByIndex(SZ, 3);
 
   cout<<"结点0: "<<BJ<<endl;
   cout<<"结点1: "<<SH<<endl;
@@ -72,7 +70,7 @@ void TestGetVertexByIndex() {
   cout<<"结点3: "<<SZ<<endl;
 
   cout<<endl<<"**矩阵图**"<<endl;
-  GraphMatrix<string, double> matrix_graph(10);
+  MatrixGraph<string, double> matrix_graph(10);
   matrix_graph.InsertVertex("地球");
   matrix_graph.InsertVertex("火星");
   matrix_graph.InsertVertex("木星");
@@ -84,10 +82,10 @@ void TestGetVertexByIndex() {
   matrix_graph.InsertEdge("地球", "木星", 11.3);
   matrix_graph.InsertEdge("火星", "水星", 0.3);
 
-  done = matrix_graph.GetVertexByIndex(BJ, 0);
-  done = matrix_graph.GetVertexByIndex(SH, 1);
-  done = matrix_graph.GetVertexByIndex(GZ, 2);
-  done = matrix_graph.GetVertexByIndex(SZ, 3);
+  matrix_graph.GetVertexByIndex(BJ, 0);
+  matrix_graph.GetVertexByIndex(SH, 1);
+  matrix_graph.GetVertexByIndex(GZ, 2);
+  matrix_graph.GetVertexByIndex(SZ, 3);
 
   cout<<"结点0: "<<BJ<<endl;
   cout<<"结点1: "<<SH<<endl;
@@ -111,23 +109,23 @@ void TestDFS() {
   int v3 = 3;
   int v4 = 4;
 
-  GraphAdjacencyList<int, int> graph_adjacency_list;
+  AdjacencyListGraph<int, int> adjacency_list_graph;
 
-  graph_adjacency_list.InsertVertex(v0);
-  graph_adjacency_list.InsertVertex(v1);
-  graph_adjacency_list.InsertVertex(v2);
-  graph_adjacency_list.InsertVertex(v3);
-  graph_adjacency_list.InsertVertex(v4);
+  adjacency_list_graph.InsertVertex(v0);
+  adjacency_list_graph.InsertVertex(v1);
+  adjacency_list_graph.InsertVertex(v2);
+  adjacency_list_graph.InsertVertex(v3);
+  adjacency_list_graph.InsertVertex(v4);
 
-  graph_adjacency_list.InsertEdge(v0, v1, 100);
-  graph_adjacency_list.InsertEdge(v1, v2, 50);
-  graph_adjacency_list.InsertEdge(v2, v3, 20);
-  graph_adjacency_list.InsertEdge(v3, v4, 60);
-  graph_adjacency_list.InsertEdge(v0, v3, 30);
-  graph_adjacency_list.InsertEdge(v0, v4, 100);
-  graph_adjacency_list.InsertEdge(v2, v4, 10);
+  adjacency_list_graph.InsertEdge(v0, v1, 100);
+  adjacency_list_graph.InsertEdge(v1, v2, 50);
+  adjacency_list_graph.InsertEdge(v2, v3, 20);
+  adjacency_list_graph.InsertEdge(v3, v4, 60);
+  adjacency_list_graph.InsertEdge(v0, v3, 30);
+  adjacency_list_graph.InsertEdge(v0, v4, 100);
+  adjacency_list_graph.InsertEdge(v2, v4, 10);
 
-  GraphMatrix<int, int> matrix_graph;
+  MatrixGraph<int, int> matrix_graph;
 
   matrix_graph.InsertVertex(v0);
   matrix_graph.InsertVertex(v1);
@@ -144,7 +142,7 @@ void TestDFS() {
   matrix_graph.InsertEdge(v2, v4, 10);
 
   cout<<"**邻接表图**"<<endl;
-  DFS(graph_adjacency_list, v0);
+  DFS(adjacency_list_graph, v0);
 
   cout<<endl<<"**矩阵图**"<<endl;
   DFS(matrix_graph, v0);
@@ -166,14 +164,14 @@ void TestBFS() {
   int v3 = 3;
   int v4 = 4;
 
-  GraphAdjacencyList<int, int> graph_adjacency_list;
-  GraphMatrix<int, int> matrix_graph;
+  AdjacencyListGraph<int, int> adjacency_list_graph;
+  MatrixGraph<int, int> matrix_graph;
 
-  graph_adjacency_list.InsertVertex(v0);
-  graph_adjacency_list.InsertVertex(v1);
-  graph_adjacency_list.InsertVertex(v2);
-  graph_adjacency_list.InsertVertex(v3);
-  graph_adjacency_list.InsertVertex(v4);
+  adjacency_list_graph.InsertVertex(v0);
+  adjacency_list_graph.InsertVertex(v1);
+  adjacency_list_graph.InsertVertex(v2);
+  adjacency_list_graph.InsertVertex(v3);
+  adjacency_list_graph.InsertVertex(v4);
 
   matrix_graph.InsertVertex(v0);
   matrix_graph.InsertVertex(v1);
@@ -181,13 +179,13 @@ void TestBFS() {
   matrix_graph.InsertVertex(v3);
   matrix_graph.InsertVertex(v4);
 
-  graph_adjacency_list.InsertEdge(v0, v1, 100);
-  graph_adjacency_list.InsertEdge(v1, v2, 50);
-  graph_adjacency_list.InsertEdge(v2, v3, 20);
-  graph_adjacency_list.InsertEdge(v3, v4, 60);
-  graph_adjacency_list.InsertEdge(v0, v3, 30);
-  graph_adjacency_list.InsertEdge(v0, v4, 100);
-  graph_adjacency_list.InsertEdge(v2, v4, 10);
+  adjacency_list_graph.InsertEdge(v0, v1, 100);
+  adjacency_list_graph.InsertEdge(v1, v2, 50);
+  adjacency_list_graph.InsertEdge(v2, v3, 20);
+  adjacency_list_graph.InsertEdge(v3, v4, 60);
+  adjacency_list_graph.InsertEdge(v0, v3, 30);
+  adjacency_list_graph.InsertEdge(v0, v4, 100);
+  adjacency_list_graph.InsertEdge(v2, v4, 10);
 
   matrix_graph.InsertEdge(v0, v1, 100);
   matrix_graph.InsertEdge(v1, v2, 50);
@@ -198,7 +196,7 @@ void TestBFS() {
   matrix_graph.InsertEdge(v2, v4, 10);
 
   cout<<"**邻接表图**"<<endl;
-  BFS(graph_adjacency_list, v0);
+  BFS(adjacency_list_graph, v0);
 
   cout<<endl<<"**矩阵图**"<<endl;
   BFS(matrix_graph, v0);
@@ -219,17 +217,17 @@ void TestComponents() {
   cout<<"|    0-1权值: 0.8                                            |"<<endl<<endl;
   cout<<"|    2-3权值: 7.3                                            |"<<endl<<endl;
 
-  GraphAdjacencyList<int, double> graph_adjacency_list;
+  AdjacencyListGraph<int, double> adjacency_list_graph;
 
-  graph_adjacency_list.InsertVertex(0);
-  graph_adjacency_list.InsertVertex(1);
-  graph_adjacency_list.InsertVertex(2);
-  graph_adjacency_list.InsertVertex(3);
+  adjacency_list_graph.InsertVertex(0);
+  adjacency_list_graph.InsertVertex(1);
+  adjacency_list_graph.InsertVertex(2);
+  adjacency_list_graph.InsertVertex(3);
 
-  graph_adjacency_list.InsertEdge(0, 1, 0.8);
-  graph_adjacency_list.InsertEdge(2, 3, 7.3);
+  adjacency_list_graph.InsertEdge(0, 1, 0.8);
+  adjacency_list_graph.InsertEdge(2, 3, 7.3);
 
-  GraphMatrix<int, double> matrix_graph;
+  MatrixGraph<int, double> matrix_graph;
 
   matrix_graph.InsertVertex(0);
   matrix_graph.InsertVertex(1);
@@ -240,7 +238,7 @@ void TestComponents() {
   matrix_graph.InsertEdge(2, 3, 7.3);
 
   cout<<"**邻接表图测试**"<<endl;
-  Components(graph_adjacency_list);
+  Components(adjacency_list_graph);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   Components(matrix_graph);
@@ -271,20 +269,20 @@ void TestKruskal() {
   MinSpanTree<string, double> min_span_tree_adj(100);
   MinSpanTree<string, double> min_span_tree_matrix(100);
 
-  GraphAdjacencyList<string, double> graph_adjacency_list;
+  AdjacencyListGraph<string, double> adjacency_list_graph;
 
-  graph_adjacency_list.InsertVertex(BJ);
-  graph_adjacency_list.InsertVertex(SH);
-  graph_adjacency_list.InsertVertex(GZ);
-  graph_adjacency_list.InsertVertex(SZ);
+  adjacency_list_graph.InsertVertex(BJ);
+  adjacency_list_graph.InsertVertex(SH);
+  adjacency_list_graph.InsertVertex(GZ);
+  adjacency_list_graph.InsertVertex(SZ);
 
-  graph_adjacency_list.InsertEdge(BJ, SH, 0.8);
-  graph_adjacency_list.InsertEdge(SH, GZ, 3.9);
-  graph_adjacency_list.InsertEdge(GZ, SZ, 7.3);
-  graph_adjacency_list.InsertEdge(BJ, GZ, 11.3);
-  graph_adjacency_list.InsertEdge(SH, SZ, 0.3);
+  adjacency_list_graph.InsertEdge(BJ, SH, 0.8);
+  adjacency_list_graph.InsertEdge(SH, GZ, 3.9);
+  adjacency_list_graph.InsertEdge(GZ, SZ, 7.3);
+  adjacency_list_graph.InsertEdge(BJ, GZ, 11.3);
+  adjacency_list_graph.InsertEdge(SH, SZ, 0.3);
 
-  GraphMatrix<string, double> matrix_graph;
+  MatrixGraph<string, double> matrix_graph;
   matrix_graph.InsertVertex(BJ);
   matrix_graph.InsertVertex(SH);
   matrix_graph.InsertVertex(GZ);
@@ -297,7 +295,7 @@ void TestKruskal() {
   matrix_graph.InsertEdge(SH, SZ, 0.3);
 
   cout<<"**邻接表图测试**"<<endl;
-  Kruskal(graph_adjacency_list, min_span_tree_adj);
+  Kruskal(adjacency_list_graph, min_span_tree_adj);
   min_span_tree_adj.Show();
 
   cout<<endl<<"**矩阵图测试**"<<endl;
@@ -327,20 +325,20 @@ void TestPrim() {
   string GZ = "广州";
   string SZ = "深圳";
 
-  GraphAdjacencyList<string, double> graph_adjacency_list;
+  AdjacencyListGraph<string, double> adjacency_list_graph;
 
-  graph_adjacency_list.InsertVertex(BJ);
-  graph_adjacency_list.InsertVertex(SH);
-  graph_adjacency_list.InsertVertex(GZ);
-  graph_adjacency_list.InsertVertex(SZ);
+  adjacency_list_graph.InsertVertex(BJ);
+  adjacency_list_graph.InsertVertex(SH);
+  adjacency_list_graph.InsertVertex(GZ);
+  adjacency_list_graph.InsertVertex(SZ);
 
-  graph_adjacency_list.InsertEdge(BJ, SH, 0.8);
-  graph_adjacency_list.InsertEdge(SH, GZ, 3.9);
-  graph_adjacency_list.InsertEdge(GZ, SZ, 7.3);
-  graph_adjacency_list.InsertEdge(BJ, GZ, 11.3);
-  graph_adjacency_list.InsertEdge(SH, SZ, 0.3);
+  adjacency_list_graph.InsertEdge(BJ, SH, 0.8);
+  adjacency_list_graph.InsertEdge(SH, GZ, 3.9);
+  adjacency_list_graph.InsertEdge(GZ, SZ, 7.3);
+  adjacency_list_graph.InsertEdge(BJ, GZ, 11.3);
+  adjacency_list_graph.InsertEdge(SH, SZ, 0.3);
 
-  GraphMatrix<string, double> matrix_graph;
+  MatrixGraph<string, double> matrix_graph;
 
   matrix_graph.InsertVertex(BJ);
   matrix_graph.InsertVertex(SH);
@@ -355,8 +353,8 @@ void TestPrim() {
 
   cout<<endl<<"**邻接表图测试**"<<endl;
   MinSpanTree<string, double> min_span_tree_adj(100);
-  // Prim(graph_adjacency_list, BJ, min_span_tree_adj); // 殷书原版实现
-  Prim(graph_adjacency_list, BJ, min_span_tree_adj); // 朴素版Prim
+  // Prim(adjacency_list_graph, BJ, min_span_tree_adj); // 殷书原版实现
+  Prim(adjacency_list_graph, BJ, min_span_tree_adj); // 朴素版Prim
   min_span_tree_adj.Show();
 
   cout<<endl<<"**矩阵图测试**"<<endl;
@@ -380,23 +378,23 @@ void TestShortestPath() {
   int v3 = 3;
   int v4 = 4;
 
-  GraphAdjacencyList<int, int> graph_adjacency_list;
+  AdjacencyListGraph<int, int> adjacency_list_graph;
 
-  graph_adjacency_list.InsertVertex(v0);
-  graph_adjacency_list.InsertVertex(v1);
-  graph_adjacency_list.InsertVertex(v2);
-  graph_adjacency_list.InsertVertex(v3);
-  graph_adjacency_list.InsertVertex(v4);
+  adjacency_list_graph.InsertVertex(v0);
+  adjacency_list_graph.InsertVertex(v1);
+  adjacency_list_graph.InsertVertex(v2);
+  adjacency_list_graph.InsertVertex(v3);
+  adjacency_list_graph.InsertVertex(v4);
 
-  graph_adjacency_list.InsertEdge(v0, v1, 100);
-  graph_adjacency_list.InsertEdge(v1, v2, 50);
-  graph_adjacency_list.InsertEdge(v2, v3, 20);
-  graph_adjacency_list.InsertEdge(v3, v4, 60);
-  graph_adjacency_list.InsertEdge(v0, v3, 30);
-  graph_adjacency_list.InsertEdge(v0, v4, 100);
-  graph_adjacency_list.InsertEdge(v2, v4, 10);
+  adjacency_list_graph.InsertEdge(v0, v1, 100);
+  adjacency_list_graph.InsertEdge(v1, v2, 50);
+  adjacency_list_graph.InsertEdge(v2, v3, 20);
+  adjacency_list_graph.InsertEdge(v3, v4, 60);
+  adjacency_list_graph.InsertEdge(v0, v3, 30);
+  adjacency_list_graph.InsertEdge(v0, v4, 100);
+  adjacency_list_graph.InsertEdge(v2, v4, 10);
 
-  GraphMatrix<int, int> matrix_graph;
+  MatrixGraph<int, int> matrix_graph;
 
   matrix_graph.InsertVertex(v0);
   matrix_graph.InsertVertex(v1);
@@ -420,9 +418,9 @@ void TestShortestPath() {
 
   int path_ajd[5];
 
-  DijkstraShortestPath(graph_adjacency_list, v0, dist_adj, path_ajd);
+  DijkstraShortestPath(adjacency_list_graph, v0, dist_adj, path_ajd);
 
-  PrintShortestPath(graph_adjacency_list, v0, dist_adj, path_ajd);
+  PrintShortestPath(adjacency_list_graph, v0, dist_adj, path_ajd);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   int dist_matrix[5];
@@ -432,9 +430,9 @@ void TestShortestPath() {
 
   int path_matrix[5];
 
-  DijkstraShortestPath(graph_adjacency_list, v0, dist_matrix, path_matrix);
+  DijkstraShortestPath(adjacency_list_graph, v0, dist_matrix, path_matrix);
 
-  PrintShortestPath(graph_adjacency_list, v0, dist_matrix, path_matrix);
+  PrintShortestPath(adjacency_list_graph, v0, dist_matrix, path_matrix);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }

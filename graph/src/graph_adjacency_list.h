@@ -36,15 +36,15 @@ struct Vertex {
 
 
 template<class T, class E>
-class GraphAdjacencyList: public Graph<T, E> {
+class AdjacencyListGraph: public Graph<T, E> {
 
 public:
 
   // 构造函数
-  GraphAdjacencyList(int size = DEFAULT_VERTICES);
+  AdjacencyListGraph(int size = DEFAULT_VERTICES);
 
   // 析构函数
-  ~GraphAdjacencyList();
+  ~AdjacencyListGraph();
 
   /**
    * @brief 使用结点索引获取结点
@@ -119,9 +119,9 @@ public:
   int GetVertexIndex(T vertex);
 
   template<class U>
-  friend istream& operator>>(istream& in, GraphAdjacencyList<T, E>& graph_adjacency_list);
+  friend istream& operator>>(istream& in, AdjacencyListGraph<T, E>& graph_adjacency_list);
   template<class U>
-  friend ostream& operator<<(ostream& out, GraphAdjacencyList<T, E>& graph_adjacency_list);
+  friend ostream& operator<<(ostream& out, AdjacencyListGraph<T, E>& graph_adjacency_list);
 
   /**
    * 我们是CyberDash :-)
@@ -133,7 +133,7 @@ private:
 
 
 template<class T, class E>
-GraphAdjacencyList<T, E>::GraphAdjacencyList(int size) {
+AdjacencyListGraph<T, E>::AdjacencyListGraph(int size) {
 
   this->max_vertices_num_ = size;
   this->vertices_num_ = 0;
@@ -148,7 +148,7 @@ GraphAdjacencyList<T, E>::GraphAdjacencyList(int size) {
 
 
 template<class T, class E>
-GraphAdjacencyList<T, E>::~GraphAdjacencyList() {
+AdjacencyListGraph<T, E>::~AdjacencyListGraph() {
 
   for (int i = 0; i < this->vertices_num_; i++) {
 
@@ -172,7 +172,7 @@ GraphAdjacencyList<T, E>::~GraphAdjacencyList() {
  * @return 是否获取成功
  */
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
+bool AdjacencyListGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
   if (vertex_index >= 0 && vertex_index < this->vertices_num_) {
     vertex = this->vertex_table_[vertex_index].value_;
 
@@ -184,7 +184,7 @@ bool GraphAdjacencyList<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
 
 
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
+bool AdjacencyListGraph<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
 
   int vertex1_index = this->GetVertexIndex(vertex1);
   int vertex2_index = this->GetVertexIndex(vertex2);
@@ -214,7 +214,7 @@ bool GraphAdjacencyList<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
  * @return 是否插入成功
  */
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::InsertVertex(const T& vertex) {
+bool AdjacencyListGraph<T, E>::InsertVertex(const T& vertex) {
 
   // 如果已有节点数大于限制, 则不执行插入, 返回失败
   if (this->vertices_num_ == this->max_vertices_num_) {
@@ -234,7 +234,7 @@ bool GraphAdjacencyList<T, E>::InsertVertex(const T& vertex) {
  * @return 是否删除成功
  */
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::RemoveVertex(T vertex) {
+bool AdjacencyListGraph<T, E>::RemoveVertex(T vertex) {
 
   int vertex_index = this->GetVertexIndex(vertex);
 
@@ -308,7 +308,7 @@ bool GraphAdjacencyList<T, E>::RemoveVertex(T vertex) {
  * @return 是否插入成功
  */
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
+bool AdjacencyListGraph<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
 
   int vertex1_index = this->GetVertexIndex(vertex1);
   int vertex2_index = this->GetVertexIndex(vertex2);
@@ -356,7 +356,7 @@ bool GraphAdjacencyList<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
  * @return 是否删除成功
  */
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::RemoveEdge(T vertex1, T vertex2) {
+bool AdjacencyListGraph<T, E>::RemoveEdge(T vertex1, T vertex2) {
 
   // 获取两个结点在vertex_table_的数组索引, 如果有一个不存在, 则返回false
   int vertex1_index = this->GetVertexIndex(vertex1);
@@ -429,7 +429,7 @@ bool GraphAdjacencyList<T, E>::RemoveEdge(T vertex1, T vertex2) {
  * @return 是否获取成功
  */
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
+bool AdjacencyListGraph<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
 
   int vertex_index = this->GetVertexIndex(vertex); // 获取结点在vertex_table_的数组索引
 
@@ -457,7 +457,7 @@ bool GraphAdjacencyList<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T
  * @return 是否获取成功
  */
 template<class T, class E>
-bool GraphAdjacencyList<T, E>::GetNextNeighborVertex(T& next_neighbor, const T& vertex, const T& neighbor_vertex) {
+bool AdjacencyListGraph<T, E>::GetNextNeighborVertex(T& next_neighbor, const T& vertex, const T& neighbor_vertex) {
 
   // 拿到vertex和neighbor_vertex对应的vertex_table_的数组索引
   int vertex_index = GetVertexIndex(vertex);
@@ -487,7 +487,7 @@ bool GraphAdjacencyList<T, E>::GetNextNeighborVertex(T& next_neighbor, const T& 
 
 
 template<class T, class E>
-istream& operator>>(istream& in, GraphAdjacencyList<T, E>& graph_adjacency_list) {
+istream& operator>>(istream& in, AdjacencyListGraph<T, E>& graph_adjacency_list) {
 
   int vertex_num;
   int edge_num;
@@ -535,7 +535,7 @@ istream& operator>>(istream& in, GraphAdjacencyList<T, E>& graph_adjacency_list)
 
 
 template<class T, class E>
-ostream& operator<<(ostream& out, GraphAdjacencyList<T, E>& graph_adjacency_list) {
+ostream& operator<<(ostream& out, AdjacencyListGraph<T, E>& graph_adjacency_list) {
 
   int vertex_num = graph_adjacency_list.NumberOfVertices();
   int edge_num = graph_adjacency_list.NumberOfEdges();
@@ -578,7 +578,7 @@ ostream& operator<<(ostream& out, GraphAdjacencyList<T, E>& graph_adjacency_list
  * @return 结点索引
  */
 template<class T, class E>
-int GraphAdjacencyList<T, E>::GetVertexIndex(T vertex) {
+int AdjacencyListGraph<T, E>::GetVertexIndex(T vertex) {
 
   int vertex_index = -1; // 如果图中没有该结点, 则返回-1
 
@@ -595,7 +595,7 @@ int GraphAdjacencyList<T, E>::GetVertexIndex(T vertex) {
 
 
 template<class T, class E>
-void GraphAdjacencyList<T, E>::CyberDashShow() {
+void AdjacencyListGraph<T, E>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
       <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl
