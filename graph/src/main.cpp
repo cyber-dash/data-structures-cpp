@@ -27,5 +27,7 @@ int main(int argc, char** argv) {
 
   TestShortestPath();
 
+  TestCyberDashShow();
+
   return 0;
 }

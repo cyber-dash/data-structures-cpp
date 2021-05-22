@@ -436,3 +436,10 @@ void TestShortestPath() {
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
+
+
+// 关于CyberDash, :)
+void TestCyberDashShow() {
+  MatrixGraph<int, int> cyber_dash_graph;
+  cyber_dash_graph.CyberDashShow();
+}

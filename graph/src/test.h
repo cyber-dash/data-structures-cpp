@@ -35,5 +35,8 @@ void TestPrim();
 // 测试Dijkstra最小生成树
 void TestShortestPath();
 
+// 关于CyberDash
+void TestCyberDashShow();
+
 
 #endif //CYBER_DASH_GRAPH_TEST_H
