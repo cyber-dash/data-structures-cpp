@@ -30,7 +30,7 @@ public:
 
   virtual bool InsertVertex(const T& vertex) = 0;
 
-  virtual bool InsertEdge(T v1, T v2, E weight) = 0;
+  virtual bool InsertEdge(T vertex1, T vertex2, E weight) = 0;
 
   virtual bool RemoveVertex(T v) = 0;
 

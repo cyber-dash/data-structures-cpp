@@ -2,8 +2,8 @@
 // Created by cyberdash@163.com(抖音id:cyberdash_yuan) on 2021/1/23.
 //
 
-#ifndef CYBER_DASH_GRAPH_MATRIX_H
-#define CYBER_DASH_GRAPH_MATRIX_H
+#ifndef CYBER_DASH_MATRIX_GRAPH_H
+#define CYBER_DASH_MATRIX_GRAPH_H
 
 
 #include "graph.h"
@@ -404,4 +404,4 @@ void MatrixGraph<T, E>::PrintMatrix() {
   }
 }
 
-#endif //CYBER_DASH_GRAPH_MATRIX_H
+#endif //CYBER_DASH_MATRIX_GRAPH_H

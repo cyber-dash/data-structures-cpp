@@ -2,8 +2,8 @@
 // Created by cyberdash@163.com(抖音id:cyberdash_yuan) on 2021/1/26.
 //
 
-#ifndef CYBER_DASH_GRAPH_ADJACENCY_LIST_H
-#define CYBER_DASH_GRAPH_ADJACENCY_LIST_H
+#ifndef CYBER_DASH_ADJACENCY_LIST_GRAPH_H
+#define CYBER_DASH_ADJACENCY_LIST_GRAPH_H
 
 
 #include <iostream>
@@ -607,4 +607,4 @@ void AdjacencyListGraph<T, E>::CyberDashShow() {
 }
 
 
-#endif //CYBER_DASH_GRAPH_ADJACENCY_LIST_H
+#endif // CYBER_DASH_ADJACENCY_LIST_GRAPH_H
