@@ -17,17 +17,8 @@ template<class T, class E>
 class GraphMatrix: public Graph<T, E> {
 
 public:
-  explicit GraphMatrix(int size = DEFAULT_VERTICES /* , bool is_weighted = true */);
+  explicit GraphMatrix(int size = DEFAULT_VERTICES);
   ~GraphMatrix();
-  // T GetValue(int i);
-  // E GetWeight(int v1, int v2);
-  // int GetFirstNeighborVertex(int v);
-  // bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
-  // int GetNextNeighbor(int v, int w);
-  // bool InsertVertex(const T& vertex);
-  // bool InsertEdge(int v1, int v2, E weight);
-  // bool RemoveVertex(int vertex_index);
-  // bool RemoveEdge(int v1, int v2);
 
   bool GetVertexByIndex(T& vertex, int vertex_index);
 
@@ -100,17 +91,16 @@ public:
   template<class U>
   friend ostream& operator<<(ostream& out, GraphMatrix<T, E>& graph_matrix);
 
-  // int GetVertexPos(T vertex);
+  void PrintMatrix();
 
 private:
   T* vertices_list_;
   E** edge_matrix_;
-  // bool is_weighted_;
 };
 
 
 template<class T, class E>
-GraphMatrix<T, E>::GraphMatrix(int size /* , bool is_weighted*/) {
+GraphMatrix<T, E>::GraphMatrix(int size) {
 
   this->max_vertices_num_ = size;
   this->vertices_num_ = 0;
@@ -163,6 +153,7 @@ bool GraphMatrix<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
   int v2_index = GetVertexIndex(vertex2);
 
   if (v1_index >= 0 && v2_index >= 0 &&
+    v1_index != v2_index &&
     this->edge_matrix_[v1_index][v2_index] != MAX_WEIGHT &&
     this->edge_matrix_[v1_index][v2_index] > 0)
   {
@@ -176,10 +167,7 @@ bool GraphMatrix<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
 
 
 template<class T, class E>
-// int GraphMatrix<T, E>::GetFirstNeighborVertex(int v) {
 bool GraphMatrix<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
-
-  // int col = -1;
 
   int vertex_index = GetVertexIndex(vertex);
 
@@ -187,7 +175,7 @@ bool GraphMatrix<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& verte
     return false;
   }
 
-  for (int cur_index = 0; cur_index < this->vertices_num_ && cur_index != vertex_index; cur_index++) {
+  for (int cur_index = 0; cur_index < this->vertices_num_; cur_index++) {
     E weight;
     T cur_vertex;
 
@@ -196,10 +184,8 @@ bool GraphMatrix<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& verte
       continue;
     }
 
-    // bool has_weight = this->GetWeight(weight, vertex_index, cur_index);
     bool has_weight = GetWeight(weight, vertex, cur_vertex);
     if (has_weight) {
-      // return GetVertexByIndex(first_neighbor, cur_index);
       first_neighbor = cur_vertex;
       return true;
     }
@@ -219,7 +205,7 @@ bool GraphMatrix<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& 
     return false;
   }
 
-  for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertices_num_ && cur_index != vertex_index; cur_index ++) {
+  for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertices_num_; cur_index ++) {
     E weight;
     T cur_vertex;
 
@@ -228,10 +214,8 @@ bool GraphMatrix<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& 
       continue;
     }
 
-    // bool has_weight = GetWeight(weight, vertex_index, cur_index);
     bool has_weight = GetWeight(weight, vertex, cur_vertex);
     if (has_weight) {
-      // return GetVertexByIndex(next_neighbor_vertex, cur_index);
       next_neighbor_vertex = cur_vertex;
       return true;
     }
@@ -260,8 +244,7 @@ bool GraphMatrix<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
 
-  if (v1_index < 0 || v2_index < 0 || v1_index == v2_index ||
-    this->edge_matrix_[v1_index][v2_index] == MAX_WEIGHT)
+  if (v1_index < 0 || v2_index < 0 || v1_index == v2_index)
   {
     return false;
   }
@@ -276,7 +259,6 @@ bool GraphMatrix<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
 
 
 template<class T, class E>
-// bool GraphMatrix<T, E>::RemoveVertex(int vertex_index) {
 bool GraphMatrix<T, E>::RemoveVertex(T vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
@@ -313,7 +295,6 @@ bool GraphMatrix<T, E>::RemoveVertex(T vertex) {
 
 
 template<class T, class E>
-// bool GraphMatrix<T, E>::RemoveEdge(int v1, int v2) {
 bool GraphMatrix<T, E>::RemoveEdge(T vertex1, T vertex2) {
 
   int v1_index = GetVertexIndex(vertex1);
@@ -331,22 +312,6 @@ bool GraphMatrix<T, E>::RemoveEdge(T vertex1, T vertex2) {
   }
 
   return false;
-
-  /*
-  if (v1_index > -1 && v1_index < this->vertices_num_ &&
-      v2_index > -1 && v2 < this->vertices_num_ &&
-      this->edge_matrix_[v1][v2] > 0 && this->edge_matrix_[v1][v2] < MAX_WEIGHT)
-  {
-    this->edge_matrix_[v1][v2] = MAX_WEIGHT;
-    this->edge_matrix_[v2][v1] = MAX_WEIGHT;
-
-    this->edge_count_--;
-
-    return true;
-  } else {
-    return false;
-  }
-   */
 }
 
 
@@ -426,6 +391,17 @@ int GraphMatrix<T, E>::GetVertexIndex(T vertex) {
   }
 
   return vertex_index;
+}
+
+
+template<class T, class E>
+void GraphMatrix<T, E>::PrintMatrix() {
+  for (int i = 0; i < this->vertices_num_; i++) {
+    for (int j = 0; j < this->vertices_num_; j++) {
+      cout<<this->edge_matrix_[i][j]<<"  ";
+    }
+    cout<<endl;
+  }
 }
 
 #endif //CYBER_DASH_GRAPH_MATRIX_H
