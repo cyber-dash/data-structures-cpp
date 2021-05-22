@@ -6,8 +6,8 @@
 #define CYBER_DASH_GRAPH_TEST_H
 
 
-#include "graph_adjacency_list.h"
-#include "graph_matrix.h"
+#include "adjacency_list_graph.h"
+#include "matrix_graph.h"
 #include <iostream>
 
 
