@@ -7,6 +7,7 @@
 
 
 #include "graph_adjacency_list.h"
+#include "graph_matrix.h"
 #include <iostream>
 
 

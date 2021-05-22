@@ -17,39 +17,106 @@ template<class T, class E>
 class GraphMatrix: public Graph<T, E> {
 
 public:
-  explicit GraphMatrix(int size = DEFAULT_VERTICES, bool is_weighted = true);
+  explicit GraphMatrix(int size = DEFAULT_VERTICES /* , bool is_weighted = true */);
   ~GraphMatrix();
-  T GetValue(int i);
-  E GetWeight(int v1, int v2);
+  // T GetValue(int i);
+  // E GetWeight(int v1, int v2);
   // int GetFirstNeighborVertex(int v);
-  bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
-  int GetNextNeighbor(int v, int w);
+  // bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
+  // int GetNextNeighbor(int v, int w);
+  // bool InsertVertex(const T& vertex);
+  // bool InsertEdge(int v1, int v2, E weight);
+  // bool RemoveVertex(int vertex_index);
+  // bool RemoveEdge(int v1, int v2);
+
+  bool GetVertexByIndex(T& vertex, int vertex_index);
+
+  /**
+   * @brief 获取边权值
+   * @param weight 边权值(用于保存结果)
+   * @param vertex1 边的节点1
+   * @param vertex2 边的节点2
+   * @return 是否获取成功
+   */
+  bool GetWeight(E& weight, T vertex1, T vertex2);
+
+  /**
+   * @brief 插入结点
+   * @param vertex 节点
+   * @return 是否插入成功
+   */
   bool InsertVertex(const T& vertex);
-  bool InsertEdge(int v1, int v2, E weight);
-  bool RemoveVertex(int vertex_index);
-  bool RemoveEdge(int v1, int v2);
+
+  /**
+   * @brief 删除结点
+   * @param vertex 节点
+   * @return 是否删除成功
+   */
+  bool RemoveVertex(T vertex);
+
+  /**
+   * @brief 插入边
+   * @param vertex1 边节点1
+   * @param vertex2 边节点2
+   * @param weight 边权值
+   * @return 是否插入成功
+   */
+  bool InsertEdge(T vertex1, T vertex2, E weight);
+
+  /**
+   * @brief 删除边
+   * @param vertex1 边结点1
+   * @param vertex2 边结点2
+   * @return 是否删除成功
+   */
+  bool RemoveEdge(T vertex1, T vertex2);
+
+  /**
+   * 获取第一个相邻结点
+   * @param first_neighbor 第一个相邻结点(用于保存节点)
+   * @param vertex 节点
+   * @return 是否获取成功
+   */
+  bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
+
+  /**
+   * @brief 获取下一个相邻结点
+   * @param next_neighbor_vertex 下一个相邻结点(用于保存结点)
+   * @param vertex 结点
+   * @param neighbor_vertex 当前相邻结点
+   * @return 是否获取成功
+   */
+  bool GetNextNeighborVertex(T& next_neighbor_vertex, const T& vertex, const T& neighbor_vertex);
+
+  /**
+   * @brief 获取结点索引
+   * @param vertex 结点
+   * @return 结点索引
+   */
+  int GetVertexIndex(T vertex);
 
   template<class U>
   friend istream& operator>>(istream& in, GraphMatrix<T, E>& graph_matrix);
   template<class U>
   friend ostream& operator<<(ostream& out, GraphMatrix<T, E>& graph_matrix);
 
-  int GetVertexPos(T vertex);
+  // int GetVertexPos(T vertex);
 
 private:
   T* vertices_list_;
   E** edge_matrix_;
-  bool is_weighted_;
+  // bool is_weighted_;
 };
 
 
 template<class T, class E>
-GraphMatrix<T, E>::GraphMatrix(int size, bool is_weighted) {
+GraphMatrix<T, E>::GraphMatrix(int size /* , bool is_weighted*/) {
 
   this->max_vertices_num_ = size;
   this->vertices_num_ = 0;
   this->edge_count_ = 0;
 
+  // 所有节点
   this->vertices_list_ = new T[this->max_vertices_num_];
   /* error handler */
 
@@ -57,7 +124,7 @@ GraphMatrix<T, E>::GraphMatrix(int size, bool is_weighted) {
   /* error handler */
 
   for (int i = 0; i < this->max_vertices_num_; i++) {
-    this->edge_matrix_[i] = new E[this->max_vertices_num_];
+    this->edge_matrix_[i] = new E[this->max_vertices_num_]; // 节点i对应的所有边
     for (int j = 0; j < this->max_vertices_num_; j++) {
       this->edge_matrix_[i][j] = (i == j) ? 0 : MAX_WEIGHT;
     }
@@ -72,61 +139,105 @@ GraphMatrix<T, E>::~GraphMatrix() {
 }
 
 
+/**
+ * @brief 使用结点索引获取结点
+ * @param vertex 结点(保存结果的节点)
+ * @param vertex_index 结点索引
+ * @return 是否获取成功
+ */
 template<class T, class E>
-T GraphMatrix<T, E>::GetValue(int vertex_index) {
+bool GraphMatrix<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
   if (vertex_index >= 0 && vertex_index <= this->vertices_num_) {
-    return this->vertices_list_[vertex_index];
+    vertex = this->vertices_list_[vertex_index];
+    return true;
   } else {
-    return (T)NULL;
+    return false;
   }
 }
 
 
 template<class T, class E>
-E GraphMatrix<T, E>::GetWeight(int v1, int v2) {
-  if (v1 >= 0 && v2 >= 0) {
-    return this->edge_matrix_[v1][v2];
-  } else {
-    return 0;
+bool GraphMatrix<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
+
+  int v1_index = GetVertexIndex(vertex1);
+  int v2_index = GetVertexIndex(vertex2);
+
+  if (v1_index >= 0 && v2_index >= 0 &&
+    this->edge_matrix_[v1_index][v2_index] != MAX_WEIGHT &&
+    this->edge_matrix_[v1_index][v2_index] > 0)
+  {
+    weight = this->edge_matrix_[v1_index][v2_index];
+
+    return true;
   }
+
+  return false;
 }
 
 
 template<class T, class E>
-int GraphMatrix<T, E>::GetFirstNeighborVertex(int v) {
+// int GraphMatrix<T, E>::GetFirstNeighborVertex(int v) {
+bool GraphMatrix<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
 
-  int col = -1;
+  // int col = -1;
 
-  if (v < 0) {
-    return col;
+  int vertex_index = GetVertexIndex(vertex);
+
+  if (vertex_index < 0) {
+    return false;
   }
 
-  for (col = 0; col < this->vertices_num_; col++) {
-    if (this->edge_matrix_[v][col] > 0 && this->edge_matrix_[v][col] < MAX_WEIGHT) {
-      break;
+  for (int cur_index = 0; cur_index < this->vertices_num_ && cur_index != vertex_index; cur_index++) {
+    E weight;
+    T cur_vertex;
+
+    bool done = GetVertexByIndex(cur_vertex, cur_index);
+    if (!done) {
+      continue;
+    }
+
+    // bool has_weight = this->GetWeight(weight, vertex_index, cur_index);
+    bool has_weight = GetWeight(weight, vertex, cur_vertex);
+    if (has_weight) {
+      // return GetVertexByIndex(first_neighbor, cur_index);
+      first_neighbor = cur_vertex;
+      return true;
     }
   }
 
-  return col;
+  return false;
 }
 
 
 template<class T, class E>
-int GraphMatrix<T, E>::GetNextNeighborVertex(int v, int w) {
+bool GraphMatrix<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& vertex, const T& neighbor_vertex) {
 
-  int col = -1;
+  int vertex_index = GetVertexIndex(vertex);
+  int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);
 
-  if (v < 0 && w < 0) {
-    return col;
+  if (vertex_index < 0 && neighbor_vertex_index < 0) {
+    return false;
   }
 
-  for (col = w + 1; col < this->vertices_num_; col ++) {
-    if (this->edge_matrix_[v][col] > 0 && this->edge_matrix_[v][col] < MAX_WEIGHT) {
-      break;
+  for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertices_num_ && cur_index != vertex_index; cur_index ++) {
+    E weight;
+    T cur_vertex;
+
+    bool done = GetVertexByIndex(cur_vertex, cur_index);
+    if (!done) {
+      continue;
+    }
+
+    // bool has_weight = GetWeight(weight, vertex_index, cur_index);
+    bool has_weight = GetWeight(weight, vertex, cur_vertex);
+    if (has_weight) {
+      // return GetVertexByIndex(next_neighbor_vertex, cur_index);
+      next_neighbor_vertex = cur_vertex;
+      return true;
     }
   }
 
-  return col;
+  return false;
 }
 
 
@@ -134,41 +245,47 @@ template<class T, class E>
 bool GraphMatrix<T, E>::InsertVertex(const T& vertex) {
   if (this->vertices_num_ >= this->max_vertices_num_) {
     return false;
-  } else {
-    this->vertices_list_[this->vertices_num_] = vertex;
-    this->vertices_num_++;
-
-    return true;
   }
+
+  this->vertices_list_[this->vertices_num_] = vertex;
+  this->vertices_num_++;
+
+  return true;
 }
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::InsertEdge(int v1, int v2, E weight) {
-  if (v1 >= 0 && v1 < this->vertices_num_ &&
-      v2 >= 0 && v2 < this->vertices_num_ &&
-      this->edge_matrix_[v1][v2] == MAX_WEIGHT)
+bool GraphMatrix<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
+
+  int v1_index = GetVertexIndex(vertex1);
+  int v2_index = GetVertexIndex(vertex2);
+
+  if (v1_index < 0 || v2_index < 0 || v1_index == v2_index ||
+    this->edge_matrix_[v1_index][v2_index] == MAX_WEIGHT)
   {
-    this->edge_matrix_[v1][v2] = weight;
-    this->edge_matrix_[v2][v1] = weight;
-
-    this->edge_count_++;
-
-    return true;
-  } else {
     return false;
   }
+
+  this->edge_matrix_[v1_index][v2_index] = weight;
+  this->edge_matrix_[v2_index][v1_index] = weight;
+
+  this->edge_count_++;
+
+  return true;
 }
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::RemoveVertex(int vertex_index) {
+// bool GraphMatrix<T, E>::RemoveVertex(int vertex_index) {
+bool GraphMatrix<T, E>::RemoveVertex(T vertex) {
+
+  int vertex_index = GetVertexIndex(vertex);
 
   if (vertex_index < 0 || vertex_index >= this->vertices_num_) {
     return false;
   }
 
-  // 只剩1个顶点
+  // 只剩1个顶点 todo: 书上的逻辑, 实际上可以删除
   if (this->vertices_num_ == 1) {
     return false;
   }
@@ -196,10 +313,28 @@ bool GraphMatrix<T, E>::RemoveVertex(int vertex_index) {
 
 
 template<class T, class E>
-bool GraphMatrix<T, E>::RemoveEdge(int v1, int v2) {
+// bool GraphMatrix<T, E>::RemoveEdge(int v1, int v2) {
+bool GraphMatrix<T, E>::RemoveEdge(T vertex1, T vertex2) {
 
-  if (v1 > -1 && v1 < this->vertices_num_ &&
-      v2 > -1 && v2 < this->vertices_num_ &&
+  int v1_index = GetVertexIndex(vertex1);
+  int v2_index = GetVertexIndex(vertex2);
+
+  E weight;
+  bool has_weight = GetWeight(weight, vertex1, vertex2);
+  if (has_weight) {
+    this->edge_matrix_[v1_index][v2_index] = MAX_WEIGHT;
+    this->edge_matrix_[v2_index][v1_index] = MAX_WEIGHT;
+
+    this->edge_count_--;
+
+    return true;
+  }
+
+  return false;
+
+  /*
+  if (v1_index > -1 && v1_index < this->vertices_num_ &&
+      v2_index > -1 && v2 < this->vertices_num_ &&
       this->edge_matrix_[v1][v2] > 0 && this->edge_matrix_[v1][v2] < MAX_WEIGHT)
   {
     this->edge_matrix_[v1][v2] = MAX_WEIGHT;
@@ -211,6 +346,7 @@ bool GraphMatrix<T, E>::RemoveEdge(int v1, int v2) {
   } else {
     return false;
   }
+   */
 }
 
 
@@ -278,18 +414,18 @@ ostream& operator<<(ostream& out, GraphMatrix<T, E>& graph_matrix) {
 
 
 template<class T, class E>
-int GraphMatrix<T, E>::GetVertexPos(T vertex) {
+int GraphMatrix<T, E>::GetVertexIndex(T vertex) {
 
-  int vertex_pos = -1;
+  int vertex_index = -1;
 
   for (int i = 0; i < this->vertices_num_; i++) {
     if (this->vertices_list_[i] == vertex) {
-      vertex_pos = i;
+      vertex_index = i;
       break;
     }
   }
 
-  return vertex_pos;
+  return vertex_index;
 }
 
 #endif //CYBER_DASH_GRAPH_MATRIX_H
