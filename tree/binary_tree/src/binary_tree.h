@@ -46,18 +46,19 @@ public:
   BinaryTree(BinaryTree<T>& binary_tree) { root_ptr_ = Copy(binary_tree.root_ptr_); }
   ~BinaryTree() { Destroy(root_ptr_); }
 
+  /* 基础函数 */
   // 是否为空树
   bool IsEmpty() { return (root_ptr_ == NULL) ? true : false; }
   // 获取根节点
   BinTreeNode<T>* GetRoot() const { return root_ptr_; }
-  // 父节点
+  // 获取父节点
   BinTreeNode<T>* Parent(BinTreeNode<T> *current) { return (root_ptr_ == NULL || root_ptr_ == current) ? NULL :
     Parent_(root_ptr_, current); }
   // 左孩子
   BinTreeNode<T>* LeftChild(BinTreeNode<T> *current) { return (current != NULL) ? current->left_child_ : NULL; }
   // 右孩子
   BinTreeNode<T>* RightChild(BinTreeNode<T> *current) { return (current != NULL) ? current->right_child_ : NULL; }
-  // 深度
+  // 高度
   int Height() { return SubTreeHeight_(root_ptr_); }
   // Size
   int Size() { return SubTreeSize_(root_ptr_); }
@@ -87,6 +88,7 @@ public:
     CreateSubBinTreeByPreAndInOrderString_(pre_order_str_ptr, in_order_str_ptr, str_length, root_ptr_);
   }
 
+  /* 打印输出系列 */
   // 打印二叉树(使用'(', ',',')')
   void Print(void) { SubTreePrint_(root_ptr_); };
   // 使用输入流创建二叉树
@@ -94,6 +96,7 @@ public:
   // 使用输出流打印二叉树(前序)
   void Traverse(BinTreeNode<T>* subTree, ostream& out);
 
+  // 我们是CyberDash :-)
   void CyberDashShow();
 
 protected:
@@ -106,9 +109,12 @@ protected:
   void Destroy(BinTreeNode<T> *& subTree);
   bool SubTreeFind_(BinTreeNode<T> *node_ptr, T value) const;
   BinTreeNode<T>* Copy(BinTreeNode<T> *orignode);
-  int SubTreeHeight_(BinTreeNode<T> *subTree) const;
-  int SubTreeSize_(BinTreeNode<T> *subTree) const;
-  BinTreeNode<T>* Parent_(BinTreeNode<T> *sub_tree_root_ptr, BinTreeNode<T> *node_ptr);
+  // 求子树的高度(递归)
+  int SubTreeHeight_(BinTreeNode<T> *sub_tree_root_ptr) const;
+  // 求子树的Size(递归)
+  int SubTreeSize_(BinTreeNode<T>* sub_tree_root_ptr) const;
+  // 子树获取节点的父节点
+  BinTreeNode<T>* Parent_(BinTreeNode<T>* sub_tree_root_ptr, BinTreeNode<T>* node_ptr);
 
   void PreOrder_(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T> *p));
   void InOrder(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T> *p));
@@ -141,12 +147,11 @@ void BinaryTree<T>::Destroy(BinTreeNode<T> *& subTree) {
 
 
 /**
- * @brief 二叉子树查找父节点
- *
- * @tparam T
- * @param sub_tree_root_ptr
- * @param node_ptr
- * @return
+ * @brief 子树获取节点的父节点
+ * @tparam T 节点数据模板类型
+ * @param sub_tree_root_ptr 子树根节点指针
+ * @param node_ptr 节点指针
+ * @return 节点的, 位于子树内的, 父节点指针
  */
 template<class T>
 BinTreeNode<T>* BinaryTree<T>::Parent_(BinTreeNode<T>* sub_tree_root_ptr, BinTreeNode<T>* node_ptr) {
@@ -168,15 +173,6 @@ BinTreeNode<T>* BinaryTree<T>::Parent_(BinTreeNode<T>* sub_tree_root_ptr, BinTre
   }
 
   return parent_ptr;
-
-  /*
-  // 左右子树递归调用Parent_
-  if ((parent_ptr = Parent_(sub_tree_root_ptr->left_child_, node_ptr)) != NULL) {
-    return parent_ptr;
-  } else {
-    return Parent_(sub_tree_root_ptr->right_child_, node_ptr);
-  }
-   */
 }
 
 
@@ -222,14 +218,20 @@ void BinaryTree<T>::PostOrder_(BinTreeNode<T> *subTree,
 }
 
 
+/**
+ * @brief 求子树的size(递归)
+ * @tparam T 节点数据模板类型
+ * @param sub_tree_root_ptr 子树根节点指针
+ * @return 子树size
+ */
 template<class T>
-int BinaryTree<T>::SubTreeSize_(BinTreeNode<T> *sub_tree) const {
-  if (sub_tree == NULL) {
+int BinaryTree<T>::SubTreeSize_(BinTreeNode<T>* sub_tree_root_ptr) const {
+  if (sub_tree_root_ptr == NULL) {
     return 0;
   }
 
-  int left_sub_tree_size = SubTreeSize_(sub_tree->left_child_);
-  int right_sub_tree_size = SubTreeSize_(sub_tree->right_child_);
+  int left_sub_tree_size = SubTreeSize_(sub_tree_root_ptr->left_child_); // 递归求左子树size
+  int right_sub_tree_size = SubTreeSize_(sub_tree_root_ptr->right_child_); // 递归求右子树size
 
   int sub_tree_size = 1 + left_sub_tree_size + right_sub_tree_size;
 
@@ -237,14 +239,27 @@ int BinaryTree<T>::SubTreeSize_(BinTreeNode<T> *sub_tree) const {
 }
 
 
+/**
+ * @brief 求子树的高度(递归)
+ * @tparam T 节点数据模板类型
+ * @param sub_tree_root_ptr 子树根节点指针
+ * @return 子树高度
+ */
 template<class T>
-int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T> *subTree) const {
-  if (subTree == NULL) {
+int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T>* sub_tree_root_ptr) const {
+  // 如果子树根节点为空, 则返回0
+  if (sub_tree_root_ptr == NULL) {
     return 0;
+  }
+
+  int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->left_child_); // 递归求左子树高度
+  int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->right_child_); // 递归求右子树高度
+
+  // 树高度 = 最高的左右子树高度 + 1
+  if (left_sub_tree_height < right_sub_tree_height) {
+    return right_sub_tree_height + 1;
   } else {
-    int i = SubTreeHeight_(subTree->left_child_);
-    int j = SubTreeHeight_(subTree->right_child_);
-    return (i < j) ? j + 1 : i + 1;
+    return left_sub_tree_height + 1;
   }
 }
 
@@ -551,6 +566,9 @@ BinTreeNode<T>* BinaryTree<T>::CreateSubBinTreeByPreAndInOrderString_(
 }
 
 
+/**
+ * 我们是CyberDash :-)
+ */
 template<class T>
 void BinaryTree<T>::CyberDashShow() {
   cout<<endl
@@ -559,6 +577,7 @@ void BinaryTree<T>::CyberDashShow() {
       <<"CyberDash成员:"<<endl
       <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
       <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
+      <<"L_Dash(yuleen_@outlook.com), "<<"北京邮电大学(计算机研究生在读)"<<endl<<endl
       <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
