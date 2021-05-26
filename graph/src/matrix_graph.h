@@ -92,6 +92,7 @@ public:
   friend ostream& operator<<(ostream& out, MatrixGraph<T, E>& graph_matrix);
 
   void PrintMatrix();
+  void CyberDashShow();
 
 private:
   T* vertices_list_;
@@ -403,5 +404,19 @@ void MatrixGraph<T, E>::PrintMatrix() {
     cout<<endl;
   }
 }
+
+
+template<class T, class E>
+void MatrixGraph<T, E>::CyberDashShow() {
+  cout<<endl
+      <<"*************************************** CyberDash ***************************************"<<endl<<endl
+      <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash成员:"<<endl
+      <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
+      <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
+      <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+}
+
 
 #endif //CYBER_DASH_MATRIX_GRAPH_H
