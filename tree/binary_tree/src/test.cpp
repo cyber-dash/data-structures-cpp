@@ -175,7 +175,7 @@ void TestInOrder() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                   Test BinaryTree InOrder                 |"<<endl;
+  cout<<"|                   Test BinaryTree SubTreeInOrder_                 |"<<endl;
   cout<<"|                      测试二叉树中序遍历                      |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
