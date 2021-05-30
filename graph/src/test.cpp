@@ -30,6 +30,8 @@ void TestMatrixGraphMatrix() {
   matrix_graph.InsertEdge("火星", "水星", 0.3);
 
   matrix_graph.PrintMatrix();
+
+  cout<<"-------------------------------------------------------------"<<endl;
 }
 
 

@@ -40,7 +40,7 @@ class DataList {
 public:
   DataList(int size = DEFAULT_SIZE): array_size_(size), current_size_(0)
   {
-    element_array_ = new DataNode<Elem, Key>();
+    element_array_ = new DataNode<Elem, Key>[size];
     /* error handler */
   }
   DataList(DataList<Elem, Key>& data_list);
@@ -49,9 +49,10 @@ public:
   virtual int Length() { return current_size_; }
   virtual bool GetKey(int i, Key& key) const;
   virtual bool SetKey(int i, Key key);
-  virtual int SeqSearch(const Key key) const = 0;
-  virtual bool Insert(Elem& elem);
-  virtual bool Remove(const Key key, Elem& elem);
+  virtual int SeqSearch(const Key& key) const = 0;
+  // virtual bool Insert(Elem& elem);
+  virtual bool Insert(const Key& key, const Elem& elem);
+  virtual bool Remove(const Key& key, Elem& elem);
 
   template<class U>
   friend int operator << (ostream& out, const DataList<Elem, Key>& data_list);
@@ -91,12 +92,13 @@ bool DataList<Elem, Key>::SetKey(int i, Key key) {
 
 
 template<class Elem, class Key>
-bool DataList<Elem, Key>::Insert(Elem& elem) {
+// bool DataList<Elem, Key>::Insert(Elem& elem) {
+bool DataList<Elem, Key>::Insert(const Key& key, const Elem& elem) {
   if (current_size_ == array_size_) {
     return false;
   }
 
-  // element_array_[current_size_] = elem;
+  element_array_[current_size_].SetKey(key);
   element_array_[current_size_].SetElem(elem);
   current_size_++;
 
@@ -105,13 +107,14 @@ bool DataList<Elem, Key>::Insert(Elem& elem) {
 
 
 template<class Elem, class Key>
-bool DataList<Elem, Key>::Remove(const Key key, Elem& elem) {
+bool DataList<Elem, Key>::Remove(const Key& key, Elem& elem) {
   if (current_size_ == 0) {
     return false;
   }
 
+  // 遍历, 找到对应elem相同的, 如果没有则遍历至数组索引current_size_
   int i = 0;
-  for (int i = 0; i < current_size_ && element_array_[i].GetElem() != elem; i++) {
+  for (int i = 0; i < current_size_ && element_array_[i].GetKey() != key; i++) {
   }
 
   if (i == current_size_) {

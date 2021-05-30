@@ -13,22 +13,20 @@ template<class Elem, class Key>
 class SearchList: public DataList<Elem, Key> {
 public:
   SearchList(int size = DEFAULT_SIZE): DataList<Elem, Key>(size) {}
-  int SeqSearch(const Key key) const;
-  // int SeqSearch(const Key key) const;
-  virtual int SeqSearchRecursive(const Key key, int pos) const;
-  // int SeqSearchRecursive(const Key key, int pos) const;
+  int SeqSearch(const Key& key) const;
+  virtual int SeqSearchRecursive(const Key& key, int pos) const;
 };
 
 
 /**
  * @brief 搜索关键码为key的数据元素
  * @tparam Elem
- * @tparam Key
- * @param key
- * @return
+ * @tparam Key 搜索码模板类型
+ * @param key 搜索码
+ * @return 数据所在的位置
  */
 template<class Elem, class Key>
-int SearchList<Elem, Key>::SeqSearch(const Key key) const {
+int SearchList<Elem, Key>::SeqSearch(const Key& key) const {
   this->element_array_[this->current_size_].SetKey(key);
 
   int i = 0;
@@ -41,7 +39,7 @@ int SearchList<Elem, Key>::SeqSearch(const Key key) const {
 
 
 template<class Elem, class Key>
-int SearchList<Elem, Key>::SeqSearchRecursive(const Key key, int pos) const {
+int SearchList<Elem, Key>::SeqSearchRecursive(const Key& key, int pos) const {
   if (pos > this->current_size_) {
     return 0;
   }
