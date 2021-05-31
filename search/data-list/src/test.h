@@ -8,9 +8,12 @@
 
 #include "data_list.h"
 #include "search_list.h"
+#include "sorted_list.h"
 
 
 void TestSearchListSeqSearch();
+
+void TestSortedListSeqSearch();
 
 
 #endif // CYBER_DASH_SEARCH_DATA_LIST_TEST_H

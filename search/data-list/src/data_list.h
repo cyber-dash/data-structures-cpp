@@ -13,22 +13,18 @@ using namespace std;
 
 const int DEFAULT_SIZE = 100;
 
-// template<class Elem, class Key>
-// class DataList;
-
 
 template<class Elem, class Key>
 class DataNode {
-  // friend class DataList<Elem, Key>;
 public:
   DataNode() {};
   DataNode(const Key& key): key_(key) {}
   DataNode(const Key& key, const Elem& elem): key_(key), elem_(elem) {}
   Key GetKey() const { return key_; }
-  void SetKey(Key key) { key_ = key; }
+  void SetKey(const Key& key) { key_ = key; }
 
   Elem GetElem() const { return elem_; }
-  void SetElem(Elem elem) { elem_ = elem; }
+  void SetElem(const Elem& elem) { elem_ = elem; }
 private:
   Key key_;
   Elem elem_;
@@ -92,7 +88,6 @@ bool DataList<Elem, Key>::SetKey(int i, Key key) {
 
 
 template<class Elem, class Key>
-// bool DataList<Elem, Key>::Insert(Elem& elem) {
 bool DataList<Elem, Key>::Insert(const Key& key, const Elem& elem) {
   if (current_size_ == array_size_) {
     return false;
@@ -129,12 +124,5 @@ bool DataList<Elem, Key>::Remove(const Key& key, Elem& elem) {
   return true;
 }
 
-/*
-template<class Elem, class Key>
-int DataList<Elem, Key>::SeqSearch(const Key key) const {
-  return 0;
-}
- */
 
-
-#endif //MAIN_DATA_LIST_H
+#endif // MAIN_DATA_LIST_H
