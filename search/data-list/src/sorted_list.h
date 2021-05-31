@@ -15,6 +15,8 @@ public:
   SortedList(int size = DEFAULT_SIZE): DataList<Elem, Key>(size) {}
   ~SortedList() {}
   int SeqSearch(const Key& key) const;
+  int BinarySearch(const Key& key) const;
+  int BinarySearchRecursive(const Key& key, int low, int high) const;
   bool Insert(const Key& key, const Elem& elem);
   int Begin() { return (this->current_size_ == 0) ? 0 : 1; }
   int Next(int i) { return (i >= 1 && i <= this->current_size_) ? i + 1 : 0; }
@@ -54,6 +56,18 @@ bool SortedList<Elem, Key>::Insert(const Key& key, const Elem& elem) {
   this->element_array_[insert_pos - 1].SetElem(elem);
 
   this->current_size_++;
+}
+
+
+template<class Elem, class Key>
+int SortedList<Elem, Key>::BinarySearch(const Key& key) const {
+  return 0; // todo:
+}
+
+
+template<class Elem, class Key>
+int SortedList<Elem, Key>::BinarySearchRecursive(const Key& key, int low, int high) const {
+  return 0; // todo:
 }
 
 
