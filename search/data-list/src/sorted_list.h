@@ -61,13 +61,44 @@ bool SortedList<Elem, Key>::Insert(const Key& key, const Elem& elem) {
 
 template<class Elem, class Key>
 int SortedList<Elem, Key>::BinarySearch(const Key& key) const {
-  return 0; // todo:
+
+  int high = this->current_size_ - 1;
+  int low = 0;
+  int mid;
+
+  while (low <= high) {
+    mid = (low + high) / 2;
+
+    if (key > this->element_array_[mid].GetKey()) {
+      low = mid +1;
+    } else if (key < this->element_array_[mid].GetKey()) {
+      high = mid - 1;
+    } else {
+      return mid + 1;
+    }
+  }
+
+  return 0;
 }
 
 
 template<class Elem, class Key>
 int SortedList<Elem, Key>::BinarySearchRecursive(const Key& key, int low, int high) const {
-  return 0; // todo:
+
+  int mid = 0;
+
+  if (low <= high) {
+    mid = (low + high) / 2;
+    if (key == this->element_array_[mid - 1].GetKey()) {
+      return mid;
+    } else if (key > this->element_array_[mid - 1].GetKey()) {
+      mid = BinarySearchRecursive(key, mid + 1, high);
+    } else if (key < this->element_array_[mid - 1].GetKey()) {
+      mid = BinarySearchRecursive(key, low, mid - 1);
+    }
+  }
+
+  return mid;
 }
 
 

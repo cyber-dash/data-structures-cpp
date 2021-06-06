@@ -11,7 +11,13 @@ int main() {
 
   TestSearchListSeqSearch();
 
+  TestSearchListSeqSearchRecursive();
+
   TestSortedListSeqSearch();
+
+  TestSortedListBinarySearch();
+
+  TestSortedListBinarySearchRecursive();
 
   return 0;
 }

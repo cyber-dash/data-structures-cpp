@@ -13,7 +13,13 @@
 
 void TestSearchListSeqSearch();
 
+void TestSearchListSeqSearchRecursive();
+
 void TestSortedListSeqSearch();
+
+void TestSortedListBinarySearch();
+
+void TestSortedListBinarySearchRecursive();
 
 
 #endif // CYBER_DASH_SEARCH_DATA_LIST_TEST_H

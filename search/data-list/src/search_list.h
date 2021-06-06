@@ -27,7 +27,6 @@ public:
  */
 template<class Elem, class Key>
 int SearchList<Elem, Key>::SeqSearch(const Key& key) const {
-  this->element_array_[this->current_size_].SetKey(key);
 
   int i = 0;
   while (this->element_array_[i].GetKey() != key) {
