@@ -56,6 +56,8 @@ bool SortedList<Elem, Key>::Insert(const Key& key, const Elem& elem) {
   this->element_array_[insert_pos - 1].SetElem(elem);
 
   this->current_size_++;
+
+  return true;
 }
 
 

@@ -1,17 +1,24 @@
+//
+// Created by cyberdash@163.com on 2021/6/26.
+//
 
-#include <iostream>
+#include "test.h"
 
-#include "BSTNode.h"
-#include "person.h"
 
 using namespace std;
 
+
+/*
 void visit(BSTNode<person, long> *p) {
-  cout << p->data_ << " ";
+  cout << p->GetData()<< " ";
 };
+ */
 
 int main(void)
 {
+
+  TestBSTInsert();
+  /*
   int num;
   long id;
   string name;
@@ -56,6 +63,7 @@ int main(void)
 
   bst.makeEmpty();
   bst.PrintTree(visit);
+  */
 
   return 0;
 }

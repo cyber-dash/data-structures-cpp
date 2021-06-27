@@ -46,7 +46,6 @@ public:
   virtual bool GetKey(int i, Key& key) const;
   virtual bool SetKey(int i, Key key);
   virtual int SeqSearch(const Key& key) const = 0;
-  // virtual bool Insert(Elem& elem);
   virtual bool Insert(const Key& key, const Elem& elem);
   virtual bool Remove(const Key& key, Elem& elem);
 
@@ -108,8 +107,8 @@ bool DataList<Elem, Key>::Remove(const Key& key, Elem& elem) {
   }
 
   // 遍历, 找到对应elem相同的, 如果没有则遍历至数组索引current_size_
-  int i = 0;
-  for (int i = 0; i < current_size_ && element_array_[i].GetKey() != key; i++) {
+  int i;
+  for (i = 0; i < current_size_ && element_array_[i].GetKey() != key; i++) {
   }
 
   if (i == current_size_) {

@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main  BSTNode.h  person.h main.cpp)
+add_executable(main binary_search_tree.h person.h main.cpp test.cpp test.h)
