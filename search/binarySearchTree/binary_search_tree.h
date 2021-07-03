@@ -41,37 +41,34 @@ public:
   BST(Key key);
   BST(const Key& key, const Elem& elem);
   ~BST() {};
-  BSTNode<Elem, Key>* Search (const Key key) { return Search_(key, root_); }
+  BSTNode<Elem, Key>* Search (const Key& key) {
+    return SearchInSubTree_(key, this->root_);
+  }
   BST<Elem, Key>& operator=(const BST<Elem, Key>& R);
   void makeEmpty(void) { MakeEmpty(root_); root_ = NULL; }
   void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { PrintSubTree_(root_, visit); }
-  Elem Min() { return Min(root_)->elem_; }
-  Elem Max() { return Max(root_)->elem_; }
+  Elem Min() { return MinInSubTree_(root_)->GetData(); }
+  Elem Max() { return MaxInSubTree_(root_)->GetData(); }
 
-  bool Insert(const Elem& elem, const Key& key) {
-    if (Search(key) != NULL)
-      return true;
-    return InsertSubTree_(elem, key, root_);
-  }
-
-  bool Remove(const Key key) { return Remove(key, root_); }
+  bool Insert(const Elem& elem, const Key& key);
+  bool Remove(const Key& key) { return RemoveInSubTree_(key, root_); }
 
 protected:
   BSTNode<Elem, Key>* root_;
   // Key RefValue;
-  BSTNode<Elem, Key>* Search_(const Key& key, BSTNode<Elem, Key>* node_ptr);
-  void MakeEmpty(BSTNode<Elem, Key>*& ptr);
+  BSTNode<Elem, Key>* SearchInSubTree_(const Key& key, BSTNode<Elem, Key>* node_ptr);
+  void MakeEmpty(BSTNode<Elem, Key>*& sub_tree_root_ptr);
   void PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>* p)) const;
   BSTNode<Elem, Key>* Copy(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
-  BSTNode<Elem, Key>* Min(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
-  BSTNode<Elem, Key>* Max(BSTNode<Elem, Key>* ptr) const;
-  bool InsertSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
-  bool Remove(const Key& key, BSTNode<Elem, Key>*& node_ptr);
+  BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
+  BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
+  bool InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+  bool RemoveInSubTree_(const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 };
 
 
 template <class Elem, class Key>
-BSTNode<Elem, Key>* BST<Elem, Key>::Search_(const Key& key, BSTNode<Elem, Key>* node_ptr) {
+BSTNode<Elem, Key>* BST<Elem, Key>::SearchInSubTree_(const Key& key, BSTNode<Elem, Key>* node_ptr) {
   if (node_ptr == NULL) {
     return NULL;
   }
@@ -79,17 +76,27 @@ BSTNode<Elem, Key>* BST<Elem, Key>::Search_(const Key& key, BSTNode<Elem, Key>* 
   Key cur_key = node_ptr->GetKey();
 
   if (key < cur_key) {
-    return Search_(key, node_ptr->left_child_ptr_);
+    return SearchInSubTree_(key, node_ptr->left_child_ptr_);
   } else if (key > cur_key) {
-    return Search_(key, node_ptr->right_child_ptr_);
+    return SearchInSubTree_(key, node_ptr->right_child_ptr_);
   } else {
     return node_ptr;
   }
-};
+}
+
+
+template<class Elem, class Key>
+bool BST<Elem, Key>::Insert(const Elem& elem, const Key& key) {
+  if (Search(key) != NULL) {
+    return true;
+  }
+
+  return InsertIntoSubTree_(elem, key, root_);
+}
 
 
 template <class Elem, class Key>
-bool BST<Elem, Key>::InsertSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
+bool BST<Elem, Key>::InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
   if (sub_tree_root_ptr == NULL) {
     sub_tree_root_ptr = new BSTNode<Elem, Key>(elem, key);
     /* error handler */
@@ -98,13 +105,13 @@ bool BST<Elem, Key>::InsertSubTree_(const Elem& elem, const Key& key, BSTNode<El
   }
 
   if (key< sub_tree_root_ptr->GetKey()) {
-    return InsertSubTree_(elem, key, sub_tree_root_ptr->left_child_ptr_);
+    return InsertIntoSubTree_(elem, key, sub_tree_root_ptr->left_child_ptr_);
   } else if (key > sub_tree_root_ptr->GetKey()) {
-    return InsertSubTree_(elem, key, sub_tree_root_ptr->right_child_ptr_);
+    return InsertIntoSubTree_(elem, key, sub_tree_root_ptr->right_child_ptr_);
   } else {
     return false;
   }
-};
+}
 
 
 /*
@@ -115,7 +122,7 @@ BST<Elem, Key>::BST(Key value) {
   RefValue = value;
   cin >> x;
   while (x.key != RefValue) {
-    InsertSubTree_(x, root_);
+    InsertIntoSubTree_(x, root_);
     cin >> x;
   }
 };
@@ -130,52 +137,59 @@ BST<Elem, Key>::BST(const Key& key, const Elem& elem) {
 
 
 template <class Elem, class Key>
-bool BST<Elem, Key>::Remove(const Key& key, BSTNode<Elem, Key>*& node_ptr) {
-  BSTNode<Elem, Key> *temp;
+bool BST<Elem, Key>::RemoveInSubTree_(const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
 
-  if (node_ptr == NULL) {
+
+  if (sub_tree_root_ptr == NULL) {
     return false;
   }
 
-  if (key < node_ptr->GetKey()) {
-    return Remove(key, node_ptr->left_child_ptr_);
-  } else if (key > node_ptr->GetKey()) {
-    return Remove(key, node_ptr->right_child_ptr_);
+  if (key < sub_tree_root_ptr->GetKey()) {
+    return RemoveInSubTree_(key, sub_tree_root_ptr->left_child_ptr_);
+  } else if (key > sub_tree_root_ptr->GetKey()) {
+    return RemoveInSubTree_(key, sub_tree_root_ptr->right_child_ptr_);
   }
 
-  if (node_ptr->left_child_ptr_ != NULL && node_ptr->right_child_ptr_ != NULL) {
-    temp = node_ptr->right_child_ptr_;
-    while (temp->left_child_ptr_ != NULL) {
-      temp = temp->left_child_ptr_;
-    }
-    node_ptr->elem_ = temp->elem_;
-    return Remove(node_ptr->elem_.getKey(), node_ptr->right_child_ptr_);
-  } else {
-    temp = node_ptr;
-    if (node_ptr->left_child_ptr_ == NULL) {
-      node_ptr = node_ptr->right_child_ptr_;
-    } else {
-      node_ptr = node_ptr->left_child_ptr_;
+  if (sub_tree_root_ptr->left_child_ptr_ != NULL && sub_tree_root_ptr->right_child_ptr_ != NULL) {
+
+    BSTNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr->right_child_ptr_;
+    while (cur_node_ptr->left_child_ptr_ != NULL) {
+      cur_node_ptr = cur_node_ptr->left_child_ptr_;
     }
 
-    delete temp;
+    sub_tree_root_ptr->SetData(cur_node_ptr->GetData());
+    sub_tree_root_ptr->SetKey(cur_node_ptr->GetKey());
+
+    return RemoveInSubTree_(sub_tree_root_ptr->GetKey(), sub_tree_root_ptr->right_child_ptr_);
+  } else {
+    BSTNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    if (sub_tree_root_ptr->left_child_ptr_ == NULL) {
+      sub_tree_root_ptr = sub_tree_root_ptr->right_child_ptr_;
+    } else {
+      sub_tree_root_ptr = sub_tree_root_ptr->left_child_ptr_;
+    }
+
+    delete cur_node_ptr;
+    cur_node_ptr = NULL;
+
     return true;
   }
-};
+}
 
 
 template <class Elem, class K>
-void BST<Elem, K>::MakeEmpty(BSTNode<Elem, K>*& node_ptr) {
+void BST<Elem, K>::MakeEmpty(BSTNode<Elem, K>*& sub_tree_root_ptr) {
 
-  if (node_ptr == NULL) {
+  if (sub_tree_root_ptr == NULL) {
     return;
   }
 
-  MakeEmpty(node_ptr->left_child_ptr_);
-  MakeEmpty(node_ptr->right_child_ptr_);
+  MakeEmpty(sub_tree_root_ptr->left_child_ptr_);
+  MakeEmpty(sub_tree_root_ptr->right_child_ptr_);
 
-  delete node_ptr;
-};
+  delete sub_tree_root_ptr;
+  sub_tree_root_ptr = NULL;
+}
 
 
 template <class Elem, class Key>
@@ -196,7 +210,7 @@ void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (
   PrintSubTree_(sub_tree_root_ptr->right_child_ptr_, visit);
 
   cout << ")";
-};
+}
 
 
 template <class Elem, class Key>
@@ -214,37 +228,40 @@ BSTNode<Elem, Key>* BST<Elem, Key>::Copy(const BSTNode<Elem, Key>* origin_sub_tr
   new_sub_tree_root_ptr->right_child_ptr_ = Copy(origin_sub_tree_root_ptr->right_child_ptr_);
 
   return new_sub_tree_root_ptr;
-};
+}
 
 
 template <class Elem, class Key>
-BSTNode<Elem, Key>* BST<Elem, Key>::Min(BSTNode<Elem, Key>* sub_tree_root_ptr) const {
+BSTNode<Elem, Key>* BST<Elem, Key>::MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const {
 
   if (sub_tree_root_ptr == NULL) {
     return NULL;
   }
 
-  BSTNode<Elem, Key>* min_data_node_ptr = sub_tree_root_ptr;
+  BSTNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
 
-  while (min_data_node_ptr->left_child_ptr_ != NULL) {
-    min_data_node_ptr = min_data_node_ptr->left_child_ptr_;
+  while (cur_node_ptr->left_child_ptr_ != NULL) {
+    cur_node_ptr = cur_node_ptr->left_child_ptr_;
   }
 
-  return min_data_node_ptr;
-};
+  return cur_node_ptr;
+}
+
 
 template <class E, class K>
-BSTNode<E, K> *BST<E, K>::Max(BSTNode<E, K> *ptr) const {
-  if (ptr == NULL) {
+BSTNode<E, K>* BST<E, K>::MaxInSubTree_(BSTNode<E, K>* sub_tree_root_ptr) const {
+
+  if (sub_tree_root_ptr == NULL) {
     return NULL;
   }
-  BSTNode<E, K> *ans = ptr;
-  while (ans->right_child_ptr_ != NULL) {
-    ans = ans->right_child_ptr_;
+
+  BSTNode<E, K>* cur_node_ptr = sub_tree_root_ptr;
+  while (cur_node_ptr->right_child_ptr_ != NULL) {
+    cur_node_ptr = cur_node_ptr->right_child_ptr_;
   }
 
-  return ans;
-};
+  return cur_node_ptr;
+}
 
 
 #endif // CYBER_DASH_BINARY_SEARCH_TREE_H
