@@ -7,6 +7,7 @@
 
 
 #include "binary_search_tree.h"
+#include "AVL_tree.h"
 
 
 void TestBSTInsert();

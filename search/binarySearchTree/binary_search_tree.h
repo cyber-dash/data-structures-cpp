@@ -17,7 +17,6 @@ public:
           BSTNode<Elem, Key>* left_child_ptr = NULL,
           BSTNode<Elem, Key>* right_child_ptr = NULL):
       elem_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr) {}
-  // ~BSTNode() { }
 
   void SetData(const Elem& elem) { elem_ = elem;}
   Elem GetData() { return elem_; }
@@ -38,7 +37,7 @@ template <class Elem, class Key>
 class BST {
 public:
   BST(): root_(NULL) {}
-  BST(Key key);
+  // BST(Key key);
   BST(const Key& key, const Elem& elem);
   ~BST() {};
   BSTNode<Elem, Key>* Search (const Key& key) {
