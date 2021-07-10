@@ -7,6 +7,7 @@
 
 
 #include "binary_search_tree.h"
+#include "stack"
 
 
 template<class Elem, class Key>
@@ -36,13 +37,14 @@ template<class Elem, class Key>
 class AVLTree: public BST<Elem, Key> {
 public:
   AVLTree() { this->root_ = NULL; }
-  bool Insert(const Elem& data, const Key& key);
+  bool Insert(Elem data, Key key);
   bool Remove(Key key, Elem& data) { return this->RemoveInSubTree_(this->root_, key, data); }
   int Height() const;
 protected:
   AVLNode<Elem, Key>* SearchInSubTree_(const Key& key, const AVLNode<Elem, Key>*& sub_tree_root_ptr) const;
-  bool InsertInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr);
-  bool RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key, Elem& elem);
+  bool InsertInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Elem elem, Key key);
+  // bool RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key, Elem& elem);
+  bool RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
 
   // 左单旋转(Rotation Left), 图7.15(a)的情形
   void RotateLeft_(AVLNode<Elem, Key>*& node_ptr);
@@ -91,11 +93,11 @@ void AVLTree<Elem, Key>::RotateRight_(AVLNode<Elem, Key>*& node_ptr) {
 
   // 图7.16(b)
   AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
-  node_ptr = sub_right_node_ptr->left_child_ptr_;
+  node_ptr = sub_right_node_ptr->LeftChildPtr();
 
   // 图7.16(c)
-  sub_right_node_ptr->left_child_ptr_ = node_ptr->right_child_ptr_;
-  node_ptr->right_child_ptr_ = sub_right_node_ptr;
+  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr());
+  node_ptr->SetRightChildPtr(sub_right_node_ptr);
 
   // 调整平衡因子
   node_ptr->balance_factor = 0;
@@ -108,14 +110,12 @@ void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 
   // 图7.17(b)
   AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
-  // AVLNode<Elem, Key>* sub_left_node_ptr = sub_right_node_ptr->left_child_ptr_;
   AVLNode<Elem, Key>* sub_left_node_ptr = sub_right_node_ptr->LeftChildPtr();
   node_ptr = sub_left_node_ptr->RightChildPtr();
 
   // 图7.17(c)
-  sub_left_node_ptr->right_child_ptr_ = sub_left_node_ptr; // node_ptr成为新根前, 甩掉它的左子树
-
-  node_ptr->left_child_ptr_ = sub_left_node_ptr;
+  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptr成为新根前, 甩掉它的左子树
+  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // 左单旋转, node_ptr成为新根
 
   if (node_ptr->balance_factor <= 0) {
     sub_left_node_ptr->balance_factor = 0;
@@ -123,8 +123,8 @@ void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
     sub_left_node_ptr->balance_factor = -1;
   }
 
-  sub_right_node_ptr->left_child_ptr_ = node_ptr->right_child_ptr_;
-  node_ptr->right_child_ptr_ = sub_right_node_ptr;
+  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptr成为新根之前, 甩掉它的右子树
+  node_ptr->SetRightChildPtr(sub_right_node_ptr); // 右单旋转, node_ptr成为新根
 
   if (node_ptr->balance_factor == -1) {
     sub_right_node_ptr->balance_factor = 1;
@@ -139,22 +139,25 @@ void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 template<class Elem, class Key>
 void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // 图7.17(b) --> 图7.17(c)
+  // 图7.18(b)
   AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
-  AVLNode<Elem, Key>* sub_right_node_ptr= sub_left_node_ptr->left_child_ptr_;
+  AVLNode<Elem, Key>* sub_right_node_ptr= sub_left_node_ptr->LeftChildPtr();
+  node_ptr = sub_right_node_ptr->LeftChildPtr();
 
-  node_ptr->left_child_ptr_ = sub_right_node_ptr;
+  // 图7.18(c)
+  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptr成为新根之前, 甩掉它的右子树
+  node_ptr->SetRightChildPtr(sub_right_node_ptr); // 右单旋转, node_ptr成为新根
 
-  if (node_ptr->balance_factor <= 0) {
+  if (node_ptr->balance_factor >= 0) {
     sub_right_node_ptr->balance_factor = 0;
   } else {
     sub_right_node_ptr->balance_factor = 1;
   }
 
-  sub_left_node_ptr->left_child_ptr_ = node_ptr->right_child_ptr_;
-  node_ptr->right_child_ptr_ = sub_left_node_ptr;
+  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptr成为新根前, 甩掉它的左子树
+  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // 左单旋转, node_ptr成为新根
 
-  if (node_ptr->balance_factor == -1) {
+  if (node_ptr->balance_factor == 1) {
     sub_left_node_ptr->balance_factor = -1;
   } else {
     sub_left_node_ptr->balance_factor = 0;
@@ -163,5 +166,105 @@ void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
   node_ptr->balance_factor = 0;
 }
 
+
+template<class Elem, class Key>
+bool AVLTree<Elem, Key>::InsertInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Elem elem, Key key) {
+  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL; // todo: parent_node_of_insert
+  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+
+  stack<AVLNode<Elem, Key>*> AVL_node_stack;
+
+  // 寻找插入位置
+  while (cur_node_ptr != NULL) {
+    // 找到等于key的结点, 无法插入, todo: 原书使用elem
+    if (key == cur_node_ptr->GetKey()) {
+      return false;
+    }
+
+    cur_stack_node_ptr = cur_node_ptr;
+    AVL_node_stack.push(cur_stack_node_ptr);
+
+    // todo: 原书使用elem
+    if (key < cur_node_ptr->GetKey()) {
+      cur_node_ptr = cur_node_ptr->LeftChildPtr();
+    } else {
+      cur_node_ptr = cur_node_ptr->RightChildPtr();
+    }
+  }
+
+  cur_node_ptr = new AVLNode<Elem, Key>(elem, key);
+  /* error handler */
+
+  // 空树, 新结点成为根节点
+  if (cur_stack_node_ptr == NULL) {
+    sub_tree_root_ptr = cur_node_ptr;
+    return true;
+  }
+
+  // todo: 原书使用elem做比较, 应该是错了
+  if (key < cur_stack_node_ptr->GetKey()) {
+    cur_stack_node_ptr->SetLeftChildPtr(cur_node_ptr);
+  } else {
+    cur_stack_node_ptr->SetRightChildPtr(cur_node_ptr);
+  }
+
+  // 重新平衡化
+  while (AVL_node_stack.empty() == false) {
+    cur_stack_node_ptr = AVL_node_stack.top();
+    AVL_node_stack.pop();
+
+    if (cur_node_ptr == cur_stack_node_ptr->LeftChildPtr()) {
+      cur_stack_node_ptr->balance_factor--;
+    } else {
+      cur_stack_node_ptr->balance_factor++;
+    }
+
+    // 第1种情况, 平衡退出
+    if (cur_stack_node_ptr->balance_factor == 0) {
+      break;
+    }
+
+    // 第2种情况, |平衡因子| = 1
+    if (cur_stack_node_ptr->balance_factor == 1 || cur_stack_node_ptr->balance_factor == -1) {
+      cur_node_ptr = cur_stack_node_ptr;
+    } else { // 第3种情况, |bf| = 2
+      int stack_node_rotate_flag = (cur_stack_node_ptr->balance_factor < 0) ? -1 : 1;
+      if (cur_node_ptr->balance_factor == stack_node_rotate_flag) { // 两个结点的平衡因子同号, 单旋转
+        if (stack_node_rotate_flag == -1) {
+          this->RotateRight_(cur_stack_node_ptr); // 右单旋转
+        } else {
+          this->RotateLeft_(cur_stack_node_ptr); // 左单旋转
+        }
+      } else { // 两个结点的平衡因子反号, 双旋转
+        if (stack_node_rotate_flag == -1) {
+          this->RotateLeftRight_(cur_stack_node_ptr);
+        } else {
+          this->RotateRightLeft_(cur_stack_node_ptr);
+        }
+      }
+
+      break; // 不再向上调整
+    }
+  }
+
+  if (AVL_node_stack.empty() == true) {
+    sub_tree_root_ptr = cur_stack_node_ptr;
+  } else {
+    AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
+    if (stack_top_node_ptr->GetKey() > cur_stack_node_ptr->GetKey()) {
+      stack_top_node_ptr->SetLeftChildPtr(cur_stack_node_ptr);
+    } else {
+      stack_top_node_ptr->SetRightChildPtr(cur_stack_node_ptr);
+    }
+  }
+
+  return true;
+}
+
+
+template<class Elem, class Key>
+bool AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key) {
+
+}
 
 #endif // CYBER_DASH_AVL_TREE_H

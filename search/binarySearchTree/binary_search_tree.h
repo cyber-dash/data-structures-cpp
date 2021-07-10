@@ -109,7 +109,7 @@ bool BST<Elem, Key>::InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNod
     return true;
   }
 
-  if (key< sub_tree_root_ptr->GetKey()) {
+  if (key < sub_tree_root_ptr->GetKey()) {
     return InsertIntoSubTree_(elem, key, sub_tree_root_ptr->LeftChildPtr());
   } else if (key > sub_tree_root_ptr->GetKey()) {
     return InsertIntoSubTree_(elem, key, sub_tree_root_ptr->RightChildPtr());
