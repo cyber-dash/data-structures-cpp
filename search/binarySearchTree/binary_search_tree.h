@@ -24,6 +24,11 @@ public:
   void SetKey(const Key& key) { key_ = key; }
   Key GetKey() { return key_; }
 
+  BSTNode<Elem, Key>* LeftChildPtr() { return this->left_child_ptr_; };
+  void SetLeftChildPtr(BSTNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
+  BSTNode<Elem, Key>* RightChildPtr() { return this->right_child_ptr_; };
+  void SetRightChildPtr(BSTNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
+
   BSTNode<Elem, Key>* left_child_ptr_;
   BSTNode<Elem, Key>* right_child_ptr_;
 
