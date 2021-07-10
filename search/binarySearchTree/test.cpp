@@ -127,6 +127,9 @@ void TestBSTSearch() {
   string question8 = "最后随便说句话";
   string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
 
+  string question9 = "讲一件后悔的事儿";
+  string answer9 = "烂到肚子里也不会说的";
+
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
   binary_search_tree->Insert(answer3, question3);
@@ -135,12 +138,14 @@ void TestBSTSearch() {
   binary_search_tree->Insert(answer6, question6);
   binary_search_tree->Insert(answer7, question7);
   binary_search_tree->Insert(answer8, question8);
+  binary_search_tree->Insert(answer9, question9);
 
-  string question9 = "讲一件后悔的事儿";
+  binary_search_tree->Remove(question9);
 
   BSTNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
   if (the_9th_node == NULL) { // 没有搜索到
-    cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duck不必"<<endl;
+    // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duck不必"<<endl;
+    cout<<"此问题已删除"<<endl;
   } else { // 搜索到
     cout<<"question9: "<<the_9th_node->GetKey()<<endl<<"answer9: "<<the_9th_node->GetData()<<endl;
   }
