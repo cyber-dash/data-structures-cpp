@@ -12,38 +12,57 @@
 
 template<class Elem, class Key>
 class AVLNode: public BSTNode<Elem, Key> {
+// class AVLNode {
+public:
+  AVLNode(): left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
 
-  AVLNode() {
-    this->left_child_ptr_ = NULL;
-    this->right_child_ptr_ = NULL;
-    this->balance_factor = 0;
-  }
+  AVLNode(const Elem& elem, const Key& key):
+    elem_(elem), key_(key),
+    left_child_ptr_(NULL), right_child_ptr_(NULL),
+    balance_factor() {}
 
   AVLNode(const Elem& elem, const Key& key,
-          AVLNode<Elem, Key>* left_child_ptr = NULL,
-          AVLNode<Elem, Key>* right_child_ptr = NULL) {
-    this->elem_ = elem;
-    this->key_ = key;
-    this->left_child_ptr_ = left_child_ptr;
-    this->right_child_ptr_ = right_child_ptr;
-    this->balance_factor = 0;
-  }
+          AVLNode<Elem, Key>* left_child_ptr,
+          AVLNode<Elem, Key>* right_child_ptr):
+          elem_(elem), key_(key),
+          left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr), balance_factor(0) {}
+
+  void SetLeftChildPtr(AVLNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
+  void SetRightChildPtr(AVLNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
+
+  void SetData(const Elem& elem) { this->elem_ = elem;}
+  Elem GetData() { return this->elem_; }
+
+  void SetKey(const Key& key) { this->key_ = key; }
+  Key GetKey() { return this->key_; }
+
+  AVLNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
+  AVLNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
+
+  AVLNode<Elem, Key>* left_child_ptr_;
+  AVLNode<Elem, Key>* right_child_ptr_;
 
   int balance_factor;
+  Elem elem_;
+  Key key_;
 };
 
 
 template<class Elem, class Key>
 class AVLTree: public BST<Elem, Key> {
+// class AVLTree {
 public:
-  AVLTree() { this->root_ = NULL; }
+  AVLTree(): root_(NULL) {}
   bool Insert(Elem data, Key key);
   bool Remove(Key key, Elem& data) { return this->RemoveInSubTree_(this->root_, key, data); }
-  int Height() const;
+  // int Height() const;
+  void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); }
+
+  AVLNode<Elem, Key>* root_;
+
 protected:
   AVLNode<Elem, Key>* SearchInSubTree_(const Key& key, const AVLNode<Elem, Key>*& sub_tree_root_ptr) const;
-  bool InsertInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Elem elem, Key key);
-  // bool RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key, Elem& elem);
+  bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
   bool RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
 
   // 左单旋转(Rotation Left), 图7.15(a)的情形
@@ -56,6 +75,15 @@ protected:
   void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr);
   // AVL子树的高度
   int HeightOfSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
+
+  // 获取结点插入位置, 并用栈保存信息
+  bool FindInsertPosAndInitStack_(AVLNode<Elem, Key>*& sub_tree_root_ptr,
+                                  Key key,
+                                  stack<AVLNode<Elem, Key>*>& AVL_node_stack,
+                                  AVLNode<Elem, Key>*& cur_stack_node_ptr,
+                                  AVLNode<Elem, Key>*& insert_node_ptr);
+
+  void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) const;
 };
 
 
@@ -106,7 +134,7 @@ void AVLTree<Elem, Key>::RotateRight_(AVLNode<Elem, Key>*& node_ptr) {
 
 
 template<class Elem, class Key>
-void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
+void AVLTree<Elem, Key>::RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 
   // 图7.17(b)
   AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
@@ -137,7 +165,7 @@ void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 
 
 template<class Elem, class Key>
-void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
+void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
   // 图7.18(b)
   AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
@@ -167,8 +195,45 @@ void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 }
 
 
+// todo: 用来代替部分逻辑
+// 获取结点插入位置, 并用栈保存信息
 template<class Elem, class Key>
-bool AVLTree<Elem, Key>::InsertInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Elem elem, Key key) {
+bool AVLTree<Elem, Key>::FindInsertPosAndInitStack_(AVLNode<Elem, Key>*& sub_tree_root_ptr,
+                                Key key,
+                                stack<AVLNode<Elem, Key>*>& AVL_node_stack,
+                                AVLNode<Elem, Key>*& cur_stack_node_ptr,
+                                AVLNode<Elem, Key>*& insert_node_ptr) {
+
+  // 寻找插入位置
+  while (insert_node_ptr != NULL) {
+    // 找到等于key的结点, 无法插入, todo: 原书使用elem
+    if (key == insert_node_ptr->GetKey()) {
+      return false;
+    }
+
+    cur_stack_node_ptr = insert_node_ptr;
+    AVL_node_stack.push(cur_stack_node_ptr);
+
+    // todo: 原书使用elem
+    if (key < insert_node_ptr->GetKey()) {
+      insert_node_ptr = insert_node_ptr->LeftChildPtr();
+    } else {
+      insert_node_ptr = insert_node_ptr->RightChildPtr();
+    }
+  }
+
+  return true;
+}
+
+
+template<class Elem, class Key>
+bool AVLTree<Elem, Key>::Insert(Elem data, Key key) {
+  return this->InsertInSubTree_(data, key, this->root_);
+}
+
+
+template<class Elem, class Key>
+bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
   AVLNode<Elem, Key>* cur_stack_node_ptr = NULL; // todo: parent_node_of_insert
   AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
 
@@ -264,7 +329,69 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key) {
+  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL; // todo: parent_node_of_insert
+  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+  AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
 
+  stack<AVLNode<Elem, Key>*> AVL_node_stack;
+
+  // 寻找插入位置
+  while (cur_node_ptr != NULL) {
+    // 找到等于key的结点, 无法插入, todo: 原书使用elem
+    if (key == cur_node_ptr->GetKey()) {
+      break;
+    }
+
+    cur_stack_node_ptr = cur_node_ptr;
+    AVL_node_stack.push(cur_stack_node_ptr);
+
+    if (key < cur_node_ptr->GetKey()) {
+      cur_node_ptr = cur_node_ptr->LeftChildPtr();
+    } else {
+      cur_node_ptr = cur_node_ptr->RightChildPtr();
+    }
+  }
+
+  if (cur_node_ptr == NULL) {
+    return false; // 未找到删除结点
+  }
+
+  if (cur_node_ptr->LeftChildPtr() != NULL && cur_node_ptr->RightChildPtr() != NULL) {
+    cur_stack_node_ptr = cur_node_ptr;
+    AVL_node_stack.push(cur_stack_node_ptr); // 将待删除节点入stack
+
+    cur_node_pre_ptr = cur_node_ptr->LeftChildPtr();
+    while(cur_node_pre_ptr->RightChildPtr() != NULL) {
+      cur_stack_node_ptr = cur_node_pre_ptr;
+      AVL_node_stack.push(cur_stack_node_ptr);
+      cur_node_pre_ptr = cur_node_pre_ptr->RightChildPtr();
+    }
+
+    cur_node_ptr->SetKey(cur_node_pre_ptr->GetKey());
+    cur_node_ptr->SetData(cur_node_pre_ptr->GetData());
+  }
 }
+
+
+template <class Elem, class Key>
+void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) const {
+
+  if (sub_tree_root_ptr == NULL) {
+    return;
+  }
+
+  visit(sub_tree_root_ptr);
+
+  cout << "(";
+
+  PrintSubTree_(sub_tree_root_ptr->LeftChildPtr(), visit);
+
+  cout << ",";
+
+  PrintSubTree_(sub_tree_root_ptr->RightChildPtr(), visit);
+
+  cout << ")";
+}
+
 
 #endif // CYBER_DASH_AVL_TREE_H

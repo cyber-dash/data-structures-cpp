@@ -18,11 +18,11 @@ public:
           BSTNode<Elem, Key>* right_child_ptr = NULL):
       elem_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr) {}
 
-  void SetData(const Elem& elem) { elem_ = elem;}
-  Elem GetData() { return elem_; }
+  virtual void SetData(const Elem& elem) { elem_ = elem;}
+  virtual Elem GetData() { return elem_; }
 
-  void SetKey(const Key& key) { key_ = key; }
-  Key GetKey() { return key_; }
+  virtual void SetKey(const Key& key) { key_ = key; }
+  virtual Key GetKey() { return key_; }
 
   void SetLeftChildPtr(BSTNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
   void SetRightChildPtr(BSTNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
@@ -30,10 +30,10 @@ public:
   BSTNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
   BSTNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
 
+protected:
   BSTNode<Elem, Key>* left_child_ptr_;
   BSTNode<Elem, Key>* right_child_ptr_;
 
-private:
   Key key_;
   Elem elem_;
 };
@@ -51,12 +51,12 @@ public:
   }
   BST<Elem, Key>& operator=(const BST<Elem, Key>& R);
   void makeEmpty(void) { MakeEmpty(root_); root_ = NULL; }
-  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { PrintSubTree_(root_, visit); }
+  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); }
   Elem Min() { return MinInSubTree_(root_)->GetData(); }
   Elem Max() { return MaxInSubTree_(root_)->GetData(); }
 
-  bool Insert(const Elem& elem, const Key& key);
-  bool Remove(const Key& key) { return RemoveInSubTree_(key, root_); }
+  virtual bool Insert(Elem elem, Key key);
+  virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_); }
 
 protected:
   BSTNode<Elem, Key>* root_;
@@ -67,7 +67,8 @@ protected:
   BSTNode<Elem, Key>* Copy(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
   BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
   BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
-  bool InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+  // bool InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+  bool InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
   bool RemoveInSubTree_(const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 };
 
@@ -91,17 +92,18 @@ BSTNode<Elem, Key>* BST<Elem, Key>::SearchInSubTree_(const Key& key, BSTNode<Ele
 
 
 template<class Elem, class Key>
-bool BST<Elem, Key>::Insert(const Elem& elem, const Key& key) {
-  if (Search(key) != NULL) {
+bool BST<Elem, Key>::Insert(Elem elem, Key key) {
+  if (this->Search(key) != NULL) {
     return true;
   }
 
-  return InsertIntoSubTree_(elem, key, root_);
+  return this->InsertIntoSubTree_(elem, key, this->root_);
 }
 
 
 template <class Elem, class Key>
-bool BST<Elem, Key>::InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
+// bool BST<Elem, Key>::InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
+bool BST<Elem, Key>::InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
   if (sub_tree_root_ptr == NULL) {
     sub_tree_root_ptr = new BSTNode<Elem, Key>(elem, key);
     /* error handler */

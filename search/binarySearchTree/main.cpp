@@ -16,5 +16,7 @@ int main()
 
   TestBSTSearch();
 
+  TestAVLInsert();
+
   return 0;
 }

@@ -6,7 +6,12 @@
 #include "test.h"
 
 
-void visit(BSTNode<string, string>* node_ptr) {
+void BSTNodeVisit(BSTNode<string, string>* node_ptr) {
+  cout<<"["<<node_ptr->GetKey()<<":"<<node_ptr->GetData()<<"]";
+}
+
+
+void AVLNodeVisit(AVLNode<string, string>* node_ptr) {
   cout<<"["<<node_ptr->GetKey()<<":"<<node_ptr->GetData()<<"]";
 }
 
@@ -32,7 +37,7 @@ void TestBSTInsert() {
   binary_search_tree->Insert(answer2, question2);
   binary_search_tree->Insert(answer3, question3);
 
-  binary_search_tree->PrintTree(visit);
+  binary_search_tree->PrintTree(BSTNodeVisit);
 
   cout<<endl;
 
@@ -81,13 +86,13 @@ void TestBSTRemove() {
   binary_search_tree->Insert(answer7, question7);
   binary_search_tree->Insert(answer8, question8);
 
-  binary_search_tree->PrintTree(visit);
+  binary_search_tree->PrintTree(BSTNodeVisit);
 
   cout<<endl;
 
   binary_search_tree->Remove(question1);
 
-  binary_search_tree->PrintTree(visit);
+  binary_search_tree->PrintTree(BSTNodeVisit);
 
   cout<<endl;
 
@@ -158,6 +163,39 @@ void TestBSTSearch() {
   } else { // 搜索到
     cout<<"question8: "<<the_8th_node->GetKey()<<endl<<"answer8: "<<the_8th_node->GetData()<<endl;
   }
+
+  cout<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+void TestAVLInsert() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test AVL Insert                      |"<<endl;
+  cout<<"|                     测试平衡二叉树的插入                     |"<<endl;
+
+  AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+
+  string question1 = "我最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "我最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "我最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  AVL_tree->Insert(answer1, question1);
+  AVL_tree->Insert(answer2, question2);
+  AVL_tree->Insert(answer3, question3);
+  AVL_tree->Insert(answer4, question4);
+
+  AVL_tree->PrintTree(AVLNodeVisit);
 
   cout<<endl;
 
