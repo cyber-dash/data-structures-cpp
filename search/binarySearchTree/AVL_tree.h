@@ -12,7 +12,6 @@
 
 template<class Elem, class Key>
 class AVLNode: public BSTNode<Elem, Key> {
-// class AVLNode {
 public:
   AVLNode(): left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
 
@@ -50,7 +49,6 @@ public:
 
 template<class Elem, class Key>
 class AVLTree: public BST<Elem, Key> {
-// class AVLTree {
 public:
   AVLTree(): root_(NULL) {}
   bool Insert(Elem data, Key key);
