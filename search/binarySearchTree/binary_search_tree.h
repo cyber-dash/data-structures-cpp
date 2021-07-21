@@ -42,39 +42,36 @@ protected:
 template <class Elem, class Key>
 class BST {
 public:
-  BST(): root_(NULL) {}
-  // BST(Key key);
-  BST(const Key& key, const Elem& elem);
-  ~BST() {};
-  BSTNode<Elem, Key>* Search (const Key& key) {
-    return SearchInSubTree_(key, this->root_);
-  }
+  BST(): root_node_ptr_(NULL) {}
+  BST(Key key, Elem elem);
+  virtual ~BST() { delete this->root_node_ptr_; };
+  BSTNode<Elem, Key>* Search (const Key& key) { return SearchInSubTree_(key, this->root_node_ptr_); }
   BST<Elem, Key>& operator=(const BST<Elem, Key>& R);
-  void makeEmpty(void) { MakeEmpty(root_); root_ = NULL; }
-  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); }
-  Elem Min() { return MinInSubTree_(root_)->GetData(); }
-  Elem Max() { return MaxInSubTree_(root_)->GetData(); }
+  void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
+  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr_, visit); }
+  Elem Min() { return MinInSubTree_(root_node_ptr_)->GetData(); }
+  Elem Max() { return MaxInSubTree_(root_node_ptr_)->GetData(); }
 
   virtual bool Insert(Elem elem, Key key);
-  virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_); }
+  virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_ptr_); }
 
 protected:
-  BSTNode<Elem, Key>* root_;
-  // Key RefValue;
-  BSTNode<Elem, Key>* SearchInSubTree_(const Key& key, BSTNode<Elem, Key>* node_ptr);
-  void MakeEmpty(BSTNode<Elem, Key>*& sub_tree_root_ptr);
+  BSTNode<Elem, Key>* root_node_ptr_;
+  BSTNode<Elem, Key>* SearchInSubTree_(Key key, BSTNode<Elem, Key>* node_ptr);
+  void MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr);
+  // 打印子树(递归/中序)
   void PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>* p)) const;
   BSTNode<Elem, Key>* Copy(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
   BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
   BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
-  // bool InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
   bool InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
-  bool RemoveInSubTree_(const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+  // 子树中删除节点(递归)
+  bool RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 };
 
 
 template <class Elem, class Key>
-BSTNode<Elem, Key>* BST<Elem, Key>::SearchInSubTree_(const Key& key, BSTNode<Elem, Key>* node_ptr) {
+BSTNode<Elem, Key>* BST<Elem, Key>::SearchInSubTree_(Key key, BSTNode<Elem, Key>* node_ptr) {
   if (node_ptr == NULL) {
     return NULL;
   }
@@ -97,12 +94,11 @@ bool BST<Elem, Key>::Insert(Elem elem, Key key) {
     return true;
   }
 
-  return this->InsertIntoSubTree_(elem, key, this->root_);
+  return this->InsertIntoSubTree_(elem, key, this->root_node_ptr_);
 }
 
 
 template <class Elem, class Key>
-// bool BST<Elem, Key>::InsertIntoSubTree_(const Elem& elem, const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
 bool BST<Elem, Key>::InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
   if (sub_tree_root_ptr == NULL) {
     sub_tree_root_ptr = new BSTNode<Elem, Key>(elem, key);
@@ -121,30 +117,23 @@ bool BST<Elem, Key>::InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*&
 }
 
 
-/*
 template <class Elem, class Key>
-BST<Elem, Key>::BST(Key value) {
-  Elem x;
-  root_ = NULL;
-  RefValue = value;
-  cin >> x;
-  while (x.key != RefValue) {
-    InsertIntoSubTree_(x, root_);
-    cin >> x;
-  }
-};
- */
-
-
-template <class Elem, class Key>
-BST<Elem, Key>::BST(const Key& key, const Elem& elem) {
-  Insert(elem, key);
+BST<Elem, Key>::BST(Key key, Elem elem) {
+  this->Insert(elem, key);
 }
 
 
+/**
+ * @brief 子树中删除节点(递归)
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param key 待删除节点的数据码
+ * @param sub_tree_root_ptr 子树根节点
+ * @return 是否删除成功
+ * @note
+ */
 template <class Elem, class Key>
-bool BST<Elem, Key>::RemoveInSubTree_(const Key& key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
-
+bool BST<Elem, Key>::RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
 
   if (sub_tree_root_ptr == NULL) {
     return false;
@@ -183,23 +172,40 @@ bool BST<Elem, Key>::RemoveInSubTree_(const Key& key, BSTNode<Elem, Key>*& sub_t
 }
 
 
-template <class Elem, class K>
-void BST<Elem, K>::MakeEmpty(BSTNode<Elem, K>*& sub_tree_root_ptr) {
+/**
+ * @brief 清除子树(递归)
+ * @tparam Elem 数据项类型模板
+ * @tparam Key 关键码类型模板
+ * @param sub_tree_root_ptr 子树根节点指针
+ * @note
+ * 如果sub_tree_root_ptr为NULL, 则递归结束
+ * 对左右子树, 递归执行函数
+ * 对子树节点执行delete和置NULL操作
+ */
+template <class Elem, class Key>
+void BST<Elem, Key>::MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr) {
 
   if (sub_tree_root_ptr == NULL) {
     return;
   }
 
-  MakeEmpty(sub_tree_root_ptr->LeftChildPtr());
-  MakeEmpty(sub_tree_root_ptr->RightChildPtr());
+  MakeEmptySubTree_(sub_tree_root_ptr->LeftChildPtr());
+  MakeEmptySubTree_(sub_tree_root_ptr->RightChildPtr());
 
   delete sub_tree_root_ptr;
   sub_tree_root_ptr = NULL;
 }
 
 
+/**
+ * 打印子树(递归/中序)
+ * @tparam Elem 数据项类型模板
+ * @tparam Key 关键码类型模板
+ * @param sub_tree_root_ptr 子树根节点指针
+ * @param visit 访问函数
+ */
 template <class Elem, class Key>
-void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key> *p)) const {
+void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>*)) const {
 
   if (sub_tree_root_ptr == NULL) {
     return;
@@ -267,6 +273,12 @@ BSTNode<Elem, Key>* BST<Elem, Key>::MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_r
   }
 
   return cur_node_ptr;
+}
+
+
+template<class Elem, class Key>
+BST<Elem, Key> &BST<Elem, Key>::operator=(const BST<Elem, Key> &R) {
+  return *this;
 }
 
 
