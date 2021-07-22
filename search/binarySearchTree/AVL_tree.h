@@ -234,6 +234,7 @@ bool AVLTree<Elem, Key>::Insert(Elem data, Key key) {
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
+
   AVLNode<Elem, Key>* cur_stack_node_ptr = NULL; // todo: parent_node_of_insert
   AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
 
