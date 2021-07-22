@@ -61,7 +61,7 @@ public:
 protected:
   AVLNode<Elem, Key>* SearchInSubTree_(const Key& key, const AVLNode<Elem, Key>*& sub_tree_root_ptr) const;
   bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
-  bool InsertInSubTree2_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
+  bool InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
   bool RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
 
   // 左单旋转(Rotation Left), 图7.15(a)的情形
@@ -228,7 +228,7 @@ bool AVLTree<Elem, Key>::FindInsertPosAndInitStack_(AVLNode<Elem, Key>*& sub_tre
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::Insert(Elem data, Key key) {
   // return this->InsertInSubTree_(data, key, this->root_);
-  return this->InsertInSubTree2_(data, key, this->root_);
+  return this->InsertInSubTreeByCyberDash_(data, key, this->root_);
 }
 
 
@@ -359,87 +359,84 @@ AVLNode<Elem, Key>* GetInsertNodePtrAndInitStack(Elem elem, Key key,
 }
 
 
+/**
+ * @brief 平衡树子树插入(CyberDash实现版本)
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param elem 数据项
+ * @param key 关键码
+ * @param sub_tree_root_ptr 子树根节点
+ * @return 是否插入成功
+ * @note
+ * 1. 首先找到插入位置, 并且使用栈保存
+ * 2.
+ */
 template<class Elem, class Key>
-bool AVLTree<Elem, Key>::InsertInSubTree2_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
+bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
 
-  stack<AVLNode<Elem, Key>*> AVL_node_stack;
+  stack<AVLNode<Elem, Key>* > AVL_node_stack;
 
-  /*
-  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL; // todo: parent_node_of_insert
-  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+  AVLNode<Elem, Key> *insert_node_ptr = GetInsertNodePtrAndInitStack(elem, key, sub_tree_root_ptr, AVL_node_stack);
+  AVLNode<Elem, Key>* stack_node_ptr;
 
-  // 寻找插入位置
-  while (cur_node_ptr != NULL) {
-    // 找到等于key的结点, 无法插入, todo: 原书使用elem
-    if (key == cur_node_ptr->GetKey()) {
-      return false;
-    }
-
-    cur_stack_node_ptr = cur_node_ptr;
-    AVL_node_stack.push(cur_stack_node_ptr);
-
-    // todo: 原书使用elem
-    if (key < cur_node_ptr->GetKey()) {
-      cur_node_ptr = cur_node_ptr->LeftChildPtr();
-    } else {
-      cur_node_ptr = cur_node_ptr->RightChildPtr();
-    }
+  if (AVL_node_stack.empty()) {
+    stack_node_ptr = NULL;
+  } else {
+    stack_node_ptr = AVL_node_stack.top();
   }
-   */
 
-  AVLNode<Elem, Key>* insert_node_ptr = GetInsertNodePtrAndInitStack(elem, key,
-                                                                     sub_tree_root_ptr, AVL_node_stack);
-  AVLNode<Elem, Key>* cur_stack_node_ptr = AVL_node_stack.top();
-  AVLNode<Elem, Key>* cur_node_ptr = insert_node_ptr;
-
-  cur_node_ptr = new AVLNode<Elem, Key>(elem, key);
+  insert_node_ptr = new AVLNode<Elem, Key>(elem, key);
   /* error handler */
 
   // 空树, 新结点成为根节点
-  if (cur_stack_node_ptr == NULL) {
-    sub_tree_root_ptr = cur_node_ptr;
+  if (stack_node_ptr == NULL) {
+    sub_tree_root_ptr = insert_node_ptr;
     return true;
   }
 
-  // todo: 原书使用elem做比较, 应该是错了
-  if (key < cur_stack_node_ptr->GetKey()) {
-    cur_stack_node_ptr->SetLeftChildPtr(cur_node_ptr);
+  // 原书使用elem做比较, 应该是错了
+  if (key < stack_node_ptr->GetKey()) {
+    stack_node_ptr->SetLeftChildPtr(insert_node_ptr);
   } else {
-    cur_stack_node_ptr->SetRightChildPtr(cur_node_ptr);
+    stack_node_ptr->SetRightChildPtr(insert_node_ptr);
   }
+
+  AVLNode<Elem, Key>* stack_node_child_ptr = insert_node_ptr;
 
   // 重新平衡化
   while (AVL_node_stack.empty() == false) {
-    cur_stack_node_ptr = AVL_node_stack.top();
+
+    // 栈顶出栈
+    stack_node_ptr = AVL_node_stack.top();
     AVL_node_stack.pop();
 
-    if (cur_node_ptr == cur_stack_node_ptr->LeftChildPtr()) {
-      cur_stack_node_ptr->balance_factor--;
+    if (stack_node_child_ptr == stack_node_ptr->LeftChildPtr()) {
+      stack_node_ptr->balance_factor--;
     } else {
-      cur_stack_node_ptr->balance_factor++;
+      stack_node_ptr->balance_factor++;
     }
 
     // 第1种情况, 平衡退出
-    if (cur_stack_node_ptr->balance_factor == 0) {
+    if (stack_node_ptr->balance_factor == 0) {
       break;
     }
 
-    // 第2种情况, |平衡因子| = 1
-    if (cur_stack_node_ptr->balance_factor == 1 || cur_stack_node_ptr->balance_factor == -1) {
-      cur_node_ptr = cur_stack_node_ptr;
+    // 第2种情况, |平衡因子| = 1, 右-左=1
+    if (stack_node_ptr->balance_factor == 1 || stack_node_ptr->balance_factor == -1) {
+      stack_node_child_ptr = stack_node_ptr;
     } else { // 第3种情况, |bf| = 2
-      int stack_node_rotate_flag = (cur_stack_node_ptr->balance_factor < 0) ? -1 : 1;
-      if (cur_node_ptr->balance_factor == stack_node_rotate_flag) { // 两个结点的平衡因子同号, 单旋转
+      int stack_node_rotate_flag = (stack_node_ptr->balance_factor < 0) ? -1 : 1;
+      if (stack_node_child_ptr->balance_factor == stack_node_rotate_flag) { // 两个结点的平衡因子同号, 单旋转
         if (stack_node_rotate_flag == -1) {
-          this->RotateRight_(cur_stack_node_ptr); // 右单旋转
+          this->RotateRight_(stack_node_ptr); // 右单旋转
         } else {
-          this->RotateLeft_(cur_stack_node_ptr); // 左单旋转
+          this->RotateLeft_(stack_node_ptr); // 左单旋转
         }
       } else { // 两个结点的平衡因子反号, 双旋转
         if (stack_node_rotate_flag == -1) {
-          this->RotateLeftRight_(cur_stack_node_ptr);
+          this->RotateLeftRight_(stack_node_ptr);
         } else {
-          this->RotateRightLeft_(cur_stack_node_ptr);
+          this->RotateRightLeft_(stack_node_ptr);
         }
       }
 
@@ -447,14 +444,15 @@ bool AVLTree<Elem, Key>::InsertInSubTree2_(Elem elem, Key key, AVLNode<Elem, Key
     }
   }
 
+  // 已经完成平衡化的树, 完成最后处理
   if (AVL_node_stack.empty() == true) {
-    sub_tree_root_ptr = cur_stack_node_ptr;
+    sub_tree_root_ptr = stack_node_ptr;
   } else {
     AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
-    if (stack_top_node_ptr->GetKey() > cur_stack_node_ptr->GetKey()) {
-      stack_top_node_ptr->SetLeftChildPtr(cur_stack_node_ptr);
+    if (stack_top_node_ptr->GetKey() > stack_node_ptr->GetKey()) {
+      stack_top_node_ptr->SetLeftChildPtr(stack_node_ptr);
     } else {
-      stack_top_node_ptr->SetRightChildPtr(cur_stack_node_ptr);
+      stack_top_node_ptr->SetRightChildPtr(stack_node_ptr);
     }
   }
 
