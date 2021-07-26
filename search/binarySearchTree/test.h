@@ -24,4 +24,6 @@ void TestMakeEmpty(); // todo
 
 void TestAVLInsert();
 
+void TestAVLInsertByCyberDash();
+
 #endif // CYBER_DASH_BINARY_SEARCH_TREE_TEST_H

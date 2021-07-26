@@ -201,3 +201,36 @@ void TestAVLInsert() {
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
+
+
+void TestAVLInsertByCyberDash() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                 Test AVL InsertByCyberDash                |"<<endl;
+  cout<<"|               测试平衡二叉树的插入(CyberDash版本)            |"<<endl;
+
+  AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+
+  string question1 = "我最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "我最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "我最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  AVL_tree->InsertByCyberDash(answer1, question1);
+  AVL_tree->InsertByCyberDash(answer2, question2);
+  AVL_tree->InsertByCyberDash(answer3, question3);
+  AVL_tree->InsertByCyberDash(answer4, question4);
+
+  AVL_tree->PrintTree(AVLNodeVisit);
+
+  cout<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
