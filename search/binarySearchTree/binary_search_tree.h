@@ -64,6 +64,7 @@ protected:
   BSTNode<Elem, Key>* Copy(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
   BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
   BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
+  // 子树中插入节点(递归)
   bool InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
   // 子树中删除节点(递归)
   bool RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
@@ -98,6 +99,19 @@ bool BST<Elem, Key>::Insert(Elem elem, Key key) {
 }
 
 
+/**
+ * @brief 子树中插入节点(递归)
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param elem 数据项
+ * @param key 关键码
+ * @param sub_tree_root_ptr 子树根节点指针
+ * @return 是否插入成功
+ * @note
+ * 如果根节点指针为NULL, 则创建节点
+ * 判断插入关键码与子树根节点关键码的大小关系, 在左子树or右子树做插入操作(递归)
+ * 如果关键码相同, 则返回false
+ */
 template <class Elem, class Key>
 bool BST<Elem, Key>::InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
   if (sub_tree_root_ptr == NULL) {
@@ -131,6 +145,10 @@ BST<Elem, Key>::BST(Key key, Elem elem) {
  * @param sub_tree_root_ptr 子树根节点
  * @return 是否删除成功
  * @note
+ * 1. 如果子树根节点指针为NULL, 则返回false
+ * 2. 递归分治, 找到删除节点的位置
+ * 3. 如果有两个孩子节点, 使用中序前驱or后继, 替换掉待删除节点
+ * 4. 如果只有一个孩子节点, 则将该孩子提升至待删除节点
  */
 template <class Elem, class Key>
 bool BST<Elem, Key>::RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
@@ -145,27 +163,34 @@ bool BST<Elem, Key>::RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_roo
     return RemoveInSubTree_(key, sub_tree_root_ptr->RightChildPtr());
   }
 
-  if (sub_tree_root_ptr->LeftChildPtr() != NULL && sub_tree_root_ptr->RightChildPtr() != NULL) {
+  // 删除sub_tree_root_ptr, 使用中序前驱or后继替换掉该节点, 此处使用后继
+  if (sub_tree_root_ptr->LeftChildPtr() != NULL && sub_tree_root_ptr->RightChildPtr() != NULL) { // 存在左右孩子
 
     BSTNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr->RightChildPtr();
     while (cur_node_ptr->LeftChildPtr()!= NULL) {
       cur_node_ptr = cur_node_ptr->LeftChildPtr();
     }
 
-    sub_tree_root_ptr->SetData(cur_node_ptr->GetData());
-    sub_tree_root_ptr->SetKey(cur_node_ptr->GetKey());
+    // 拿到后继节点的数据, 作为替换数据
+    Elem replace_data = cur_node_ptr->GetData();
+    Key replace_key = cur_node_ptr->GetKey();
 
-    return RemoveInSubTree_(sub_tree_root_ptr->GetKey(), sub_tree_root_ptr->RightChildPtr());
+    sub_tree_root_ptr->SetData(replace_data);
+    sub_tree_root_ptr->SetKey(replace_key);
+
+    // 删除替换数据原先所在的节点
+    return RemoveInSubTree_(replace_key, sub_tree_root_ptr->RightChildPtr());
   } else {
-    BSTNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    BSTNode<Elem, Key>* delete_node_ptr = sub_tree_root_ptr;
+
     if (sub_tree_root_ptr->LeftChildPtr() == NULL) {
       sub_tree_root_ptr = sub_tree_root_ptr->RightChildPtr();
     } else {
       sub_tree_root_ptr = sub_tree_root_ptr->LeftChildPtr();
     }
 
-    delete cur_node_ptr;
-    cur_node_ptr = NULL;
+    delete delete_node_ptr;
+    delete_node_ptr = NULL;
 
     return true;
   }
@@ -198,11 +223,20 @@ void BST<Elem, Key>::MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr) {
 
 
 /**
- * 打印子树(递归/中序)
+ * @brief 打印子树(递归/中序)
  * @tparam Elem 数据项类型模板
  * @tparam Key 关键码类型模板
  * @param sub_tree_root_ptr 子树根节点指针
  * @param visit 访问函数
+ * @note
+ * 打印格式: "[子树根节点]([子树根节点左子树], [子树根节点右子树])"
+ *
+ * 1. 访问/打印子树根节点
+ * 2. 打印“(”
+ * 3. 访问/打印子树根节点的左子树
+ * 4. 打印“,”
+ * 5. 访问/打印子树根节点的右子树
+ * 6. 打印“)”
  */
 template <class Elem, class Key>
 void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>*)) const {
