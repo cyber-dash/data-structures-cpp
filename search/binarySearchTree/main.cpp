@@ -20,5 +20,7 @@ int main()
 
   TestAVLInsertByCyberDash();
 
+  TestAVLRemoveByCyberDash();
+
   return 0;
 }

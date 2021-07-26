@@ -53,7 +53,7 @@ public:
   AVLTree(): root_(NULL) {}
   bool Insert(Elem data, Key key);
   bool InsertByCyberDash(Elem data, Key key);
-  bool Remove(Key key, Elem& data) { return this->RemoveInSubTree_(this->root_, key, data); }
+  bool Remove(Key key, Elem& data) { return this->RemoveInSubTree_(this->root_, key); }
   // int Height() const;
   void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); }
 
@@ -531,8 +531,9 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
 
 
 template<class Elem, class Key>
-bool AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key) {
-  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+bool
+AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key key) {
+  // AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
   AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
 
   stack<AVLNode<Elem, Key>*> AVL_node_stack;
@@ -581,7 +582,7 @@ bool AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr
     delete_node_ptr = cur_node_pre_ptr;
   }
 
-  AVLNode<Elem, Key>* child_of_delete_node_ptr;
+  AVLNode<Elem, Key>* child_of_delete_node_ptr = NULL; // 被删除节点的孩子节点
 
   // 找到此时的待删除节点的一个孩子节点, 用作连接
   if (delete_node_ptr->LeftChildPtr() != NULL) {
@@ -595,15 +596,94 @@ bool AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr
   if (cur_stack_node_ptr == NULL) { // 删除的是根节点
     sub_tree_root_ptr = child_of_delete_node_ptr;
   } else {
-    if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) {
+
+    if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) { // 被删除节点是cur_stack_node_ptr的左孩子
       cur_stack_node_ptr->SetLeftChildPtr(child_of_delete_node_ptr); // 连接
-    } else {
+    } else { // 被删除节点是cur_stack_node_ptr的右孩子
       cur_stack_node_ptr->SetRightChildPtr(child_of_delete_node_ptr); // 连接
     }
 
+    AVLNode<Elem, Key>* parent_node_ptr;
+
     // 重新平衡化
     while (AVL_node_stack.empty() == false) {
-      // todo:
+
+      AVLNode<Elem, Key>* grand_parent_node_ptr = NULL;
+      parent_node_ptr = AVL_node_stack.top();
+      AVL_node_stack.pop();
+
+      int grand_parent_direction;
+      int parent_direction;
+
+      if (parent_node_ptr->RightChildPtr() == child_of_delete_node_ptr) {
+        parent_node_ptr->balance_factor--;
+      } else {
+        parent_node_ptr->balance_factor++;
+      }
+
+      if (AVL_node_stack.empty() == false) {
+        grand_parent_node_ptr = AVL_node_stack.top();
+        AVL_node_stack.pop();
+
+        grand_parent_direction = (grand_parent_node_ptr->LeftChildPtr() == parent_node_ptr) ? -1 : 1;
+      } else {
+        grand_parent_direction = 0;
+      }
+
+      if (parent_node_ptr->balance_factor == 1 || parent_node_ptr->balance_factor == -1) { // 图7.20
+        break;
+      }
+
+      if (parent_node_ptr->balance_factor != 0) { // |bf| = 2
+        if (parent_node_ptr->balance_factor < 0) {
+          parent_direction = -1;
+          child_of_delete_node_ptr = parent_node_ptr->LeftChildPtr();
+        } else {
+          parent_direction = 1;
+          child_of_delete_node_ptr = parent_node_ptr->RightChildPtr();
+        }
+
+        if (child_of_delete_node_ptr->balance_factor == 0) {
+          if (parent_direction == -1) {
+            this->RotateRight_(parent_node_ptr);
+            parent_node_ptr->balance_factor = 1;
+            parent_node_ptr->LeftChildPtr()->balance_factor = -1;
+          } else {
+            this->RotateLeft_(parent_node_ptr);
+            parent_node_ptr->balance_factor = -1;
+            parent_node_ptr->RightChildPtr()->balance_factor = 1;
+          }
+
+          break;
+        }
+
+        if (child_of_delete_node_ptr->balance_factor == parent_direction) { // 图7.23, 两节点平衡因子同号
+          if (parent_direction == -1) {
+            this->RotateRight_(parent_node_ptr);
+          } else {
+            this->RotateLeft_(parent_node_ptr);
+          }
+        } else { // 图7.24, 两节点平衡因子反号
+          if (parent_direction == -1) {
+            this->RotateLeftRight_(parent_node_ptr);
+          } else {
+            this->RotateRightLeft_(parent_node_ptr);
+          }
+        }
+
+        // 旋转后, 新根与上层连接
+        if (grand_parent_direction == -1) {
+          grand_parent_node_ptr->SetLeftChildPtr(parent_node_ptr);
+        } else {
+          grand_parent_node_ptr->SetRightChildPtr(parent_node_ptr);
+        }
+      }
+
+      child_of_delete_node_ptr = parent_node_ptr; // 图7.21, |bf| = 0
+    }
+
+    if (AVL_node_stack.empty() == true) {
+      sub_tree_root_ptr = parent_node_ptr;
     }
   }
 
