@@ -325,7 +325,6 @@ void TestBSTMakeEmpty() {
 
   binary_search_tree->PrintTree(BSTNodeVisit);
 
-
   cout<<"-------------------------------------------------------------"<<endl;
 }
 
