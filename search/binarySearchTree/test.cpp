@@ -170,6 +170,166 @@ void TestBSTSearch() {
 }
 
 
+void TestBSTMax() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                        Test BST Max                       |"<<endl;
+  cout<<"|                     测试搜索二叉树的最大值                    |"<<endl;
+
+  BST<string, string>* binary_search_tree = new BST<string, string>();
+
+  string question1 = "最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  string question5 = "最讨厌的编程语言";
+  string answer5 = "Java";
+
+  string question6 = "如果暴富了想干嘛";
+  string answer6 = "包养数学家";
+
+  string question7 = "推荐几首歌听";
+  string answer7 = "Learning To Survive|Final Masquerade|Nothing";
+
+  string question8 = "最后随便说句话";
+  string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
+
+  string question9 = "讲一件后悔的事儿";
+  string answer9 = "烂到肚子里也不会说的";
+
+  binary_search_tree->Insert(answer1, question1);
+  binary_search_tree->Insert(answer2, question2);
+  binary_search_tree->Insert(answer3, question3);
+  binary_search_tree->Insert(answer4, question4);
+  binary_search_tree->Insert(answer5, question5);
+  binary_search_tree->Insert(answer6, question6);
+  binary_search_tree->Insert(answer7, question7);
+  binary_search_tree->Insert(answer8, question8);
+  binary_search_tree->Insert(answer9, question9);
+
+  string maxData = binary_search_tree->Max();
+
+  cout<<"maxData: "<<maxData<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+void TestBSTMin() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                        Test BST Min                       |"<<endl;
+  cout<<"|                     测试搜索二叉树的最小值                    |"<<endl;
+
+  BST<string, string>* binary_search_tree = new BST<string, string>();
+
+  string question1 = "最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  string question5 = "最讨厌的编程语言";
+  string answer5 = "Java";
+
+  string question6 = "如果暴富了想干嘛";
+  string answer6 = "包养数学家";
+
+  string question7 = "推荐几首歌听";
+  string answer7 = "Learning To Survive|Final Masquerade|Nothing";
+
+  string question8 = "最后随便说句话";
+  string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
+
+  string question9 = "讲一件后悔的事儿";
+  string answer9 = "烂到肚子里也不会说的";
+
+  binary_search_tree->Insert(answer1, question1);
+  binary_search_tree->Insert(answer2, question2);
+  binary_search_tree->Insert(answer3, question3);
+  binary_search_tree->Insert(answer4, question4);
+  binary_search_tree->Insert(answer5, question5);
+  binary_search_tree->Insert(answer6, question6);
+  binary_search_tree->Insert(answer7, question7);
+  binary_search_tree->Insert(answer8, question8);
+  binary_search_tree->Insert(answer9, question9);
+
+  string minData = binary_search_tree->Min();
+
+  cout<<"minData: "<<minData<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+void TestBSTMakeEmpty() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                     Test BST MakeEmpty                       |"<<endl;
+  cout<<"|                      测试搜索二叉树的删除                    |"<<endl;
+
+  BST<string, string>* binary_search_tree = new BST<string, string>();
+
+  string question1 = "最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  string question5 = "最讨厌的编程语言";
+  string answer5 = "Java";
+
+  string question6 = "如果暴富了想干嘛";
+  string answer6 = "包养数学家";
+
+  string question7 = "推荐几首歌听";
+  string answer7 = "Learning To Survive|Final Masquerade|Nothing";
+
+  string question8 = "最后随便说句话";
+  string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
+
+  string question9 = "讲一件后悔的事儿";
+  string answer9 = "烂到肚子里也不会说的";
+
+  binary_search_tree->Insert(answer1, question1);
+  binary_search_tree->Insert(answer2, question2);
+  binary_search_tree->Insert(answer3, question3);
+  binary_search_tree->Insert(answer4, question4);
+  binary_search_tree->Insert(answer5, question5);
+  binary_search_tree->Insert(answer6, question6);
+  binary_search_tree->Insert(answer7, question7);
+  binary_search_tree->Insert(answer8, question8);
+  binary_search_tree->Insert(answer9, question9);
+
+  binary_search_tree->MakeEmpty();
+
+  binary_search_tree->PrintTree(BSTNodeVisit);
+
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
 void TestAVLInsert() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;

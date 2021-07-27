@@ -16,11 +16,11 @@ void TestBSTRemove();
 
 void TestBSTSearch();
 
-void TestMax(); // todo
+void TestBSTMax(); // todo
 
-void TestMin(); // todo
+void TestBSTMin(); // todo
 
-void TestMakeEmpty(); // todo
+void TestBSTMakeEmpty(); // todo
 
 void TestAVLInsert();
 

@@ -16,6 +16,12 @@ int main()
 
   TestBSTSearch();
 
+  TestBSTMax();
+
+  TestBSTMin();
+
+  TestBSTMakeEmpty();
+
   TestAVLInsert();
 
   TestAVLInsertByCyberDash();
