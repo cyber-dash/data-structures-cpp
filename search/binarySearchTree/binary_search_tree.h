@@ -57,34 +57,55 @@ public:
 
 protected:
   BSTNode<Elem, Key>* root_node_ptr_;
-  BSTNode<Elem, Key>* SearchInSubTree_(Key key, BSTNode<Elem, Key>* node_ptr);
+  // 在子树中, 使用关键码进行搜索
+  BSTNode<Elem, Key>* SearchInSubTree_(Key key, BSTNode<Elem, Key>* sub_tree_root_ptr);
+
   void MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr);
+
   // 打印子树(递归/中序)
   void PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>* p)) const;
+
   BSTNode<Elem, Key>* Copy(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
+
+  // 子树中关键码最小项
   BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
+
+  // 子树中关键码最大项
   BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
+
   // 子树中插入节点(递归)
   bool InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+
   // 子树中删除节点(递归)
   bool RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 };
 
 
+/**
+ * @brief 在子树中, 使用关键码进行搜索
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param key 关键码
+ * @param sub_tree_root_ptr 子树根节点
+ * @return 搜索结果
+ * @note
+ * 1. 如果子树根节点为NULL, 返回NULL
+ * 2. 使用当前遍历节点的key, 与参数key作比较, 分别进行递归和返回搜索结果(终止递归)
+ */
 template <class Elem, class Key>
-BSTNode<Elem, Key>* BST<Elem, Key>::SearchInSubTree_(Key key, BSTNode<Elem, Key>* node_ptr) {
-  if (node_ptr == NULL) {
+BSTNode<Elem, Key>* BST<Elem, Key>::SearchInSubTree_(Key key, BSTNode<Elem, Key>* sub_tree_root_ptr) {
+  if (sub_tree_root_ptr == NULL) {
     return NULL;
   }
 
-  Key cur_key = node_ptr->GetKey();
+  Key cur_key = sub_tree_root_ptr->GetKey();
 
   if (key < cur_key) {
-    return SearchInSubTree_(key, node_ptr->LeftChildPtr());
+    return SearchInSubTree_(key, sub_tree_root_ptr->LeftChildPtr());
   } else if (key > cur_key) {
-    return SearchInSubTree_(key, node_ptr->RightChildPtr());
+    return SearchInSubTree_(key, sub_tree_root_ptr->RightChildPtr());
   } else {
-    return node_ptr;
+    return sub_tree_root_ptr;
   }
 }
 
@@ -277,6 +298,15 @@ BSTNode<Elem, Key>* BST<Elem, Key>::Copy(const BSTNode<Elem, Key>* origin_sub_tr
 }
 
 
+/**
+ * @brief 子树中关键码最小项
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param sub_tree_root_ptr 子树根节点
+ * @return 关键码最小项
+ * @note
+ * 左孩子节点迭代
+ */
 template <class Elem, class Key>
 BSTNode<Elem, Key>* BST<Elem, Key>::MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const {
 
@@ -294,6 +324,15 @@ BSTNode<Elem, Key>* BST<Elem, Key>::MinInSubTree_(BSTNode<Elem, Key>* sub_tree_r
 }
 
 
+/**
+ * @brief 子树中关键码最大项
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param sub_tree_root_ptr 子树根节点
+ * @return 关键码最大项
+ * @note
+ * 右孩子节点迭代
+ */
 template <class Elem, class Key>
 BSTNode<Elem, Key>* BST<Elem, Key>::MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const {
 
