@@ -16,6 +16,55 @@ void AVLNodeVisit(AVLNode<string, string>* node_ptr) {
 }
 
 
+void TestOperatorEqual() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                       Test Operator=                      |"<<endl;
+  cout<<"|                     测试搜索二叉树=操作                     |"<<endl;
+
+  BST<string, string>* origin_search_tree_ptr = new BST<string, string>();
+
+  string question1 = "我最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "我最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "我最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  origin_search_tree_ptr->Insert(answer1, question1);
+  origin_search_tree_ptr->Insert(answer2, question2);
+  origin_search_tree_ptr->Insert(answer3, question3);
+
+  BST<string, string> new_BST = *origin_search_tree_ptr;
+
+  // todo: use following
+  /*
+  BST<string, string> origin_search_tree;
+
+  string question1 = "我最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "我最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "我最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  origin_search_tree.Insert(answer1, question1);
+  origin_search_tree.Insert(answer2, question2);
+  origin_search_tree.Insert(answer3, question3);
+
+  BST<string, string> new_BST = origin_search_tree;
+   */
+
+  new_BST.PrintTree(BSTNodeVisit);
+
+  cout<<endl<<"-------------------------------------------------------------"<<endl;
+}
+
+
 void TestBSTInsert() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;

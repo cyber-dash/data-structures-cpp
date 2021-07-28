@@ -44,16 +44,19 @@ class BST {
 public:
   BST(): root_node_ptr_(NULL) {}
   BST(Key key, Elem elem);
-  virtual ~BST() { delete this->root_node_ptr_; };
-  BSTNode<Elem, Key>* Search (const Key& key) { return SearchInSubTree_(key, this->root_node_ptr_); }
-  BST<Elem, Key>& operator=(const BST<Elem, Key>& R);
-  void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
-  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr_, visit); }
-  Elem Min() { return MinInSubTree_(root_node_ptr_)->GetData(); }
-  Elem Max() { return MaxInSubTree_(root_node_ptr_)->GetData(); }
 
+  virtual ~BST() { delete this->root_node_ptr_; };
+
+  BSTNode<Elem, Key>* Search (Key key) { return SearchInSubTree_(key, this->root_node_ptr_); }
   virtual bool Insert(Elem elem, Key key);
   virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_ptr_); }
+
+  Elem Min() { return MinInSubTree_(root_node_ptr_)->GetData(); }
+  Elem Max() { return MaxInSubTree_(root_node_ptr_)->GetData(); }
+  void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
+  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr_, visit); }
+
+  BST<Elem, Key>& operator=(const BST<Elem, Key>& origin_BST);
 
 protected:
   BSTNode<Elem, Key>* root_node_ptr_;
@@ -65,7 +68,7 @@ protected:
   // 打印子树(递归/中序)
   void PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>* p)) const;
 
-  BSTNode<Elem, Key>* Copy(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
+  BSTNode<Elem, Key>* Copy_(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
 
   // 子树中关键码最小项
   BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
@@ -281,7 +284,7 @@ void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (
 
 
 template <class Elem, class Key>
-BSTNode<Elem, Key>* BST<Elem, Key>::Copy(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr) {
+BSTNode<Elem, Key>* BST<Elem, Key>::Copy_(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr) {
 
   if (origin_sub_tree_root_ptr == NULL) {
     return NULL;
@@ -290,9 +293,12 @@ BSTNode<Elem, Key>* BST<Elem, Key>::Copy(const BSTNode<Elem, Key>* origin_sub_tr
   BSTNode<Elem, Key>* new_sub_tree_root_ptr = new BSTNode<Elem, Key>(
       origin_sub_tree_root_ptr->GetData(),
       origin_sub_tree_root_ptr->GetKey());
+  /* error handler */
 
-  new_sub_tree_root_ptr->left_child_ptr_ = Copy(origin_sub_tree_root_ptr->left_child_ptr_);
-  new_sub_tree_root_ptr->right_child_ptr_ = Copy(origin_sub_tree_root_ptr->right_child_ptr_);
+  // new_sub_tree_root_ptr->left_child_ptr_ = Copy_(origin_sub_tree_root_ptr->left_child_ptr_);
+  // new_sub_tree_root_ptr->right_child_ptr_ = Copy_(origin_sub_tree_root_ptr->right_child_ptr_);
+  new_sub_tree_root_ptr->SetLeftChildPtr(Copy_(origin_sub_tree_root_ptr->left_child_ptr_));
+  new_sub_tree_root_ptr->SetRightChildPtr(Copy_(origin_sub_tree_root_ptr->right_child_ptr_));
 
   return new_sub_tree_root_ptr;
 }
@@ -349,8 +355,30 @@ BSTNode<Elem, Key>* BST<Elem, Key>::MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_r
 }
 
 
+/*
+template<class T>
+SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
+
+  this->max_size_ = seq_list.Size();
+  int p_length = seq_list.Length();
+
+  for (int i = 0; i < p_length; i++) {
+    int curData;
+    seq_list.GetData(i, curData);
+
+    this->SetData(i, curData);
+  }
+
+  return *this;
+}
+*/
+
+
 template<class Elem, class Key>
-BST<Elem, Key> &BST<Elem, Key>::operator=(const BST<Elem, Key> &R) {
+BST<Elem, Key>& BST<Elem, Key>::operator=(const BST<Elem, Key>& origin_BST) {
+
+  this->root_node_ptr_ = this->Copy_(origin_BST.root_node_ptr_);
+
   return *this;
 }
 

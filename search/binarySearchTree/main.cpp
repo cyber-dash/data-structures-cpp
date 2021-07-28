@@ -10,6 +10,8 @@ using namespace std;
 
 int main()
 {
+  TestOperatorEqual();
+
   TestBSTInsert();
 
   TestBSTRemove();

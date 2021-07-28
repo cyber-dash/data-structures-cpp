@@ -10,6 +10,8 @@
 #include "AVL_tree.h"
 
 
+void TestOperatorEqual();
+
 void TestBSTInsert();
 
 void TestBSTRemove();
