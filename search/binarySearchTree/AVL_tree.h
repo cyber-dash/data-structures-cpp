@@ -414,7 +414,7 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Key key,
 
   // 寻找删除位置
   while (cur_node_ptr != NULL) {
-    // 找到等于key的结点, 无法插入, todo: 原书使用elem
+    // 找到等于key的结点, 无法插入
     if (key == cur_node_ptr->GetKey()) {
       break;
     }
@@ -534,7 +534,6 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
 template<class Elem, class Key>
 bool
 AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key key) {
-  // AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
   AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
 
   stack<AVLNode<Elem, Key>*> AVL_node_stack;
@@ -542,25 +541,6 @@ AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key
   AVLNode<Elem, Key>* delete_node_ptr = GetDeleteNodePtrAndInitStack(key,
                                                                      sub_tree_root_ptr,
                                                                      AVL_node_stack);
-
-  /*
-  // 寻找删除位置
-  while (cur_node_ptr != NULL) {
-    // 找到等于key的结点, 无法插入, todo: 原书使用elem
-    if (key == cur_node_ptr->GetKey()) {
-      break;
-    }
-
-    cur_stack_node_ptr = cur_node_ptr;
-    AVL_node_stack.push(cur_stack_node_ptr);
-
-    if (key < cur_node_ptr->GetKey()) {
-      cur_node_ptr = cur_node_ptr->LeftChildPtr();
-    } else {
-      cur_node_ptr = cur_node_ptr->RightChildPtr();
-    }
-  }
-   */
 
   if (delete_node_ptr == NULL) {
     return false; // 未找到删除结点
@@ -571,7 +551,6 @@ AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key
 
     cur_node_pre_ptr = delete_node_ptr->LeftChildPtr();
     while(cur_node_pre_ptr->RightChildPtr() != NULL) {
-      // cur_stack_node_ptr = cur_node_pre_ptr;
       AVL_node_stack.push(cur_node_pre_ptr);
       cur_node_pre_ptr = cur_node_pre_ptr->RightChildPtr();
     }
