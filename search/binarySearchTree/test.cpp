@@ -4,6 +4,7 @@
 
 
 #include "test.h"
+#include "vector"
 
 
 void BSTNodeVisit(BSTNode<string, string>* node_ptr) {
@@ -444,6 +445,7 @@ void TestAVLInsertByCyberDash() {
 }
 
 
+/*
 void TestAVLRemoveByCyberDash() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -470,8 +472,38 @@ void TestAVLRemoveByCyberDash() {
   AVL_tree->InsertByCyberDash(answer4, question4);
 
   AVL_tree->Remove(question3, answer3);
-  AVL_tree->Remove(question2, answer2);
-  // AVL_tree->Remove(question1, answer1); // todo: has bug
+  // AVL_tree->Remove(question2, answer2);
+  AVL_tree->Remove(question1, answer1);
+
+  AVL_tree->PrintTree(AVLNodeVisit);
+
+  cout<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+*/
+
+
+void TestAVLRemoveByCyberDash() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                 Test AVL RemoveByCyberDash                |"<<endl;
+  cout<<"|               测试平衡二叉树的删除(CyberDash版本)             |"<<endl;
+
+  AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+
+  string keyArr[19] =
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+  string elemArr[19] =
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+
+  for (int i = 0; i < 19; i++) {
+    AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
+  }
+
+  AVL_tree->PrintTree(AVLNodeVisit);
+
+  AVL_tree->Remove2("p");
 
   AVL_tree->PrintTree(AVLNodeVisit);
 

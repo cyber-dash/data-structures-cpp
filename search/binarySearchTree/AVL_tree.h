@@ -54,8 +54,9 @@ public:
   bool Insert(Elem data, Key key);
   bool InsertByCyberDash(Elem data, Key key);
   bool Remove(Key key, Elem& data) { return this->RemoveInSubTree_(this->root_, key); }
+  bool Remove2(Key key) { return this->RemoveInSubTree_(this->root_, key); }
   // int Height() const;
-  void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); }
+  void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); cout<<endl; }
 
   AVLNode<Elem, Key>* root_; // 根节点
 
@@ -566,7 +567,6 @@ AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key
   }
 
   if (delete_node_ptr->LeftChildPtr() != NULL && delete_node_ptr->RightChildPtr() != NULL) {
-    // cur_stack_node_ptr = delete_node_ptr;
     AVL_node_stack.push(delete_node_ptr); // 将待删除节点入stack
 
     cur_node_pre_ptr = delete_node_ptr->LeftChildPtr();
@@ -591,11 +591,11 @@ AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key
     child_of_delete_node_ptr = delete_node_ptr->RightChildPtr();
   }
 
-  AVLNode<Elem, Key>* cur_stack_node_ptr = AVL_node_stack.top();
-
-  if (cur_stack_node_ptr == NULL) { // 删除的是根节点
+  if (AVL_node_stack.empty() == true) { // 删除的是根节点
     sub_tree_root_ptr = child_of_delete_node_ptr;
   } else {
+
+    AVLNode<Elem, Key>* cur_stack_node_ptr = AVL_node_stack.top();
 
     if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) { // 被删除节点是cur_stack_node_ptr的左孩子
       cur_stack_node_ptr->SetLeftChildPtr(child_of_delete_node_ptr); // 连接
