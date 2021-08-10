@@ -57,11 +57,12 @@ void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set) {
 
 /**
  * @brief 图广度优先遍历
- *   使用队列进行广度优先遍历
  * @tparam T 结点模板类型
  * @tparam E 边模板类型
  * @param graph 图
  * @param vertex 遍历起始结点
+ * @note
+ * 使用队列进行广度优先遍历
  */
 template<class T, class E>
 void BFS(Graph<T, E>& graph, const T& vertex) {
@@ -104,25 +105,33 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
  * @tparam T 结点模板类型
  * @tparam E 边模板类型
  * @param graph 图
+ * @note
+ * 1. 使用visited_vertex_set保存已经遍历过的节点
+ * 2. 每遍历一个节点vertex
+ *   如果在visited_vertex_set中, 则已经在某连通分量中, 不再处理;
+ *   如果不在visited_vertex_set中, 使用DFS对vertex进行遍历, 连通分量数量+1
  */
 template<class T, class E>
 void Components(Graph<T, E>& graph) {
 
-  int vertices_num = graph.NumberOfVertices();
-  set<T> visited_vertex_set;
+  int vertices_num = graph.NumberOfVertices(); // 图内节点的数量
+  set<T> visited_vertex_set; // 使用set保存已经遍历过的节点
 
-  int component_index = 1;
+  int component_index = 1; // 初始连通分量为1
 
   for (int i = 0; i < vertices_num; i++) {
+
     T vertex;
-    bool done = graph.GetVertexByIndex(vertex, i);
+    bool done = graph.GetVertexByIndex(vertex, i); // 获取索引i对应的节点vertex
 
     if (done) {
+      // 如果visited_vertex_set中, 没有查到vertex, 说明vertex在一个新的联通分量中
+      // 对vertex执行DFS遍历(书中的算法, 使用BFS也可以)
       if (visited_vertex_set.find(vertex) == visited_vertex_set.end()) {
         cout<<"连通分量"<<component_index<<":"<<endl;
         DFSOnVertex(graph, vertex, visited_vertex_set);
 
-        component_index++;
+        component_index++; // 连通分量数量+1
         cout<<endl;
       }
     }
@@ -309,63 +318,92 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @tparam E
+ * @param graph
+ * @param vertex
+ * @param dist 数组, dist[i]表示源点v0到vi的距离长度
+ * @param from_path
+ * @note
+ */
 template<class T, class E>
-void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E *dist, int *path) {
+void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E* dist, int* from_path) {
 
-  T cur_vertex;
-  int vertex_num = graph.NumberOfVertices();
-
+  int vertex_num = graph.NumberOfVertices(); //
   set<T> vertex_set;
+  int vertex_idx = graph.GetVertexIndex(vertex);
 
   // 初始化
   for (int i = 0; i < vertex_num; i++) {
 
-    // vertex到当前节点cur_vertex的距离, 保存到dist[i]
-    graph.GetVertexByIndex(cur_vertex, i);
-    bool get_weight_done = graph.GetWeight(dist[i], vertex, cur_vertex);
+    // 获取索引i对应的节点vertex
+    T idx_i_vertex;
+    bool get_vertex_done = graph.GetVertexByIndex(idx_i_vertex, i);
+    /* error handler */
 
-    // 如果dist[i]存在, 则path[i]为vertex对应的索引
-    if (cur_vertex != vertex && get_weight_done) {
-      path[i] = graph.GetVertexIndex(vertex);
+    // vertex到当前节点idx_i_vertex的距离, 保存到dist[i]
+    // 如果vertex到idx_i_vertex之间没有边, 则dist[i]为MAX_WEIGHT
+    bool get_weight_done = graph.GetWeight(dist[i], vertex, idx_i_vertex);
+    if (!get_weight_done) {
+      dist[i] = (E)MAX_WEIGHT;
+    }
+
+    // 如果 边(节点[vertex_idx], 节点[i])存在, 则from_path[i]为vertex对应的索引vertex_idx
+    if (idx_i_vertex != vertex && get_weight_done && get_vertex_done) {
+      from_path[i] = vertex_idx;
     } else {
-      path[i] = -1;
+      from_path[i] = -1;
     }
   }
 
-  // vertex到vertex的距离(dist)为0
+  // 节点vertex加入到集合vertex_set
   vertex_set.insert(vertex);
-
-  int vertex_idx = graph.GetVertexIndex(vertex);
   dist[vertex_idx] = 0;
 
+  // 将图中其他节点, 按照算法, 依次加入到集合vertex_set, 并且按照最短路径状态方程, 执行算法
   for (int i = 0; i < vertex_num - 1; i++) {
-    E min = (E)MAX_WEIGHT;
+    E cur_min_dist = (E)MAX_WEIGHT;
+    T cur_min_dist_dest_vertex = vertex;
 
-    T cur_min_vertex = vertex;
     for (int j = 0; j < vertex_num; j++) {
-      graph.GetVertexByIndex(cur_vertex, j);
-      if (vertex_set.find(cur_vertex) == vertex_set.end() && dist[cur_vertex] < min) {
-        cur_min_vertex = cur_vertex;
-        min = dist[cur_vertex];
+      T idx_j_vertex;
+      bool get_vertex_done = graph.GetVertexByIndex(idx_j_vertex, j);
+      /* error handler */
+
+      // 本轮的最短路径的目的节点cur_min_dist_dest_vertex 和 最短路径cur_min_dist
+      if (vertex_set.find(idx_j_vertex) == vertex_set.end() // 不在vertex_set中
+        && dist[idx_j_vertex] < cur_min_dist // 边(节点[vertex_idx], 节点[j])的长度 < cur_min_dist
+          && get_vertex_done
+        )
+      {
+        cur_min_dist_dest_vertex = idx_j_vertex;
+        cur_min_dist = dist[idx_j_vertex];
       }
     }
 
-    vertex_set.insert(cur_min_vertex);
+    vertex_set.insert(cur_min_dist_dest_vertex); // 将cur_min_dist_dest_vertex插入到vertex_set
 
+    // Dijkstra核心算法
     for (int j = 0; j < vertex_num; j++) {
-      graph.GetVertexByIndex(cur_vertex, j);
+      T idx_j_vertex;
+      bool get_vertex_done = graph.GetVertexByIndex(idx_j_vertex, j);
+      /* error handler */
 
       E weight;
-      bool get_weight_done = graph.GetWeight(weight, cur_min_vertex, cur_vertex);
+      bool get_weight_done = graph.GetWeight(weight, cur_min_dist_dest_vertex, idx_j_vertex);
+      /* error handler */
 
-      if (vertex_set.find(cur_vertex) == vertex_set.end()
-        && weight < (E)MAX_WEIGHT
-        && dist[cur_min_vertex] + weight < dist[cur_vertex]
-        && get_weight_done
+      if (vertex_set.find(idx_j_vertex) == vertex_set.end() // cur_j_vertex不在vertex_set中
+          && weight < (E)MAX_WEIGHT // 边()
+          && dist[cur_min_dist_dest_vertex] + weight < dist[idx_j_vertex]
+          && get_weight_done
+          && get_vertex_done
         )
       {
-        dist[cur_vertex] = dist[cur_min_vertex] + weight;
-        path[j] = graph.GetVertexIndex(cur_min_vertex);
+        dist[idx_j_vertex] = dist[cur_min_dist_dest_vertex] + weight;
+        from_path[j] = graph.GetVertexIndex(cur_min_dist_dest_vertex);
       }
     }
   }
@@ -373,29 +411,29 @@ void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E *dist, int *path) {
 
 
 template<class T, class E>
-void PrintShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
+void PrintShortestPath(Graph<T, E>& graph, T vertex, E* dist, int* from_path) {
   cout<<"从顶点"<<vertex<<"到其他各顶点的最短路径为: "<<endl;
 
   int vertex_num = graph.NumberOfVertices();
   int vertex_index = graph.GetVertexIndex(vertex);
 
-  int* d = new int[vertex_num];
+  int* vertex_idx_arr = new int[vertex_num];
 
   for (int i = 0; i < vertex_num; i++) {
     if (i != vertex_index) {
       int j = i;
-      int k = 0;
+      int vertex_idx = 0;
 
       while (j != vertex_index) {
-        d[k++] = j;
-        j = path[j];
+        vertex_idx_arr[vertex_idx++] = j;
+        j = from_path[j];
       }
 
       T cur_vertex;
       graph.GetVertexByIndex(cur_vertex, i);
       cout<<"顶点"<<cur_vertex<<"的最短路径为:"<<vertex<<" ";
-      while (k > 0) {
-        graph.GetVertexByIndex(cur_vertex, d[--k]);
+      while (vertex_idx > 0) {
+        graph.GetVertexByIndex(cur_vertex, vertex_idx_arr[--vertex_idx]);
         cout<<cur_vertex<<" ";
       }
 
@@ -403,7 +441,7 @@ void PrintShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]) {
     }
   }
 
-  delete[] d;
+  delete[] vertex_idx_arr;
 }
 
 

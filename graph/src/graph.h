@@ -39,9 +39,9 @@ public:
   virtual int GetVertexIndex(T vertex) = 0;
 
 protected:
-  int max_vertices_num_;
-  int edge_count_;
-  int vertices_num_;
+  int max_vertices_num_; // 图节点数量最大限制
+  int edge_count_; // 边数量
+  int vertices_num_; // 节点数量
 };
 
 

@@ -53,9 +53,8 @@ public:
   AVLTree(): root_(NULL) {}
   bool Insert(Elem data, Key key);
   bool InsertByCyberDash(Elem data, Key key);
-  bool Remove(Key key, Elem& data) { return this->RemoveInSubTree_(this->root_, key); }
-  bool Remove2(Key key) { return this->RemoveInSubTree_(this->root_, key); }
-  // int Height() const;
+  bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(this->root_, key); }
+  bool Remove2(Key key) { return this->RemoveInSubTreeByCyberDash_(this->root_, key); }
   void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); cout<<endl; }
 
   AVLNode<Elem, Key>* root_; // 根节点
@@ -71,8 +70,8 @@ public:
 protected:
   AVLNode<Elem, Key>* SearchInSubTree_(const Key& key, const AVLNode<Elem, Key>*& sub_tree_root_ptr) const;
   bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
+  // 平衡树子树插入(CyberDash实现版本)
   bool InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
-  bool RemoveInSubTree_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
   bool RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
 
   // 左单旋转(Rotation Left), 图7.15(a)的情形
@@ -83,15 +82,9 @@ protected:
   void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr);
   // 先右后左双旋转(Rotation Right Left), 图7.18(a)的情形
   void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr);
-  // AVL子树的高度
-  int HeightOfSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
 
-  // 获取结点插入位置, 并用栈保存信息
-  bool FindInsertPosAndInitStack_(AVLNode<Elem, Key>*& sub_tree_root_ptr,
-                                  Key key,
-                                  stack<AVLNode<Elem, Key>*>& AVL_node_stack,
-                                  AVLNode<Elem, Key>*& cur_stack_node_ptr,
-                                  AVLNode<Elem, Key>*& insert_node_ptr);
+  // AVL子树的高度
+  // int HeightOfSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
 
   void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) const;
 };
@@ -202,37 +195,6 @@ void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
   }
 
   node_ptr->balance_factor = 0;
-}
-
-
-// todo: 用来代替部分逻辑
-// 获取结点插入位置, 并用栈保存信息
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::FindInsertPosAndInitStack_(AVLNode<Elem, Key>*& sub_tree_root_ptr,
-                                Key key,
-                                stack<AVLNode<Elem, Key>*>& AVL_node_stack,
-                                AVLNode<Elem, Key>*& cur_stack_node_ptr,
-                                AVLNode<Elem, Key>*& insert_node_ptr) {
-
-  // 寻找插入位置
-  while (insert_node_ptr != NULL) {
-    // 找到等于key的结点, 无法插入, todo: 原书使用elem
-    if (key == insert_node_ptr->GetKey()) {
-      return false;
-    }
-
-    cur_stack_node_ptr = insert_node_ptr;
-    AVL_node_stack.push(cur_stack_node_ptr);
-
-    // todo: 原书使用elem
-    if (key < insert_node_ptr->GetKey()) {
-      insert_node_ptr = insert_node_ptr->LeftChildPtr();
-    } else {
-      insert_node_ptr = insert_node_ptr->RightChildPtr();
-    }
-  }
-
-  return true;
 }
 
 
@@ -451,12 +413,12 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
   stack<AVLNode<Elem, Key>* > AVL_node_stack;
 
   // 获取插入位置, 初始化栈
-  AVLNode<Elem, Key> *insert_node_ptr = AVLTree::GetInsertNodePtrAndInitStack(key, sub_tree_root_ptr, AVL_node_stack);
+  AVLNode<Elem, Key>* insert_node_ptr = GetInsertNodePtrAndInitStack(key, sub_tree_root_ptr, AVL_node_stack);
 
   insert_node_ptr = new AVLNode<Elem, Key>(elem, key);
   /* error handler */
 
-  // 空树, 新结点成为根节点
+  // 空树, 新结点成为根节点, 并返回
   if (AVL_node_stack.empty()) {
     sub_tree_root_ptr = insert_node_ptr;
     return true;
@@ -531,9 +493,16 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
 }
 
 
+/**
+ * @brief 平衡树子树删除节点(CyberDash实现版本)
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param sub_tree_root_ptr 子树根节点
+ * @param key 待删除关键码
+ * @return
+ */
 template<class Elem, class Key>
-bool
-AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key key) {
+bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key key) {
   AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
 
   stack<AVLNode<Elem, Key>*> AVL_node_stack;
@@ -673,53 +642,13 @@ AVLTree<Elem, Key>::RemoveInSubTree_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key
 }
 
 
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key) {
-  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL;
-  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
-  AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
-
-  stack<AVLNode<Elem, Key>*> AVL_node_stack;
-
-  // 寻找插入位置
-  while (cur_node_ptr != NULL) {
-    // 找到等于key的结点, 无法插入, todo: 原书使用elem
-    if (key == cur_node_ptr->GetKey()) {
-      break;
-    }
-
-    cur_stack_node_ptr = cur_node_ptr;
-    AVL_node_stack.push(cur_stack_node_ptr);
-
-    if (key < cur_node_ptr->GetKey()) {
-      cur_node_ptr = cur_node_ptr->LeftChildPtr();
-    } else {
-      cur_node_ptr = cur_node_ptr->RightChildPtr();
-    }
-  }
-
-  if (cur_node_ptr == NULL) {
-    return false; // 未找到删除结点
-  }
-
-  if (cur_node_ptr->LeftChildPtr() != NULL && cur_node_ptr->RightChildPtr() != NULL) {
-    cur_stack_node_ptr = cur_node_ptr;
-    AVL_node_stack.push(cur_stack_node_ptr); // 将待删除节点入stack
-
-    cur_node_pre_ptr = cur_node_ptr->LeftChildPtr();
-    while(cur_node_pre_ptr->RightChildPtr() != NULL) {
-      cur_stack_node_ptr = cur_node_pre_ptr;
-      AVL_node_stack.push(cur_stack_node_ptr);
-      cur_node_pre_ptr = cur_node_pre_ptr->RightChildPtr();
-    }
-
-    cur_node_ptr->SetKey(cur_node_pre_ptr->GetKey());
-    cur_node_ptr->SetData(cur_node_pre_ptr->GetData());
-  }
-}
-
-
-
+/**
+ * @brief 打印子树(递归)
+ * @tparam Elem
+ * @tparam Key
+ * @param sub_tree_root_ptr
+ * @param visit
+ */
 template <class Elem, class Key>
 void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) const {
 
