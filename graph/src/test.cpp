@@ -412,19 +412,13 @@ void TestShortestPath() {
   matrix_graph.InsertEdge(v0, v4, 100);
   matrix_graph.InsertEdge(v2, v4, 10);
 
-  cout<<endl<<"**邻接表图测试**"<<endl;
-  int dist_adj[5];
-  /*
-  for (int i = 0; i < 5; i++) {
-    dist_adj[i] = (int)MAX_WEIGHT;
-  }
-   */
+  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl;
+  int dist_arr[5];
+  int from_path_arr[5];
 
-  int path_ajd[5];
+  DijkstraShortestPath(adjacency_list_graph, v0, dist_arr, from_path_arr);
 
-  DijkstraShortestPath(adjacency_list_graph, v0, dist_adj, path_ajd);
-
-  PrintShortestPath(adjacency_list_graph, v0, dist_adj, path_ajd);
+  PrintShortestPath(adjacency_list_graph, v0, dist_arr, from_path_arr);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   int dist_matrix[5];

@@ -166,14 +166,14 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
  * @tparam T 结点模板类型
  * @tparam E 边模板类型
  * @param graph 图
- * @param vertex 起始结点
- * @param dist
- * @param from_path
+ * @param origin_vertex 起始结点
+ * @param min_dist_arr
+ * @param from_path_arr
  * @note
  *
  */
 template<class T, class E>
-void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E* dist, int* from_path);
+void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E* min_dist_arr, int* from_path_arr);
 
 
 /**
