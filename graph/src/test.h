@@ -33,7 +33,7 @@ void TestKruskal();
 void TestPrim();
 
 // 测试Dijkstra最小生成树
-void TestShortestPath();
+void TestDijkstraShortestPath();
 
 // 关于CyberDash
 void TestCyberDashShow();

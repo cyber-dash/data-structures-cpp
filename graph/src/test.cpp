@@ -368,19 +368,19 @@ void TestPrim() {
 }
 
 
-void TestShortestPath() {
+void TestDijkstraShortestPath() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test DijkstraShortestPath                 |"<<endl;
   cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
 
-  int v0 = 0;
-  int v1 = 1;
-  int v2 = 2;
-  int v3 = 3;
-  int v4 = 4;
+  string v0 = "北京";
+  string v1 = "上海";
+  string v2 = "广州";
+  string v3 = "深圳";
+  string v4 = "杭州";
 
-  AdjacencyListGraph<int, int> adjacency_list_graph;
+  AdjacencyListGraph<string, double> adjacency_list_graph;
 
   adjacency_list_graph.InsertVertex(v0);
   adjacency_list_graph.InsertVertex(v1);
@@ -388,15 +388,15 @@ void TestShortestPath() {
   adjacency_list_graph.InsertVertex(v3);
   adjacency_list_graph.InsertVertex(v4);
 
-  adjacency_list_graph.InsertEdge(v0, v1, 100);
-  adjacency_list_graph.InsertEdge(v1, v2, 50);
-  adjacency_list_graph.InsertEdge(v2, v3, 20);
-  adjacency_list_graph.InsertEdge(v3, v4, 60);
-  adjacency_list_graph.InsertEdge(v0, v3, 30);
-  adjacency_list_graph.InsertEdge(v0, v4, 100);
-  adjacency_list_graph.InsertEdge(v2, v4, 10);
+  adjacency_list_graph.InsertEdge(v0, v1, 98.63);
+  adjacency_list_graph.InsertEdge(v1, v2, 51.52);
+  adjacency_list_graph.InsertEdge(v2, v3, 17);
+  adjacency_list_graph.InsertEdge(v3, v4, 58.98);
+  adjacency_list_graph.InsertEdge(v0, v3, 29.3);
+  adjacency_list_graph.InsertEdge(v0, v4, 100.003);
+  adjacency_list_graph.InsertEdge(v2, v4, 9.34);
 
-  MatrixGraph<int, int> matrix_graph;
+  MatrixGraph<string, double> matrix_graph;
 
   matrix_graph.InsertVertex(v0);
   matrix_graph.InsertVertex(v1);
@@ -404,35 +404,27 @@ void TestShortestPath() {
   matrix_graph.InsertVertex(v3);
   matrix_graph.InsertVertex(v4);
 
-  matrix_graph.InsertEdge(v0, v1, 100);
-  matrix_graph.InsertEdge(v1, v2, 50);
-  matrix_graph.InsertEdge(v2, v3, 20);
-  matrix_graph.InsertEdge(v3, v4, 60);
-  matrix_graph.InsertEdge(v0, v3, 30);
-  matrix_graph.InsertEdge(v0, v4, 100);
-  matrix_graph.InsertEdge(v2, v4, 10);
+  matrix_graph.InsertEdge(v0, v1, 98.63);
+  matrix_graph.InsertEdge(v1, v2, 51.52);
+  matrix_graph.InsertEdge(v2, v3, 17);
+  matrix_graph.InsertEdge(v3, v4, 58.98);
+  matrix_graph.InsertEdge(v0, v3, 29.3);
+  matrix_graph.InsertEdge(v0, v4, 100.003);
+  matrix_graph.InsertEdge(v2, v4, 9.34);
 
   cout<<endl<<"**邻接表图Dijkstra测试**"<<endl;
-  int dist_arr[5];
-  int from_path_arr[5];
+  double min_dist_arr_adj[5];
+  int from_path_arr_adj[5];
 
-  DijkstraShortestPath(adjacency_list_graph, v0, dist_arr, from_path_arr);
-
-  PrintShortestPath(adjacency_list_graph, v0, dist_arr, from_path_arr);
+  DijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
+  PrintShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
-  int dist_matrix[5];
-  /*
-  for (int i = 0; i < 5; i++) {
-    dist_matrix[i] = (int)MAX_WEIGHT;
-  }
-   */
+  double min_dist_arr_matrix[5];
+  int from_path_arr_matrix[5];
 
-  int path_matrix[5];
-
-  DijkstraShortestPath(adjacency_list_graph, v0, dist_matrix, path_matrix);
-
-  PrintShortestPath(adjacency_list_graph, v0, dist_matrix, path_matrix);
+  DijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_matrix, from_path_arr_matrix);
+  PrintShortestPath(adjacency_list_graph, v0, min_dist_arr_matrix, from_path_arr_matrix);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
