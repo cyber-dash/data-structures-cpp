@@ -247,17 +247,30 @@ bool AVLTree<Elem, Key>::InsertByCyberDash(Elem data, Key key) {
 }
 
 
+/**
+ * @brief 子树中插入节点(递归)
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param elem 数据项
+ * @param key 关键码
+ * @param sub_tree_root_ptr 子树根节点指针
+ * @return 是否插入成功
+ * @note
+ * 如果根节点指针为NULL, 则创建节点
+ * 判断插入关键码与子树根节点关键码的大小关系, 在左子树or右子树做插入操作(递归)
+ * 如果关键码相同, 则返回false
+ */
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
 
-  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL; // todo: parent_node_of_insert
+  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL;
   AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
 
   stack<AVLNode<Elem, Key>*> AVL_node_stack;
 
   // 寻找插入位置
   while (cur_node_ptr != NULL) {
-    // 找到等于key的结点, 无法插入, todo: 原书使用elem
+    // 找到等于key的结点, 无法插入, (原书使用elem)
     if (key == cur_node_ptr->GetKey()) {
       return false;
     }
@@ -265,7 +278,6 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
     cur_stack_node_ptr = cur_node_ptr;
     AVL_node_stack.push(cur_stack_node_ptr);
 
-    // todo: 原书使用elem
     if (key < cur_node_ptr->GetKey()) {
       cur_node_ptr = cur_node_ptr->LeftChildPtr();
     } else {
@@ -282,7 +294,6 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
     return true;
   }
 
-  // todo: 原书使用elem做比较, 应该是错了
   if (key < cur_stack_node_ptr->GetKey()) {
     cur_stack_node_ptr->SetLeftChildPtr(cur_node_ptr);
   } else {

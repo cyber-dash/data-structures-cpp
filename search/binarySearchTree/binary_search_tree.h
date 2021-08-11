@@ -51,7 +51,7 @@ public:
   virtual bool Insert(Elem elem, Key key);
   virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_ptr_); }
 
-  Elem Min() { return MinInSubTree_(root_node_ptr_)->GetData(); }
+  Elem Min();
   Elem Max() { return MaxInSubTree_(root_node_ptr_)->GetData(); }
   void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
   void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr_, visit); }
@@ -59,16 +59,19 @@ public:
   BST<Elem, Key>& operator=(const BST<Elem, Key>& origin_BST);
 
 protected:
-  BSTNode<Elem, Key>* root_node_ptr_;
+  BSTNode<Elem, Key>* root_node_ptr_; // 根节点
+
   // 在子树中, 使用关键码进行搜索
   BSTNode<Elem, Key>* SearchInSubTree_(Key key, BSTNode<Elem, Key>* sub_tree_root_ptr);
 
+  // 清除子树(递归)
   void MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr);
 
   // 打印子树(递归/中序)
   void PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>* p)) const;
 
-  BSTNode<Elem, Key>* Copy_(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr);
+  // 复制一颗树
+  BSTNode<Elem, Key>* Copy_(const BSTNode<Elem, Key>* origin_tree_root_ptr);
 
   // 子树中关键码最小项
   BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
@@ -77,7 +80,7 @@ protected:
   BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
 
   // 子树中插入节点(递归)
-  bool InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+  bool InsertInSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 
   // 子树中删除节点(递归)
   bool RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
@@ -119,7 +122,13 @@ bool BST<Elem, Key>::Insert(Elem elem, Key key) {
     return true;
   }
 
-  return this->InsertIntoSubTree_(elem, key, this->root_node_ptr_);
+  return this->InsertInSubTree_(elem, key, this->root_node_ptr_);
+}
+
+
+template<class Elem, class Key>
+Elem BST<Elem, Key>::Min() {
+  return MinInSubTree_(root_node_ptr_)->GetData();
 }
 
 
@@ -137,7 +146,7 @@ bool BST<Elem, Key>::Insert(Elem elem, Key key) {
  * 如果关键码相同, 则返回false
  */
 template <class Elem, class Key>
-bool BST<Elem, Key>::InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
+bool BST<Elem, Key>::InsertInSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
   if (sub_tree_root_ptr == NULL) {
     sub_tree_root_ptr = new BSTNode<Elem, Key>(elem, key);
     /* error handler */
@@ -146,9 +155,9 @@ bool BST<Elem, Key>::InsertIntoSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*&
   }
 
   if (key < sub_tree_root_ptr->GetKey()) {
-    return InsertIntoSubTree_(elem, key, sub_tree_root_ptr->LeftChildPtr());
+    return InsertInSubTree_(elem, key, sub_tree_root_ptr->LeftChildPtr());
   } else if (key > sub_tree_root_ptr->GetKey()) {
-    return InsertIntoSubTree_(elem, key, sub_tree_root_ptr->RightChildPtr());
+    return InsertInSubTree_(elem, key, sub_tree_root_ptr->RightChildPtr());
   } else {
     return false;
   }
@@ -283,24 +292,29 @@ void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (
 }
 
 
+/**
+ * @brief 复制一颗树
+ * @tparam Elem 数据项模板类型
+ * @tparam Key 关键码模板类型
+ * @param origin_tree_root_ptr 源子树
+ * @return 新树的根节点
+ */
 template <class Elem, class Key>
-BSTNode<Elem, Key>* BST<Elem, Key>::Copy_(const BSTNode<Elem, Key>* origin_sub_tree_root_ptr) {
+BSTNode<Elem, Key>* BST<Elem, Key>::Copy_(const BSTNode<Elem, Key>* origin_tree_root_ptr) {
 
-  if (origin_sub_tree_root_ptr == NULL) {
+  if (origin_tree_root_ptr == NULL) {
     return NULL;
   }
 
-  BSTNode<Elem, Key>* new_sub_tree_root_ptr = new BSTNode<Elem, Key>(
-      origin_sub_tree_root_ptr->GetData(),
-      origin_sub_tree_root_ptr->GetKey());
+  BSTNode<Elem, Key>* new_tree_root_ptr = new BSTNode<Elem, Key>(
+      origin_tree_root_ptr->GetData(),
+      origin_tree_root_ptr->GetKey());
   /* error handler */
 
-  // new_sub_tree_root_ptr->left_child_ptr_ = Copy_(origin_sub_tree_root_ptr->left_child_ptr_);
-  // new_sub_tree_root_ptr->right_child_ptr_ = Copy_(origin_sub_tree_root_ptr->right_child_ptr_);
-  new_sub_tree_root_ptr->SetLeftChildPtr(Copy_(origin_sub_tree_root_ptr->left_child_ptr_));
-  new_sub_tree_root_ptr->SetRightChildPtr(Copy_(origin_sub_tree_root_ptr->right_child_ptr_));
+  new_tree_root_ptr->SetLeftChildPtr(Copy_(origin_tree_root_ptr->left_child_ptr_));
+  new_tree_root_ptr->SetRightChildPtr(Copy_(origin_tree_root_ptr->right_child_ptr_));
 
-  return new_sub_tree_root_ptr;
+  return new_tree_root_ptr;
 }
 
 
@@ -353,25 +367,6 @@ BSTNode<Elem, Key>* BST<Elem, Key>::MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_r
 
   return cur_node_ptr;
 }
-
-
-/*
-template<class T>
-SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
-
-  this->max_size_ = seq_list.Size();
-  int p_length = seq_list.Length();
-
-  for (int i = 0; i < p_length; i++) {
-    int curData;
-    seq_list.GetData(i, curData);
-
-    this->SetData(i, curData);
-  }
-
-  return *this;
-}
-*/
 
 
 template<class Elem, class Key>
