@@ -56,12 +56,14 @@ void BFS(Graph<T, E>& graph, const T& vertex);
  * @tparam T 结点模板类型
  * @tparam E 边模板类型
  * @param graph 图
+ * @note
+ * 1. 使用visited_vertex_set保存已经遍历过的节点
+ * 2. 每遍历一个节点vertex
+ *   如果在visited_vertex_set中, 则已经在某连通分量中, 不再处理;
+ *   如果不在visited_vertex_set中, 使用DFS对vertex进行遍历, 连通分量数量+1
  */
 template<class T, class E>
 void Components(Graph<T, E>& graph);
-
-
-// const float MAX_VALUE = 10000000;
 
 
 /**
@@ -166,10 +168,12 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
  * @param graph 图
  * @param vertex 起始结点
  * @param dist
- * @param path
+ * @param from_path
+ * @note
+ *
  */
 template<class T, class E>
-void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E* dist, int* path);
+void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E* dist, int* from_path);
 
 
 /**
@@ -179,10 +183,10 @@ void DijkstraShortestPath(Graph<T, E>& graph, T vertex, E* dist, int* path);
  * @param graph
  * @param vertex
  * @param dist
- * @param path
+ * @param from_path
  */
 template<class T, class E>
-void PrintShortestPath(Graph<T, E>& graph, T vertex, E dist[], int path[]);
+void PrintShortestPath(Graph<T, E>& graph, T vertex, E dist[], int from_path[]);
 
 
 #endif //CYBER_DASH_GRAPH_ALGORITHM_H

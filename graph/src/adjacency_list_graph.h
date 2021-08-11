@@ -63,59 +63,25 @@ public:
    */
   bool GetWeight(E& weight, T vertex1, T vertex2);
 
-  /**
-   * @brief 插入结点
-   * @param vertex 节点
-   * @return 是否插入成功
-   */
+  // 插入结点
   bool InsertVertex(const T& vertex);
 
-  /**
-   * @brief 删除结点
-   * @param vertex 节点
-   * @return 是否删除成功
-   */
+  // 删除结点
   bool RemoveVertex(T vertex);
 
-  /**
-   * @brief 插入边
-   * @param vertex1 边节点1
-   * @param vertex2 边节点2
-   * @param weight 边权值
-   * @return 是否插入成功
-   */
+  // 插入边
   bool InsertEdge(T vertex1, T vertex2, E weight);
 
-  /**
-   * @brief 删除边
-   * @param vertex1 边结点1
-   * @param vertex2 边结点2
-   * @return 是否删除成功
-   */
+  // 删除边
   bool RemoveEdge(T vertex1, T vertex2);
 
-  /**
-   * 获取第一个相邻结点
-   * @param first_neighbor 第一个相邻结点(用于保存节点)
-   * @param vertex 节点
-   * @return 是否获取成功
-   */
+  // 获取第一个相邻结点
   bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
 
-  /**
-   * @brief 获取下一个相邻结点
-   * @param next_neighbor 下一个相邻结点(用于保存结点)
-   * @param vertex 结点
-   * @param neighbor_vertex 当前相邻结点
-   * @return 是否获取成功
-   */
+  // 获取下一个相邻结点
   bool GetNextNeighborVertex(T& next_neighbor, const T& vertex, const T& neighbor_vertex);
 
-  /**
-   * @brief 获取结点索引
-   * @param vertex 结点
-   * @return 结点索引
-   */
+  // 获取结点索引
   int GetVertexIndex(T vertex);
 
   template<class U>
@@ -132,6 +98,12 @@ private:
 };
 
 
+/**
+ * @brief 邻接表图构造函数
+ * @tparam T
+ * @tparam E
+ * @param size
+ */
 template<class T, class E>
 AdjacencyListGraph<T, E>::AdjacencyListGraph(int size) {
 

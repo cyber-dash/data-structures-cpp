@@ -4,6 +4,7 @@
 
 
 #include "test.h"
+#include "vector"
 
 
 void BSTNodeVisit(BSTNode<string, string>* node_ptr) {
@@ -328,7 +329,7 @@ void TestBSTMin() {
 void TestBSTMakeEmpty() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                     Test BST MakeEmpty                       |"<<endl;
+  cout<<"|                     Test BST MakeEmpty                    |"<<endl;
   cout<<"|                      测试搜索二叉树的删除                    |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
@@ -448,30 +449,22 @@ void TestAVLRemoveByCyberDash() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test AVL RemoveByCyberDash                |"<<endl;
-  cout<<"|               测试平衡二叉树的删除(CyberDash版本)            |"<<endl;
+  cout<<"|               测试平衡二叉树的删除(CyberDash版本)             |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
-  string question1 = "我最爱的乐队";
-  string answer1 = "林肯公园";
+  string keyArr[19] =
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+  string elemArr[19] =
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
 
-  string question2 = "我最爱的游戏";
-  string answer2 = "Dota2";
+  for (int i = 0; i < 19; i++) {
+    AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
+  }
 
-  string question3 = "我最爱的电影";
-  string answer3 = "《黑客帝国》";
+  AVL_tree->PrintTree(AVLNodeVisit);
 
-  string question4 = "最爱的运动";
-  string answer4 = "足球";
-
-  AVL_tree->InsertByCyberDash(answer1, question1);
-  AVL_tree->InsertByCyberDash(answer2, question2);
-  AVL_tree->InsertByCyberDash(answer3, question3);
-  AVL_tree->InsertByCyberDash(answer4, question4);
-
-  AVL_tree->Remove(question3, answer3);
-  AVL_tree->Remove(question2, answer2);
-  // AVL_tree->Remove(question1, answer1); // todo: has bug
+  AVL_tree->Remove2("p");
 
   AVL_tree->PrintTree(AVLNodeVisit);
 

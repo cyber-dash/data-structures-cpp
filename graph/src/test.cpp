@@ -414,9 +414,11 @@ void TestShortestPath() {
 
   cout<<endl<<"**邻接表图测试**"<<endl;
   int dist_adj[5];
+  /*
   for (int i = 0; i < 5; i++) {
     dist_adj[i] = (int)MAX_WEIGHT;
   }
+   */
 
   int path_ajd[5];
 
@@ -426,9 +428,11 @@ void TestShortestPath() {
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   int dist_matrix[5];
+  /*
   for (int i = 0; i < 5; i++) {
     dist_matrix[i] = (int)MAX_WEIGHT;
   }
+   */
 
   int path_matrix[5];
 
