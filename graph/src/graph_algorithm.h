@@ -162,31 +162,31 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
 
 
 /**
- * @brief Dijkstra最短路径
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @param origin_vertex 起始结点
- * @param min_dist_arr
- * @param from_path_arr
+ * @brief 迪杰斯特拉(Dijkstra)最短路径
+ * @tparam T 图节点模板类型
+ * @tparam E 图边权值模板类型
+ * @param graph 图类型
+ * @param origin_vertex 起始节点
+ * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
+ * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
  * @note
- *
  */
 template<class T, class E>
-void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E* min_dist_arr, int* from_path_arr);
+void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
 
 
 /**
- * @brief 打印最短路径
- * @tparam T
- * @tparam E
- * @param graph
- * @param vertex
- * @param dist
- * @param from_path
+ * @brief 迪杰斯特拉(Dijkstra)最短路径
+ * @tparam T 图节点模板类型
+ * @tparam E 图边权值模板类型
+ * @param graph 图类型
+ * @param origin_vertex 起始节点
+ * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
+ * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
+ * @note
  */
 template<class T, class E>
-void PrintShortestPath(Graph<T, E>& graph, T vertex, E dist[], int from_path[]);
+void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
 
 
-#endif //CYBER_DASH_GRAPH_ALGORITHM_H
+#endif // CYBER_DASH_GRAPH_ALGORITHM_H

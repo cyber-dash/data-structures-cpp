@@ -139,6 +139,13 @@ void Components(Graph<T, E>& graph) {
 }
 
 
+/**
+ * @brief Kruskal算法
+ * @tparam T 图节点模板类型
+ * @tparam E 边模板类型
+ * @param graph 图
+ * @param min_span_tree 最小生成树
+ */
 template<class T, class E>
 void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
 
@@ -194,8 +201,8 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
 
 
 /**
- * @brief 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
- * @tparam T 图节点数据模板类型
+ * @brief Prim算法, 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
+ * @tparam T 图节点模板类型
  * @tparam E 边模板类型
  * @param graph 图
  * @param vertex 起始节点(起始可以不用这个参数, 参考教科书, 此处保留)
@@ -258,7 +265,7 @@ void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 
 /**
  * @brief Prim算法朴素实现
- * @tparam T 图节点数据模板类型
+ * @tparam T 图节点模板类型
  * @tparam E 边模板类型
  * @param graph 图
  * @param vertex 起始节点(其实可以不用这个参数, 参照教科书, 此处保留)
@@ -319,17 +326,17 @@ void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 
 
 /**
- * @brief
- * @tparam T
- * @tparam E
- * @param graph
- * @param origin_vertex
- * @param min_dist_arr 数组, dist[i]表示源点v0到vi的距离长度
- * @param from_path_arr
+ * @brief 迪杰斯特拉(Dijkstra)最短路径
+ * @tparam T 图节点模板类型
+ * @tparam E 图边权值模板类型
+ * @param graph 图类型
+ * @param origin_vertex 起始节点
+ * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
+ * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
  * @note
  */
 template<class T, class E>
-void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E* min_dist_arr, int* from_path_arr) {
+void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]) {
 
   int vertex_num = graph.NumberOfVertices();
   set<T> vertex_set;
@@ -428,38 +435,58 @@ void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E* min_dist_arr, 
 }
 
 
+/**
+ * @brief 显示迪杰斯特拉(Dijkstra)最短路径
+ * @tparam T 图节点模板类型
+ * @tparam E 图边权值模板类型
+ * @param graph 图类型
+ * @param origin_vertex 路径起始节点
+ * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
+ * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
+ * @note
+ */
 template<class T, class E>
-void PrintShortestPath(Graph<T, E>& graph, T vertex, E* dist, int* from_path) {
-  cout<<"从顶点"<<vertex<<"到其他各顶点的最短路径为: "<<endl;
+void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]) {
+  cout << "从顶点" << origin_vertex << "到其他各顶点的最短路径为: " << endl;
 
-  int vertex_num = graph.NumberOfVertices();
-  int vertex_index = graph.GetVertexIndex(vertex);
+  int vertex_count = graph.NumberOfVertices();
+  int origin_vertex_idx = graph.GetVertexIndex(origin_vertex);
 
-  int* vertex_idx_arr = new int[vertex_num];
+  // 用于存放以某个节点为终点的最短路径经过的节点
+  int* cur_pre_path_arr = new int[vertex_count];
+  /* error handler */
 
-  for (int i = 0; i < vertex_num; i++) {
-    if (i != vertex_index) {
-      int j = i;
-      int vertex_idx = 0;
-
-      while (j != vertex_index) {
-        vertex_idx_arr[vertex_idx++] = j;
-        j = from_path[j];
-      }
-
-      T cur_vertex;
-      graph.GetVertexByIndex(cur_vertex, i);
-      cout<<"顶点"<<cur_vertex<<"的最短路径为:"<<vertex<<" ";
-      while (vertex_idx > 0) {
-        graph.GetVertexByIndex(cur_vertex, vertex_idx_arr[--vertex_idx]);
-        cout<<cur_vertex<<" ";
-      }
-
-      cout<<"最短路径长度为:"<<dist[i]<<endl;
+  // 分别显示origin_vertex到各个节点的最短路径
+  for (int i = 0; i < vertex_count; i++) {
+    if (i == origin_vertex_idx) {
+      continue;
     }
+
+    int pre_vertex_idx = i; // 以索引i节点为终点
+    int idx = 0;
+
+    while (pre_vertex_idx != origin_vertex_idx) {
+      cur_pre_path_arr[idx] = pre_vertex_idx;
+      idx++;
+      pre_vertex_idx = from_path_arr[pre_vertex_idx];
+    }
+
+    // 获取索引i的节点
+    T idx_i_vertex;
+    graph.GetVertexByIndex(idx_i_vertex, i);
+
+    cout << "顶点" << idx_i_vertex << "的最短路径为:" << origin_vertex << " ";
+
+    while (idx > 0) {
+      idx--;
+      graph.GetVertexByIndex(idx_i_vertex, cur_pre_path_arr[idx]);
+      cout << idx_i_vertex << " ";
+    }
+
+    cout << "最短路径长度为:" << min_dist_arr[i] << endl;
   }
 
-  delete[] vertex_idx_arr;
+  delete[] cur_pre_path_arr;
 }
 
 

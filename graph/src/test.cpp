@@ -417,14 +417,14 @@ void TestDijkstraShortestPath() {
   int from_path_arr_adj[5];
 
   DijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
-  PrintShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
+  PrintDijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   double min_dist_arr_matrix[5];
   int from_path_arr_matrix[5];
 
   DijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_matrix, from_path_arr_matrix);
-  PrintShortestPath(adjacency_list_graph, v0, min_dist_arr_matrix, from_path_arr_matrix);
+  PrintDijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_matrix, from_path_arr_matrix);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
