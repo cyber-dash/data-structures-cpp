@@ -23,7 +23,8 @@ void TestOperatorEqual() {
   cout<<"|                       Test Operator=                      |"<<endl;
   cout<<"|                     测试搜索二叉树=操作                     |"<<endl;
 
-  BST<string, string>* origin_search_tree_ptr = new BST<string, string>();
+  // BST<string, string>* origin_search_tree_ptr = new BST<string, string>();
+  BST<string, string> origin_search_tree_ptr;
 
   string question1 = "我最爱的乐队";
   string answer1 = "林肯公园";
@@ -34,11 +35,15 @@ void TestOperatorEqual() {
   string question3 = "我最爱的电影";
   string answer3 = "《黑客帝国》";
 
-  origin_search_tree_ptr->Insert(answer1, question1);
-  origin_search_tree_ptr->Insert(answer2, question2);
-  origin_search_tree_ptr->Insert(answer3, question3);
+  // origin_search_tree_ptr->Insert(answer1, question1);
+  origin_search_tree_ptr.Insert(answer1, question1);
+  // origin_search_tree_ptr->Insert(answer2, question2);
+  origin_search_tree_ptr.Insert(answer2, question2);
+  // origin_search_tree_ptr->Insert(answer3, question3);
+  origin_search_tree_ptr.Insert(answer3, question3);
 
-  BST<string, string> new_BST = *origin_search_tree_ptr;
+  // BST<string, string> new_BST = *origin_search_tree_ptr;
+  BST<string, string> new_BST = origin_search_tree_ptr;
 
   // todo: use following
   /*

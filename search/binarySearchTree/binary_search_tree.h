@@ -55,7 +55,7 @@ public:
   Elem Min();
   Elem Max();
   void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
-  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr_, visit); }
+  void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) { this->PrintSubTree_(this->root_node_ptr_, visit); }
 
   BST<Elem, Key>& operator=(const BST<Elem, Key>& origin_BST);
 

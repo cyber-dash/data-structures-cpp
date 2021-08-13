@@ -45,18 +45,15 @@ protected:
 template<class Elem, class Key>
 class AVLTree: public BST<Elem, Key> {
 public:
-  // AVLTree(): root_node_ptr_(NULL) {}
   AVLTree(): BST<Elem, Key>() {}
+  AVLNode<Elem, Key>*& RootRef() { return (AVLNode<Elem, Key>*&)this->root_node_ptr_; }
+  AVLNode<Elem, Key>* Root() { return (AVLNode<Elem, Key>*)this->root_node_ptr_; }
+
   bool Insert(Elem data, Key key);
   bool InsertByCyberDash(Elem data, Key key);
-  // bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(this->root_node_ptr, key); }
-  bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_((AVLNode<Elem, Key>*&)this->root_node_ptr_, key); }
-  // bool Remove2(Key key) { return this->RemoveInSubTreeByCyberDash_(this->root_node_ptr, key); }
-  bool Remove2(Key key) { return this->RemoveInSubTreeByCyberDash_((AVLNode<Elem, Key>*&)this->root_node_ptr_, key); }
-  // void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr, visit); cout << endl; }
-  void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_((AVLNode<Elem, Key>*&)this->root_node_ptr_, visit); cout << endl; }
-
-  // AVLNode<Elem, Key>* root_node_ptr; // 根节点
+  bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(RootRef(), key); }
+  bool Remove2(Key key);
+  void PrintTree(void (*visit)(AVLNode<Elem, Key>*));
 
   static AVLNode<Elem, Key>* GetInsertNodePtrAndInitStack(Key key,
                                                    AVLNode<Elem, Key>* node_ptr,
@@ -85,7 +82,7 @@ protected:
   // AVL子树的高度
   // int HeightOfSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
 
-  void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) const;
+  void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*));
 };
 
 
@@ -662,7 +659,7 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
  * @param visit
  */
 template <class Elem, class Key>
-void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) const {
+void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) {
 
   if (sub_tree_root_ptr == NULL) {
     return;
@@ -679,6 +676,18 @@ void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, vo
   PrintSubTree_(sub_tree_root_ptr->RightChildPtr(), visit);
 
   cout << ")";
+}
+
+
+template<class Elem, class Key>
+void AVLTree<Elem, Key>::PrintTree(void (*visit)(AVLNode<Elem, Key> *)) {
+  this->PrintSubTree_((AVLNode<Elem, Key>*)this->root_node_ptr_, visit); cout << endl;
+}
+
+
+template<class Elem, class Key>
+bool AVLTree<Elem, Key>::Remove2(Key key) {
+  return this->RemoveInSubTreeByCyberDash_(this->RootRef(), key);
 }
 
 
