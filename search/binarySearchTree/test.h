@@ -20,6 +20,8 @@ void TestBSTSearch();
 
 void TestBSTMax();
 
+void TestAVLMax();
+
 void TestBSTMin();
 
 void TestBSTMakeEmpty();

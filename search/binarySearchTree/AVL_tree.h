@@ -13,18 +13,12 @@
 template<class Elem, class Key>
 class AVLNode: public BSTNode<Elem, Key> {
 public:
-  AVLNode(): left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
-
+  AVLNode():
+    left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
   AVLNode(const Elem& elem, const Key& key):
-    elem_(elem), key_(key),
-    left_child_ptr_(NULL), right_child_ptr_(NULL),
-    balance_factor() {}
-
-  AVLNode(const Elem& elem, const Key& key,
-          AVLNode<Elem, Key>* left_child_ptr,
-          AVLNode<Elem, Key>* right_child_ptr):
-          elem_(elem), key_(key),
-          left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr), balance_factor(0) {}
+    elem_(elem), key_(key), left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
+  AVLNode(Elem elem, Key key, AVLNode<Elem, Key>* left_child_ptr, AVLNode<Elem, Key>* right_child_ptr):
+    elem_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr), balance_factor(0) {}
 
   void SetLeftChildPtr(AVLNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
   void SetRightChildPtr(AVLNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
@@ -38,10 +32,11 @@ public:
   AVLNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
   AVLNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
 
+  int balance_factor;
+protected:
   AVLNode<Elem, Key>* left_child_ptr_;
   AVLNode<Elem, Key>* right_child_ptr_;
 
-  int balance_factor;
   Elem elem_;
   Key key_;
 };
@@ -50,14 +45,18 @@ public:
 template<class Elem, class Key>
 class AVLTree: public BST<Elem, Key> {
 public:
-  AVLTree(): root_(NULL) {}
+  // AVLTree(): root_node_ptr_(NULL) {}
+  AVLTree(): BST<Elem, Key>() {}
   bool Insert(Elem data, Key key);
   bool InsertByCyberDash(Elem data, Key key);
-  bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(this->root_, key); }
-  bool Remove2(Key key) { return this->RemoveInSubTreeByCyberDash_(this->root_, key); }
-  void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_, visit); cout<<endl; }
+  // bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(this->root_node_ptr, key); }
+  bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_((AVLNode<Elem, Key>*&)this->root_node_ptr_, key); }
+  // bool Remove2(Key key) { return this->RemoveInSubTreeByCyberDash_(this->root_node_ptr, key); }
+  bool Remove2(Key key) { return this->RemoveInSubTreeByCyberDash_((AVLNode<Elem, Key>*&)this->root_node_ptr_, key); }
+  // void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr, visit); cout << endl; }
+  void PrintTree(void (*visit)(AVLNode<Elem, Key>*)) const { this->PrintSubTree_((AVLNode<Elem, Key>*&)this->root_node_ptr_, visit); cout << endl; }
 
-  AVLNode<Elem, Key>* root_; // 根节点
+  // AVLNode<Elem, Key>* root_node_ptr; // 根节点
 
   static AVLNode<Elem, Key>* GetInsertNodePtrAndInitStack(Key key,
                                                    AVLNode<Elem, Key>* node_ptr,
@@ -101,11 +100,11 @@ void AVLTree<Elem, Key>::RotateLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
   // 图7.15(b)
   AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
-  node_ptr = sub_left_node_ptr->right_child_ptr_;
+  node_ptr = sub_left_node_ptr->RightChildPtr();
 
   // 图7.15(c)
-  sub_left_node_ptr->right_child_ptr_ = node_ptr->left_child_ptr_;
-  node_ptr->left_child_ptr_ = sub_left_node_ptr;
+  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr());
+  node_ptr->SetLeftChildPtr(sub_left_node_ptr);
 
   // 调整平衡因子
   node_ptr->balance_factor = 0;
@@ -200,13 +199,15 @@ void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::Insert(Elem data, Key key) {
-  return this->InsertInSubTree_(data, key, this->root_);
+  // return this->InsertInSubTree_(data, key, this->root_node_ptr);
+  return this->InsertInSubTree_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
 }
 
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertByCyberDash(Elem data, Key key) {
-  return this->InsertInSubTreeByCyberDash_(data, key, this->root_);
+  // return this->InsertInSubTreeByCyberDash_(data, key, this->root_node_ptr);
+  return this->InsertInSubTreeByCyberDash_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
 }
 
 

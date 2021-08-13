@@ -273,6 +273,59 @@ void TestBSTMax() {
 }
 
 
+void TestAVLMax() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                        Test AVL Max                       |"<<endl;
+  cout<<"|                     测试搜索二叉树的最大值                    |"<<endl;
+
+  AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+
+  string question1 = "最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  string question5 = "最讨厌的编程语言";
+  string answer5 = "Java";
+
+  string question6 = "如果暴富了想干嘛";
+  string answer6 = "包养数学家";
+
+  string question7 = "推荐几首歌听";
+  string answer7 = "Learning To Survive|Final Masquerade|Nothing";
+
+  string question8 = "最后随便说句话";
+  string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
+
+  string question9 = "讲一件后悔的事儿";
+  string answer9 = "烂到肚子里也不会说的";
+
+  AVL_tree->Insert(answer1, question1);
+  AVL_tree->Insert(answer2, question2);
+  AVL_tree->Insert(answer3, question3);
+  AVL_tree->Insert(answer4, question4);
+  AVL_tree->Insert(answer5, question5);
+  AVL_tree->Insert(answer6, question6);
+  AVL_tree->Insert(answer7, question7);
+  AVL_tree->Insert(answer8, question8);
+  AVL_tree->Insert(answer9, question9);
+
+  string maxData = AVL_tree->BST::Max();
+
+  cout<<"maxData: "<<maxData<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
 void TestBSTMin() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;

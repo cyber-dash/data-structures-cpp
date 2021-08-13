@@ -13,22 +13,23 @@ template <class Elem, class Key>
 class BSTNode {
 public:
   BSTNode(): left_child_ptr_(NULL), right_child_ptr_(NULL) {}
-  BSTNode(const Elem& elem, const Key& key,
-          BSTNode<Elem, Key>* left_child_ptr = NULL,
-          BSTNode<Elem, Key>* right_child_ptr = NULL):
+  BSTNode(Elem elem, Key key): elem_(elem), key_(key), left_child_ptr_(NULL), right_child_ptr_(NULL) {}
+  BSTNode(Elem elem, Key key, BSTNode<Elem, Key>* left_child_ptr, BSTNode<Elem, Key>* right_child_ptr):
       elem_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr) {}
-
-  virtual void SetData(const Elem& elem) { elem_ = elem;}
-  virtual Elem GetData() { return elem_; }
-
-  virtual void SetKey(const Key& key) { key_ = key; }
-  virtual Key GetKey() { return key_; }
-
-  void SetLeftChildPtr(BSTNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
-  void SetRightChildPtr(BSTNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
 
   BSTNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
   BSTNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
+
+  virtual void SetLeftChildPtr(BSTNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
+  virtual void SetRightChildPtr(BSTNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
+
+  virtual void SetKey(const Key& key) { this->key_ = key; }
+  virtual Key GetKey() { return this->key_; }
+
+  virtual void SetData(const Elem& elem) { this->elem_ = elem;}
+  virtual Elem GetData() {
+    return this->elem_;
+  }
 
 protected:
   BSTNode<Elem, Key>* left_child_ptr_;
@@ -47,12 +48,12 @@ public:
 
   virtual ~BST() { delete this->root_node_ptr_; };
 
-  BSTNode<Elem, Key>* Search (Key key) { return SearchInSubTree_(key, this->root_node_ptr_); }
+  virtual BSTNode<Elem, Key>* Search (Key key) { return SearchInSubTree_(key, this->root_node_ptr_); }
   virtual bool Insert(Elem elem, Key key);
   virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_ptr_); }
 
   Elem Min();
-  Elem Max() { return MaxInSubTree_(root_node_ptr_)->GetData(); }
+  Elem Max();
   void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
   void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) const { this->PrintSubTree_(this->root_node_ptr_, visit); }
 
@@ -375,6 +376,14 @@ BST<Elem, Key>& BST<Elem, Key>::operator=(const BST<Elem, Key>& origin_BST) {
   this->root_node_ptr_ = this->Copy_(origin_BST.root_node_ptr_);
 
   return *this;
+}
+
+
+template<class Elem, class Key>
+Elem BST<Elem, Key>::Max() {
+  BSTNode<Elem, Key>* root_node_ptr = this->root_node_ptr_;
+  BSTNode<Elem, Key>* max_node = this->BST::MaxInSubTree_(root_node_ptr);
+  return max_node->GetData();
 }
 
 

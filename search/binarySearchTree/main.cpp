@@ -18,6 +18,8 @@ int main()
 
   TestBSTMax();
 
+  TestAVLMax();
+
   TestBSTMin();
 
   TestBSTMakeEmpty();
