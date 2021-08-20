@@ -18,13 +18,15 @@ void TestBSTRemove();
 
 void TestBSTSearch();
 
-void TestBSTMax();
+void TestBSTMaxAndMin();
 
-void TestAVLMax();
+void TestAVLMaxAndMin();
 
 void TestBSTMin();
 
 void TestBSTMakeEmpty();
+
+void TestAVLSearch();
 
 void TestAVLInsert();
 

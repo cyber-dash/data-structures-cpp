@@ -225,64 +225,11 @@ void TestBSTSearch() {
 }
 
 
-void TestBSTMax() {
+void TestAVLSearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                        Test BST Max                       |"<<endl;
-  cout<<"|                     测试搜索二叉树的最大值                    |"<<endl;
-
-  BST<string, string>* binary_search_tree = new BST<string, string>();
-
-  string question1 = "最爱的乐队";
-  string answer1 = "林肯公园";
-
-  string question2 = "最爱的游戏";
-  string answer2 = "Dota2";
-
-  string question3 = "最爱的电影";
-  string answer3 = "《黑客帝国》";
-
-  string question4 = "最爱的运动";
-  string answer4 = "足球";
-
-  string question5 = "最讨厌的编程语言";
-  string answer5 = "Java";
-
-  string question6 = "如果暴富了想干嘛";
-  string answer6 = "包养数学家";
-
-  string question7 = "推荐几首歌听";
-  string answer7 = "Learning To Survive|Final Masquerade|Nothing";
-
-  string question8 = "最后随便说句话";
-  string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
-
-  string question9 = "讲一件后悔的事儿";
-  string answer9 = "烂到肚子里也不会说的";
-
-  binary_search_tree->Insert(answer1, question1);
-  binary_search_tree->Insert(answer2, question2);
-  binary_search_tree->Insert(answer3, question3);
-  binary_search_tree->Insert(answer4, question4);
-  binary_search_tree->Insert(answer5, question5);
-  binary_search_tree->Insert(answer6, question6);
-  binary_search_tree->Insert(answer7, question7);
-  binary_search_tree->Insert(answer8, question8);
-  binary_search_tree->Insert(answer9, question9);
-
-  string maxData = binary_search_tree->Max();
-
-  cout<<"maxData: "<<maxData<<endl;
-
-  cout<<"-------------------------------------------------------------"<<endl;
-}
-
-
-void TestAVLMax() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                        Test AVL Max                       |"<<endl;
-  cout<<"|                     测试搜索二叉树的最大值                    |"<<endl;
+  cout<<"|                      Test AVL Search                      |"<<endl;
+  cout<<"|                       测试AVL树的删除                       |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
@@ -323,9 +270,136 @@ void TestAVLMax() {
   AVL_tree->Insert(answer8, question8);
   AVL_tree->Insert(answer9, question9);
 
-  string maxData = AVL_tree->BST::Max();
+  AVL_tree->RemoveByCyberDash(question9);
 
-  cout<<"maxData: "<<maxData<<endl;
+  AVLNode<string, string>* the_9th_node = AVL_tree->Search(question9);
+  if (the_9th_node == NULL) { // 没有搜索到
+    // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duck不必"<<endl;
+    cout<<"此问题已删除"<<endl;
+  } else { // 搜索到
+    cout<<"question9: "<<the_9th_node->GetKey()<<endl<<"answer9: "<<the_9th_node->GetData()<<endl;
+  }
+
+  cout<<endl;
+
+  AVLNode<string, string>* the_8th_node = AVL_tree->Search(question8);
+  if (the_8th_node == NULL) { // 没有搜索到
+    cout<<"Duck不必"<<endl;
+  } else { // 搜索到
+    cout<<"question8: "<<the_8th_node->GetKey()<<endl<<"answer8: "<<the_8th_node->GetData()<<endl;
+  }
+
+  cout<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+void TestBSTMaxAndMin() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                    Test BST Max and Min                   |"<<endl;
+  cout<<"|                  测试搜索二叉树的最大值/最小值                 |"<<endl;
+
+  BST<string, string>* binary_search_tree = new BST<string, string>();
+
+  string question1 = "最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  string question5 = "最讨厌的编程语言";
+  string answer5 = "Java";
+
+  string question6 = "如果暴富了想干嘛";
+  string answer6 = "包养数学家";
+
+  string question7 = "推荐几首歌听";
+  string answer7 = "Learning To Survive|Final Masquerade|Nothing";
+
+  string question8 = "最后随便说句话";
+  string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
+
+  string question9 = "讲一件后悔的事儿";
+  string answer9 = "那些无法形容的痛, 见不得光";
+
+  binary_search_tree->Insert(answer1, question1);
+  binary_search_tree->Insert(answer2, question2);
+  binary_search_tree->Insert(answer3, question3);
+  binary_search_tree->Insert(answer4, question4);
+  binary_search_tree->Insert(answer5, question5);
+  binary_search_tree->Insert(answer6, question6);
+  binary_search_tree->Insert(answer7, question7);
+  binary_search_tree->Insert(answer8, question8);
+  binary_search_tree->Insert(answer9, question9);
+
+  string max_data = binary_search_tree->Max();
+  cout << "max_data: " << max_data << endl;
+
+  string min_data = binary_search_tree->Min();
+  cout<<"min_data: "<<min_data<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+void TestAVLMaxAndMin() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                     Test AVL Max & Min                    |"<<endl;
+  cout<<"|                    测试AVL树的最大值/最小值                  |"<<endl;
+
+  AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+
+  string question1 = "最爱的乐队";
+  string answer1 = "林肯公园";
+
+  string question2 = "最爱的游戏";
+  string answer2 = "Dota2";
+
+  string question3 = "最爱的电影";
+  string answer3 = "《黑客帝国》";
+
+  string question4 = "最爱的运动";
+  string answer4 = "足球";
+
+  string question5 = "最讨厌的编程语言";
+  string answer5 = "Java";
+
+  string question6 = "如果暴富了想干嘛";
+  string answer6 = "包养数学家";
+
+  string question7 = "推荐几首歌听";
+  string answer7 = "Learning To Survive|Final Masquerade|Nothing";
+
+  string question8 = "最后随便说句话";
+  string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
+
+  string question9 = "讲一件后悔的事儿";
+  string answer9 = "那些无法形容的痛, 见不得光";
+
+  AVL_tree->Insert(answer1, question1);
+  AVL_tree->Insert(answer2, question2);
+  AVL_tree->Insert(answer3, question3);
+  AVL_tree->Insert(answer4, question4);
+  AVL_tree->Insert(answer5, question5);
+  AVL_tree->Insert(answer6, question6);
+  AVL_tree->Insert(answer7, question7);
+  AVL_tree->Insert(answer8, question8);
+  AVL_tree->Insert(answer9, question9);
+
+  string max_data = AVL_tree->Max();
+  cout<<"max_data: "<<max_data<<endl;
+
+  string min_data = AVL_tree->Min();
+  cout<<"min_data: "<<min_data<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -364,7 +438,7 @@ void TestBSTMin() {
   string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
 
   string question9 = "讲一件后悔的事儿";
-  string answer9 = "烂到肚子里也不会说的";
+  string answer9 = "那些无法形容的痛, 见不得光";
 
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
@@ -522,7 +596,7 @@ void TestAVLRemoveByCyberDash() {
 
   AVL_tree->PrintTree(AVLNodeVisit);
 
-  AVL_tree->Remove2("p");
+  AVL_tree->RemoveByCyberDash("p");
 
   AVL_tree->PrintTree(AVLNodeVisit);
 

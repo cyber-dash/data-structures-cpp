@@ -10,25 +10,27 @@ using namespace std;
 
 int main()
 {
-  TestBSTInsert();
+  // TestBSTInsert();
 
-  TestBSTRemove();
+  // TestBSTRemove();
 
-  TestBSTSearch();
+  // TestBSTSearch();
 
-  TestBSTMax();
+  TestBSTMaxAndMin();
 
-  TestAVLMax();
+  TestAVLMaxAndMin();
 
-  TestBSTMin();
+  // TestAVLSearch();
 
-  TestBSTMakeEmpty();
+  // TestBSTMin();
 
-  TestAVLInsert();
+  // TestBSTMakeEmpty();
 
-  TestAVLInsertByCyberDash();
+  // TestAVLInsert();
 
-  TestAVLRemoveByCyberDash();
+  // TestAVLInsertByCyberDash();
+
+  // TestAVLRemoveByCyberDash();
 
   return 0;
 }

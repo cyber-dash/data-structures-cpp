@@ -20,8 +20,8 @@ public:
   BSTNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
   BSTNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
 
-  virtual void SetLeftChildPtr(BSTNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
-  virtual void SetRightChildPtr(BSTNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
+  void SetLeftChildPtr(BSTNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
+  void SetRightChildPtr(BSTNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
 
   virtual void SetKey(const Key& key) { this->key_ = key; }
   virtual Key GetKey() { return this->key_; }
@@ -48,12 +48,13 @@ public:
 
   virtual ~BST() { delete this->root_node_ptr_; };
 
-  virtual BSTNode<Elem, Key>* Search (Key key) { return SearchInSubTree_(key, this->root_node_ptr_); }
+  BSTNode<Elem, Key>* Search (Key key) { return SearchInSubTree_(key, this->root_node_ptr_); }
   virtual bool Insert(Elem elem, Key key);
   virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_ptr_); }
 
-  Elem Min();
-  Elem Max();
+  virtual Elem Min();
+  virtual Elem Max();
+
   void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
   void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) { this->PrintSubTree_(this->root_node_ptr_, visit); }
 
