@@ -86,11 +86,11 @@ void TestDeQueue() {
 }
 
 
-void TestGetFront() {
+void TestGetFrontAndGetRear() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                    Test Queue Dequeue                     |"<<endl;
-  cout<<"|                        测试队列队头                         |"<<endl<<endl<<endl;
+  cout<<"|                Test Queue GetFront & GetRear              |"<<endl;
+  cout<<"|                   测试队列获取队头/获取队尾                   |"<<endl<<endl<<endl;
 
   LinkQueue<string> string_queue;
 
@@ -103,9 +103,12 @@ void TestGetFront() {
   string_queue.EnQueue("我要我觉得");
 
   string front_data;
+  string rear_data;
 
   string_queue.GetFront(front_data);
+  string_queue.GetRear(rear_data);
   cout<<"The front of the queue: "<<front_data<<endl;
+  cout<<"The rear of the queue: "<<rear_data<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -141,4 +144,24 @@ void TestIsEmpty() {
   }
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
+
+
+void TestOperatorCout() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test Operator <<                     |"<<endl;
+  cout<<"|                      测试队列operator<<                    |"<<endl<<endl<<endl;
+
+  LinkQueue<string> string_queue;
+
+  string_queue.EnQueue("听我的");
+  string_queue.EnQueue("买买买");
+  string_queue.EnQueue("买冰箱");
+  string_queue.EnQueue("什么都要听我的");
+  string_queue.EnQueue("闹够了没有");
+  string_queue.EnQueue("我不要你觉得");
+  string_queue.EnQueue("我要我觉得");
+
+  cout<<string_queue;
 }

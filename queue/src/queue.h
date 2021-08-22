@@ -8,12 +8,10 @@
 
 template<class T>
 class Queue {
-
 public:
-  Queue() {};
   virtual ~Queue() {};
   virtual bool EnQueue(const T& data) = 0;
-  virtual bool DeQueue(T& x) = 0;
+  virtual bool DeQueue(T& data) = 0;
   virtual bool GetFront(T& data) const = 0;
   virtual bool IsEmpty() const = 0;
   virtual int GetSize() const = 0;

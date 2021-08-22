@@ -12,9 +12,11 @@ void TestEnQueue();
 
 void TestDeQueue();
 
-void TestGetFront();
+void TestGetFrontAndGetRear();
 
 void TestIsEmpty();
+
+void TestOperatorCout();
 
 
 #endif // CYBER_DASH_QUEUE_TEST_H

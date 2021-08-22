@@ -13,9 +13,11 @@ int main() {
 
   TestDeQueue();
 
-  TestGetFront();
+  TestGetFrontAndGetRear();
 
   TestIsEmpty();
+
+  TestOperatorCout();
 
   return 0;
 }

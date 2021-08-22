@@ -18,8 +18,8 @@ template <class T>
 class LinkNode {
 
 public:
-  explicit LinkNode(LinkNode<T>* ptr = NULL): link_(ptr) {}
-  explicit LinkNode(const T& data, LinkNode<T> *ptr = NULL): data_(data), link_(ptr) {}
+  LinkNode(LinkNode<T>* ptr = NULL): link_(ptr) {}
+  LinkNode(const T& data, LinkNode<T> *ptr = NULL): data_(data), link_(ptr) {}
 
   T GetData() { return data_; }
   bool SetData(const T& data) { data_ = data; return true; }
@@ -29,7 +29,7 @@ public:
 
 private:
   T data_;
-  LinkNode<T> *link_;
+  LinkNode<T>* link_;
 };
 
 
@@ -42,6 +42,7 @@ public:
   bool EnQueue(const T& data);
   bool DeQueue(T& data);
   bool GetFront(T& data) const;
+  bool GetRear(T& data) const;
   bool IsEmpty() const;
   int GetSize() const;
   void MakeEmpty();
@@ -60,12 +61,24 @@ private:
 };
 
 
+/**
+ * @brief
+ * @tparam T
+ * @note
+ */
 template<class T>
 LinkQueue<T>::~LinkQueue() {
   MakeEmpty();
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @param data
+ * @return
+ * @note
+ */
 template<class T>
 bool LinkQueue<T>::EnQueue(const T& data) {
 
@@ -75,17 +88,24 @@ bool LinkQueue<T>::EnQueue(const T& data) {
   }
 
   if (IsEmpty()) {
-    front_ptr_ = new_node_ptr;
-    rear_ptr_ = new_node_ptr;
+    this->front_ptr_ = new_node_ptr;
+    this->rear_ptr_ = new_node_ptr;
   } else {
-    rear_ptr_->SetLink(new_node_ptr);
-    rear_ptr_ = new_node_ptr;
+    this->rear_ptr_->SetLink(new_node_ptr);
+    this->rear_ptr_ = new_node_ptr;
   }
 
   return true;
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @param data
+ * @return
+ * @note
+ */
 template<class T>
 bool LinkQueue<T>::DeQueue(T& data) {
 
@@ -104,6 +124,13 @@ bool LinkQueue<T>::DeQueue(T& data) {
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @param data
+ * @return
+ * @note
+ */
 template<class T>
 bool LinkQueue<T>::GetFront(T& data) const {
 
@@ -111,12 +138,38 @@ bool LinkQueue<T>::GetFront(T& data) const {
     return false;
   }
 
-  data = front_ptr_->GetData();
+  data = this->front_ptr_->GetData();
 
   return true;
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @param data
+ * @return
+ * @note
+ */
+template<class T>
+bool LinkQueue<T>::GetRear(T& data) const {
+
+  if (IsEmpty()) {
+    return false;
+  }
+
+  data = this->rear_ptr_->GetData();
+
+  return true;
+}
+
+
+/**
+ * @brief
+ * @tparam T
+ * @return
+ * @note
+ */
 template<class T>
 bool LinkQueue<T>::IsEmpty() const {
   if (front_ptr_ == NULL) {
@@ -127,6 +180,12 @@ bool LinkQueue<T>::IsEmpty() const {
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @return
+ * @note
+ */
 template<class T>
 int LinkQueue<T>::GetSize() const {
 
@@ -142,6 +201,11 @@ int LinkQueue<T>::GetSize() const {
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @note
+ */
 template<class T>
 void LinkQueue<T>::MakeEmpty() {
 
@@ -155,6 +219,13 @@ void LinkQueue<T>::MakeEmpty() {
 }
 
 
+/**
+ * @brief
+ * @tparam T
+ * @param os
+ * @param link_queue
+ * @return
+ */
 template<class T>
 ostream& operator<<(ostream& os, LinkQueue<T>& link_queue) {
 
