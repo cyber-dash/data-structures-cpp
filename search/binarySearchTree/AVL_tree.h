@@ -213,14 +213,12 @@ void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::Insert(Elem data, Key key) {
-  // return this->InsertInSubTree_(data, key, this->root_node_ptr);
   return this->InsertInSubTree_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
 }
 
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertByCyberDash(Elem data, Key key) {
-  // return this->InsertInSubTreeByCyberDash_(data, key, this->root_node_ptr);
   return this->InsertInSubTreeByCyberDash_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
 }
 
@@ -358,39 +356,6 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetInsertNodePtrAndInitStack(Key key,
 
   return cur_node_ptr;
 }
-
-
-/*
-template<class Elem, class Key>
-AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Elem elem, Key key,
-                                                                     AVLNode<Elem, Key>* node_ptr,
-                                                                     stack<AVLNode<Elem, Key>*>& AVL_node_stack) {
-
-  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL;
-  AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
-
-  // 寻找插入位置
-  while (cur_node_ptr != NULL) {
-    // 找到等于key的结点, 无法插入, todo: 原书使用elem
-    if (key == cur_node_ptr->GetKey()) {
-      // return false;
-      return NULL;
-    }
-
-    cur_stack_node_ptr = cur_node_ptr;
-    AVL_node_stack.push(cur_stack_node_ptr);
-
-    // 原书使用elem, 此处使用关键码
-    if (key < cur_node_ptr->GetKey()) {
-      cur_node_ptr = cur_node_ptr->LeftChildPtr();
-    } else {
-      cur_node_ptr = cur_node_ptr->RightChildPtr();
-    }
-  }
-
-  return cur_node_ptr;
-}
- */
 
 
 template<class Elem, class Key>
