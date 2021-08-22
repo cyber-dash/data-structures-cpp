@@ -30,6 +30,8 @@ void TestAVLSearch();
 
 void TestAVLInsert();
 
+void TestAVLInsert2();
+
 void TestAVLInsertByCyberDash();
 
 void TestAVLRemoveByCyberDash();

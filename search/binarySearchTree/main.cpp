@@ -12,7 +12,7 @@ int main()
 {
   /* 插入 */
   // TestBSTInsert();
-  // TestAVLInsert();
+  TestAVLInsert2();
   // TestAVLInsertByCyberDash();
 
   /* 删除 */

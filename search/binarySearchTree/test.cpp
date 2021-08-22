@@ -544,6 +544,39 @@ void TestAVLInsert() {
 }
 
 
+void TestAVLInsert2() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                     Test AVL Insert2                      |"<<endl;
+  cout<<"|                    测试平衡二叉树的插入2                     |"<<endl;
+
+  AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+
+  string question1 = "a";
+  string answer1 = "a";
+
+  string question2 = "d";
+  string answer2 = "d";
+
+  string question3 = "c";
+  string answer3 = "c";
+
+  string question4 = "b";
+  string answer4 = "b";
+
+  AVL_tree->InsertByCyberDash(answer1, question1);
+  AVL_tree->InsertByCyberDash(answer2, question2);
+  AVL_tree->InsertByCyberDash(answer3, question3);
+  AVL_tree->InsertByCyberDash(answer4, question4);
+
+  AVL_tree->PrintTree(AVLNodeVisit);
+
+  cout<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
 void TestAVLInsertByCyberDash() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -609,20 +642,18 @@ void TestAVLRemoveByCyberDash() {
 void TestBSTAndAVLHeight() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                   Test BST & AVL Height                      |"<<endl;
-  cout<<"|                     测试搜索二叉树/AVL树的高度                     |"<<endl;
+  cout<<"|                   Test BST & AVL Height                   |"<<endl;
+  cout<<"|                  测试搜索二叉树/AVL树的高度                  |"<<endl;
 
   string keyArr[19] =
-    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+    { "a", "d", "c", "b", "e", "f", "g", "h", "i", "k", "l", "j", "m", "n", "r", "p", "q", "o", "s" };
   string elemArr[19] =
-    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+    { "a", "d", "c", "b", "e", "f", "g", "h", "i", "k", "l", "j", "m", "n", "r", "p", "q", "o", "s" };
 
   cout<<"分别向BST和AVL树插入:"<<endl;
   for (int i = 0; i < 19; i++) {
-    cout<<"\"key:"<<keyArr[i]<<"/elem:"<<elemArr[i]<<"\"";
-    if (i != 18) {
-      cout<<", ";
-    }
+    cout<<"\"key:"<<keyArr[i]<<"/elem:"<<elemArr[i]<<"\"  ";
+    // 四个一行
     if (i % 4 == 3 && i != 0) {
       cout<<endl;
     }
@@ -636,7 +667,7 @@ void TestBSTAndAVLHeight() {
   }
 
   for (int i = 0; i < 19; i++) {
-    AVL_tree->Insert(keyArr[i], elemArr[i]);
+    AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
   }
 
   cout<<endl<<endl;

@@ -185,7 +185,7 @@ void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
   // 图7.18(b)
   AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
-  AVLNode<Elem, Key>* sub_right_node_ptr= sub_left_node_ptr->LeftChildPtr();
+  AVLNode<Elem, Key>* sub_right_node_ptr= sub_left_node_ptr->RightChildPtr();
   node_ptr = sub_right_node_ptr->LeftChildPtr();
 
   // 图7.18(c)
