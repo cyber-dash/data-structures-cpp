@@ -604,3 +604,45 @@ void TestAVLRemoveByCyberDash() {
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
+
+
+void TestBSTAndAVLHeight() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test BST & AVL Height                      |"<<endl;
+  cout<<"|                     测试搜索二叉树/AVL树的高度                     |"<<endl;
+
+  string keyArr[19] =
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+  string elemArr[19] =
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+
+  cout<<"分别向BST和AVL树插入:"<<endl;
+  for (int i = 0; i < 19; i++) {
+    cout<<"\"key:"<<keyArr[i]<<"/elem:"<<elemArr[i]<<"\"";
+    if (i != 18) {
+      cout<<", ";
+    }
+    if (i % 4 == 3 && i != 0) {
+      cout<<endl;
+    }
+  }
+
+  BST<string, string>* bst_tree = new BST<string, string>();
+  AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+
+  for (int i = 0; i < 19; i++) {
+    bst_tree->Insert(keyArr[i], elemArr[i]);
+  }
+
+  for (int i = 0; i < 19; i++) {
+    AVL_tree->Insert(keyArr[i], elemArr[i]);
+  }
+
+  cout<<endl<<endl;
+
+  cout<<"BST树高度: "<<bst_tree->Height()<<endl;
+  cout<<"AVL树高度: "<<AVL_tree->Height()<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}

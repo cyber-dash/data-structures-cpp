@@ -34,5 +34,7 @@ void TestAVLInsertByCyberDash();
 
 void TestAVLRemoveByCyberDash();
 
+void TestBSTAndAVLHeight();
+
 
 #endif // CYBER_DASH_SEARCH_TREE_TEST_H

@@ -48,14 +48,15 @@ public:
 
   virtual ~BST() { delete this->root_node_ptr_; };
 
-  BSTNode<Elem, Key>* Search (Key key) { return SearchInSubTree_(key, this->root_node_ptr_); }
   virtual bool Insert(Elem elem, Key key);
   virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_ptr_); }
+  BSTNode<Elem, Key>* Search (Key key) { return SearchInSubTree_(key, this->root_node_ptr_); }
+  virtual int Height() { return this->SubTreeHeight_(this->root_node_ptr_); }
 
   virtual Elem Min();
   virtual Elem Max();
 
-  void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
+  virtual void MakeEmpty() { MakeEmptySubTree_(root_node_ptr_); root_node_ptr_ = NULL; }
   void PrintTree(void (*visit)(BSTNode<Elem, Key>*)) { this->PrintSubTree_(this->root_node_ptr_, visit); }
 
   BST<Elem, Key>& operator=(const BST<Elem, Key>& origin_BST);
@@ -63,8 +64,16 @@ public:
 protected:
   BSTNode<Elem, Key>* root_node_ptr_; // 根节点
 
+  // 子树中插入节点(递归)
+  bool InsertInSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+
+  // 子树中删除节点(递归)
+  bool RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
+
   // 在子树中, 使用关键码进行搜索
   BSTNode<Elem, Key>* SearchInSubTree_(Key key, BSTNode<Elem, Key>* sub_tree_root_ptr);
+
+  int SubTreeHeight_(BSTNode<Elem, Key>* sub_tree_root_ptr);
 
   // 清除子树(递归)
   void MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr);
@@ -80,12 +89,6 @@ protected:
 
   // 子树中关键码最大项
   BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
-
-  // 子树中插入节点(递归)
-  bool InsertInSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
-
-  // 子树中删除节点(递归)
-  bool RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 };
 
 
@@ -385,6 +388,23 @@ Elem BST<Elem, Key>::Max() {
   BSTNode<Elem, Key>* root_node_ptr = this->root_node_ptr_;
   BSTNode<Elem, Key>* max_node = this->BST::MaxInSubTree_(root_node_ptr);
   return max_node->GetData();
+}
+
+
+template<class Elem, class Key>
+int BST<Elem, Key>::SubTreeHeight_(BSTNode<Elem, Key>* sub_tree_root_ptr) {
+  if (sub_tree_root_ptr == NULL) {
+    return 0;
+  }
+
+  int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->LeftChildPtr());
+  int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->RightChildPtr());
+
+  if (left_sub_tree_height < right_sub_tree_height) {
+    return right_sub_tree_height + 1;
+  } else {
+    return left_sub_tree_height + 1;
+  }
 }
 
 

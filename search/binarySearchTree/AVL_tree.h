@@ -47,16 +47,18 @@ protected:
 template<class Elem, class Key>
 class AVLTree: public BST<Elem, Key> {
 public:
-  // AVLTree(): BST<Elem, Key>() {}
   AVLTree(): root_node_ptr_(NULL) {}
   AVLNode<Elem, Key>*& RootRef() { return (AVLNode<Elem, Key>*&)this->root_node_ptr_; }
   AVLNode<Elem, Key>* Root() { return (AVLNode<Elem, Key>*)this->root_node_ptr_; }
 
   bool Insert(Elem data, Key key);
   bool InsertByCyberDash(Elem data, Key key);
-  bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(RootRef(), key); }
+  // bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(RootRef(), key); }
   bool RemoveByCyberDash(Key key);
   AVLNode<Elem, Key>* Search (Key key) { return this->SearchInSubTree_(key, this->root_node_ptr_); }
+  int Height() { return this->SubTreeHeight_(this->root_node_ptr_); }
+
+
   Elem Max();
   Elem Min();
   void PrintTree(void (*visit)(AVLNode<Elem, Key>*));
@@ -93,7 +95,7 @@ protected:
   // 子树中关键码最大项
   AVLNode<Elem, Key>* MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
   // AVL子树的高度
-  // int HeightOfSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
+  int SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr);
 
   void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*));
 
@@ -792,5 +794,21 @@ Elem AVLTree<Elem, Key>::Min() {
   return max_node->GetData();
 }
 
+
+template<class Elem, class Key>
+int AVLTree<Elem, Key>::SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr) {
+  if (sub_tree_root_ptr == NULL) {
+    return 0;
+  }
+
+  int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->LeftChildPtr());
+  int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->RightChildPtr());
+
+  if (left_sub_tree_height < right_sub_tree_height) {
+    return right_sub_tree_height + 1;
+  } else {
+    return left_sub_tree_height + 1;
+    }
+  }
 
 #endif // CYBER_DASH_AVL_TREE_H
