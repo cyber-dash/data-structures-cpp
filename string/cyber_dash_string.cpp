@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <string.h>
+// #include <string.h>
 #include "cyber_dash_string.h"
 
 
@@ -193,6 +193,7 @@ int* CyberDashString::KMPNext(char* pattern, int pattern_len) {
         next[index] = starting_index;
       } else {
         starting_index = next[starting_index];
+        index++;
       }
     }
   }
@@ -225,6 +226,8 @@ int* CyberDashString::KMPNext_v2(char* pattern, int pattern_len) {
       } else {
         starting_index = next[starting_index];
       }
+
+      index++;
     }
   }
 
@@ -237,8 +240,8 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
   int match_pos;
 
   int pattern_len = pattern.Length();
-  // int* next = KMPNext(pattern.char_ptr_, pattern_len);
-  int* next = KMPNext_minified(pattern.char_ptr_, pattern_len);
+  //int* next = KMPNext_v2(pattern.char_ptr_, pattern_len);
+  int* next = KMPNext(pattern.char_ptr_, pattern_len);
   if (!next) {
     cerr<<"next array allocation error"<<endl;
     return -2;

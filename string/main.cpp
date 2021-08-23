@@ -14,7 +14,7 @@ int main() {
 
   TestBFFind();
 
-  // TestKMPFind();
+  TestKMPFind();
 
   /*
   // test Find
