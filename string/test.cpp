@@ -1,54 +1,42 @@
 //
-// Created by svenlee on 2020/7/29.
+// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 8/23/2021.
 //
 
-#include <iostream>
+#include "test.h"
 #include "cyber_dash_string.h"
 
 
-using namespace std;
+void TestBFFind() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                        Test BF BruteForceFind                       |"<<endl;
+  cout<<"|                          测试BF算法                        |"<<endl<<endl<<endl;
+
+  CyberDashString string1("xyzzz");
+  CyberDashString string2("xyz");
+  CyberDashString string3("xx");
+
+  cout << string1.BruteForceFind(string2, 0) << endl;
+  cout << string1.BruteForceFind(string3, 0) << endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
 
 
+void TestKMPFind() {
 
-int main() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                        Test KMPFind                       |"<<endl;
+  cout<<"|                          测试KMP算法                        |"<<endl<<endl<<endl;
 
-  // test Find
-  CyberDashString pattern1("aab12aab12aab");
-  CyberDashString pattern2("aab12aab12aab");
-  CyberDashString pattern3("a");
-  CyberDashString pattern4("xyz");
-  CyberDashString pattern5("xyzzz");
+  CyberDashString string1("xyzzz");
+  CyberDashString string2("xyz");
+  CyberDashString string3("xx");
 
-  CyberDashString test_str6("12aab12aab12aabxyz");
-  CyberDashString test_str7("12aab12aab12aabxyz");
+  cout << string1.KMPFind(string2, 0) << endl;
+  // cout << string1.KMPFind(string3, 0) << endl;
 
-  // test KMPFind
-  int find_pos;
-  find_pos = test_str6.KMPFind(pattern1, 0);
-  cout<<"KMP find_pos1:"<<find_pos<<endl;
-  find_pos = test_str6.KMPFind(pattern2, 0);
-  cout<<"KMP find_pos2:"<<find_pos<<endl;
-  find_pos = test_str6.KMPFind(pattern3, 0);
-  cout<<"KMP find_pos3:"<<find_pos<<endl;
-  find_pos = test_str6.KMPFind(pattern4, 0);
-  cout<<"KMP find_pos4:"<<find_pos<<endl;
-  find_pos = test_str6.KMPFind(pattern5, 0);
-  cout<<"KMP find_pos5:"<<find_pos<<endl<<endl;
-
-  // test KMPFind_minified
-  find_pos = test_str7.KMPFind_minified(pattern1, 0);
-  cout<<"KMP_minified find_pos1:"<<find_pos<<endl;
-  find_pos = test_str7.KMPFind_minified(pattern2, 0);
-  cout<<"KMP_minified find_pos2:"<<find_pos<<endl;
-  find_pos = test_str7.KMPFind_minified(pattern3, 0);
-  cout<<"KMP_minified find_pos3:"<<find_pos<<endl;
-  find_pos = test_str7.KMPFind_minified(pattern4, 0);
-  cout<<"KMP_minified find_pos4:"<<find_pos<<endl;
-  find_pos = test_str6.KMPFind_minified(pattern5, 0);
-  cout<<"KMP find_pos5:"<<find_pos<<endl<<endl;
-
-  // CyberDashSHow
-  test_str6.CyberDashShow();
-
-  return 0;
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

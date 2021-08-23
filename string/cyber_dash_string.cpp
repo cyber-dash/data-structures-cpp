@@ -103,7 +103,7 @@ bool CyberDashString::operator != (CyberDashString& cyber_dash_str) const {
 
 
 bool CyberDashString::operator ! () const {
-
+  return true;
 }
 
 
@@ -132,7 +132,7 @@ CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
 
 
 CyberDashString& CyberDashString::operator += (CyberDashString& cyber_dash_str) {
-
+  return *this;
 }
 
 
@@ -146,7 +146,7 @@ char& CyberDashString::operator[] (int index) {
 }
 
 
-int CyberDashString::Find(CyberDashString& pattern, int offset) const {
+int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const {
 
   int match_offset = -1;
   int pat_idx;
@@ -237,7 +237,8 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
   int match_pos;
 
   int pattern_len = pattern.Length();
-  int* next = KMPNext(pattern.char_ptr_, pattern_len);
+  // int* next = KMPNext(pattern.char_ptr_, pattern_len);
+  int* next = KMPNext_minified(pattern.char_ptr_, pattern_len);
   if (!next) {
     cerr<<"next array allocation error"<<endl;
     return -2;

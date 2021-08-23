@@ -30,7 +30,7 @@ public:
   CyberDashString& operator = (const CyberDashString& cyber_dash_str);
   CyberDashString& operator += (CyberDashString& cyber_dash_str);
   char& operator[] (int index);
-  int Find(CyberDashString& pattern, int offset) const;
+  int BruteForceFind(CyberDashString& pattern, int offset) const;
   int KMPFind(CyberDashString& pattern, int offset) const;
   // int KMPFind_v2(CyberDashString& pattern, int offset) const;
   int KMPFind_minified(CyberDashString& pattern, int offset) const;
