@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <cstdlib>
-// #include <string.h>
+#include <cstring>
 #include "cyber_dash_string.h"
 
 
