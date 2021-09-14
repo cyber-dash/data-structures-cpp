@@ -168,13 +168,13 @@ int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const 
 }
 
 
-int* CyberDashString::KMPNext(char* pattern, int pattern_len) {
+int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
 
   int index = 0;
   int starting_index = -1;
 
   int* next = new int[pattern_len];
-  if (!next) {
+  if (next == NULL) {
     cerr<<"next array allocate error"<<endl;
     return NULL;
   }
@@ -182,18 +182,17 @@ int* CyberDashString::KMPNext(char* pattern, int pattern_len) {
   next[0] = starting_index;
 
   while (index < pattern_len) {
+    index++;
+
     if (starting_index == -1) {
-      index++;
       starting_index = 0;
       next[index] = starting_index;
     } else {
       if (pattern[index] == pattern[starting_index]) {
-        index++;
         starting_index++;
         next[index] = starting_index;
       } else {
         starting_index = next[starting_index];
-        index++;
       }
     }
   }
@@ -202,13 +201,14 @@ int* CyberDashString::KMPNext(char* pattern, int pattern_len) {
 }
 
 
-int* CyberDashString::KMPNext_v2(char* pattern, int pattern_len) {
+int* CyberDashString::KMPNext_v2(const char* pattern, int pattern_len) {
 
   int* next = new int[pattern_len];
-  if (!next) {
+  if (next == NULL) {
     cerr<<"next array allocate error"<<endl;
     return NULL;
   }
+
   next[0] = -1;
   next[1] = 0;
 

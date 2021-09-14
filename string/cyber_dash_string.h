@@ -39,14 +39,14 @@ public:
     os<<cyber_dash_str.char_ptr_<<endl;
   }
 
-  void CyberDashShow();
+  static void CyberDashShow();
 
 private:
   char* char_ptr_;
   int length_;
   int max_size_;
-  static int* KMPNext(char* pattern, int pattern_len);
-  static int* KMPNext_v2(char* pattern, int pattern_len);
+  static int* KMPNext(const char* pattern, int pattern_len);
+  static int* KMPNext_v2(const char* pattern, int pattern_len);
   static int* KMPNext_minified(char* pattern, int pattern_len);
 };
 
