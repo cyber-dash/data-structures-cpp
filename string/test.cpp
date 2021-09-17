@@ -13,15 +13,13 @@ void TestBFFind() {
   cout<<"|                    Test BruteForceFind                    |"<<endl;
   cout<<"|                          测试BF算法                        |"<<endl<<endl<<endl;
 
-  CyberDashString string1("xwxwowxwoxxo");
-  CyberDashString string2("wo");
-  CyberDashString string3("xx");
+  CyberDashString target_str("hand in hand we can, start to understand");
+  CyberDashString pattern_str_1("hand");
+  CyberDashString pattern_str_2("understand");
 
-  // cout << string1.BruteForceFind(string2, 0) << endl;
-  // cout << string1.BruteForceFind(string3, 0) << endl;
-  cout << "目标串: " << string1 <<endl<<endl;
-  cout << "模式串\"" << string2 << "\"的匹配位置: " << string1.BruteForceFind(string2, 0) << endl;
-  cout << "模式串\"" << string3 << "\"的匹配位置: " << string1.BruteForceFind(string3, 0) << endl;
+  cout << "目标串: " << target_str << endl << endl;
+  cout << "模式串\"" << pattern_str_1 << "\"的匹配位置: " << target_str.BruteForceFind(pattern_str_1, 0) << endl;
+  cout << "模式串\"" << pattern_str_2 << "\"的匹配位置: " << target_str.BruteForceFind(pattern_str_2, 0) << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -32,17 +30,17 @@ void TestKMPFind() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                        Test KMPFind                       |"<<endl;
-  cout<<"|                          测试KMP算法                        |"<<endl<<endl<<endl;
+  cout<<"|                         测试KMP算法                        |"<<endl<<endl<<endl;
 
-  CyberDashString string1("aaaabcd56****abcd56abcd7777");
-  CyberDashString string2("abcd56abcd7");
-  CyberDashString string3("ababc");
-  CyberDashString string4("bcd56abc");
+  CyberDashString target_str("aaaabcd56****abcd56abcd7777");
+  CyberDashString pattern_str_1("abcd56abcd7");
+  CyberDashString pattern_str_2("ababc");
+  CyberDashString pattern_str_3("bcd56abc");
 
-  cout << "目标串: " << string1 <<endl<<endl;
-  cout << "模式串\"" << string2 << "\"的匹配位置: " << string1.KMPFind(string2, 0) << endl;
-  cout << "模式串\"" << string3 <<"\"的匹配位置: "<<string1.KMPFind(string3, 0) << endl;
-  cout << "模式串\"" << string4 <<"\"的匹配位置: "<<string1.KMPFind(string4, 0) << endl;
+  cout << "目标串: " << target_str << endl << endl;
+  cout << "模式串\"" << pattern_str_1 << "\"的匹配位置: " << target_str.KMPFind(pattern_str_1, 0) << endl;
+  cout << "模式串\"" << pattern_str_2 << "\"的匹配位置: " << target_str.KMPFind(pattern_str_2, 0) << endl;
+  cout << "模式串\"" << pattern_str_3 << "\"的匹配位置: " << target_str.KMPFind(pattern_str_3, 0) << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -53,17 +51,17 @@ void TestKMPFindCyberDash() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test KMPFindCyberDash                  |"<<endl;
-  cout<<"|                        测试KMP算法                         |"<<endl<<endl<<endl;
+  cout<<"|                         测试KMP算法                        |"<<endl<<endl<<endl;
 
-  CyberDashString string1("aaaabcd56****abcd56abcd7777");
-  CyberDashString string2("abcd56abcd7");
-  CyberDashString string3("ababc");
-  CyberDashString string4("bcd56abc");
+  CyberDashString target_str("aaaabcd56****abcd56abcd7777");
+  CyberDashString pattern_str_1("abcd56abcd7");
+  CyberDashString pattern_str_2("ababc");
+  CyberDashString pattern_str_3("bcd56abc");
 
-  cout<<"目标串: "<<string1<<endl<<endl;
-  cout << "模式串\"" << string2 << "\"的匹配位置: " << string1.KMPFindCyberDash(string2, 0) << endl;
-  cout << "模式串\""<<string3<<"\"的匹配位置: "<<string1.KMPFindCyberDash(string3, 0) << endl;
-  cout << "模式串\""<<string4<<"\"的匹配位置: "<<string1.KMPFindCyberDash(string4, 0) << endl;
+  cout << "目标串: " << target_str << endl << endl;
+  cout << "模式串\"" << pattern_str_1 << "\"的匹配位置: " << target_str.KMPFindCyberDash(pattern_str_1, 0) << endl;
+  cout << "模式串\"" << pattern_str_2 << "\"的匹配位置: " << target_str.KMPFindCyberDash(pattern_str_2, 0) << endl;
+  cout << "模式串\"" << pattern_str_3 << "\"的匹配位置: " << target_str.KMPFindCyberDash(pattern_str_3, 0) << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

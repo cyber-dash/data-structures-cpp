@@ -22,7 +22,8 @@ CyberDashString::CyberDashString(int size) {
   }
 
   length_ = 0;
-  char_array_[0] = '\0';
+  // 先全部置0
+  memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
 }
 
 
@@ -43,9 +44,10 @@ CyberDashString::CyberDashString(const char* char_ptr) {
 
   length_ = char_len;
 
-  memcpy(char_array_, char_ptr, char_len);
-
-  this->char_array_[char_len] = 0;
+  // 先全部置0
+  memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
+  // 再复制字符串内容
+  memcpy(char_array_, char_ptr, sizeof(char) * char_len);
 }
 
 
@@ -75,7 +77,7 @@ CyberDashString CyberDashString::operator () (int index, int offset) const {
 
     ret_str.length_ = offset;
 
-    memcpy(ret_str.char_array_, char_array_ + index, offset);
+    memcpy(ret_str.char_array_, char_array_ + index, sizeof(char) * offset);
 
     ret_str.char_array_[offset] = '\0';
   }
@@ -121,7 +123,7 @@ CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
       exit(1);
     }
 
-    memcpy(char_array_, src_str.char_array_, src_str.length_);
+    memcpy(char_array_, src_str.char_array_, sizeof(char) * src_str.length_);
 
     length_ = src_str.length_;
 

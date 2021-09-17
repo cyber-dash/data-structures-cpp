@@ -38,8 +38,10 @@ public:
   // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
   int KMPFindCyberDash(CyberDashString& pattern, int offset) const;
 
+  // 重载<<
   friend ostream& operator<<(ostream& os, CyberDashString& cyber_dash_str) {
     os << cyber_dash_str.char_array_;
+    return os;
   }
 
   static void CyberDashShow();
