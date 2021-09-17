@@ -304,8 +304,6 @@ void CyberDashString::PrintNextArray(const int* next_arr_ptr, int next_arr_len) 
  */
 int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
 
-  // cout<<pattern;
-
   int pattern_len = pattern.Length();
   int* next = KMPNext(pattern.char_array_, pattern_len);
   if (next == NULL) {
