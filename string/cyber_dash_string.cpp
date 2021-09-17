@@ -44,6 +44,8 @@ CyberDashString::CyberDashString(const char* char_ptr) {
   length_ = char_len;
 
   memcpy(char_array_, char_ptr, char_len);
+
+  this->char_array_[char_len] = 0;
 }
 
 
@@ -146,6 +148,12 @@ char& CyberDashString::operator[] (int index) {
 }
 
 
+/**
+ * @brief BF字符串匹配法
+ * @param pattern 模式串
+ * @param offset 目标串的起始偏移量
+ * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
+ */
 int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const {
 
   int match_offset = -1;
@@ -168,31 +176,70 @@ int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const 
 }
 
 
+/**
+ * @brief 求模式串的next数组
+ * @param pattern 模式串第一个字符串的指针
+ * @param pattern_len 模式串长度
+ * @return next数组起始地址
+ */
 int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
 
-  int i = 0;
-  int starting_index = -1;
-
+  // 分配next数组内存
   int* next = new int[pattern_len];
   if (next == NULL) {
     cerr<<"next array allocate error"<<endl;
     return NULL;
   }
 
+  /// 设置next[0] = -1
+  int i = 0;
+  int starting_index = -1;
+
   next[0] = starting_index;
 
   while (i < pattern_len) {
 
+    /// 使用next[0]处理next[1]
+    /// 当模式串字符pattern[1]失配时, 必然从pattern[0]开始重新进行匹配, 因此next[1] = 0
+    /// 此处逻辑可以和下面的pattern[i] == pattern[starting_index]分支逻辑合并
+    /// 因此next[0] = -1
+    /// 其余部分则相同(代码可以合并)
     if (starting_index == -1) {
       i++;
-      starting_index = 0;
+      starting_index++;
       next[i] = starting_index;
-    } else { // 使用next[i]求next[i + 1]
+    }
+    /// 使用next[i]求next[i + 1]
+    else
+    {
+      /// 如果pattern[i]和pattern[starting_index]相同, 则左右两侧的相同字符串区域扩展
+      /// 示例
+      ///  a b c d 5 6 a b c d 7
+      ///  a b
+      ///              a b
+      ///                  ^
+      ///                  |
+      ///
+      ///
+      /// i == 8, starting_index == 2
+      /// pattern[8] == pattern[2] == 'c', 走if( == )分支:
+      ///     8++ -> 9,
+      ///     starting_index++ -> 3
+      ///     next[9] == pattern[3]
+      ///
+      ///
+      ///  a b c d 5 6 a b c d 7
+      ///  a b c
+      ///              a b c
+      ///                    ^
+      ///                    |
+      ///
       if (pattern[i] == pattern[starting_index]) {
         i++;
         starting_index++;
         next[i] = starting_index;
       }
+      /// 如果pattern[i]和pattern[starting_index]不同, 则使用next数组进行递归, 逐步验证
       else
       {
         starting_index = next[starting_index];
@@ -248,17 +295,26 @@ void CyberDashString::PrintNextArray(const int* next_arr_ptr, int next_arr_len) 
 }
 
 
+/**
+ * @brief KMP字符串匹配查找
+ * @param pattern 模式串
+ * @param offset 目标串的起始偏移量
+ * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
+ * @note
+ */
 int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
 
-  cout<<pattern;
+  // cout<<pattern;
 
   int pattern_len = pattern.Length();
   int* next = KMPNext(pattern.char_array_, pattern_len);
-  PrintNextArray(next, pattern_len);
-  if (!next) {
+  if (next == NULL) {
     cerr<<"next array allocation error"<<endl;
-    return -2;
+    return -2; //
   }
+
+  // cout<<"模式串: "<<pattern<<endl<<"对应的next数组: ";
+  // PrintNextArray(next, pattern_len); // show the next array
 
   int pattern_str_i = 0;
   int target_str_i = offset;
@@ -276,7 +332,7 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
       if (pattern_str_i == 0) {
         target_str_i++;
       }
-      // 如果不是模式串第1个字符不匹配,
+      // 如果不是模式串第1个字符不匹配, 则从模式串的next[pattern_str_i]开始执行下一趟匹配
       else
       {
         pattern_str_i = next[pattern_str_i];
@@ -284,27 +340,34 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
     }
   }
 
-  delete[] next;
+  delete[] next; // 删除next数组
 
   int match_pos;
 
   if (pattern_str_i < pattern_len) {
-    match_pos = -1;
+    match_pos = -1; // 不匹配
   } else {
-    match_pos = target_str_i - pattern_len;
+    match_pos = target_str_i - pattern_len; // 算出目标串中匹配的第一个字符的(在目标串中的)位置
   }
 
   return match_pos;
 }
 
 
+/**
+ * @brief KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
+ * @param pattern 模式串
+ * @param offset 目标串的起始偏移量
+ * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
+ * @note
+ */
 int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) const {
 
   int match_pos;
 
   int pattern_len = pattern.Length();
   int* next = KMPNextByCyberDash(pattern.char_array_, pattern_len);
-  PrintNextArray(next, pattern_len);
+  // PrintNextArray(next, pattern_len);
   if (!next) {
     cerr<<"next array allocation error"<<endl;
     return -2;

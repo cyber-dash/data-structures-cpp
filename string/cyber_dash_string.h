@@ -31,12 +31,15 @@ public:
   CyberDashString& operator += (CyberDashString& cyber_dash_str);
   char& operator[] (int index);
   int BruteForceFind(CyberDashString& pattern, int offset) const;
+
+  // KMP字符串匹配查找
   int KMPFind(CyberDashString& pattern, int offset) const;
-  // int KMPFind_v2(CyberDashString& pattern, int offset) const;
+
+  // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
   int KMPFindCyberDash(CyberDashString& pattern, int offset) const;
 
   friend ostream& operator<<(ostream& os, CyberDashString& cyber_dash_str) {
-    os << cyber_dash_str.char_array_ << endl;
+    os << cyber_dash_str.char_array_;
   }
 
   static void CyberDashShow();
