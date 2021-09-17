@@ -15,14 +15,14 @@ CyberDashString::CyberDashString(int size) {
 
   max_size_ = size;
 
-  char_ptr_ = new char[max_size_ + 1];
-  if (char_ptr_ == NULL) {
+  char_array_ = new char[max_size_ + 1];
+  if (char_array_ == NULL) {
     cerr<<"Allocation Error"<<endl;
     exit(1);
   }
 
   length_ = 0;
-  char_ptr_[0] = '\0';
+  char_array_[0] = '\0';
 }
 
 
@@ -35,20 +35,20 @@ CyberDashString::CyberDashString(const char* char_ptr) {
     max_size_ = DEFAULT_SIZE;
   }
 
-  char_ptr_ = new char[max_size_ + 1];
-  if (char_ptr_ == NULL) {
+  char_array_ = new char[max_size_ + 1];
+  if (char_array_ == NULL) {
     cerr<<"Allocation Error"<<endl;
     exit(1);
   }
 
   length_ = char_len;
 
-  memcpy(char_ptr_, char_ptr, char_len);
+  memcpy(char_array_, char_ptr, char_len);
 }
 
 
 CyberDashString::~CyberDashString() {
-  delete[] char_ptr_;
+  delete[] char_array_;
 }
 
 
@@ -64,7 +64,7 @@ CyberDashString CyberDashString::operator () (int index, int offset) const {
   if (index < 0 || index + offset > max_size_ || offset <= 0 || index + 1 > length_) {
 
     ret_str.length_ = 0;
-    ret_str.char_ptr_[0] = '\0';
+    ret_str.char_array_[0] = '\0';
   } else {
 
     if (index + offset > length_) {
@@ -73,9 +73,9 @@ CyberDashString CyberDashString::operator () (int index, int offset) const {
 
     ret_str.length_ = offset;
 
-    memcpy(ret_str.char_ptr_, char_ptr_ + index, offset);
+    memcpy(ret_str.char_array_, char_array_ + index, offset);
 
-    ret_str.char_ptr_[offset] = '\0';
+    ret_str.char_array_[offset] = '\0';
   }
 
   return ret_str;
@@ -83,7 +83,7 @@ CyberDashString CyberDashString::operator () (int index, int offset) const {
 
 
 bool CyberDashString::operator == (const CyberDashString& cyber_dash_str) const {
-  int cmp_res = strcmp(char_ptr_, cyber_dash_str.char_ptr_);
+  int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
   if (cmp_res == 0) {
     return true;
   } else {
@@ -93,7 +93,7 @@ bool CyberDashString::operator == (const CyberDashString& cyber_dash_str) const 
 
 
 bool CyberDashString::operator != (CyberDashString& cyber_dash_str) const {
-  int cmp_res = strcmp(char_ptr_, cyber_dash_str.char_ptr_);
+  int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
   if (cmp_res != 0) {
     return true;
   } else {
@@ -111,15 +111,15 @@ CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
 
   if (&src_str != this) {
 
-    delete[] char_ptr_;
+    delete[] char_array_;
 
-    char_ptr_ = new char[src_str.max_size_ + 1];
-    if (char_ptr_ == NULL) {
+    char_array_ = new char[src_str.max_size_ + 1];
+    if (char_array_ == NULL) {
       cerr<<"存储分配失败!"<<endl;
       exit(1);
     }
 
-    memcpy(char_ptr_, src_str.char_ptr_, src_str.length_);
+    memcpy(char_array_, src_str.char_array_, src_str.length_);
 
     length_ = src_str.length_;
 
@@ -142,7 +142,7 @@ char& CyberDashString::operator[] (int index) {
     exit(1);
   }
 
-  return char_ptr_[index];
+  return char_array_[index];
 }
 
 
@@ -153,7 +153,7 @@ int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const 
 
   for (int i = offset; i <= length_ - pattern.length_; i++) {
     for (pat_idx = 0; pat_idx < pattern.length_; pat_idx++) {
-      if (char_ptr_[i + pat_idx] != pattern[pat_idx]) {
+      if (char_array_[i + pat_idx] != pattern[pat_idx]) {
         break;
       }
     }
@@ -170,7 +170,7 @@ int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const 
 
 int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
 
-  int index = 0;
+  int i = 0;
   int starting_index = -1;
 
   int* next = new int[pattern_len];
@@ -181,17 +181,20 @@ int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
 
   next[0] = starting_index;
 
-  while (index < pattern_len) {
-    index++;
+  while (i < pattern_len) {
 
     if (starting_index == -1) {
+      i++;
       starting_index = 0;
-      next[index] = starting_index;
-    } else {
-      if (pattern[index] == pattern[starting_index]) {
+      next[i] = starting_index;
+    } else { // 使用next[i]求next[i + 1]
+      if (pattern[i] == pattern[starting_index]) {
+        i++;
         starting_index++;
-        next[index] = starting_index;
-      } else {
+        next[i] = starting_index;
+      }
+      else
+      {
         starting_index = next[starting_index];
       }
     }
@@ -201,7 +204,7 @@ int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
 }
 
 
-int* CyberDashString::KMPNext_v2(const char* pattern, int pattern_len) {
+int* CyberDashString::KMPNextByCyberDash(const char* pattern, int pattern_len) {
 
   int* next = new int[pattern_len];
   if (next == NULL) {
@@ -212,22 +215,21 @@ int* CyberDashString::KMPNext_v2(const char* pattern, int pattern_len) {
   next[0] = -1;
   next[1] = 0;
 
-  int index = 1;
+  int i = 1;
   int starting_index = 0;
 
-  while (index < pattern_len) {
-    if (pattern[index] == pattern[starting_index]) {
-      index++;
+  while (i < pattern_len) {
+    if (pattern[i] == pattern[starting_index]) {
+      i++;
       starting_index++;
-      next[index] = starting_index;
+      next[i] = starting_index;
     } else {
       if (starting_index == 0) {
-        next[index] = starting_index;
+        i++;
+        next[i] = starting_index;
       } else {
         starting_index = next[starting_index];
       }
-
-      index++;
     }
   }
 
@@ -235,52 +237,74 @@ int* CyberDashString::KMPNext_v2(const char* pattern, int pattern_len) {
 }
 
 
+void CyberDashString::PrintNextArray(const int* next_arr_ptr, int next_arr_len) {
+  /// 示例
+  /// 模式字符串:  a b c d 5 6 a b c d 7
+  /// next数组:  -1 0 0 0 0 0 0 1 2 3 4
+  for (int i = 0; i < next_arr_len; i++) {
+    cout<<*(next_arr_ptr + i)<<" ";
+  }
+  cout<<endl;
+}
+
+
 int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
 
-  int match_pos;
+  cout<<pattern;
 
   int pattern_len = pattern.Length();
-  //int* next = KMPNext_v2(pattern.char_ptr_, pattern_len);
-  int* next = KMPNext(pattern.char_ptr_, pattern_len);
+  int* next = KMPNext(pattern.char_array_, pattern_len);
+  PrintNextArray(next, pattern_len);
   if (!next) {
     cerr<<"next array allocation error"<<endl;
     return -2;
   }
 
-  int pattern_index = 0;
-  int target_str_index = offset;
+  int pattern_str_i = 0;
+  int target_str_i = offset;
 
-  while (pattern_index < pattern_len && target_str_index < length_) {
-    if (pattern[pattern_index] == char_ptr_[target_str_index]) {
-      pattern_index++;
-      target_str_index++;
-    } else {
-      if (pattern_index == 0) {
-        target_str_index++;
-      } else {
-        pattern_index = next[pattern_index];
+  while (pattern_str_i < pattern_len && target_str_i < this->length_) {
+    /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)相同, 则向后移位
+    if (pattern[pattern_str_i] == this->char_array_[target_str_i]) {
+      pattern_str_i++;
+      target_str_i++;
+    }
+    /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)不同
+    else
+    {
+      // 如果是模式串第1个字符不匹配, 则目标串向后移位
+      if (pattern_str_i == 0) {
+        target_str_i++;
+      }
+      // 如果不是模式串第1个字符不匹配,
+      else
+      {
+        pattern_str_i = next[pattern_str_i];
       }
     }
   }
 
   delete[] next;
 
-  if (pattern_index < pattern_len) {
+  int match_pos;
+
+  if (pattern_str_i < pattern_len) {
     match_pos = -1;
   } else {
-    match_pos = target_str_index - pattern_len;
+    match_pos = target_str_i - pattern_len;
   }
 
   return match_pos;
 }
 
 
-int CyberDashString::KMPFind_minified(CyberDashString& pattern, int offset) const {
+int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) const {
 
   int match_pos;
 
   int pattern_len = pattern.Length();
-  int* next = KMPNext(pattern.char_ptr_, pattern_len);
+  int* next = KMPNextByCyberDash(pattern.char_array_, pattern_len);
+  PrintNextArray(next, pattern_len);
   if (!next) {
     cerr<<"next array allocation error"<<endl;
     return -2;
@@ -290,7 +314,7 @@ int CyberDashString::KMPFind_minified(CyberDashString& pattern, int offset) cons
   int target_str_index = offset;
 
   while (pattern_index < pattern_len && target_str_index < length_) {
-    if (pattern_index == -1 || pattern[pattern_index] == char_ptr_[target_str_index]) {
+    if (pattern_index == -1 || pattern[pattern_index] == char_array_[target_str_index]) {
       pattern_index++;
       target_str_index++;
     } else {

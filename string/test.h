@@ -10,4 +10,6 @@ void TestBFFind();
 
 void TestKMPFind();
 
+void TestKMPFindCyberDash();
+
 #endif // CYBER_DASH_STRING_TEST_H

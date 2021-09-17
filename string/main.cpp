@@ -16,6 +16,8 @@ int main() {
 
   TestKMPFind();
 
+  TestKMPFindCyberDash();
+
   /*
   // test Find
   CyberDashString pattern1("aab12aab12aab");
@@ -49,7 +51,7 @@ int main() {
   cout<<"KMP_minified find_pos3:"<<find_pos<<endl;
   find_pos = test_str7.KMPFind_minified(pattern4, 0);
   cout<<"KMP_minified find_pos4:"<<find_pos<<endl;
-  find_pos = test_str6.KMPFind_minified(pattern5, 0);
+  find_pos = test_str6.KMPFindCyberDash(pattern5, 0);
   cout<<"KMP find_pos5:"<<find_pos<<endl<<endl;
 
   // CyberDashSHow

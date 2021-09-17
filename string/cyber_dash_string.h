@@ -33,21 +33,21 @@ public:
   int BruteForceFind(CyberDashString& pattern, int offset) const;
   int KMPFind(CyberDashString& pattern, int offset) const;
   // int KMPFind_v2(CyberDashString& pattern, int offset) const;
-  int KMPFind_minified(CyberDashString& pattern, int offset) const;
+  int KMPFindCyberDash(CyberDashString& pattern, int offset) const;
 
   friend ostream& operator<<(ostream& os, CyberDashString& cyber_dash_str) {
-    os<<cyber_dash_str.char_ptr_<<endl;
+    os << cyber_dash_str.char_array_ << endl;
   }
 
   static void CyberDashShow();
 
 private:
-  char* char_ptr_;
+  char* char_array_;
   int length_;
   int max_size_;
   static int* KMPNext(const char* pattern, int pattern_len);
-  static int* KMPNext_v2(const char* pattern, int pattern_len);
-  static int* KMPNext_minified(char* pattern, int pattern_len);
+  static int* KMPNextByCyberDash(const char* pattern, int pattern_len);
+  static void PrintNextArray(const int* next_arr_ptr, int next_arr_len);
 };
 
 
