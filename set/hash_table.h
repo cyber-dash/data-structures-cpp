@@ -32,10 +32,41 @@ private:
   int current_size_;
   int table_size_;
   Elem* hash_table_;
-  KindOfStatus* info_;
+  KindOfStatus* status_info_;
   int FindPos(const Key key) const;
   int operator == (Elem& elem);
   int operator != (Elem& elem);
 };
+
+
+template <class Elem, class Key>
+HashTable<Elem, Key>::HashTable(int d, int size) {
+  this->divisor_ = d;
+  this->table_size_ = size;
+  this->current_size_ = 0;
+  this->hash_table_ = new Elem[this->table_size_];
+  this->status_info_ = new KindOfStatus[this->table_size_];
+
+  for (int i = 0; i < this->table_size_; i++) {
+    this->status_info_[i] = Empty;
+  }
+}
+
+
+template <class Elem, class Key>
+int HashTable<Elem, Key>::FindPos(const Key key) const {
+  int i = key % this->divisor_;
+  int j = i;
+  do {
+    if (this->status_info_[j] == Empty || this->status_info_[j] == Active && this->hash_table_[j] == key) {
+      return j;
+    }
+
+    j = (j + 1) % this->table_size_;
+
+  } while (j != i);
+
+  return j;
+}
 
 #endif // CYBER_DASH_HASH_TABLE_H
