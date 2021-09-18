@@ -13,14 +13,14 @@
 
 
 template<typename T>
-class BitSet: public Set<T> {
+class LinkedSet: public Set<T> {
 public:
 
-  BitSet(int size);
-  BitSet(const BitSet<T>& bit_set);
+  LinkedSet(int size);
+  LinkedSet(const LinkedSet<T>& bit_set);
 
   // 析构函数
-  ~BitSet() { delete[] this->bit_vector_; };
+  ~LinkedSet() { delete[] this->bit_vector_; };
 
   // 置空集合
   void MakeEmpty();
@@ -33,19 +33,19 @@ public:
 
   unsigned short GetMember(const T& x);
   void PutMember(const T& x, int v);
-  bool AddMember(const T& x);
+  bool AddMember(const T& member);
   bool DelMember(const T& x);
   bool Contains(T x);
-  bool SubSet(BitSet<T>& bit_set);
+  bool SubSet(LinkedSet<T>& bit_set);
 
-  BitSet<T>& operator = (const BitSet<T>& bit_set);
-  BitSet<T>& operator + (const BitSet<T>& bit_set);
-  BitSet<T>& operator * (const BitSet<T>& bit_set);
-  BitSet<T>& operator - (const BitSet<T>& bit_set);
-  bool operator == (BitSet<T>& bit_set);
+  LinkedSet<T>& operator = (const LinkedSet<T>& bit_set);
+  LinkedSet<T>& operator + (const LinkedSet<T>& bit_set);
+  LinkedSet<T>& operator * (const LinkedSet<T>& bit_set);
+  LinkedSet<T>& operator - (const LinkedSet<T>& bit_set);
+  bool operator == (LinkedSet<T>& bit_set);
 
-  friend istream& operator >> (istream &in, BitSet<T>& bit_set);
-  friend ostream& operator << (ostream &out, BitSet<T>& bit_set);
+  friend istream& operator >> (istream &in, LinkedSet<T>& bit_set);
+  friend ostream& operator << (ostream &out, LinkedSet<T>& bit_set);
 
 private:
   int set_size_; // 集合大小
@@ -55,7 +55,7 @@ private:
 
 
 template<typename T>
-void BitSet<T>::MakeEmpty() {
+void LinkedSet<T>::MakeEmpty() {
   for (int i = 0; i < this->vector_size_; i++) {
     this->bit_vector_[i]=0;
   }
@@ -68,7 +68,7 @@ void BitSet<T>::MakeEmpty() {
  * @param size 集合大小
  */
 template<typename T>
-BitSet<T>::BitSet(int size): set_size_(size) {
+LinkedSet<T>::LinkedSet(int size): set_size_(size) {
   this->vector_size_ = (this->set_size_ + 15) >> 4;
   this->bit_vector_ = new unsigned short [this->vector_size_];
   /* error handler */
@@ -86,77 +86,134 @@ BitSet<T>::BitSet(int size): set_size_(size) {
  * @param bit_set (源)集合
  */
 template<typename T>
-BitSet<T>::BitSet(const BitSet<T>& src_bit_set) {
-  this->set_size_ = src_bit_set.set_size_;
-  this->vector_size_ = src_bit_set.
+LinkedSet<T>::LinkedSet(const LinkedSet<T>& src_bit_set) {
+  this->SetSetSize(src_bit_set.GetSetSize());
+  this->SetVectorSize(src_bit_set.GetVectorSize());
+
+  this->bit_vector_ = new unsigned short [this->vector_size_];
+  /* error handler */
+
+  // init
+  for (int i = 0; i < this->vector_size_; i++) {
+    this->bit_vector_[i] = 0;
+  }
 }
 
 
 template<typename T>
-bool BitSet<T>::GetMember(const T &x) {
+unsigned short LinkedSet<T>::GetMember(const T &x) {
+  int ad = x / 16;
+  int id = x % 16;
+  unsigned short elem = this->bit_vector_[ad];
+
+  return ((elem >> (15 - id)) % 2);
+}
+
+
+template<typename T>
+void LinkedSet<T>::PutMember(const T &x, int v) {
+  int ad = x / 16;
+  int id = x % 16;
+  unsigned short elem = this->bit_vector_[ad];
+  unsigned short temp = elem >> (15 - id);
+
+  elem = elem << (id + 1);
+
+  if (temp % 2 == 0 && v  == 0) {
+    temp = temp + 1;
+  } else if (temp % 2 == 1 && v == 0) {
+    temp = temp - 1;
+  }
+
+  this->bit_vector_[ad] = (temp << (15 - id)) | (elem >> (id + 1))
+}
+
+
+template<typename T>
+bool LinkedSet<T>::AddMember(const T& member) {
+  if (member < 0 && member > this->set_size_ ) {
+    return false;
+  }
+  
+  if (this->GetMember(member) == 0) {
+    this->PutMember(member, 1);
+    return true;
+  }
+
   return false;
 }
 
-template<typename T>
-void BitSet<T>::PutMember(const T &x, int v) {
-
-}
 
 template<typename T>
-bool BitSet<T>::AddMember(const T &x) {
+bool LinkedSet<T>::DelMember(const T &x) {
+  if (member < 0 && member > this->set_size_ ) {
+    return false;
+  }
+
+  if (this->GetMember(member) == 1) {
+    this->PutMember(member, 0);
+    return true;
+  }
+
   return false;
 }
 
-template<typename T>
-bool BitSet<T>::DelMember(const T &x) {
-  return false;
-}
 
+// todo
 template<typename T>
-BitSet<T> &BitSet<T>::operator=(const BitSet<T> &R) {
+LinkedSet<T> &LinkedSet<T>::operator=(const LinkedSet<T> &R) {
   return <#initializer#>;
 }
 
-template<typename T>
-BitSet<T> BitSet<T>::operator+(const BitSet<T> &R) {
-  return BitSet<T>();
-}
 
 template<typename T>
-BitSet<T> BitSet<T>::operator*(const BitSet<T> &R) {
-  return BitSet<T>();
+LinkedSet<T> LinkedSet<T>::operator+(const LinkedSet<T> &R) {
+  return <#initializer#>;
 }
 
-template<typename T>
-BitSet<T> BitSet<T>::operator-(const BitSet<T> &R) {
-  return BitSet<T>();
-}
 
 template<typename T>
-bool BitSet<T>::Contains(const T x) {
+LinkedSet<T> LinkedSet<T>::operator*(const LinkedSet<T> &R) {
+  return <#initializer#>;
+}
+
+
+template<typename T>
+LinkedSet<T> LinkedSet<T>::operator-(const LinkedSet<T> &R) {
+  return LinkedSet<T>();
+}
+
+
+template<typename T>
+bool LinkedSet<T>::Contains(const T x) {
   return false;
 }
 
+
 template<typename T>
-bool BitSet<T>::SubSet(BitSet<T> &bit_set) {
+bool LinkedSet<T>::SubSet(LinkedSet<T> &bit_set) {
   return false;
 }
 
+
 template<typename T>
-bool BitSet<T>::operator==(BitSet<T> &bit_set) {
-  return false;
+bool LinkedSet<T>::operator==(LinkedSet<T> &bit_set) {
+  return <#initializer#>;
 }
+
 
 istream &operator>>(istream &in, BitSet<T> &bit_set) {
   return <#initializer#>;
 }
 
-ostream &operator<<(ostream &out, BitSet<T> &bit_set) {
-  return <#initializer#>;
+
+ostream& operator<<(ostream &out, BitSet<T> &bit_set) {
+  return out;
 }
 
-istream &operator>>(istream &in, BitSet<T> &bit_set) {
-  return <#initializer#>;
+
+istream& operator>>(istream &in, BitSet<T> &bit_set) {
+  return in;
 }
 
 
