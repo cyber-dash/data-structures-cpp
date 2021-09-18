@@ -102,4 +102,78 @@ bool LinkedSet<T>::AddMember(const T& member) {
 }
 
 
+template <class T>
+bool LinkedSet<T>::DelMember(const T& member) {
+  SetNode<T>* temp = this->first_->link;
+  SetNode<T>* pre = this->first_;
+
+  while (temp != NULL && temp->data < member) {
+    pre = temp;
+    temp = temp->link;
+  }
+
+  if (temp != NULL && temp->data == member) {
+    pre->link = temp->link;
+    if (temp == this->last_) {
+      this->last_ = pre;
+    }
+
+    delete temp;
+
+    return true;
+  }
+
+  return false;
+}
+
+
+template <class T>
+LinkedSet<T>& LinkedSet<T>::operator = (LinkedSet<T> src_linked_set) {
+  this->first_ = new SetNode<T>();
+  /* error handler */
+
+  SetNode<T>* cur_ptr = this->first_;
+  SetNode<T>* src_cur_ptr = src_linked_set.first_->link;
+
+  while (src_linked_set != NULL) {
+    cur_ptr->link = new SetNode<T>(src_cur_ptr->data);
+    cur_ptr = cur_ptr->link;
+    src_cur_ptr = src_cur_ptr->link;
+  }
+
+  cur_ptr->link = NULL;
+  this->last_ = cur_ptr;
+
+  return *this;
+}
+
+
+template <class T>
+LinkedSet<T>& LinkedSet<T>::operator + (LinkedSet<T>& linked_set) {
+  return initializer;
+}
+
+
+template <class T>
+bool LinkedSet<T>::operator == (LinkedSet<T>& src_linked_set) {
+  SetNode<T>* src_cur_ptr = src_linked_set.first_->link;
+  SetNode<T>* cur_ptr = this->first_->link;
+
+  while (cur_ptr != NULL && src_cur_ptr != NULL) {
+    if (cur_ptr->data == src_cur_ptr->data) {
+      cur_ptr = cur_ptr->link;
+      src_cur_ptr = src_cur_ptr->link;
+    } else {
+      return false;
+    }
+  }
+
+  if (cur_ptr != NULL || src_cur_ptr != NULL) { // 链长不相等
+    return false;
+  }
+
+  return true;
+}
+
+
 #endif // CYBER_DASH_LINK_SET_H
