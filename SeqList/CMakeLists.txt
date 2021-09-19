@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main main.cpp seq_list.h test.cpp test.h seq_list_algorithm.h)
+add_executable(main src/main.cpp src/seq_list.h src/test.cpp src/test.h src/seq_list_algorithm.h)

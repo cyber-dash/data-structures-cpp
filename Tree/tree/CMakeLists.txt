@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main tree.cpp main.cpp tree.h tree_node.h)
+add_executable(main src/tree.cpp src/main.cpp src/tree.h src/tree_node.h)

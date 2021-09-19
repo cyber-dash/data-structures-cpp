@@ -2,14 +2,53 @@
 // Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/28.
 //
 
-#include <cstdlib>
-#include <stdexcept>
+#ifndef CYBER_DASH_LINK_STACK_H
+#define CYBER_DASH_LINK_STACK_H
 
-#include "link_node.h"
-#include "link_stack.h"
+
+#include <iostream>
+#include "stack.h"
 
 
 using namespace std;
+
+
+template <class T>
+struct LinkNode {
+
+  T data_;
+
+  LinkNode<T> *link_;
+
+  explicit LinkNode(LinkNode<T>* ptr = NULL): link_(ptr) {}
+  explicit LinkNode(const T& data, LinkNode<T> *ptr = NULL): data_(data), link_(ptr) {}
+};
+
+
+template <class T>
+class LinkStack: public Stack<T>{
+
+public:
+  LinkStack(): top_ptr_(NULL) {}
+  ~LinkStack();
+  void Push(const T& data);
+  bool Pop(T& data);
+  bool GetTop(T& data) const;
+  bool IsEmpty() const;
+  int GetSize() const;
+  void MakeEmpty();
+
+  LinkNode<T>* GetTopPtr();
+
+  template<class U>
+  friend ostream& operator<<(ostream& os, LinkStack<T>& stack);
+
+  void CyberDashShow();
+
+private:
+  LinkNode<T>* top_ptr_;     // 元素
+
+};
 
 
 template<class T>
@@ -132,3 +171,6 @@ void LinkStack<T>::CyberDashShow() {
       <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
+
+
+#endif //CYBER_DASH_LINK_STACK_H

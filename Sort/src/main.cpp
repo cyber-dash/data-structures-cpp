@@ -5,9 +5,6 @@
 #include "test.h"
 
 
-using namespace std;
-
-
 int main() {
 
   TestBubbleSort();
@@ -28,4 +25,3 @@ int main() {
 
   return 0;
 }
-

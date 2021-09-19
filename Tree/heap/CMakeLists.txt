@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main main.cpp min_heap.cpp min_heap.h)
+add_executable(main src/main.cpp src/min_heap.cpp src/min_heap.h)

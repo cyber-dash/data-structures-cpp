@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main main.cpp huffman_node.h huffman_tree.cpp huffman_tree.h min_heap.cpp min_heap.h)
+add_executable(main src/main.cpp src/huffman_node.h src/huffman_tree.cpp src/huffman_tree.h src/min_heap.cpp src/min_heap.h)

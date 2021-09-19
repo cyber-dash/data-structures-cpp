@@ -2,13 +2,58 @@
 // Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/29.
 //
 
+#ifndef CYBER_DASH_YUAN_STRING_H
+#define CYBER_DASH_YUAN_STRING_H
+
+
 #include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include "cyber_dash_string.h"
 
 
 using namespace std;
+
+
+const int DEFAULT_SIZE = 128;
+
+
+class CyberDashString {
+
+public:
+  explicit CyberDashString(int size = DEFAULT_SIZE);
+  explicit CyberDashString(const char* char_ptr);
+  ~CyberDashString();
+
+  int Length() const;
+  CyberDashString operator() (int index, int len) const;
+  bool operator == (const CyberDashString& cyber_dash_str) const;
+  bool operator != (CyberDashString& cyber_dash_str) const;
+  bool operator ! () const;
+  CyberDashString& operator = (const CyberDashString& cyber_dash_str);
+  CyberDashString& operator += (CyberDashString& cyber_dash_str);
+  char& operator[] (int index);
+  int BruteForceFind(CyberDashString& pattern, int offset) const;
+
+  // KMP字符串匹配查找
+  int KMPFind(CyberDashString& pattern, int offset) const;
+
+  // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
+  int KMPFindCyberDash(CyberDashString& pattern, int offset) const;
+
+  // 重载<<
+  friend ostream& operator<<(ostream& os, CyberDashString& cyber_dash_str) {
+    os << cyber_dash_str.char_array_;
+    return os;
+  }
+
+  static void CyberDashShow();
+
+private:
+  char* char_array_;
+  int length_;
+  int max_size_;
+  static int* KMPNext(const char* pattern, int pattern_len);
+  static int* KMPNextByCyberDash(const char* pattern, int pattern_len);
+  static void PrintNextArray(const int* next_arr_ptr, int next_arr_len);
+};
 
 
 CyberDashString::CyberDashString(int size) {
@@ -211,7 +256,7 @@ int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
       starting_index++;
       next[i] = starting_index;
     }
-    /// 使用next[i]求next[i + 1]
+      /// 使用next[i]求next[i + 1]
     else
     {
       /// 如果pattern[i]和pattern[starting_index]相同, 则左右两侧的相同字符串区域扩展
@@ -241,7 +286,7 @@ int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
         starting_index++;
         next[i] = starting_index;
       }
-      /// 如果pattern[i]和pattern[starting_index]不同, 则使用next数组进行递归, 逐步验证
+        /// 如果pattern[i]和pattern[starting_index]不同, 则使用next数组进行递归, 逐步验证
       else
       {
         starting_index = next[starting_index];
@@ -325,14 +370,14 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
       pattern_str_i++;
       target_str_i++;
     }
-    /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)不同
+      /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)不同
     else
     {
       // 如果是模式串第1个字符不匹配, 则目标串向后移位
       if (pattern_str_i == 0) {
         target_str_i++;
       }
-      // 如果不是模式串第1个字符不匹配, 则从模式串的next[pattern_str_i]开始执行下一趟匹配
+        // 如果不是模式串第1个字符不匹配, 则从模式串的next[pattern_str_i]开始执行下一趟匹配
       else
       {
         pattern_str_i = next[pattern_str_i];
@@ -407,3 +452,6 @@ void CyberDashString::CyberDashShow() {
       <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
+
+
+#endif //CYBER_DASH_YUAN_STRING_H

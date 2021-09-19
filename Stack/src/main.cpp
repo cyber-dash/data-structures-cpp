@@ -3,9 +3,8 @@
 //
 
 #include <iostream>
-
-#include "link_stack.cpp"
 #include "link_stack.h"
+
 
 using namespace std;
 

@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main cyber_dash_string.h main.cpp cyber_dash_string.cpp test.cpp test.h)
+add_executable(main src/cyber_dash_string.h src/main.cpp src/test.cpp src/test.h)

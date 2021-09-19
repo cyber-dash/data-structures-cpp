@@ -25,7 +25,7 @@ public:
   void CyberDashShow();
 
 private:
-  E *heap_array_;
+  E* heap_array_;
   int current_size_;
   int max_size_;
   void siftDown(int start, int end);
