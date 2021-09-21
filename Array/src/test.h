@@ -13,5 +13,7 @@ void TestSparseMatrixConstructor();
 
 void TestSparseMatrixCopyConstructor();
 
+void TestSparseMatrixInput();
+
 
 #endif // CYBER_DASH_TRI_TUPLE_TEST_H

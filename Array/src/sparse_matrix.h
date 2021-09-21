@@ -14,6 +14,7 @@
 
 
 #include <iostream>
+#include <cstdlib>
 
 
 using namespace std;
@@ -54,6 +55,12 @@ public:
   int Cols() { return this->cols_; };
   int Terms() { return this->terms_; }
   int MaxTerms() { return this->max_terms_; }
+
+  void SetRows(int rows) { this->rows_ = rows; }
+  void SetCols(int cols) { this->cols_ = cols; };
+  int SetTerms(int terms) { this->terms_ = terms; }
+  int SetMaxTerms(int max_terms) { this->max_terms_ = max_terms; }
+
   TriTuple<T>* SparseMatrixArray() { return this->sparse_matrix_array_; }
 
   SparseMatrix<T>& operator = (SparseMatrix<T>& sparse_matrix);
@@ -132,14 +139,38 @@ ostream& operator<<(ostream& out, SparseMatrix<T>& sparse_matrix) {
       sparse_matrix.SparseMatrixArray()[i].value<<endl;
   }
 
-  // out<<"1234"<<endl;
-
   return out;
 }
 
 
 template<class T>
-istream &operator>>(istream &in, SparseMatrix<T> &sparse_matrix) {
+istream& operator>>(istream& in, SparseMatrix<T> &sparse_matrix) {
+  cout << "输入rows, cols和terms" << endl;
+
+  int rows = 0;
+  int cols = 0;
+  int terms = 0;
+
+  in >> rows >> cols >> terms;
+
+  if (terms > sparse_matrix.MaxTerms()) {
+    /* error handler */
+    exit(1);
+  }
+
+  sparse_matrix.SetRows(rows);
+  sparse_matrix.SetCols(cols);
+  sparse_matrix.SetTerms(terms);
+
+  for (int i = 0; i < sparse_matrix.Terms(); i++) {
+    cout << "输入第" << i << "个row, column和term的值" << endl;
+    in >> sparse_matrix.SparseMatrixArray()[i].row
+      >> sparse_matrix.SparseMatrixArray()[i].col
+      >> sparse_matrix.SparseMatrixArray()[i].value;
+  }
+
+  cout << sparse_matrix << endl;
+
   return in;
 }
 

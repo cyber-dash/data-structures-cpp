@@ -35,3 +35,18 @@ void TestSparseMatrixCopyConstructor() {
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
+
+
+void TestSparseMatrixInput() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test SparseMatrixInput                  |"<<endl;
+  cout<<"|                    测试队列稀疏矩阵输入构造                   |"<<endl<<endl<<endl;
+
+  SparseMatrix<int> sparse_matrix_1(100);
+
+  cin>>sparse_matrix_1;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
