@@ -15,6 +15,8 @@ void TestSparseMatrixConstructor() {
 
   SparseMatrix<int> sparse_matrix(100);
 
+  cout<<sparse_matrix;
+
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
@@ -28,6 +30,8 @@ void TestSparseMatrixCopyConstructor() {
 
   SparseMatrix<int> sparse_matrix_1(100);
   SparseMatrix<int> sparse_matrix_2(sparse_matrix_1);
+
+  cout<<sparse_matrix_2;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
