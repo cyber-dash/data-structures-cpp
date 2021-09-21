@@ -175,9 +175,29 @@ istream& operator>>(istream& in, SparseMatrix<T> &sparse_matrix) {
 }
 
 
+/**
+ * @brief 稀疏矩阵转置
+ * @tparam T
+ * @return
+ */
 template<class T>
 SparseMatrix<T> SparseMatrix<T>::Transpose() {
-  return SparseMatrix<T>(0);
+  SparseMatrix<T> trans_sparse_matrix(this->MaxTerms());
+
+  trans_sparse_matrix.SetRows(this->Cols());
+  trans_sparse_matrix.SetCols(this->Rows());
+  trans_sparse_matrix.SetTerms(this->Terms());
+
+  if (this->Terms() == 0) {
+    return trans_sparse_matrix;
+  }
+
+  int cur = 0;
+  for (int i = 0; i < this->Cols(); i++) {
+    for (int j = 0; j < this->Terms(); j++) {
+      if (this->SparseMatrixArray()[cur])
+    }
+  }
 }
 
 
