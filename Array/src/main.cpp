@@ -10,5 +10,9 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+  TestSparseMatrixConstructor();
+
+  TestSparseMatrixCopyConstructor();
+
   return 0;
 }

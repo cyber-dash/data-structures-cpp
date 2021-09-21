@@ -13,7 +13,8 @@
 #define CYBER_DASH_TRI_TUPLE_H
 
 
-#include <ostream>
+#include <iostream>
+// #include <ostream>
 
 
 using namespace std;
@@ -75,15 +76,40 @@ private:
 };
 
 
+/**
+ * @brief 构造函数
+ * @tparam T 数据模板类型
+ * @param max_size 矩阵的最大维度
+ */
 template<class T>
-SparseMatrix<T>::SparseMatrix(int max_size) {
+SparseMatrix<T>::SparseMatrix(int max_size): max_terms_(max_size) {
+  if (max_size < 1) {
+    cerr<<"初始化max_size错误"<<endl;
+    return;
+  }
 
+  this->sparse_matrix_array_ = new TriTuple<T>[max_size];
+  /* error handler */
+
+  this->rows_ = 0;
+  this->cols_ = 0;
+  this->terms_ = 0;
 }
 
 
 template<class T>
-SparseMatrix<T>::SparseMatrix(SparseMatrix<T> &sparse_matrix) {
+SparseMatrix<T>::SparseMatrix(SparseMatrix<T>& sparse_matrix) {
+  this->rows_ = sparse_matrix.rows_;
+  this->cols_ = sparse_matrix.cols_;
+  this->terms_ = sparse_matrix.terms_;
+  this->max_terms_ = sparse_matrix.max_terms_;
 
+  this->sparse_matrix_array_ = new TriTuple<T>[this->max_terms_];
+  /* error handler */
+
+  for (int i = 0; i < this->terms_; i++) {
+    this->sparse_matrix_array_[i] = sparse_matrix.sparse_matrix_array_[i];
+  }
 }
 
 

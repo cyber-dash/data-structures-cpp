@@ -9,4 +9,9 @@
 #include "sparse_matrix.h"
 
 
+void TestSparseMatrixConstructor();
+
+void TestSparseMatrixCopyConstructor();
+
+
 #endif // CYBER_DASH_TRI_TUPLE_TEST_H
