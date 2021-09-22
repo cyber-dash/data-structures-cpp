@@ -31,9 +31,11 @@ void TestSparseMatrixCopyConstructor() {
   SparseMatrix<int> sparse_matrix_1(100);
   SparseMatrix<int> sparse_matrix_2(sparse_matrix_1);
 
-  SparseMatrix<int>& sparse_matrix_3 = sparse_matrix_1.Transpose();
+  // SparseMatrix<int>& sparse_matrix_3 = sparse_matrix_1.Transpose();
+  SparseMatrix<int>* sparse_matrix_ptr_3 = sparse_matrix_1.Transpose();
 
   cout<<sparse_matrix_2;
+  cout<<*sparse_matrix_ptr_3;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -49,6 +51,10 @@ void TestSparseMatrixInput() {
   SparseMatrix<int> sparse_matrix_1(100);
 
   cin>>sparse_matrix_1;
+
+  SparseMatrix<int>* sparse_matrix_ptr_3 = sparse_matrix_1.Transpose();
+
+  cout << *sparse_matrix_ptr_3 << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

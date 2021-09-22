@@ -12,9 +12,9 @@ int main(int argc, char** argv) {
 
   // TestSparseMatrixConstructor();
 
-  TestSparseMatrixCopyConstructor();
+  // TestSparseMatrixCopyConstructor();
 
-  // TestSparseMatrixInput();
+  TestSparseMatrixInput();
 
   return 0;
 }

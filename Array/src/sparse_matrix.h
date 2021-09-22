@@ -58,6 +58,9 @@ public:
   int Terms() { return this->terms_; }
   int MaxTerms() { return this->max_terms_; }
 
+  bool GetValue(int row, int col, T& value);
+  bool SetValue(int row, int col, T value);
+
   void SetRows(int rows) { this->rows_ = rows; }
   void SetCols(int cols) { this->cols_ = cols; };
   int SetTerms(int terms) { this->terms_ = terms; }
@@ -68,7 +71,7 @@ public:
   SparseMatrix<T>& operator = (SparseMatrix<T>& sparse_matrix);
 
   // 转置运算
-  SparseMatrix<T>& Transpose();
+  SparseMatrix<T>* Transpose();
 
   // 快速转置运算
   SparseMatrix<T>& FastTranspose();
@@ -120,6 +123,23 @@ SparseMatrix<T>::SparseMatrix(SparseMatrix<T>& sparse_matrix) :
   rows_(sparse_matrix.Rows()), cols_(sparse_matrix.Cols()),
   terms_(sparse_matrix.Terms()), max_terms_(sparse_matrix.MaxTerms())
 {
+  this->sparse_matrix_array_ = new TriTuple<T>[this->MaxTerms()];
+  /* error handler */
+
+  for (int i = 0; i < this->terms_; i++) {
+    this->sparse_matrix_array_[i] = sparse_matrix.SparseMatrixArray()[i];
+  }
+}
+
+
+template<class T>
+SparseMatrix<T>& SparseMatrix<T>::operator = (SparseMatrix<T>& sparse_matrix) {
+
+  this->SetRows(sparse_matrix.Rows());
+  this->SetCols(sparse_matrix.Cols());
+  this->SetTerms(sparse_matrix.Terms());
+  this->SetMaxTerms(sparse_matrix.MaxTerms());
+
   this->sparse_matrix_array_ = new TriTuple<T>[this->MaxTerms()];
   /* error handler */
 
@@ -183,25 +203,55 @@ istream& operator>>(istream& in, SparseMatrix<T> &sparse_matrix) {
  * @return
  */
 template<class T>
-SparseMatrix<T>& SparseMatrix<T>::Transpose() {
-  SparseMatrix<T> trans_sparse_matrix(this->MaxTerms());
+SparseMatrix<T>* SparseMatrix<T>::Transpose() {
+  SparseMatrix<T>* trans_sparse_matrix_ptr = new SparseMatrix<T>(this->MaxTerms());
 
-  trans_sparse_matrix.SetRows(this->Cols());
-  trans_sparse_matrix.SetCols(this->Rows());
-  trans_sparse_matrix.SetTerms(this->Terms());
+  trans_sparse_matrix_ptr->SetRows(this->Cols());
+  trans_sparse_matrix_ptr->SetCols(this->Rows());
+  trans_sparse_matrix_ptr->SetTerms(this->Terms());
 
   if (this->Terms() == 0) {
-    return trans_sparse_matrix;
+    return trans_sparse_matrix_ptr;
   }
 
   int cur = 0;
-  for (int i = 0; i < this->Cols(); i++) {
-    for (int j = 0; j < this->Terms(); j++) {
-      // if (this->SparseMatrixArray()[cur])
+  for (int i = 0; i < this->Cols(); i++) { // 用列号做扫描, 做Cols趟
+    for (int j = 0; j < this->Terms(); j++) { // 在数组sparse_matrix_array_中找到列号为i的三元组
+      if (this->SparseMatrixArray()[j].col == i) {
+        trans_sparse_matrix_ptr->SparseMatrixArray()[cur].row = i; // row等于col
+        trans_sparse_matrix_ptr->SparseMatrixArray()[cur].col = this->SparseMatrixArray()[j].row; // col等于row
+        trans_sparse_matrix_ptr->SparseMatrixArray()[cur].value = this->SparseMatrixArray()[j].value; // value
+        cur++;
+      }
     }
   }
 
-  return trans_sparse_matrix;
+  return trans_sparse_matrix_ptr;
+}
+
+
+template<class T>
+bool SparseMatrix<T>::GetValue(int row, int col, T &value) {
+  for (int i = 0; i < this->Terms(); i++) {
+    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
+      value = this->sparse_matrix_array_[i].value;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+template<class T>
+bool SparseMatrix<T>::SetValue(int row, int col, T value) {
+  if (row >= this->max_terms_ || col >= this->max_terms_) {
+    return false;
+  }
+
+  this->sparse_matrix_array_[this->terms_].row =  row;
+  this->sparse_matrix_array_[this->terms_].col =  col;
+  this->sparse_matrix_array_[this->terms_].value = value;
 }
 
 
