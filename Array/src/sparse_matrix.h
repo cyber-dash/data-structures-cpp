@@ -47,11 +47,13 @@ public:
  * 
  * @param max_size 矩阵最大容量
  */
-  SparseMatrix(int max_size);
+  SparseMatrix(int max_size = 100);
   SparseMatrix(SparseMatrix<T>& sparse_matrix);
   ~SparseMatrix() { delete[] sparse_matrix_array_; }
 
-  int Rows() { return this->rows_; }
+  int Rows() {
+    return this->rows_;
+  }
   int Cols() { return this->cols_; };
   int Terms() { return this->terms_; }
   int MaxTerms() { return this->max_terms_; }
@@ -66,10 +68,10 @@ public:
   SparseMatrix<T>& operator = (SparseMatrix<T>& sparse_matrix);
 
   // 转置运算
-  SparseMatrix<T> Transpose();
+  SparseMatrix<T>& Transpose();
 
   // 快速转置运算
-  SparseMatrix<T> FastTranspose();
+  SparseMatrix<T>& FastTranspose();
 
   // 当前矩阵与sparse_matrix相加
   SparseMatrix<T> Add(SparseMatrix<T>& sparse_matrix);
@@ -181,7 +183,7 @@ istream& operator>>(istream& in, SparseMatrix<T> &sparse_matrix) {
  * @return
  */
 template<class T>
-SparseMatrix<T> SparseMatrix<T>::Transpose() {
+SparseMatrix<T>& SparseMatrix<T>::Transpose() {
   SparseMatrix<T> trans_sparse_matrix(this->MaxTerms());
 
   trans_sparse_matrix.SetRows(this->Cols());
@@ -195,16 +197,20 @@ SparseMatrix<T> SparseMatrix<T>::Transpose() {
   int cur = 0;
   for (int i = 0; i < this->Cols(); i++) {
     for (int j = 0; j < this->Terms(); j++) {
-      if (this->SparseMatrixArray()[cur])
+      // if (this->SparseMatrixArray()[cur])
     }
   }
+
+  return trans_sparse_matrix;
 }
 
 
+/*
 template<class T>
-SparseMatrix<T> SparseMatrix<T>::FastTranspose() {
+SparseMatrix<T>& SparseMatrix<T>::FastTranspose() {
   return SparseMatrix<T>(0);
 }
+ */
 
 
 #endif
