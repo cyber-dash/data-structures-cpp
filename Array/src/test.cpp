@@ -68,16 +68,51 @@ void TestSparseMatrixTranspose() {
 
   SparseMatrix<double> sparse_matrix_1(100);
 
+  /*
   sparse_matrix_1.SetRows(3);
   sparse_matrix_1.SetCols(3);
 
   sparse_matrix_1.AddElement(0, 1, 1.7);
   sparse_matrix_1.AddElement(1, 0, 8.2);
+   */
+  sparse_matrix_1.SetRows(10);
+  sparse_matrix_1.SetCols(20);
+
+  sparse_matrix_1.AddElement(0, 1, 11.345);
+  sparse_matrix_1.AddElement(1, 0, 4.2);
+  sparse_matrix_1.AddElement(16, 7, 432.569);
 
   cout<<"sparse_matrix_1矩阵:"<<endl;
   cout<<sparse_matrix_1<<endl;
 
   SparseMatrix<double>* sparse_matrix_ptr = sparse_matrix_1.Transpose();
+
+  cout<<"转置后的矩阵:"<<endl;
+  cout<<*sparse_matrix_ptr<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
+
+
+void TestSparseMatrixFastTranspose() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|               Test SparseMatrixFastTranspose              |"<<endl;
+  cout<<"|                   测试队列稀疏矩阵(快速)转置                  |"<<endl<<endl<<endl;
+
+  SparseMatrix<double> sparse_matrix_1(100);
+
+  sparse_matrix_1.SetRows(10);
+  sparse_matrix_1.SetCols(20);
+
+  sparse_matrix_1.AddElement(0, 1, 11.345);
+  sparse_matrix_1.AddElement(1, 0, 4.2);
+  sparse_matrix_1.AddElement(16, 7, 432.569);
+
+  cout<<"sparse_matrix_1矩阵:"<<endl;
+  cout<<sparse_matrix_1<<endl;
+
+  SparseMatrix<double>* sparse_matrix_ptr = sparse_matrix_1.FastTranspose();
 
   cout<<"转置后的矩阵:"<<endl;
   cout<<*sparse_matrix_ptr<<endl;

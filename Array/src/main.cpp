@@ -10,13 +10,15 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-  // TestSparseMatrixConstructor();
+  TestSparseMatrixConstructor();
 
-  // TestSparseMatrixCopyConstructor();
+  TestSparseMatrixCopyConstructor();
 
   // TestSparseMatrixInput();
 
   TestSparseMatrixTranspose();
+
+  TestSparseMatrixFastTranspose();
 
   return 0;
 }

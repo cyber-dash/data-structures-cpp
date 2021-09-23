@@ -16,5 +16,7 @@ void TestSparseMatrixInput();
 
 void TestSparseMatrixTranspose();
 
+void TestSparseMatrixFastTranspose();
+
 
 #endif // CYBER_DASH_TRI_TUPLE_TEST_H

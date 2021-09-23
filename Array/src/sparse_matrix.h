@@ -74,7 +74,7 @@ public:
   SparseMatrix<T>* Transpose();
 
   // 快速转置运算
-  SparseMatrix<T>& FastTranspose();
+  SparseMatrix<T>* FastTranspose();
 
   // 当前矩阵与sparse_matrix相加
   SparseMatrix<T> Add(SparseMatrix<T>& sparse_matrix);
@@ -230,6 +230,57 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
 }
 
 
+/**
+ * @brief 稀疏矩阵快速转置
+ * @tparam T 模板数据类型
+ * @return 转置矩阵的指针
+ */
+template<class T>
+SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
+  int* row_size_arr = new int[this->Cols()];
+  int* row_start_arr = new int[this->Cols()];
+
+  SparseMatrix<T>* trans_sparse_matrix_ptr = new SparseMatrix<T>(this->MaxTerms());
+
+  trans_sparse_matrix_ptr->SetRows(this->Cols());
+  trans_sparse_matrix_ptr->SetCols(this->Rows());
+  trans_sparse_matrix_ptr->SetTerms(this->Terms());
+
+  if (this->Terms() == 0) {
+    return trans_sparse_matrix_ptr;
+  }
+
+  for (int i = 0; i < this->Cols(); i++) {
+    row_size_arr[i] = 0;
+  }
+
+  for (int i = 0; i < this->Terms(); i++) {
+    row_size_arr[this->SparseMatrixArray()[i].col]++;  // 转置后的第this->SparseMatrixArray()[i].col行个数++
+  }
+
+  row_start_arr[0] = 0; // sparse_matrix_array_数组的索引0位置的数据, 保存转置后的0行
+  for (int i = 1; i < this->Cols(); i++) {
+    row_start_arr[i] = row_start_arr[i - 1] + row_size_arr[i - 1];
+  }
+
+  for (int i = 0; i < this->Terms(); i++) {
+    int cur_start_pos = row_start_arr[this->SparseMatrixArray()[i].col];
+
+    trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].row = this->SparseMatrixArray()[i].col;
+    trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].col = this->SparseMatrixArray()[i].row;
+    trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].value = this->SparseMatrixArray()[i].value;
+
+    row_start_arr[this->SparseMatrixArray()[i].col]++; // 完成后, 向后挪一位
+  }
+
+  delete[] row_start_arr;
+  delete[] row_size_arr;
+
+  return trans_sparse_matrix_ptr;
+}
+
+
+
 template<class T>
 bool SparseMatrix<T>::GetElement(int row, int col, T &value) {
   for (int i = 0; i < this->Terms(); i++) {
@@ -269,14 +320,6 @@ bool SparseMatrix<T>::AddElement(int row, int col, T value) {
 
   return true;
 }
-
-
-/*
-template<class T>
-SparseMatrix<T>& SparseMatrix<T>::FastTranspose() {
-  return SparseMatrix<T>(0);
-}
- */
 
 
 #endif
