@@ -58,3 +58,29 @@ void TestSparseMatrixInput() {
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
+
+
+void TestSparseMatrixTranspose() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                 Test SparseMatrixTranspose                |"<<endl;
+  cout<<"|                     测试队列稀疏矩阵转置                     |"<<endl<<endl<<endl;
+
+  SparseMatrix<double> sparse_matrix_1(100);
+
+  sparse_matrix_1.SetRows(3);
+  sparse_matrix_1.SetCols(3);
+
+  sparse_matrix_1.AddElement(0, 1, 1.7);
+  sparse_matrix_1.AddElement(1, 0, 8.2);
+
+  cout<<"sparse_matrix_1矩阵:"<<endl;
+  cout<<sparse_matrix_1<<endl;
+
+  SparseMatrix<double>* sparse_matrix_ptr = sparse_matrix_1.Transpose();
+
+  cout<<"转置后的矩阵:"<<endl;
+  cout<<*sparse_matrix_ptr<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
+}

@@ -14,7 +14,9 @@ int main(int argc, char** argv) {
 
   // TestSparseMatrixCopyConstructor();
 
-  TestSparseMatrixInput();
+  // TestSparseMatrixInput();
+
+  TestSparseMatrixTranspose();
 
   return 0;
 }

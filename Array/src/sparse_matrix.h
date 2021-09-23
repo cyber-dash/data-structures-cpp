@@ -51,20 +51,20 @@ public:
   SparseMatrix(SparseMatrix<T>& sparse_matrix);
   ~SparseMatrix() { delete[] sparse_matrix_array_; }
 
-  int Rows() {
-    return this->rows_;
-  }
-  int Cols() { return this->cols_; };
-  int Terms() { return this->terms_; }
-  int MaxTerms() { return this->max_terms_; }
-
-  bool GetValue(int row, int col, T& value);
-  bool SetValue(int row, int col, T value);
-
+  int Rows() { return this->rows_; }
   void SetRows(int rows) { this->rows_ = rows; }
+
+  int Cols() { return this->cols_; };
   void SetCols(int cols) { this->cols_ = cols; };
+
+  int Terms() { return this->terms_; }
   int SetTerms(int terms) { this->terms_ = terms; }
+
+  int MaxTerms() { return this->max_terms_; }
   int SetMaxTerms(int max_terms) { this->max_terms_ = max_terms; }
+
+  bool GetElement(int row, int col, T& value);
+  bool AddElement(int row, int col, T value);
 
   TriTuple<T>* SparseMatrixArray() { return this->sparse_matrix_array_; }
 
@@ -231,7 +231,7 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
 
 
 template<class T>
-bool SparseMatrix<T>::GetValue(int row, int col, T &value) {
+bool SparseMatrix<T>::GetElement(int row, int col, T &value) {
   for (int i = 0; i < this->Terms(); i++) {
     if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
       value = this->sparse_matrix_array_[i].value;
@@ -244,14 +244,30 @@ bool SparseMatrix<T>::GetValue(int row, int col, T &value) {
 
 
 template<class T>
-bool SparseMatrix<T>::SetValue(int row, int col, T value) {
+bool SparseMatrix<T>::AddElement(int row, int col, T value) {
+
   if (row >= this->max_terms_ || col >= this->max_terms_) {
+    return false;
+  }
+
+  for (int i = 0; i < this->Terms(); i++) {
+    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
+      this->sparse_matrix_array_[i].value = value;
+      return true;
+    }
+  }
+
+  if (this->Terms() == this->MaxTerms()) { // 不能再插入
     return false;
   }
 
   this->sparse_matrix_array_[this->terms_].row =  row;
   this->sparse_matrix_array_[this->terms_].col =  col;
   this->sparse_matrix_array_[this->terms_].value = value;
+
+  this->terms_++;
+
+  return true;
 }
 
 
