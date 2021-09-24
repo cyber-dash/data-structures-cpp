@@ -1,6 +1,13 @@
-//
-// Created by cyberdash@163.com(douyin: cyberdash_yuan) on 2020/7/14.
-//
+/*!
+ * @file gen_list.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 广义表模板类
+ * @version 0.2.1
+ * @date 2021-07-14
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_GENERALIZED_LIST_H
 #define CYBER_DASH_GENERALIZED_LIST_H
@@ -68,38 +75,6 @@ GenList<T>::GenList() {
 }
 
 
-/*
-template<class T>
-GenListNode<T> *GenList<T>::Copy(GenListNode<T> *list_node_ptr) { // todo: Change name to CopyTo tail
-
-  if (list_node_ptr != NULL) {
-    int list_node_type = list_node_ptr->GetType();
-    GenListNode<T>* list_node_tail_ptr = list_node_ptr->GetTailLink();
-
-    GenListNode<T>* cur = new GenListNode<T>();
-    cur->SetType(list_node_type);
-
-    switch (list_node_type) {
-      case 0:
-        // todo
-        break;
-      case 1:
-        break;
-      case 2:
-        break;
-    }
-
-    GenListNode<T>* cur_tail_list_ptr = CopyFrom(list_node_tail_ptr);
-    cur->SetTailLink(cur_tail_list_ptr);
-
-    return cur;
-  } else {
-    return NULL;
-  }
-}
- */
-
-
 /**
  * @brief 线性表头结点
  * @tparam T
@@ -157,7 +132,6 @@ GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& node_ptr) {
         cur_node_ptr.union_info.ref_node_ptr = Copy_(node_ptr->union_info.ref_node_ptr);
         break;
       default:
-        //
         break;
     }
 
@@ -392,21 +366,6 @@ void GenList<T>::CreateList(istream& in, GenListNode<T>*& list_node_ptr, bool& i
  */
 
 
-/*
-template<class T>
-istream& operator>>(istream& in, GenList<T>& gen_list) {
-
-  int chr_num;
-  cout<<"Input the character's number"<<endl;
-
-  in>>chr_num;
-
-  bool inExistedList = false;
-  gen_list.CreateList(in, gen_list.ref_node_ptr->next, inExistedList);
-
-  gen_list.ref_node_ptr = gen_list.ref_node_ptr->next->union_info.ref_node_ptr;
-}
- */
 
 template<class T>
 istream& operator>>(istream& in, GenList<T>& gen_list) {

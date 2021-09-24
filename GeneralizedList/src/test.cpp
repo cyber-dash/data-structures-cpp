@@ -1,6 +1,13 @@
-//
-// Created by svenlee on 2021/5/19.
-//
+/*!
+ * @file test.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 广义表测试.cpp文件
+ * @version 0.2.1
+ * @date 2021-05-19
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include "test.h"
 

@@ -1,6 +1,13 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/29.
-//
+/*!
+ * @file main.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 广义表Demo演示
+ * @version 0.2.1
+ * @date 2021-05-19
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include <iostream>
 #include "test.h"
