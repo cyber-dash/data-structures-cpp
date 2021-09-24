@@ -20,15 +20,24 @@
 using namespace std;
 
 
+//! 稀疏矩阵三元组结构体
 template<class T>
 struct TriTuple {
-  int row;
-  int col;
-  T value;
-  TriTuple<T>& operator=(TriTuple<T>& trituple) {
-    row = trituple.row;
-    col = trituple.col;
-    value = trituple.value;
+  int row; //!< 行索引
+  int col; //!< 列索引
+  T value; //!< 值
+
+  /*!
+   * @brief 赋值运算符重载函数
+   * @param tri_tuple 稀疏函数三元组数据
+   * @return 当前对象本身
+   */
+  TriTuple<T>& operator=(TriTuple<T>& tri_tuple) {
+    row = tri_tuple.row;
+    col = tri_tuple.col;
+    value = tri_tuple.value;
+
+    return *this;
   }
 };
 
@@ -40,26 +49,42 @@ public:
 
   // 构造函数(参数为稀疏矩阵最大元素个数)
   SparseMatrix(int max_size = 100);
-  SparseMatrix(SparseMatrix<T>& sparse_matrix);
-  ~SparseMatrix() { delete[] sparse_matrix_array_; }
 
+  // 复制构造函数(参数为稀疏矩阵)
+  SparseMatrix(SparseMatrix<T>& sparse_matrix);
+
+  // 析构函数
+  virtual ~SparseMatrix() { delete[] sparse_matrix_array_; }
+
+  // 获取行数
   int Rows() { return this->rows_; }
+  // 设置行数
   void SetRows(int rows) { this->rows_ = rows; }
 
+  // 获取列数
   int Cols() { return this->cols_; };
+  // 设置行数
   void SetCols(int cols) { this->cols_ = cols; };
 
+  // 获取元素数
   int Terms() { return this->terms_; }
+  // 设置元素数
   int SetTerms(int terms) { this->terms_ = terms; }
 
+  // 获取最大元素数
   int MaxTerms() { return this->max_terms_; }
+  // 设置最大元素数
   int SetMaxTerms(int max_terms) { this->max_terms_ = max_terms; }
 
+  // 获取元素
   bool GetElement(int row, int col, T& value);
+  // 添加元素(如果此位置元素存在, 则覆盖)
   bool AddElement(int row, int col, T value);
 
+  // 获取元素数组起始地址
   TriTuple<T>* SparseMatrixArray() { return this->sparse_matrix_array_; }
 
+  // 赋值运算符重载函数
   SparseMatrix<T>& operator = (SparseMatrix<T>& sparse_matrix);
 
   // 转置运算
@@ -68,38 +93,35 @@ public:
   // 快速转置运算
   SparseMatrix<T>* FastTranspose();
 
-  // 当前矩阵与sparse_matrix相加
+  // 当前矩阵与sparse_matrix相加 todo: 未实现
   SparseMatrix<T> Add(SparseMatrix<T>& sparse_matrix);
 
-  // 当前矩阵与矩阵sparse_matrix相乘
+  // 当前矩阵与矩阵sparse_matrix相乘 todo: 未实现
   SparseMatrix<T> Multiply(SparseMatrix<T>& sparse_matrix);
 
+  // 打印稀疏矩阵
   template <class U>
   friend ostream& operator << (ostream& out, SparseMatrix<T>& sparse_matrix);
+  // 输入稀疏矩阵
   template <class U>
   friend istream& operator >> (istream& in, SparseMatrix<T>& sparse_matrix);
 
 private:
-  //! 行数
-  int rows_;
+  int rows_; //!< 行数
 
-  //! 列数
-  int cols_;
+  int cols_; //!< 列数
 
-  //! 当前元素数
-  int terms_;
+  int terms_; //!< 当前元素数
 
-  //! 最大元素数
-  int max_terms_;
+  int max_terms_; //!< 最大元素数
 
-  //! 元素数组
-  TriTuple<T>* sparse_matrix_array_;
+  TriTuple<T>* sparse_matrix_array_; //!< 元素数组
 };
 
 
 /*!
  * @brief 构造函数(参数为稀疏矩阵最大元素个数)
- * @tparam T 数据模板类型
+ * @tparam T 模板参数类型
  * @param max_size 最大元素个数
  */
 template<class T>
@@ -119,6 +141,11 @@ SparseMatrix<T>::SparseMatrix(int max_size): max_terms_(max_size) {
 }
 
 
+/*!
+ * @brief 复制构造函数(参数为稀疏矩阵)
+ * @tparam T 模板参数类型
+ * @param sparse_matrix 稀疏矩阵(的引用)
+ */
 template<class T>
 SparseMatrix<T>::SparseMatrix(SparseMatrix<T>& sparse_matrix) :
   rows_(sparse_matrix.Rows()), cols_(sparse_matrix.Cols()),
@@ -133,6 +160,12 @@ SparseMatrix<T>::SparseMatrix(SparseMatrix<T>& sparse_matrix) :
 }
 
 
+/*!
+ * @brief 赋值运算符重载函数
+ * @tparam T 模板参数类型
+ * @param sparse_matrix 稀疏矩阵(的引用)
+ * @return 当前数组本身
+ */
 template<class T>
 SparseMatrix<T>& SparseMatrix<T>::operator = (SparseMatrix<T>& sparse_matrix) {
 
@@ -147,6 +180,8 @@ SparseMatrix<T>& SparseMatrix<T>::operator = (SparseMatrix<T>& sparse_matrix) {
   for (int i = 0; i < this->terms_; i++) {
     this->sparse_matrix_array_[i] = sparse_matrix.SparseMatrixArray()[i];
   }
+
+  return *this;
 }
 
 
