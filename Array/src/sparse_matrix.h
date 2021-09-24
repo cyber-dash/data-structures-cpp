@@ -293,12 +293,20 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
  * @tparam T 模板参数类型
  * @return 转置矩阵的指针
  * @note
- *  使用row_size_arr保存原数组各列
+ *  空间换时间的思想\n\n
+ *
+ *  **row_size_arr**: 保存原矩阵各列分别有多少个元素, 对应转置矩阵的各行有多少个元素 \n
+ *  **trans_pos_at_each_row_arr**: 执行转置时, 原矩阵各列(转置矩阵各行)的每一列(转置矩阵每一行)的任务执行数组 \n
+ *
+ *  \n先初始化以上两个数组 \n\n
+ *  遍历sparse_matrix_array_ \n
+ *  对第i个元素进行转置矩阵对应的赋值 \n
+ *  赋值结束后, 更新trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col]的值(下一次转置矩阵数组执行保存的位置向后挪一位) \n
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
   int* row_size_arr = new int[this->Cols()];
-  int* row_start_arr = new int[this->Cols()];
+  int* trans_pos_at_each_row_arr = new int[this->Cols()];
 
   SparseMatrix<T>* trans_sparse_matrix_ptr = new SparseMatrix<T>(this->MaxTerms());
 
@@ -318,22 +326,22 @@ SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
     row_size_arr[this->SparseMatrixArray()[i].col]++;  // 转置后的第this->SparseMatrixArray()[i].col行个数++
   }
 
-  row_start_arr[0] = 0; // sparse_matrix_array_数组的索引0位置的数据, 保存转置后的0行
+  trans_pos_at_each_row_arr[0] = 0; // sparse_matrix_array_数组的索引0位置的数据, 保存转置后的0行
   for (int i = 1; i < this->Cols(); i++) {
-    row_start_arr[i] = row_start_arr[i - 1] + row_size_arr[i - 1];
+    trans_pos_at_each_row_arr[i] = trans_pos_at_each_row_arr[i - 1] + row_size_arr[i - 1];
   }
 
   for (int i = 0; i < this->Terms(); i++) {
-    int cur_start_pos = row_start_arr[this->SparseMatrixArray()[i].col];
+    int cur_start_pos = trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col];
 
     trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].row = this->SparseMatrixArray()[i].col;
     trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].col = this->SparseMatrixArray()[i].row;
     trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].value = this->SparseMatrixArray()[i].value;
 
-    row_start_arr[this->SparseMatrixArray()[i].col]++; // 完成后, 向后挪一位
+    trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col]++; // 完成后, 向后挪一位
   }
 
-  delete[] row_start_arr;
+  delete[] trans_pos_at_each_row_arr;
   delete[] row_size_arr;
 
   return trans_sparse_matrix_ptr;
