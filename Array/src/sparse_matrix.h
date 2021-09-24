@@ -53,35 +53,35 @@ public:
   // 复制构造函数(参数为稀疏矩阵)
   SparseMatrix(SparseMatrix<T>& sparse_matrix);
 
-  // 析构函数
+  /*! @brief 析构函数 */
   virtual ~SparseMatrix() { delete[] sparse_matrix_array_; }
 
-  // 获取行数
+  /*! @brief 获取行数 */
   int Rows() { return this->rows_; }
-  // 设置行数
+  /*! @brief 设置行数 */
   void SetRows(int rows) { this->rows_ = rows; }
 
-  // 获取列数
+  /*! @brief 获取列数 */
   int Cols() { return this->cols_; };
-  // 设置行数
+  /*! @brief 设置行数 */
   void SetCols(int cols) { this->cols_ = cols; };
 
-  // 获取元素数
+  /*! @brief 获取元素数 */
   int Terms() { return this->terms_; }
-  // 设置元素数
+  /*! @brief 设置元素数 */
   int SetTerms(int terms) { this->terms_ = terms; }
 
-  // 获取最大元素数
+  /*! @brief 获取最大元素数 */
   int MaxTerms() { return this->max_terms_; }
-  // 设置最大元素数
+  /*! @brief 设置最大元素数 */
   int SetMaxTerms(int max_terms) { this->max_terms_ = max_terms; }
 
-  // 获取元素
+  /*! @brief 获取元素 */
   bool GetElement(int row, int col, T& value);
-  // 添加元素(如果此位置元素存在, 则覆盖)
+  /*! @brief 添加元素(如果此位置元素存在, 则覆盖) */
   bool AddElement(int row, int col, T value);
 
-  // 获取元素数组起始地址
+  /*! @brief 获取元素数组起始地址 */
   TriTuple<T>* SparseMatrixArray() { return this->sparse_matrix_array_; }
 
   // 赋值运算符重载函数
@@ -108,13 +108,9 @@ public:
 
 private:
   int rows_; //!< 行数
-
   int cols_; //!< 列数
-
   int terms_; //!< 当前元素数
-
   int max_terms_; //!< 最大元素数
-
   TriTuple<T>* sparse_matrix_array_; //!< 元素数组
 };
 
@@ -185,6 +181,17 @@ SparseMatrix<T>& SparseMatrix<T>::operator = (SparseMatrix<T>& sparse_matrix) {
 }
 
 
+/*!
+ * @brief 打印稀疏矩阵
+ * @tparam T 模板参数类型
+ * @param out 输出流(的引用)
+ * @param sparse_matrix 稀疏矩阵(的引用)
+ * @return 输出流(的引用)
+ * 代码示例
+ * ```
+ * cout << sparse_matrix;
+ * ```
+ */
 template<class T>
 ostream& operator<<(ostream& out, SparseMatrix<T>& sparse_matrix) {
   out<<"rows = "<<sparse_matrix.Rows()<<endl;
@@ -201,8 +208,20 @@ ostream& operator<<(ostream& out, SparseMatrix<T>& sparse_matrix) {
 }
 
 
+/*!
+ * @brief 输入稀疏矩阵
+ * @tparam T 模板参数类型
+ * @param out 输入流(的引用)
+ * @param sparse_matrix 稀疏矩阵(的引用)
+ * @return 输入流(的引用)
+ * @note
+ * 代码示例
+ * ```
+ * cin >> sparse_matrix;
+ * ```
+ */
 template<class T>
-istream& operator>>(istream& in, SparseMatrix<T> &sparse_matrix) {
+istream& operator>>(istream& in, SparseMatrix<T>& sparse_matrix) {
   cout << "输入rows, cols和terms" << endl;
 
   int rows = 0;
@@ -233,10 +252,13 @@ istream& operator>>(istream& in, SparseMatrix<T> &sparse_matrix) {
 }
 
 
-/**
+/*!
  * @brief 稀疏矩阵转置
- * @tparam T
- * @return
+ * @tparam T 模板参数类型
+ * @return 转置矩阵的地址
+ * @note
+ *   两个for循环 \n
+ *   时间复杂度O(col^2*row)
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::Transpose() {
@@ -266,10 +288,12 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
 }
 
 
-/**
+/*!
  * @brief 稀疏矩阵快速转置
- * @tparam T 模板数据类型
+ * @tparam T 模板参数类型
  * @return 转置矩阵的指针
+ * @note
+ *  使用row_size_arr保存原数组各列
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
