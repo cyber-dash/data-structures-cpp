@@ -1,6 +1,13 @@
-//
-// Created by cyberdash@163.com(抖音id:cyberdash_yuan) on 2021/5/16.
-//
+/*!
+ * @file main.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 稀疏矩阵测试Demo演示
+ * @version 0.2.1
+ * @date 2021-05-16
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include "test.h"
 

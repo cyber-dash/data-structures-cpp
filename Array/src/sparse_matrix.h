@@ -1,4 +1,4 @@
-/**
+/*!
  * @file sparse_matrix.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 稀疏矩阵 
@@ -76,9 +76,9 @@ public:
   /*! @brief 设置最大元素数 */
   int SetMaxTerms(int max_terms) { this->max_terms_ = max_terms; }
 
-  /*! @brief 获取元素 */
+  // 获取元素
   bool GetElement(int row, int col, T& value);
-  /*! @brief 添加元素(如果此位置元素存在, 则覆盖) */
+  // 添加元素(如果此位置元素存在, 则覆盖)
   bool AddElement(int row, int col, T value);
 
   /*! @brief 获取元素数组起始地址 */
@@ -153,6 +153,65 @@ SparseMatrix<T>::SparseMatrix(SparseMatrix<T>& sparse_matrix) :
   for (int i = 0; i < this->terms_; i++) {
     this->sparse_matrix_array_[i] = sparse_matrix.SparseMatrixArray()[i];
   }
+}
+
+
+/*!
+ * @brief 获取数组元素
+ * @tparam T 模板参数类型
+ * @param row 行索引
+ * @param col 列索引
+ * @param value 值引用(用于保存结果)
+ * @return 是否获取成功
+ */
+template<class T>
+bool SparseMatrix<T>::GetElement(int row, int col, T& value) {
+  for (int i = 0; i < this->Terms(); i++) {
+    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
+      value = this->sparse_matrix_array_[i].value;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+/*!
+ * @brief 添加元素
+ * @tparam T 模板参数类型
+ * @param row 行索引
+ * @param col 列索引
+ * @param value 值
+ * @return 是否添加成功
+ * @note
+ * 如果row/col对应的位置已经有数组元素, 则更新数组元素的值
+ */
+template<class T>
+bool SparseMatrix<T>::AddElement(int row, int col, T value) {
+
+  if (row >= this->max_terms_ || col >= this->max_terms_) {
+    return false;
+  }
+
+  for (int i = 0; i < this->Terms(); i++) {
+    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
+      this->sparse_matrix_array_[i].value = value;
+      return true;
+    }
+  }
+
+  if (this->Terms() == this->MaxTerms()) { // 不能再插入
+    return false;
+  }
+
+  this->sparse_matrix_array_[this->terms_].row =  row;
+  this->sparse_matrix_array_[this->terms_].col =  col;
+  this->sparse_matrix_array_[this->terms_].value = value;
+
+  this->terms_++;
+
+  return true;
 }
 
 
@@ -345,48 +404,6 @@ SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
   delete[] row_size_arr;
 
   return trans_sparse_matrix_ptr;
-}
-
-
-
-template<class T>
-bool SparseMatrix<T>::GetElement(int row, int col, T &value) {
-  for (int i = 0; i < this->Terms(); i++) {
-    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
-      value = this->sparse_matrix_array_[i].value;
-      return true;
-    }
-  }
-
-  return false;
-}
-
-
-template<class T>
-bool SparseMatrix<T>::AddElement(int row, int col, T value) {
-
-  if (row >= this->max_terms_ || col >= this->max_terms_) {
-    return false;
-  }
-
-  for (int i = 0; i < this->Terms(); i++) {
-    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
-      this->sparse_matrix_array_[i].value = value;
-      return true;
-    }
-  }
-
-  if (this->Terms() == this->MaxTerms()) { // 不能再插入
-    return false;
-  }
-
-  this->sparse_matrix_array_[this->terms_].row =  row;
-  this->sparse_matrix_array_[this->terms_].col =  col;
-  this->sparse_matrix_array_[this->terms_].value = value;
-
-  this->terms_++;
-
-  return true;
 }
 
 
