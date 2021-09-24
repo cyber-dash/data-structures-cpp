@@ -1,16 +1,16 @@
 /**
  * @file sparse_matrix.h
- * @author cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 稀疏矩阵 
- * @version 0.1
+ * @version 0.2.1
  * @date 2021-05-13
  * 
  * @copyright Copyright (c) 2021
- * 
+ *  CyberDash计算机考研
  */
 
-#ifndef CYBER_DASH_TRI_TUPLE_H
-#define CYBER_DASH_TRI_TUPLE_H
+#ifndef CYBER_DASH_SPARSE_MATRIX_H
+#define CYBER_DASH_SPARSE_MATRIX_H
 
 
 #include <iostream>
@@ -33,20 +33,12 @@ struct TriTuple {
 };
 
 
-/**
- * @brief 构造稀疏矩阵
- * 
- * @tparam T 存储的值
- */
+//! 稀疏矩阵模板类
 template<class T>
 class SparseMatrix {
 public:
 
-/**
- * @brief 构建一个新的稀疏矩阵
- * 
- * @param max_size 矩阵最大容量
- */
+  // 构造函数(参数为稀疏矩阵最大元素个数)
   SparseMatrix(int max_size = 100);
   SparseMatrix(SparseMatrix<T>& sparse_matrix);
   ~SparseMatrix() { delete[] sparse_matrix_array_; }
@@ -88,18 +80,27 @@ public:
   friend istream& operator >> (istream& in, SparseMatrix<T>& sparse_matrix);
 
 private:
+  //! 行数
   int rows_;
+
+  //! 列数
   int cols_;
+
+  //! 当前元素数
   int terms_;
+
+  //! 最大元素数
   int max_terms_;
+
+  //! 元素数组
   TriTuple<T>* sparse_matrix_array_;
 };
 
 
-/**
- * @brief 构造函数
+/*!
+ * @brief 构造函数(参数为稀疏矩阵最大元素个数)
  * @tparam T 数据模板类型
- * @param max_size 矩阵的最大维度
+ * @param max_size 最大元素个数
  */
 template<class T>
 SparseMatrix<T>::SparseMatrix(int max_size): max_terms_(max_size) {
@@ -323,7 +324,3 @@ bool SparseMatrix<T>::AddElement(int row, int col, T value) {
 
 
 #endif
-/**
- * @brief  CYBER_DASH_TRI_TUPLE_H
- * 
- */

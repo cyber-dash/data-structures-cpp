@@ -9,5 +9,9 @@
 *.win
 *.layout
 
+#Doxygen
+*html/
+*latex/
+
 *.o
 main

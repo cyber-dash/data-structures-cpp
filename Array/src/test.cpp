@@ -68,13 +68,6 @@ void TestSparseMatrixTranspose() {
 
   SparseMatrix<double> sparse_matrix_1(100);
 
-  /*
-  sparse_matrix_1.SetRows(3);
-  sparse_matrix_1.SetCols(3);
-
-  sparse_matrix_1.AddElement(0, 1, 1.7);
-  sparse_matrix_1.AddElement(1, 0, 8.2);
-   */
   sparse_matrix_1.SetRows(10);
   sparse_matrix_1.SetCols(20);
 
