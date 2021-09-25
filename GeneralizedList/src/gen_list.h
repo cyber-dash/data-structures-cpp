@@ -280,8 +280,8 @@ void GenList<T>::CreateListByQueue(queue<T>& char_queue, GenListNode<T>*& node_p
   } else if (isalpha(chr) && islower(chr)) {
     if (!in_referred_list) {
       node_ptr = GenerateElemNode_(chr);
+      CreateListByQueue(char_queue, node_ptr, in_referred_list);
     }
-    CreateListByQueue(char_queue, node_ptr, in_referred_list);
   } else if (chr == ',') {
     CreateListByQueue(char_queue, node_ptr->next, in_referred_list);
   } else if (chr == ')') {
@@ -295,6 +295,7 @@ void GenList<T>::CreateListByQueue(queue<T>& char_queue, GenListNode<T>*& node_p
       node_ptr = NULL;
       PassRightParenthesisAfterSharpChar(char_queue);
     }
+    in_referred_list = false;
   }
 }
 
