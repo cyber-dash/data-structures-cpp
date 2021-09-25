@@ -17,7 +17,7 @@ using namespace std;
 
 int main() {
 
-  // TestDepth();
+  TestDepth();
 
   TestLength();
 

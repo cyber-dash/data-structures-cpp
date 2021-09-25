@@ -55,6 +55,7 @@ private:
   bool IsGenListBeginChar_(T chr);
 
   void LeftBracketRegulatorQueue_(queue<T>& charQueue);
+  void PassRightParenthesisAfterSharpChar(queue<T>& charQueue);
   GenListNode<T>* GenerateElemNode_(T chr);
   GenListNode<T>* GenerateChildListNode_();
 
@@ -208,6 +209,16 @@ void GenList<T>::LeftBracketRegulatorQueue_(queue<T>& char_queue) {
 
 
 template<class T>
+void GenList<T>::PassRightParenthesisAfterSharpChar(queue<T>& char_queue) {
+  T chr = char_queue.front();
+  char_queue.pop();
+  if (chr != ')') {
+    exit(1);
+  }
+}
+
+
+template<class T>
 bool GenList<T>::IsGenListNameChar_(T chr) {
   return isalpha(chr) && isupper(chr);
 }
@@ -282,6 +293,7 @@ void GenList<T>::CreateListByQueue(queue<T>& char_queue, GenListNode<T>*& node_p
   else if (chr == '#') {
     if (!in_referred_list) {
       node_ptr = NULL;
+      PassRightParenthesisAfterSharpChar(char_queue);
     }
   }
 }
