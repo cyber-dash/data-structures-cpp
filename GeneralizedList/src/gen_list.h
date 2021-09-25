@@ -22,6 +22,7 @@
 using namespace std;
 
 
+//!
 template<class T>
 class GenList {
 
@@ -156,7 +157,7 @@ int GenList<T>::SubListLength_(GenListNode<T>* node_ptr) {
 
 template<class T>
 int GenList<T>::Length() {
-  int list_length = SubListLength_(ref_node_ptr);
+  int list_length = SubListLength_(this->ref_node_ptr->next);
 
   return list_length;
 }
@@ -277,7 +278,8 @@ void GenList<T>::CreateListByQueue(queue<T>& char_queue, GenListNode<T>*& node_p
       node_ptr->next = NULL;
     }
     in_referred_list = false;
-  } else if (chr == '#') {
+  }
+  else if (chr == '#') {
     if (!in_referred_list) {
       node_ptr = NULL;
     }
@@ -296,6 +298,8 @@ void GenList<T>::CreateListByString(string gen_string) {
   bool in_referred_list = false;
 
   this->CreateListByQueue(char_queue, this->ref_node_ptr->next, in_referred_list);
+
+  this->ref_node_ptr = this->ref_node_ptr->next->union_info.ref_node_ptr;
 }
 
 /*
