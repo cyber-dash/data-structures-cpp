@@ -58,8 +58,27 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 **tree**: 树
 
+## 4 Doxygen生成文档
+### 4.1 Doxygen配置文件
+### 4.2 Doxygen生成文件
+### 4.3 生成PDF文件
+doxygen配置文件将GENERATE_LATEX/LATEX_OUTPUT/USE_PDFLATEX/PDF_HYPERLINKS设置为YES
 
-## 4 作者简介
+打开latex目录中的refman.tex,  
+找到"\begin{document}"这一行, 改为
+```
+\usepackage{CJKutf8}
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+```
+找到"\end{document}"这一行, 改为
+```
+\end{CJK}
+\end{document}
+```
+
+
+## 5 作者简介
 **Y_Dash(元哥)**
 
 用过很多语言, 做过很多项目, 从底层到应用层, 安全/服务/社区/IoT太多了.
