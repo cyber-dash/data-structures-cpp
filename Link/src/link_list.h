@@ -1,6 +1,16 @@
 //
 // Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/6/6.
 //
+/*!
+ * @file link_list.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 稀疏矩阵
+ * @version 0.2.1
+ * @date 2020-06-06
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_LINK_LIST_H
 #define CYBER_DASH_LINK_LIST_H

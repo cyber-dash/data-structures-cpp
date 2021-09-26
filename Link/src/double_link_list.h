@@ -18,7 +18,6 @@ public:
   DoubleLinkList(T data);
   ~DoubleLinkList();
 
-  // void MakeEmpty();
   int Length() const { return length_; }
   bool IsEmpty() const;
   DoubleLinkNode<T>* GetHead() const { return head_ptr_; }
@@ -35,5 +34,17 @@ private:
 };
 
 
+template<class T>
+DoubleLinkList<T>::DoubleLinkList(T data) {
+  head_ptr_ = new DoubleLinkNode<T>(data);
+  if (head_ptr_ == NULL) {
+    cerr<<"存储分配出错!"<<endl;
+    exit(1);
+  }
 
-#endif //MAIN_DOUBLE_LINK_LIST_H
+  head_ptr_->next_ = head_ptr_;
+  head_ptr_->prev_ = head_ptr_;
+}
+
+
+#endif // CYBER_DASH_DOUBLE_LINK_LIST_H
