@@ -30,22 +30,29 @@ union GenNodeUnion {
 };
 
 
-//! 广义表数据项类(用于保存数据信息)
+//! 广义表数据项类(用于保存数据节点的信息)
 template<class T>
 class Item {
 public:
+  /*!
+   * @brief 构造函数
+   */
   Item() {
     this->type = GenListNode<T>::REF_TYPE;
     this->union_info.ref_count = 0;
   }
 
+  /*!
+   * @brief 复制构造函数
+   * @param item 节点数据
+   */
   Item(Item<T>& item) {
     this->type = item.union_type_;
     this->union_info = item.union_info;
   }
 
-  int type;
-  GenNodeUnion<T> union_info;
+  int type; //!< 类型
+  GenNodeUnion<T> union_info; //!< union信息
 };
 
 
@@ -65,13 +72,13 @@ public:
   GenListNode(GenListNode<T>& node):
       type(node.type), next(node.next), union_info(node.union_info) {}
 
-  int type; //<! 类型
-  GenNodeUnion<T> union_info; //<! Union类型
-  GenListNode<T>* next; //<! 下一节点指针
+  int type; //!< 类型
+  GenNodeUnion<T> union_info; //!< Union类型
+  GenListNode<T>* next; //!< 下一节点指针
 
-  static const int REF_TYPE = 0;
-  static const int ELEM_TYPE = 1;
-  static const int CHILD_LIST_TYPE = 2;
+  static const int REF_TYPE = 0; //!< 引用类型
+  static const int ELEM_TYPE = 1; //!< 数据节点类型
+  static const int CHILD_LIST_TYPE = 2; //!< 子表类型
 };
 
 

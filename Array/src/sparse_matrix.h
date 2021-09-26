@@ -117,7 +117,7 @@ private:
 
 /*!
  * @brief 构造函数(参数为稀疏矩阵最大元素个数)
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @param max_size 最大元素个数
  */
 template<class T>
@@ -139,7 +139,7 @@ SparseMatrix<T>::SparseMatrix(int max_size): max_terms_(max_size) {
 
 /*!
  * @brief 复制构造函数(参数为稀疏矩阵)
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @param sparse_matrix 稀疏矩阵(的引用)
  */
 template<class T>
@@ -158,7 +158,7 @@ SparseMatrix<T>::SparseMatrix(SparseMatrix<T>& sparse_matrix) :
 
 /*!
  * @brief 获取数组元素
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @param row 行索引
  * @param col 列索引
  * @param value 值引用(用于保存结果)
@@ -179,7 +179,7 @@ bool SparseMatrix<T>::GetElement(int row, int col, T& value) {
 
 /*!
  * @brief 添加元素
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @param row 行索引
  * @param col 列索引
  * @param value 值
@@ -217,7 +217,7 @@ bool SparseMatrix<T>::AddElement(int row, int col, T value) {
 
 /*!
  * @brief 赋值运算符重载函数
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @param sparse_matrix 稀疏矩阵(的引用)
  * @return 当前数组本身
  */
@@ -242,7 +242,7 @@ SparseMatrix<T>& SparseMatrix<T>::operator = (SparseMatrix<T>& sparse_matrix) {
 
 /*!
  * @brief 打印稀疏矩阵
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @param out 输出流(的引用)
  * @param sparse_matrix 稀疏矩阵(的引用)
  * @return 输出流(的引用)
@@ -269,7 +269,7 @@ ostream& operator<<(ostream& out, SparseMatrix<T>& sparse_matrix) {
 
 /*!
  * @brief 输入稀疏矩阵
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @param out 输入流(的引用)
  * @param sparse_matrix 稀疏矩阵(的引用)
  * @return 输入流(的引用)
@@ -313,7 +313,7 @@ istream& operator>>(istream& in, SparseMatrix<T>& sparse_matrix) {
 
 /*!
  * @brief 稀疏矩阵转置
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @return 转置矩阵的地址
  * @note
  *   两个for循环 \n
@@ -349,7 +349,7 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
 
 /*!
  * @brief 稀疏矩阵快速转置
- * @tparam T 模板参数类型
+ * @tparam T 类型模板参数
  * @return 转置矩阵的指针
  * @note
  *  空间换时间的思想\n\n
