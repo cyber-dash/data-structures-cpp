@@ -1,69 +1,118 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2021/1/23.
-//
+/*!
+ * @file graph.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 图基类
+ * @version 0.2.1
+ * @date 2021-01-23
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_GRAPH_H
 #define CYBER_DASH_GRAPH_H
 
 
-const int DEFAULT_VERTICES = 20;
-const int MAX_WEIGHT = 1000;
+const int DEFAULT_VERTICES = 20; //<! 默认图结点个数
+const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 矩阵图剔除这个逻辑
 
 
-template<class T, class E>
+/*!
+ * @class 图基类(模板类)
+ * @tparam V 节点类型模板参数
+ * @tparam W 边权值类型模板参数
+ */
+template<class V, class W>
 class Graph {
 public:
-  Graph(int size = DEFAULT_VERTICES);
-  ~Graph();
-  bool GraphEmpty() const;
-  bool GraphFull() const;
-  int NumberOfVertices();
-  int NumberOfEdges();
 
-  virtual bool GetVertexByIndex(T& vertex, int vertex_index) = 0;
+  /*!
+   * @brief 图结点数量
+   */
+  int NumberOfVertices() { return this->vertices_num_; }
 
-  virtual bool GetWeight(E& weight, T v1, T v2) = 0;
+  /*!
+   * @brief 边数量
+   */
+  int NumberOfEdges() { return this->edge_count_; }
 
-  virtual bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex) = 0;
+  /*!
+   * @brief 获取结点(由结点索引)
+   * @param vertex 节点变量引用(用于保存结果)
+   * @param vertex_index 结点索引
+   * @return 是否获取成功
+   */
+  virtual bool GetVertexByIndex(V& vertex, int vertex_index) = 0;
 
-  virtual bool GetNextNeighborVertex(T& next_neighbor, const T& vertex, const T& neighbor_vertex) = 0;
+  /*!
+   * @brief 获取边的权值
+   * @param weight 边权值变量引用(用于保存结果)
+   * @param v1 边的一个节点
+   * @param v2 边的另一个节点
+   * @return 是否获取成功
+   */
+  virtual bool GetWeight(W& weight, V v1, V v2) = 0;
 
-  virtual bool InsertVertex(const T& vertex) = 0;
+  /*!
+   * @brief 获取结点的第一个相邻结点
+   * @param first_neighbor 结点变量引用(用于保存第一个相邻结点)
+   * @param vertex 结点
+   * @return 是否获取成功
+   */
+  virtual bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex) = 0;
 
-  virtual bool InsertEdge(T vertex1, T vertex2, E weight) = 0;
+  /*!
+   * @brief 获取结点的下一个相邻结点
+   * @param next_neighbor 结点变量(用于保存下一个相邻结点)
+   * @param vertex 结点
+   * @param neighbor_vertex 结点的一个相邻节点
+   * @return 是否获取成功
+   */
+  virtual bool GetNextNeighborVertex(V& next_neighbor, const V& vertex, const V& neighbor_vertex) = 0;
 
-  virtual bool RemoveVertex(T v) = 0;
+  /*!
+   * @brief 插入结点
+   * @param vertex 结点
+   * @return 是否插入成功
+   */
+  virtual bool InsertVertex(const V& vertex) = 0;
 
-  virtual bool RemoveEdge(T v1, T v2) = 0;
+  /*!
+   * @brief 插入边
+   * @param vertex1 边的一个结点
+   * @param vertex2 边的另一个结点
+   * @param weight 边的权值
+   * @return 是否插入成功
+   */
+  virtual bool InsertEdge(V vertex1, V vertex2, W weight) = 0;
 
-  virtual int GetVertexIndex(T vertex) = 0;
+  /*!
+   * @brief 删除结点
+   * @param v 节点
+   * @return 是否删除成功
+   */
+  virtual bool RemoveVertex(V v) = 0;
+
+  /*!
+   * @brief 删除边
+   * @param v1 边的一个节点
+   * @param v2 边的另一个节点
+   * @return 是否删除成功
+   */
+  virtual bool RemoveEdge(V v1, V v2) = 0;
+
+  /*!
+   * @brief 获取结点的索引值
+   * @param vertex 节点
+   * @return 是否获取成功
+   */
+  virtual int GetVertexIndex(V vertex) = 0;
 
 protected:
-  int max_vertices_num_; // 图节点数量最大限制
-  int edge_count_; // 边数量
-  int vertices_num_; // 节点数量
+  int max_vertices_num_; //!< 图节点数量最大限制
+  int edge_count_; //!< 边数量
+  int vertices_num_; //!< 节点数量
 };
 
-
-template<class T, class E>
-Graph<T, E>::Graph(int size) {
-}
-
-
-template<class T, class E>
-Graph<T, E>::~Graph() {
-}
-
-
-template<class T, class E>
-int Graph<T, E>::NumberOfVertices() {
-  return vertices_num_;
-}
-
-
-template<class T, class E>
-int Graph<T, E>::NumberOfEdges() {
-  return edge_count_;
-}
 
 #endif //CYBER_DASH_GRAPH_H

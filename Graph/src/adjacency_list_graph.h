@@ -1,6 +1,13 @@
-//
-// Created by cyberdash@163.com(抖音id:cyberdash_yuan) on 2021/1/26.
-//
+/*!
+ * @file adjacency_list_graph.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 邻接表图类
+ * @version 0.2.1
+ * @date 2021-01-16
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_ADJACENCY_LIST_GRAPH_H
 #define CYBER_DASH_ADJACENCY_LIST_GRAPH_H
