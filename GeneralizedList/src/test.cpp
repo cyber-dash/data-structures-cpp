@@ -9,14 +9,33 @@
  *  CyberDash计算机考研
  */
 
+
 #include "test.h"
 
+
+// todo:
 void TestCreateListByString() {
 
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                 Test GeneralizedList Depth                |"<<endl;
+  cout<<"|                        测试广义表深度                       |"<<endl<<endl<<endl;
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
+
+// todo:
 void TestHeadAndTail() {
 
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                 Test GeneralizedList Depth                |"<<endl;
+  cout<<"|                        测试广义表深度                       |"<<endl<<endl<<endl;
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
