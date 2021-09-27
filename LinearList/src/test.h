@@ -7,29 +7,31 @@
 
 
 #include "seq_list.h"
+#include "link_list.h"
+#include "double_link_list.h"
 #include "seq_list_algorithm.h"
 #include <iostream>
 
 
-void TestInsert();
+void TestSeqListInsert();
 
-void TestRemove();
+void TestSeqListRemove();
 
-void TestSize();
+void TestSeqListSize();
 
-void TestLength();
+void TestSeqListLength();
 
-void TestEmpty();
+void TestSeqListEmpty();
 
-void TestSearch();
+void TestSeqListSearch();
 
-void TestLocate();
+void TestSeqListLocate();
 
-void TestGetData();
+void TestSeqListGetData();
 
-void TestSetData();
+void TestSqlListSetData();
 
-void TestSort();
+void TestSqlListSort();
 
 void TestSeqListUnion();
 

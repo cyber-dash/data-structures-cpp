@@ -10,25 +10,25 @@ using namespace std;
 
 int main() {
 
-  TestInsert();
+  TestSeqListInsert();
 
-  TestRemove();
+  TestSeqListRemove();
 
-  TestSize();
+  TestSeqListSize();
 
-  TestEmpty();
+  TestSeqListEmpty();
 
-  TestLength();
+  TestSeqListLength();
 
-  TestSearch();
+  TestSeqListSearch();
 
-  TestLocate();
+  TestSeqListLocate();
 
-  TestGetData();
+  TestSeqListGetData();
 
-  TestSetData();
+  TestSqlListSetData();
 
-  TestSort();
+  TestSqlListSort();
 
   TestSeqListUnion();
 
