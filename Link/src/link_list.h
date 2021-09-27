@@ -20,23 +20,33 @@ using namespace std;
 
 
 /*!
- * @class 链表结点模板类
+ * @brief 单链表结点模板类
  * @tparam T 类型模板参数
  */
 template <class T>
 struct LinkNode {
-  /*! @brief 构造函数(结点指针) */
+  /*! @brief 构造函数(下一结点地址) */
   explicit LinkNode(LinkNode<T>* ptr = NULL) { this->link_ = ptr; }
+
+  /*!
+   * @brief 构造函数(数据项和下一结点地址)
+   * @param data 数据项
+   * @param ptr 下一节点地址
+   */
   explicit LinkNode(const T& data, LinkNode<T> *ptr = NULL) {
     this->data_ = data;
     this->link_ = ptr;
   }
 
-  T data_;
-  LinkNode<T>* link_;
+  T data_; //!< 链表数据项
+  LinkNode<T>* link_; //!< 下一结点
 };
 
 
+/*!
+ * @brief 单链表模板类
+ * @tparam T 类型模板参数
+ */
 template<class T>
 class LinkList {
 
@@ -48,21 +58,32 @@ public:
   LinkList(const T& data);
   // 构造函数(参数为节点指针引用)
   LinkList(LinkNode<T>* node);
+  // 复制构造函数
   LinkList(LinkList<T>& link_list);
+  // 析构函数
   ~LinkList();
 
+  // 清除链表
   void MakeEmpty();
+  /*! @brief 链表长度 */
   int Length() const { return length_; }
-  LinkNode<T>* GetHead() const { return head_ptr_; }
-  LinkNode<T>* Search();
+  /*! @brief 链表头结点 */
+  LinkNode<T>* Head() const { return head_ptr_; }
+  // 搜索数据项为data的元素
+  LinkNode<T>* Search(T data);
+  // 位置pos的结点地址
   LinkNode<T>* Locate(int pos);
+  // 获取第pos个结点的数据
   bool GetData(int pos, T& data) const;
+  // 获取
   bool SetData(int pos, T& data);
+  // 在第pos个元素(数组索引pos - 1)之后, 插入数据
   bool Insert(int pos, const T& data);
+  // 在第pos个元素(数组索引pos - 1)之后, 插入结点
+  bool Insert(int pos, LinkNode<T>* node);
   bool Remove(int pos, T& data);
   bool IsEmpty() const;
   bool IsFull() const;
-  bool Insert(int pos, LinkNode<T>* node);
   void Output();
   void CyberDashShow();
 
@@ -116,7 +137,7 @@ LinkList<T>::LinkList(LinkList<T>& link_list) {
     return;
   }
 
-  LinkNode<T>* cur_src_ptr = link_list.GetHead();
+  LinkNode<T>* cur_src_ptr = link_list.Head();
 
   if (link_list.Length() == 1) {
     head_ptr_ = new LinkNode<T>(cur_src_ptr->data_);
@@ -199,7 +220,7 @@ void LinkList<T>::Output() {
     return;
   }
 
-  LinkNode<T>* cur = GetHead();
+  LinkNode<T>* cur = Head();
   while(cur != NULL) {
     cout<<cur->data_<<" ";
     cur = cur->link_;
@@ -209,16 +230,23 @@ void LinkList<T>::Output() {
 }
 
 
+
+
+/*!
+ * @brief 在第pos个元素(数组索引pos - 1)之后, 插入数据
+ * @tparam T 类型模板参数
+ * @param pos 第pos个
+ * @param data 待插入数据
+ * @return 是否插入成功
+ */
 template<class T>
-bool LinkList<T>::Insert(int pos, LinkNode<T>* node) {
+bool LinkList<T>::Insert(int pos, const T& data) {
 
   if (pos < 0 || pos > Length()) {
     return false;
   }
 
-  if (node == NULL) {
-    return false;
-  }
+  LinkNode<T>* node = new LinkNode<T>(data);
 
   if (head_ptr_ == NULL) {
     node->link_ = head_ptr_;
@@ -249,14 +277,23 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node) {
 }
 
 
+/*!
+ * @brief 在第pos个元素(数组索引pos - 1)之后, 插入结点
+ * @tparam T 类型模板参数
+ * @param pos 第pos个
+ * @param node 待插入结点
+ * @return 是否插入成功
+ */
 template<class T>
-bool LinkList<T>::Insert(int pos, const T& data) {
+bool LinkList<T>::Insert(int pos, LinkNode<T>* node) {
 
   if (pos < 0 || pos > Length()) {
     return false;
   }
 
-  LinkNode<T>* node = new LinkNode<T>(data);
+  if (node == NULL) {
+    return false;
+  }
 
   if (head_ptr_ == NULL) {
     node->link_ = head_ptr_;
