@@ -13,29 +13,35 @@
 #include <iostream>
 
 
+//
 void TestSeqListInsert();
-
+//
 void TestSeqListRemove();
-
+//
 void TestSeqListSize();
-
+//
 void TestSeqListLength();
-
+//
 void TestSeqListEmpty();
-
+//
 void TestSeqListSearch();
-
+//
 void TestSeqListLocate();
-
+//
 void TestSeqListGetData();
-
+//
 void TestSqlListSetData();
-
+//
 void TestSqlListSort();
-
+//
 void TestSeqListUnion();
-
+//
 void TestSeqListIntersection();
+
+//!< 测试单链表长度
+void TestLinkListInsert();
+//!< 测试单链表长度
+void TestLinkListLength();
 
 void TestCyberDashShow();
 

@@ -77,7 +77,7 @@ public:
   // 获取第pos个结点的数据
   bool GetData(int pos, T& data) const;
   // 获取
-  bool SetData(int pos, T& data);
+  bool SetData(int pos, const T& data);
   // 在第pos个元素(数组索引pos - 1)之后, 插入数据
   bool Insert(int pos, const T& data);
   // 在第pos个元素(数组索引pos - 1)之后, 插入结点
@@ -187,7 +187,7 @@ bool LinkList<T>::GetData(int pos, T& data) const {
 
 
 template<class T>
-bool LinkList<T>::SetData(int pos, T& data) {
+bool LinkList<T>::SetData(int pos, const T& data) {
 
   if (pos < 1 || pos > Length()) {
     return false;

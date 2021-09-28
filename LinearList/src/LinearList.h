@@ -33,7 +33,7 @@ public:
    * @param data 数据项
    * @return
    */
-  virtual bool SetData(int pos, const T& data) const = 0;
+  virtual bool SetData(int pos, const T& data) = 0;
 
   /*!
    * @brief 在第pos个元素之后, 插入数据
@@ -55,7 +55,7 @@ public:
    * @brief 判断是否为空
    * @return 是否为空
    */
-  virtual bool IsEmpty() = 0;
+  virtual bool IsEmpty() const = 0;
 
   /*!
    * @brief 打印线性表

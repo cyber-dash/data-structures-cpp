@@ -30,10 +30,10 @@ public:
   int Search(T& x) const;
   int Locate(int pos) const;
   bool GetData(int pos, T& data) const;
-  bool SetData(int pos, const T& data) const;
+  bool SetData(int pos, const T& data);
   bool Insert(int i, const T& x);
   bool Remove(int i, T& x);
-  bool IsEmpty();
+  bool IsEmpty() const;
   bool IsFull();
   int Resize(int new_size);
   void Input();
@@ -172,8 +172,7 @@ bool SeqList<T>::GetData(int pos, T& data) const {
 
 
 template<class T>
-// bool SeqList<T>::SetData(int pos, T& data) const {
-bool SeqList<T>::SetData(int pos, const T& data) const {
+bool SeqList<T>::SetData(int pos, const T& data) {
   if (pos > 0 && pos <= last_idx_ + 1) {
     data_array_[pos - 1] = data;
     return true;
@@ -230,7 +229,7 @@ bool SeqList<T>::Remove(int pos, T& remove_data) {
 
 
 template<class T>
-bool SeqList<T>::IsEmpty() {
+bool SeqList<T>::IsEmpty() const {
   if (last_idx_ == -1) {
     return true;
   } else {
