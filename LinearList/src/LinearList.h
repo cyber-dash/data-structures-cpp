@@ -40,6 +40,9 @@ public:
    * @param pos 位置pos
    * @param data 数据项值
    * @return 是否成功
+   * @note
+   * 区别于数组, 以1开始\n
+   * 当pos为0时, 表示插入位置1
    */
   virtual bool Insert(int pos, const T& data) = 0;
 

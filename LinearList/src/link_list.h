@@ -90,7 +90,6 @@ public:
 private:
   LinkNode<T>* head_ptr_;
   int length_;
-  // int size_;
 };
 
 
@@ -230,14 +229,14 @@ void LinkList<T>::Output() {
 }
 
 
-
-
 /*!
- * @brief 在第pos个元素(数组索引pos - 1)之后, 插入数据
- * @tparam T 类型模板参数
- * @param pos 第pos个
- * @param data 待插入数据
- * @return 是否插入成功
+ * @brief 在第pos个元素之后, 插入数据
+ * @param pos 位置pos
+ * @param data 数据项值
+ * @return 是否成功
+ * @note
+ * 区别于数组, 以1开始\n
+ * 当pos为0时, 表示插入位置1
  */
 template<class T>
 bool LinkList<T>::Insert(int pos, const T& data) {
