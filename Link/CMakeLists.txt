@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main src/main.cpp src/node.h src/link_list.cpp src/link_list.h)
+add_executable(main src/main.cpp src/link_list.h src/test.cpp src/test.h)

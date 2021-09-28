@@ -12,6 +12,7 @@
 #define CYBER_DASH_DOUBLE_LINK_LIST_H
 
 
+#include "LinearList.h"
 #include <iostream>
 
 
@@ -29,7 +30,7 @@ struct DoubleLinkNode {
 
 
 template<class T>
-class DoubleLinkList {
+class DoubleLinkList: public LinearList<T> {
 
 public:
 
@@ -38,7 +39,7 @@ public:
 
   int Length() const { return this->length_; }
   bool IsEmpty() const;
-  DoubleLinkNode<T>* GetHead() const { return this->head_ptr_; }
+  DoubleLinkNode<T>* Head() const { return this->head_ptr_; }
   DoubleLinkNode<T>* Search(const T& data);
   DoubleLinkNode<T>* Locate(int pos, int direction);
   bool Insert(int pos, const T& data, int direction);

@@ -9,7 +9,7 @@
 using namespace std;
 
 
-void TestInsert() {
+void TestSeqListInsert() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Insert                     "<<endl;
@@ -31,7 +31,7 @@ void TestInsert() {
 }
 
 
-void TestRemove() {
+void TestSeqListRemove() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Remove                     "<<endl;
@@ -57,7 +57,7 @@ void TestRemove() {
 }
 
 
-void TestSize() {
+void TestSeqListSize() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                      Test SeqList Size                      "<<endl;
@@ -71,7 +71,7 @@ void TestSize() {
 }
 
 
-void TestLength() {
+void TestSeqListLength() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Length                     "<<endl;
@@ -93,7 +93,7 @@ void TestLength() {
 }
 
 
-void TestEmpty() {
+void TestSeqListEmpty() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Empty                      "<<endl;
@@ -126,7 +126,7 @@ void TestEmpty() {
 }
 
 
-void TestSearch() {
+void TestSeqListSearch() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Search                     "<<endl;
@@ -150,7 +150,7 @@ void TestSearch() {
 }
 
 
-void TestLocate() {
+void TestSeqListLocate() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Locate                     "<<endl;
@@ -174,7 +174,7 @@ void TestLocate() {
 }
 
 
-void TestGetData() {
+void TestSeqListGetData() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList GetData                    "<<endl;
@@ -199,7 +199,7 @@ void TestGetData() {
 }
 
 
-void TestSetData() {
+void TestSqlListSetData() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList SetData                    "<<endl;
@@ -227,7 +227,7 @@ void TestSetData() {
 }
 
 
-void TestSort() {
+void TestSqlListSort() {
 
     cout<<endl;
     cout<<"------------------------- CyberDash -------------------------"<<endl;
