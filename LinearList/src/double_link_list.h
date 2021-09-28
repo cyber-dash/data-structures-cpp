@@ -65,5 +65,34 @@ DoubleLinkList<T>::DoubleLinkList(T data) {
   head_ptr_->prev_ = head_ptr_;
 }
 
+template<class T>
+bool DoubleLinkList<T>::IsEmpty()const{
+  return head_ptr_>next_==head_ptr_;
+}
+
+template<class T>
+DoubleLinkNode<T>* DoubleLinkList<T>::Search(const T& data){
+
+}
+
+template<class T>
+DoubleLinkNode<T>* DoubleLinkList<T>::Locate(int pos, int direction){
+
+}
+
+template<class T>
+bool DoubleLinkList<T>::Insert(int pos, const T& data, int direction){
+
+}
+
+template<class T>
+bool DoubleLinkList<T>::Remove(int pos, T& data, int direction){
+
+}
+
+template<class T>
+void DoubleLinkList<T>::Output(){
+
+}
 
 #endif // CYBER_DASH_DOUBLE_LINK_LIST_H
