@@ -1,5 +1,5 @@
 /*!
- * @file link_list.h
+ * @file double_link_list.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 双向链表
  * @version 0.2.1

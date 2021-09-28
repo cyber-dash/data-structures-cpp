@@ -9,6 +9,6 @@ add_executable(main
     src/seq_list.h
     src/link_list.h
     src/double_link_list.h
-    src/test.cpp
-    src/test.h
-    src/seq_list_algorithm.h)
+    src/seq_list_test.h
+    src/seq_list_algorithm.h
+    src/link_list_test.h)
