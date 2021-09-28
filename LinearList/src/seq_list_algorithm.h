@@ -1,6 +1,12 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2021/2/24.
-//
+/*!
+ * @file seq_list_algorithm.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 单链表测试类
+ * @version 0.2.1
+ * @date 2021-09-28
+ * @copyright Copyright (c) 2021
+ * **CyberDash计算机考研**
+ */
 
 #ifndef CYBER_DASH_SEQ_LIST_ALGORITHM_H
 #define CYBER_DASH_SEQ_LIST_ALGORITHM_H
@@ -9,16 +15,14 @@
 #include "seq_list.h"
 
 
-/*
-template<class T>
-void SeqListUnion(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b);
-
-
-template<class T>
-void SeqListIntersection(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b);
+/*!
+ * @brief 顺序表求并集
+ * @tparam T 类型模板参数
+ * @param seq_list_a 顺序表a(并运算后的表)
+ * @param seq_list_b 顺序表b
+ * @note
+ * 遍历顺序表b, 对每个元素, 如果在表a中不存在, 则插入到表a中
  */
-
-
 template<class T>
 void SeqListUnion(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
   int a_length = seq_list_a.Length();
