@@ -14,6 +14,7 @@
 
 #include "LinearList.h"
 #include <iostream>
+#include <cstddef>
 
 
 template <class T>
@@ -34,6 +35,7 @@ class DoubleLinkList: public LinearList<T> {
 
 public:
 
+  DoubleLinkList();
   DoubleLinkList(T data);
   ~DoubleLinkList();
 
@@ -52,6 +54,17 @@ private:
   int size_;
 };
 
+template<class T>
+DoubleLinkList<T>::DoubleLinkList() {
+  head_ptr_ = new DoubleLinkNode<T>();
+  if (head_ptr_ == NULL) {
+    cerr<<"存储分配出错!"<<endl;
+    exit(1);
+  }
+
+  head_ptr_->next_ = head_ptr_;
+  head_ptr_->prev_ = head_ptr_;
+}
 
 template<class T>
 DoubleLinkList<T>::DoubleLinkList(T data) {
@@ -163,7 +176,27 @@ bool DoubleLinkList<T>::Remove(int pos, T& data, int direction){
 
 template<class T>
 void DoubleLinkList<T>::Output(){
+  if (head_ptr_ == NULL) {
+    cout<<"Empty list"<<endl;
+    return;
+  }
 
+  DoubleLinkNode<T>* current = Head();
+  cout<<"向后遍历输出："<<" ";
+  current = current->next_;
+  while(current != head_ptr_) {
+    cout<<current->data_<<" ";
+    current = current->next_;
+  }
+
+  count<<"向前遍历输出"<<" ";
+  current = current->prev_;
+  while(current != head_ptr_) {
+    cout<<current->data_<<" ";
+    current = current->prev_;
+  }
+
+  cout<<endl
 }
 
 #endif // CYBER_DASH_DOUBLE_LINK_LIST_H

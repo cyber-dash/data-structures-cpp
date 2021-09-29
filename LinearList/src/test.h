@@ -37,6 +37,18 @@ void TestSeqListUnion();
 
 void TestSeqListIntersection();
 
+void TestDoubleLinkListInsert();
+
+void TestDoubleLinkListRemove();
+
+void TestDoubleLinkListLength();
+
+void  TestDoubleLinkListEmpty();
+
+void TestDoubleLinkListSearch();
+
+void TestDoubleLinkListLocate();
+
 void TestCyberDashShow();
 
 

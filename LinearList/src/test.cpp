@@ -307,3 +307,83 @@ void TestSeqListIntersection() {
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
+
+
+void TestDoubleLinkListInsert(){
+  
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"                      Test DoubleList Insert              "<<endl;
+  cout<<"                         测试双向链表插入                        "<<endl<<endl<<endl;
+  
+  DoubleLinkList<int>* double_list;
+  double_list = new DoubleLinkList<int>();
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl; 
+}
+
+
+void TestDoubleLinkListRemove(){
+  
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"               Test DoubleList Remove              "<<endl;
+  cout<<"                         测试双向链表删除                        "<<endl<<endl<<endl;
+  
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl; 
+}
+
+
+void TestDoubleLinkListLength(){
+  
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"               Test DoubleList Length              "<<endl;
+  cout<<"                         测试双向链表长度                       "<<endl<<endl<<endl;
+  
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl; 
+}
+
+
+void TestDoubleLinkListEmpty(){
+  
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"               Test DoubleList Empty              "<<endl;
+  cout<<"                         测试双向链表是否为空                        "<<endl<<endl<<endl;
+  
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl; 
+}
+
+
+void TestDoubleLinkListSearch(){
+  
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"               Test DoubleList Search              "<<endl;
+  cout<<"                         测试双向链表查找                        "<<endl<<endl<<endl;
+  
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl; 
+}
+
+
+void TestDoubleLinkListLocate(){
+  
+  cout<<endl;
+  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<"               Test DoubleList Locate              "<<endl;
+  cout<<"                         测试双向链表Locate                        "<<endl<<endl<<endl;
+  
+
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl; 
+}
