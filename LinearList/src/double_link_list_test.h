@@ -5,6 +5,8 @@
 #ifndef CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
 #define CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
 
+#include "double_link_list.h"
+// #include <iostream>
 
 /*!
  * @brief 双向链表测试类
@@ -27,8 +29,7 @@ public:
 
 
 void DoubleLinkListTest::TestInsert() {
-
-  cout<<endl;
+  cout << endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                    Test DoubleList Insert                   "<<endl;
   cout<<"                         测试双向链表插入                        "<<endl<<endl<<endl;
