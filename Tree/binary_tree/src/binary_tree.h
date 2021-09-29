@@ -1,13 +1,20 @@
-//
-// Created by alei_go@163.com(抖音: cyberdash_yuan) on 2020/11/1.
-//
+/*!
+ * @file binary_tree.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 二叉树
+ * @version 0.2.1
+ * @date 2020-11-01
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_BINARY_TREE_H
 #define CYBER_DASH_BINARY_TREE_H
 
 
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include <stack>
 #include <queue>
 #include "binary_tree.h"
@@ -16,6 +23,10 @@
 using namespace std;
 
 
+/*!
+ * @brief 二叉树结点模板结构体
+ * @tparam T 类型模板参数
+ */
 template <class T>
 struct BinTreeNode {
   BinTreeNode(): left_child_ptr_(NULL), right_child_ptr_(NULL) {}
@@ -28,6 +39,10 @@ struct BinTreeNode {
 };
 
 
+/*!
+ * @brief 后序遍历栈结点模板类
+ * @tparam T 类型模板参数
+ */
 template <class T>
 struct PostOrderStackNode {
   BinTreeNode<T> *bin_node_ptr;
@@ -39,6 +54,10 @@ struct PostOrderStackNode {
 };
 
 
+/*!
+ * @brief 二叉树模板类
+ * @tparam T 类型模板参数
+ */
 template <class T>
 class BinaryTree {
 public:
