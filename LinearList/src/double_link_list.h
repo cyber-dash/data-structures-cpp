@@ -39,14 +39,17 @@ public:
   DoubleLinkList(T data);
   ~DoubleLinkList();
 
-  int Length() const { return this->length_; }
+  int Length() const override { return this->length_; }
   bool IsEmpty() const;
   DoubleLinkNode<T>* Head() const { return this->head_ptr_; }
   DoubleLinkNode<T>* Search(const T& data);
   DoubleLinkNode<T>* Locate(int pos, int direction);
   bool Insert(int pos, const T& data, int direction);
   bool Remove(int pos, T& data, int direction);
+  bool GetData(int pos, T& data) const;
+  bool SetData(int pos, const T& data);
   void Output();
+  void CyberDashShow();
 
 private:
   DoubleLinkNode<T>* head_ptr_;
@@ -64,6 +67,7 @@ DoubleLinkList<T>::DoubleLinkList() {
 
   head_ptr_->next_ = head_ptr_;
   head_ptr_->prev_ = head_ptr_;
+  this->length_ = 0;
 }
 
 template<class T>
@@ -76,6 +80,7 @@ DoubleLinkList<T>::DoubleLinkList(T data) {
 
   head_ptr_->next_ = head_ptr_;
   head_ptr_->prev_ = head_ptr_;
+  this->length_ = 1;
 }
 
 template<class T>
@@ -157,6 +162,7 @@ bool DoubleLinkList<T>::Insert(int pos, const T& data, int direction){
     newNode->prev_ = current;
   }
 
+  this->length_++;
   return true;
 }
 
@@ -171,6 +177,45 @@ bool DoubleLinkList<T>::Remove(int pos, T& data, int direction){
   current->prev_->next_ = current->next_;
   data = current->data_;
   delete current;
+
+  this->length_--;
+  return true;
+}
+
+template<class T>
+bool DoubleLinkList<T>::GetData(int pos, T& data) const{
+  if (pos < 1 || pos > Length()) {
+    return false;
+  }
+
+  DoubleLinkList<T>* current = head_ptr_;
+
+  while (pos - 1 > 0) {
+    current = current->link_;
+    pos--;
+  }
+
+  data = current->data_;
+
+  return true
+}
+
+template<class T>
+bool DoubleLinkList<T>::SetData(int pos,const T& data) {
+
+  if (pos < 1 || pos > Length()) {
+    return false;
+  }
+
+  DoubleLinkList<T>* current = head_ptr_;
+
+  while (pos - 1 > 0) {
+    currrent = current->link_;
+    pos--;
+  }
+
+  current->data_ = data;
+
   return true;
 }
 
@@ -197,6 +242,18 @@ void DoubleLinkList<T>::Output(){
   }
 
   cout<<endl
+}
+
+template<class T>
+void LinkList<T>::CyberDashShow() {
+  cout<<endl
+      <<"*************************************** CyberDash ***************************************"<<endl<<endl
+      <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash成员:"<<endl
+      <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
+      <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
+      <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 
 #endif // CYBER_DASH_DOUBLE_LINK_LIST_H
