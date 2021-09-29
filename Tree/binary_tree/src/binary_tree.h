@@ -150,7 +150,6 @@ protected:
   friend ostream& operator << (ostream& in, BinTreeNode<T>& Tree);
 };
 
-s
 template<class T>
 void BinaryTree<T>::Destroy(BinTreeNode<T> *& subTree) {
   if (subTree != NULL) {
@@ -391,7 +390,7 @@ istream& operator >> (istream& in, BinaryTree<T>& Tree) {
 
 
 template<class T>
-ostream&  << (ostream& out, BinaryTree<T>& Tree) {
+ostream& operator << (ostream& out, BinaryTree<T>& Tree) {
   out << "二叉树的前序遍历\n";
   Tree.Traverse(Tree.GetRoot(), out);
   out << endl;
