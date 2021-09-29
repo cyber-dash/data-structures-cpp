@@ -28,30 +28,69 @@ template<class T>
 class SeqList: public LinearList<T> {
 
 public:
+  // 构造函数(无参数)
   SeqList(): data_array_(NULL), size_(0), last_idx_(-1) {}
+
+  // 构造函数(参数:顺序表总长度)
   SeqList(int size);
-  SeqList(SeqList<T>& L);
+
+  // 复制构造函数(参数:顺序表)
+  SeqList(SeqList<T>& seq_list);
+
+  // 析构函数
   ~SeqList() { delete[] data_array_; }
+
+  // 获取总长度
   int Size() const;
+
+  // 获取当前长度
   int Length() const;
-  int Search(T& x) const;
+
+  // 搜索
+  int Search(T& data) const;
+
+  // 定位
   int Locate(int pos) const;
+
+  // 获取位置pos的数据
   bool GetData(int pos, T& data) const;
+
+  // 设置位置pos的数据
   bool SetData(int pos, const T& data);
-  bool Insert(int i, const T& x);
-  bool Remove(int i, T& x);
+
+  // 位置pos插入数据data
+  bool Insert(int pos, const T& data);
+
+  // 删除位置pos的数据
+  bool Remove(int pos, T& data);
+
+  // 是否为空
   bool IsEmpty() const;
-  bool IsFull();
+
+  // 是否满
+  bool IsFull() const;
+
+  // 调整顺序表的长度
   int Resize(int new_size);
+
+  // 输入顺序表
   void Input();
+
+  // 排序
   void Sort();
+
+  // 打印顺序表
   void Output();
+
+  // 赋值运算符重载函数
   SeqList<T>& operator= (const SeqList<T>& seq_list);
+
+  // 我们是CyberDash
   void CyberDashShow();
 
 private:
   T* data_array_; //!< 数据项数组
-  int size_; //!< 顺序表大小
+  int size_; //!< 顺序表总长度
   int last_idx_; //!< 最后一项的数组索引
 };
 
@@ -92,20 +131,31 @@ SeqList<T>::SeqList(SeqList<T>& seq_list) {
     return;
   }
 
-  this->data_array_ = new T[this->size_];
+  this->data_array_ = new T[this->Size()];
   if (this->data_array_ == NULL) {
     cerr<<"存储分配错误!"<<endl;
     exit(1);
   }
 
-  for (int i = 1; i <= last_idx_ + 1; i++) {
+  for (int i = 1; i <= this->last_idx_ + 1; i++) {
     T cur_value;
     seq_list.GetData(i, cur_value);
-    data_array_[i - 1] = cur_value;
+    this->data_array_[i - 1] = cur_value;
   }
 }
 
 
+/*!
+ * @brief 调整顺序表的长度
+ * @tparam T 类型模板参数
+ * @param new_size 新的总长度
+ * @return 新的总长度
+ * @note
+ * **返回值说明**
+ * -2: 分配内存失败
+ * -1: 无效参数
+ * 0: 新的总长度与原来的相同
+ */
 template<class T>
 int SeqList<T>::Resize(int new_size) {
 
@@ -114,26 +164,26 @@ int SeqList<T>::Resize(int new_size) {
     return -1;
   }
 
-  if (new_size == size_) {
+  if (new_size == this->Size()) {
     cout<<"重分配数组长度与原数组长度相同"<<endl;
     return 0;
   }
 
-  T* new_array = new T[size_];
-  if (new_array == NULL) {
+  T* new_data_array = new T[this->Size()];
+  if (new_data_array == NULL) {
     cerr<<"存储分配错误"<<endl;
     return -2;
   }
 
   T* src_ptr = data_array_;
-  T* dest_ptr = new_array;
+  T* dest_ptr = new_data_array;
 
-  for (int i = 0; i <= last_idx_; i++) {
+  for (int i = 0; i < this->Length(); i++) {
     *(dest_ptr + i) = *(src_ptr + i);
   }
 
   delete [] data_array_;
-  data_array_ = new_array;
+  data_array_ = new_data_array;
 
   size_ = new_size;
 
@@ -163,6 +213,14 @@ int SeqList<T>::Search(T& data) const {
 }
 
 
+/*!
+ * @brief 定位
+ * @tparam T 类型模板参数
+ * @param pos 第pos个
+ * @return 位置pos
+ * @note
+ * pos是以1为起始, 不同于数组以0开始
+ */
 template<class T>
 int SeqList<T>::Locate(int pos) const {
   if (pos >= 1 && pos <= last_idx_ + 1) {
@@ -173,6 +231,13 @@ int SeqList<T>::Locate(int pos) const {
 };
 
 
+/*!
+ * @brief 获取位置pos的数据
+ * @tparam T 类型模板参数
+ * @param pos 位置pos
+ * @param data 数据(用于保存数据项)
+ * @return 是否获取成功
+ */
 template<class T>
 bool SeqList<T>::GetData(int pos, T& data) const {
   if (pos > 0 && pos <= last_idx_ + 1) {
@@ -184,6 +249,13 @@ bool SeqList<T>::GetData(int pos, T& data) const {
 }
 
 
+/*!
+ * @brief 设置位置pos的数据
+ * @tparam T 类型模板参数
+ * @param pos 位置pos
+ * @param data 数据
+ * @return 是否设置成功
+ */
 template<class T>
 bool SeqList<T>::SetData(int pos, const T& data) {
   if (pos > 0 && pos <= last_idx_ + 1) {
@@ -227,6 +299,13 @@ bool SeqList<T>::Insert(int pos, const T& data) {
 }
 
 
+/*!
+ * @brief 删除位置pos的数据
+ * @tparam T 类型模板参数
+ * @param pos 位置pos
+ * @param remove_data 被删除的数据项
+ * @return 是否删除成功
+ */
 template<class T>
 bool SeqList<T>::Remove(int pos, T& remove_data) {
 
@@ -250,6 +329,11 @@ bool SeqList<T>::Remove(int pos, T& remove_data) {
 }
 
 
+/*!
+ * @brief 是否为空表
+ * @tparam T 类型模板参数
+ * @return 是否为空
+ */
 template<class T>
 bool SeqList<T>::IsEmpty() const {
   if (last_idx_ == -1) {
@@ -260,8 +344,13 @@ bool SeqList<T>::IsEmpty() const {
 }
 
 
+/*!
+ * @brief 顺序表是否满
+ * @tparam T 类型模板参数
+ * @return 是否满
+ */
 template<class T>
-bool SeqList<T>::IsFull() {
+bool SeqList<T>::IsFull() const {
   if (last_idx_ == size_ - 1) {
     return true;
   } else {
@@ -270,6 +359,12 @@ bool SeqList<T>::IsFull() {
 }
 
 
+/*!
+ * @brief 赋值运算符重载函数
+ * @tparam T 类型模板参数
+ * @param seq_list 顺序表
+ * @return 顺序表引用
+ */
 template<class T>
 SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
 
@@ -287,22 +382,34 @@ SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
 }
 
 
+/*!
+ * @brief 获取总长度
+ * @tparam T 类型模板参数
+ * @return 总长度
+ */
 template<class T>
 int SeqList<T>::Size() const {
   return size_;
 }
 
 
+/*!
+ * @brief 获取当前长度
+ * @tparam T 类型模板参数
+ * @return 当前长度
+ */
 template<class T>
 int SeqList<T>::Length() const {
   return last_idx_ + 1;
 }
 
 
+/*!
+ * @brief 打印顺序表
+ * @tparam T 类型模板参数
+ */
 template<class T>
 void SeqList<T>::Output() {
-
-  // cout<<"顺序表最后元素位置:"<<last_idx_ + 1<<endl;
 
   if (last_idx_ == -1) {
     cout<<"顺序表为空表:"<<endl;
@@ -315,6 +422,10 @@ void SeqList<T>::Output() {
 }
 
 
+/*!
+ * @brief 排序
+ * @tparam T 类型模板参数
+ */
 template<class T>
 void SeqList<T>::Sort() {
 
@@ -337,6 +448,9 @@ void SeqList<T>::Sort() {
 }
 
 
+/*!
+ * @brief 我们是CyberDash
+ */
 template<class T>
 void SeqList<T>::CyberDashShow() {
   cout<<endl

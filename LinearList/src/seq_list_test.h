@@ -18,19 +18,34 @@
 using namespace std;
 
 
+/*!
+ * @brief 顺序表测试类
+ */
 class SeqListTest {
 public:
+  /*! @brief 测试插入 */
   static void TestInsert();
+  /*! @brief 测试删除 */
   static void TestRemove();
+  /*! @brief 测试总长度 */
   static void TestSize();
+  /*! @brief 测试当前长度 */
   static void TestLength();
+  /*! @brief 测试是否为空 */
   static void TestEmpty();
+  /*! @brief 测试搜索 */
   static void TestSearch();
+  /*! @brief 测试定位 */
   static void TestLocate();
+  /*! @brief 测试获取数据 */
   static void TestGetData();
+  /*! @brief 测试设置数据 */
   static void TestSetData();
+  /*! @brief 测试排序 */
   static void TestSort();
+  /*! @brief 测试两个顺序表并集 */
   static void TestUnion();
+  /*! @brief 测试两个顺序表交集 */
   static void TestIntersection();
 };
 

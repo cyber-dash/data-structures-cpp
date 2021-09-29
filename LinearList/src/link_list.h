@@ -27,16 +27,16 @@ using namespace std;
 template <class T>
 struct LinkNode {
   /*! @brief 构造函数(下一结点地址) */
-  explicit LinkNode(LinkNode<T>* ptr = NULL) { this->link_ = ptr; }
+  explicit LinkNode(LinkNode<T>* node_ptr = NULL) { this->link_ = node_ptr; }
 
   /*!
    * @brief 构造函数(数据项和下一结点地址)
    * @param data 数据项
    * @param ptr 下一节点地址
    */
-  explicit LinkNode(const T& data, LinkNode<T> *ptr = NULL) {
+  explicit LinkNode(const T& data, LinkNode<T>* node_ptr = NULL) {
     this->data_ = data;
-    this->link_ = ptr;
+    this->link_ = node_ptr;
   }
 
   T data_; //!< 链表数据项
@@ -92,8 +92,8 @@ public:
   void CyberDashShow();
 
 private:
-  LinkNode<T>* head_ptr_;
-  int length_;
+  LinkNode<T>* head_ptr_; //!< 链表头结点
+  int length_; //!< 链表长度
 };
 
 
@@ -413,15 +413,50 @@ void LinkList<T>::CyberDashShow() {
 }
 
 
+/*!
+ * @brief 搜索数据项为data的元素
+ * @tparam T 类型模板参数
+ * @param data 数据
+ * @return 对应的结点指针
+ */
 template<class T>
 LinkNode<T>* LinkList<T>::Search(T data) {
+
+  LinkNode<T>* cur = this->head_ptr_;
+  if (cur == NULL) { // 空链表
+    return NULL;
+  }
+
+  while (cur != NULL) {
+    if (cur->data_ == data) {
+      return cur;
+    }
+
+    cur = cur->link_;
+  }
+
   return NULL;
 }
 
 
+/*!
+ * @brief 位置pos的结点地址
+ * @tparam T 类型模板结点
+ * @param pos 位置pos
+ * @return 结点指针
+ */
 template<class T>
 LinkNode<T>* LinkList<T>::Locate(int pos) {
-  return NULL;
+  if (pos < 1 || pos > this->Length()) {
+    return NULL;
+  }
+
+  LinkNode<T>* cur = this->Head();
+  for (int i = 1; i < pos; i++) {
+    cur = cur->link_;
+  }
+
+  return cur;
 }
 
 

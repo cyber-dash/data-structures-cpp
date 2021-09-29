@@ -22,12 +22,21 @@ class LinkListTest {
 public:
   /*! @brief 测试插入 */
   static void TestInsert();
+
   /*! @brief 测试长度 */
   static void TestLength();
+
   /*! @brief 测试删除 */
   static void TestRemove();
+
   /*! @brief 测试清除链表 */
   static void TestMakeEmpty();
+
+  /*! @brief 测试查找 */
+  static void TestSearch();
+
+  /*! @brief 测试定位 */
+  static void TestLocate();
 };
 
 
@@ -117,6 +126,56 @@ void LinkListTest::TestMakeEmpty() {
   link_list->MakeEmpty();
 
   link_list->Output();
+
+  cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+void LinkListTest::TestSearch() {
+
+  cout << endl;
+  cout << "|------------------------ CyberDash ------------------------|" << endl;
+  cout << "|                   Test LinkList Search                    |" << endl;
+  cout << "|                         测试链表搜索                        |" << endl << endl << endl;
+
+  LinkList<string>* link_list = new LinkList<string>();
+
+  link_list->Insert(0, "Beijing");
+  link_list->Insert(1, "Shanghai");
+  link_list->Insert(2, "Guangzhou");
+  link_list->Insert(3, "Shenzhen");
+  link_list->Insert(4, "Caoxian");
+
+  LinkNode<string>* bj_node_ptr = link_list->Search("Beijing");
+  LinkNode<string>* cx_node_ptr = link_list->Search("Caoxian");
+
+  cout << "bj_node_ptr->data_: " << bj_node_ptr->data_ << endl;
+  cout << "cx_node_ptr->data_: " << cx_node_ptr->data_ << endl;
+
+  cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+void LinkListTest::TestLocate() {
+
+  cout << endl;
+  cout << "|------------------------ CyberDash ------------------------|" << endl;
+  cout << "|                   Test LinkList Locate                    |" << endl;
+  cout << "|                         测试链表定位                        |" << endl << endl << endl;
+
+  LinkList<string>* link_list = new LinkList<string>();
+
+  link_list->Insert(0, "Beijing");
+  link_list->Insert(1, "Shanghai");
+  link_list->Insert(2, "Guangzhou");
+  link_list->Insert(3, "Shenzhen");
+  link_list->Insert(4, "Caoxian");
+
+  LinkNode<string>* pos_1_node_ptr = link_list->Locate(1);
+  LinkNode<string>* pos_2_node_ptr = link_list->Locate(2);
+
+  cout << "pos_1_node_ptr->data_: " << pos_1_node_ptr->data_ << endl;
+  cout << "pos_2_node_ptr->data_: " << pos_2_node_ptr->data_ << endl;
 
   cout << "-------------------------------------------------------------" << endl << endl;
 }

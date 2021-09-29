@@ -11,6 +11,7 @@ using namespace std;
 
 int main() {
 
+  /*
   SeqListTest::TestInsert();
 
   SeqListTest::TestRemove();
@@ -34,6 +35,7 @@ int main() {
   SeqListTest::TestUnion();
 
   SeqListTest::TestIntersection();
+   */
 
   LinkListTest::TestLength();
 
@@ -42,6 +44,10 @@ int main() {
   LinkListTest::TestRemove();
 
   LinkListTest::TestMakeEmpty();
+
+  LinkListTest::TestSearch();
+
+  LinkListTest::TestLocate();
 
   return 0;
 }
