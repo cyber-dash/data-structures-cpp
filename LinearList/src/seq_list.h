@@ -1,6 +1,12 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/14.
-//
+/*!
+ * @file seq_list.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 顺序表模板类
+ * @version 0.2.1
+ * @date 2021-09-28
+ * @copyright Copyright (c) 2021
+ * **CyberDash计算机考研**
+ */
 
 #ifndef CYBER_DASH_SEQ_LIST_H
 #define CYBER_DASH_SEQ_LIST_H
@@ -8,21 +14,22 @@
 
 #include <iostream>
 #include <cstdlib>
-#include "LinearList.h"
+#include "linear_list.h"
 
 
 using namespace std;
 
 
-const int kDefaultSize = 100;
-
-
+/*!
+ * @brief 顺序表模板类
+ * @tparam T 类型模板参数
+ */
 template<class T>
 class SeqList: public LinearList<T> {
 
 public:
-  SeqList();
-  SeqList(int sz = kDefaultSize);
+  SeqList(): data_array_(NULL), size_(0), last_idx_(-1) {}
+  SeqList(int size);
   SeqList(SeqList<T>& L);
   ~SeqList() { delete[] data_array_; }
   int Size() const;
@@ -43,56 +50,56 @@ public:
   void CyberDashShow();
 
 private:
-  T* data_array_;
-  int max_size_;
-  int last_idx_;
+  T* data_array_; //!< 数据项数组
+  int size_; //!< 顺序表大小
+  int last_idx_; //!< 最后一项的数组索引
 };
 
 
-template<class T>
-SeqList<T>::SeqList() {
-  data_array_ = NULL;
-  max_size_ = 0;
-  last_idx_ = -1;
-}
-
-
 /**
- * 构造函数
- * @tparam T 顺序表元素类型
+ * @brief 构造函数
+ * @tparam T 类型模板参数
  * @param size 顺序表size
  */
 template<class T>
 SeqList<T>::SeqList(int size) {
 
   if (size > 0) {
-    max_size_ = size;
-    last_idx_ = -1;
+    this->size_ = size;
+    this->last_idx_ = -1;
+    this->data_array_ = new T[size];
   }
 
-  data_array_ = new T[max_size_];
-  if (data_array_ == NULL) {
+  if (this->data_array_ == NULL) {
     cerr<<"new error"<<endl;
     exit(1);
   }
 }
 
 
+/*!
+ * @brief 复制构造函数
+ * @tparam T 类型模板参数
+ * @param seq_list 顺序表
+ */
 template<class T>
 SeqList<T>::SeqList(SeqList<T>& seq_list) {
 
-  max_size_ = seq_list.Size();
-  last_idx_ = seq_list.Length() - 1;
+  this->size_ = seq_list.Size();
+  this->last_idx_ = seq_list.Length() - 1;
 
-  T cur_value;
+  if (this->size_ == 0) {
+    return;
+  }
 
-  data_array_ = new T[max_size_];
-  if (data_array_ == NULL) {
+  this->data_array_ = new T[this->size_];
+  if (this->data_array_ == NULL) {
     cerr<<"存储分配错误!"<<endl;
     exit(1);
   }
 
   for (int i = 1; i <= last_idx_ + 1; i++) {
+    T cur_value;
     seq_list.GetData(i, cur_value);
     data_array_[i - 1] = cur_value;
   }
@@ -107,12 +114,12 @@ int SeqList<T>::Resize(int new_size) {
     return -1;
   }
 
-  if (new_size == max_size_) {
+  if (new_size == size_) {
     cout<<"重分配数组长度与原数组长度相同"<<endl;
     return 0;
   }
 
-  T* new_array = new T[max_size_];
+  T* new_array = new T[size_];
   if (new_array == NULL) {
     cerr<<"存储分配错误"<<endl;
     return -2;
@@ -128,16 +135,22 @@ int SeqList<T>::Resize(int new_size) {
   delete [] data_array_;
   data_array_ = new_array;
 
-  max_size_ = new_size;
+  size_ = new_size;
 
   return new_size;
 }
 
 
+/*!
+ * @brief 查找数据
+ * @tparam T 类型模板参数
+ * @param data 数据
+ * @return 在顺序表中的位置
+ */
 template<class T>
 int SeqList<T>::Search(T& data) const {
 
-  int pos = 0; // not array index
+  int pos = 0; // 从1开始, 返回0表示没有查到
 
   for (int i = 0; i <= last_idx_; i++) {
     if (data_array_[i] == data) {
@@ -194,7 +207,7 @@ bool SeqList<T>::SetData(int pos, const T& data) {
 template<class T>
 bool SeqList<T>::Insert(int pos, const T& data) {
 
-  if (last_idx_ == max_size_ - 1) {
+  if (last_idx_ == size_ - 1) {
     return false;
   }
 
@@ -249,7 +262,7 @@ bool SeqList<T>::IsEmpty() const {
 
 template<class T>
 bool SeqList<T>::IsFull() {
-  if (last_idx_ == max_size_ - 1) {
+  if (last_idx_ == size_ - 1) {
     return true;
   } else {
     return false;
@@ -260,7 +273,7 @@ bool SeqList<T>::IsFull() {
 template<class T>
 SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
 
-  this->max_size_ = seq_list.Size();
+  this->size_ = seq_list.Size();
   int p_length = seq_list.Length();
 
   for (int i = 0; i < p_length; i++) {
@@ -276,7 +289,7 @@ SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
 
 template<class T>
 int SeqList<T>::Size() const {
-  return max_size_;
+  return size_;
 }
 
 

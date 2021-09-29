@@ -1,7 +1,7 @@
 /*!
  * @file seq_list_test.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 单链表测试类
+ * @brief 顺序表测试类
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021

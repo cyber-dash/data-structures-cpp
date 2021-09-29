@@ -39,5 +39,9 @@ int main() {
 
   LinkListTest::TestInsert();
 
+  LinkListTest::TestRemove();
+
+  LinkListTest::TestMakeEmpty();
+
   return 0;
 }
