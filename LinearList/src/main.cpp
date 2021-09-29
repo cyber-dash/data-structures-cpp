@@ -2,7 +2,8 @@
 // Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/15.
 //
 
-#include "test.h"
+#include "link_list_test.h"
+#include "seq_list_test.h"
 
 
 using namespace std;
@@ -10,31 +11,33 @@ using namespace std;
 
 int main() {
 
-  TestSeqListInsert();
+  SeqListTest::TestInsert();
 
-  TestSeqListRemove();
+  SeqListTest::TestRemove();
 
-  TestSeqListSize();
+  SeqListTest::TestSize();
 
-  TestSeqListEmpty();
+  SeqListTest::TestEmpty();
 
-  TestSeqListLength();
+  SeqListTest::TestLength();
 
-  TestSeqListSearch();
+  SeqListTest::TestSearch();
 
-  TestSeqListLocate();
+  SeqListTest::TestLocate();
 
-  TestSeqListGetData();
+  SeqListTest::TestGetData();
 
-  TestSqlListSetData();
+  SeqListTest::TestSetData();
 
-  TestSqlListSort();
+  SeqListTest::TestSort();
 
-  TestSeqListUnion();
+  SeqListTest::TestUnion();
 
-  TestSeqListIntersection();
+  SeqListTest::TestIntersection();
 
-  TestCyberDashShow();
+  LinkListTest::TestLength();
+
+  LinkListTest::TestInsert();
 
   return 0;
 }

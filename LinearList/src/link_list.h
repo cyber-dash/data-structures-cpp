@@ -77,11 +77,11 @@ public:
   // 获取第pos个结点的数据
   bool GetData(int pos, T& data) const;
   // 获取
-  bool SetData(int pos, T& data);
+  bool SetData(int pos, const T& data);
   // 在第pos个元素(数组索引pos - 1)之后, 插入数据
   bool Insert(int pos, const T& data);
   // 在第pos个元素(数组索引pos - 1)之后, 插入结点
-  bool Insert(int pos, LinkNode<T>* node);
+  bool Insert(int pos, LinkNode<T>* node_ptr);
   bool Remove(int pos, T& data);
   bool IsEmpty() const;
   void Output();
@@ -90,7 +90,6 @@ public:
 private:
   LinkNode<T>* head_ptr_;
   int length_;
-  // int size_;
 };
 
 
@@ -187,7 +186,7 @@ bool LinkList<T>::GetData(int pos, T& data) const {
 
 
 template<class T>
-bool LinkList<T>::SetData(int pos, T& data) {
+bool LinkList<T>::SetData(int pos, const T& data) {
 
   if (pos < 1 || pos > Length()) {
     return false;
@@ -216,28 +215,28 @@ template<class T>
 void LinkList<T>::Output() {
 
   if (head_ptr_ == NULL) {
-    cout<<"Empty list"<<endl;
+    cout << "Empty list" << endl;
     return;
   }
 
   LinkNode<T>* cur = Head();
   while(cur != NULL) {
-    cout<<cur->data_<<" ";
+    cout << cur->data_ << " ";
     cur = cur->link_;
   }
-  cout<<endl;
 
+  cout << endl;
 }
 
 
-
-
 /*!
- * @brief 在第pos个元素(数组索引pos - 1)之后, 插入数据
- * @tparam T 类型模板参数
- * @param pos 第pos个
- * @param data 待插入数据
- * @return 是否插入成功
+ * @brief 在第pos个元素之后, 插入数据
+ * @param pos 位置pos
+ * @param data 数据项值
+ * @return 是否成功
+ * @note
+ * 区别于数组, 以1开始\n
+ * 当pos为0时, 表示插入位置1
  */
 template<class T>
 bool LinkList<T>::Insert(int pos, const T& data) {
@@ -246,29 +245,27 @@ bool LinkList<T>::Insert(int pos, const T& data) {
     return false;
   }
 
-  LinkNode<T>* node = new LinkNode<T>(data);
+  LinkNode<T>* node_ptr = new LinkNode<T>(data);
 
-  if (head_ptr_ == NULL) {
-    node->link_ = head_ptr_;
-    head_ptr_ = node;
-    length_ = 1;
+  if (this->head_ptr_ == NULL) {
+    node_ptr->link_ = this->head_ptr_;
+    this->head_ptr_ = node_ptr;
+    this->length_ = 1;
     return true;
   }
 
   if (pos == 0) {
-
-    node->link_ = head_ptr_;
-    head_ptr_ = node;
+    node_ptr->link_ = this->head_ptr_;
+    this->head_ptr_ = node_ptr;
   } else {
-
-    LinkNode<T>* cur = head_ptr_;
+    LinkNode<T>* cur = this->head_ptr_;
     while (pos - 1 > 0) {
       cur = cur->link_;
       pos--;
     }
 
-    node->link_ = cur->link_;
-    cur->link_ = node;
+    node_ptr->link_ = cur->link_;
+    cur->link_ = node_ptr;
   }
 
   length_++;
@@ -278,34 +275,36 @@ bool LinkList<T>::Insert(int pos, const T& data) {
 
 
 /*!
- * @brief 在第pos个元素(数组索引pos - 1)之后, 插入结点
- * @tparam T 类型模板参数
- * @param pos 第pos个
- * @param node 待插入结点
- * @return 是否插入成功
+ * @brief 在第pos个元素之后, 插入数据
+ * @param pos 位置pos
+ * @param node_ptr 数据项对应的结点指针
+ * @return 是否成功
+ * @note
+ * 区别于数组, 以1开始\n
+ * 当pos为0时, 表示插入位置1
  */
 template<class T>
-bool LinkList<T>::Insert(int pos, LinkNode<T>* node) {
+bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
 
   if (pos < 0 || pos > Length()) {
     return false;
   }
 
-  if (node == NULL) {
+  if (node_ptr == NULL) {
     return false;
   }
 
   if (head_ptr_ == NULL) {
-    node->link_ = head_ptr_;
-    head_ptr_ = node;
+    node_ptr->link_ = head_ptr_;
+    head_ptr_ = node_ptr;
     length_ = 1;
     return true;
   }
 
   if (pos == 0) {
 
-    node->link_ = head_ptr_;
-    head_ptr_ = node;
+    node_ptr->link_ = head_ptr_;
+    head_ptr_ = node_ptr;
   } else {
 
     LinkNode<T>* cur = head_ptr_;
@@ -314,8 +313,8 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node) {
       pos--;
     }
 
-    node->link_ = cur->link_;
-    cur->link_ = node;
+    node_ptr->link_ = cur->link_;
+    cur->link_ = node_ptr;
   }
 
   length_++;
@@ -324,9 +323,13 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node) {
 }
 
 
+/*!
+ * @brief 是否为空链表
+ * @tparam T 类型模板参数
+ * @return 是否为空链表
+ */
 template<class T>
 bool LinkList<T>::IsEmpty() const {
-
   if (length_ == 0) {
     return true;
   } else {
@@ -335,6 +338,10 @@ bool LinkList<T>::IsEmpty() const {
 }
 
 
+/*!
+ * @brief
+ * @tparam T
+ */
 template<class T>
 void LinkList<T>::CyberDashShow() {
   cout<<endl
@@ -355,20 +362,45 @@ LinkList<T>::~LinkList() {
 
 
 template<class T>
-LinkNode<T> *LinkList<T>::Search(T data) {
+LinkNode<T>* LinkList<T>::Search(T data) {
   return NULL;
 }
 
 
 template<class T>
-LinkNode<T> *LinkList<T>::Locate(int pos) {
+LinkNode<T>* LinkList<T>::Locate(int pos) {
   return NULL;
 }
 
 
+/*!
+ * @brief 删除第pos个结点
+ * @tparam T
+ * @param pos
+ * @param data
+ * @return 是否删除成功
+ * @note
+ * 从1开始计数
+ */
 template<class T>
 bool LinkList<T>::Remove(int pos, T &data) {
-  return false;
+
+  LinkNode<T>* delete_node_ptr = NULL;
+  LinkNode<T>* cur = NULL;
+  if (this->Length() == 0 || pos < 1) {
+    return false;
+  }
+
+  if (pos == 1) {
+    delete_node_ptr = this->head_ptr_;
+    this->head_ptr_ = this->head_ptr_->link_;
+  } else {
+    // todo:
+  }
+
+  delete delete_node_ptr;
+
+  return true;
 }
 
 

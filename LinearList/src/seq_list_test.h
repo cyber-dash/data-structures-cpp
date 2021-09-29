@@ -1,15 +1,41 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2021/2/24.
-//
+/*!
+ * @file seq_list_test.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 单链表测试类
+ * @version 0.2.1
+ * @date 2021-09-28
+ * @copyright Copyright (c) 2021
+ * **CyberDash计算机考研**
+ */
 
-#include "test.h"
-#include <iostream>
+#ifndef CYBER_DASH_SEQ_LIST_TEST_H
+#define CYBER_DASH_SEQ_LIST_TEST_H
+
+#include "seq_list.h"
+#include "seq_list_algorithm.h"
 
 
 using namespace std;
 
 
-void TestSeqListInsert() {
+class SeqListTest {
+public:
+  static void TestInsert();
+  static void TestRemove();
+  static void TestSize();
+  static void TestLength();
+  static void TestEmpty();
+  static void TestSearch();
+  static void TestLocate();
+  static void TestGetData();
+  static void TestSetData();
+  static void TestSort();
+  static void TestUnion();
+  static void TestIntersection();
+};
+
+
+void SeqListTest::TestInsert() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Insert                     "<<endl;
@@ -31,7 +57,7 @@ void TestSeqListInsert() {
 }
 
 
-void TestSeqListRemove() {
+void SeqListTest::TestRemove() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Remove                     "<<endl;
@@ -57,7 +83,7 @@ void TestSeqListRemove() {
 }
 
 
-void TestSeqListSize() {
+void SeqListTest::TestSize() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                      Test SeqList Size                      "<<endl;
@@ -71,7 +97,7 @@ void TestSeqListSize() {
 }
 
 
-void TestSeqListLength() {
+void SeqListTest::TestLength() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Length                     "<<endl;
@@ -93,7 +119,7 @@ void TestSeqListLength() {
 }
 
 
-void TestSeqListEmpty() {
+void SeqListTest::TestEmpty() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Empty                      "<<endl;
@@ -126,7 +152,7 @@ void TestSeqListEmpty() {
 }
 
 
-void TestSeqListSearch() {
+void SeqListTest::TestSearch() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Search                     "<<endl;
@@ -150,7 +176,7 @@ void TestSeqListSearch() {
 }
 
 
-void TestSeqListLocate() {
+void SeqListTest::TestLocate() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Locate                     "<<endl;
@@ -174,7 +200,7 @@ void TestSeqListLocate() {
 }
 
 
-void TestSeqListGetData() {
+void SeqListTest::TestGetData() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList GetData                    "<<endl;
@@ -199,7 +225,7 @@ void TestSeqListGetData() {
 }
 
 
-void TestSqlListSetData() {
+void SeqListTest::TestSetData() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList SetData                    "<<endl;
@@ -227,7 +253,7 @@ void TestSqlListSetData() {
 }
 
 
-void TestSqlListSort() {
+void SeqListTest::TestSort() {
 
     cout<<endl;
     cout<<"------------------------- CyberDash -------------------------"<<endl;
@@ -250,14 +276,7 @@ void TestSqlListSort() {
 }
 
 
-void TestCyberDashShow() {
-  SeqList<int> seq_list(1);
-
-  seq_list.CyberDashShow();
-}
-
-
-void TestSeqListUnion() {
+void SeqListTest::TestUnion() {
 
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
@@ -283,7 +302,7 @@ void TestSeqListUnion() {
 }
 
 
-void TestSeqListIntersection() {
+void SeqListTest::TestIntersection() {
 
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
@@ -309,81 +328,4 @@ void TestSeqListIntersection() {
 }
 
 
-void TestDoubleLinkListInsert(){
-  
-  cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                      Test DoubleList Insert              "<<endl;
-  cout<<"                         测试双向链表插入                        "<<endl<<endl<<endl;
-  
-  DoubleLinkList<int>* double_list;
-  double_list = new DoubleLinkList<int>();
-
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl; 
-}
-
-
-void TestDoubleLinkListRemove(){
-  
-  cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Remove              "<<endl;
-  cout<<"                         测试双向链表删除                        "<<endl<<endl<<endl;
-  
-
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl; 
-}
-
-
-void TestDoubleLinkListLength(){
-  
-  cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Length              "<<endl;
-  cout<<"                         测试双向链表长度                       "<<endl<<endl<<endl;
-  
-
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl; 
-}
-
-
-void TestDoubleLinkListEmpty(){
-  
-  cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Empty              "<<endl;
-  cout<<"                         测试双向链表是否为空                        "<<endl<<endl<<endl;
-  
-
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl; 
-}
-
-
-void TestDoubleLinkListSearch(){
-  
-  cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Search              "<<endl;
-  cout<<"                         测试双向链表查找                        "<<endl<<endl<<endl;
-  
-
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl; 
-}
-
-
-void TestDoubleLinkListLocate(){
-  
-  cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Locate              "<<endl;
-  cout<<"                         测试双向链表Locate                        "<<endl<<endl<<endl;
-  
-
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl; 
-}
+#endif // CYBER_DASH_SEq_LIST_TEST_H

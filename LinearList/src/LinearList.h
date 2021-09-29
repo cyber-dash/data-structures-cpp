@@ -33,13 +33,16 @@ public:
    * @param data 数据项
    * @return
    */
-  virtual bool SetData(int pos, const T& data) const = 0;
+  virtual bool SetData(int pos, const T& data) = 0;
 
   /*!
    * @brief 在第pos个元素之后, 插入数据
    * @param pos 位置pos
    * @param data 数据项值
    * @return 是否成功
+   * @note
+   * 区别于数组, 以1开始\n
+   * 当pos为0时, 表示插入位置1
    */
   virtual bool Insert(int pos, const T& data) = 0;
 
@@ -55,15 +58,14 @@ public:
    * @brief 判断是否为空
    * @return 是否为空
    */
-  virtual bool IsEmpty() = 0;
+  virtual bool IsEmpty() const = 0;
 
   /*!
    * @brief 打印线性表
    */
   virtual void Output() = 0;
 
-  virtual void CyberDashShow() = 0;
-
+  // virtual void CyberDashShow() = 0;
   // virtual int Locate(int pos) const = 0;
   // virtual int Search(T& data) const = 0;
   // virtual int Size() const = 0;
