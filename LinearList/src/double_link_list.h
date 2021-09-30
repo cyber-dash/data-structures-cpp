@@ -23,6 +23,7 @@
  */
 template <class T>
 struct DoubleLinkNode {
+  explicit DoubleLinkNode(): prev_(NULL), next_(NULL) {}
   /*! @brief 构造函数(下一结点与上一结点地址) */
   explicit DoubleLinkNode(DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL): prev_(prev), next_(next) {}
   /*!
@@ -55,10 +56,10 @@ public:
   /*! @brief 析构函数 */
   ~DoubleLinkList();
 
-  int Length() const override { return this->length_; }
+  int Length() const { return this->length_; }
   bool IsEmpty() const;
   /*! @brief 获取链表头结点 */
-  DoubleLinkNode<T>* Head() const { return this->head_ptr_; }
+  DoubleLinkNode<T>* Head() const { return this->head_; }
   /*!
    * @brief 搜索链表结点
    * @param data 要搜索的数据项
@@ -73,79 +74,83 @@ public:
    */
   DoubleLinkNode<T>* Locate(int pos, int direction);
   bool Insert(int pos, const T& data, int direction);
+  bool Insert(int pos, const T& data);
   bool Remove(int pos, T& data, int direction);
+  bool Remove(int pos, T& data);
   bool GetData(int pos, T& data) const;
   bool SetData(int pos, const T& data);
   void Output();
   void CyberDashShow();
 
 private:
-  DoubleLinkNode<T>* head_ptr_;
+  DoubleLinkNode<T>* head_;
   int length_;
   int size_;
 };
 
+
 template<class T>
 DoubleLinkList<T>::DoubleLinkList() {
-  head_ptr_ = new DoubleLinkNode<T>();
-  if (head_ptr_ == NULL) {
+  head_ = new DoubleLinkNode<T>();
+  if (head_ == NULL) {
     cerr<<"存储分配出错!"<<endl;
     exit(1);
   }
 
-  head_ptr_->next_ = head_ptr_;
-  head_ptr_->prev_ = head_ptr_;
+  head_->next_ = head_;
+  head_->prev_ = head_;
   this->length_ = 0;
 }
 
+
 template<class T>
 DoubleLinkList<T>::DoubleLinkList(T data) {
-  head_ptr_ = new DoubleLinkNode<T>(data);
-  if (head_ptr_ == NULL) {
+  head_ = new DoubleLinkNode<T>(data);
+  if (head_ == NULL) {
     cerr<<"存储分配出错!"<<endl;
     exit(1);
   }
 
-  head_ptr_->next_ = head_ptr_;
-  head_ptr_->prev_ = head_ptr_;
+  head_->next_ = head_;
+  head_->prev_ = head_;
   this->length_ = 1;
 }
 
 template<class T>
 bool DoubleLinkList<T>::IsEmpty()const{
-  return head_ptr_>next_ == head_ptr_;
+  return head_->next_ == head_;
 }
 
 template<class T>
 DoubleLinkNode<T>* DoubleLinkList<T>::Search(const T& data){
-  DoubleLinkNode<T>* current = head_ptr_->next_;
-  while (current != head_ptr_ && current->data_ != data)
+  DoubleLinkNode<T>* current = head_->next_;
+  while (current != head_ && current->data_ != data)
   {
       current = current->next_;
   }
 
-  if(current != head_ptr_){
+  if(current != head_){
     return current;
   }
-  return nullptr;
+  return NULL;
 }
 
 template<class T>
 DoubleLinkNode<T>* DoubleLinkList<T>::Locate(int pos, int direction){
-  if(head_ptr_->next_ == head_ptr_ || i == 0){
-    return head_ptr_;
+  if(head_->next_ == head_ || pos == 0){
+    return head_;
   }
 
   DoubleLinkNode<T>* current;
   if(direction == 0){
-    current = head_ptr_->next_;
+    current = head_->next_;
   }else{
-    current = head_ptr_->prev_;
+    current = head_->prev_;
   }
 
   for(int i = 0;i < pos;i++){
-    if(current == head_ptr_){
-      return nullptr;
+    if(current == head_){
+      return NULL;
     }
     
     //direction==0 向前搜索，direction!=0向后搜索
@@ -157,22 +162,22 @@ DoubleLinkNode<T>* DoubleLinkList<T>::Locate(int pos, int direction){
     }
   }
 
-  if(current != head_ptr_){
+  if(current != head_){
     return current;
   }
 
-  return nullptr;
+  return NULL;
 }
 
 template<class T>
 bool DoubleLinkList<T>::Insert(int pos, const T& data, int direction){
   DoubleLinkNode<T>* current = Locate(pos,direction);
-  if(current == nullptr){
+  if(current == NULL){
     return false;
   }
 
   DoubleLinkNode<T>* newNode = new DoubleLinkNode<T>(data);
-  if(newNode == nullptr){
+  if(newNode == NULL){
     cerr<<"存储分配失败！"<<endl;
     exit(1);
   }
@@ -197,7 +202,7 @@ bool DoubleLinkList<T>::Insert(int pos, const T& data, int direction){
 template<class T>
 bool DoubleLinkList<T>::Remove(int pos, T& data, int direction){
   DoubleLinkNode<T>* current = Locate(pos,direction);
-  if(current == nullptr){
+  if(current == NULL){
     return false;
   }
 
@@ -216,7 +221,7 @@ bool DoubleLinkList<T>::GetData(int pos, T& data) const{
     return false;
   }
 
-  DoubleLinkList<T>* current = head_ptr_;
+  DoubleLinkList<T>* current = head_;
 
   while (pos - 1 > 0) {
     current = current->link_;
@@ -225,7 +230,7 @@ bool DoubleLinkList<T>::GetData(int pos, T& data) const{
 
   data = current->data_;
 
-  return true
+  return true;
 }
 
 template<class T>
@@ -235,10 +240,10 @@ bool DoubleLinkList<T>::SetData(int pos,const T& data) {
     return false;
   }
 
-  DoubleLinkList<T>* current = head_ptr_;
+  DoubleLinkList<T>* current = head_;
 
   while (pos - 1 > 0) {
-    currrent = current->link_;
+    current = current->link_;
     pos--;
   }
 
@@ -249,7 +254,7 @@ bool DoubleLinkList<T>::SetData(int pos,const T& data) {
 
 template<class T>
 void DoubleLinkList<T>::Output(){
-  if (head_ptr_ == NULL) {
+  if (head_ == NULL) {
     cout<<"Empty list"<<endl;
     return;
   }
@@ -257,23 +262,23 @@ void DoubleLinkList<T>::Output(){
   DoubleLinkNode<T>* current = Head();
   cout<<"向后遍历输出："<<" ";
   current = current->next_;
-  while(current != head_ptr_) {
+  while(current != head_) {
     cout<<current->data_<<" ";
     current = current->next_;
   }
 
-  count<<"向前遍历输出"<<" ";
+  cout<<"向前遍历输出"<<" ";
   current = current->prev_;
-  while(current != head_ptr_) {
+  while(current != head_) {
     cout<<current->data_<<" ";
     current = current->prev_;
   }
 
-  cout<<endl
+  cout<<endl;
 }
 
 template<class T>
-void LinkList<T>::CyberDashShow() {
+void DoubleLinkList<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
       <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl
@@ -282,6 +287,16 @@ void LinkList<T>::CyberDashShow() {
       <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
       <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+}
+
+template<class T>
+bool DoubleLinkList<T>::Insert(int pos, const T &data) {
+  return false;
+}
+
+template<class T>
+bool DoubleLinkList<T>::Remove(int pos, T &data) {
+  return false;
 }
 
 #endif // CYBER_DASH_DOUBLE_LINK_LIST_H

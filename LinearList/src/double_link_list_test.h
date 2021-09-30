@@ -6,7 +6,11 @@
 #define CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
 
 #include "double_link_list.h"
+
+
 using namespace std;
+
+
 /*!
  * @brief 双向链表测试类
  */
@@ -33,8 +37,7 @@ void DoubleLinkListTest::TestInsert() {
   cout<<"                    Test DoubleList Insert                   "<<endl;
   cout<<"                         测试双向链表插入                        "<<endl<<endl<<endl;
 
-  DoubleLinkList<int>* double_list;
-  double_list = new DoubleLinkList<int>();
+  DoubleLinkList<int>* double_list = new DoubleLinkList<int>();
 
   double_list->Insert(0,1);
   double_list->Insert(1,2);
@@ -145,7 +148,7 @@ void DoubleLinkListTest::TestSearch(){
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
-
+/*
 void DoubleLinkListTest::TestLocate(){
 
   cout<<endl;
@@ -166,6 +169,7 @@ void DoubleLinkListTest::TestLocate(){
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
+ */
 
 
 #endif // CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
