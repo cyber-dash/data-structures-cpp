@@ -4,6 +4,7 @@
 
 #include "link_list_test.h"
 #include "seq_list_test.h"
+#include "double_link_list_test.h"
 
 
 using namespace std;
@@ -38,6 +39,18 @@ int main() {
   LinkListTest::TestLength();
 
   LinkListTest::TestInsert();
+
+  DoubleLinkListTest::TestEmpty();
+
+  DoubleLinkListTest::TestInsert();
+
+  DoubleLinkListTest::TestLength();
+
+  DoubleLinkListTest::TestLocate();
+
+  DoubleLinkListTest::TestRemove();
+
+  DoubleLinkListTest::TestSearch();
 
   return 0;
 }

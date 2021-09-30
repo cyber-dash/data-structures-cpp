@@ -17,32 +17,60 @@
 #include <cstddef>
 
 
+/*!
+ * @brief 双链表结点模板类
+ * @tparam T 类型模板参数
+ */
 template <class T>
 struct DoubleLinkNode {
-
+  /*! @brief 构造函数(下一结点与上一结点地址) */
   explicit DoubleLinkNode(DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL): prev_(prev), next_(next) {}
+  /*!
+   * @brief 构造函数(数据项和下一结点地址)
+   * @param data 数据项
+   * @param ptr 下一节点地址
+   */
   explicit DoubleLinkNode(const T& data, DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL):
       data_(data), prev_(prev), next_(next) {}
 
-  T data_;
-  DoubleLinkNode<T>* next_;
-  DoubleLinkNode<T>* prev_;
+  T data_;//!< 链表数据项
+  DoubleLinkNode<T>* next_;//!< 下一结点
+  DoubleLinkNode<T>* prev_;//!< 上一结点
 };
 
 
+/*!
+ * @brief 双链表模板类
+ * @tparam T 类型模板参数
+ */
 template<class T>
 class DoubleLinkList: public LinearList<T> {
 
 public:
 
+  /*! @brief 构造函数(无参数) */
   DoubleLinkList();
+  /*! @brief 构造函数(参数为头结点数据项) */
   DoubleLinkList(T data);
+  /*! @brief 析构函数 */
   ~DoubleLinkList();
 
   int Length() const override { return this->length_; }
   bool IsEmpty() const;
+  /*! @brief 获取链表头结点 */
   DoubleLinkNode<T>* Head() const { return this->head_ptr_; }
+  /*!
+   * @brief 搜索链表结点
+   * @param data 要搜索的数据项
+   * @return 搜索到的结点，若返回空则未搜到
+   */
   DoubleLinkNode<T>* Search(const T& data);
+  /*!
+   * @brief 定位链表结点
+   * @param pos 定位结点的索引
+   * @param direction 搜索方向 0为向前，非0为向后
+   * @return 定位到的结点，若返回空则达不到该定位
+   */
   DoubleLinkNode<T>* Locate(int pos, int direction);
   bool Insert(int pos, const T& data, int direction);
   bool Remove(int pos, T& data, int direction);
