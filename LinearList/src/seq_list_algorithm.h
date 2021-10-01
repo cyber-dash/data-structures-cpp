@@ -1,7 +1,7 @@
 /*!
  * @file seq_list_algorithm.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 单链表测试类
+ * @brief 顺序表算法测试类
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021
@@ -42,11 +42,16 @@ void SeqListUnion(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
 }
 
 
+/*!
+ * @brief 顺序表求交集
+ * @tparam T 类型模板参数
+ * @param seq_list_a 顺序表a(交运算后的表)
+ * @param seq_list_b 顺序表b
+ */
 template<class T>
 void SeqListIntersection(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
 
   int a_length = seq_list_a.Length();
-  int b_length = seq_list_b.Length();
 
   int iter_pos = 1;
   while (iter_pos <= a_length) {

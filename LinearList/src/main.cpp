@@ -36,6 +36,7 @@ int main() {
   SeqListTest::TestUnion();
 
   SeqListTest::TestIntersection();
+   */
 
   LinkListTest::TestLength();
 
@@ -56,6 +57,14 @@ int main() {
 
   DoubleLinkListTest::TestSearch();
    */
+
+  LinkListTest::TestRemove();
+
+  LinkListTest::TestMakeEmpty();
+
+  LinkListTest::TestSearch();
+
+  LinkListTest::TestLocate();
 
   return 0;
 }
