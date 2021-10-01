@@ -38,13 +38,6 @@ int main() {
   SeqListTest::TestIntersection();
    */
 
-  LinkListTest::TestLength();
-
-  LinkListTest::TestInsertByDirection();
-
-  DoubleLinkListTest::TestEmpty();
-   */
-
   DoubleLinkListTest::TestInsertByDirection();
 
   DoubleLinkListTest::TestRemoveByDirection();
@@ -58,6 +51,7 @@ int main() {
   DoubleLinkListTest::TestSearch();
    */
 
+  /*
   LinkListTest::TestRemove();
 
   LinkListTest::TestMakeEmpty();
@@ -65,6 +59,7 @@ int main() {
   LinkListTest::TestSearch();
 
   LinkListTest::TestLocate();
+   */
 
   return 0;
 }
