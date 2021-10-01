@@ -12,9 +12,10 @@ using namespace std;
 
 int main() {
 
+  /*
   SeqListTest::TestInsert();
 
-  SeqListTest::TestRemove();
+  SeqListTest::TestRemoveByDirection();
 
   SeqListTest::TestSize();
 
@@ -38,19 +39,23 @@ int main() {
 
   LinkListTest::TestLength();
 
-  LinkListTest::TestInsert();
+  LinkListTest::TestInsertByDirection();
 
   DoubleLinkListTest::TestEmpty();
+   */
 
-  DoubleLinkListTest::TestInsert();
+  DoubleLinkListTest::TestInsertByDirection();
 
+  DoubleLinkListTest::TestRemoveByDirection();
+
+  /*
   DoubleLinkListTest::TestLength();
 
   DoubleLinkListTest::TestLocate();
 
-  DoubleLinkListTest::TestRemove();
 
   DoubleLinkListTest::TestSearch();
+   */
 
   return 0;
 }
