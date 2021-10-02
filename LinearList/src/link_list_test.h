@@ -160,7 +160,7 @@ void LinkListTest::TestLocate() {
 
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                   Test LinkList Locate                    |" << endl;
+  cout << "|                   Test LinkList LocateByDirection                    |" << endl;
   cout << "|                         测试链表定位                        |" << endl << endl << endl;
 
   LinkList<string>* link_list = new LinkList<string>();

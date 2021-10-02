@@ -70,15 +70,7 @@ public:
    * @brief 打印线性表
    */
   virtual void Output() = 0;
-
-  // virtual void CyberDashShow() = 0;
-  // virtual int Locate(int pos) const = 0;
-  // virtual int Search(T& data) const = 0;
-  // virtual int Size() const = 0;
-  // virtual bool IsFull() = 0;
-  // virtual void Sort() = 0;
-  // virtual void Input() = 0;
 };
 
 
-#endif //CYBER_DASH_LINEAR_LIST_H
+#endif // CYBER_DASH_LINEAR_LIST_H

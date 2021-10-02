@@ -194,7 +194,7 @@ void SeqListTest::TestSearch() {
 void SeqListTest::TestLocate() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"                     Test SeqList Locate                     "<<endl;
+  cout<<"                     Test SeqList LocateByDirection                     "<<endl;
   cout<<"                        测试顺序表Locate                       "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);

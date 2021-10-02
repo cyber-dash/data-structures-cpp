@@ -28,14 +28,16 @@ public:
   static void TestSearch();
   /*! @brief 测试链表定位 */
   static void TestLocate();
+  /*! @brief 测试获取设置数据 */
+  static void TestGetDataAndSetData();
 };
 
 
 void DoubleLinkListTest::TestInsertByDirection() {
   cout << endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList InsertByDirection             "<<endl;
-  cout<<"                      测试双向链表按方向插入                    "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|              Test DoubleList InsertByDirection            |"<<endl;
+  cout<<"|                     测试双向链表按方向插入                    |"<<endl<<endl<<endl;
 
   DoubleLinkList<string>* band_list = new DoubleLinkList<string>();
 
@@ -52,9 +54,9 @@ void DoubleLinkListTest::TestInsertByDirection() {
 void DoubleLinkListTest::TestRemoveByDirection() {
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList RemoveByDirection             "<<endl;
-  cout<<"                      测试双向链表按方向删除                    "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|              Test DoubleList RemoveByDirection            |"<<endl;
+  cout<<"|                     测试双向链表按方向删除                   |"<<endl<<endl<<endl;
 
   DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
 
@@ -85,9 +87,9 @@ void DoubleLinkListTest::TestRemoveByDirection() {
 void DoubleLinkListTest::TestLength(){
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Length              "<<endl;
-  cout<<"                         测试双向链表长度                       "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test DoubleList Length                  |"<<endl;
+  cout<<"|                       测试双向链表长度                      |"<<endl<<endl<<endl;
 
   DoubleLinkList<int>* double_list;
   double_list = new DoubleLinkList<int>();
@@ -96,7 +98,7 @@ void DoubleLinkListTest::TestLength(){
   double_list->Insert(1,2);
   double_list->Insert(2,3);
 
-  cout<<"double_list length"<<double_list->Length()<<endl;
+  cout<<"双向链表长度: "<<double_list->Length()<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -105,9 +107,9 @@ void DoubleLinkListTest::TestLength(){
 void DoubleLinkListTest::TestEmpty(){
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Empty              "<<endl;
-  cout<<"                         测试双向链表是否为空                        "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test DoubleList Empty                   |"<<endl;
+  cout<<"|                        测试双向链表是否为空                  |"<<endl<<endl<<endl;
 
   DoubleLinkList<string>* double_link;
   double_link = new DoubleLinkList<string>();
@@ -140,9 +142,9 @@ void DoubleLinkListTest::TestEmpty(){
 void DoubleLinkListTest::TestSearch(){
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Search              "<<endl;
-  cout<<"                         测试双向链表查找                        "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                   Test DoubleList Search                  |"<<endl;
+  cout<<"|                       测试双向链表查找                      |"<<endl<<endl<<endl;
 
   DoubleLinkList<int>* double_list;
   double_list = new DoubleLinkList<int>();
@@ -153,33 +155,31 @@ void DoubleLinkListTest::TestSearch(){
 
   DoubleLinkNode<int>* node = double_list->Search(3);
 
-  // cout<<"The pos of"<<3<<" is "<<pos<<endl;
+  cout << "The pos of" << 3 << " is " << node <<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
-/*
+
 void DoubleLinkListTest::TestLocate(){
 
   cout<<endl;
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<"               Test DoubleList Locate              "<<endl;
-  cout<<"                         测试双向链表Locate                        "<<endl<<endl<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                  Test DoubleList Locate                   |"<<endl;
+  cout<<"|                       测试双向链表定位                       |"<<endl<<endl<<endl;
 
-  DoubleLinkList<int>* double_list;
-  double_list = new DoubleLinkList<int>();
+  DoubleLinkList<int>* double_list = new DoubleLinkList<int>();
 
   double_list->Insert(0,1);
   double_list->Insert(1,2);
   double_list->Insert(2,3);
 
-  int pos = double_list->Locate(3);
+  DoubleLinkNode<int>* node_ptr = double_list->Locate(3);
 
-  cout<<"The pos is: "<<pos<<endl;
+  cout<<"The node_ptr is: " <<node_ptr<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
- */
 
 
 #endif // CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
