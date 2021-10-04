@@ -293,8 +293,8 @@ EXTENSION_MAPPING      =
 
 MARKDOWN_SUPPORT       = YES
 
-# When enabled doxygen tries to link words that correspond to documented
-# classes, or namespaces to their corresponding documentation. Such a link can
+# When enabled doxygen tries to next words that correspond to documented
+# classes, or namespaces to their corresponding documentation. Such a next can
 # be prevented in individual cases by putting a % sign in front of the word or
 # globally by setting AUTOLINK_SUPPORT to NO.
 # The default value is: YES.
@@ -962,8 +962,8 @@ REFERENCES_RELATION    = NO
 
 # If the REFERENCES_LINK_SOURCE tag is set to YES and SOURCE_BROWSER tag is set
 # to YES then the hyperlinks from functions in REFERENCES_RELATION and
-# REFERENCED_BY_RELATION lists will link to the source code. Otherwise they will
-# link to the documentation.
+# REFERENCED_BY_RELATION lists will next to the source code. Otherwise they will
+# next to the documentation.
 # The default value is: YES.
 
 REFERENCES_LINK_SOURCE = YES

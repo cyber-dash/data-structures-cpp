@@ -155,13 +155,13 @@ void DoubleLinkListTest::TestSearch(){
 
   DoubleLinkNode<int>* node = double_list->Search(3);
 
-  cout << "The pos of" << 3 << " is " << node <<endl;
+  cout << "The pos of " << 3 << " is " << node <<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
-void DoubleLinkListTest::TestLocate(){
+void DoubleLinkListTest::TestLocate() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -177,6 +177,27 @@ void DoubleLinkListTest::TestLocate(){
   DoubleLinkNode<int>* node_ptr = double_list->Locate(3);
 
   cout<<"The node_ptr is: " <<node_ptr<<endl;
+
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
+
+
+void DoubleLinkListTest::TestGetDataAndSetData() {
+
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|              Test DoubleList GetData And SetData          |"<<endl;
+  cout<<"|                   测试双向链表获取/设置数据项                 |"<<endl<<endl<<endl;
+
+  DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
+
+  city_list->Insert(0, "Beijing");
+  city_list->Insert(1, "Shanghai");
+  city_list->Insert(2, "Shenzhen");
+
+  string city_name;
+  city_list->GetData(1, city_name);
+  cout<<"The city_name: "<<city_name;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

@@ -27,20 +27,20 @@ using namespace std;
 template <class T>
 struct LinkNode {
   /*! @brief 构造函数(下一结点地址) */
-  explicit LinkNode(LinkNode<T>* node_ptr = NULL) { this->link_ = node_ptr; }
+  explicit LinkNode(LinkNode<T>* node = NULL) { this->next = node; }
 
   /*!
    * @brief 构造函数(数据项和下一结点地址)
    * @param data 数据项
    * @param ptr 下一节点地址
    */
-  explicit LinkNode(const T& data, LinkNode<T>* node_ptr = NULL) {
-    this->data_ = data;
-    this->link_ = node_ptr;
+  explicit LinkNode(const T& data, LinkNode<T>* node = NULL) {
+    this->data = data;
+    this->next = node;
   }
 
-  T data_; //!< 链表数据项
-  LinkNode<T>* link_; //!< 下一结点
+  T data; //!< 链表数据项
+  LinkNode<T>* next; //!< 下一结点
 };
 
 
@@ -50,26 +50,19 @@ struct LinkNode {
  */
 template<class T>
 class LinkList: public LinearList<T> {
-
 public:
-
   // 构造函数(无参数)
   LinkList();
-  // 构造函数(参数为头结点的数据项)
-  explicit LinkList(const T& data);
-  // 构造函数(参数为节点指针引用)
-  explicit LinkList(LinkNode<T>* node);
   // 复制构造函数
   LinkList(LinkList<T>& link_list);
   // 析构函数
-  ~LinkList() { this->MakeEmpty(); }
-
+  ~LinkList();
   // 清除链表
   void MakeEmpty();
   /*! @brief 链表长度 */
   int Length() const { return this->length_; }
   /*! @brief 链表头结点 */
-  LinkNode<T>* Head() const { return this->head_ptr_; }
+  LinkNode<T>* Head() const { return this->head_; }
   // 搜索数据项为data的元素
   LinkNode<T>* Search(T data);
   // 位置pos的结点地址
@@ -92,7 +85,7 @@ public:
   void CyberDashShow();
 
 private:
-  LinkNode<T>* head_ptr_; //!< 链表头结点
+  LinkNode<T>* head_; //!< 链表头结点
   int length_; //!< 链表长度
 };
 
@@ -103,48 +96,10 @@ private:
  */
 template<class T>
 LinkList<T>::LinkList() {
-  this->head_ptr_ = NULL;
+  this->head_ = new LinkNode<T>();
+  /* error handler */
   this->length_ = 0;
 };
-
-
-/*!
- * @brief 构造函数(参数为头结点数据项)
- * @tparam T 类型模板参数
- * @param data 头结点数据项
- */
-template<class T>
-LinkList<T>::LinkList(const T& data) {
-  this->head_ptr_ = new LinkNode<T>(data);
-  this->length_ = 1;
-}
-
-
-/*!
- * @brief 构造函数(参数为其他链表某个结点指针)
- * @tparam T 类型模板参数
- * @param node_ptr 链表结点指针
- * @note
- * node_ptr设置为头结点, 然后将自node_ptr开始的后续结点, 全部复制到链表中
- */
-template<class T>
-LinkList<T>::LinkList(LinkNode<T>* node_ptr) {
-
-  if (node_ptr == NULL) {
-    LinkNode<T>();
-    return;
-  }
-
-  this->head_ptr_ = node_ptr; // 设置头结点
-  this->length_ = 0;
-
-  LinkNode<T>* cur = this->head_ptr_;
-
-  while (cur != NULL) {
-    this->length_++;
-    cur = cur->link_;
-  }
-}
 
 
 /*!
@@ -155,38 +110,38 @@ LinkList<T>::LinkList(LinkNode<T>* node_ptr) {
 template<class T>
 LinkList<T>::LinkList(LinkList<T>& link_list) {
 
-  if (link_list.Length() == 0) {
-    head_ptr_ = NULL;
-    length_ = 0;
-    return;
-  }
+  this->head_ = new LinkNode<T>();
+  LinkNode<T>* src_ptr = link_list.Head();
+  LinkNode<T>* dest_ptr = head_;
 
-  LinkNode<T>* cur_src_ptr = link_list.Head();
+  while (src_ptr->next != NULL) {
 
-  if (link_list.Length() == 1) {
-    head_ptr_ = new LinkNode<T>(cur_src_ptr->data_);
-    head_ptr_->link_ = NULL;
-    length_ = 1;
-    return;
-  }
+    T data = src_ptr->next.data;
+    dest_ptr->next = new LinkNode<T>(data);
 
-  head_ptr_ = new LinkNode<T>();
-
-  LinkNode<T>* cur_dest_ptr = head_ptr_;
-
-  while (cur_src_ptr->link_ != NULL) {
-    cur_dest_ptr->data_ = cur_src_ptr->data_;
-
-    cur_dest_ptr->link_ = new LinkNode<T>();
-
-    cur_dest_ptr = cur_dest_ptr->link_;
-    cur_src_ptr = cur_src_ptr->link_;
+    dest_ptr = dest_ptr->next;
+    src_ptr = src_ptr->next;
 
     length_++;
   }
 
-  cur_dest_ptr->data_ = cur_src_ptr->data_;
-  cur_dest_ptr->link_ = NULL;
+  dest_ptr->next = NULL;
+}
+
+
+template<class T>
+LinkList<T>::~LinkList() {
+  LinkNode<T>* cur = this->head_;
+
+  while (cur->next != NULL) {
+    LinkNode<T>* delete_node = cur->next;
+
+    cur->next = delete_node->next;
+    delete delete_node;
+  }
+
+  delete this->head_;
+  this->head_ = NULL;
 }
 
 
@@ -200,18 +155,18 @@ LinkList<T>::LinkList(LinkList<T>& link_list) {
 template<class T>
 bool LinkList<T>::GetData(int pos, T& data) const {
 
-  if (pos < 1 || pos > Length()) {
+  if (pos < 1 || pos > this->Length()) {
     return false;
   }
 
-  LinkNode<T>* cur = head_ptr_;
+  LinkNode<T>* cur = this->head_;
 
-  while (pos - 1 > 0) {
-    cur = cur->link_;
+  while (pos > 0) {
+    cur = cur->next;
     pos--;
   }
 
-  data = cur->data_;
+  data = cur->data;
 
   return true;
 }
@@ -231,14 +186,14 @@ bool LinkList<T>::SetData(int pos, const T& data) {
     return false;
   }
 
-  LinkNode<T>* cur = head_ptr_;
+  LinkNode<T>* cur = this->head_;
 
-  while (pos - 1 > 0) {
-    cur = cur->link_;
+  while (pos > 0) {
+    cur = cur->next;
     pos--;
   }
 
-  cur->data_ = data;
+  cur->data = data;
 
   return true;
 }
@@ -251,17 +206,17 @@ bool LinkList<T>::SetData(int pos, const T& data) {
 template<class T>
 void LinkList<T>::MakeEmpty() {
 
-  LinkNode<T>* cur = this->head_ptr_;
+  LinkNode<T>* cur = this->head_;
 
-  while (cur != NULL) {
+  while (cur->next != NULL) {
     LinkNode<T>* delete_node_ptr = cur;
-    cur = cur->link_;
+    cur = cur->next;
 
     delete delete_node_ptr;
     this->length_--;
   }
 
-  this->head_ptr_ = NULL;
+  this->head_ = NULL;
 }
 
 
@@ -272,15 +227,15 @@ void LinkList<T>::MakeEmpty() {
 template<class T>
 void LinkList<T>::Output() {
 
-  if (head_ptr_ == NULL) {
+  if (head_ == NULL) {
     cout << "Empty list" << endl;
     return;
   }
 
   LinkNode<T>* cur = Head();
   while(cur != NULL) {
-    cout << cur->data_ << " ";
-    cur = cur->link_;
+    cout << cur->data << " ";
+    cur = cur->next;
   }
 
   cout << endl;
@@ -305,25 +260,25 @@ bool LinkList<T>::Insert(int pos, const T& data) {
 
   LinkNode<T>* node_ptr = new LinkNode<T>(data);
 
-  if (this->head_ptr_ == NULL) {
-    node_ptr->link_ = this->head_ptr_;
-    this->head_ptr_ = node_ptr;
+  if (this->head_ == NULL) {
+    node_ptr->next = this->head_;
+    this->head_ = node_ptr;
     this->length_ = 1;
     return true;
   }
 
   if (pos == 0) {
-    node_ptr->link_ = this->head_ptr_;
-    this->head_ptr_ = node_ptr;
+    node_ptr->next = this->head_;
+    this->head_ = node_ptr;
   } else {
-    LinkNode<T>* cur = this->head_ptr_;
+    LinkNode<T>* cur = this->head_;
     while (pos - 1 > 0) {
-      cur = cur->link_;
+      cur = cur->next;
       pos--;
     }
 
-    node_ptr->link_ = cur->link_;
-    cur->link_ = node_ptr;
+    node_ptr->next = cur->next;
+    cur->next = node_ptr;
   }
 
   length_++;
@@ -352,27 +307,27 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
     return false;
   }
 
-  if (head_ptr_ == NULL) {
-    node_ptr->link_ = head_ptr_;
-    head_ptr_ = node_ptr;
+  if (head_ == NULL) {
+    node_ptr->next = head_;
+    head_ = node_ptr;
     length_ = 1;
     return true;
   }
 
   if (pos == 0) {
 
-    node_ptr->link_ = head_ptr_;
-    head_ptr_ = node_ptr;
+    node_ptr->next = head_;
+    head_ = node_ptr;
   } else {
 
-    LinkNode<T>* cur = head_ptr_;
+    LinkNode<T>* cur = head_;
     while (pos - 1 > 0) {
-      cur = cur->link_;
+      cur = cur->next;
       pos--;
     }
 
-    node_ptr->link_ = cur->link_;
-    cur->link_ = node_ptr;
+    node_ptr->next = cur->next;
+    cur->next = node_ptr;
   }
 
   length_++;
@@ -422,17 +377,17 @@ void LinkList<T>::CyberDashShow() {
 template<class T>
 LinkNode<T>* LinkList<T>::Search(T data) {
 
-  LinkNode<T>* cur = this->head_ptr_;
+  LinkNode<T>* cur = this->head_;
   if (cur == NULL) { // 空链表
     return NULL;
   }
 
   while (cur != NULL) {
-    if (cur->data_ == data) {
+    if (cur->data == data) {
       return cur;
     }
 
-    cur = cur->link_;
+    cur = cur->next;
   }
 
   return NULL;
@@ -453,7 +408,7 @@ LinkNode<T>* LinkList<T>::Locate(int pos) {
 
   LinkNode<T>* cur = this->Head();
   for (int i = 1; i < pos; i++) {
-    cur = cur->link_;
+    cur = cur->next;
   }
 
   return cur;
@@ -479,21 +434,21 @@ bool LinkList<T>::Remove(int pos, T &data) {
   }
 
   if (pos == 1) {
-    delete_node_ptr = this->head_ptr_;
-    this->head_ptr_ = this->head_ptr_->link_;
+    delete_node_ptr = this->head_;
+    this->head_ = this->head_->next;
   } else {
-    cur = this->head_ptr_;
+    cur = this->head_;
 
     // 循链找到第i - 1个结点
     for (int i = 1; i < pos - 1; i++) {
-      cur = cur->link_;
+      cur = cur->next;
     }
 
-    delete_node_ptr = cur->link_;
-    cur->link_ = delete_node_ptr->link_;
+    delete_node_ptr = cur->next;
+    cur->next = delete_node_ptr->next;
   }
 
-  data = delete_node_ptr->data_;
+  data = delete_node_ptr->data;
   this->length_--;
 
   delete delete_node_ptr;

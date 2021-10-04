@@ -149,8 +149,8 @@ void LinkListTest::TestSearch() {
   LinkNode<string>* bj_node_ptr = link_list->Search("Beijing");
   LinkNode<string>* cx_node_ptr = link_list->Search("Caoxian");
 
-  cout << "bj_node_ptr->data_: " << bj_node_ptr->data_ << endl;
-  cout << "cx_node_ptr->data_: " << cx_node_ptr->data_ << endl;
+  cout << "bj_node_ptr->data: " << bj_node_ptr->data << endl;
+  cout << "cx_node_ptr->data: " << cx_node_ptr->data << endl;
 
   cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -174,8 +174,8 @@ void LinkListTest::TestLocate() {
   LinkNode<string>* pos_1_node_ptr = link_list->Locate(1);
   LinkNode<string>* pos_2_node_ptr = link_list->Locate(2);
 
-  cout << "pos_1_node_ptr->data_: " << pos_1_node_ptr->data_ << endl;
-  cout << "pos_2_node_ptr->data_: " << pos_2_node_ptr->data_ << endl;
+  cout << "pos_1_node_ptr->data: " << pos_1_node_ptr->data << endl;
+  cout << "pos_2_node_ptr->data: " << pos_2_node_ptr->data << endl;
 
   cout << "-------------------------------------------------------------" << endl << endl;
 }
