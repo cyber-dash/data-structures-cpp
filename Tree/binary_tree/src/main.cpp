@@ -10,32 +10,34 @@ using namespace std;
 
 int main() {
 
+  BinaryTreeTest::TestCopyConstructor();
+
   // 测试二叉树深度
-  TestBinaryTreeHeight();
+  BinaryTreeTest::TestHeight();
 
   // 测试LeftChild和RightChild
-  TestBinaryTreeChildFunction();
+  BinaryTreeTest::TestChildFunction();
 
   // 测试父节点函数Parent
-  TestParent();
+  BinaryTreeTest::TestParent();
 
   // 测试前序遍历
-  TestPreOrder();
+  BinaryTreeTest::TestPreOrder();
 
   // 测试中序遍历
-  TestInOrder();
+  BinaryTreeTest::TestInOrder();
 
   // 测试后序遍历
-  TestPostOrder();
+  BinaryTreeTest::TestPostOrder();
 
   // 测试层序遍历
-  TestLevelOrder();
+  BinaryTreeTest::TestLevelOrder();
 
   // 测试查找是否在二叉树
-  TestFind();
+  BinaryTreeTest::TestFind();
 
   // 测试使用前序遍历和后序遍历结果创建二叉树
-  TestCreateBinTreeByPreAndInOrderString();
+  BinaryTreeTest::TestCreateBinTreeByPreAndInOrderString();
 
   return 0;
 }

@@ -29,13 +29,13 @@ using namespace std;
  */
 template <class T>
 struct BinTreeNode {
-  BinTreeNode(): left_child_(NULL), right_child_(NULL) {}
-  BinTreeNode(T data, BinTreeNode<T>* left_child_ptr = NULL, BinTreeNode<T>* right_child_ptr = NULL):
-    data_(data), left_child_(left_child_ptr), right_child_(right_child_ptr) {}
+  BinTreeNode(): left_child(NULL), right_child(NULL) {}
+  BinTreeNode(T data, BinTreeNode<T>* left_child = NULL, BinTreeNode<T>* right_child = NULL):
+    data(data), left_child(left_child), right_child(right_child) {}
 
-  T data_;
-  BinTreeNode<T>* left_child_;
-  BinTreeNode<T>* right_child_;
+  T data;
+  BinTreeNode<T>* left_child;
+  BinTreeNode<T>* right_child;
 };
 
 
@@ -45,12 +45,13 @@ struct BinTreeNode {
  */
 template <class T>
 struct PostOrderStackNode {
-  BinTreeNode<T> *bin_node_ptr;
-  enum { LEFT, RIGHT } tag;
-  explicit PostOrderStackNode(BinTreeNode<T> *node_ptr = NULL) {
-    bin_node_ptr = node_ptr;
+  explicit PostOrderStackNode(BinTreeNode<T>* node = NULL) {
+    node = node;
     tag = LEFT;
   }
+
+  BinTreeNode<T>* node;
+  enum { LEFT, RIGHT } tag;
 };
 
 
@@ -61,51 +62,55 @@ struct PostOrderStackNode {
 template <class T>
 class BinaryTree {
 public:
+  // 构造函数
   BinaryTree(): root_(NULL) {}
-  BinaryTree(T value): value_(value), root_(NULL) {}
-  BinaryTree(BinaryTree<T>& binary_tree) { root_ = Copy(binary_tree.root_); }
-  ~BinaryTree() { Destroy(root_); }
+  BinaryTree(T data);
+  // 复制构造函数
+  BinaryTree(const BinaryTree<T>& bin_tree) { root_ = Copy_(bin_tree.Root()); }
+  ~BinaryTree() { SubTreeDestroy_(root_); }
 
   /* 基础函数 */
+  // 获取根节点
+  BinTreeNode<T>* Root() const { return root_; }
   // 是否为空树
   bool IsEmpty() { return root_ == NULL; }
   // 获取根节点
   BinTreeNode<T>* GetRoot() const { return root_; }
   // 获取父节点
-  BinTreeNode<T>* Parent(BinTreeNode<T> *current) { return (root_ == NULL || root_ == current) ? NULL :
-                                                           Parent_(root_, current); }
+  BinTreeNode<T>* Parent(BinTreeNode<T>* node) {
+    return (root_ == NULL || root_ == node) ? NULL : Parent_(root_, node); }
   // 左孩子
-  BinTreeNode<T>* LeftChild(BinTreeNode<T> *current) { return (current != NULL) ? current->left_child_ : NULL; }
+  BinTreeNode<T>* LeftChild(BinTreeNode<T>* node) { return (node != NULL) ? node->left_child : NULL; }
   // 右孩子
-  BinTreeNode<T>* RightChild(BinTreeNode<T> *current) { return (current != NULL) ? current->right_child_ : NULL; }
+  BinTreeNode<T>* RightChild(BinTreeNode<T>* node) { return (node != NULL) ? node->right_child : NULL; }
   // 高度
   int Height() { return SubTreeHeight_(root_); }
   // Size
   int Size() { return SubTreeSize_(root_); }
   // 插入结点
-  bool Insert(T& item) { return SubTreeInsert_(root_, item); }
+  bool Insert(T data) { return SubTreeInsert_(root_, data); }
   // 查询结点(是否在树中)
   bool Find(T item) { return SubTreeFind_(root_, item); }
 
   /* 遍历系列 */
   // 前序遍历(使用递归)
-  void PreOrder(void (*visit)(BinTreeNode<T>*)) { SubTreePreOrder_(root_, visit); }
+  void PreOrder(void (*visit)(BinTreeNode<T>* node)) { SubTreePreOrder_(root_, visit); }
   // 前序遍历(使用非递归)
-  void PreOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreePreOrderNonRecursive_(root_, visit); }
+  void PreOrderNonRecursive(void (*visit)(BinTreeNode<T>* node)) { SubTreePreOrderNonRecursive_(root_, visit); }
   // 中序遍历(使用递归)
-  void InOrder(void (*visit)(BinTreeNode<T>*)) { SubTreeInOrder_(root_, visit); }
+  void InOrder(void (*visit)(BinTreeNode<T>* node)) { SubTreeInOrder_(root_, visit); }
   // 中序遍历(使用非递归)
-  void InOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreeInOrderNonRecursive_(root_, visit); }
+  void InOrderNonRecursive(void (*visit)(BinTreeNode<T>* node)) { SubTreeInOrderNonRecursive_(root_, visit); }
   // 后序遍历(使用递归)
-  void PostOrder(void (*visit)(BinTreeNode<T>*)) { SubTreePostOrder_(root_, visit); }
+  void PostOrder(void (*visit)(BinTreeNode<T>* node)) { SubTreePostOrder_(root_, visit); }
   // 后序遍历(使用非递归)
-  void PostOrderNonRecursive(void (*visit)(BinTreeNode<T>*)) { SubTreePostOrderNonRecursive_(root_, visit); }
+  void PostOrderNonRecursive(void (*visit)(BinTreeNode<T>* node)) { SubTreePostOrderNonRecursive_(root_, visit); }
   // 层序遍历
-  void LevelOrder(void (*visit)(BinTreeNode<T>*)) { SubTreeLevelOrder_(root_, visit); }
+  void LevelOrder(void (*visit)(BinTreeNode<T>* node)) { SubTreeLevelOrder_(root_, visit); }
 
   // 使用前序遍历和中序遍历结果, 创建二叉树
-  void CreateBinTreeByPreAndInOrderString(T *pre_order_str_ptr, T *in_order_str_ptr, int str_length) {
-    CreateSubBinTreeByPreAndInOrderString_(pre_order_str_ptr, in_order_str_ptr, str_length, root_);
+  void CreateBinTreeByPreAndInOrderString(T* pre_order_str, T* in_order_str, int str_length) {
+    CreateSubBinTreeByPreAndInOrderString_(pre_order_str, in_order_str, str_length, root_);
   }
 
   /* 打印输出系列 */
@@ -121,100 +126,109 @@ public:
 
 protected:
   BinTreeNode<T>* root_;
-  T value_;
+  // T value_;
 
   void CreateBinTree_(istream& in, BinTreeNode<T> *& subTree);
   // 使用前序遍历和中序遍历结果, 创建二叉子树(递归)
   void CreateSubBinTreeByPreAndInOrderString_(T* pre_order_str_ptr, T* in_order_str_ptr,
                                               int str_length, BinTreeNode<T>*& sub_tree_root_ptr);
   // 子树插入数据
-  bool SubTreeInsert_(BinTreeNode<T> *& node_ptr, T& value);
+  bool SubTreeInsert_(BinTreeNode<T>*& sub_tree_root, T data);
   // 删除子树
-  void Destroy(BinTreeNode<T> *& subTree);
+  void SubTreeDestroy_(BinTreeNode<T>*& sub_tree_root);
   // 查找数据是否在(子)树中
-  bool SubTreeFind_(BinTreeNode<T>* sub_tree_root_ptr, T value) const;
+  bool SubTreeFind_(BinTreeNode<T>* sub_tree_root, T value) const;
   // 复制二叉树
-  BinTreeNode<T>* Copy(BinTreeNode<T> *src_tree_root_ptr);
+  BinTreeNode<T>* Copy_(BinTreeNode<T>* src_tree_root);
   // 求子树的高度(递归)
-  int SubTreeHeight_(BinTreeNode<T> *sub_tree_root_ptr) const;
+  int SubTreeHeight_(BinTreeNode<T>* sub_tree_root) const;
   // 求子树的Size(递归)
-  int SubTreeSize_(BinTreeNode<T>* sub_tree_root_ptr) const;
+  int SubTreeSize_(BinTreeNode<T>* sub_tree_root) const;
   // 子树获取节点的父节点
-  BinTreeNode<T>* Parent_(BinTreeNode<T>* sub_tree_root_ptr, BinTreeNode<T>* node_ptr);
+  BinTreeNode<T>* Parent_(BinTreeNode<T>* sub_tree_root, BinTreeNode<T>* node);
 
   // 子树前序遍历(递归)
-  void SubTreePreOrder_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>* p));
+  void SubTreePreOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
   // 子树前序遍历(非递归)
-  void SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T> *p));
+  void SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
   // 子树中序遍历(递归)
-  void SubTreeInOrder_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>* p));
+  void SubTreeInOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
   // 子树中序遍历(非递归)
-  void SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T> *p));
+  void SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T> *node));
   // 子树后序遍历(递归)
-  void SubTreePostOrder_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>* p));
+  void SubTreePostOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
   // 子树后序遍历(非递归)
-  void SubTreePostOrderNonRecursive_(BinTreeNode<T> *sub_tree_root_ptr, void (*visit)(BinTreeNode<T>*));
+  void SubTreePostOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
 
   // 子树层序遍历
-  void SubTreeLevelOrder_(BinTreeNode<T> *sub_tree_root_ptr, void (*visit)(BinTreeNode<T> *p));
+  void SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
   // 子树打印
-  void SubTreePrint_(BinTreeNode<T> *sub_tree_root_ptr);
+  void SubTreePrint_(BinTreeNode<T>* sub_tree_root);
 
   // 判断两颗树相同
   template<class U>
-  friend int operator == (const BinaryTree<T>& s, const BinaryTree<T>& t);
+  friend int operator == (const BinaryTree<T>& bin_tree_1, const BinaryTree<T>& bin_tree_2);
+  // 输入二叉树
   template<class U>
-  friend istream& operator >> (istream& in, BinTreeNode<T>& Tree);
+  friend istream& operator >> (istream& in, BinaryTree<T>& bin_tree);
+  // 输出二叉树
   template<class U>
-  friend ostream& operator << (ostream& in, BinTreeNode<T>& Tree);
+  friend ostream& operator << (ostream& out, BinaryTree<T>& bin_tree);
 };
 
-template<class T>
-void BinaryTree<T>::Destroy(BinTreeNode<T> *& subTree) {
-  if (subTree != NULL) {
-    Destroy(subTree->left_child_);
-    Destroy(subTree->right_child_);
-    delete subTree;
+
+template <class T>
+BinaryTree<T>::BinaryTree(T data) {
+  SubTreeInsert_(root_, data);
+}
+
+
+template <class T>
+void BinaryTree<T>::SubTreeDestroy_(BinTreeNode<T> *& sub_tree_root) {
+  if (sub_tree_root != NULL) {
+    SubTreeDestroy_(sub_tree_root->left_child);
+    SubTreeDestroy_(sub_tree_root->right_child);
+    delete sub_tree_root;
   }
 }
 
 
-/**
+/*!
  * @brief 子树获取节点的父节点
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
- * @param node_ptr 节点指针
- * @return 节点的, 位于子树内的, 父节点指针
+ * @param sub_tree_root 子树根节点指针
+ * @param node 节点指针
+ * @return 节点的(位于子树内的)父节点指针
  */
 template<class T>
-BinTreeNode<T>* BinaryTree<T>::Parent_(BinTreeNode<T>* sub_tree_root_ptr, BinTreeNode<T>* node_ptr) {
+BinTreeNode<T>* BinaryTree<T>::Parent_(BinTreeNode<T>* sub_tree_root, BinTreeNode<T>* node) {
 
   // 如果子树根为NULL, 则返回NULL
-  if (sub_tree_root_ptr == NULL) {
+  if (sub_tree_root == NULL) {
     return NULL;
   }
 
   // 如果子树根的左孩子or右孩子, 就是node_ptr的父节点, 则返回子树根结点
-  if (sub_tree_root_ptr->left_child_ == node_ptr || sub_tree_root_ptr->right_child_ == node_ptr) {
-    return sub_tree_root_ptr;
+  if (sub_tree_root->left_child == node || sub_tree_root->right_child == node) {
+    return sub_tree_root;
   }
 
-  BinTreeNode<T>* parent_ptr = Parent_(sub_tree_root_ptr->left_child_, node_ptr);
+  BinTreeNode<T>* parent = Parent_(sub_tree_root->left_child, node);
 
-  if (parent_ptr == NULL) {
-    parent_ptr = Parent_(sub_tree_root_ptr->right_child_, node_ptr);
+  if (parent == NULL) {
+    parent = Parent_(sub_tree_root->right_child, node);
   }
 
-  return parent_ptr;
+  return parent;
 }
 
 
 template<class T>
 void BinaryTree<T>::Traverse(BinTreeNode<T> *subTree, ostream& out) {
   if (subTree != NULL) {
-    out << subTree->data_ << ' ';
-    Traverse(subTree->left_child_, out);
-    Traverse(subTree->right_child_, out);
+    out << subTree->data << ' ';
+    Traverse(subTree->left_child, out);
+    Traverse(subTree->right_child, out);
   }
 }
 
@@ -222,79 +236,79 @@ void BinaryTree<T>::Traverse(BinTreeNode<T> *subTree, ostream& out) {
 /**
  * 子树前序遍历(递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param visit 访问函数
  */
 template<class T>
-void BinaryTree<T>::SubTreePreOrder_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>*)) {
-  if (sub_tree_root_ptr == NULL) {
+void BinaryTree<T>::SubTreePreOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>*)) {
+  if (sub_tree_root == NULL) {
     return;
   }
 
-  visit(sub_tree_root_ptr);
+  visit(sub_tree_root);
 
-  SubTreePreOrder_(sub_tree_root_ptr->left_child_, visit);
-  SubTreePreOrder_(sub_tree_root_ptr->right_child_, visit);
+  SubTreePreOrder_(sub_tree_root->left_child, visit);
+  SubTreePreOrder_(sub_tree_root->right_child, visit);
 }
 
 
 /**
  * 子树中序遍历(递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param visit 访问函数
  */
 template<class T>
-void BinaryTree<T>::SubTreeInOrder_(BinTreeNode<T>* sub_tree_root_ptr,
+void BinaryTree<T>::SubTreeInOrder_(BinTreeNode<T>* sub_tree_root,
                                     void (*visit)(BinTreeNode<T>*))
 {
-  if (sub_tree_root_ptr == NULL) {
+  if (sub_tree_root == NULL) {
     return;
   }
 
-  SubTreeInOrder_(sub_tree_root_ptr->left_child_, visit);
+  SubTreeInOrder_(sub_tree_root->left_child, visit);
 
-  visit(sub_tree_root_ptr);
+  visit(sub_tree_root);
 
-  SubTreeInOrder_(sub_tree_root_ptr->right_child_, visit);
+  SubTreeInOrder_(sub_tree_root->right_child, visit);
 }
 
 
 /**
  * 子树后序遍历(递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param visit 访问函数
  */
 template<class T>
-void BinaryTree<T>::SubTreePostOrder_(BinTreeNode<T>* sub_tree_root_ptr,
+void BinaryTree<T>::SubTreePostOrder_(BinTreeNode<T>* sub_tree_root,
                                       void (*visit)(BinTreeNode<T>*))
 {
-  if (sub_tree_root_ptr == NULL) {
+  if (sub_tree_root == NULL) {
     return;
   }
 
-  SubTreePostOrder_(sub_tree_root_ptr->left_child_, visit);
-  SubTreePostOrder_(sub_tree_root_ptr->right_child_, visit);
+  SubTreePostOrder_(sub_tree_root->left_child, visit);
+  SubTreePostOrder_(sub_tree_root->right_child, visit);
 
-  visit(sub_tree_root_ptr);
+  visit(sub_tree_root);
 }
 
 
 /**
  * @brief 求子树的size(递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @return 子树size
  */
 template<class T>
-int BinaryTree<T>::SubTreeSize_(BinTreeNode<T>* sub_tree_root_ptr) const {
-  if (sub_tree_root_ptr == NULL) {
+int BinaryTree<T>::SubTreeSize_(BinTreeNode<T>* sub_tree_root) const {
+  if (sub_tree_root == NULL) {
     return 0;
   }
 
-  int left_sub_tree_size = SubTreeSize_(sub_tree_root_ptr->left_child_); // 递归求左子树size
-  int right_sub_tree_size = SubTreeSize_(sub_tree_root_ptr->right_child_); // 递归求右子树size
+  int left_sub_tree_size = SubTreeSize_(sub_tree_root->left_child); // 递归求左子树size
+  int right_sub_tree_size = SubTreeSize_(sub_tree_root->right_child); // 递归求右子树size
 
   int sub_tree_size = 1 + left_sub_tree_size + right_sub_tree_size;
 
@@ -305,18 +319,18 @@ int BinaryTree<T>::SubTreeSize_(BinTreeNode<T>* sub_tree_root_ptr) const {
 /**
  * @brief 求子树的高度(递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @return 子树高度
  */
 template<class T>
-int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T>* sub_tree_root_ptr) const {
+int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T>* sub_tree_root) const {
   // 如果子树根节点为空, 则返回0
-  if (sub_tree_root_ptr == NULL) {
+  if (sub_tree_root == NULL) {
     return 0;
   }
 
-  int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->left_child_); // 递归求左子树高度
-  int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->right_child_); // 递归求右子树高度
+  int left_sub_tree_height = SubTreeHeight_(sub_tree_root->left_child); // 递归求左子树高度
+  int right_sub_tree_height = SubTreeHeight_(sub_tree_root->right_child); // 递归求右子树高度
 
   // 树高度 = 最高的左右子树高度 + 1
   if (left_sub_tree_height < right_sub_tree_height) {
@@ -327,26 +341,26 @@ int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T>* sub_tree_root_ptr) const {
 }
 
 
-/**
- * @brief 复制二叉树
- * @tparam T 结点数据模板类型
- * @param src_tree_root_ptr 源树根节点
+/*!
+ * @brief 复制二叉树(递归)
+ * @tparam T 类型模板参数
+ * @param src_tree_root 源树根节点
  * @return 新树根节点
  */
 template<class T>
-BinTreeNode<T>* BinaryTree<T>::Copy(BinTreeNode<T>* src_tree_root_ptr) {
-  if (src_tree_root_ptr == NULL) {
+BinTreeNode<T>* BinaryTree<T>::Copy_(BinTreeNode<T>* src_tree_root) {
+  if (src_tree_root == NULL) {
     return NULL;
   }
 
-  BinTreeNode<T>* new_node_ptr = new BinTreeNode<T>();
+  BinTreeNode<T>* new_node = new BinTreeNode<T>();
   /* Null handler */
 
-  new_node_ptr->data_ = src_tree_root_ptr->data_;
-  new_node_ptr->left_child_ = Copy(src_tree_root_ptr->left_child_);
-  new_node_ptr->right_child_ = Copy(src_tree_root_ptr->right_child_);
+  new_node->data = src_tree_root->data;
+  new_node->left_child = Copy_(src_tree_root->left_child);
+  new_node->right_child = Copy_(src_tree_root->right_child);
 
-  return new_node_ptr;
+  return new_node;
 }
 
 
@@ -363,9 +377,9 @@ bool Equal(BinTreeNode<T>* root_ptr_a, BinTreeNode<T>* root_ptr_b) {
     return true;
   }
 
-  if (root_ptr_a != NULL && root_ptr_b != NULL && root_ptr_a->data_ == root_ptr_b->data_
-      && Equal(root_ptr_a->left_child_, root_ptr_b->left_child_)
-      && Equal(root_ptr_a->right_child_, root_ptr_b->right_child_))
+  if (root_ptr_a != NULL && root_ptr_b != NULL && root_ptr_a->data == root_ptr_b->data
+      && Equal(root_ptr_a->left_child, root_ptr_b->left_child)
+      && Equal(root_ptr_a->right_child, root_ptr_b->right_child))
   {
     return true;
   } else {
@@ -374,6 +388,7 @@ bool Equal(BinTreeNode<T>* root_ptr_a, BinTreeNode<T>* root_ptr_b) {
 }
 
 
+/*
 template<class T>
 void BinaryTree<T>::CreateBinTree_(istream& in, BinTreeNode<T>*& subTree) {
   T item;
@@ -386,18 +401,19 @@ void BinaryTree<T>::CreateBinTree_(istream& in, BinTreeNode<T>*& subTree) {
         cerr << "存储分配错误!" << endl;
         exit(1);
       }
-      CreateBinTree_(in, subTree->left_child_);
-      CreateBinTree_(in, subTree->right_child_);
+      CreateBinTree_(in, subTree->left_child);
+      CreateBinTree_(in, subTree->right_child);
     } else {
       subTree = NULL;
     }
   }
 }
+ */
 
 
 template<class T>
-int operator == (const BinaryTree<T>& bin_tree_a, const BinaryTree<T>& bin_tree_b) {
-  return (Equal(bin_tree_a.GetRoot(), bin_tree_b.GetRoot()));
+int operator == (const BinaryTree<T>& bin_tree_1, const BinaryTree<T>& bin_tree_2) {
+  return (Equal(bin_tree_1.GetRoot(), bin_tree_2.GetRoot()));
 }
 
 
@@ -417,19 +433,19 @@ ostream& operator << (ostream& out, BinaryTree<T>& Tree) {
 }
 
 
-/**
+/*!
  * @brief 子树插入数据
- * @tparam T 结点数据模板类型
- * @param node_ptr
- * @param value
- * @return
+ * @tparam T 类型模板参数
+ * @param sub_tree_root 子树根结点
+ * @param data 结点数据项
+ * @return 是否插入成功
  */
 template<class T>
-bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& node_ptr, T& value) {
+bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& sub_tree_root, T data) {
 
-  if (node_ptr == NULL) {
-    node_ptr = new BinTreeNode<T>(value);
-    if (node_ptr == NULL) {
+  if (sub_tree_root == NULL) {
+    sub_tree_root = new BinTreeNode<T>(data);
+    if (sub_tree_root == NULL) {
       cerr << "存储分配错误!" << endl;
       return false;
     }
@@ -437,44 +453,44 @@ bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& node_ptr, T& value) {
     return true;
   }
 
-  bool insert_res = false;
+  bool insert_done = false;
 
-  int left_sub_tree_height = SubTreeHeight_(node_ptr->left_child_);
-  int right_sub_tree_height = SubTreeHeight_(node_ptr->right_child_);
+  int left_sub_tree_height = SubTreeHeight_(sub_tree_root->left_child);
+  int right_sub_tree_height = SubTreeHeight_(sub_tree_root->right_child);
 
   if (left_sub_tree_height > right_sub_tree_height) {
-    insert_res = SubTreeInsert_(node_ptr->right_child_, value);
+    insert_done = SubTreeInsert_(sub_tree_root->right_child, data);
   } else {
-    insert_res = SubTreeInsert_(node_ptr->left_child_, value);
+    insert_done = SubTreeInsert_(sub_tree_root->left_child, data);
   }
 
-  return insert_res;
+  return insert_done;
 }
 
 
 /**
  * @brief 查找数据是否在(子)树中
  * @tparam T 结点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param value 被查找数据
  * @return 是否存在
  */
 template<class T>
-bool BinaryTree<T>::SubTreeFind_(BinTreeNode<T>* sub_tree_root_ptr, T value) const {
+bool BinaryTree<T>::SubTreeFind_(BinTreeNode<T>* sub_tree_root, T value) const {
 
-  if (sub_tree_root_ptr == NULL) {
+  if (sub_tree_root == NULL) {
     return false;
   }
 
-  if (sub_tree_root_ptr->data_ == value) {
+  if (sub_tree_root->data == value) {
     return true;
   }
 
-  if (SubTreeFind_(sub_tree_root_ptr->left_child_, value)) {
+  if (SubTreeFind_(sub_tree_root->left_child, value)) {
     return true;
   }
 
-  return SubTreeFind_(sub_tree_root_ptr->right_child_, value);
+  return SubTreeFind_(sub_tree_root->right_child, value);
 }
 
 
@@ -490,18 +506,18 @@ void BinaryTree<T>::SubTreePrint_(BinTreeNode<T>* sub_tree_root_ptr) {
     return;
   }
 
-  cout << sub_tree_root_ptr->data_;
+  cout << sub_tree_root_ptr->data;
 
-  if (sub_tree_root_ptr->left_child_ != NULL || sub_tree_root_ptr->right_child_ != NULL) {
+  if (sub_tree_root_ptr->left_child != NULL || sub_tree_root_ptr->right_child != NULL) {
 
     cout << '(';
 
-    SubTreePrint_(sub_tree_root_ptr->left_child_);
+    SubTreePrint_(sub_tree_root_ptr->left_child);
 
     cout << ',';
 
-    if (sub_tree_root_ptr->right_child_ != NULL) {
-      SubTreePrint_(sub_tree_root_ptr->right_child_);
+    if (sub_tree_root_ptr->right_child != NULL) {
+      SubTreePrint_(sub_tree_root_ptr->right_child);
     }
 
     cout << ')';
@@ -512,15 +528,15 @@ void BinaryTree<T>::SubTreePrint_(BinTreeNode<T>* sub_tree_root_ptr) {
 /**
  * @brief 子树前序遍历(非递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param visit 访问函数
  */
 template<class T>
-void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>*)) {
+void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>*)) {
 
   // (栈初始化)声明前序遍历栈, 子树根节点指针入栈
   stack<BinTreeNode<T>*> pre_traverse_stack;
-  pre_traverse_stack.push(sub_tree_root_ptr);
+  pre_traverse_stack.push(sub_tree_root);
 
   while (!pre_traverse_stack.empty()) {
 
@@ -532,12 +548,12 @@ void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_p
     visit(cur_node_ptr);
 
     // 孩子节点入栈
-    if (cur_node_ptr->right_child_ != NULL) {
-      pre_traverse_stack.push(cur_node_ptr->right_child_);
+    if (cur_node_ptr->right_child != NULL) {
+      pre_traverse_stack.push(cur_node_ptr->right_child);
     }
 
-    if (cur_node_ptr->left_child_ != NULL) {
-      pre_traverse_stack.push(cur_node_ptr->left_child_);
+    if (cur_node_ptr->left_child != NULL) {
+      pre_traverse_stack.push(cur_node_ptr->left_child);
     }
   }
 }
@@ -546,15 +562,15 @@ void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_p
 /**
  * @brief 子树层序遍历
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param visit 访问函数
  */
 template<class T>
-void BinaryTree<T>::SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>* node_ptr)) {
+void BinaryTree<T>::SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node_ptr)) {
 
   queue<BinTreeNode<T>*> level_traverse_queue;
 
-  BinTreeNode<T>* cur_node_ptr = sub_tree_root_ptr;
+  BinTreeNode<T>* cur_node_ptr = sub_tree_root;
   level_traverse_queue.push(cur_node_ptr);
 
   while (!level_traverse_queue.empty()) {
@@ -563,12 +579,12 @@ void BinaryTree<T>::SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root_ptr, void (
 
     visit(cur_node_ptr);
 
-    if (cur_node_ptr->left_child_ != NULL) {
-      level_traverse_queue.push(cur_node_ptr->left_child_);
+    if (cur_node_ptr->left_child != NULL) {
+      level_traverse_queue.push(cur_node_ptr->left_child);
     }
 
-    if (cur_node_ptr->right_child_ != NULL) {
-      level_traverse_queue.push(cur_node_ptr->right_child_);
+    if (cur_node_ptr->right_child != NULL) {
+      level_traverse_queue.push(cur_node_ptr->right_child);
     }
   }
 }
@@ -577,20 +593,20 @@ void BinaryTree<T>::SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root_ptr, void (
 /**
  * @brief 子树中序遍历(非递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param visit 访问函数
  */
 template<class T>
-void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>*)) {
+void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>*)) {
 
   stack<BinTreeNode<T>*> in_traverse_stack;
-  BinTreeNode<T>* cur_node_ptr = sub_tree_root_ptr;
+  BinTreeNode<T>* cur_node_ptr = sub_tree_root;
 
   while (cur_node_ptr != NULL || !in_traverse_stack.empty()) {
 
     while (cur_node_ptr != NULL) {
       in_traverse_stack.push(cur_node_ptr);
-      cur_node_ptr = cur_node_ptr->left_child_;
+      cur_node_ptr = cur_node_ptr->left_child;
     }
 
     if (!in_traverse_stack.empty()) {
@@ -600,7 +616,7 @@ void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_pt
 
       visit(cur_node_ptr);
 
-      cur_node_ptr = cur_node_ptr->right_child_;
+      cur_node_ptr = cur_node_ptr->right_child;
     }
   }
 }
@@ -609,21 +625,21 @@ void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_pt
 /**
  * @brief 子树后序遍历(非递归)
  * @tparam T 节点数据模板类型
- * @param sub_tree_root_ptr 子树根节点指针
+ * @param sub_tree_root 子树根节点指针
  * @param visit 访问函数
  */
 template <class T>
-void BinaryTree<T>::SubTreePostOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_ptr, void (*visit)(BinTreeNode<T>*)) {
+void BinaryTree<T>::SubTreePostOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>*)) {
 
   stack<PostOrderStackNode<T> > post_traverse_stack;
 
-  BinTreeNode<T>* cur_node_ptr = sub_tree_root_ptr;
+  BinTreeNode<T>* cur_node_ptr = sub_tree_root;
 
   do {
     while (cur_node_ptr != NULL) {
       PostOrderStackNode<T> traverse_node(cur_node_ptr);
       post_traverse_stack.push(traverse_node);
-      cur_node_ptr = cur_node_ptr->left_child_;
+      cur_node_ptr = cur_node_ptr->left_child;
     }
 
     bool left_unfinished = true;
@@ -632,13 +648,13 @@ void BinaryTree<T>::SubTreePostOrderNonRecursive_(BinTreeNode<T>* sub_tree_root_
       PostOrderStackNode<T> cur_traverse_node = post_traverse_stack.top();
       post_traverse_stack.pop();
 
-      cur_node_ptr = cur_traverse_node.bin_node_ptr;
+      cur_node_ptr = cur_traverse_node.node;
 
       switch (cur_traverse_node.tag) {
         case PostOrderStackNode<T>::LEFT:
           cur_traverse_node.tag = PostOrderStackNode<T>::RIGHT;
           post_traverse_stack.push(cur_traverse_node);
-          cur_node_ptr = cur_node_ptr->right_child_;
+          cur_node_ptr = cur_node_ptr->right_child;
 
           left_unfinished = false;
 
@@ -685,12 +701,12 @@ void BinaryTree<T>::CreateSubBinTreeByPreAndInOrderString_(T* pre_order_str_ptr,
   CreateSubBinTreeByPreAndInOrderString_(pre_order_str_ptr + 1,
                                          in_order_str_ptr,
                                          pivot,
-                                         sub_tree_root_ptr->left_child_);
+                                         sub_tree_root_ptr->left_child);
 
   CreateSubBinTreeByPreAndInOrderString_(pre_order_str_ptr + pivot + 1,
                                          in_order_str_ptr + pivot + 1,
                                          str_length - pivot - 1,
-                                         sub_tree_root_ptr->right_child_);
+                                         sub_tree_root_ptr->right_child);
 }
 
 
