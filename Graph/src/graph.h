@@ -18,7 +18,7 @@ const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 矩阵图剔除这个逻�
 
 
 /*!
- * @class 图基类(模板类)
+ * @brief 图基类(模板类)
  * @tparam V 节点类型模板参数
  * @tparam W 边权值类型模板参数
  */
@@ -27,26 +27,28 @@ class Graph {
 public:
 
   /*!
-   * @brief 图结点数量
+   * @brief 获取图结点数量
+   * @return 图结点数量
    */
   int NumberOfVertices() { return this->vertices_num_; }
 
   /*!
-   * @brief 边数量
+   * @brief 获取边数量
+   * @return 边数量
    */
   int NumberOfEdges() { return this->edge_count_; }
 
   /*!
    * @brief 获取结点(由结点索引)
-   * @param vertex 节点变量引用(用于保存结果)
+   * @param vertex 结点(用于保存结果)
    * @param vertex_index 结点索引
    * @return 是否获取成功
    */
   virtual bool GetVertexByIndex(V& vertex, int vertex_index) = 0;
 
   /*!
-   * @brief 获取边的权值
-   * @param weight 边权值变量引用(用于保存结果)
+   * @brief 获取边权值
+   * @param weight 边权值(用于保存结果)
    * @param v1 边的一个节点
    * @param v2 边的另一个节点
    * @return 是否获取成功
@@ -55,7 +57,7 @@ public:
 
   /*!
    * @brief 获取结点的第一个相邻结点
-   * @param first_neighbor 结点变量引用(用于保存第一个相邻结点)
+   * @param first_neighbor 结点(用于保存第一个相邻结点)
    * @param vertex 结点
    * @return 是否获取成功
    */
@@ -63,7 +65,7 @@ public:
 
   /*!
    * @brief 获取结点的下一个相邻结点
-   * @param next_neighbor 结点变量(用于保存下一个相邻结点)
+   * @param next_neighbor 结点(用于保存下一个相邻结点)
    * @param vertex 结点
    * @param neighbor_vertex 结点的一个相邻节点
    * @return 是否获取成功

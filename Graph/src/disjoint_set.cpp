@@ -1,10 +1,21 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2021/2/21.
-//
+/*!
+ * @file disjoint_set.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 并查集.cpp文件
+ * @version 0.2.1
+ * @date 2021-02-21
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include "disjoint_set.h"
 
 
+/*!
+ * @brief 构造函数
+ * @param size 大小
+ */
 DisjointSet::DisjointSet(int size) {
   size_ = size;
   this->parent_ = new int[this->size_];
@@ -14,12 +25,24 @@ DisjointSet::DisjointSet(int size) {
 }
 
 
+/*!
+ * @brief 重载=
+ * @param disjoint_set 源并查集
+ * @return 赋值后的并查集
+ * @note
+ *  todo: 未实现
+ */
 DisjointSet& DisjointSet::operator=(const DisjointSet& disjoint_set) {
 
   return *this;
 }
 
 
+/*!
+ * @brief 查找(非递归)
+ * @param value 数组索引
+ * @return 根节点
+ */
 int DisjointSet::FindNonRecursive(int value) {
 
   while (parent_[value] >= 0) {
@@ -30,6 +53,11 @@ int DisjointSet::FindNonRecursive(int value) {
 }
 
 
+/*!
+ * @brief 查找
+ * @param value 数组索引
+ * @return 根节点
+ */
 int DisjointSet::Find(int value) {
   if (parent_[value] < 0) {
     return value;
@@ -40,7 +68,7 @@ int DisjointSet::Find(int value) {
 
 
 /**
- *
+ * @brief 合并集合(Weighted)
  * @param node1
  * @param node2
  */
@@ -64,8 +92,8 @@ void DisjointSet::WeightedUnion(int node1, int node2) {
 }
 
 
-/**
- * 对原书进行优化
+/*!
+ * @brief 查找(对原书进行优化)
  * @param node1
  * @param node2
  */

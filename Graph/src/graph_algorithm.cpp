@@ -1,15 +1,21 @@
-//
-// Created by cyberdash@163.com(抖音id:cyberdash_yuan) on 2021/2/4.
-//
+/*!
+ * @file graph_algorithm.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 图算法.cpp文件
+ * @version 0.2.1
+ * @date 2021-02-04
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include "graph_algorithm.h"
 #include <iostream>
 
 
-/**
+/*!
  * @brief 图深度优先遍历
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
+ * @tparam T 结点类型模版参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图
  * @param vertex 遍历起始结点
  */
@@ -22,12 +28,12 @@ void DFS(Graph<T, E>& graph, const T& vertex) {
 }
 
 
-/**
- * @brief 图节点深度优先遍历(递归)
- * @tparam T 节点模板类型
- * @tparam E 边模板类型
+/*!
+ * @brief 图深度优先遍历(递归)
+ * @tparam T 节点类型模板参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图
- * @param vertex 图节点
+ * @param vertex 遍历起始结点
  * @param visited_vertex_set 已访问节点集合
  */
 template<class T, class E>
@@ -55,10 +61,10 @@ void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set) {
 }
 
 
-/**
+/*!
  * @brief 图广度优先遍历
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
+ * @tparam T 结点类型模板参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图
  * @param vertex 遍历起始结点
  * @note
@@ -100,10 +106,10 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
 }
 
 
-/**
+/*!
  * @brief 求图的连通分量
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
+ * @tparam T 结点类型模板参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图
  * @note
  * 1. 使用visited_vertex_set保存已经遍历过的节点
@@ -139,10 +145,10 @@ void Components(Graph<T, E>& graph) {
 }
 
 
-/**
+/*!
  * @brief Kruskal算法
- * @tparam T 图节点模板类型
- * @tparam E 边模板类型
+ * @tparam T 结点类型模板参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图
  * @param min_span_tree 最小生成树
  */
@@ -200,13 +206,15 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
 }
 
 
-/**
- * @brief Prim算法, 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
- * @tparam T 图节点模板类型
- * @tparam E 边模板类型
+/*!
+ * @brief Prim算法(Plus)
+ * @tparam T 结点类型模板参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图
  * @param vertex 起始节点(起始可以不用这个参数, 参考教科书, 此处保留)
  * @param min_span_tree 最小生成树
+ * @note
+ * 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
  */
 template<class T, class E>
 void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
@@ -263,10 +271,10 @@ void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
 }
 
 
-/**
+/*!
  * @brief Prim算法朴素实现
- * @tparam T 图节点模板类型
- * @tparam E 边模板类型
+ * @tparam T 结点类型模板参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图
  * @param vertex 起始节点(其实可以不用这个参数, 参照教科书, 此处保留)
  * @param min_span_tree 最小生成树
@@ -435,15 +443,14 @@ void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[],
 }
 
 
-/**
+/*!
  * @brief 显示迪杰斯特拉(Dijkstra)最短路径
- * @tparam T 图节点模板类型
- * @tparam E 图边权值模板类型
+ * @tparam T 结点类型模板参数
+ * @tparam E 边权值类型模板参数
  * @param graph 图类型
  * @param origin_vertex 路径起始节点
  * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
  * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
- * @note
  */
 template<class T, class E>
 void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]) {

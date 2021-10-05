@@ -13,90 +13,95 @@
 using namespace std;
 
 
-template<class T, class E>
-class MatrixGraph: public Graph<T, E> {
+/*!
+ * @brief 矩阵图模板类
+ * @tparam V 结点类型模板参数
+ * @tparam W 边权值类型模板参数
+ */
+template<class V, class W>
+class MatrixGraph: public Graph<V, W> {
 
 public:
   explicit MatrixGraph(int size = DEFAULT_VERTICES);
   ~MatrixGraph();
 
-  bool GetVertexByIndex(T& vertex, int vertex_index);
+  bool GetVertexByIndex(V& vertex, int vertex_index);
 
-  /**
+  /*!
    * @brief 获取边权值
    * @param weight 边权值(用于保存结果)
    * @param vertex1 边的节点1
    * @param vertex2 边的节点2
    * @return 是否获取成功
    */
-  bool GetWeight(E& weight, T vertex1, T vertex2);
+  bool GetWeight(W& weight, V vertex1, V vertex2);
 
-  /**
+  /*!
    * @brief 插入结点
    * @param vertex 节点
    * @return 是否插入成功
    */
-  bool InsertVertex(const T& vertex);
+  bool InsertVertex(const V& vertex);
 
-  /**
+  /*!
    * @brief 删除结点
    * @param vertex 节点
    * @return 是否删除成功
    */
-  bool RemoveVertex(T vertex);
+  bool RemoveVertex(V vertex);
 
-  /**
+  /*!
    * @brief 插入边
    * @param vertex1 边节点1
    * @param vertex2 边节点2
    * @param weight 边权值
    * @return 是否插入成功
    */
-  bool InsertEdge(T vertex1, T vertex2, E weight);
+  bool InsertEdge(V vertex1, V vertex2, W weight);
 
-  /**
+  /*!
    * @brief 删除边
    * @param vertex1 边结点1
    * @param vertex2 边结点2
    * @return 是否删除成功
    */
-  bool RemoveEdge(T vertex1, T vertex2);
+  bool RemoveEdge(V vertex1, V vertex2);
 
-  /**
+  /*!
    * 获取第一个相邻结点
    * @param first_neighbor 第一个相邻结点(用于保存节点)
    * @param vertex 节点
    * @return 是否获取成功
    */
-  bool GetFirstNeighborVertex(T& first_neighbor, const T& vertex);
+  bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex);
 
-  /**
+  /*!
    * @brief 获取下一个相邻结点
    * @param next_neighbor_vertex 下一个相邻结点(用于保存结点)
    * @param vertex 结点
    * @param neighbor_vertex 当前相邻结点
    * @return 是否获取成功
    */
-  bool GetNextNeighborVertex(T& next_neighbor_vertex, const T& vertex, const T& neighbor_vertex);
+  bool GetNextNeighborVertex(V& next_neighbor_vertex, const V& vertex, const V& neighbor_vertex);
 
-  /**
+  /*!
    * @brief 获取结点索引
    * @param vertex 结点
    * @return 结点索引
    */
-  int GetVertexIndex(T vertex);
+  int GetVertexIndex(V vertex);
 
   template<class U>
-  friend istream& operator>>(istream& in, MatrixGraph<T, E>& graph_matrix);
+  friend istream& operator>>(istream& in, MatrixGraph<V, W>& graph_matrix);
   template<class U>
-  friend ostream& operator<<(ostream& out, MatrixGraph<T, E>& graph_matrix);
+  friend ostream& operator<<(ostream& out, MatrixGraph<V, W>& graph_matrix);
 
   void PrintMatrix();
   void CyberDashShow();
 
 private:
-  T* vertices_list_;
-  E** edge_matrix_;
+  V* vertices_list_; //!< 结点列表
+  W** edge_matrix_; //!< 边矩阵
 };
 
 
@@ -123,8 +128,8 @@ MatrixGraph<T, E>::MatrixGraph(int size) {
 }
 
 
-template<class T, class E>
-MatrixGraph<T, E>::~MatrixGraph() {
+template<class V, class W>
+MatrixGraph<V, W>::~MatrixGraph() {
   delete[] this->vertices_list_;
   delete[] this->edge_matrix_;
 }
@@ -167,8 +172,8 @@ bool MatrixGraph<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
 }
 
 
-template<class T, class E>
-bool MatrixGraph<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& vertex) {
+template<class V, class W>
+bool MatrixGraph<V, W>::GetFirstNeighborVertex(V& first_neighbor, const V& vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
 
@@ -177,8 +182,8 @@ bool MatrixGraph<T, E>::GetFirstNeighborVertex(T& first_neighbor, const T& verte
   }
 
   for (int cur_index = 0; cur_index < this->vertices_num_; cur_index++) {
-    E weight;
-    T cur_vertex;
+    W weight;
+    V cur_vertex;
 
     bool done = GetVertexByIndex(cur_vertex, cur_index);
     if (!done) {

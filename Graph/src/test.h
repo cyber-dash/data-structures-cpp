@@ -11,31 +11,31 @@
 #include <iostream>
 
 
-// 测试矩阵图的矩阵
+/*! 测试矩阵图的矩阵 */
 void TestMatrixGraphMatrix();
 
-// 测试使用结点索引获取结点
+/*! 测试使用结点索引获取结点 */
 void TestGetVertexByIndex();
 
-// 测试DFS
+/*! 测试DFS */
 void TestDFS();
 
-// 测试BFS
+/*! 测试BFS */
 void TestBFS();
 
-// 测试连通分量
+/*! 测试连通分量 */
 void TestComponents();
 
-// 测试KrusKal
+/*! 测试KrusKal */
 void TestKruskal();
 
-// 测试Prim算法
+/*! 测试Prim算法 */
 void TestPrim();
 
-// 测试Dijkstra最小生成树
+/*! 测试Dijkstra最小生成树 */
 void TestDijkstraShortestPath();
 
-// 关于CyberDash
+/*! 关于CyberDash */
 void TestCyberDashShow();
 
 

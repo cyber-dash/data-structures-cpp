@@ -1,6 +1,12 @@
-//
-// Created by cyberdash@163.com(抖音id:cyberdash_yuan) on 2021/2/4.
-//
+/*!
+ * @file graph_algorithm.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 图算法.h文件
+ * @version 0.2.1
+ * @date 2021-02-04
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_GRAPH_ALGORITHM_H
 #define CYBER_DASH_GRAPH_ALGORITHM_H
@@ -17,105 +23,79 @@
 using namespace std;
 
 
-/**
- * @brief 图深度优先遍历
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @param vertex 遍历起始结点
- */
+// 图深度优先遍历
 template<class T, class E>
 void DFS(Graph<T, E>& graph, const T& vertex);
 
 
-/**
- * @brief 图节点深度优先遍历(递归)
- * @tparam T 节点模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @param vertex 图节点
- * @param visited_vertex_set 已访问节点集合
- */
+// 图深度优先遍历(递归)
 template<class T, class E>
 void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set);
 
 
-/**
- * @brief 图广度优先遍历
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @param vertex 遍历起始结点
- */
+// 图广度优先遍历
 template<class T, class E>
 void BFS(Graph<T, E>& graph, const T& vertex);
 
 
-/**
- * @brief 求图的连通分量
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @note
- * 1. 使用visited_vertex_set保存已经遍历过的节点
- * 2. 每遍历一个节点vertex
- *   如果在visited_vertex_set中, 则已经在某连通分量中, 不再处理;
- *   如果不在visited_vertex_set中, 使用DFS对vertex进行遍历, 连通分量数量+1
- */
+// 求图的连通分量
 template<class T, class E>
 void Components(Graph<T, E>& graph);
 
 
-/**
- * @brief 最小生成树结点
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
+/*!
+ * @brief 最小生成树结点结构体
  */
-template<class T, class E>
+template<class V, class W>
 struct MSTEdgeNode {
-  T tail; // 尾结点
-  T head; // 头结点
-  E weight; // 权重
+  /*! @brief 构造函数(空参数) */
   MSTEdgeNode() {}
-  MSTEdgeNode(E value): weight(value) {}
-  bool operator<=(MSTEdgeNode<T, E>& node) { return weight <= node.weight; }
-  bool operator>(MSTEdgeNode<T, E>& node) { return weight > node.weight; }
+  /*! @brief 构造函数() */
+  MSTEdgeNode(W value): weight(value) {}
+  /*! @brief 重载<= */
+  bool operator<=(MSTEdgeNode<V, W>& node) { return weight <= node.weight; }
+  /*! @brief 重载> */
+  bool operator>(MSTEdgeNode<V, W>& node) { return weight > node.weight; }
+
+  V tail; //!< 尾结点
+  V head; //!< 头结点
+  W weight; //!< 边权重
 };
 
 
-/**
- * @brief 最小生成树
- * @tparam T 结点模板类型
- * @tparam E 边模板类型
+/*!
+ * @brief 最小生成树模板类
+ * @tparam T 结点类型模板参数
+ * @tparam E 边权值类型模板参数
  */
 template<class T, class E>
 class MinSpanTree {
 protected:
-  MSTEdgeNode<T, E>* edge_node_array_; // 最小生成树结点数组
-  int max_size_;
-  int cur_node_count_; // 当前生成树的节点数量
+  MSTEdgeNode<T, E>* edge_node_array_; //!< 最小生成树结点数组
+  int max_size_; //!< 最大结点数
+  int cur_size_; //!< 当前生成树的节点数量
 public:
   // 构造函数
-  MinSpanTree(int size): max_size_(size), cur_node_count_(0) {
+  MinSpanTree(int size): max_size_(size), cur_size_(0) {
     edge_node_array_ = new MSTEdgeNode<T, E>[size];
   }
 
   // 向edge_node_array_插入结点
   int Insert(MSTEdgeNode<T, E>& edge_node) {
-    if (cur_node_count_ >= max_size_) {
+    if (cur_size_ >= max_size_) {
       return -1;
     }
 
-    edge_node_array_[cur_node_count_] = edge_node;
-    cur_node_count_++;
+    edge_node_array_[cur_size_] = edge_node;
+    cur_size_++;
 
-    return cur_node_count_ - 1;
+    return cur_size_ - 1;
   }
 
-  // 显示最小生成树
+  /*! @brief 显示最小生成树 */
   void Show() {
     E sum = 0;
-    for (int i = 0; i < cur_node_count_; i++) {
+    for (int i = 0; i < cur_size_; i++) {
       sum += edge_node_array_[i].weight;
       cout << "head: " << edge_node_array_[i].head << ", tail: " << edge_node_array_[i].tail << ", weight: "
            << edge_node_array_[i].weight << endl;
@@ -126,65 +106,27 @@ public:
 };
 
 
-/**
- * @brief Kruskal最小生成树
- * @tparam T 节点模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @param min_span_tree 最小生成树
- */
+// Kruskal最小生成树
 template<class T, class E>
 void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree);
 
 
-/**
- * @brief 殷人昆版教材的Prim算法实现, 此为经过优化的版本, 优化点在堆的操作
- * @tparam T 图节点数据模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @param vertex 起始节点(起始可以不用这个参数, 参考教科书, 此处保留)
- * @param min_span_tree 最小生成树
- */
+// Prim(Plus)
 template<class T, class E>
 void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
 
 
-/**
- * @brief Prim算法朴素实现
- * @tparam T 图节点数据模板类型
- * @tparam E 边模板类型
- * @param graph 图
- * @param vertex 起始节点(其实可以不用这个参数, 参照教科书, 此处保留)
- * @param min_span_tree 最小生成树
- */
+// Prim算法朴素实现
 template<class T, class E>
 void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
 
 
-/**
- * @brief 迪杰斯特拉(Dijkstra)最短路径
- * @tparam T 图节点模板类型
- * @tparam E 图边权值模板类型
- * @param graph 图类型
- * @param origin_vertex 起始节点
- * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
- * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
- * @note
- */
+// 迪杰斯特拉(Dijkstra)最短路径
 template<class T, class E>
 void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
 
 
-/**
- * @brief 迪杰斯特拉(Dijkstra)最短路径
- * @tparam T 图节点模板类型
- * @tparam E 图边权值模板类型
- * @param graph 图类型
- * @param origin_vertex 起始节点
- * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
- * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
- * @note
- */
+// 显示迪杰斯特拉(Dijkstra)最短路径
 template<class T, class E>
 void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
 
