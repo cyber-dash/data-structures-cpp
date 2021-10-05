@@ -16,7 +16,7 @@ int main() {
   BinaryTreeTest::TestHeight();
 
   // 测试LeftChild和RightChild
-  BinaryTreeTest::TestChildFunction();
+  BinaryTreeTest::TestChild();
 
   // 测试父节点函数Parent
   BinaryTreeTest::TestParent();

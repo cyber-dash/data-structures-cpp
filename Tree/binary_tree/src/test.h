@@ -1,6 +1,13 @@
-//
-// Created by cyberdash@163.com on 2021/5/4.
-//
+/*!
+ * @file test.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 二叉树测试类
+ * @version 0.2.1
+ * @date 2020-05-04
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_BINARY_TREE_TEST_H
 #define CYBER_DASH_BINARY_TREE_TEST_H
@@ -13,44 +20,47 @@
  */
 class BinaryTreeTest {
 public:
-  /*! 测试复制构造函数 */
+  /*! @brief 测试复制构造函数 */
   static void TestCopyConstructor();
 
-  /*! 测试二叉树深度 */
+  /*! @brief 测试二叉树深度 */
   static void TestHeight();
 
-  /*! 测试LeftChild和RightChild */
-  static void TestChildFunction();
+  /*! @brief 测试LeftChild和RightChild */
+  static void TestChild();
 
-  /*! 测试父节点函数Parent */
+  /*! @brief 测试父节点函数Parent */
   static void TestParent();
 
-  /*! 测试前序遍历 */
+  /*! @brief 测试前序遍历 */
   static void TestPreOrder();
 
-  /*! 测试中序遍历 */
+  /*! @brief 测试中序遍历 */
   static void TestInOrder();
 
-  /*! 测试后序遍历 */
+  /*! @brief 测试后序遍历 */
   static void TestPostOrder();
 
-  /*! 测试层序遍历 */
+  /*! @brief 测试层序遍历 */
   static void TestLevelOrder();
 
-  /*! 测试查找是否在二叉树 */
+  /*! @brief 测试查找是否在二叉树 */
   static void TestFind();
 
-  /*! 测试使用前序遍历和后序遍历结果创建二叉树 */
+  /*! @brief 测试使用前序遍历和后序遍历结果创建二叉树 */
   static void TestCreateBinTreeByPreAndInOrderString();
 
-  /*! 测试是否为空 */
+  /*! @brief 测试是否为空 */
   static void TestIsEmpty();
 };
 
 
-
-void visit(BinTreeNode<int>* node_ptr) {
-  cout << node_ptr->data << " ";
+/*!
+ * @brief 结点打印函数
+ * @param node 二叉树结点
+ */
+void visit(BinTreeNode<int>* node) {
+  cout << node->data << " ";
 };
 
 
@@ -72,13 +82,10 @@ void BinaryTreeTest::TestCopyConstructor() {
 
   bin_tree_2.Print();
 
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout<<endl<<cout<<"------------------------- CyberDash -------------------------"<<endl;
 }
 
 
-/**
- * 测试二叉树深度
- */
 void BinaryTreeTest::TestHeight() {
 
   cout<<endl;
@@ -111,14 +118,12 @@ void BinaryTreeTest::TestHeight() {
 }
 
 
-// 测试是否为空
 void BinaryTreeTest::TestIsEmpty() {
 
 }
 
 
-// 测试二叉树深度
-void BinaryTreeTest::TestChildFunction() {
+void BinaryTreeTest::TestChild() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -154,7 +159,6 @@ void BinaryTreeTest::TestChildFunction() {
 }
 
 
-// 测试二叉树深度
 void BinaryTreeTest::TestParent() {
 
   cout<<endl;
