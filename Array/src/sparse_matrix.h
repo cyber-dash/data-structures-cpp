@@ -69,7 +69,7 @@ public:
   /*! @brief 获取元素数 */
   int Terms() { return this->terms_; }
   /*! @brief 设置元素数 */
-  int SetTerms(int terms) { this->terms_ = terms; }
+  void SetTerms(int terms) { this->terms_ = terms; }
 
   /*! @brief 获取最大元素数 */
   int MaxTerms() { return this->max_terms_; }
