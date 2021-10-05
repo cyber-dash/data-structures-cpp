@@ -47,18 +47,19 @@ int main() {
 
   DoubleLinkListTest::TestLocate();
 
-  DoubleLinkListTest::TestSearch();
    */
 
-  /*
+  LinkListTest::TestCopyConstructor();
+
+  DoubleLinkListTest::TestSearch();
+
   LinkListTest::TestRemove();
 
   LinkListTest::TestMakeEmpty();
 
-  LinkListTest::TestSearch();
-
   LinkListTest::TestLocate();
-   */
+
+  LinkListTest::TestGetDataAndSetData();
 
   return 0;
 }

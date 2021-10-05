@@ -20,6 +20,9 @@
  */
 class LinkListTest {
 public:
+  /*! @brief 测试复制构造函数 */
+  static void TestCopyConstructor();
+
   /*! @brief 测试插入 */
   static void TestInsert();
 
@@ -37,7 +40,33 @@ public:
 
   /*! @brief 测试定位 */
   static void TestLocate();
+
+  /*! @brief 测试设置和获取数据 */
+  static void TestGetDataAndSetData();
 };
+
+
+void LinkListTest::TestCopyConstructor() {
+  cout << endl;
+  cout << "|------------------------ CyberDash ------------------------|" << endl;
+  cout << "|                Test LinkList CopyConstructor              |" << endl;
+  cout << "|                       测试链表复制构造                       |" << endl << endl << endl;
+
+  LinkList<string> link_list;
+
+  link_list.Insert(0, "Beijing");
+  link_list.Insert(1, "Shanghai");
+  link_list.Insert(2, "Guangzhou");
+
+  link_list.Output();
+
+  // LinkList<string>* link_list_2 = new LinkList<string>(link_list);
+  LinkList<string> link_list_2(link_list);
+
+  link_list_2.Output();
+
+  cout << "-------------------------------------------------------------" << endl << endl;
+}
 
 
 void LinkListTest::TestInsert() {
@@ -180,5 +209,29 @@ void LinkListTest::TestLocate() {
   cout << "-------------------------------------------------------------" << endl << endl;
 }
 
+
+void LinkListTest::TestGetDataAndSetData() {
+  cout << endl;
+  cout << "|------------------------ CyberDash ------------------------|" << endl;
+  cout << "|              Test LinkList GetDataAndSetData              |" << endl;
+  cout << "|                     测试链表设置和获取数据                   |" << endl << endl << endl;
+
+  LinkList<string>* link_list = new LinkList<string>();
+
+  link_list->Insert(0, "Beijing");
+  link_list->Insert(1, "Shanghai");
+  link_list->Insert(2, "Guangzhou");
+
+  string city;
+  link_list->GetData(2, city);
+  cout << city << endl;
+
+  link_list->SetData(2, "Shenzhen");
+
+  link_list->Output();
+
+
+  cout << "-------------------------------------------------------------" << endl << endl;
+}
 
 #endif // CYBER_DASH_LINK_LIST_TEST_H

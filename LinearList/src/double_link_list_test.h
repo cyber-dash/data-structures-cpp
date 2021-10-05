@@ -153,9 +153,11 @@ void DoubleLinkListTest::TestSearch(){
   double_list->Insert(1,2);
   double_list->Insert(2,3);
 
-  DoubleLinkNode<int>* node = double_list->Search(3);
+  DoubleLinkNode<int>* node_1 = double_list->Search(1);
+  DoubleLinkNode<int>* node_3 = double_list->Search(3);
 
-  cout << "The pos of " << 3 << " is " << node <<endl;
+  cout << "The pos of " << 1 << " is " << node_1 <<endl;
+  cout << "The pos of " << 3 << " is " << node_3 <<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

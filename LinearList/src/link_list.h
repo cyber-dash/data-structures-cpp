@@ -54,7 +54,7 @@ public:
   // 构造函数(无参数)
   LinkList();
   // 复制构造函数
-  LinkList(LinkList<T>& link_list);
+  LinkList(const LinkList<T>& link_list);
   // 析构函数
   ~LinkList();
   // 清除链表
@@ -108,15 +108,16 @@ LinkList<T>::LinkList() {
  * @param link_list 链表引用
  */
 template<class T>
-LinkList<T>::LinkList(LinkList<T>& link_list) {
+LinkList<T>::LinkList(const LinkList<T>& link_list) {
 
   this->head_ = new LinkNode<T>();
+  LinkNode<T>* dest_ptr = this->Head();
+
   LinkNode<T>* src_ptr = link_list.Head();
-  LinkNode<T>* dest_ptr = head_;
 
   while (src_ptr->next != NULL) {
 
-    T data = src_ptr->next.data;
+    T data = src_ptr->next->data;
     dest_ptr->next = new LinkNode<T>(data);
 
     dest_ptr = dest_ptr->next;
@@ -215,8 +216,6 @@ void LinkList<T>::MakeEmpty() {
     delete delete_node_ptr;
     this->length_--;
   }
-
-  this->head_ = NULL;
 }
 
 
@@ -232,7 +231,7 @@ void LinkList<T>::Output() {
     return;
   }
 
-  LinkNode<T>* cur = Head();
+  LinkNode<T>* cur = Head()->next;
   while(cur != NULL) {
     cout << cur->data << " ";
     cur = cur->next;
@@ -260,26 +259,14 @@ bool LinkList<T>::Insert(int pos, const T& data) {
 
   LinkNode<T>* node_ptr = new LinkNode<T>(data);
 
-  if (this->head_ == NULL) {
-    node_ptr->next = this->head_;
-    this->head_ = node_ptr;
-    this->length_ = 1;
-    return true;
+  LinkNode<T>* cur = this->head_;
+  while (pos > 0) {
+    cur = cur->next;
+    pos--;
   }
 
-  if (pos == 0) {
-    node_ptr->next = this->head_;
-    this->head_ = node_ptr;
-  } else {
-    LinkNode<T>* cur = this->head_;
-    while (pos - 1 > 0) {
-      cur = cur->next;
-      pos--;
-    }
-
-    node_ptr->next = cur->next;
-    cur->next = node_ptr;
-  }
+  node_ptr->next = cur->next;
+  cur->next = node_ptr;
 
   length_++;
 
@@ -307,28 +294,14 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
     return false;
   }
 
-  if (head_ == NULL) {
-    node_ptr->next = head_;
-    head_ = node_ptr;
-    length_ = 1;
-    return true;
+  LinkNode<T>* cur = head_;
+  while (pos > 0) {
+    cur = cur->next;
+    pos--;
   }
 
-  if (pos == 0) {
-
-    node_ptr->next = head_;
-    head_ = node_ptr;
-  } else {
-
-    LinkNode<T>* cur = head_;
-    while (pos - 1 > 0) {
-      cur = cur->next;
-      pos--;
-    }
-
-    node_ptr->next = cur->next;
-    cur->next = node_ptr;
-  }
+  node_ptr->next = cur->next;
+  cur->next = node_ptr;
 
   length_++;
 
@@ -343,7 +316,7 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
  */
 template<class T>
 bool LinkList<T>::IsEmpty() const {
-  if (length_ == 0) {
+  if (this->head_->next == NULL) {
     return true;
   } else {
     return false;
@@ -377,7 +350,7 @@ void LinkList<T>::CyberDashShow() {
 template<class T>
 LinkNode<T>* LinkList<T>::Search(T data) {
 
-  LinkNode<T>* cur = this->head_;
+  LinkNode<T>* cur = this->head_->next;
   if (cur == NULL) { // 空链表
     return NULL;
   }
@@ -406,7 +379,7 @@ LinkNode<T>* LinkList<T>::Locate(int pos) {
     return NULL;
   }
 
-  LinkNode<T>* cur = this->Head();
+  LinkNode<T>* cur = this->Head()->next;
   for (int i = 1; i < pos; i++) {
     cur = cur->next;
   }
@@ -427,31 +400,25 @@ LinkNode<T>* LinkList<T>::Locate(int pos) {
 template<class T>
 bool LinkList<T>::Remove(int pos, T &data) {
 
-  LinkNode<T>* delete_node_ptr = NULL;
-  LinkNode<T>* cur = NULL;
   if (this->Length() == 0 || pos < 1 || pos > this->Length()) {
     return false;
   }
 
-  if (pos == 1) {
-    delete_node_ptr = this->head_;
-    this->head_ = this->head_->next;
-  } else {
-    cur = this->head_;
+  LinkNode<T>* cur = this->head_;
 
-    // 循链找到第i - 1个结点
-    for (int i = 1; i < pos - 1; i++) {
-      cur = cur->next;
-    }
-
-    delete_node_ptr = cur->next;
-    cur->next = delete_node_ptr->next;
+  for (int i = 1; i < pos; i++) {
+    cur = cur->next;
   }
+
+  LinkNode<T>* delete_node_ptr = cur->next;
+  cur->next = delete_node_ptr->next;
 
   data = delete_node_ptr->data;
   this->length_--;
 
-  delete delete_node_ptr;
+  if (delete_node_ptr != NULL) {
+    delete delete_node_ptr;
+  }
 
   return true;
 }
