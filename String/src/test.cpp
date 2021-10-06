@@ -1,11 +1,18 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 8/23/2021.
-//
+/*!
+ * @file test.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 字符串匹配测试.cpp文件
+ * @version 0.2.1
+ * @date 2021-08-23
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include "test.h"
 #include "cyber_dash_string.h"
 
 
+/*! 测试BF算法 */
 void TestBFFind() {
 
   cout<<endl;
@@ -25,6 +32,7 @@ void TestBFFind() {
 }
 
 
+/*! 测试KMP算法 */
 void TestKMPFind() {
 
   cout<<endl;
@@ -46,6 +54,7 @@ void TestKMPFind() {
 }
 
 
+/*! 测试KMP(CyberDash版本)算法 */
 void TestKMPFindCyberDash() {
 
   cout<<endl;
