@@ -97,7 +97,9 @@ doxygen配置文件将GENERATE_LATEX/LATEX_OUTPUT/USE_PDFLATEX/PDF_HYPERLINKS设
 ```
 
 
-## 5 作者简介
+## 5 关于我们
+我们是拥有十多年开发经验的开发工程师，长期就职于各传统与互联网大厂，目前在做数据结构与算法讲解教学，如果想更多了解我们，欢迎关注抖音：cyberdash_yuan
+
 **Y_Dash(元哥)**
 
 用过很多语言, 做过很多项目, 从底层到应用层, 安全/服务/社区/IoT太多了.
