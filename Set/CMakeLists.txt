@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main main.cpp disjoint_set.cpp disjoint_set.h set.h bit_set.h link_set.h dictionary.h hash_table_linear_probing.h test.cpp test.h hash_table_quadratic_probing.h)
+add_executable(main src/main.cpp src/disjoint_set.cpp src/disjoint_set.h src/set.h src/bit_set.h src/link_set.h src/dictionary.h src/hash_table_linear_probing.h src/test.cpp src/test.h src/hash_table_quadratic_probing.h)
