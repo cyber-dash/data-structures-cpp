@@ -20,16 +20,18 @@
 **Linux测试环境**
 
     kernel >= 3.10
-    cmake版本：3.13
+    cmake：3.13
+    doxygen: 1.9.2
 **Mac测试环境**
 
     MAC OS BigSur（11.2.1）
-    cmake版本：3.13
+    cmake：3.13
+    doxygen: 1.9.2
 
 
 ### 1.3 升级与优化
-**编程规范**
-
+**代码风格与编程规范**
+代码准守google编码规范，参考文档连接：
 https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
 
 **使用STL**
@@ -38,21 +40,19 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 **C++特性**
 
-**代码风格**
-
 
 ## 2 使用方式
 为了方便分类学习, 项目主目录下, 每个目录对应一个独立的项目
 ### 2.1 编译与运行
+    git clone https://gitee.com/cyberdash/data-structure-cpp.git
     # 进入目录
-    cd <dir>
+    cd data-structure-cpp/<dir>
     # 编译
     cmake3 .
     make
     # 执行程序
     ./main
-### 2.2 使用CMake
-### 2.3 复制代码文件
+
 
 ## 3 内容简介
 **generalizedList**: 广义表
@@ -79,7 +79,12 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 ## 4 Doxygen生成文档
 ### 4.1 Doxygen配置文件
+每个代码目录下的cyber_dash_doxygen_config文件为doxygen的配置文件
 ### 4.2 Doxygen生成文件
+可以使用doxygen命令生成每个测试项目的文档
+    doxygen cyber_dash_doxygen_config
+执行成功之后可以去html目录下打开index.html阅读使用说明
+
 ### 4.3 生成PDF文件
 doxygen配置文件将GENERATE_LATEX/LATEX_OUTPUT/USE_PDFLATEX/PDF_HYPERLINKS设置为YES
 
@@ -111,4 +116,4 @@ doxygen配置文件将GENERATE_LATEX/LATEX_OUTPUT/USE_PDFLATEX/PDF_HYPERLINKS设
 
 **L_Dash**
 
-北邮在读研究生, 资深测试开发工程师
+资深测试开发工程师，热爱数据结构和算法
