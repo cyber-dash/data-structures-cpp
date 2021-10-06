@@ -25,19 +25,29 @@ struct LinkNode {
 };
 
 
+//! 栈结构体
 template <class T>
 class LinkStack: public Stack<T>{
 
 public:
+  /*! @brief 构造函数 */
   LinkStack(): top_ptr_(NULL) {}
+  /*! @brief 析构函数 */
   ~LinkStack();
+  /*! @brief 入栈一个元素 */
   void Push(const T& data);
+  /*! @brief 出栈一个元素 */
   bool Pop(T& data);
+  /*! @brief 获取栈顶元素 */
   bool GetTop(T& data) const;
+  /*! @brief 判断栈是否为空 */
   bool IsEmpty() const;
+  /*! @brief 获取栈大小 */
   int GetSize() const;
+  /*! @brief 清空一个栈 */
   void MakeEmpty();
 
+  /*! @brief 获取栈顶元素指针 */
   LinkNode<T>* GetTopPtr();
 
   template<class U>
@@ -50,19 +60,35 @@ private:
 
 };
 
-
+/**
+ * @brief 析构函数
+ * @tparam T 栈元素类型
+ * @note 显式销毁时调用
+ */
 template<class T>
 LinkStack<T>::~LinkStack<T>() {
   MakeEmpty();
 }
 
 
+/**
+ * @brief 获取栈顶元素指针
+ * @tparam T 栈元素类型
+ * @return 返回栈顶元素指针
+ * @note
+ */
 template<class T>
 LinkNode<T>* LinkStack<T>::GetTopPtr() {
   return top_ptr_;
 }
 
 
+/**
+ * @brief 入栈操作
+ * @tparam T 栈元素类型
+ * @note
+ * 将元素压入栈顶
+ */
 template <class T>
 void LinkStack<T>::Push(T const& data)
 {
@@ -73,6 +99,13 @@ void LinkStack<T>::Push(T const& data)
 }
 
 
+/**
+ * @brief 出栈操作
+ * @tparam T 栈元素类型
+ * @return 返回操作是否执行成功
+ * @note
+ * 获取成功之后需要将栈顶元素删除
+ */
 template <class T>
 bool LinkStack<T>::Pop(T& data)
 {
@@ -92,6 +125,13 @@ bool LinkStack<T>::Pop(T& data)
 }
 
 
+/**
+ * @brief 获取栈顶元素
+ * @tparam T 栈元素类型
+ * @return 返回操作是否执行成功
+ * @note
+ * 仅仅获取栈顶元素，不需要将栈顶元素删除
+ */
 template <class T>
 bool LinkStack<T>::GetTop(T& data) const
 {
@@ -105,7 +145,12 @@ bool LinkStack<T>::GetTop(T& data) const
   return true;
 }
 
-
+/**
+ * @brief 获取栈的大小
+ * @return 返回栈的大小
+ * @note
+ * 需要遍历栈大小，时间复杂度O(n)
+ */
 template<class T>
 int LinkStack<T>::GetSize() const {
 
@@ -121,6 +166,11 @@ int LinkStack<T>::GetSize() const {
 }
 
 
+/**
+ * @brief 判断栈是否为空
+ * @return 如果栈为空，则返回true，否则返回false
+ * @note
+ */
 template<class T>
 bool LinkStack<T>::IsEmpty() const {
   if (top_ptr_ == NULL) {
@@ -131,6 +181,12 @@ bool LinkStack<T>::IsEmpty() const {
 }
 
 
+/**
+ * @brief 清空栈
+ * @tparam T 栈元素类型
+ * @note
+ * 需要释放栈中每个元素
+ */
 template<class T>
 void LinkStack<T>::MakeEmpty() {
 
@@ -144,6 +200,13 @@ void LinkStack<T>::MakeEmpty() {
 }
 
 
+/**
+ * @brief
+ * @tparam T 栈元素类型
+ * @param os
+ * @param link_stack
+ * @return
+ */
 template<class T>
 ostream& operator<<(ostream &os, LinkStack<T> &stack) {
 
