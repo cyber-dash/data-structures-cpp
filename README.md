@@ -43,8 +43,15 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 ## 2 使用方式
 为了方便分类学习, 项目主目录下, 每个目录对应一个独立的项目
-### 2.1 使用CMake
-### 2.1 复制代码文件
+### 2.1 编译与运行
+    # 进入目录
+    cd <dir>
+    cmake3 .
+    make
+    # 执行程序
+    ./main
+### 2.2 使用CMake
+### 2.3 复制代码文件
 
 ## 3 内容简介
 **generalizedList**: 广义表
