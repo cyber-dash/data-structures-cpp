@@ -16,12 +16,16 @@
 
 ### 1.2 代码运行环境
 目前在Linux和Mac环境已经测试通过。
-Linux测试环境：
-kernel >= 3.10
-cmake版本：3.13
-Mac测试环境：
-MAC OS BigSur（11.2.1）
-cmake版本：3.13
+
+**Linux测试环境**
+
+    kernel >= 3.10
+    cmake版本：3.13
+**Mac测试环境**
+
+    MAC OS BigSur（11.2.1）
+    cmake版本：3.13
+
 
 ### 1.3 升级与优化
 **编程规范**
