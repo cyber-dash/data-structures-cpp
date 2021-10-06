@@ -46,6 +46,7 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 ### 2.1 编译与运行
     # 进入目录
     cd <dir>
+    # 编译
     cmake3 .
     make
     # 执行程序
@@ -108,4 +109,4 @@ doxygen配置文件将GENERATE_LATEX/LATEX_OUTPUT/USE_PDFLATEX/PDF_HYPERLINKS设
 
 **L_Dash**
 
-北邮在读研究生, 为了保护他, 暂时不公开他的信息
+北邮在读研究生, 资深测试开发工程师
