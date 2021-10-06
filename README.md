@@ -59,7 +59,7 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 **graph**: 图
 
-**link**: 链表
+**LinearList**: 线性表
 
 **pointer**: 指针(用于新手熟悉)
 
