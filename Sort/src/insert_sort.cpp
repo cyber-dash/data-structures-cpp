@@ -5,7 +5,7 @@
 #include "util.h"
 
 
-void insert_sort(int *arr, int arr_size) {
+void InsertSort(int *arr, int arr_size) {
 
     for (int i = 1; i < arr_size; i++) {
 
