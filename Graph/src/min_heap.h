@@ -4,15 +4,16 @@
  * @brief 最小堆实现
  * @version 0.2.1
  * @date 2021-07-14
- *
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */
+
 #ifndef CYBER_DASH_MIN_HEAP_H
 #define CYBER_DASH_MIN_HEAP_H
 
 #include <iostream>
 #include <cstdlib>
+
 
 using namespace std;
 
@@ -20,6 +21,10 @@ using namespace std;
 #define DEFAULT_SIZE 10
 
 
+/*!
+ * @brief 最小堆模板类
+ * @tparam E 类型模板参数
+ */
 template <class E>
 class MinHeap {
 public:
@@ -36,7 +41,7 @@ public:
   void CyberDashShow();
 
 private:
-  E *heap_array_;
+  E* heap_array_;
   int current_size_;
   int max_size_;
   void siftDown(int start, int end);
@@ -185,5 +190,5 @@ void MinHeap<T>::CyberDashShow() {
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 
-#endif //CYBER_DASH_MIN_HEAP_H
 
+#endif //CYBER_DASH_MIN_HEAP_H

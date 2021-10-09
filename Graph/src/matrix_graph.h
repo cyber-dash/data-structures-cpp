@@ -1,10 +1,9 @@
 /*!
  * @file matrix_graph.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 图模板类
+ * @brief 矩阵图模板类
  * @version 0.2.1
  * @date 2021-07-14
- *
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */
@@ -29,15 +28,10 @@ template<class V, class W>
 class MatrixGraph: public Graph<V, W> {
 
 public:
-  /*!
-   * @brief 构造函数
-   * @param size 最大结点数
-   */
+  // 构造函数
   MatrixGraph(int size = DEFAULT_VERTICES);
 
-  /*!
-   * @brief 析构函数
-   */
+  // 析构函数
   ~MatrixGraph();
 
   /*!
@@ -126,22 +120,28 @@ private:
 };
 
 
-template<class T, class E>
-MatrixGraph<T, E>::MatrixGraph(int size) {
+/*!
+ * @brief 构造函数
+ * @tparam V 结点类型模板参数
+ * @tparam W 边权值类型模板参数
+ * @param size 最大结点数
+ */
+template<class V, class W>
+MatrixGraph<V, W>::MatrixGraph(int size) {
 
   this->max_vertices_num_ = size;
   this->vertices_num_ = 0;
   this->edge_count_ = 0;
 
   // 所有节点
-  this->vertices_list_ = new T[this->max_vertices_num_];
+  this->vertices_list_ = new V[this->max_vertices_num_];
   /* error handler */
 
-  this->edge_matrix_ = (E**)new E*[this->max_vertices_num_];
+  this->edge_matrix_ = (W**)new W*[this->max_vertices_num_];
   /* error handler */
 
   for (int i = 0; i < this->max_vertices_num_; i++) {
-    this->edge_matrix_[i] = new E[this->max_vertices_num_]; // 节点i对应的所有边
+    this->edge_matrix_[i] = new W[this->max_vertices_num_]; // 节点i对应的所有边
     for (int j = 0; j < this->max_vertices_num_; j++) {
       this->edge_matrix_[i][j] = (i == j) ? 0 : MAX_WEIGHT;
     }
@@ -149,6 +149,11 @@ MatrixGraph<T, E>::MatrixGraph(int size) {
 }
 
 
+/*!
+ * @brief 析构函数
+ * @tparam V 结点类型模板参数
+ * @tparam W 边权值类型模板参数
+ */
 template<class V, class W>
 MatrixGraph<V, W>::~MatrixGraph() {
   delete[] this->vertices_list_;
@@ -156,7 +161,7 @@ MatrixGraph<V, W>::~MatrixGraph() {
 }
 
 
-/**
+/*!
  * @brief 使用结点索引获取结点
  * @param vertex 结点(保存结果的节点)
  * @param vertex_index 结点索引
@@ -173,8 +178,17 @@ bool MatrixGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
 }
 
 
-template<class T, class E>
-bool MatrixGraph<T, E>::GetWeight(E& weight, T vertex1, T vertex2) {
+/*!
+ * @brief 获取边权值
+ * @tparam V
+ * @tparam W
+ * @param weight
+ * @param vertex1
+ * @param vertex2
+ * @return
+ */
+template<class V, class W>
+bool MatrixGraph<V, W>::GetWeight(W& weight, V vertex1, V vertex2) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);

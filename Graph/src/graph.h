@@ -1,7 +1,7 @@
 /*!
  * @file graph.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 图基类
+ * @brief 图虚基模板类
  * @version 0.2.1
  * @date 2021-01-23
  *
