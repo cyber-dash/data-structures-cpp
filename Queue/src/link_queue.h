@@ -10,11 +10,14 @@
 #ifndef CYBER_DASH_LINK_QUEUE_H
 #define CYBER_DASH_LINK_QUEUE_H
 
+
 #include <cstdlib>
 #include "queue.h"
 #include <iostream>
 
+
 using namespace std;
+
 
 /*!
  * @brief 链表队列结点模板结构体
@@ -168,6 +171,7 @@ bool LinkQueue<T>::EnQueue(const T& data) {
 
   return true;
 }
+
 
 /*!
  * @brief 出队(保存数据)
@@ -334,6 +338,7 @@ void LinkQueue<T>::CyberDashShow() {
       <<"CyberDash成员:"<<endl
       <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
       <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
+      <<"L_Dash"<<endl<<endl
       <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
