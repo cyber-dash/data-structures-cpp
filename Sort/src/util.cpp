@@ -1,6 +1,12 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/6/2.
-//
+/*!
+ * @file util.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 工具.cpp文件
+ * @version 0.2.1
+ * @date 2021-09-19
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include <iostream>
 
@@ -8,9 +14,9 @@
 using namespace std;
 
 
-void swap(int *a, int *b) {
+void Swap(int *a, int *b) {
 
-    if (a == b) {
+    if (*a == *b) {
         return;
     }
 
@@ -30,7 +36,7 @@ int* min_by_ptr(int *ptr1, int *ptr2) {
 }
 
 
-void array_show(int *arr, int array_size) {
+void PrintArray(int *arr, int array_size) {
 
   for (int i = 0; i < array_size; i++) {
     cout<<arr[i]<<" ";

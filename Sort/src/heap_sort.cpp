@@ -1,5 +1,5 @@
 /*!
- * @file HeapSort.cpp
+ * @file heap_sort.cpp
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 堆排序
  * @version 0.2.1
@@ -37,7 +37,7 @@ void BuildHeap(int* arr, int size) {
       }
 
       if (arr[j] > arr[min_child]) {
-        swap(arr + j, arr + min_child);
+        Swap(arr + j, arr + min_child);
       }
 
       j = min_child; // next step
@@ -62,7 +62,7 @@ void HeapSort(int* arr, int size) {
 
     arr[i] = tmp[0];
 
-    swap(tmp, tmp + heap_end_idx);
+    Swap(tmp, tmp + heap_end_idx);
   }
 
   delete[] tmp;
