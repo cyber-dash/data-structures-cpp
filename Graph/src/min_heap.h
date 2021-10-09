@@ -1,7 +1,13 @@
-//
-// Created by alei_go@163.com(抖音: cyberdash_yuan) on 2020/11/1.
-//
-
+/*!
+ * @file min_heap.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 最小堆实现
+ * @version 0.2.1
+ * @date 2021-07-14
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 #ifndef CYBER_DASH_MIN_HEAP_H
 #define CYBER_DASH_MIN_HEAP_H
 

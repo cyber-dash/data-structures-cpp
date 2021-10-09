@@ -1,6 +1,13 @@
-//
-// Created by cyberdash@163.com(抖音id:cyberdash_yuan) on 2021/1/23.
-//
+/*!
+ * @file matrix_graph.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 图模板类
+ * @version 0.2.1
+ * @date 2021-07-14
+ *
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_MATRIX_GRAPH_H
 #define CYBER_DASH_MATRIX_GRAPH_H
