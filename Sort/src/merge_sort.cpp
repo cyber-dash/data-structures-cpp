@@ -78,14 +78,14 @@ void sub_array_merge_sort_recursive(int* array, int* cache_array, int left, int 
  * @brief 归并排序(使用递归/二分)
  * 调用sub_array_merge_sort_recursive实现归并排序
  * @param array 待排序数组
- * @param array_size 待排序数组长度
+ * @param arr_size 待排序数组长度
  */
-void merge_sort(int *array, int array_size) {
+void MergeSort(int *array, int array_size) {
 
-  int* cache_array = new int[array_size];
+  int* cache_array = new int[arr_size];
 
   int left = 0;
-  int right = array_size - 1;
+  int right = arr_size - 1;
 
   sub_array_merge_sort_recursive(array, cache_array, left, right);
 }
@@ -111,7 +111,7 @@ int get_next_turn_array_count(int array_count) {
  * @param array 待排序数组
  * @param array_size 待排序数组长度
  */
-void merge_sort_nonrecursive(int* array, int array_size) {
+void MergeSortNonrecursive(int* array, int array_size) {
 
   int* cache_array = new int[array_size];
 

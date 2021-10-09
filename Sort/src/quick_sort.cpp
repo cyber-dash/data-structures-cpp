@@ -34,16 +34,16 @@ int split(int *arr, int left, int right) {
 }
 
 
-void quick_sort(int *arr, int left, int right) {
+void QuickSort(int *arr, int left, int right) {
 
-    if (left >= right) {
+    if (begin >= end) {
         return;
     }
 
-    int pivot = split(arr, left, right);
+    int pivot = split(arr, begin, end);
 
-    quick_sort(arr, left, pivot - 1);
-    quick_sort(arr, pivot + 1, right);
+  QuickSort(arr, begin, pivot - 1);
+  QuickSort(arr, pivot + 1, end);
 }
 
 

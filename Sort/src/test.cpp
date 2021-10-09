@@ -24,7 +24,7 @@ void TestBubbleSort() {
   cout<<"冒泡排序前:"<<endl;
   array_show(array, array_size);
 
-  bubble_sort(array, array_size);
+  BubbleSort(array, array_size);
 
   cout<<"冒泡排序后:"<<endl;
   array_show(array, array_size);
@@ -46,7 +46,7 @@ void TestSelectSort() {
   cout<<"选择排序前:"<<endl;
   array_show(array, array_size);
 
-  select_sort(array, array_size);
+  SelectSort(array, array_size);
 
   cout<<"选择排序后:"<<endl;
   array_show(array, array_size);
@@ -68,7 +68,7 @@ void TestInsertSort() {
   cout<<"插入排序前:"<<endl;
   array_show(array, array_size);
 
-  insert_sort(array, array_size);
+  InsertSort(array, array_size);
 
   cout<<"插入排序后:"<<endl;
   array_show(array, array_size);
@@ -90,7 +90,7 @@ void TestMergeSort() {
   cout<<"归并排序前:"<<endl;
   array_show(array, array_size);
 
-  merge_sort(array, array_size);
+  MergeSort(array, array_size);
 
   cout<<"归并排序后:"<<endl;
   array_show(array, array_size);
@@ -112,7 +112,7 @@ void TestMergeSortNonRecursive() {
   cout<<"归并排序(非递归)前:"<<endl;
   array_show(array, array_size);
 
-  merge_sort_nonrecursive(array, array_size);
+  MergeSortNonrecursive(array, array_size);
 
   cout<<"归并排序(非递归)后:"<<endl;
   array_show(array, array_size);
@@ -133,7 +133,7 @@ void TestQuickSort() {
   cout<<"快速排序前:"<<endl;
   array_show(array, array_size);
 
-  quick_sort(array, 0, array_size - 1);
+  QuickSort(array, 0, array_size - 1);
 
   cout<<"快速排序后:"<<endl;
   array_show(array, array_size);
@@ -155,7 +155,7 @@ void TestHeapSort() {
   cout<<"堆排序前:"<<endl;
   array_show(array, array_size);
 
-  heap_sort(array, array_size);
+  HeapSort(array, array_size);
 
   cout<<"堆排序后:"<<endl;
   array_show(array, array_size);

@@ -1,58 +1,64 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/6/2.
-//
+/*!
+ * @file HeapSort.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 堆排序
+ * @version 0.2.1
+ * @date 2021-09-19
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #include "util.h"
 
 
-void build_heap(int* arr, int arr_size) {
+void BuildHeap(int* arr, int size) {
 
-  int edge_pos = (arr_size - 2) / 2;
+  int pivot = (size - 2) / 2;
 
-  for (int i = edge_pos; i >= 0; i--) {
+  for (int i = pivot; i >= 0; i--) {
 
-    for (int j = i; j <= edge_pos; ) {
+    for (int j = i; j <= pivot; ) {
 
-      int left_child_idx = 2 * j + 1;
-      int right_child_idx = 2 * j + 2;
+      int left_child = 2 * j + 1;
+      int right_child = 2 * j + 2;
 
-      int min_child_idx;
+      int min_child;
 
-      if (left_child_idx >= arr_size) {
+      if (left_child >= size) {
         break;
-      } else if (right_child_idx >= arr_size) {
-        min_child_idx = left_child_idx;
+      } else if (right_child >= size) {
+        min_child = left_child;
       } else {
-        if (arr[left_child_idx] >= arr[right_child_idx]) {
-          min_child_idx = right_child_idx;
+        if (arr[left_child] >= arr[right_child]) {
+          min_child = right_child;
         } else {
-          min_child_idx = left_child_idx;
+          min_child = left_child;
         }
       }
 
-      if (arr[j] > arr[min_child_idx]) {
-        swap(arr + j, arr + min_child_idx);
+      if (arr[j] > arr[min_child]) {
+        swap(arr + j, arr + min_child);
       }
 
-      j = min_child_idx; // next step
+      j = min_child; // next step
     }
   }
 }
 
 
-void heap_sort(int* arr, int arr_size) {
+void HeapSort(int* arr, int size) {
 
-  int *tmp = new int[arr_size]();
-  for (int i = 0; i < arr_size; i++) {
+  int *tmp = new int[size]();
+  for (int i = 0; i < size; i++) {
     tmp[i] = arr[i];
   }
 
-  for (int i = 0; i < arr_size; i++) {
+  for (int i = 0; i < size; i++) {
 
-    int cur_heap_size = arr_size - i;
-    int heap_end_idx = arr_size - 1 - i;
+    int cur_heap_size = size - i;
+    int heap_end_idx = size - 1 - i;
 
-    build_heap(tmp, cur_heap_size);
+    BuildHeap(tmp, cur_heap_size);
 
     arr[i] = tmp[0];
 

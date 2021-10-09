@@ -4,7 +4,6 @@
  * @brief 二叉树测试类
  * @version 0.2.1
  * @date 2020-05-04
- *
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */
@@ -82,7 +81,7 @@ void BinaryTreeTest::TestCopyConstructor() {
 
   bin_tree_2.Print();
 
-  cout<<endl<<cout<<"------------------------- CyberDash -------------------------"<<endl;
+  cout << endl << "------------------------- CyberDash -------------------------"<<endl;
 }
 
 

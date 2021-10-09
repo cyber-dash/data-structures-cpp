@@ -1,13 +1,20 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/29.
-//
+/*!
+ * @file cyber_dash_string.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 字符串匹配模板类
+ * @version 0.2.1
+ * @date 2021-07-29
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_YUAN_STRING_H
 #define CYBER_DASH_YUAN_STRING_H
 
 
 #include <iostream>
-
+#include <stdlib.h>
+#include <string.h>
 
 using namespace std;
 
@@ -15,14 +22,20 @@ using namespace std;
 const int DEFAULT_SIZE = 128;
 
 
+/*!
+ * @brief CyberDash字符串类
+ */
 class CyberDashString {
 
 public:
-  explicit CyberDashString(int size = DEFAULT_SIZE);
-  explicit CyberDashString(const char* char_ptr);
-  ~CyberDashString();
+  // 构造函数(字符串长度)
+  CyberDashString(int size = DEFAULT_SIZE);
+  /*! 构造函数 */
+  CyberDashString(const char* char_ptr);
+  /*! 析构函数 */
+  ~CyberDashString() { delete[] char_array_; };
 
-  int Length() const;
+  int Length() const { return this->length_; };
   CyberDashString operator() (int index, int len) const;
   bool operator == (const CyberDashString& cyber_dash_str) const;
   bool operator != (CyberDashString& cyber_dash_str) const;
@@ -30,6 +43,8 @@ public:
   CyberDashString& operator = (const CyberDashString& cyber_dash_str);
   CyberDashString& operator += (CyberDashString& cyber_dash_str);
   char& operator[] (int index);
+
+  // BF字符串匹配
   int BruteForceFind(CyberDashString& pattern, int offset) const;
 
   // KMP字符串匹配查找
@@ -46,16 +61,21 @@ public:
 
   static void CyberDashShow();
 
-private:
-  char* char_array_;
-  int length_;
-  int max_size_;
   static int* KMPNext(const char* pattern, int pattern_len);
   static int* KMPNextByCyberDash(const char* pattern, int pattern_len);
-  static void PrintNextArray(const int* next_arr_ptr, int next_arr_len);
+  static void PrintNextArray(const int* next_arr, int next_arr_len);
+
+private:
+  char* char_array_; //!< 字符串数组
+  int length_; //!< 当前字符串长度
+  int max_size_; //!< 最大长度
 };
 
 
+/*!
+ * @brief 构造函数(字符串长度)
+ * @param size 字符串最大长度
+ */
 CyberDashString::CyberDashString(int size) {
 
   max_size_ = size;
@@ -72,6 +92,10 @@ CyberDashString::CyberDashString(int size) {
 }
 
 
+/*!
+ * @brief 构造函数(字符串)
+ * @param char_ptr 字符串
+ */
 CyberDashString::CyberDashString(const char* char_ptr) {
   int char_len = strlen(char_ptr);
 
@@ -96,16 +120,12 @@ CyberDashString::CyberDashString(const char* char_ptr) {
 }
 
 
-CyberDashString::~CyberDashString() {
-  delete[] char_array_;
-}
-
-
-int CyberDashString::Length() const {
-  return length_;
-}
-
-
+/*!
+ * @brief 重载()
+ * @param index 起始index
+ * @param offset 偏移量
+ * @return 字符串
+ */
 CyberDashString CyberDashString::operator () (int index, int offset) const {
 
   CyberDashString ret_str(offset + 1);
@@ -131,6 +151,11 @@ CyberDashString CyberDashString::operator () (int index, int offset) const {
 }
 
 
+/*!
+ * @brief 重载==
+ * @param cyber_dash_str 字符串
+ * @return 是否相同
+ */
 bool CyberDashString::operator == (const CyberDashString& cyber_dash_str) const {
   int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
   if (cmp_res == 0) {
@@ -141,6 +166,11 @@ bool CyberDashString::operator == (const CyberDashString& cyber_dash_str) const 
 }
 
 
+/*!
+ * @brief 重载!=
+ * @param cyber_dash_str 字符串
+ * @return 是否不同
+ */
 bool CyberDashString::operator != (CyberDashString& cyber_dash_str) const {
   int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
   if (cmp_res != 0) {
@@ -151,11 +181,17 @@ bool CyberDashString::operator != (CyberDashString& cyber_dash_str) const {
 }
 
 
+// todo
 bool CyberDashString::operator ! () const {
   return true;
 }
 
 
+/*!
+ * @brief 重载=
+ * @param src_str 源字符串
+ * @return 自身字符串
+ */
 CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
 
   if (&src_str != this) {
@@ -180,11 +216,17 @@ CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
 }
 
 
+// todo
 CyberDashString& CyberDashString::operator += (CyberDashString& cyber_dash_str) {
   return *this;
 }
 
 
+/*!
+ * @brief 重载[]
+ * @param index
+ * @return
+ */
 char& CyberDashString::operator[] (int index) {
   if (index < 0 || index >= Length()) {
     cerr<<"Out of Range."<<endl;
@@ -195,8 +237,8 @@ char& CyberDashString::operator[] (int index) {
 }
 
 
-/**
- * @brief BF字符串匹配法
+/*!
+ * @brief BF字符串匹配
  * @param pattern 模式串
  * @param offset 目标串的起始偏移量
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
@@ -204,16 +246,16 @@ char& CyberDashString::operator[] (int index) {
 int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const {
 
   int match_offset = -1;
-  int pat_idx;
+  int pattern_idx;
 
   for (int i = offset; i <= length_ - pattern.length_; i++) {
-    for (pat_idx = 0; pat_idx < pattern.length_; pat_idx++) {
-      if (char_array_[i + pat_idx] != pattern[pat_idx]) {
+    for (pattern_idx = 0; pattern_idx < pattern.length_; pattern_idx++) {
+      if (char_array_[i + pattern_idx] != pattern[pattern_idx]) {
         break;
       }
     }
 
-    if (pat_idx == pattern.length_) {
+    if (pattern_idx == pattern.length_) {
       match_offset = i;
       break;
     }
@@ -223,7 +265,7 @@ int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const 
 }
 
 
-/**
+/*!
  * @brief 求模式串的next数组
  * @param pattern 模式串第一个字符串的指针
  * @param pattern_len 模式串长度
@@ -298,6 +340,12 @@ int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
 }
 
 
+/*!
+ * @brief 求模式串的next数组(CyberDash版本)
+ * @param pattern 模式串第一个字符串的指针
+ * @param pattern_len 模式串长度
+ * @return next数组起始地址
+ */
 int* CyberDashString::KMPNextByCyberDash(const char* pattern, int pattern_len) {
 
   int* next = new int[pattern_len];
@@ -331,18 +379,23 @@ int* CyberDashString::KMPNextByCyberDash(const char* pattern, int pattern_len) {
 }
 
 
-void CyberDashString::PrintNextArray(const int* next_arr_ptr, int next_arr_len) {
+/*!
+ * @brief 打印next数组
+ * @param next_arr next数组
+ * @param next_arr_len
+ */
+void CyberDashString::PrintNextArray(const int* next_arr, int next_arr_len) {
   /// 示例
   /// 模式字符串:  a b c d 5 6 a b c d 7
   /// next数组:  -1 0 0 0 0 0 0 1 2 3 4
   for (int i = 0; i < next_arr_len; i++) {
-    cout<<*(next_arr_ptr + i)<<" ";
+    cout << *(next_arr + i) << " ";
   }
   cout<<endl;
 }
 
 
-/**
+/*!
  * @brief KMP字符串匹配查找
  * @param pattern 模式串
  * @param offset 目标串的起始偏移量
@@ -399,7 +452,7 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
 }
 
 
-/**
+/*!
  * @brief KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
  * @param pattern 模式串
  * @param offset 目标串的起始偏移量
@@ -442,6 +495,9 @@ int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) cons
 }
 
 
+/*!
+ * @brief 我们是CyberDash:-)
+ */
 void CyberDashString::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl

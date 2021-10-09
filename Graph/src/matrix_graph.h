@@ -22,9 +22,23 @@ template<class V, class W>
 class MatrixGraph: public Graph<V, W> {
 
 public:
-  explicit MatrixGraph(int size = DEFAULT_VERTICES);
+  /*!
+   * @brief 构造函数
+   * @param size 最大结点数
+   */
+  MatrixGraph(int size = DEFAULT_VERTICES);
+
+  /*!
+   * @brief 析构函数
+   */
   ~MatrixGraph();
 
+  /*!
+   * @brief 获取节点(由结点索引)
+   * @param vertex 结点(用于保存结果)
+   * @param vertex_index 结点索引
+   * @return 是否获取成功
+   */
   bool GetVertexByIndex(V& vertex, int vertex_index);
 
   /*!

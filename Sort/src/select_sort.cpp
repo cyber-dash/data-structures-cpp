@@ -5,7 +5,7 @@
 #include "util.h"
 
 
-void select_sort(int *arr, int arr_size) {
+void SelectSort(int *arr, int arr_size) {
 
     for (int i = 0; i < arr_size; i++) {
 
