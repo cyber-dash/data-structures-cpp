@@ -5,6 +5,7 @@
  * @version 0.2.1
  * @date 2021-07-28
  * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_LINK_QUEUE_H

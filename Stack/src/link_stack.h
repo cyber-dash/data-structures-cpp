@@ -1,6 +1,12 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2020/7/28.
-//
+/*!
+ * @file link_stack.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 链式栈模板类
+ * @version 0.2.1
+ * @date 2020-07-28
+ * @copyright Copyright (c) 2021
+ *  CyberDash计算机考研
+ */
 
 #ifndef CYBER_DASH_LINK_STACK_H
 #define CYBER_DASH_LINK_STACK_H
@@ -13,56 +19,63 @@
 using namespace std;
 
 
+/*!
+ * @brief 结点模板结构体
+ * @tparam T 类型模板参数
+ */
 template <class T>
 struct LinkNode {
+  explicit LinkNode(LinkNode<T>* node = NULL): link(node) {}
+  explicit LinkNode(const T& data, LinkNode<T>* node = NULL): data(data), link(node) {}
 
-  T data_;
-
-  LinkNode<T> *link_;
-
-  explicit LinkNode(LinkNode<T>* ptr = NULL): link_(ptr) {}
-  explicit LinkNode(const T& data, LinkNode<T> *ptr = NULL): data_(data), link_(ptr) {}
+  T data; //!< 数据项
+  LinkNode<T>* link; //!< 下一结点
 };
 
 
-//! 栈结构体
+/*!
+ * @brief 链式栈模板类
+ * @tparam T 类型模板参数
+ */
 template <class T>
 class LinkStack: public Stack<T>{
 
 public:
   /*! @brief 构造函数 */
-  LinkStack(): top_ptr_(NULL) {}
-  /*! @brief 析构函数 */
+  LinkStack(): top_(NULL) {}
+  // 析构函数
   ~LinkStack();
-  /*! @brief 入栈一个元素 */
+  // 入栈
   void Push(const T& data);
-  /*! @brief 出栈一个元素 */
+  // 出栈(保存数据)
   bool Pop(T& data);
-  /*! @brief 获取栈顶元素 */
+  // 出栈(不保存数据)
+  bool Pop();
+  // 获取栈顶数据
   bool GetTop(T& data) const;
-  /*! @brief 判断栈是否为空 */
+  // 判断栈是否为空
   bool IsEmpty() const;
-  /*! @brief 获取栈大小 */
+  // 获取栈大小
   int GetSize() const;
-  /*! @brief 清空一个栈 */
+  // 清空
   void MakeEmpty();
 
-  /*! @brief 获取栈顶元素指针 */
+  // 获取栈顶结点指针
   LinkNode<T>* GetTopPtr();
 
+  // 重载<<(打印栈)
   template<class U>
   friend ostream& operator<<(ostream& os, LinkStack<T>& stack);
 
   void CyberDashShow();
 
 private:
-  LinkNode<T>* top_ptr_;     // 元素
-
+  LinkNode<T>* top_;     //!< 栈顶结点指针
 };
 
-/**
+/*!
  * @brief 析构函数
- * @tparam T 栈元素类型
+ * @tparam T 类型模板参数
  * @note 显式销毁时调用
  */
 template<class T>
@@ -71,61 +84,80 @@ LinkStack<T>::~LinkStack<T>() {
 }
 
 
-/**
- * @brief 获取栈顶元素指针
- * @tparam T 栈元素类型
- * @return 返回栈顶元素指针
- * @note
+/*!
+ * @brief 获取栈顶结点指针
+ * @tparam T 类型模板参数
+ * @return 栈顶结点指针
  */
 template<class T>
 LinkNode<T>* LinkStack<T>::GetTopPtr() {
-  return top_ptr_;
+  return top_;
 }
 
 
-/**
- * @brief 入栈操作
- * @tparam T 栈元素类型
- * @note
- * 将元素压入栈顶
+/*!
+ * @brief 入栈
+ * @tparam T 类型模板参数
  */
 template <class T>
-void LinkStack<T>::Push(T const& data)
+void LinkStack<T>::Push(const T& data)
 {
-  LinkNode<T>* link_node = new LinkNode<T>(data);
+  LinkNode<T>* node = new LinkNode<T>(data);
 
-  link_node->link_ = top_ptr_;
-  top_ptr_ = link_node;
+  node->link = this->top_;
+  this->top_ = node;
 }
 
 
 /**
- * @brief 出栈操作
- * @tparam T 栈元素类型
- * @return 返回操作是否执行成功
- * @note
- * 获取成功之后需要将栈顶元素删除
+ * @brief 出栈(保存数据项)
+ * @tparam T 类型模板参数
+ * @param data 数据(保存数据项)
+ * @return 是否成功
  */
 template <class T>
 bool LinkStack<T>::Pop(T& data)
 {
   if (IsEmpty()) {
-    // throw out_of_range("Stack<>::pop(): empty stack");
     return false;
   }
 
-  LinkNode<T>* cur_top_ptr = top_ptr_;
-  top_ptr_ = top_ptr_->link_;
+  LinkNode<T>* delete_node = this->top_;
+  this->top_ = this->top_->link;
 
-  data = cur_top_ptr->data_;
+  data = delete_node->data;
 
-  delete cur_top_ptr;
+  delete delete_node;
+  delete_node = NULL;
 
   return true;
 }
 
 
 /**
+ * @brief 出栈(不保存数据项)
+ * @tparam T 类型模板参数
+ * @param data 数据(保存数据项)
+ * @return 是否成功
+ */
+template <class T>
+bool LinkStack<T>::Pop()
+{
+  if (IsEmpty()) {
+    return false;
+  }
+
+  LinkNode<T>* delete_node = this->top_;
+  this->top_ = this->top_->link;
+
+  delete delete_node;
+  delete_node = NULL;
+
+  return true;
+}
+
+
+/*!
  * @brief 获取栈顶元素
  * @tparam T 栈元素类型
  * @return 返回操作是否执行成功
@@ -136,44 +168,41 @@ template <class T>
 bool LinkStack<T>::GetTop(T& data) const
 {
   if (IsEmpty()) {
-    // throw out_of_range("Stack<>::top(): empty stack");
     return false;
   }
 
-  data = top_ptr_->data_;
+  data = this->top_->data;
 
   return true;
 }
 
-/**
+
+/*!
  * @brief 获取栈的大小
- * @return 返回栈的大小
- * @note
- * 需要遍历栈大小，时间复杂度O(n)
+ * @return 栈的大小
  */
 template<class T>
 int LinkStack<T>::GetSize() const {
 
   int count = 0;
-  LinkNode<T>* cur_ptr = top_ptr_;
+  LinkNode<T>* cur = this->top_;
 
-  while (cur_ptr != NULL) {
+  while (cur != NULL) {
     count++;
-    cur_ptr = cur_ptr->link_;
+    cur = cur->link;
   }
 
   return count;
 }
 
 
-/**
+/*!
  * @brief 判断栈是否为空
- * @return 如果栈为空，则返回true，否则返回false
- * @note
+ * @return 是否为空
  */
 template<class T>
 bool LinkStack<T>::IsEmpty() const {
-  if (top_ptr_ == NULL) {
+  if (this->top_ == NULL) {
     return true;
   } else {
     return false;
@@ -189,34 +218,33 @@ bool LinkStack<T>::IsEmpty() const {
  */
 template<class T>
 void LinkStack<T>::MakeEmpty() {
+  while (this->top_ != NULL) {
+    LinkNode<T>* cur = this->top_;
+    top_ = top_->link;
 
-  LinkNode<T>* cur_ptr;
-
-  while (top_ptr_ != NULL) {
-    cur_ptr = top_ptr_;
-    top_ptr_ = top_ptr_->link_;
-    delete cur_ptr;
+    delete cur;
+    cur = NULL;
   }
 }
 
 
 /**
- * @brief
- * @tparam T 栈元素类型
- * @param os
- * @param link_stack
- * @return
+ * @brief 重载<<(打印栈)
+ * @tparam T 类型模板参数
+ * @param os 输出流
+ * @param link_stack 栈
+ * @return 输出流
  */
 template<class T>
-ostream& operator<<(ostream &os, LinkStack<T> &stack) {
+ostream& operator<<(ostream& os, LinkStack<T>& stack) {
 
   os<<"栈中元素个数: "<<stack.GetSize()<<endl;
 
-  LinkNode<T>* cur_ptr = stack.GetTopPtr();
+  LinkNode<T>* cur = stack.GetTopPtr();
 
-  for (int i = 1; cur_ptr != NULL; i++) {
-    os<<i<<":"<<cur_ptr->data_<<endl;
-    cur_ptr = cur_ptr->link_;
+  for (int i = 1; cur != NULL; i++) {
+    os << i << ":" << cur->data << endl;
+    cur = cur->link;
   }
 
   return os;
