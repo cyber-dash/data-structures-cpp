@@ -4,10 +4,10 @@
  * @brief 队列测试.cpp文件
  * @version 0.2.1
  * @date 2021-10-9
- *
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */
+
 #include "test.h"
 #include "link_queue.h"
 

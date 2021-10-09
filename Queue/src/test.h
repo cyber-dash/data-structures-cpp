@@ -4,7 +4,6 @@
  * @brief 队列测试头文件
  * @version 0.2.1
  * @date 2021-10-9
- *
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */
@@ -13,22 +12,22 @@
 #define CYBER_DASH_QUEUE_TEST_H
 
 
-/*! 测试获取队列长度 */
+/*! @brief 测试获取队列长度 */
 void TestGetSize();
 
-/*! 测试队列入队 */
+/*! @brief 测试入队 */
 void TestEnQueue();
 
-/*! 测试队列出队 */
+/*! @brief 测试出队 */
 void TestDeQueue();
 
-/*! 测试获取队列头/尾节点 */
+/*! @brief 测试获取队列头/尾节点 */
 void TestGetFrontAndGetRear();
 
-/*! 测试队列是否为空 */
+/*! @brief 测试队列是否为空 */
 void TestIsEmpty();
 
-/*! 测试队列operator? */
+/*! @brief 测试重载<< */
 void TestOperatorCout();
 
 

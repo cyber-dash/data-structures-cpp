@@ -4,7 +4,6 @@
  * @brief 队列demo演示
  * @version 0.2.1
  * @date 2021-07-14
- *
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */

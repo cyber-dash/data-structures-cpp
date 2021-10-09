@@ -2,11 +2,9 @@
  * @file link_queue.h
  * @author cyberdash@163.com(抖音: cyberdash_yuan)
  * @brief 链表实现队列
- * @version 0.1
+ * @version 0.2.1
  * @date 2021-07-28
- * 
  * @copyright Copyright (c) 2021
- * 
  */
 
 #ifndef CYBER_DASH_LINK_QUEUE_H
@@ -18,226 +16,164 @@
 
 using namespace std;
 
-/**
- * @brief 链表队列结点
- * 
- * @tparam T 结点类型
+/*!
+ * @brief 链表队列结点模板结构体
+ * @tparam T 类型模板参数
  */
 template <class T>
 class LinkNode{
 
 public:
-  /**
-  * @brief  构造一个空结点
-  * 
-  * @param  ptr 指针(可选) 指向下一个结点
-  */
-  LinkNode(LinkNode<T> *ptr = NULL): link_(ptr) {}
+  /*!
+   * @brief 构造函数(下一结点指针)
+   * @param node 下一结点指针
+   */
+  LinkNode(LinkNode<T>* node = NULL): link_(node) {}
 
   /**
-   * @brief 构造一个结点
-   * 
-   * @param data 当前结点存储的数据
-   * @param ptr 指针(可选) 指向下一个结点
+   * @brief 构造函数(数据项&下一结点指针)
+   * @param data 数据项
+   * @param node 下一结点指针
    */
-  LinkNode(const T &data, LinkNode<T> *ptr = NULL): data_(data), link_(ptr) {}
+  LinkNode(const T& data, LinkNode<T>* node = NULL): data_(data), link_(node) {}
 
   /**
    * @brief 获取当前结点值
-   * 
-   * @return T 结点值
+   * @return T 类型模板参数
    */
   T GetData() { return data_; }
 
-  /**
+  /*!
    * @brief 设置当前结点值
-   * 
    * @param data 输入的结点值
-   * @return true 设置成功
-   * @return false 设置失败
+   * @return 是否成功
    */
-  bool SetData(const T &data)
+  bool SetData(const T& data)
   {
     data_ = data;
     return true;
   }
 
-  /**
+  /*!
    * @brief 获取下一结点
-   * 
    * @return LinkNode<T>* 返回下一结点
    */
-  LinkNode<T> *GetLink() { return link_; }
+  LinkNode<T>* GetLink() { return link_; }
 
-  /**
+  /*!
    * @brief 设置下一结点
-   * 
-   * @param ptr 指针 指向下一结点
-   * @return true 设置成功
-   * @return false 设置失败
+   * @param node 下一结点指针
+   * @return 是否成功
    */
-  bool SetLink(LinkNode<T> *ptr)
+  bool SetLink(LinkNode<T>* node)
   {
-    link_ = ptr;
+    link_ = node;
     return true;
   }
 
 private:
-  /**
-   * @brief 结点值
-   * 
-   */
-  T data_;
-  /**
-   * @brief 下一结点
-   * 
-   */
-  LinkNode<T> *link_;
+  T data_; //!< 结点数据项
+  LinkNode<T>* link_; //!< 下一结点
 };
 
+
 /**
- * @brief 链表队列
- * 
- * @tparam T 队列存储类型
+ * @brief 链表队列模板类
+ * @tparam T 类型模板参数
  */
 template <class T>
-class LinkQueue: public Queue<T>{
+class LinkQueue: public Queue<T> {
 
 public:
-  /**
- * @brief 构造链表队列
- * 
- */
-  LinkQueue(): front_ptr_(NULL), rear_ptr_(NULL) {}
-  ~LinkQueue();
+  /*! @brief 构造函数 */
+  LinkQueue(): front_(NULL), rear_(NULL) {}
 
-  /**
-   * @brief 入队操作
-   * 
-   * @param data 加入队列的值
-   * @return true 
-   * @return false 
-   */
-  bool EnQueue(const T &data);
+  /*! @brief 析构函数 */
+  ~LinkQueue() { MakeEmpty(); }
 
-  /**
-   * @brief 出队操作
-   * 
-   * @param data 引用方式返回出队结点的值
-   * @return true 
-   * @return false 
+  /*!
+   * @brief 入队
+   * @param data 数据项
+   * @return 是否入队成功
    */
-  bool DeQueue(T &data);
+  bool EnQueue(const T& data);
 
-  /**
-   * @brief 获取队列头结点
-   * 
-   * @param data 引用方式返回队列头结点的值
-   * @return true 正确返回
-   * @return false 运行出错
-   */
-  bool GetFront(T &data) const;
+  // 出队(保存数据)
+  bool DeQueue(T& data);
 
-  /**
-   * @brief 获取队列尾结点
-   * 
-   * @param data 引用方式返回队列尾结点的值
-   * @return true 正确返回
-   * @return false 运行出错
-   */
-  bool GetRear(T &data) const;
+  // 出队(不保存数据)
+  bool DeQueue();
 
-  /**
-   * @brief 判断队列是否为空
-   * 
-   * @return true 空
-   * @return false 不为空
-   */
+  // 获取队头数据
+  bool GetFront(T& data) const;
+
+  // 获取队尾数据
+  bool GetRear(T& data) const;
+
+  // 判断队列是否为空
   bool IsEmpty() const;
 
-  /**
-   * @brief 获取队列长度
-   * 
-   * @return int 队列长度
-   */
+  // 获取队列长度
   int GetSize() const;
 
-  /**
-   * @brief 清空队列
-   * 
-   */
+  // 清空队列
   void MakeEmpty();
 
-  /**
-   * @brief 获取队列前置结点
-   * 
-   * @return LinkNode<T>* 前置结点
+  /*!
+   * @brief 获取队头结点指针
+   * @return 队头结点指针
    */
-  LinkNode<T>* GetFrontPtr() { return front_ptr_; }
+  LinkNode<T>* GetFrontPtr() { return this->front_; }
 
-  /**
-   * @brief 获取队列后置结点
-   * 
-   * @return LinkNode<T>* 后置结点
+  /*!
+   * @brief 获取队尾结点指针
+   * @return LinkNode<T>* 队尾结点指针
    */
-  LinkNode<T>* GetRearPtr() { return rear_ptr_; }
+  LinkNode<T>* GetRearPtr() { return this->rear_; }
 
+  // 重载<<(打印队列)
   template<class U>
   friend ostream& operator<<(ostream& os, LinkQueue<T>& link_queue);
   
-  /**
-   * @brief CAST
-   * 
-   */
+  // 我们是CyberDash:-)
   void CyberDashShow();
 
 private:
-  LinkNode<T>* front_ptr_;
-  LinkNode<T>* rear_ptr_;
+  LinkNode<T>* front_; //!< 队头指针
+  LinkNode<T>* rear_; //!< 队尾指针
 };
 
-/**
- * @brief 析构函数
- * @tparam T
- * @note 显式销毁时调用
- */
-template<class T>
-LinkQueue<T>::~LinkQueue() {
-  MakeEmpty();
-}
 
-/**
- * @brief 入队操作
- * @tparam T 队列元素类型
- * @param data 入队结点值
- * @return 执行是否成功
- * @note
+/*!
+ * @brief 入队
+ * @tparam T 类型模板参数
+ * @param data 数据
+ * @return 是否成功
  */
 template<class T>
 bool LinkQueue<T>::EnQueue(const T& data) {
 
-  LinkNode<T>* new_node_ptr = new LinkNode<T>(data);
-  if (new_node_ptr == NULL) {
+  LinkNode<T>* new_node = new LinkNode<T>(data);
+  if (new_node == NULL) {
     return false;
   }
 
   if (IsEmpty()) {
-    this->front_ptr_ = new_node_ptr;
-    this->rear_ptr_ = new_node_ptr;
+    this->front_ = new_node;
+    this->rear_ = new_node;
   } else {
-    this->rear_ptr_->SetLink(new_node_ptr);
-    this->rear_ptr_ = new_node_ptr;
+    this->rear_->SetLink(new_node);
+    this->rear_ = new_node;
   }
 
   return true;
 }
 
-/**
- * @brief 出队操作
- * @tparam T 队列元素类型
- * @param data 引用方式返回出队结点值
- * @return 执行是否成功
- * @note
+/*!
+ * @brief 出队(保存数据)
+ * @tparam T 类型模板参数
+ * @param data 数据(保存出队结点的数据项)
+ * @return 是否出队成功
  */
 template<class T>
 bool LinkQueue<T>::DeQueue(T& data) {
@@ -246,22 +182,47 @@ bool LinkQueue<T>::DeQueue(T& data) {
     return false;
   }
 
-  LinkNode<T>* cur_ptr = front_ptr_;
+  LinkNode<T>* cur = front_;
 
-  data = cur_ptr->GetData();
-  front_ptr_ = front_ptr_->GetLink();
+  data = cur->GetData();
+  this->front_ = this->front_->GetLink();
 
-  delete cur_ptr;
+  delete cur;
+  cur = NULL;
 
   return true;
 }
 
-/**
- * @brief 获取队列前置结点值
- * @tparam T 队列元素类型
- * @param data 引用方式返回队列前置结点值
- * @return 执行是否成功
- * @note
+
+/*!
+ * @brief 出队(不保存数据)
+ * @tparam T 类型模板参数
+ * @param data 数据(保存出队结点的数据项)
+ * @return 是否出队成功
+ */
+template<class T>
+bool LinkQueue<T>::DeQueue() {
+
+  if (IsEmpty()) {
+    return false;
+  }
+
+  LinkNode<T>* cur = this->front_;
+
+  this->front_ = this->front_->GetLink();
+
+  delete cur;
+  cur = NULL;
+
+  return true;
+}
+
+
+/*!
+ * @brief 获取队头数据
+ * @tparam T 类型模板参数
+ * @param data 数据(用于保存队头数据项)
+ * @return 是否成功
  */
 template<class T>
 bool LinkQueue<T>::GetFront(T& data) const {
@@ -270,17 +231,17 @@ bool LinkQueue<T>::GetFront(T& data) const {
     return false;
   }
 
-  data = this->front_ptr_->GetData();
+  data = this->front_->GetData();
 
   return true;
 }
 
-/**
- * @brief 获取队列后置结点值
- * @tparam T 队列元素类型
- * @param data 引用方式返回队列后置结点值
- * @return 执行是否成功
- * @note
+
+/*!
+ * @brief 获取队尾数据
+ * @tparam T 类型模板参数
+ * @param data 数据(用于保存数据项)
+ * @return 是否成功
  */
 template<class T>
 bool LinkQueue<T>::GetRear(T& data) const {
@@ -289,69 +250,65 @@ bool LinkQueue<T>::GetRear(T& data) const {
     return false;
   }
 
-  data = this->rear_ptr_->GetData();
+  data = this->rear_->GetData();
 
   return true;
 }
 
-/**
+
+/*!
  * @brief 判断队列是否为空
- * @tparam T 队列元素类型
- * @return 若为空返回true 不空返回false
- * @note
+ * @tparam T 类型模板参数
+ * @return 是否为空
  */
 template<class T>
 bool LinkQueue<T>::IsEmpty() const {
-  if (front_ptr_ == NULL) {
+  if (this->front_ == NULL) {
     return true;
   } else {
     return false;
   }
 }
 
-/**
+
+/*!
  * @brief 获取队列长度
- * @tparam T 队列元素类型
+ * @tparam T 类型模板参数
  * @return 队列长度
- * @note
  */
 template<class T>
 int LinkQueue<T>::GetSize() const {
 
   int count = 0;
-  LinkNode<T>* cur_ptr = front_ptr_;
+  LinkNode<T>* cur = this->front_;
 
-  while (cur_ptr != NULL) {
-    cur_ptr = cur_ptr->GetLink();
+  while (cur != NULL) {
+    cur = cur->GetLink();
     count++;
   }
 
   return count;
 }
 
-/**
+
+/*!
  * @brief 清空队列
- * @tparam T 队列元素类型
- * @note
+ * @tparam T 类型模板参数
  */
 template<class T>
 void LinkQueue<T>::MakeEmpty() {
-
-  LinkNode<T>* cur_ptr;
-
-  while (front_ptr_ != NULL) {
-    cur_ptr = front_ptr_;
-    front_ptr_ = front_ptr_->GetLink();
-    delete  cur_ptr;
+  while (!this->IsEmpty()) {
+    this->DeQueue();
   }
 }
 
-/**
- * @brief
- * @tparam T
- * @param os
- * @param link_queue
- * @return
+
+/*!
+ * @brief 重载<<(打印队列)
+ * @tparam T 类型模板参数
+ * @param os 输出流
+ * @param link_queue 链表队列
+ * @return 输出流
  */
 template<class T>
 ostream& operator<<(ostream& os, LinkQueue<T>& link_queue) {
