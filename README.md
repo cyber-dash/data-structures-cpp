@@ -3,7 +3,7 @@
 ### 1.1 配套书籍
 清华大学出版社《数据结构(用面向对象方法与C++语言描述)(第2版)》(殷人昆主编)
 
-![](https://img9.doubanio.com/view/subject/l/public/s22791934.jpg)
+![image.png](https://gitee.com/L_Dash/cloud-images/raw/master/img/datastructure.jpg)
 
 **需要强调的是**  
 本项目代码并不是将书中代码抄写下来, 而是进行了大量的调整, 涉及代码规范, 解决Bug,
