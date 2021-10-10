@@ -27,7 +27,7 @@
 
 ### 1.3 代码规范与风格
 **代码规范**  
-代码准守google编码规范，参考文档连接：
+Google编码规范，参考文档连接:  
 https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
 
 **使用STL**  
