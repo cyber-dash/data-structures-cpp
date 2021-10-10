@@ -24,12 +24,12 @@
 
 
 ### 1.3 代码规范与风格
-**代码风格与编程规范**  
+**代码规范**  
 代码准守google编码规范，参考文档连接：
 https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
 
 **使用STL**  
-部分代码(例如图)使用了STL, 参考文档或者<C++ Primer>
+部分代码(例如图)(大量)使用STL, 参考文档或者<C++ Primer>
 
 **C++特性**  
 考虑很多读者是学生和初学者, 使用C++98

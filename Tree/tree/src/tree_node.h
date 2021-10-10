@@ -5,14 +5,19 @@
 #ifndef CYBER_DASH_TREE_NODE_H
 #define CYBER_DASH_TREE_NODE_H
 
+
 #include <iostream>
+
 
 template <class T>
 struct TreeNode {
+  TreeNode(T data = 0, TreeNode<T>* first_child = NULL, TreeNode<T>* next_sibling = NULL):
+    data(data), first_child(first_child), next_sibling(next_sibling) {}
+
   T data;
-  TreeNode<T> *firstChild, *nextSibling;
-  TreeNode(T value = 0, TreeNode<T> *fc = NULL, TreeNode<T> *ns = NULL) :
-    data(value), firstChild(fc), nextSibling(ns) {}
+  TreeNode<T>* first_child;
+  TreeNode<T>* next_sibling;
 };
+
 
 #endif //CYBER_DASH_TREE_NODE_H

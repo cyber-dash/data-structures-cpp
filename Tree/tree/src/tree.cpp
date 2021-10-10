@@ -28,8 +28,8 @@ bool Tree<T>::IsRoot(void) {
 template<class T>
 void Tree<T>::RemoveSubTree(TreeNode<T> *p){
   if (p){
-    RemoveSubTree(p->firstChild);
-    RemoveSubTree(p->nextSibling);
+    RemoveSubTree(p->first_child);
+    RemoveSubTree(p->next_sibling);
     delete p;
   }
 }
@@ -48,14 +48,14 @@ bool Tree<T>::Parent(void) {
 
 template <class T>
 bool Tree<T>::FindParent(TreeNode<T> *t, TreeNode<T> *p) {
-  TreeNode<T> *q = t->firstChild;
+  TreeNode<T> *q = t->first_child;
   bool succ;
 
   while (q != NULL && q != p) {
     if ((succ = FindParent(q, p)) == true) {
       return succ;
     }
-    q = q->nextSibling;
+    q = q->next_sibling;
   }
 
   if (q != NULL && q == p) {
@@ -69,8 +69,8 @@ bool Tree<T>::FindParent(TreeNode<T> *t, TreeNode<T> *p) {
 
 template <class T>
 bool Tree<T>::FirstChild(void) {
-  if (current != NULL && current->firstChild != NULL) {
-    current = current->firstChild;
+  if (current != NULL && current->first_child != NULL) {
+    current = current->first_child;
     return true;
   }
 
@@ -81,8 +81,8 @@ bool Tree<T>::FirstChild(void) {
 
 template <class T>
 bool Tree<T>::NextSibling(void) {
-  if (current != NULL && current->nextSibling != NULL) {
-    current = current->nextSibling;
+  if (current != NULL && current->next_sibling != NULL) {
+    current = current->next_sibling;
     return true;
   }
 
@@ -108,9 +108,9 @@ bool Tree<T>::Find(TreeNode<T> *p, T value) {
     result = true;
     current = p;
   } else {
-    TreeNode<T> *q = p->firstChild;
+    TreeNode<T> *q = p->first_child;
     while (q != NULL && !(result = Find(q, value))) {
-      q = q->nextSibling;
+      q = q->next_sibling;
     }
   }
 
@@ -126,11 +126,11 @@ void Tree<T>::Insert(TreeNode<T> *& subTree, T& x) {
       exit(1);
     }
   } else {
-    Insert(subTree->firstChild, x);
+    Insert(subTree->first_child, x);
     if (subTree == GetRoot()) {
       return;
     }
-    Insert(subTree->nextSibling, x);
+    Insert(subTree->next_sibling, x);
   }
 }
 
@@ -139,7 +139,7 @@ void Tree<T>::PreOrder(ostream& out, TreeNode<T> *p) {
   if (p != NULL) {
     out << p->data;
 
-    for (p = p->firstChild; p != NULL; p = p->nextSibling) {
+    for (p = p->first_child; p != NULL; p = p->next_sibling) {
       PreOrder(out, p);
     }
   }
@@ -150,7 +150,7 @@ void Tree<T>::PostOrder(ostream& out, TreeNode<T> *p) {
   if (p != NULL) {
     TreeNode<T> *q;
 
-    for (q = p->firstChild; q != NULL; q = q->nextSibling) {
+    for (q = p->first_child; q != NULL; q = q->next_sibling) {
       PostOrder(out, q);
     }
     out << p->data;
@@ -166,8 +166,8 @@ void Tree<T>::preorder(TreeNode<T> *t, void (*visit)(TreeNode<T> *p))
 
   visit(t);
 
-  preorder(t->firstChild, visit);
-  preorder(t->nextSibling, visit);
+  preorder(t->first_child, visit);
+  preorder(t->next_sibling, visit);
 }
 
 template <class T>
@@ -177,9 +177,9 @@ void Tree<T>::postorder(TreeNode<T> *t, void (*visit)(TreeNode<T> *p))
     return;
   }
 
-  postorder(t->firstChild, visit);
+  postorder(t->first_child, visit);
   visit(t);
-  postorder(t->nextSibling, visit);
+  postorder(t->next_sibling, visit);
 }
 
 template <class T>
@@ -194,7 +194,7 @@ void Tree<T>::LevelOrder(ostream& out, TreeNode<T> *p)
       p = Q.front();
       Q.pop();
       out << p->data;
-      for (p = p->firstChild; p != NULL; p = p->nextSibling) {
+      for (p = p->first_child; p != NULL; p = p->next_sibling) {
         Q.push(p);
       }
     }
@@ -209,8 +209,8 @@ int Tree<T>::count_node(TreeNode<T> *t) {
 
   int count = 1;
 
-  count += count_node(t->firstChild);
-  count += count_node(t->nextSibling);
+  count += count_node(t->first_child);
+  count += count_node(t->next_sibling);
 
   return count;
 }
@@ -221,8 +221,8 @@ int Tree<T>::find_depth(TreeNode<T> *t) {
     return 0;
   }
 
-  int fc_depth = find_depth(t->firstChild) + 1;
-  int ns_depth = find_depth(t->nextSibling);
+  int fc_depth = find_depth(t->first_child) + 1;
+  int ns_depth = find_depth(t->next_sibling);
 
   return (fc_depth > ns_depth) ? fc_depth : ns_depth;
 }
@@ -247,8 +247,8 @@ void Tree<T>::create_tree(TreeNode<T> *& subTree, char *&GL) {
     cerr << "存储分配错误!" << endl; 
     exit(1);
   }
-  create_tree(subTree->firstChild, GL);
-  create_tree(subTree->nextSibling, GL);
+  create_tree(subTree->first_child, GL);
+  create_tree(subTree->next_sibling, GL);
 }
 
 template <class T>
@@ -260,7 +260,7 @@ void Tree<T>::show_tree(TreeNode<T> *t) {
   cout << '(';
   cout << t->data;
 
-  for (TreeNode<T> *p = t->firstChild; p != NULL; p = p->nextSibling) {
+  for (TreeNode<T> *p = t->first_child; p != NULL; p = p->next_sibling) {
     show_tree(p);
   }
 
