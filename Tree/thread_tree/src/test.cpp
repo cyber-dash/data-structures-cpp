@@ -6,7 +6,7 @@
 
 
 void visit(ThreadNode<int>* node_ptr) {
-  cout<<node_ptr->data_<<" ";
+  cout << node_ptr->data << " ";
 };
 
 
@@ -36,11 +36,11 @@ void TestFirst() {
 
   in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* root_ptr = in_order_thread_tree.GetRoot();
+  ThreadNode<int>* root_ptr = in_order_thread_tree.Root();
 
   ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(root_ptr);
 
-  cout<<"中序线索第一个线索节点 :"<<first_node_ptr->data_<<endl;
+  cout << "中序线索第一个线索节点 :" << first_node_ptr->data << endl;
 
   cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;
@@ -73,11 +73,11 @@ void TestLast() {
 
   in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* root_ptr = in_order_thread_tree.GetRoot();
+  ThreadNode<int>* root_ptr = in_order_thread_tree.Root();
 
   ThreadNode<int>* last_node_ptr = in_order_thread_tree.Last(root_ptr);
 
-  cout<<"中序线索最后一个线索节点: "<<last_node_ptr->data_<<endl;
+  cout << "中序线索最后一个线索节点: " << last_node_ptr->data << endl;
 
   cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;
@@ -110,16 +110,16 @@ void TestNext() {
 
   in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(in_order_thread_tree.GetRoot());
+  ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(in_order_thread_tree.Root());
 
   ThreadNode<int>* second_node_ptr = in_order_thread_tree.Next(first_node_ptr);
   ThreadNode<int>* third_node_ptr = in_order_thread_tree.Next(second_node_ptr);
   ThreadNode<int>* forth_node_ptr = in_order_thread_tree.Next(third_node_ptr);
 
-  cout<<"中序线索树第1个线索节点: "<<first_node_ptr->data_<<endl;
-  cout<<"中序线索树第2个线索节点: "<<second_node_ptr->data_<<endl;
-  cout<<"中序线索树第3个线索节点: "<<third_node_ptr->data_<<endl;
-  cout<<"中序线索树第4个线索节点: "<<forth_node_ptr->data_<<endl;
+  cout << "中序线索树第1个线索节点: " << first_node_ptr->data << endl;
+  cout << "中序线索树第2个线索节点: " << second_node_ptr->data << endl;
+  cout << "中序线索树第3个线索节点: " << third_node_ptr->data << endl;
+  cout << "中序线索树第4个线索节点: " << forth_node_ptr->data << endl;
 
   cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;
@@ -153,7 +153,7 @@ void TestPrior() {
 
   in_order_thread_tree.CreateInOrderThread();
 
-  node_ptr_array[0] = in_order_thread_tree.First(in_order_thread_tree.GetRoot());
+  node_ptr_array[0] = in_order_thread_tree.First(in_order_thread_tree.Root());
 
   for (int i = 1; i < 4; i++) {
     node_ptr_array[i] = in_order_thread_tree.Next(node_ptr_array[i - 1]);
@@ -161,7 +161,7 @@ void TestPrior() {
 
   for (int i = 3; i >=1; i--) {
     ThreadNode<int>* prior_node_ptr = in_order_thread_tree.Prior(node_ptr_array[i]);
-    cout<<"中序线索树第"<<i<<"个线索节点: "<<prior_node_ptr->data_<<endl; // (i - 1) + 1 = i
+    cout << "中序线索树第" << i << "个线索节点: " << prior_node_ptr->data << endl; // (i - 1) + 1 = i
   }
 
   cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
@@ -198,7 +198,7 @@ void TestParent() {
 
   in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* root_ptr = in_order_thread_tree.GetRoot();
+  ThreadNode<int>* root_ptr = in_order_thread_tree.Root();
   ThreadNode<int>* root_parent_ptr = in_order_thread_tree.Parent(root_ptr);
 
   ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(root_ptr);
@@ -206,14 +206,14 @@ void TestParent() {
   ThreadNode<int>* first_parent_parent_ptr = in_order_thread_tree.Parent(first_parent_ptr);
 
   if (root_parent_ptr != NULL) {
-    cout<<"根节点的父节点: "<<root_parent_ptr->data_<<endl;
+    cout << "根节点的父节点: " << root_parent_ptr->data << endl;
   } else {
     cout<<"根节点的父节点为NULL"<<endl;
   }
 
-  cout<<"第一个线索节点: "<<first_node_ptr->data_<<endl;
-  cout<<"第一个线索节点的父节点: "<<first_parent_ptr->data_<<endl;
-  cout<<"第一个线索节点的父节点的父节点: "<<first_parent_parent_ptr->data_<<endl;
+  cout << "第一个线索节点: " << first_node_ptr->data << endl;
+  cout << "第一个线索节点的父节点: " << first_parent_ptr->data << endl;
+  cout << "第一个线索节点的父节点的父节点: " << first_parent_parent_ptr->data << endl;
 
   cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;

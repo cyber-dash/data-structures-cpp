@@ -4,7 +4,6 @@
  * @brief 稀疏矩阵 
  * @version 0.2.1
  * @date 2021-05-13
- * 
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */
