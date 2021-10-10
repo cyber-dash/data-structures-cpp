@@ -1,6 +1,6 @@
-﻿# CyberDash数据结构开源代码
+﻿# CyberDash数据结构开源代码  
 ## 1 简介
-### 1.1 配套书籍
+### 1.1 配套书籍  
 清华大学出版社《数据结构(用面向对象方法与C++语言描述)(第2版)》(殷人昆主编)  
 
 **需要强调的是**  
@@ -8,7 +8,7 @@
 增加边界条件等大量优化. 完成代码的过程中经过了反复地讨论, 力争在教科书的基础上, 
 提高代码的规范性健壮性.
 
-### 1.2 代码运行环境
+### 1.2 代码运行环境  
 目前在Linux和Mac环境已经测试通过。
 
 **Linux测试环境**
@@ -23,16 +23,16 @@
     doxygen: 1.9.2
 
 
-### 1.3 升级与优化
-**代码风格与编程规范**
+### 1.3 代码规范与风格
+**代码风格与编程规范**  
 代码准守google编码规范，参考文档连接：
 https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
 
-**使用STL**
+**使用STL**  
 部分代码(例如图)使用了STL, 参考文档或者<C++ Primer>
 
-**C++特性**
-考虑很多读者是学生初学者, 使用C++98
+**C++特性**  
+考虑很多读者是学生和初学者, 使用C++98
 
 ## 2 使用方式
 为了方便分类学习, 项目主目录下, 每个目录对应一个独立的项目
@@ -48,30 +48,30 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 
 ## 3 内容简介
-**Array: 稀疏矩阵**
+**Array: 稀疏矩阵**  
 
-**GeneralizedList: 广义表**
+**GeneralizedList: 广义表**  
 
 **Graph: 图**  
 矩阵图, 邻接表图, 深度优先, 广度优先, 连通分量, 最小生成树, 最短路径
 
-**LinearList: 线性表**
+**LinearList: 线性表**  
 顺序表, 单链表, 双向链表
 
-**Queue: 队列**
+**Queue: 队列**  
 
-**Search: 搜索**
+**Search: 搜索**   
 二叉搜索树
 
-**Sort**: 排序
+**Sort: 排序**  
 冒泡, 插入, 选择, 堆, 归并, 快速
 
-**Stack: 栈**
+**Stack: 栈**  
 
-**String: 字符串**
+**String: 字符串**  
 BF, KMP
 
-**Tree: 树**
+**Tree: 树**  
 二叉树, 二叉线索树, 哈夫曼树
 
 ## 4 Doxygen生成文档
@@ -106,7 +106,7 @@ doxygen配置文件将GENERATE_LATEX/LATEX_OUTPUT/USE_PDFLATEX/PDF_HYPERLINKS设
 **Y_Dash(元哥)**
 
 用过很多语言, 做过很多项目, 从底层到应用层, 安全/服务/社区/IoT/...  
-写代码能剪裁kernel, 吹拉谈唱能去欧洲做展会讲解, 五花八门什么都略懂一些
+写代码能剪裁kernel, 吹拉谈唱能去欧洲做展会讲解, 从外太空到内XX, 五花八门什么都略懂一些
 
 **G_Dash(磊哥)**
 
