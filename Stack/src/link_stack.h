@@ -63,6 +63,9 @@ public:
   // 获取栈顶结点指针
   LinkNode<T>* GetTopPtr();
 
+  //迷宫问题
+  int SeekPath(int x,int y);
+
   // 重载<<(打印栈)
   template<class U>
   friend ostream& operator<<(ostream& os, LinkStack<T>& stack);
@@ -225,6 +228,16 @@ void LinkStack<T>::MakeEmpty() {
     delete cur;
     cur = NULL;
   }
+}
+
+/**
+ * @brief 清空栈
+ * @tparam x 初始位置x坐标
+ * @tparam y 初始位置y坐标
+ */
+template<class T>
+int LinkStack<T>::SeekPath(int x,int y){
+
 }
 
 

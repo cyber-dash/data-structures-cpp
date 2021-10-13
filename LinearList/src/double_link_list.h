@@ -94,6 +94,9 @@ public:
   // 设置结点数据
   bool SetData(int pos, const T& data);
 
+  //约瑟夫环
+  int LastRemaining(DoubleLinkNode* head, int m);
+
   // 打印双向链表
   void Output();
 
@@ -366,6 +369,17 @@ bool DoubleLinkList<T>::SetData(int pos, const T& data) {
   return true;
 }
 
+/*!
+ * @brief 约瑟夫环问题
+ * @param head 首位结点
+ * @param m 数到m就出列 
+ * @return 剩余的结点值
+ */
+template<class T>
+int DoubleLinkList<T>::LastRemaining(DoubleLinkNode* head, int m){
+
+}
+
 
 /*!
  * @brief 打印双向链表
@@ -396,6 +410,8 @@ void DoubleLinkList<T>::Output(){
 
   cout<<endl;
 }
+
+
 
 
 template<class T>
