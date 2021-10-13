@@ -132,14 +132,7 @@ LinkList<T>::LinkList(const LinkList<T>& link_list) {
 
 template<class T>
 LinkList<T>::~LinkList() {
-  LinkNode<T>* cur = this->head_;
-
-  while (cur->next != NULL) {
-    LinkNode<T>* delete_node = cur->next;
-
-    cur->next = delete_node->next;
-    delete delete_node;
-  }
+  this->MakeEmpty();
 
   delete this->head_;
   this->head_ = NULL;
@@ -207,11 +200,10 @@ bool LinkList<T>::SetData(int pos, const T& data) {
 template<class T>
 void LinkList<T>::MakeEmpty() {
 
-  LinkNode<T>* cur = this->head_;
+  while (this->head_->next != NULL) {
 
-  while (cur->next != NULL) {
-    LinkNode<T>* delete_node_ptr = cur;
-    cur = cur->next;
+    LinkNode<T>* delete_node_ptr = this->head_->next;
+    this->head_->next = this->head_->next->next;
 
     delete delete_node_ptr;
     this->length_--;
@@ -226,7 +218,7 @@ void LinkList<T>::MakeEmpty() {
 template<class T>
 void LinkList<T>::Output() {
 
-  if (head_ == NULL) {
+  if (this->head_->next == NULL) {
     cout << "Empty list" << endl;
     return;
   }
