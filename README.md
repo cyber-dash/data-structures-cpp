@@ -63,7 +63,7 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 **Queue: 队列**  
 
 **Search: 搜索**   
-二叉搜索树
+二叉搜索树, AVL树
 
 **Sort: 排序**  
 冒泡, 插入, 选择, 堆, 归并, 快速
