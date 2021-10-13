@@ -138,6 +138,7 @@ DoubleLinkList<T>::~DoubleLinkList() {
   }
 
   delete this->head_;
+  this->head_ = NULL;
 }
 
 
@@ -309,7 +310,7 @@ bool DoubleLinkList<T>::RemoveByDirection(int pos, T& data, int direction){
  */
 template<class T>
 bool DoubleLinkList<T>::Remove(int pos, T &data) {
-  return false;
+  return this->RemoveByDirection(pos, data, DoubleLinkList::NEXT_DIRECTION);
 }
 
 

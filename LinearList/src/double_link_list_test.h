@@ -201,7 +201,7 @@ void DoubleLinkListTest::TestGetDataAndSetData() {
   city_list->GetData(1, city_name);
   cout<<"The city_name: "<<city_name;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+  cout<<endl<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
