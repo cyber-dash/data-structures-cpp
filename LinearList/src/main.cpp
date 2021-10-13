@@ -15,8 +15,6 @@ int main() {
   /*
   SeqListTest::TestInsert();
 
-  SeqListTest::TestRemoveByDirection();
-
   SeqListTest::TestSize();
 
   SeqListTest::TestEmpty();
@@ -36,7 +34,7 @@ int main() {
   SeqListTest::TestUnion();
 
   SeqListTest::TestIntersection();
-   */
+  */
 
   DoubleLinkListTest::TestInsertByDirection();
 
