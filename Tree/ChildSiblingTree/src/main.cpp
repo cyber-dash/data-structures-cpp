@@ -7,11 +7,9 @@
 
 using namespace std;
 
-#include "tree_node.h"
-#include "tree.h"
-#include "tree.cpp"
+#include "child_sibling_tree.h"
 
-void visit(TreeNode<int> *p) {
+void visit(ChildSiblingNode<int> *p) {
   cout << p->data << " ";
 }
 
@@ -21,7 +19,7 @@ int main(void) {
 
   Tree<int> tree;
 
-  cout << "Input the nodes num in the binary tree: ";
+  cout << "Input the nodes num in the binary ChildSiblingTree: ";
   cin >> num;
 
   for (i = 0; i < num; i++) {
@@ -34,7 +32,7 @@ int main(void) {
 
   cout << "node num: " << tree.count_node() << endl;
   cout << "depth: " << tree.find_depth() << endl;
-  cout << "show tree: " << endl;
+  cout << "show ChildSiblingTree: " << endl;
   tree.show_tree();
 
   cout << "preorder: " << endl;
