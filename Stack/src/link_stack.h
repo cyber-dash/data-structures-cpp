@@ -64,7 +64,7 @@ public:
   LinkNode<T>* GetTopPtr();
 
   //迷宫问题
-  int SeekPath(int x,int y);
+  // int SeekPath(int x,int y);
 
   // 重载<<(打印栈)
   template<class U>
@@ -75,6 +75,7 @@ public:
 private:
   LinkNode<T>* top_;     //!< 栈顶结点指针
 };
+
 
 /*!
  * @brief 析构函数
@@ -230,15 +231,13 @@ void LinkStack<T>::MakeEmpty() {
   }
 }
 
-/**
- * @brief 清空栈
- * @tparam x 初始位置x坐标
- * @tparam y 初始位置y坐标
- */
+
+/*
 template<class T>
 int LinkStack<T>::SeekPath(int x,int y){
 
 }
+ */
 
 
 /**

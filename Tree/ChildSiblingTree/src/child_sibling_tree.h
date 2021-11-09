@@ -12,7 +12,6 @@
 #define CYBER_DASH_CHILD_SIBLING_TREE_H
 
 
-// #include <stdio>
 #include <cstdlib>
 #include <iostream>
 #include <queue>
@@ -23,21 +22,21 @@ struct ChildSiblingNode {
   ChildSiblingNode(T data = 0, ChildSiblingNode<T>* first_child = NULL, ChildSiblingNode<T>* next_sibling = NULL):
     data(data), first_child(first_child), next_sibling(next_sibling) {}
 
-  T data;
+  T data; //!< 数据项
   ChildSiblingNode<T>* first_child; //!< 长子结点指针
   ChildSiblingNode<T>* next_sibling; //!< 兄弟结点指针
 };
 
 
 template <class T>
-class Tree {
+class ChildSiblingTree {
 public:
-  Tree(): root_(NULL), current_(NULL) {}
-  bool Root();
+  ChildSiblingTree(): root_(NULL), current_(NULL) {}
+  bool SetRootToCurrent();
   bool IsEmpty() { return this->root_ == NULL; }
   bool FirstChild();
   bool NextSibling();
-  bool Parent();
+  bool FindParentAndSetCurrent();
   bool Find(T value);
   void Insert(T& item) { return Insert(root_, item);}
   ChildSiblingNode<T> *GetRoot(void) { return root_; }
@@ -54,10 +53,15 @@ public:
 private:
   ChildSiblingNode<T>* root_; //!< 根结点
   ChildSiblingNode<T>* current_; //!< 当前指针, 为了方便链表操作
-  bool Find(ChildSiblingNode<T> *p, T value);
-  void RemoveSubTree(ChildSiblingNode<T> *p);
-  bool FindParent(ChildSiblingNode<T> *t, ChildSiblingNode<T> *p);
-  void Insert(ChildSiblingNode<T> *& subTree, T& x);
+
+  // 在子树中使用数据项查找, 并将节点赋给current_
+  bool FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, T data);
+  // 删除子树
+  void RemoveSubTree_(ChildSiblingNode<T>* sub_tree_root);
+  // 在子树中寻找父结点, 并设置当前结点current_
+  bool FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, ChildSiblingNode<T>* node);
+
+  void Insert(ChildSiblingNode<T>*& subTree, T& x);
   void PreOrder(ostream& out, ChildSiblingNode<T> *p);
   void PostOrder(ostream& out, ChildSiblingNode<T> *p);
   void preorder(ChildSiblingNode<T> *t, void (*visit)(ChildSiblingNode<T> *p));
@@ -76,7 +80,7 @@ private:
  * @return 是否设置成功
  */
 template <class T>
-bool Tree<T>::Root() {
+bool ChildSiblingTree<T>::SetRootToCurrent() {
   if (this->root_ == NULL) {
     this->current_ = NULL;
     return false;
@@ -87,50 +91,93 @@ bool Tree<T>::Root() {
   return true;
 }
 
+
+/*!
+ * @brief 删除子树
+ * @tparam T 类型模板参数
+ * @param sub_tree_root 子树根结点
+ */
 template<class T>
-void Tree<T>::RemoveSubTree(ChildSiblingNode<T> *p){
-  if (p){
-    RemoveSubTree(p->first_child);
-    RemoveSubTree(p->next_sibling);
-    delete p;
+void ChildSiblingTree<T>::RemoveSubTree_(ChildSiblingNode<T>* sub_tree_root){
+  if (sub_tree_root != NULL) {
+    this->RemoveSubTree_(sub_tree_root->first_child);
+    this->RemoveSubTree_(sub_tree_root->next_sibling);
+    delete sub_tree_root;
   }
 }
 
-template <class T>
-bool Tree<T>::Parent(void) {
-  ChildSiblingNode<T> *p = current_;
 
-  if (current_ == NULL || current_ == root_) {
-    current_ = NULL;
+/*!
+ * @brief 寻找父结点, 并设置当前结点current_
+ * @tparam T 类型模板参数
+ * @return 是否成功
+ */
+template <class T>
+bool ChildSiblingTree<T>::FindParentAndSetCurrent() {
+  ChildSiblingNode<T>* node = this->current_;
+
+  if (this->current_ == NULL || this->current_ == this->root_) {
+    this->current_ = NULL;
     return false;
   }
 
-  return FindParent(root_, p);
+  return FindParentAndSetCurrentInSubTree_(this->root_, node);
 }
 
+
+/*!
+ * @brief 在子树中寻找父结点, 并设置当前结点current_
+ * @tparam T 类型模板参数
+ * @param sub_tree_root 子树根结点
+ * @param node 待寻找父结点的结点
+ * @return 是否成功
+ */
 template <class T>
-bool Tree<T>::FindParent(ChildSiblingNode<T> *t, ChildSiblingNode<T> *p) {
-  ChildSiblingNode<T> *q = t->first_child;
+bool ChildSiblingTree<T>::FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, ChildSiblingNode<T>* node) {
+
+  /*
+  ChildSiblingNode<T>* cur = sub_tree_root->first_child;
   bool succ;
 
-  while (q != NULL && q != p) {
-    if ((succ = FindParent(q, p)) == true) {
+  while (cur != NULL && cur != node) {
+    if ((succ = FindParentInSubTree_(cur, node)) == true) {
       return succ;
     }
-    q = q->next_sibling;
+    cur = cur->next_sibling;
   }
 
-  if (q != NULL && q == p) {
-    current_ = t;
+  if (cur != NULL && cur == node) {
+    current_ = sub_tree_root;
     return true;
   } else {
     current_ = NULL;
     return false;
   }
+   */
+
+  ChildSiblingNode<T>* cur = sub_tree_root->first_child;
+
+  while (cur != NULL && cur != node) {
+    bool isFound = FindParentAndSetCurrentInSubTree_(cur, node);
+    if (isFound == true) {
+      return true;
+    }
+    cur = cur->next_sibling;
+  }
+
+  // node是根节点的孩子
+  if (cur != NULL && cur == node) {
+    this->current_ = sub_tree_root;
+    return true;
+  }
+
+  this->current_ = NULL;
+  return false;
 }
 
+
 template <class T>
-bool Tree<T>::FirstChild() {
+bool ChildSiblingTree<T>::FirstChild() {
   if (this->current_ != NULL && this->current_->first_child != NULL) {
     current_ = current_->first_child;
     return true;
@@ -142,7 +189,7 @@ bool Tree<T>::FirstChild() {
 }
 
 template <class T>
-bool Tree<T>::NextSibling(void) {
+bool ChildSiblingTree<T>::NextSibling(void) {
   if (current_ != NULL && current_->next_sibling != NULL) {
     current_ = current_->next_sibling;
     return true;
@@ -153,34 +200,54 @@ bool Tree<T>::NextSibling(void) {
   return false;
 }
 
+
 template <class T>
-bool Tree<T>::Find(T value) {
-  if (IsEmpty()) {
+bool ChildSiblingTree<T>::Find(T value) {
+  if (this->IsEmpty()) {
     return false;
   }
 
-  return Find(root_, value);
+  return FindAndSetCurrentInSubTree_(this->root_, value);
 }
 
-template <class T>
-bool Tree<T>::Find(ChildSiblingNode<T> *p, T value) {
-  bool result = false;
 
-  if (p->data == value) {
-    result = true;
-    current_ = p;
+/*!
+ * @brief 在子树中使用数据项查找, 并将节点赋给current_
+ * @tparam T 类型模板参数
+ * @param sub_tree_root 子树根结点
+ * @param data 数据项
+ * @return 是否成功
+ */
+template <class T>
+bool ChildSiblingTree<T>::FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, T data) {
+  bool isFound = false;
+
+  if (sub_tree_root->data == data) {
+    isFound = true;
+    this->current_ = sub_tree_root;
   } else {
-    ChildSiblingNode<T> *q = p->first_child;
-    while (q != NULL && !(result = Find(q, value))) {
-      q = q->next_sibling;
+    ChildSiblingNode<T>* cur = sub_tree_root->first_child;
+    /*
+    while (cur != NULL && !(isFound = FindAndSetCurrentInSubTree_(cur, data))) {
+      cur = cur->next_sibling;
+    }
+     */
+    while (cur != NULL) {
+      isFound = FindAndSetCurrentInSubTree_(cur, data);
+      if (isFound) {
+        break;
+      }
+
+      cur = cur->next_sibling;
     }
   }
 
-  return result;
+  return isFound;
 }
 
+
 template <class T>
-void Tree<T>::Insert(ChildSiblingNode<T> *& subTree, T& x) {
+void ChildSiblingTree<T>::Insert(ChildSiblingNode<T> *& subTree, T& x) {
   if (subTree == NULL) {
     subTree = new ChildSiblingNode<T>(x);
     if (subTree == NULL) {
@@ -197,7 +264,7 @@ void Tree<T>::Insert(ChildSiblingNode<T> *& subTree, T& x) {
 }
 
 template <class T>
-void Tree<T>::PreOrder(ostream& out, ChildSiblingNode<T> *p) {
+void ChildSiblingTree<T>::PreOrder(ostream& out, ChildSiblingNode<T> *p) {
   if (p != NULL) {
     out << p->data;
 
@@ -208,7 +275,7 @@ void Tree<T>::PreOrder(ostream& out, ChildSiblingNode<T> *p) {
 }
 
 template <class T>
-void Tree<T>::PostOrder(ostream& out, ChildSiblingNode<T> *p) {
+void ChildSiblingTree<T>::PostOrder(ostream& out, ChildSiblingNode<T> *p) {
   if (p != NULL) {
     ChildSiblingNode<T> *q;
 
@@ -220,7 +287,7 @@ void Tree<T>::PostOrder(ostream& out, ChildSiblingNode<T> *p) {
 }
 
 template <class T>
-void Tree<T>::preorder(ChildSiblingNode<T> *t, void (*visit)(ChildSiblingNode<T> *p))
+void ChildSiblingTree<T>::preorder(ChildSiblingNode<T> *t, void (*visit)(ChildSiblingNode<T> *p))
 {
   if (t == NULL) {
     return;
@@ -233,7 +300,7 @@ void Tree<T>::preorder(ChildSiblingNode<T> *t, void (*visit)(ChildSiblingNode<T>
 }
 
 template <class T>
-void Tree<T>::postorder(ChildSiblingNode<T> *t, void (*visit)(ChildSiblingNode<T> *p))
+void ChildSiblingTree<T>::postorder(ChildSiblingNode<T> *t, void (*visit)(ChildSiblingNode<T> *p))
 {
   if (t == NULL) {
     return;
@@ -245,7 +312,7 @@ void Tree<T>::postorder(ChildSiblingNode<T> *t, void (*visit)(ChildSiblingNode<T
 }
 
 template <class T>
-void Tree<T>::LevelOrder(ostream& out, ChildSiblingNode<T> *p)
+void ChildSiblingTree<T>::LevelOrder(ostream& out, ChildSiblingNode<T> *p)
 {
   queue < ChildSiblingNode<T> * > Q;
 
@@ -264,7 +331,7 @@ void Tree<T>::LevelOrder(ostream& out, ChildSiblingNode<T> *p)
 }
 
 template <class T>
-int Tree<T>::count_node(ChildSiblingNode<T> *t) {
+int ChildSiblingTree<T>::count_node(ChildSiblingNode<T> *t) {
   if (t == NULL) {
     return 0;
   }
@@ -278,7 +345,7 @@ int Tree<T>::count_node(ChildSiblingNode<T> *t) {
 }
 
 template <class T>
-int Tree<T>::find_depth(ChildSiblingNode<T> *t) {
+int ChildSiblingTree<T>::find_depth(ChildSiblingNode<T> *t) {
   if (t == NULL) {
     return 0;
   }
@@ -290,7 +357,7 @@ int Tree<T>::find_depth(ChildSiblingNode<T> *t) {
 }
 
 template <class T>
-void Tree<T>::create_tree(ChildSiblingNode<T> *& subTree, char *&GL) {
+void ChildSiblingTree<T>::create_tree(ChildSiblingNode<T> *& subTree, char *&GL) {
   if (*GL == '\0') {
     return;
   }
@@ -314,7 +381,7 @@ void Tree<T>::create_tree(ChildSiblingNode<T> *& subTree, char *&GL) {
 }
 
 template <class T>
-void Tree<T>::show_tree(ChildSiblingNode<T> *t) {
+void ChildSiblingTree<T>::show_tree(ChildSiblingNode<T> *t) {
   if (t == NULL) {
     return;
   }
@@ -331,7 +398,7 @@ void Tree<T>::show_tree(ChildSiblingNode<T> *t) {
 
 
 template<class T>
-void Tree<T>::CyberDashShow() {
+void ChildSiblingTree<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
       <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl

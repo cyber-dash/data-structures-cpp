@@ -17,7 +17,7 @@ int main(void) {
   int num;
   int i = 0;
 
-  Tree<int> tree;
+  ChildSiblingTree<int> tree;
 
   cout << "Input the nodes num in the binary ChildSiblingTree: ";
   cin >> num;
@@ -45,7 +45,7 @@ int main(void) {
   tree.LevelOrder(cout);
 
   cout << "--- " << endl;
-  Tree<int> tree_1;
+  ChildSiblingTree<int> tree_1;
   char *gl = (char *) "(0(1(2))(2))";
   tree_1.create_tree(gl);
   cout <<tree_1.count_node() ;
