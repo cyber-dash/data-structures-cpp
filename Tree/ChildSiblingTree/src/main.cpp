@@ -26,7 +26,7 @@ int main(void) {
     tree.Insert(i);
   }
 
-  if (tree.Find(10)) {
+  if (tree.FindAndSetCurrent(10)) {
     cout << "find 10 in list." << endl;
   }
 
@@ -35,10 +35,10 @@ int main(void) {
   cout << "show ChildSiblingTree: " << endl;
   tree.show_tree();
 
-  cout << "preorder: " << endl;
+  cout << "PreOrderInSubTreeRecursive_: " << endl;
   tree.PreOrder(cout);
   tree.preorder( visit);
-  cout << "postorder: " << endl;
+  cout << "PostOrderInSubTreeRecursive_: " << endl;
   tree.PostOrder(cout);
   tree.postorder(visit);
   cout << "levelorder: " << endl;
