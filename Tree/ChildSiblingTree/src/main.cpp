@@ -30,10 +30,10 @@ int main(void) {
     cout << "find 10 in list." << endl;
   }
 
-  cout << "node num: " << tree.count_node() << endl;
-  cout << "depth: " << tree.find_depth() << endl;
+  cout << "node num: " << tree.NodeCount() << endl;
+  cout << "depth: " << tree.Depth() << endl;
   cout << "show ChildSiblingTree: " << endl;
-  tree.show_tree();
+    tree.ShowTree();
 
   cout << "PreOrderInSubTreeRecursive_: " << endl;
   tree.PreOrder(cout);
@@ -47,9 +47,9 @@ int main(void) {
   cout << "--- " << endl;
   ChildSiblingTree<int> tree_1;
   char *gl = (char *) "(0(1(2))(2))";
-  tree_1.create_tree(gl);
-  cout <<tree_1.count_node() ;
-  tree_1.show_tree();
+    tree_1.CreateTreeByStr(gl);
+  cout << tree_1.NodeCount() ;
+    tree_1.ShowTree();
 
   cout << endl;
 

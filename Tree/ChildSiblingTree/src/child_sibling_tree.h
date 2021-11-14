@@ -60,10 +60,10 @@ public:
   void preorder(void (*visit)(ChildSiblingNode<T>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
   void postorder(void (*visit)(ChildSiblingNode<T>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
   void LevelOrder(ostream& out) { LevelOrderInSubTree_(out, root_); }
-  int count_node() { return count_node(root_); }
-  int find_depth() { return find_depth(root_); }
-  void create_tree(char *&GL) { create_tree(root_, GL); }
-  void show_tree() { show_tree(root_); }
+  int NodeCount() { return this->SubTreeNodeCount_(this->root_); }
+  int Depth() { return this->SubTreeDepthRecursive_(this->root_); }
+  void CreateTreeByStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
+  void ShowTree() { ShowSubTreeRecursive_(this->root_); }
   void CyberDashShow();
 private:
   ChildSiblingNode<T>* root_; //!< 根结点
@@ -84,10 +84,10 @@ private:
   // 在子树中后根遍历
   void PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
   void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T> *p);
-  void create_tree(ChildSiblingNode<T> *&, char *&GL);
-  int count_node(ChildSiblingNode<T> *t);
-  int find_depth(ChildSiblingNode<T> *t);
-  void show_tree(ChildSiblingNode<T> *t);
+  void CreateTreeByStrRecursive_(ChildSiblingNode<T>*& , char*& str);
+  int SubTreeNodeCount_(ChildSiblingNode<T> *sub_tree_root);
+  int SubTreeDepthRecursive_(ChildSiblingNode<T> *sub_tree_root);
+  void ShowSubTreeRecursive_(ChildSiblingNode<T> *sub_tree_root);
 };
 
 
@@ -365,66 +365,78 @@ void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>
 }
 
 template <class T>
-int ChildSiblingTree<T>::count_node(ChildSiblingNode<T> *t) {
-  if (t == NULL) {
+int ChildSiblingTree<T>::SubTreeNodeCount_(ChildSiblingNode<T>* sub_tree_root) {
+  if (sub_tree_root == NULL) {
     return 0;
   }
 
   int count = 1;
 
-  count += count_node(t->first_child);
-  count += count_node(t->next_sibling);
+  count += SubTreeNodeCount_(sub_tree_root->first_child);
+  count += SubTreeNodeCount_(sub_tree_root->next_sibling);
 
   return count;
 }
 
+/*!
+ * @brief
+ * @tparam T
+ * @param sub_tree_root
+ * @return
+ */
 template <class T>
-int ChildSiblingTree<T>::find_depth(ChildSiblingNode<T> *t) {
-  if (t == NULL) {
+int ChildSiblingTree<T>::SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_root) {
+  if (sub_tree_root == NULL) {
     return 0;
   }
 
-  int fc_depth = find_depth(t->first_child) + 1;
-  int ns_depth = find_depth(t->next_sibling);
+  int first_child_depth = SubTreeDepthRecursive_(sub_tree_root->first_child) + 1;
+  int next_sibling_depth = SubTreeDepthRecursive_(sub_tree_root->next_sibling);
 
-  return (fc_depth > ns_depth) ? fc_depth : ns_depth;
+  return (first_child_depth > next_sibling_depth) ? first_child_depth : next_sibling_depth;
 }
 
+
+/*!
+ * @brief 使用字符串创建子女兄弟树
+ * @tparam T 类型模板参数
+ * @param sub_tree_root 子树根节点
+ * @param str 字符串
+ */
 template <class T>
-void ChildSiblingTree<T>::create_tree(ChildSiblingNode<T> *& subTree, char *&GL) {
-  if (*GL == '\0') {
+void ChildSiblingTree<T>::CreateTreeByStrRecursive_(ChildSiblingNode<T>*& sub_tree_root, char*& str) {
+  if (*str == '\0') {
     return;
   }
 
-  if (*GL == ')') {
-    GL++;
+  if (*str == ')') {
+    str++; // 下一个兄弟节点
     return;
   }
 
-  while (*GL == '(') {
-    GL++;
+  while (*str == '(') {
+    str++;
   }
 
-  subTree = new ChildSiblingNode<T>(*(GL++) - '0');
-  if (subTree == NULL) {
-    cerr << "存储分配错误!" << endl;
-    exit(1);
-  }
-  create_tree(subTree->first_child, GL);
-  create_tree(subTree->next_sibling, GL);
+  sub_tree_root = new ChildSiblingNode<T>(*(str++) - '0');
+  /* error handler */
+
+    CreateTreeByStrRecursive_(sub_tree_root->first_child, str);
+    CreateTreeByStrRecursive_(sub_tree_root->next_sibling, str);
 }
 
+
 template <class T>
-void ChildSiblingTree<T>::show_tree(ChildSiblingNode<T> *t) {
-  if (t == NULL) {
+void ChildSiblingTree<T>::ShowSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root) {
+  if (sub_tree_root == NULL) {
     return;
   }
 
   cout << '(';
-  cout << t->data;
+  cout << sub_tree_root->data;
 
-  for (ChildSiblingNode<T> *p = t->first_child; p != NULL; p = p->next_sibling) {
-    show_tree(p);
+  for (ChildSiblingNode<T> *p = sub_tree_root->first_child; p != NULL; p = p->next_sibling) {
+      ShowSubTreeRecursive_(p);
   }
 
   cout << ')';
