@@ -17,6 +17,9 @@
 #include <queue>
 
 
+using namespace std;
+
+
 /*!
  * @brief 子女兄弟树结点模板结构体
  * @tparam T 类型模板参数
@@ -53,17 +56,17 @@ public:
   bool NextSibling();
   bool FindParentAndSetCurrent();
   bool FindAndSetCurrent(T data);
-  void Insert(T& item) { return InsertInSubTree_(this->root_, item);}
+  void Insert(T& item) { return this->InsertInSubTree_(this->root_, item);}
   ChildSiblingNode<T>* Root() { return this->root_; }
   void PreOrder(ostream& out) { PreOrder(out, this->root_); }
   void PostOrder(ostream& out) { PostOrder(out, this->root_); }
-  void preorder(void (*visit)(ChildSiblingNode<T>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
-  void postorder(void (*visit)(ChildSiblingNode<T>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
+  void PreOrder(void (*visit)(ChildSiblingNode<T>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
+  void PostOrder(void (*visit)(ChildSiblingNode<T>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
   void LevelOrder(ostream& out) { LevelOrderInSubTree_(out, root_); }
   int NodeCount() { return this->SubTreeNodeCount_(this->root_); }
   int Depth() { return this->SubTreeDepthRecursive_(this->root_); }
   void CreateTreeByStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
-  void ShowTree() { ShowSubTreeRecursive_(this->root_); }
+  void ShowTree() { this->ShowSubTreeRecursive_(this->root_); }
   void CyberDashShow();
 private:
   ChildSiblingNode<T>* root_; //!< 根结点
@@ -81,7 +84,7 @@ private:
   void PostOrder(ostream& out, ChildSiblingNode<T> *p);
   // 在子树中进行先根遍历(递归)
   void PreOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
-  // 在子树中后根遍历
+  // 在子树中进行后根遍历(递归)
   void PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
   void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T> *p);
   void CreateTreeByStrRecursive_(ChildSiblingNode<T>*& , char*& str);
