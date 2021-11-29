@@ -63,7 +63,7 @@ public:
   void PreOrder(void (*visit)(ChildSiblingNode<T>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
   void PostOrder(void (*visit)(ChildSiblingNode<T>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
   void LevelOrder(ostream& out) { LevelOrderInSubTree_(out, root_); }
-  int NodeCount() { return this->SubTreeNodeCount_(this->root_); }
+  int NodeCount() { return this->SubTreeNodeCountRecursive_(this->root_); }
   int Depth() { return this->SubTreeDepthRecursive_(this->root_); }
   void CreateTreeByStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
   void ShowTree() { this->ShowSubTreeRecursive_(this->root_); }
@@ -86,10 +86,15 @@ private:
   void PreOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
   // 在子树中进行后根遍历(递归)
   void PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
-  void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T> *p);
+  // 在子树中层序遍历
+  void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T> *sub_tree_root);
+  // 使用字符串创建子女兄弟树
   void CreateTreeByStrRecursive_(ChildSiblingNode<T>*& , char*& str);
-  int SubTreeNodeCount_(ChildSiblingNode<T> *sub_tree_root);
+  // 子树节点数量(递归)
+  int SubTreeNodeCountRecursive_(ChildSiblingNode<T> *sub_tree_root);
+  // 子树深度(递归)
   int SubTreeDepthRecursive_(ChildSiblingNode<T> *sub_tree_root);
+  // 打印子树(递归)
   void ShowSubTreeRecursive_(ChildSiblingNode<T> *sub_tree_root);
 };
 
@@ -284,7 +289,7 @@ void ChildSiblingTree<T>::InsertInSubTree_(ChildSiblingNode<T>*& sub_tree_root, 
 
 
 template <class T>
-void ChildSiblingTree<T>::PreOrder(ostream& out, ChildSiblingNode<T> *p) {
+void ChildSiblingTree<T>::PreOrder(ostream& out, ChildSiblingNode<T>* p) {
   if (p != NULL) {
     out << p->data;
 
@@ -348,44 +353,66 @@ void ChildSiblingTree<T>::PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_
 }
 
 
+/*!
+ * @brief 在子树中层序遍历
+ * @tparam T 类型模板参数
+ * @param out 输出流
+ * @param sub_tree_root 子树根节点
+ */
 template <class T>
-void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T> *p)
+void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>* sub_tree_root)
 {
-  queue < ChildSiblingNode<T> * > Q;
+  queue<ChildSiblingNode<T>*> node_queue;
 
-  if (p != NULL) {
-    Q.push(p);
+  if (sub_tree_root == NULL) {
+    return;
+  }
 
-    while (!Q.empty()) {
-      p = Q.front();
-      Q.pop();
-      out << p->data;
-      for (p = p->first_child; p != NULL; p = p->next_sibling) {
-        Q.push(p);
-      }
+  // 初始化队列node_queue
+  node_queue.push(sub_tree_root);
+
+  while (!node_queue.empty()) {
+    // 取队头
+    ChildSiblingNode<T>* front_node = node_queue.front();
+    node_queue.pop();
+
+    // 输出流输出
+    out << front_node->data;
+
+    // 队头节点的所有孩子节点入队
+    for (ChildSiblingNode<T>* cur = front_node->first_child; cur != NULL; cur = cur->next_sibling) {
+      node_queue.push(cur);
     }
   }
 }
 
+
+/*!
+ * @brief 子树节点数量(递归)
+ * @tparam T 类型模板参数
+ * @param sub_tree_root
+ * @return 节点数量
+ */
 template <class T>
-int ChildSiblingTree<T>::SubTreeNodeCount_(ChildSiblingNode<T>* sub_tree_root) {
+int ChildSiblingTree<T>::SubTreeNodeCountRecursive_(ChildSiblingNode<T>* sub_tree_root) {
   if (sub_tree_root == NULL) {
     return 0;
   }
 
   int count = 1;
 
-  count += SubTreeNodeCount_(sub_tree_root->first_child);
-  count += SubTreeNodeCount_(sub_tree_root->next_sibling);
+  count += SubTreeNodeCountRecursive_(sub_tree_root->first_child);
+  count += SubTreeNodeCountRecursive_(sub_tree_root->next_sibling);
 
   return count;
 }
 
+
 /*!
- * @brief
- * @tparam T
- * @param sub_tree_root
- * @return
+ * @brief 子树深度(递归)
+ * @tparam T 类型模板参数
+ * @param sub_tree_root 子树根结点
+ * @return 深度
  */
 template <class T>
 int ChildSiblingTree<T>::SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_root) {
@@ -393,7 +420,9 @@ int ChildSiblingTree<T>::SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_ro
     return 0;
   }
 
+  // 长子结点对应的深度
   int first_child_depth = SubTreeDepthRecursive_(sub_tree_root->first_child) + 1;
+  // 下一兄弟结点对应的深度
   int next_sibling_depth = SubTreeDepthRecursive_(sub_tree_root->next_sibling);
 
   return (first_child_depth > next_sibling_depth) ? first_child_depth : next_sibling_depth;
@@ -424,11 +453,16 @@ void ChildSiblingTree<T>::CreateTreeByStrRecursive_(ChildSiblingNode<T>*& sub_tr
   sub_tree_root = new ChildSiblingNode<T>(*(str++) - '0');
   /* error handler */
 
-    CreateTreeByStrRecursive_(sub_tree_root->first_child, str);
-    CreateTreeByStrRecursive_(sub_tree_root->next_sibling, str);
+  CreateTreeByStrRecursive_(sub_tree_root->first_child, str);
+  CreateTreeByStrRecursive_(sub_tree_root->next_sibling, str);
 }
 
 
+/*!
+ * @brief 打印子树(递归)
+ * @tparam T 类型模板参数
+ * @param sub_tree_root 子树根结点
+ */
 template <class T>
 void ChildSiblingTree<T>::ShowSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root) {
   if (sub_tree_root == NULL) {
@@ -438,8 +472,8 @@ void ChildSiblingTree<T>::ShowSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_ro
   cout << '(';
   cout << sub_tree_root->data;
 
-  for (ChildSiblingNode<T> *p = sub_tree_root->first_child; p != NULL; p = p->next_sibling) {
-      ShowSubTreeRecursive_(p);
+  for (ChildSiblingNode<T>* cur = sub_tree_root->first_child; cur != NULL; cur = cur->next_sibling) {
+      ShowSubTreeRecursive_(cur);
   }
 
   cout << ')';
