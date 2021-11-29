@@ -18,7 +18,7 @@ HuffmanTree<T>::HuffmanTree(float w[], int n) {
 	for (int i = 0; i < n; i++) {
 		work = new HuffmanNode<T>;
 		work->data = w[i];
-		work->leftChild = NULL;
+		work->left_child = NULL;
 		work->rightChild = NULL;
 		work->parent = work;
 		hp.Insert(*work);
@@ -43,7 +43,7 @@ void HuffmanTree<T>::deleteTree(HuffmanNode<T> *t) {
 		return;
 	}
 
-	deleteTree(t->leftChild);
+	deleteTree(t->left_child);
 	deleteTree(t->rightChild);
 
 	delete t;
@@ -54,7 +54,7 @@ void HuffmanTree<T>::
 mergeTree(HuffmanNode<T> *ht1, HuffmanNode<T> *ht2, HuffmanNode<T> *&parent) {
 	parent = new HuffmanNode<T>;
 
-	parent->leftChild = ht1;
+	parent->left_child = ht1;
 	parent->rightChild = ht2;
 	parent->parent = parent; 
 
@@ -71,7 +71,7 @@ void HuffmanTree<T>::showTree(HuffmanNode<T> * t) {
 
 	cout << t->data;
 	cout << '(';
-	showTree(t->leftChild);
+	showTree(t->left_child);
 	cout << ',';
 	showTree(t->rightChild);
 	cout << ')';
