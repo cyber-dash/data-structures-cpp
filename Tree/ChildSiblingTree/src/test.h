@@ -18,18 +18,26 @@
 
 using namespace std;
 
+
+// 节点遍历函数
 void visit(ChildSiblingNode<int>* node);
 
+// 测试使用字符串创建子女孩子树
 void TestChildSiblingTreeCreateTreeByStr();
 
+// 测试深度
 void TestChildSiblingTreeDepth();
 
+// 测试节点数量
 void TestChildSiblingTreeNodeCount();
 
+// 测试先根遍历
 void TestChildSiblingTreePreOrder();
 
+// 测试后根遍历
 void TestChildSiblingTreePostOrder();
 
+// 测试层序遍历
 void TestChildSiblingTreeLevelOrder();
 
 

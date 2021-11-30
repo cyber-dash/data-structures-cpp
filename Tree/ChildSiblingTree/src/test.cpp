@@ -12,11 +12,18 @@
 #include "child_sibling_tree.h"
 
 
+/*!
+ * @brief 节点遍历函数
+ * @param node 节点(指针)
+ */
 void visit(ChildSiblingNode<int>* node) {
   cout << node->data << " ";
 }
 
 
+/*!
+ * @brief 测试使用字符串创建子女孩子树
+ */
 void TestChildSiblingTreeCreateTreeByStr() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -41,6 +48,53 @@ void TestChildSiblingTreeCreateTreeByStr() {
 }
 
 
+/*!
+ * @brief 测试深度
+ */
+void TestChildSiblingTreeDepth() {
+  cout << endl;
+  cout << "|------------------------ CyberDash ------------------------|" << endl;
+  cout << "|                 Test ChildSiblingTree Depth               |" << endl;
+  cout << "|                          测试深度                          |" << endl << endl << endl;
+
+  char* str = (char*)"(0(1(2))(2))";
+  cout << "字符串: " << str << endl << endl;
+
+  ChildSiblingTree<int> child_sibling_tree;
+  child_sibling_tree.CreateTreeByStr(str);
+
+  int depth = child_sibling_tree.Depth();
+  cout << "深度: " << depth << endl;
+
+  cout << "-------------------------------------------------------------" << endl;
+}
+
+
+/*!
+ * @brief 测试节点数量
+ */
+void TestChildSiblingTreeNodeCount() {
+  cout << endl;
+  cout << "|------------------------ CyberDash ------------------------|" << endl;
+  cout << "|               Test ChildSiblingTree NodeCount             |" << endl;
+  cout << "|                         测试节点数量                        |" << endl << endl << endl;
+
+  char* str = (char*)"(0(1(2))(2))";
+  cout << "字符串: " << str << endl << endl;
+
+  ChildSiblingTree<int> child_sibling_tree;
+  child_sibling_tree.CreateTreeByStr(str);
+
+  int node_count = child_sibling_tree.NodeCount();
+  cout << "节点数量: " << node_count << endl;
+
+  cout << "-------------------------------------------------------------" << endl;
+}
+
+
+/*!
+ * @brief 测试先根遍历
+ */
 void TestChildSiblingTreePreOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -62,6 +116,9 @@ void TestChildSiblingTreePreOrder() {
 }
 
 
+/*!
+ * @brief 测试后根遍历
+ */
 void TestChildSiblingTreePostOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -83,6 +140,9 @@ void TestChildSiblingTreePostOrder() {
 }
 
 
+/*!
+ * @brief 测试层序遍历
+ */
 void TestChildSiblingTreeLevelOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
