@@ -20,7 +20,7 @@ using namespace std;
 
 
 // 节点遍历函数
-void visit(ChildSiblingNode<int>* node);
+// void visit(ChildSiblingNode<int>* node);
 
 // 测试使用字符串创建子女孩子树
 void TestChildSiblingTreeCreateTreeByStr();
