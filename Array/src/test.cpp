@@ -36,13 +36,17 @@ void TestSparseMatrixCopyConstructor() {
   cout<<"|                  测试队列稀疏矩阵复制构造函数                 |"<<endl<<endl<<endl;
 
   SparseMatrix<int> sparse_matrix_1(100);
+  sparse_matrix_1.SetRows(10);
+  sparse_matrix_1.SetCols(20);
+  sparse_matrix_1.AddElement(3, 9, 100);
+  sparse_matrix_1.AddElement(4, 17, 83);
+
+  cout<<"打印sparse_matrix_1:"<<endl;
+  cout<<sparse_matrix_1<<endl<<endl;
+
   SparseMatrix<int> sparse_matrix_2(sparse_matrix_1);
-
-  // SparseMatrix<int>& sparse_matrix_3 = sparse_matrix_1.Transpose();
-  SparseMatrix<int>* sparse_matrix_ptr_3 = sparse_matrix_1.Transpose();
-
+  cout<<"打印sparse_matrix_2:"<<endl;
   cout<<sparse_matrix_2;
-  cout<<*sparse_matrix_ptr_3;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -80,7 +84,7 @@ void TestSparseMatrixTranspose() {
 
   sparse_matrix_1.AddElement(0, 1, 11.345);
   sparse_matrix_1.AddElement(1, 0, 4.2);
-  sparse_matrix_1.AddElement(16, 7, 432.569);
+  sparse_matrix_1.AddElement(6, 7, 432.569);
 
   cout<<"sparse_matrix_1矩阵:"<<endl;
   cout<<sparse_matrix_1<<endl;
@@ -107,7 +111,7 @@ void TestSparseMatrixFastTranspose() {
 
   sparse_matrix_1.AddElement(0, 1, 11.345);
   sparse_matrix_1.AddElement(1, 0, 4.2);
-  sparse_matrix_1.AddElement(16, 7, 432.569);
+  sparse_matrix_1.AddElement(6, 7, 432.569);
 
   cout<<"sparse_matrix_1矩阵:"<<endl;
   cout<<sparse_matrix_1<<endl;

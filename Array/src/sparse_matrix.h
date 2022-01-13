@@ -189,7 +189,7 @@ bool SparseMatrix<T>::GetElement(int row, int col, T& value) {
 template<class T>
 bool SparseMatrix<T>::AddElement(int row, int col, T value) {
 
-  if (row >= this->max_terms_ || col >= this->max_terms_) {
+  if (row >= this->Rows() || col >= this->Cols()) {
     return false;
   }
 
