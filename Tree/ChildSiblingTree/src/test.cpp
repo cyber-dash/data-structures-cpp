@@ -28,7 +28,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|              Test ChildSiblingTree CreateByStr            |" << endl;
-  cout << "|                   测试使用字符串创建子女孩子树                |" << endl << endl << endl;
+  cout << "|                   测试使用字符串创建子女孩子树                  |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
   cout << "字符串: " << str << endl << endl;
@@ -39,12 +39,12 @@ void TestChildSiblingTreeCreateTreeByStr() {
   int node_count = child_sibling_tree.NodeCount();
   cout << "树的节点数量: " << node_count << endl;
 
-  cout << "调用ShowTree()显示: ";
+  cout << "调用ShowTree显示: ";
   child_sibling_tree.ShowTree();
 
   cout << endl;
 
-  cout << "-------------------------------------------------------------" << endl;
+  cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
@@ -55,7 +55,7 @@ void TestChildSiblingTreeDepth() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                 Test ChildSiblingTree Depth               |" << endl;
-  cout << "|                          测试深度                          |" << endl << endl << endl;
+  cout << "|                          测试深度                           |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
   cout << "字符串: " << str << endl << endl;
@@ -66,7 +66,7 @@ void TestChildSiblingTreeDepth() {
   int depth = child_sibling_tree.Depth();
   cout << "深度: " << depth << endl;
 
-  cout << "-------------------------------------------------------------" << endl;
+  cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
@@ -77,7 +77,7 @@ void TestChildSiblingTreeNodeCount() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|               Test ChildSiblingTree NodeCount             |" << endl;
-  cout << "|                         测试节点数量                        |" << endl << endl << endl;
+  cout << "|                         测试节点数量                         |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
   cout << "字符串: " << str << endl << endl;
@@ -88,7 +88,7 @@ void TestChildSiblingTreeNodeCount() {
   int node_count = child_sibling_tree.NodeCount();
   cout << "节点数量: " << node_count << endl;
 
-  cout << "-------------------------------------------------------------" << endl;
+  cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
@@ -98,8 +98,8 @@ void TestChildSiblingTreeNodeCount() {
 void TestChildSiblingTreePreOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                Test ChildSiblingTree PreOrder             |" << endl;
-  cout << "|                         测试先根遍历                        |" << endl << endl << endl;
+  cout << "|                Test ChildSiblingTree PreOrderByOstream             |" << endl;
+  cout << "|                         测试先根遍历                        |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
   cout << "字符串: " << str << endl << endl;
@@ -112,7 +112,7 @@ void TestChildSiblingTreePreOrder() {
 
   cout << endl;
 
-  cout << "-------------------------------------------------------------" << endl;
+  cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
@@ -122,8 +122,8 @@ void TestChildSiblingTreePreOrder() {
 void TestChildSiblingTreePostOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|               Test ChildSiblingTree PostOrder             |" << endl;
-  cout << "|                         测试后根遍历                        |" << endl << endl << endl;
+  cout << "|               Test ChildSiblingTree PostOrderByOstream             |" << endl;
+  cout << "|                         测试后根遍历                        |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
   cout << "字符串: " << str << endl << endl;
@@ -136,7 +136,7 @@ void TestChildSiblingTreePostOrder() {
 
   cout << endl;
 
-  cout << "-------------------------------------------------------------" << endl;
+  cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
@@ -147,7 +147,7 @@ void TestChildSiblingTreeLevelOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|              Test ChildSiblingTree LevelOrder             |" << endl;
-  cout << "|                         测试层序遍历                        |" << endl << endl << endl;
+  cout << "|                         测试层序遍历                        |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
   cout << "字符串: " << str << endl << endl;
@@ -159,7 +159,6 @@ void TestChildSiblingTreeLevelOrder() {
   child_sibling_tree.LevelOrder(cout);
 
   cout << endl;
-
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
