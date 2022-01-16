@@ -363,46 +363,68 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
-  int* row_size_arr = new int[this->Cols()];
-  int* trans_pos_at_each_row_arr = new int[this->Cols()];
+  int* row_item_count_arr = new int[this->Cols()];
+  int* iter_pos_arr = new int[this->Cols()];
 
-  SparseMatrix<T>* trans_sparse_matrix_ptr = new SparseMatrix<T>(this->MaxTerms());
+  SparseMatrix<T>* trans_sparse_matrix = new SparseMatrix<T>(this->MaxTerms());
 
-  trans_sparse_matrix_ptr->SetRows(this->Cols());
-  trans_sparse_matrix_ptr->SetCols(this->Rows());
-  trans_sparse_matrix_ptr->SetTerms(this->Terms());
+  trans_sparse_matrix->SetRows(this->Cols());
+  trans_sparse_matrix->SetCols(this->Rows());
+  trans_sparse_matrix->SetTerms(this->Terms());
 
   if (this->Terms() == 0) {
-    return trans_sparse_matrix_ptr;
+    return trans_sparse_matrix;
   }
 
   for (int i = 0; i < this->Cols(); i++) {
-    row_size_arr[i] = 0;
+    row_item_count_arr[i] = 0;
   }
 
+  // 将转置数组每行有多少个元素, 保存到row_item_count_arr
   for (int i = 0; i < this->Terms(); i++) {
-    row_size_arr[this->SparseMatrixArray()[i].col]++;  // 转置后的第this->SparseMatrixArray()[i].col行个数++
+    row_item_count_arr[this->SparseMatrixArray()[i].col]++;
   }
 
-  trans_pos_at_each_row_arr[0] = 0; // sparse_matrix_array_数组的索引0位置的数据, 保存转置后的0行
+  // 初始化转置数组的三元组数组sparse_matrix_array的分布
+  //
+  // this->sparse_matrix_array[ 0 ... 第1行的首元素的位置 ... 第i行的首个元素的位置 ... ]
+  //                            ^             ^                       ^
+  //                            |             |                       |
+  //                iter_pos_arr[0]   iter_pos_arr[1]           iter_pos_arr[i] ...
+  //
+  // 核心算法:
+  //    iter_pos_arr[i] = iter_pos_arr[i - 1] + row_item_count_arr[i - 1];
+  // 即在三元组数组sparse_matrix_array上, 每行首个元素所在的位置, 等于上一行首个元素的位置 + 该行的所有元素数
+  iter_pos_arr[0] = 0;
   for (int i = 1; i < this->Cols(); i++) {
-    trans_pos_at_each_row_arr[i] = trans_pos_at_each_row_arr[i - 1] + row_size_arr[i - 1];
+    iter_pos_arr[i] = iter_pos_arr[i - 1] + row_item_count_arr[i - 1];
   }
 
   for (int i = 0; i < this->Terms(); i++) {
-    int cur_start_pos = trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col];
+    // 转制后矩阵的当前行索引(等于原数组的列索引)
+    int cur_row = this->SparseMatrixArray()[i].col;
+    // 当前稀疏矩阵的三元组数组的数组索引, 取iter_pos_arr[cur_row];
+    int cur_sparse_matrix_index = iter_pos_arr[cur_row];
 
-    trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].row = this->SparseMatrixArray()[i].col;
-    trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].col = this->SparseMatrixArray()[i].row;
-    trans_sparse_matrix_ptr->SparseMatrixArray()[cur_start_pos].value = this->SparseMatrixArray()[i].value;
+    // 转置矩阵的三元组数组
+    TriTuple<T>* trans_sparse_matrix_array = trans_sparse_matrix->SparseMatrixArray();
+    // 原矩阵的三元组数组
+    TriTuple<T>* src_spase_matrix_array = this->SparseMatrixArray();
 
-    trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col]++; // 完成后, 向后挪一位
+    // 转置矩阵元素的row/col于原数组互换, value相同
+    trans_sparse_matrix_array[cur_sparse_matrix_index].row = src_spase_matrix_array[i].col;
+    trans_sparse_matrix_array[cur_sparse_matrix_index].col = src_spase_matrix_array[i].row;
+    trans_sparse_matrix_array[cur_sparse_matrix_index].value = src_spase_matrix_array[i].value;
+
+    // 由于trans_sparse_matrix_array[ iter_pos_arr[cur_row] ]处理已经结束, cur_row的下一次处理应在下一个位置
+    // iter_pos_arr[cur_row]加1, 表示向后挪一位
+    iter_pos_arr[cur_row]++;
   }
 
-  delete[] trans_pos_at_each_row_arr;
-  delete[] row_size_arr;
+  delete[] iter_pos_arr;
+  delete[] row_item_count_arr;
 
-  return trans_sparse_matrix_ptr;
+  return trans_sparse_matrix;
 }
 
 
