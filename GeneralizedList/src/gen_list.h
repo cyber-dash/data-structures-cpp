@@ -44,14 +44,14 @@ public:
   int Depth();
 
   // 使用char队列创建广义表(递归)
-  void CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node_ptr, bool& in_referred_list);
+  void CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node, bool& in_referred_list);
   // 使用字符串创建广义表
   void CreateListByString(string gen_list_string);
 
   // 删除结点, todo: 未实现
   void Remove(GenListNode<T>* node_ptr);
 
-  GenListNode<T>* ref_node_ptr; //!< 广义表的引用结点
+  GenListNode<T>* ref_node_; //!< 广义表的引用结点
 
   // 输入广义表
   template<class U>
@@ -59,9 +59,9 @@ public:
 
 private:
   // 子表长度(递归)
-  int SubGenListLengthRecursive_(GenListNode<T>* node_ptr);
+  int SubGenListLengthRecursive_(GenListNode<T>* node);
   // 子表深度(递归)
-  int SubGenListDepthRecursive_(GenListNode<T>* node_ptr);
+  int SubGenListDepthRecursive_(GenListNode<T>* node);
 
   // 是否是表名(大写字母)
   bool IsGenListNameChar_(T chr);
@@ -81,7 +81,7 @@ private:
   // 查找已经被引用的结点
   GenListNode<T>* FindReferredNodePtr_(T chr);
   // 复制子树, todo: 未测试
-  GenListNode<T>* Copy_(GenListNode<T>*& node_ptr);
+  GenListNode<T>* Copy_(GenListNode<T>*& node);
 
   vector<T> gen_list_name_vec_; //!< 各表节点的vector
   vector<GenListNode<T>*> gen_list_node_ptr_vec_; //!< 各表节点指针的vector
@@ -94,8 +94,8 @@ private:
  */
 template<class T>
 GenList<T>::GenList() {
-  ref_node_ptr = new GenListNode<T>();
-  if (ref_node_ptr == NULL) {
+  this->ref_node_ = new GenListNode<T>();
+  if (this->ref_node_ == NULL) {
     cerr<<"GenList constructor wrong."<<endl;
   }
 }
@@ -110,11 +110,11 @@ GenList<T>::GenList() {
 template<class T>
 bool GenList<T>::Head(Item<T>& item) {
 
-  if (this->ref_node_ptr->next == NULL) {
+  if (this->ref_node_->next == NULL) {
     return false;
   } else {
-    item.type = this->ref_node_ptr->type;
-    item.union_info = this->ref_node_ptr->union_info;
+    item.type = this->ref_node_->type;
+    item.union_info = this->ref_node_->union_info;
   }
 }
 
@@ -128,12 +128,12 @@ bool GenList<T>::Head(Item<T>& item) {
 template<class T>
 bool GenList<T>::Tail(GenList<T>& tail_list) {
 
-  if (ref_node_ptr->next == NULL) {
+  if (ref_node_->next == NULL) {
     return false;
   } else {
-    tail_list.ref_node_ptr->type = GenListNode<T>::REF_TYPE;
-    tail_list.ref_node_ptr->union_info.ref_count = 0;
-    tail_list.ref_node_ptr->next = CopyFrom(ref_node_ptr->next->next);
+    tail_list.ref_node_->type = GenListNode<T>::REF_TYPE;
+    tail_list.ref_node_->union_info.ref_count = 0;
+    tail_list.ref_node_->next = CopyFrom(this->ref_node_->next->next);
   }
 }
 
@@ -141,53 +141,53 @@ bool GenList<T>::Tail(GenList<T>& tail_list) {
 
 template<class T>
 void GenList<T>::CopyFrom(GenList<T>& src_gen_list) {
-  ref_node_ptr = Copy_(src_gen_list.ref_node_ptr);
+  ref_node_ = Copy_(src_gen_list.ref_node_);
 }
 
 
 template<class T>
-GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& node_ptr) {
+GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& node) {
 
-  GenListNode<T> cur_node_ptr = NULL;
+  GenListNode<T> cur_node = NULL;
 
-  if (node_ptr != NULL) {
-    cur_node_ptr = new GenListNode<T>();
-    cur_node_ptr.type = node_ptr->type;
+  if (node != NULL) {
+    cur_node = new GenListNode<T>();
+    cur_node.type = node->type;
 
-    switch (node_ptr->type) {
+    switch (node->type) {
       case GenListNode<T>::REF_TYPE:
-        cur_node_ptr->union_info.ref_count = node_ptr->union_info.ref_count;
+          cur_node->union_info.ref_count = node->union_info.ref_count;
         break;
       case GenListNode<T>::ELEM_TYPE:
-        cur_node_ptr->union_info.value = node_ptr->union_info.value;
+          cur_node->union_info.value = node->union_info.value;
         break;
       case GenListNode<T>::CHILD_LIST_TYPE:
-        cur_node_ptr.union_info.ref_node_ptr = Copy_(node_ptr->union_info.ref_node_ptr);
+          cur_node.union_info.ref_node = Copy_(node->union_info.ref_node);
         break;
       default:
         break;
     }
 
-    cur_node_ptr.next = Copy_(node_ptr->next);
+      cur_node.next = Copy_(node->next);
   }
 
-  return cur_node_ptr;
+  return cur_node;
 }
 
 
 /*!
  * @brief 获取子表长度(递归)
  * @tparam T 参数模板类型
- * @param node_ptr 子表引用(起始)结点指针
+ * @param node 子表引用(起始)结点指针
  * @return 长度
  */
 template<class T>
-int GenList<T>::SubGenListLengthRecursive_(GenListNode<T>* node_ptr) {
-  if (node_ptr == NULL) {
+int GenList<T>::SubGenListLengthRecursive_(GenListNode<T>* node) {
+  if (node == NULL) {
     return 0;
   }
 
-  int sub_list_length = SubGenListLengthRecursive_(node_ptr->next) + 1;
+  int sub_list_length = SubGenListLengthRecursive_(node->next) + 1;
 
   return sub_list_length;
 }
@@ -200,7 +200,7 @@ int GenList<T>::SubGenListLengthRecursive_(GenListNode<T>* node_ptr) {
  */
 template<class T>
 int GenList<T>::Length() {
-  int list_length = SubGenListLengthRecursive_(this->ref_node_ptr->next);
+  int list_length = SubGenListLengthRecursive_(this->ref_node_->next);
 
   return list_length;
 }
@@ -213,41 +213,41 @@ int GenList<T>::Length() {
  */
 template<class T>
 int GenList<T>::Depth() {
-  return SubGenListDepthRecursive_(ref_node_ptr);
+  return SubGenListDepthRecursive_(this->ref_node_);
 }
 
 
 /*!
  * @brief 获取子表深度(递归)
  * @tparam T 参数模板类型
- * @param node_ptr 子表引用(起始)结点指针
+ * @param node 子表引用(起始)结点指针
  * @return 深度
  */
 template<class T>
-int GenList<T>::SubGenListDepthRecursive_(GenListNode<T> *node_ptr) {
+int GenList<T>::SubGenListDepthRecursive_(GenListNode<T>* node) {
 
-  GenListNode<T>* cur_node_ptr = node_ptr->next;
+  GenListNode<T>* cur_node = node->next;
 
-  if (cur_node_ptr == NULL) {
+  if (cur_node == NULL) {
     return 1;
   }
 
-  int maxSubListDepth = 0;
+  int max_sub_list_depth = 0;
 
-  while (cur_node_ptr != NULL) {
+  while (cur_node != NULL) {
 
-    if (cur_node_ptr->type == GenListNode<T>::CHILD_LIST_TYPE) {
+    if (cur_node->type == GenListNode<T>::CHILD_LIST_TYPE) {
 
-      int curSubListDepth = SubGenListDepthRecursive_(cur_node_ptr->union_info.ref_node_ptr);
-      if (maxSubListDepth < curSubListDepth) {
-        maxSubListDepth = curSubListDepth;
+      int sub_list_depth = SubGenListDepthRecursive_(cur_node->union_info.ref_node);
+      if (max_sub_list_depth < sub_list_depth) {
+          max_sub_list_depth = sub_list_depth;
       }
     }
 
-    cur_node_ptr = cur_node_ptr->next;
+      cur_node = cur_node->next;
   }
 
-  return maxSubListDepth + 1;
+  return max_sub_list_depth + 1;
 }
 
 
@@ -309,66 +309,66 @@ bool GenList<T>::IsGenListBeginChar_(T chr) {
  * @brief 使用char队列创建广义表(递归)
  * @tparam T 类型模板参数
  * @param char_queue char队列
- * @param node_ptr 节点指针
+ * @param node 节点指针
  * @param in_referred_list 该节点是否已经被引用
  */
 template<class T>
-void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node_ptr, bool& in_referred_list) {
+void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node, bool& in_referred_list) {
 
   T chr = char_queue.front();
   char_queue.pop();
 
-  GenListNode<T>* referred_node_ptr = NULL;
+  GenListNode<T>* referred_node = NULL;
 
-  bool is_gen_list_begin_char = IsGenListBeginChar_(chr);
-  if (is_gen_list_begin_char) {
+  bool is_gen_list_begin_char = this->IsGenListBeginChar_(chr);
+  if (is_gen_list_begin_char) { // 大写字母或者'('开头
 
-    bool is_gen_list_name_char = IsGenListNameChar_(chr);
+    bool is_gen_list_name_char = this->IsGenListNameChar_(chr);
     if (is_gen_list_name_char) { // 大写字母
 
-      referred_node_ptr = FindReferredNodePtr_(chr); // 检查是否在vector内
+      referred_node = this->FindReferredNodePtr_(chr); // 检查是否在vector内
 
-      if (referred_node_ptr != NULL) {
-        node_ptr = NewChildGenListNode_(); // 创建一个子表类型(2)的节点
-        node_ptr->union_info.ref_node_ptr = referred_node_ptr; // 指到一个已经存在的表
-        referred_node_ptr->union_info.ref_count++; // 引用数+1
+      if (referred_node != NULL) {
+        node = this->NewChildGenListNode_(); // 创建一个子表类型(2)的节点
+        node->union_info.ref_node = referred_node; // 指到一个已经存在的表
+        referred_node->union_info.ref_count++; // 引用数+1
 
         in_referred_list = true;
       } else { // 不在node vector内
-        node_ptr = NewChildGenListNode_(); // 创建一个子表类型(2)的节点
+        node = this->NewChildGenListNode_(); // 创建一个子表类型(2)的节点
 
-        GenListNode<T>* ref_node_ptr = new GenListNode<T>();
-        ref_node_ptr->union_info.ref_count = 1;
+        GenListNode<T>* ref_node = new GenListNode<T>();
+        ref_node->union_info.ref_count = 1;
 
-        node_ptr->union_info.ref_node_ptr = ref_node_ptr; // 创建一个子表的0节点
+        node->union_info.ref_node = ref_node; // 创建一个子表的0节点
 
-        gen_list_name_vec_.push_back(chr);
-        gen_list_node_ptr_vec_.push_back(ref_node_ptr);
+        this->gen_list_name_vec_.push_back(chr);
+        this->gen_list_node_ptr_vec_.push_back(ref_node);
 
         in_referred_list = false;
       }
 
       LeftBracketHandler_(char_queue);
 
-      CreateGenListByQueueRecursive(char_queue, node_ptr->union_info.ref_node_ptr->next, in_referred_list);
-      CreateGenListByQueueRecursive(char_queue, node_ptr, in_referred_list);
+      CreateGenListByQueueRecursive(char_queue, node->union_info.ref_node->next, in_referred_list);
+      CreateGenListByQueueRecursive(char_queue, node, in_referred_list);
     }
   } else if (isalpha(chr) && islower(chr)) {
     if (!in_referred_list) {
-      node_ptr = NewElemNode_(chr);
-      CreateGenListByQueueRecursive(char_queue, node_ptr, in_referred_list);
+      node = NewElemNode_(chr);
+      CreateGenListByQueueRecursive(char_queue, node, in_referred_list);
     }
   } else if (chr == ',') {
-    CreateGenListByQueueRecursive(char_queue, node_ptr->next, in_referred_list);
+    CreateGenListByQueueRecursive(char_queue, node->next, in_referred_list);
   } else if (chr == ')') {
     if (!in_referred_list) {
-      node_ptr->next = NULL;
+      node->next = NULL;
     }
     in_referred_list = false;
   }
   else if (chr == '#') {
     if (!in_referred_list) {
-      node_ptr = NULL;
+      node = NULL;
       PassRightBracketAfterSharpChar(char_queue);
     }
     in_referred_list = false;
@@ -383,7 +383,7 @@ void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode
  * @note
  * 先将字符串放入队列中
  * 调用CreateGenListByQueueRecursive
- * 调整ref_node_ptr
+ * 调整ref_node_
  */
 template<class T>
 void GenList<T>::CreateListByString(string gen_list_string) {
@@ -391,17 +391,16 @@ void GenList<T>::CreateListByString(string gen_list_string) {
   // 先将字符串放入队列中
   queue<T> char_queue;
   for (int i = 0; i < gen_list_string.length(); i++) {
-    char cur_chr = gen_list_string[i];
-    char_queue.push(cur_chr);
+    char_queue.push(gen_list_string[i]);
   }
 
   bool in_referred_list = false;
 
   // 调用CreateGenListByQueueRecursive
-  this->CreateGenListByQueueRecursive(char_queue, this->ref_node_ptr->next, in_referred_list);
+  this->CreateGenListByQueueRecursive(char_queue, this->ref_node_->next, in_referred_list);
 
   // 调整ref_node_ptr
-  this->ref_node_ptr = this->ref_node_ptr->next->union_info.ref_node_ptr;
+  this->ref_node_ = this->ref_node_->next->union_info.ref_node;
 }
 
 
@@ -435,19 +434,20 @@ istream& operator>>(istream& in, GenList<T>& gen_list) {
 template<class T>
 GenListNode<T>* GenList<T>::FindReferredNodePtr_(T chr) {
 
-  GenListNode<T>* node_ptr = NULL;
+  GenListNode<T>* node = NULL;
 
   typename vector<T>::iterator name_iter = gen_list_name_vec_.begin();
   typename vector<GenListNode<T>*>::iterator node_iter = gen_list_node_ptr_vec_.begin();
 
-  for (; name_iter != gen_list_name_vec_.end(); name_iter++, node_iter++) {
+  // 遍历this->gen_list_name, 找到存在于字符串中的字符
+  for (; name_iter != this->gen_list_name_vec_.end(); name_iter++, node_iter++) {
     if (chr == *name_iter) {
-      node_ptr = *node_iter;
+      node = *node_iter;
       break;
     }
   }
 
-  return node_ptr;
+  return node;
 }
 
 
@@ -460,11 +460,11 @@ GenListNode<T>* GenList<T>::FindReferredNodePtr_(T chr) {
 template<class T>
 GenListNode<T>* GenList<T>::NewElemNode_(T chr) {
 
-  GenListNode<T>* node_ptr = new GenListNode<T>();
-  node_ptr->type = GenListNode<T>::ELEM_TYPE;
-  node_ptr->union_info.value = chr;
+  GenListNode<T>* node = new GenListNode<T>();
+  node->type = GenListNode<T>::ELEM_TYPE;
+  node->union_info.value = chr;
 
-  return node_ptr;
+  return node;
 }
 
 

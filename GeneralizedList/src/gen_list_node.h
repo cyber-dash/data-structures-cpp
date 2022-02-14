@@ -26,7 +26,7 @@ template<class T>
 union GenNodeUnion {
   int ref_count; //!< 引用计数
   T value; //!< 数据
-  GenListNode<T>* ref_node_ptr; //!< 下一个表的地址
+  GenListNode<T>* ref_node; //!< 下一个表的地址
 };
 
 
