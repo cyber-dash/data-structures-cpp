@@ -1,5 +1,9 @@
 # CMakeFile
 *cmake-build-debug/
+*cmake-build-debug-visual-studio/
+CMakeCache.txt
+data.txt
+*.cmake
 
 # idea IDE
 *.idea/
@@ -12,6 +16,14 @@
 #Doxygen
 *html/
 *latex/
+
+# Visual Studio Development
+*.vcxproj
+*.vcxproj.filters
+*.sln
+
+# Visual Studio Code
+*build/
 
 *.o
 main

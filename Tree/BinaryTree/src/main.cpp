@@ -1,11 +1,11 @@
 /*!
  * @file main.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief äºŒå‰æ ‘demoæ¼”ç¤º
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¶ş²æÊ÷demoÑİÊ¾
  * @version 0.2.1
  * @date 2020-11-01
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #include "test.h"
@@ -18,31 +18,31 @@ int main() {
 
   BinaryTreeTest::TestCopyConstructor();
 
-  // æµ‹è¯•äºŒå‰æ ‘æ·±åº¦
+  // ²âÊÔ¶ş²æÊ÷Éî¶È
   BinaryTreeTest::TestHeight();
 
-  // æµ‹è¯•LeftChildå’ŒRightChild
+  // ²âÊÔLeftChildºÍRightChild
   BinaryTreeTest::TestChild();
 
-  // æµ‹è¯•çˆ¶èŠ‚ç‚¹å‡½æ•°Parent
+  // ²âÊÔ¸¸½Úµãº¯ÊıParent
   BinaryTreeTest::TestParent();
 
-  // æµ‹è¯•å‰åºéå†
+  // ²âÊÔÇ°Ğò±éÀú
   BinaryTreeTest::TestPreOrder();
 
-  // æµ‹è¯•ä¸­åºéå†
+  // ²âÊÔÖĞĞò±éÀú
   BinaryTreeTest::TestInOrder();
 
-  // æµ‹è¯•ååºéå†
+  // ²âÊÔºóĞò±éÀú
   BinaryTreeTest::TestPostOrder();
 
-  // æµ‹è¯•å±‚åºéå†
+  // ²âÊÔ²ãĞò±éÀú
   BinaryTreeTest::TestLevelOrder();
 
-  // æµ‹è¯•æŸ¥æ‰¾æ˜¯å¦åœ¨äºŒå‰æ ‘
+  // ²âÊÔ²éÕÒÊÇ·ñÔÚ¶ş²æÊ÷
   BinaryTreeTest::TestFind();
 
-  // æµ‹è¯•ä½¿ç”¨å‰åºéå†å’Œååºéå†ç»“æœåˆ›å»ºäºŒå‰æ ‘
+  // ²âÊÔÊ¹ÓÃÇ°Ğò±éÀúºÍºóĞò±éÀú½á¹û´´½¨¶ş²æÊ÷
   BinaryTreeTest::TestCreateBinTreeByPreAndInOrderString();
 
   return 0;

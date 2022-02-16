@@ -1,11 +1,11 @@
 /*!
  * @file binary_tree.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief äºŒå‰æ ‘æ¨¡æ¿ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¶ş²æÊ÷Ä£°åÀà
  * @version 0.2.1
  * @date 2020-11-01
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_BINARY_TREE_H
@@ -23,260 +23,260 @@ using namespace std;
 
 
 /*!
- * @brief äºŒå‰æ ‘ç»“ç‚¹æ¨¡æ¿ç»“æ„ä½“
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ¶ş²æÊ÷½áµãÄ£°å½á¹¹Ìå
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 struct BinTreeNode {
-  /*! @brief æ„é€ å‡½æ•°(æ— å‚æ•°) */
+  /*! @brief ¹¹Ôìº¯Êı(ÎŞ²ÎÊı) */
   BinTreeNode(): left_child(NULL), right_child(NULL) {}
-  /*! @brief æ„é€ å‡½æ•°(æ•°æ®é¡¹å’Œå·¦å³å­©å­) */
+  /*! @brief ¹¹Ôìº¯Êı(Êı¾İÏîºÍ×óÓÒº¢×Ó) */
   BinTreeNode(T data, BinTreeNode<T>* left_child = NULL, BinTreeNode<T>* right_child = NULL):
     data(data), left_child(left_child), right_child(right_child) {}
 
-  T data; //!< äºŒå‰æ ‘ç»“ç‚¹æ•°æ®é¡¹
-  BinTreeNode<T>* left_child; //!< å·¦å­©å­ç»“ç‚¹æŒ‡é’ˆ
-  BinTreeNode<T>* right_child; //!< å³å­©å­ç»“ç‚¹æŒ‡é’ˆ
+  T data; //!< ¶ş²æÊ÷½áµãÊı¾İÏî
+  BinTreeNode<T>* left_child; //!< ×óº¢×Ó½áµãÖ¸Õë
+  BinTreeNode<T>* right_child; //!< ÓÒº¢×Ó½áµãÖ¸Õë
 };
 
 
 /*!
- * @brief ååºéå†æ ˆç»“ç‚¹æ¨¡æ¿ç±»
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ºóĞò±éÀúÕ»½áµãÄ£°åÀà
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 struct PostOrderStackNode {
-  /*! @brief æ„é€ å‡½æ•° */
+  /*! @brief ¹¹Ôìº¯Êı */
   explicit PostOrderStackNode(BinTreeNode<T>* node = NULL) {
     this->node = node;
     tag = LEFT;
   }
 
-  BinTreeNode<T>* node; //!< äºŒå‰æ ‘ç»“ç‚¹æŒ‡é’ˆ
-  enum { LEFT, RIGHT } tag; //!< æ ‡ç­¾
+  BinTreeNode<T>* node; //!< ¶ş²æÊ÷½áµãÖ¸Õë
+  enum { LEFT, RIGHT } tag; //!< ±êÇ©
 };
 
 
 /*!
- * @brief äºŒå‰æ ‘æ¨¡æ¿ç±»
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ¶ş²æÊ÷Ä£°åÀà
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 class BinaryTree {
 public:
-  /*! @brief æ„é€ å‡½æ•°(æ— å‚æ•°) */
+  /*! @brief ¹¹Ôìº¯Êı(ÎŞ²ÎÊı) */
   BinaryTree(): root_(NULL) {}
-  /*! @brief æ„é€ å‡½æ•°(æ ¹èŠ‚ç‚¹æ•°æ®é¡¹) */
+  /*! @brief ¹¹Ôìº¯Êı(¸ù½ÚµãÊı¾İÏî) */
   BinaryTree(T data) { this->SubTreeInsert_(this->root_, data); }
-  /*! @brief å¤åˆ¶æ„é€ å‡½æ•° */
+  /*! @brief ¸´ÖÆ¹¹Ôìº¯Êı */
   BinaryTree(const BinaryTree<T>& bin_tree) { this->root_ = this->Copy_(bin_tree.Root()); }
-  /*! @brief ææ„å‡½æ•° */
+  /*! @brief Îö¹¹º¯Êı */
   ~BinaryTree() { this->SubTreeDestroy_(root_); }
 
-  /* åŸºç¡€å‡½æ•° */
+  /* »ù´¡º¯Êı */
   /*!
-   * @brief è·å–æ ¹èŠ‚ç‚¹
-   * @return æ ¹ç»“ç‚¹æŒ‡é’ˆ
+   * @brief »ñÈ¡¸ù½Úµã
+   * @return ¸ù½áµãÖ¸Õë
    * */
   BinTreeNode<T>* Root() const { return this->root_; }
 
   /*!
-   * @brief æ˜¯å¦ä¸ºç©ºæ ‘
-   * @return æ˜¯å¦ä¸ºç©º
+   * @brief ÊÇ·ñÎª¿ÕÊ÷
+   * @return ÊÇ·ñÎª¿Õ
    */
   bool IsEmpty() { return this->root_ == NULL; }
 
   /*!
-   * @brief è·å–æ ¹èŠ‚ç‚¹
-   * @return æ ¹ç»“ç‚¹æŒ‡é’ˆ
+   * @brief »ñÈ¡¸ù½Úµã
+   * @return ¸ù½áµãÖ¸Õë
    */
   BinTreeNode<T>* GetRoot() const { return this->root_; }
 
   /*!
-   * @briefè·å–çˆ¶èŠ‚ç‚¹
-   * @return çˆ¶èŠ‚ç‚¹æŒ‡é’ˆ
+   * @brief»ñÈ¡¸¸½Úµã
+   * @return ¸¸½ÚµãÖ¸Õë
    */
   BinTreeNode<T>* Parent(BinTreeNode<T>* node) {
     return (this->root_ == NULL || this->root_ == node) ? NULL : this->Parent_(this->root_, node);
   }
 
   /*!
-   * @brief å·¦å­©å­
-   * @return å·¦å­©å­æŒ‡é’ˆ
+   * @brief ×óº¢×Ó
+   * @return ×óº¢×ÓÖ¸Õë
    */
   BinTreeNode<T>* LeftChild(BinTreeNode<T>* node) { return (node != NULL) ? node->left_child : NULL; }
 
   /*!
-   * @brief å·¦å­©å­
-   * @return å·¦å­©å­æŒ‡é’ˆ
+   * @brief ×óº¢×Ó
+   * @return ×óº¢×ÓÖ¸Õë
    */
   BinTreeNode<T>* RightChild(BinTreeNode<T>* node) { return (node != NULL) ? node->right_child : NULL; }
 
   /*!
-   * @brief è·å–æ ‘çš„é«˜åº¦
-   * @return é«˜åº¦
+   * @brief »ñÈ¡Ê÷µÄ¸ß¶È
+   * @return ¸ß¶È
    */
   int Height() { return this->SubTreeHeight_(this->root_); }
 
   /*!
-   * @brief è·å–æ ‘çš„ç»“ç‚¹æ•°
-   * @return ç»“ç‚¹æ•°
+   * @brief »ñÈ¡Ê÷µÄ½áµãÊı
+   * @return ½áµãÊı
    */
   int Size() { return this->SubTreeSize_(this->root_); }
 
   /*!
-   * @brief æ’å…¥ç»“ç‚¹
-   * @param data æ•°æ®é¡¹
-   * @return æ˜¯å¦æˆåŠŸ
+   * @brief ²åÈë½áµã
+   * @param data Êı¾İÏî
+   * @return ÊÇ·ñ³É¹¦
    */
   bool Insert(T data) { return this->SubTreeInsert_(this->root_, data); }
 
   /*!
-   * @brief æŸ¥è¯¢æ•°æ®é¡¹
-   * @param data æ•°æ®
-   * @return æ˜¯å¦åœ¨æ ‘ä¸­
+   * @brief ²éÑ¯Êı¾İÏî
+   * @param data Êı¾İ
+   * @return ÊÇ·ñÔÚÊ÷ÖĞ
    */
   bool Find(T data) { return this->SubTreeFind_(this->root_, data); }
 
-  /* éå†ç³»åˆ— */
+  /* ±éÀúÏµÁĞ */
   /*!
-   * @brief å‰åºéå†(ä½¿ç”¨é€’å½’)
-   * @param visit ç»“ç‚¹éå†å‡½æ•°
+   * @brief Ç°Ğò±éÀú(Ê¹ÓÃµİ¹é)
+   * @param visit ½áµã±éÀúº¯Êı
    */
   void PreOrder(void (*visit)(BinTreeNode<T>* node)) { this->SubTreePreOrder_(this->root_, visit); }
 
   /*!
-   * @brief å‰åºéå†(ä½¿ç”¨éé€’å½’)
-   * @param visit ç»“ç‚¹éå†å‡½æ•°
+   * @brief Ç°Ğò±éÀú(Ê¹ÓÃ·Çµİ¹é)
+   * @param visit ½áµã±éÀúº¯Êı
    */
   void PreOrderNonRecursive(void (*visit)(BinTreeNode<T>* node)) {
     this->SubTreePreOrderNonRecursive_(this->root_, visit);
   }
 
   /*!
-   * @brief ä¸­åºéå†(ä½¿ç”¨é€’å½’)
-   * @param visit ç»“ç‚¹éå†å‡½æ•°
+   * @brief ÖĞĞò±éÀú(Ê¹ÓÃµİ¹é)
+   * @param visit ½áµã±éÀúº¯Êı
    */
   void InOrder(void (*visit)(BinTreeNode<T>* node)) { this->SubTreeInOrder_(this->root_, visit); }
 
   /*!
-   * @brief ä¸­åºéå†(ä½¿ç”¨éé€’å½’)
-   * @param visit ç»“ç‚¹éå†å‡½æ•°
+   * @brief ÖĞĞò±éÀú(Ê¹ÓÃ·Çµİ¹é)
+   * @param visit ½áµã±éÀúº¯Êı
    */
   void InOrderNonRecursive(void (*visit)(BinTreeNode<T>* node)) {
     this->SubTreeInOrderNonRecursive_(this->root_, visit);
   }
 
   /*!
-   * @brief ååºéå†(ä½¿ç”¨é€’å½’)
-   * @param visit ç»“ç‚¹éå†å‡½æ•°
+   * @brief ºóĞò±éÀú(Ê¹ÓÃµİ¹é)
+   * @param visit ½áµã±éÀúº¯Êı
    */
   void PostOrder(void (*visit)(BinTreeNode<T>* node)) { this->SubTreePostOrder_(this->root_, visit); }
 
   /*!
-   * @brief ååºéå†(ä½¿ç”¨éé€’å½’)
-   * @param visit ç»“ç‚¹éå†å‡½æ•°
+   * @brief ºóĞò±éÀú(Ê¹ÓÃ·Çµİ¹é)
+   * @param visit ½áµã±éÀúº¯Êı
    */
   void PostOrderNonRecursive(void (*visit)(BinTreeNode<T>* node)) {
     this->SubTreePostOrderNonRecursive_(this->root_, visit);
   }
 
   /*!
-   * @brief å±‚åºéå†
-   * @param visit ç»“ç‚¹éå†å‡½æ•°
+   * @brief ²ãĞò±éÀú
+   * @param visit ½áµã±éÀúº¯Êı
    */
   void LevelOrder(void (*visit)(BinTreeNode<T>* node)) { this->SubTreeLevelOrder_(this->root_, visit); }
 
   /*!
-   * @brief ä½¿ç”¨å‰åºéå†å’Œä¸­åºéå†ç»“æœ, åˆ›å»ºäºŒå‰æ ‘
-   * @param pre_order_str å‰åºéå†å­—ç¬¦ä¸²
-   * @param in_order_str ä¸­åºéå†å­—ç¬¦ä¸²
-   * @param str_length å­—ç¬¦ä¸²é•¿åº¦
+   * @brief Ê¹ÓÃÇ°Ğò±éÀúºÍÖĞĞò±éÀú½á¹û, ´´½¨¶ş²æÊ÷
+   * @param pre_order_str Ç°Ğò±éÀú×Ö·û´®
+   * @param in_order_str ÖĞĞò±éÀú×Ö·û´®
+   * @param str_length ×Ö·û´®³¤¶È
    */
   void CreateBinTreeByPreAndInOrderString(T* pre_order_str, T* in_order_str, int str_length) {
     this->CreateSubBinTreeByPreAndInOrderString_(pre_order_str, in_order_str, str_length, this->root_);
   }
 
-  /* æ‰“å°è¾“å‡ºç³»åˆ— */
+  /* ´òÓ¡Êä³öÏµÁĞ */
   /*!
-   * @brief æ‰“å°äºŒå‰æ ‘(ä½¿ç”¨'(', ',',')')
+   * @brief ´òÓ¡¶ş²æÊ÷(Ê¹ÓÃ'(', ',',')')
    */
   void Print() { this->SubTreePrint_(this->root_); };
 
   /*!
-   * @brief ä½¿ç”¨è¾“å…¥æµåˆ›å»ºäºŒå‰æ ‘
-   * @param in è¾“å…¥æµ
+   * @brief Ê¹ÓÃÊäÈëÁ÷´´½¨¶ş²æÊ÷
+   * @param in ÊäÈëÁ÷
    */
   void CreateBinTree(istream &in) { this->CreateBinTree_(in, this->root_); }
 
   //
   // void Traverse(BinTreeNode<T>* sub_tree_root, ostream& out);
 
-  /*! æˆ‘ä»¬æ˜¯CyberDash:-) */
+  /*! ÎÒÃÇÊÇCyberDash:-) */
   void CyberDashShow();
 
-  // åˆ¤æ–­ä¸¤é¢—äºŒå‰æ ‘æ˜¯å¦ç›¸åŒ(é€’å½’)
+  // ÅĞ¶ÏÁ½¿Å¶ş²æÊ÷ÊÇ·ñÏàÍ¬(µİ¹é)
   static bool Equal(BinTreeNode<T>* root_ptr_a, BinTreeNode<T>* root_ptr_b);
 
 protected:
-  BinTreeNode<T>* root_; //!< æ ¹ç»“ç‚¹
+  BinTreeNode<T>* root_; //!< ¸ù½áµã
 
   // void CreateBinTree_(istream& in, BinTreeNode<T>*& subTree);
 
-  // å­æ ‘æ’å…¥æ•°æ®
+  // ×ÓÊ÷²åÈëÊı¾İ
   bool SubTreeInsert_(BinTreeNode<T>*& sub_tree_root, T data);
-  // åˆ é™¤å­æ ‘
+  // É¾³ı×ÓÊ÷
   void SubTreeDestroy_(BinTreeNode<T>*& sub_tree_root);
-  // æŸ¥æ‰¾æ•°æ®æ˜¯å¦åœ¨(å­)æ ‘ä¸­(é€’å½’)
+  // ²éÕÒÊı¾İÊÇ·ñÔÚ(×Ó)Ê÷ÖĞ(µİ¹é)
   bool SubTreeFind_(BinTreeNode<T>* sub_tree_root, T value) const;
-  // å¤åˆ¶äºŒå‰æ ‘
+  // ¸´ÖÆ¶ş²æÊ÷
   BinTreeNode<T>* Copy_(BinTreeNode<T>* src_sub_tree_root);
-  // æ±‚å­æ ‘çš„é«˜åº¦(é€’å½’)
+  // Çó×ÓÊ÷µÄ¸ß¶È(µİ¹é)
   int SubTreeHeight_(BinTreeNode<T>* sub_tree_root) const;
-  // æ±‚å­æ ‘çš„Size(é€’å½’)
+  // Çó×ÓÊ÷µÄSize(µİ¹é)
   int SubTreeSize_(BinTreeNode<T>* sub_tree_root) const;
-  // å­æ ‘è·å–èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
+  // ×ÓÊ÷»ñÈ¡½ÚµãµÄ¸¸½Úµã
   BinTreeNode<T>* Parent_(BinTreeNode<T>* sub_tree_root, BinTreeNode<T>* node);
 
-  // å­æ ‘å‰åºéå†(é€’å½’)
+  // ×ÓÊ÷Ç°Ğò±éÀú(µİ¹é)
   void SubTreePreOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
-  // å­æ ‘å‰åºéå†(éé€’å½’)
+  // ×ÓÊ÷Ç°Ğò±éÀú(·Çµİ¹é)
   void SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
-  // å­æ ‘ä¸­åºéå†(é€’å½’)
+  // ×ÓÊ÷ÖĞĞò±éÀú(µİ¹é)
   void SubTreeInOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
-  // å­æ ‘ä¸­åºéå†(éé€’å½’)
+  // ×ÓÊ÷ÖĞĞò±éÀú(·Çµİ¹é)
   void SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T> *node));
-  // å­æ ‘ååºéå†(é€’å½’)
+  // ×ÓÊ÷ºóĞò±éÀú(µİ¹é)
   void SubTreePostOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
-  // å­æ ‘ååºéå†(éé€’å½’)
+  // ×ÓÊ÷ºóĞò±éÀú(·Çµİ¹é)
   void SubTreePostOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
-  // å­æ ‘å±‚åºéå†
+  // ×ÓÊ÷²ãĞò±éÀú
   void SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node));
-  // å­æ ‘æ‰“å°
+  // ×ÓÊ÷´òÓ¡
   void SubTreePrint_(BinTreeNode<T>* sub_tree_root);
 
-  // ä½¿ç”¨å‰åºéå†å’Œä¸­åºéå†ç»“æœ, åˆ›å»ºäºŒå‰å­æ ‘(é€’å½’)
+  // Ê¹ÓÃÇ°Ğò±éÀúºÍÖĞĞò±éÀú½á¹û, ´´½¨¶ş²æ×ÓÊ÷(µİ¹é)
   void CreateSubBinTreeByPreAndInOrderString_(T* pre_order_str, T* in_order_str,
                                               int str_length, BinTreeNode<T>*& sub_tree_root);
 
-  // åˆ¤æ–­ä¸¤é¢—æ ‘ç›¸åŒ
+  // ÅĞ¶ÏÁ½¿ÅÊ÷ÏàÍ¬
   template<class U>
   friend bool operator == (const BinaryTree<T>& bin_tree_1, const BinaryTree<T>& bin_tree_2);
-  // è¾“å…¥äºŒå‰æ ‘
+  // ÊäÈë¶ş²æÊ÷
   template<class U>
   friend istream& operator >> (istream& in, BinaryTree<T>& bin_tree);
-  // è¾“å‡ºäºŒå‰æ ‘
+  // Êä³ö¶ş²æÊ÷
   template<class U>
   friend ostream& operator << (ostream& out, BinaryTree<T>& bin_tree);
 };
 
 
 /*!
- * @brief å­æ ‘æ’å…¥æ•°æ®
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
- * @param data ç»“ç‚¹æ•°æ®é¡¹
- * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+ * @brief ×ÓÊ÷²åÈëÊı¾İ
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
+ * @param data ½áµãÊı¾İÏî
+ * @return ÊÇ·ñ²åÈë³É¹¦
  */
 template<class T>
 bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& sub_tree_root, T data) {
@@ -284,7 +284,7 @@ bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& sub_tree_root, T data) {
   if (sub_tree_root == NULL) {
     sub_tree_root = new BinTreeNode<T>(data);
     if (sub_tree_root == NULL) {
-      cerr << "å­˜å‚¨åˆ†é…é”™è¯¯!" << endl;
+      cerr << "´æ´¢·ÖÅä´íÎó!" << endl;
       return false;
     }
 
@@ -307,8 +307,8 @@ bool BinaryTree<T>::SubTreeInsert_(BinTreeNode<T>*& sub_tree_root, T data) {
 
 
 /*!
- * @brief åˆ é™¤å­æ ‘
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹
+ * @brief É¾³ı×ÓÊ÷
+ * @param sub_tree_root ×ÓÊ÷¸ù½Úµã
  */
 template <class T>
 void BinaryTree<T>::SubTreeDestroy_(BinTreeNode<T>*& sub_tree_root) {
@@ -325,11 +325,11 @@ void BinaryTree<T>::SubTreeDestroy_(BinTreeNode<T>*& sub_tree_root) {
 
 
 /**
- * @brief æŸ¥æ‰¾æ•°æ®æ˜¯å¦åœ¨(å­)æ ‘ä¸­(é€’å½’)
- * @tparam T ç»“ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param value è¢«æŸ¥æ‰¾æ•°æ®
- * @return æ˜¯å¦å­˜åœ¨
+ * @brief ²éÕÒÊı¾İÊÇ·ñÔÚ(×Ó)Ê÷ÖĞ(µİ¹é)
+ * @tparam T ½áµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param value ±»²éÕÒÊı¾İ
+ * @return ÊÇ·ñ´æÔÚ
  */
 template<class T>
 bool BinaryTree<T>::SubTreeFind_(BinTreeNode<T>* sub_tree_root, T value) const {
@@ -351,10 +351,10 @@ bool BinaryTree<T>::SubTreeFind_(BinTreeNode<T>* sub_tree_root, T value) const {
 
 
 /*!
- * @brief å¤åˆ¶äºŒå‰æ ‘(é€’å½’)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param src_sub_tree_root æºæ ‘æ ¹èŠ‚ç‚¹
- * @return æ–°æ ‘æ ¹èŠ‚ç‚¹
+ * @brief ¸´ÖÆ¶ş²æÊ÷(µİ¹é)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param src_sub_tree_root Ô´Ê÷¸ù½Úµã
+ * @return ĞÂÊ÷¸ù½Úµã
  */
 template<class T>
 BinTreeNode<T>* BinaryTree<T>::Copy_(BinTreeNode<T>* src_sub_tree_root) {
@@ -374,22 +374,22 @@ BinTreeNode<T>* BinaryTree<T>::Copy_(BinTreeNode<T>* src_sub_tree_root) {
 
 
 /*!
- * @brief æ±‚å­æ ‘çš„é«˜åº¦(é€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @return å­æ ‘é«˜åº¦
+ * @brief Çó×ÓÊ÷µÄ¸ß¶È(µİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @return ×ÓÊ÷¸ß¶È
  */
 template<class T>
 int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T>* sub_tree_root) const {
-  // å¦‚æœå­æ ‘æ ¹èŠ‚ç‚¹ä¸ºç©º, åˆ™è¿”å›0
+  // Èç¹û×ÓÊ÷¸ù½ÚµãÎª¿Õ, Ôò·µ»Ø0
   if (sub_tree_root == NULL) {
     return 0;
   }
 
-  int left_sub_tree_height = SubTreeHeight_(sub_tree_root->left_child); // é€’å½’æ±‚å·¦å­æ ‘é«˜åº¦
-  int right_sub_tree_height = SubTreeHeight_(sub_tree_root->right_child); // é€’å½’æ±‚å³å­æ ‘é«˜åº¦
+  int left_sub_tree_height = SubTreeHeight_(sub_tree_root->left_child); // µİ¹éÇó×ó×ÓÊ÷¸ß¶È
+  int right_sub_tree_height = SubTreeHeight_(sub_tree_root->right_child); // µİ¹éÇóÓÒ×ÓÊ÷¸ß¶È
 
-  // æ ‘é«˜åº¦ = æœ€é«˜çš„å·¦å³å­æ ‘é«˜åº¦ + 1
+  // Ê÷¸ß¶È = ×î¸ßµÄ×óÓÒ×ÓÊ÷¸ß¶È + 1
   if (left_sub_tree_height < right_sub_tree_height) {
     return right_sub_tree_height + 1;
   } else {
@@ -399,10 +399,10 @@ int BinaryTree<T>::SubTreeHeight_(BinTreeNode<T>* sub_tree_root) const {
 
 
 /*!
- * @brief æ±‚å­æ ‘çš„size(é€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @return å­æ ‘size
+ * @brief Çó×ÓÊ÷µÄsize(µİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @return ×ÓÊ÷size
  */
 template<class T>
 int BinaryTree<T>::SubTreeSize_(BinTreeNode<T>* sub_tree_root) const {
@@ -410,8 +410,8 @@ int BinaryTree<T>::SubTreeSize_(BinTreeNode<T>* sub_tree_root) const {
     return 0;
   }
 
-  int left_sub_tree_size = SubTreeSize_(sub_tree_root->left_child); // é€’å½’æ±‚å·¦å­æ ‘size
-  int right_sub_tree_size = SubTreeSize_(sub_tree_root->right_child); // é€’å½’æ±‚å³å­æ ‘size
+  int left_sub_tree_size = SubTreeSize_(sub_tree_root->left_child); // µİ¹éÇó×ó×ÓÊ÷size
+  int right_sub_tree_size = SubTreeSize_(sub_tree_root->right_child); // µİ¹éÇóÓÒ×ÓÊ÷size
 
   int sub_tree_size = 1 + left_sub_tree_size + right_sub_tree_size;
 
@@ -420,21 +420,21 @@ int BinaryTree<T>::SubTreeSize_(BinTreeNode<T>* sub_tree_root) const {
 
 
 /*!
- * @brief å­æ ‘è·å–èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param node èŠ‚ç‚¹æŒ‡é’ˆ
- * @return èŠ‚ç‚¹çš„(ä½äºå­æ ‘å†…çš„)çˆ¶èŠ‚ç‚¹æŒ‡é’ˆ
+ * @brief ×ÓÊ÷»ñÈ¡½ÚµãµÄ¸¸½Úµã
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param node ½ÚµãÖ¸Õë
+ * @return ½ÚµãµÄ(Î»ÓÚ×ÓÊ÷ÄÚµÄ)¸¸½ÚµãÖ¸Õë
  */
 template<class T>
 BinTreeNode<T>* BinaryTree<T>::Parent_(BinTreeNode<T>* sub_tree_root, BinTreeNode<T>* node) {
 
-  // å¦‚æœå­æ ‘æ ¹ä¸ºNULL, åˆ™è¿”å›NULL
+  // Èç¹û×ÓÊ÷¸ùÎªNULL, Ôò·µ»ØNULL
   if (sub_tree_root == NULL) {
     return NULL;
   }
 
-  // å¦‚æœå­æ ‘æ ¹çš„å·¦å­©å­orå³å­©å­, å°±æ˜¯node_ptrçš„çˆ¶èŠ‚ç‚¹, åˆ™è¿”å›å­æ ‘æ ¹ç»“ç‚¹
+  // Èç¹û×ÓÊ÷¸ùµÄ×óº¢×ÓorÓÒº¢×Ó, ¾ÍÊÇnode_ptrµÄ¸¸½Úµã, Ôò·µ»Ø×ÓÊ÷¸ù½áµã
   if (sub_tree_root->left_child == node || sub_tree_root->right_child == node) {
     return sub_tree_root;
   }
@@ -462,10 +462,10 @@ void BinaryTree<T>::Traverse(BinTreeNode<T> *sub_tree_root, ostream& out) {
 
 
 /*!
- * @brief å­æ ‘å‰åºéå†(é€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ×ÓÊ÷Ç°Ğò±éÀú(µİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  */
 template<class T>
 void BinaryTree<T>::SubTreePreOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node)) {
@@ -481,28 +481,28 @@ void BinaryTree<T>::SubTreePreOrder_(BinTreeNode<T>* sub_tree_root, void (*visit
 
 
 /**
- * @brief å­æ ‘å‰åºéå†(éé€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ×ÓÊ÷Ç°Ğò±éÀú(·Çµİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  */
 template<class T>
 void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>*)) {
 
-  // (æ ˆåˆå§‹åŒ–)å£°æ˜å‰åºéå†æ ˆ, å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆå…¥æ ˆ
+  // (Õ»³õÊ¼»¯)ÉùÃ÷Ç°Ğò±éÀúÕ», ×ÓÊ÷¸ù½ÚµãÖ¸ÕëÈëÕ»
   stack<BinTreeNode<T>*> pre_traverse_stack;
   pre_traverse_stack.push(sub_tree_root);
 
   while (!pre_traverse_stack.empty()) {
 
-    // å‡ºæ ˆ
+    // ³öÕ»
     BinTreeNode<T>* cur_node_ptr = pre_traverse_stack.top();
     pre_traverse_stack.pop();
 
-    // è®¿é—®
+    // ·ÃÎÊ
     visit(cur_node_ptr);
 
-    // å­©å­èŠ‚ç‚¹å…¥æ ˆ
+    // º¢×Ó½ÚµãÈëÕ»
     if (cur_node_ptr->right_child != NULL) {
       pre_traverse_stack.push(cur_node_ptr->right_child);
     }
@@ -515,10 +515,10 @@ void BinaryTree<T>::SubTreePreOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, 
 
 
 /*!
- * @brief å­æ ‘ä¸­åºéå†(é€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ×ÓÊ÷ÖĞĞò±éÀú(µİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  */
 template<class T>
 void BinaryTree<T>::SubTreeInOrder_(BinTreeNode<T>* sub_tree_root,
@@ -537,10 +537,10 @@ void BinaryTree<T>::SubTreeInOrder_(BinTreeNode<T>* sub_tree_root,
 
 
 /**
- * @brief å­æ ‘ä¸­åºéå†(éé€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ×ÓÊ÷ÖĞĞò±éÀú(·Çµİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  */
 template<class T>
 void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node)) {
@@ -569,10 +569,10 @@ void BinaryTree<T>::SubTreeInOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, v
 
 
 /*!
- * @brief å­æ ‘ååºéå†(é€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ×ÓÊ÷ºóĞò±éÀú(µİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  */
 template<class T>
 void BinaryTree<T>::SubTreePostOrder_(BinTreeNode<T>* sub_tree_root,
@@ -590,10 +590,10 @@ void BinaryTree<T>::SubTreePostOrder_(BinTreeNode<T>* sub_tree_root,
 
 
 /**
- * @brief å­æ ‘ååºéå†(éé€’å½’)
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ×ÓÊ÷ºóĞò±éÀú(·Çµİ¹é)
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  */
 template <class T>
 void BinaryTree<T>::SubTreePostOrderNonRecursive_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>*)) {
@@ -637,10 +637,10 @@ void BinaryTree<T>::SubTreePostOrderNonRecursive_(BinTreeNode<T>* sub_tree_root,
 
 
 /**
- * @brief å­æ ‘å±‚åºéå†
- * @tparam T èŠ‚ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ×ÓÊ÷²ãĞò±éÀú
+ * @tparam T ½ÚµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  */
 template<class T>
 void BinaryTree<T>::SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root, void (*visit)(BinTreeNode<T>* node_ptr)) {
@@ -668,9 +668,9 @@ void BinaryTree<T>::SubTreeLevelOrder_(BinTreeNode<T>* sub_tree_root, void (*vis
 
 
 /*!
- * @brief å­æ ‘æ‰“å°
- * @tparam T ç»“ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹
+ * @brief ×ÓÊ÷´òÓ¡
+ * @tparam T ½áµãÊı¾İÄ£°åÀàĞÍ
+ * @param sub_tree_root ×ÓÊ÷¸ù½Úµã
  */
 template<class T>
 void BinaryTree<T>::SubTreePrint_(BinTreeNode<T>* sub_tree_root) {
@@ -699,11 +699,11 @@ void BinaryTree<T>::SubTreePrint_(BinTreeNode<T>* sub_tree_root) {
 
 
 /*!
- * @brief ä½¿ç”¨å‰åºéå†å’Œä¸­åºéå†ç»“æœ, åˆ›å»ºäºŒå‰å­æ ‘(é€’å½’)
- * @param pre_order_str å‰åºéå†å­—ç¬¦ä¸²
- * @param in_order_str ååºéå†å­—ç¬¦ä¸²
- * @param str_length å­—ç¬¦ä¸²é•¿åº¦
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
+ * @brief Ê¹ÓÃÇ°Ğò±éÀúºÍÖĞĞò±éÀú½á¹û, ´´½¨¶ş²æ×ÓÊ÷(µİ¹é)
+ * @param pre_order_str Ç°Ğò±éÀú×Ö·û´®
+ * @param in_order_str ºóĞò±éÀú×Ö·û´®
+ * @param str_length ×Ö·û´®³¤¶È
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
  */
 template<class T>
 void BinaryTree<T>::CreateSubBinTreeByPreAndInOrderString_(T* pre_order_str, T* in_order_str,
@@ -722,7 +722,7 @@ void BinaryTree<T>::CreateSubBinTreeByPreAndInOrderString_(T* pre_order_str, T* 
 
   sub_tree_root = new BinTreeNode<T>(cur_root_value);
   if (sub_tree_root == NULL) {
-    cerr << "å­˜å‚¨åˆ†é…é”™è¯¯!" << endl;
+    cerr << "´æ´¢·ÖÅä´íÎó!" << endl;
     exit(1);
   }
 
@@ -739,11 +739,11 @@ void BinaryTree<T>::CreateSubBinTreeByPreAndInOrderString_(T* pre_order_str, T* 
 
 
 /*!
- * @brief åˆ¤æ–­ä¸¤é¢—äºŒå‰æ ‘æ˜¯å¦ç›¸åŒ(é€’å½’)
- * @tparam T ç»“ç‚¹æ•°æ®æ¨¡æ¿ç±»å‹
- * @param root_ptr_a æ ¹èŠ‚ç‚¹a
- * @param root_ptr_b æ ¹èŠ‚ç‚¹2
- * @return æ˜¯å¦ç›¸åŒ
+ * @brief ÅĞ¶ÏÁ½¿Å¶ş²æÊ÷ÊÇ·ñÏàÍ¬(µİ¹é)
+ * @tparam T ½áµãÊı¾İÄ£°åÀàĞÍ
+ * @param root_ptr_a ¸ù½Úµãa
+ * @param root_ptr_b ¸ù½Úµã2
+ * @return ÊÇ·ñÏàÍ¬
  */
 template<class T>
 bool BinaryTree<T>::Equal(BinTreeNode<T>* root_ptr_a, BinTreeNode<T>* root_ptr_b) {
@@ -772,7 +772,7 @@ void BinaryTree<T>::CreateBinTree_(istream& in, BinTreeNode<T>*& subTree) {
     if (item != value_) {
       subTree = new BinTreeNode<T>(item);
       if(subTree == NULL) {
-        cerr << "å­˜å‚¨åˆ†é…é”™è¯¯!" << endl;
+        cerr << "´æ´¢·ÖÅä´íÎó!" << endl;
         exit(1);
       }
       CreateBinTree_(in, subTree->left_child);
@@ -786,10 +786,10 @@ void BinaryTree<T>::CreateBinTree_(istream& in, BinTreeNode<T>*& subTree) {
 
 
 /*!
- * @brief é‡è½½==
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param bin_tree_1 äºŒå‰æ ‘1
- * @param bin_tree_2 äºŒå‰æ ‘2
+ * @brief ÖØÔØ==
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param bin_tree_1 ¶ş²æÊ÷1
+ * @param bin_tree_2 ¶ş²æÊ÷2
  * @return
  */
 template<class T>
@@ -807,7 +807,7 @@ istream& operator >> (istream& in, BinaryTree<T>& Tree) {
 
 template<class T>
 ostream& operator << (ostream& out, BinaryTree<T>& Tree) {
-  out << "äºŒå‰æ ‘çš„å‰åºéå†\n";
+  out << "¶ş²æÊ÷µÄÇ°Ğò±éÀú\n";
   Tree.Traverse(Tree.GetRoot(), out);
   out << endl;
   return out;
@@ -815,18 +815,18 @@ ostream& operator << (ostream& out, BinaryTree<T>& Tree) {
 
 
 /**
- * æˆ‘ä»¬æ˜¯CyberDash :-)
+ * ÎÒÃÇÊÇCyberDash :-)
  */
 template<class T>
 void BinaryTree<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDashæˆå‘˜:"<<endl
-      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
-      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"L_Dash(yuleen_@outlook.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿåœ¨è¯»)"<<endl<<endl
-      <<"æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash³ÉÔ±:"<<endl
+      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
+      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
+      <<"L_Dash(yuleen_@outlook.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿ÉúÔÚ¶Á)"<<endl<<endl
+      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 

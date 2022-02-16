@@ -1,11 +1,11 @@
 /*!
  * @file test.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief äºŒå‰æ ‘æµ‹è¯•ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¶ş²æÊ÷²âÊÔÀà
  * @version 0.2.1
  * @date 2020-05-04
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_BINARY_TREE_TEST_H
@@ -15,48 +15,48 @@
 #include "binary_tree.h"
 
 /*!
- * @brief äºŒå‰æ ‘æµ‹è¯•ç±»
+ * @brief ¶ş²æÊ÷²âÊÔÀà
  */
 class BinaryTreeTest {
 public:
-  /*! @brief æµ‹è¯•å¤åˆ¶æ„é€ å‡½æ•° */
+  /*! @brief ²âÊÔ¸´ÖÆ¹¹Ôìº¯Êı */
   static void TestCopyConstructor();
 
-  /*! @brief æµ‹è¯•äºŒå‰æ ‘æ·±åº¦ */
+  /*! @brief ²âÊÔ¶ş²æÊ÷Éî¶È */
   static void TestHeight();
 
-  /*! @brief æµ‹è¯•LeftChildå’ŒRightChild */
+  /*! @brief ²âÊÔLeftChildºÍRightChild */
   static void TestChild();
 
-  /*! @brief æµ‹è¯•çˆ¶èŠ‚ç‚¹å‡½æ•°Parent */
+  /*! @brief ²âÊÔ¸¸½Úµãº¯ÊıParent */
   static void TestParent();
 
-  /*! @brief æµ‹è¯•å‰åºéå† */
+  /*! @brief ²âÊÔÇ°Ğò±éÀú */
   static void TestPreOrder();
 
-  /*! @brief æµ‹è¯•ä¸­åºéå† */
+  /*! @brief ²âÊÔÖĞĞò±éÀú */
   static void TestInOrder();
 
-  /*! @brief æµ‹è¯•ååºéå† */
+  /*! @brief ²âÊÔºóĞò±éÀú */
   static void TestPostOrder();
 
-  /*! @brief æµ‹è¯•å±‚åºéå† */
+  /*! @brief ²âÊÔ²ãĞò±éÀú */
   static void TestLevelOrder();
 
-  /*! @brief æµ‹è¯•æŸ¥æ‰¾æ˜¯å¦åœ¨äºŒå‰æ ‘ */
+  /*! @brief ²âÊÔ²éÕÒÊÇ·ñÔÚ¶ş²æÊ÷ */
   static void TestFind();
 
-  /*! @brief æµ‹è¯•ä½¿ç”¨å‰åºéå†å’Œååºéå†ç»“æœåˆ›å»ºäºŒå‰æ ‘ */
+  /*! @brief ²âÊÔÊ¹ÓÃÇ°Ğò±éÀúºÍºóĞò±éÀú½á¹û´´½¨¶ş²æÊ÷ */
   static void TestCreateBinTreeByPreAndInOrderString();
 
-  /*! @brief æµ‹è¯•æ˜¯å¦ä¸ºç©º */
+  /*! @brief ²âÊÔÊÇ·ñÎª¿Õ */
   static void TestIsEmpty();
 };
 
 
 /*!
- * @brief ç»“ç‚¹æ‰“å°å‡½æ•°
- * @param node äºŒå‰æ ‘ç»“ç‚¹
+ * @brief ½áµã´òÓ¡º¯Êı
+ * @param node ¶ş²æÊ÷½áµã
  */
 void visit(BinTreeNode<int>* node) {
   cout << node->data << " ";
@@ -68,7 +68,7 @@ void BinaryTreeTest::TestCopyConstructor() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|              Test BinaryTree CopyConstructor              |"<<endl;
-  cout<<"|                     æµ‹è¯•äºŒå‰æ ‘å¤åˆ¶æ„é€ å‡½æ•°                   |"<<endl;
+  cout<<"|                     ²âÊÔ¶ş²æÊ÷¸´ÖÆ¹¹Ôìº¯Êı                   |"<<endl;
 
   int num = 7;
   BinaryTree<int> bin_tree;
@@ -90,7 +90,7 @@ void BinaryTreeTest::TestHeight() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test BinaryTree Height                  |"<<endl;
-  cout<<"|                        æµ‹è¯•äºŒå‰æ ‘é«˜åº¦                       |"<<endl;
+  cout<<"|                        ²âÊÔ¶ş²æÊ÷¸ß¶È                       |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -110,7 +110,7 @@ void BinaryTreeTest::TestHeight() {
 
   int height = bin_tree.Height();
 
-  cout<<"äºŒå‰æ ‘æ·±åº¦: "<<height<<endl;
+  cout<<"¶ş²æÊ÷Éî¶È: "<<height<<endl;
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;
@@ -127,7 +127,7 @@ void BinaryTreeTest::TestChild() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|            Test BinaryTree LeftChild & RightChild         |"<<endl;
-  cout<<"|                     æµ‹è¯•äºŒå‰æ ‘å·¦å³å­©å­å‡½æ•°                   |"<<endl;
+  cout<<"|                     ²âÊÔ¶ş²æÊ÷×óÓÒº¢×Óº¯Êı                   |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -149,9 +149,9 @@ void BinaryTreeTest::TestChild() {
   BinTreeNode<int>* root_left_child_ptr = bin_tree.LeftChild(root_ptr);
   BinTreeNode<int>* root_right_child_ptr = bin_tree.RightChild(root_ptr);
 
-  cout << "æ ¹èŠ‚ç‚¹: " << root_ptr->data << endl;
-  cout << "æ ¹èŠ‚ç‚¹å·¦å­©å­: " << root_left_child_ptr->data << endl;
-  cout << "æ ¹èŠ‚ç‚¹å³å­©å­: " << root_right_child_ptr->data << endl;
+  cout << "¸ù½Úµã: " << root_ptr->data << endl;
+  cout << "¸ù½Úµã×óº¢×Ó: " << root_left_child_ptr->data << endl;
+  cout << "¸ù½ÚµãÓÒº¢×Ó: " << root_right_child_ptr->data << endl;
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;
@@ -163,7 +163,7 @@ void BinaryTreeTest::TestParent() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                  Test BinaryTree Parent                   |"<<endl;
-  cout<<"|                       æµ‹è¯•äºŒå‰æ ‘çˆ¶èŠ‚ç‚¹                      |"<<endl;
+  cout<<"|                       ²âÊÔ¶ş²æÊ÷¸¸½Úµã                      |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -188,12 +188,12 @@ void BinaryTreeTest::TestParent() {
   BinTreeNode<int>* target_parent_ptr = bin_tree.Parent(target_ptr);
 
   if (root_parent_ptr == NULL) {
-    cout<<"æ ¹èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹ä¸ºNULL"<<endl;
+    cout<<"¸ù½ÚµãµÄ¸¸½ÚµãÎªNULL"<<endl;
   } else {
-    cout << "æ ¹èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹: " << root_parent_ptr->data << endl;
+    cout << "¸ù½ÚµãµÄ¸¸½Úµã: " << root_parent_ptr->data << endl;
   }
 
-  cout << target_ptr->data << "çš„çˆ¶èŠ‚ç‚¹ï¼š " << target_parent_ptr->data << endl;
+  cout << target_ptr->data << "µÄ¸¸½Úµã£º " << target_parent_ptr->data << endl;
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<endl;
@@ -205,7 +205,7 @@ void BinaryTreeTest::TestPreOrder() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                  Test BinaryTree PreOrder                 |"<<endl;
-  cout<<"|                      æµ‹è¯•äºŒå‰æ ‘å‰åºéå†                      |"<<endl;
+  cout<<"|                      ²âÊÔ¶ş²æÊ÷Ç°Ğò±éÀú                      |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -223,11 +223,11 @@ void BinaryTreeTest::TestPreOrder() {
     bin_tree.Insert(i);
   }
 
-  cout<<"å‰åºéå†(é€’å½’):"<<endl;
+  cout<<"Ç°Ğò±éÀú(µİ¹é):"<<endl;
   bin_tree.PreOrder(visit);
   cout<<endl;
 
-  cout<<"å‰åºéå†(éé€’å½’):"<<endl;
+  cout<<"Ç°Ğò±éÀú(·Çµİ¹é):"<<endl;
   bin_tree.PreOrderNonRecursive(visit);
   cout<<endl;
 
@@ -241,7 +241,7 @@ void BinaryTreeTest::TestInOrder() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test BinaryTree SubTreeInOrder_                 |"<<endl;
-  cout<<"|                      æµ‹è¯•äºŒå‰æ ‘ä¸­åºéå†                      |"<<endl;
+  cout<<"|                      ²âÊÔ¶ş²æÊ÷ÖĞĞò±éÀú                      |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -259,11 +259,11 @@ void BinaryTreeTest::TestInOrder() {
     bin_tree.Insert(i);
   }
 
-  cout<<"ä¸­åºéå†(é€’å½’):"<<endl;
+  cout<<"ÖĞĞò±éÀú(µİ¹é):"<<endl;
   bin_tree.InOrder(visit);
   cout<<endl;
 
-  cout<<"ä¸­åºéå†(éé€’å½’):"<<endl;
+  cout<<"ÖĞĞò±éÀú(·Çµİ¹é):"<<endl;
   bin_tree.InOrderNonRecursive(visit);
   cout<<endl;
 
@@ -277,7 +277,7 @@ void BinaryTreeTest::TestPostOrder() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test BinaryTree PostOrder                 |"<<endl;
-  cout<<"|                      æµ‹è¯•äºŒå‰æ ‘ååºéå†                      |"<<endl;
+  cout<<"|                      ²âÊÔ¶ş²æÊ÷ºóĞò±éÀú                      |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -295,11 +295,11 @@ void BinaryTreeTest::TestPostOrder() {
     bin_tree.Insert(i);
   }
 
-  cout<<"ååºéå†(é€’å½’):"<<endl;
+  cout<<"ºóĞò±éÀú(µİ¹é):"<<endl;
   bin_tree.PostOrder(visit);
   cout<<endl;
 
-  cout<<"ååºéå†(éé€’å½’):"<<endl;
+  cout<<"ºóĞò±éÀú(·Çµİ¹é):"<<endl;
   bin_tree.PostOrderNonRecursive(visit);
   cout<<endl;
 
@@ -308,13 +308,13 @@ void BinaryTreeTest::TestPostOrder() {
 }
 
 
-// æµ‹è¯•å±‚åºéå†
+// ²âÊÔ²ãĞò±éÀú
 void BinaryTreeTest::TestLevelOrder() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test BinaryTree LevelOrder                |"<<endl;
-  cout<<"|                      æµ‹è¯•äºŒå‰æ ‘å±‚åºéå†                      |"<<endl;
+  cout<<"|                      ²âÊÔ¶ş²æÊ÷²ãĞò±éÀú                      |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -345,7 +345,7 @@ void BinaryTreeTest::TestFind() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test BinaryTree Find                   |"<<endl;
-  cout<<"|                        æµ‹è¯•äºŒå‰æ ‘æŸ¥æ‰¾                       |"<<endl;
+  cout<<"|                        ²âÊÔ¶ş²æÊ÷²éÕÒ                       |"<<endl;
   cout<<"|                                                           |"<<endl;
   cout<<"|                             0                             |"<<endl;
   cout<<"|                            / \\                            |"<<endl;
@@ -388,18 +388,18 @@ void BinaryTreeTest::TestCreateBinTreeByPreAndInOrderString() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|  Test BinaryTree TestCreateBinTreeByPreAndInOrderString   |"<<endl;
-  cout<<"|                æµ‹è¯•å‰åºéå†ä¸ä¸­åºéå†ç”ŸæˆäºŒå‰æ ‘                |"<<endl;
+  cout<<"|                ²âÊÔÇ°Ğò±éÀúÓëÖĞĞò±éÀúÉú³É¶ş²æÊ÷                |"<<endl;
 
   BinaryTree<int> bin_tree;
 
-  int pre_order_traverse_arr[] = { 0, 1, 3, 6, 5, 9, 2, 4, 8, 7 }; // å‰åºéå†ç»“æœ
-  int in_order_traverse_arr[] = { 6, 3, 1, 9, 5, 0, 8, 4, 2, 7 }; // ä¸­åºéå†ç»“æœ
+  int pre_order_traverse_arr[] = { 0, 1, 3, 6, 5, 9, 2, 4, 8, 7 }; // Ç°Ğò±éÀú½á¹û
+  int in_order_traverse_arr[] = { 6, 3, 1, 9, 5, 0, 8, 4, 2, 7 }; // ÖĞĞò±éÀú½á¹û
   bin_tree.CreateBinTreeByPreAndInOrderString(
     pre_order_traverse_arr,
     in_order_traverse_arr,
     10);
 
-  cout<<"æ‰“å°äºŒå‰æ ‘:"<<endl;
+  cout<<"´òÓ¡¶ş²æÊ÷:"<<endl;
   bin_tree.Print();
 
   cout<<endl;
