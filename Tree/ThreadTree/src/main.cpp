@@ -1,5 +1,5 @@
 //
-// Created by alei_go@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/11/1.
+// Created by alei_go@163.com(¶¶Òô: cyberdash_yuan) on 2020/11/1.
 //
 
 #include "test.h"
@@ -10,28 +10,28 @@ using namespace std;
 
 int main() {
 
-  // æµ‹è¯•First
+  // ²âÊÔFirst
   TestFirst();
 
-  // æµ‹è¯•Last
+  // ²âÊÔLast
   TestLast();
 
-  // æµ‹è¯•Next(ä¸­åº)
+  // ²âÊÔNext(ÖĞĞò)
   TestNext();
 
-  // æµ‹è¯•Prior(ä¸­åº)
+  // ²âÊÔPrior(ÖĞĞò)
   TestPrior();
 
-  // æµ‹è¯•Parent(ä¸­åº)
+  // ²âÊÔParent(ÖĞĞò)
   TestParent();
 
-  // æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘ä¸­åºéå†
+  // ²âÊÔÖĞĞòÏßË÷Ê÷ÖĞĞò±éÀú
   TestInOrderTraverseOfInOrderThread();
 
-  // æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘å‰åºéå†
+  // ²âÊÔÖĞĞòÏßË÷Ê÷Ç°Ğò±éÀú
   TestPreOrderTraverseOfInOrderThread();
 
-  // æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘ååºéå†
+  // ²âÊÔÖĞĞòÏßË÷Ê÷ºóĞò±éÀú
   TestPostOrderTraverseOfInOrderThread();
 
   /*

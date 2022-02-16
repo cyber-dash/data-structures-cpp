@@ -19,9 +19,11 @@ data.txt
 *latex/
 
 # Visual Studio Development
+*.vs/
 *.vcxproj
 *.vcxproj.filters
 *.sln
+*out/
 
 # Visual Studio Code
 *build/
