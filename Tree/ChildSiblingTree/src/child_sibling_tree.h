@@ -1,11 +1,11 @@
 /*!
  * @file ChildSiblingTree.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å­å¥³å…„å¼Ÿæ ‘æ¨¡æ¿ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ×ÓÅ®ĞÖµÜÊ÷Ä£°åÀà
  * @version 0.2.1
  * @date 2020-11-01
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_CHILD_SIBLING_TREE_H
@@ -21,34 +21,34 @@ using namespace std;
 
 
 /*!
- * @brief å­å¥³å…„å¼Ÿæ ‘ç»“ç‚¹æ¨¡æ¿ç»“æ„ä½“
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ×ÓÅ®ĞÖµÜÊ÷½áµãÄ£°å½á¹¹Ìå
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 struct ChildSiblingNode {
   /*!
-   * @brief ç»“æ„ä½“æ„é€ å‡½æ•°
-   * @param data æ•°æ®é¡¹
-   * @param first_child é•¿å­ç»“ç‚¹æŒ‡é’ˆ
-   * @param next_sibling ä¸‹ä¸€å…„å¼Ÿç»“ç‚¹æŒ‡é’ˆ
+   * @brief ½á¹¹Ìå¹¹Ôìº¯Êı
+   * @param data Êı¾İÏî
+   * @param first_child ³¤×Ó½áµãÖ¸Õë
+   * @param next_sibling ÏÂÒ»ĞÖµÜ½áµãÖ¸Õë
    */
   ChildSiblingNode(T data, ChildSiblingNode<T>* first_child = NULL, ChildSiblingNode<T>* next_sibling = NULL):
     data(data), first_child(first_child), next_sibling(next_sibling) {}
 
-  T data; //!< æ•°æ®é¡¹
-  ChildSiblingNode<T>* first_child; //!< é•¿å­ç»“ç‚¹æŒ‡é’ˆ
-  ChildSiblingNode<T>* next_sibling; //!< å…„å¼Ÿç»“ç‚¹æŒ‡é’ˆ
+  T data; //!< Êı¾İÏî
+  ChildSiblingNode<T>* first_child; //!< ³¤×Ó½áµãÖ¸Õë
+  ChildSiblingNode<T>* next_sibling; //!< ĞÖµÜ½áµãÖ¸Õë
 };
 
 
 /*!
- * @brief å­å¥³å…„å¼Ÿæ ‘æ¨¡æ¿ç±»
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ×ÓÅ®ĞÖµÜÊ÷Ä£°åÀà
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 class ChildSiblingTree {
 public:
-  /*! @brief æ„é€ å‡½æ•° */
+  /*! @brief ¹¹Ôìº¯Êı */
   ChildSiblingTree(): root_(NULL), current_(NULL) {}
   bool SetRootToCurrent();
   bool IsEmpty() { return this->root_ == NULL; }
@@ -69,40 +69,40 @@ public:
   void ShowTree() { this->ShowSubTreeRecursive_(this->root_); }
   void CyberDashShow();
 private:
-  ChildSiblingNode<T>* root_; //!< æ ¹ç»“ç‚¹
-  ChildSiblingNode<T>* current_; //!< å½“å‰æŒ‡é’ˆ, ä¸ºäº†æ–¹ä¾¿é“¾è¡¨æ“ä½œ
+  ChildSiblingNode<T>* root_; //!< ¸ù½áµã
+  ChildSiblingNode<T>* current_; //!< µ±Ç°Ö¸Õë, ÎªÁË·½±ãÁ´±í²Ù×÷
 
-  // åœ¨å­æ ‘ä¸­ä½¿ç”¨æ•°æ®é¡¹æŸ¥æ‰¾, å¹¶å°†èŠ‚ç‚¹èµ‹ç»™current_
+  // ÔÚ×ÓÊ÷ÖĞÊ¹ÓÃÊı¾İÏî²éÕÒ, ²¢½«½Úµã¸³¸øcurrent_
   bool FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, T data);
-  // åˆ é™¤å­æ ‘
+  // É¾³ı×ÓÊ÷
   void RemoveSubTree_(ChildSiblingNode<T>* sub_tree_root);
-  // åœ¨å­æ ‘ä¸­å¯»æ‰¾çˆ¶ç»“ç‚¹, å¹¶è®¾ç½®å½“å‰ç»“ç‚¹current_
+  // ÔÚ×ÓÊ÷ÖĞÑ°ÕÒ¸¸½áµã, ²¢ÉèÖÃµ±Ç°½áµãcurrent_
   bool FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, ChildSiblingNode<T>* node);
 
   void InsertInSubTree_(ChildSiblingNode<T>*& sub_tree_root, T& data);
   void PreOrder(ostream& out, ChildSiblingNode<T> *p);
   void PostOrder(ostream& out, ChildSiblingNode<T> *p);
-  // åœ¨å­æ ‘ä¸­è¿›è¡Œå…ˆæ ¹éå†(é€’å½’)
+  // ÔÚ×ÓÊ÷ÖĞ½øĞĞÏÈ¸ù±éÀú(µİ¹é)
   void PreOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
-  // åœ¨å­æ ‘ä¸­è¿›è¡Œåæ ¹éå†(é€’å½’)
+  // ÔÚ×ÓÊ÷ÖĞ½øĞĞºó¸ù±éÀú(µİ¹é)
   void PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
-  // åœ¨å­æ ‘ä¸­å±‚åºéå†
+  // ÔÚ×ÓÊ÷ÖĞ²ãĞò±éÀú
   void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T> *sub_tree_root);
-  // ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå­å¥³å…„å¼Ÿæ ‘
+  // Ê¹ÓÃ×Ö·û´®´´½¨×ÓÅ®ĞÖµÜÊ÷
   void CreateTreeByStrRecursive_(ChildSiblingNode<T>*& , char*& str);
-  // å­æ ‘èŠ‚ç‚¹æ•°é‡(é€’å½’)
+  // ×ÓÊ÷½ÚµãÊıÁ¿(µİ¹é)
   int SubTreeNodeCountRecursive_(ChildSiblingNode<T> *sub_tree_root);
-  // å­æ ‘æ·±åº¦(é€’å½’)
+  // ×ÓÊ÷Éî¶È(µİ¹é)
   int SubTreeDepthRecursive_(ChildSiblingNode<T> *sub_tree_root);
-  // æ‰“å°å­æ ‘(é€’å½’)
+  // ´òÓ¡×ÓÊ÷(µİ¹é)
   void ShowSubTreeRecursive_(ChildSiblingNode<T> *sub_tree_root);
 };
 
 
 /*!
- * @brief è®©æ ‘çš„æ ¹ç»“ç‚¹æˆä¸ºæ ‘çš„å½“å‰ç»“ç‚¹
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @return æ˜¯å¦è®¾ç½®æˆåŠŸ
+ * @brief ÈÃÊ÷µÄ¸ù½áµã³ÉÎªÊ÷µÄµ±Ç°½áµã
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @return ÊÇ·ñÉèÖÃ³É¹¦
  */
 template <class T>
 bool ChildSiblingTree<T>::SetRootToCurrent() {
@@ -118,9 +118,9 @@ bool ChildSiblingTree<T>::SetRootToCurrent() {
 
 
 /*!
- * @brief åˆ é™¤å­æ ‘
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
+ * @brief É¾³ı×ÓÊ÷
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
  */
 template<class T>
 void ChildSiblingTree<T>::RemoveSubTree_(ChildSiblingNode<T>* sub_tree_root){
@@ -133,9 +133,9 @@ void ChildSiblingTree<T>::RemoveSubTree_(ChildSiblingNode<T>* sub_tree_root){
 
 
 /*!
- * @brief å¯»æ‰¾çˆ¶ç»“ç‚¹, å¹¶è®¾ç½®å½“å‰ç»“ç‚¹current_
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @return æ˜¯å¦æˆåŠŸ
+ * @brief Ñ°ÕÒ¸¸½áµã, ²¢ÉèÖÃµ±Ç°½áµãcurrent_
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @return ÊÇ·ñ³É¹¦
  */
 template <class T>
 bool ChildSiblingTree<T>::FindParentAndSetCurrent() {
@@ -151,11 +151,11 @@ bool ChildSiblingTree<T>::FindParentAndSetCurrent() {
 
 
 /*!
- * @brief åœ¨å­æ ‘ä¸­å¯»æ‰¾çˆ¶ç»“ç‚¹, å¹¶è®¾ç½®å½“å‰ç»“ç‚¹current_
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
- * @param node å¾…å¯»æ‰¾çˆ¶ç»“ç‚¹çš„ç»“ç‚¹
- * @return æ˜¯å¦æˆåŠŸ
+ * @brief ÔÚ×ÓÊ÷ÖĞÑ°ÕÒ¸¸½áµã, ²¢ÉèÖÃµ±Ç°½áµãcurrent_
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
+ * @param node ´ıÑ°ÕÒ¸¸½áµãµÄ½áµã
+ * @return ÊÇ·ñ³É¹¦
  */
 template <class T>
 bool ChildSiblingTree<T>::FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, ChildSiblingNode<T>* node) {
@@ -190,7 +190,7 @@ bool ChildSiblingTree<T>::FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>*
     cur = cur->next_sibling;
   }
 
-  // nodeæ˜¯æ ¹èŠ‚ç‚¹çš„å­©å­
+  // nodeÊÇ¸ù½ÚµãµÄº¢×Ó
   if (cur != NULL && cur == node) {
     this->current_ = sub_tree_root;
     return true;
@@ -238,11 +238,11 @@ bool ChildSiblingTree<T>::FindAndSetCurrent(T data) {
 
 
 /*!
- * @brief åœ¨å­æ ‘ä¸­ä½¿ç”¨æ•°æ®é¡¹æŸ¥æ‰¾, å¹¶å°†èŠ‚ç‚¹èµ‹ç»™current_
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
- * @param data æ•°æ®é¡¹
- * @return æ˜¯å¦æˆåŠŸ
+ * @brief ÔÚ×ÓÊ÷ÖĞÊ¹ÓÃÊı¾İÏî²éÕÒ, ²¢½«½Úµã¸³¸øcurrent_
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
+ * @param data Êı¾İÏî
+ * @return ÊÇ·ñ³É¹¦
  */
 template <class T>
 bool ChildSiblingTree<T>::FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, T data) {
@@ -313,10 +313,10 @@ void ChildSiblingTree<T>::PostOrder(ostream& out, ChildSiblingNode<T> *p) {
 
 
 /*!
- * @brief åœ¨å­æ ‘ä¸­å…ˆæ ¹éå†
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
- * @param visit éå†å‡½æ•°
+ * @brief ÔÚ×ÓÊ÷ÖĞÏÈ¸ù±éÀú
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
+ * @param visit ±éÀúº¯Êı
  */
 template <class T>
 void ChildSiblingTree<T>::PreOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root,
@@ -328,16 +328,16 @@ void ChildSiblingTree<T>::PreOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_t
 
   visit(sub_tree_root);
 
-  PreOrderInSubTreeRecursive_(sub_tree_root->first_child, visit); // å¯¹é•¿å­ç»“ç‚¹è¿›è¡Œé€’å½’
-  PreOrderInSubTreeRecursive_(sub_tree_root->next_sibling, visit); // å¯¹å…„å¼Ÿç»“ç‚¹è¿›è¡Œé€’å½’
+  PreOrderInSubTreeRecursive_(sub_tree_root->first_child, visit); // ¶Ô³¤×Ó½áµã½øĞĞµİ¹é
+  PreOrderInSubTreeRecursive_(sub_tree_root->next_sibling, visit); // ¶ÔĞÖµÜ½áµã½øĞĞµİ¹é
 }
 
 
 /*!
- * @brief åœ¨å­æ ‘ä¸­åæ ¹éå†
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
- * @param visit éå†å‡½æ•°
+ * @brief ÔÚ×ÓÊ÷ÖĞºó¸ù±éÀú
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
+ * @param visit ±éÀúº¯Êı
  */
 template <class T>
 void ChildSiblingTree<T>::PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root,
@@ -354,10 +354,10 @@ void ChildSiblingTree<T>::PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_
 
 
 /*!
- * @brief åœ¨å­æ ‘ä¸­å±‚åºéå†
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param out è¾“å‡ºæµ
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹
+ * @brief ÔÚ×ÓÊ÷ÖĞ²ãĞò±éÀú
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param out Êä³öÁ÷
+ * @param sub_tree_root ×ÓÊ÷¸ù½Úµã
  */
 template <class T>
 void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>* sub_tree_root)
@@ -368,18 +368,18 @@ void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>
     return;
   }
 
-  // åˆå§‹åŒ–é˜Ÿåˆ—node_queue
+  // ³õÊ¼»¯¶ÓÁĞnode_queue
   node_queue.push(sub_tree_root);
 
   while (!node_queue.empty()) {
-    // å–é˜Ÿå¤´
+    // È¡¶ÓÍ·
     ChildSiblingNode<T>* front_node = node_queue.front();
     node_queue.pop();
 
-    // è¾“å‡ºæµè¾“å‡º
+    // Êä³öÁ÷Êä³ö
     out << front_node->data;
 
-    // é˜Ÿå¤´èŠ‚ç‚¹çš„æ‰€æœ‰å­©å­èŠ‚ç‚¹å…¥é˜Ÿ
+    // ¶ÓÍ·½ÚµãµÄËùÓĞº¢×Ó½ÚµãÈë¶Ó
     for (ChildSiblingNode<T>* cur = front_node->first_child; cur != NULL; cur = cur->next_sibling) {
       node_queue.push(cur);
     }
@@ -388,10 +388,10 @@ void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>
 
 
 /*!
- * @brief å­æ ‘èŠ‚ç‚¹æ•°é‡(é€’å½’)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ×ÓÊ÷½ÚµãÊıÁ¿(µİ¹é)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  * @param sub_tree_root
- * @return èŠ‚ç‚¹æ•°é‡
+ * @return ½ÚµãÊıÁ¿
  */
 template <class T>
 int ChildSiblingTree<T>::SubTreeNodeCountRecursive_(ChildSiblingNode<T>* sub_tree_root) {
@@ -409,10 +409,10 @@ int ChildSiblingTree<T>::SubTreeNodeCountRecursive_(ChildSiblingNode<T>* sub_tre
 
 
 /*!
- * @brief å­æ ‘æ·±åº¦(é€’å½’)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
- * @return æ·±åº¦
+ * @brief ×ÓÊ÷Éî¶È(µİ¹é)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
+ * @return Éî¶È
  */
 template <class T>
 int ChildSiblingTree<T>::SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_root) {
@@ -420,9 +420,9 @@ int ChildSiblingTree<T>::SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_ro
     return 0;
   }
 
-  // é•¿å­ç»“ç‚¹å¯¹åº”çš„æ·±åº¦
+  // ³¤×Ó½áµã¶ÔÓ¦µÄÉî¶È
   int first_child_depth = SubTreeDepthRecursive_(sub_tree_root->first_child) + 1;
-  // ä¸‹ä¸€å…„å¼Ÿç»“ç‚¹å¯¹åº”çš„æ·±åº¦
+  // ÏÂÒ»ĞÖµÜ½áµã¶ÔÓ¦µÄÉî¶È
   int next_sibling_depth = SubTreeDepthRecursive_(sub_tree_root->next_sibling);
 
   return (first_child_depth > next_sibling_depth) ? first_child_depth : next_sibling_depth;
@@ -430,10 +430,10 @@ int ChildSiblingTree<T>::SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_ro
 
 
 /*!
- * @brief ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå­å¥³å…„å¼Ÿæ ‘
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹èŠ‚ç‚¹
- * @param str å­—ç¬¦ä¸²
+ * @brief Ê¹ÓÃ×Ö·û´®´´½¨×ÓÅ®ĞÖµÜÊ÷
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½Úµã
+ * @param str ×Ö·û´®
  */
 template <class T>
 void ChildSiblingTree<T>::CreateTreeByStrRecursive_(ChildSiblingNode<T>*& sub_tree_root, char*& str) {
@@ -442,7 +442,7 @@ void ChildSiblingTree<T>::CreateTreeByStrRecursive_(ChildSiblingNode<T>*& sub_tr
   }
 
   if (*str == ')') {
-    str++; // ä¸‹ä¸€ä¸ªå…„å¼ŸèŠ‚ç‚¹
+    str++; // ÏÂÒ»¸öĞÖµÜ½Úµã
     return;
   }
 
@@ -459,9 +459,9 @@ void ChildSiblingTree<T>::CreateTreeByStrRecursive_(ChildSiblingNode<T>*& sub_tr
 
 
 /*!
- * @brief æ‰“å°å­æ ‘(é€’å½’)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param sub_tree_root å­æ ‘æ ¹ç»“ç‚¹
+ * @brief ´òÓ¡×ÓÊ÷(µİ¹é)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param sub_tree_root ×ÓÊ÷¸ù½áµã
  */
 template <class T>
 void ChildSiblingTree<T>::ShowSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root) {
@@ -484,12 +484,12 @@ template<class T>
 void ChildSiblingTree<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDashæˆå‘˜:"<<endl
-      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
-      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash³ÉÔ±:"<<endl
+      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
+      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
+      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
+      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 
