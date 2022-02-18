@@ -1,12 +1,12 @@
 /*!
  * @file test.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å¹¿ä¹‰è¡¨æµ‹è¯•å¤´æ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¹ãÒå±í²âÊÔÍ·ÎÄ¼ş
  * @version 0.2.1
  * @date 2021-05-19
  *
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_GEN_LIST_TEST_H
@@ -16,16 +16,16 @@
 #include "gen_list.h"
 
 
-/*! æµ‹è¯•ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå¹¿ä¹‰è¡¨ */
+/*! ²âÊÔÊ¹ÓÃ×Ö·û´®´´½¨¹ãÒå±í */
 void TestCreateListByString();
 
-/*! æµ‹è¯•å¹¿ä¹‰è¡¨çš„å¤´å’Œå°¾ */
+/*! ²âÊÔ¹ãÒå±íµÄÍ·ºÍÎ² */
 void TestHeadAndTail();
 
-/*! æµ‹è¯•å¹¿ä¹‰è¡¨çš„æ·±åº¦ */
+/*! ²âÊÔ¹ãÒå±íµÄÉî¶È */
 void TestDepth();
 
-/*! æµ‹è¯•å¹¿ä¹‰è¡¨çš„é•¿åº¦ */
+/*! ²âÊÔ¹ãÒå±íµÄ³¤¶È */
 void TestLength();
 
 

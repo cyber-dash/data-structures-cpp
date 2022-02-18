@@ -10,27 +10,27 @@ using namespace std;
 
 int main()
 {
-  /* æ’å…¥ */
+  /* ²åÈë */
   TestBSTInsert();
   TestAVLInsert2();
   TestAVLInsertByCyberDash();
 
-  /* åˆ é™¤ */
+  /* É¾³ı */
   TestBSTRemove();
   TestAVLRemoveByCyberDash();
 
-  /* æŸ¥è¯¢ */
+  /* ²éÑ¯ */
   TestBSTSearch();
   TestAVLSearch();
 
-  /* é«˜åº¦ */
+  /* ¸ß¶È */
   TestBSTAndAVLHeight();
 
-  /* æœ€å¤§æœ€å°å€¼ */
+  /* ×î´ó×îĞ¡Öµ */
   TestBSTMaxAndMin();
   TestAVLMaxAndMin();
 
-  /* æ¸…é™¤æ‰€æœ‰æ•°æ® */
+  /* Çå³ıËùÓĞÊı¾İ */
   TestBSTMakeEmpty();
 
   return 0;

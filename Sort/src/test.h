@@ -1,11 +1,11 @@
 /*!
  * @file test.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief æ’åºæµ‹è¯•.hæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ÅÅĞò²âÊÔ.hÎÄ¼ş
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_SORT_TEST_H
@@ -15,25 +15,25 @@
 #include "util.h"
 
 
-/*! æµ‹è¯•å†’æ³¡æ’åº */
+/*! ²âÊÔÃ°ÅİÅÅĞò */
 void TestBubbleSort();
 
-/*! æµ‹è¯•é€‰æ‹©æ’åº */
+/*! ²âÊÔÑ¡ÔñÅÅĞò */
 void TestSelectSort();
 
-/*! æµ‹è¯•æ’å…¥æ’åº */
+/*! ²âÊÔ²åÈëÅÅĞò */
 void TestInsertSort();
 
-/*! æµ‹è¯•å½’å¹¶æ’åº */
+/*! ²âÊÔ¹é²¢ÅÅĞò */
 void TestMergeSort();
 
-/*! æµ‹è¯•å½’å¹¶æ’åº(éé€’å½’) */
+/*! ²âÊÔ¹é²¢ÅÅĞò(·Çµİ¹é) */
 void TestMergeSortNonRecursive();
 
-/*! æµ‹è¯•å¿«é€Ÿæ’åº */
+/*! ²âÊÔ¿ìËÙÅÅĞò */
 void TestQuickSort();
 
-/*! æµ‹è¯•å †æ’åº */
+/*! ²âÊÔ¶ÑÅÅĞò */
 void TestHeapSort();
 
 

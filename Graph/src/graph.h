@@ -1,119 +1,119 @@
 /*!
  * @file graph.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å›¾è™šåŸºæ¨¡æ¿ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Í¼Ğé»ùÄ£°åÀà
  * @version 0.2.1
  * @date 2021-01-23
  *
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_GRAPH_H
 #define CYBER_DASH_GRAPH_H
 
 
-const int DEFAULT_VERTICES = 20; //<! é»˜è®¤å›¾ç»“ç‚¹ä¸ªæ•°
-const int MAX_WEIGHT = 1000; //<! æœ€å¤§æƒå€¼, todo: çŸ©é˜µå›¾å‰”é™¤è¿™ä¸ªé€»è¾‘
+const int DEFAULT_VERTICES = 20; //<! Ä¬ÈÏÍ¼½áµã¸öÊı
+const int MAX_WEIGHT = 1000; //<! ×î´óÈ¨Öµ, todo: ¾ØÕóÍ¼ÌŞ³ıÕâ¸öÂß¼­
 
 
 /*!
- * @brief å›¾åŸºç±»(æ¨¡æ¿ç±»)
- * @tparam V èŠ‚ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
- * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief Í¼»ùÀà(Ä£°åÀà)
+ * @tparam V ½ÚµãÀàĞÍÄ£°å²ÎÊı
+ * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
  */
 template<class V, class W>
 class Graph {
 public:
 
   /*!
-   * @brief è·å–å›¾ç»“ç‚¹æ•°é‡
-   * @return å›¾ç»“ç‚¹æ•°é‡
+   * @brief »ñÈ¡Í¼½áµãÊıÁ¿
+   * @return Í¼½áµãÊıÁ¿
    */
   int NumberOfVertices() { return this->vertices_num_; }
 
   /*!
-   * @brief è·å–è¾¹æ•°é‡
-   * @return è¾¹æ•°é‡
+   * @brief »ñÈ¡±ßÊıÁ¿
+   * @return ±ßÊıÁ¿
    */
   int NumberOfEdges() { return this->edge_count_; }
 
   /*!
-   * @brief è·å–ç»“ç‚¹(ç”±ç»“ç‚¹ç´¢å¼•)
-   * @param vertex ç»“ç‚¹(ç”¨äºä¿å­˜ç»“æœ)
-   * @param vertex_index ç»“ç‚¹ç´¢å¼•
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡½áµã(ÓÉ½áµãË÷Òı)
+   * @param vertex ½áµã(ÓÃÓÚ±£´æ½á¹û)
+   * @param vertex_index ½áµãË÷Òı
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual bool GetVertexByIndex(V& vertex, int vertex_index) = 0;
 
   /*!
-   * @brief è·å–è¾¹æƒå€¼
-   * @param weight è¾¹æƒå€¼(ç”¨äºä¿å­˜ç»“æœ)
-   * @param v1 è¾¹çš„ä¸€ä¸ªèŠ‚ç‚¹
-   * @param v2 è¾¹çš„å¦ä¸€ä¸ªèŠ‚ç‚¹
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡±ßÈ¨Öµ
+   * @param weight ±ßÈ¨Öµ(ÓÃÓÚ±£´æ½á¹û)
+   * @param v1 ±ßµÄÒ»¸ö½Úµã
+   * @param v2 ±ßµÄÁíÒ»¸ö½Úµã
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual bool GetWeight(W& weight, V v1, V v2) = 0;
 
   /*!
-   * @brief è·å–ç»“ç‚¹çš„ç¬¬ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
-   * @param first_neighbor ç»“ç‚¹(ç”¨äºä¿å­˜ç¬¬ä¸€ä¸ªç›¸é‚»ç»“ç‚¹)
-   * @param vertex ç»“ç‚¹
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡½áµãµÄµÚÒ»¸öÏàÁÚ½áµã
+   * @param first_neighbor ½áµã(ÓÃÓÚ±£´æµÚÒ»¸öÏàÁÚ½áµã)
+   * @param vertex ½áµã
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex) = 0;
 
   /*!
-   * @brief è·å–ç»“ç‚¹çš„ä¸‹ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
-   * @param next_neighbor ç»“ç‚¹(ç”¨äºä¿å­˜ä¸‹ä¸€ä¸ªç›¸é‚»ç»“ç‚¹)
-   * @param vertex ç»“ç‚¹
-   * @param neighbor_vertex ç»“ç‚¹çš„ä¸€ä¸ªç›¸é‚»èŠ‚ç‚¹
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡½áµãµÄÏÂÒ»¸öÏàÁÚ½áµã
+   * @param next_neighbor ½áµã(ÓÃÓÚ±£´æÏÂÒ»¸öÏàÁÚ½áµã)
+   * @param vertex ½áµã
+   * @param neighbor_vertex ½áµãµÄÒ»¸öÏàÁÚ½Úµã
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual bool GetNextNeighborVertex(V& next_neighbor, const V& vertex, const V& neighbor_vertex) = 0;
 
   /*!
-   * @brief æ’å…¥ç»“ç‚¹
-   * @param vertex ç»“ç‚¹
-   * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+   * @brief ²åÈë½áµã
+   * @param vertex ½áµã
+   * @return ÊÇ·ñ²åÈë³É¹¦
    */
   virtual bool InsertVertex(const V& vertex) = 0;
 
   /*!
-   * @brief æ’å…¥è¾¹
-   * @param vertex1 è¾¹çš„ä¸€ä¸ªç»“ç‚¹
-   * @param vertex2 è¾¹çš„å¦ä¸€ä¸ªç»“ç‚¹
-   * @param weight è¾¹çš„æƒå€¼
-   * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+   * @brief ²åÈë±ß
+   * @param vertex1 ±ßµÄÒ»¸ö½áµã
+   * @param vertex2 ±ßµÄÁíÒ»¸ö½áµã
+   * @param weight ±ßµÄÈ¨Öµ
+   * @return ÊÇ·ñ²åÈë³É¹¦
    */
   virtual bool InsertEdge(V vertex1, V vertex2, W weight) = 0;
 
   /*!
-   * @brief åˆ é™¤ç»“ç‚¹
-   * @param v èŠ‚ç‚¹
-   * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
+   * @brief É¾³ı½áµã
+   * @param v ½Úµã
+   * @return ÊÇ·ñÉ¾³ı³É¹¦
    */
   virtual bool RemoveVertex(V v) = 0;
 
   /*!
-   * @brief åˆ é™¤è¾¹
-   * @param v1 è¾¹çš„ä¸€ä¸ªèŠ‚ç‚¹
-   * @param v2 è¾¹çš„å¦ä¸€ä¸ªèŠ‚ç‚¹
-   * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
+   * @brief É¾³ı±ß
+   * @param v1 ±ßµÄÒ»¸ö½Úµã
+   * @param v2 ±ßµÄÁíÒ»¸ö½Úµã
+   * @return ÊÇ·ñÉ¾³ı³É¹¦
    */
   virtual bool RemoveEdge(V v1, V v2) = 0;
 
   /*!
-   * @brief è·å–ç»“ç‚¹çš„ç´¢å¼•å€¼
-   * @param vertex èŠ‚ç‚¹
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡½áµãµÄË÷ÒıÖµ
+   * @param vertex ½Úµã
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual int GetVertexIndex(V vertex) = 0;
 
 protected:
-  int max_vertices_num_; //!< å›¾èŠ‚ç‚¹æ•°é‡æœ€å¤§é™åˆ¶
-  int edge_count_; //!< è¾¹æ•°é‡
-  int vertices_num_; //!< èŠ‚ç‚¹æ•°é‡
+  int max_vertices_num_; //!< Í¼½ÚµãÊıÁ¿×î´óÏŞÖÆ
+  int edge_count_; //!< ±ßÊıÁ¿
+  int vertices_num_; //!< ½ÚµãÊıÁ¿
 };
 
 

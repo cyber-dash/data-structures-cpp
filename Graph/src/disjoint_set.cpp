@@ -1,20 +1,20 @@
 /*!
  * @file disjoint_set.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å¹¶æŸ¥é›†.cppæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ²¢²é¼¯.cppÎÄ¼ş
  * @version 0.2.1
  * @date 2021-02-21
  *
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #include "disjoint_set.h"
 
 
 /*!
- * @brief æ„é€ å‡½æ•°
- * @param size å¤§å°
+ * @brief ¹¹Ôìº¯Êı
+ * @param size ´óĞ¡
  */
 DisjointSet::DisjointSet(int size) {
   size_ = size;
@@ -26,11 +26,11 @@ DisjointSet::DisjointSet(int size) {
 
 
 /*!
- * @brief é‡è½½=
- * @param disjoint_set æºå¹¶æŸ¥é›†
- * @return èµ‹å€¼åçš„å¹¶æŸ¥é›†
+ * @brief ÖØÔØ=
+ * @param disjoint_set Ô´²¢²é¼¯
+ * @return ¸³ÖµºóµÄ²¢²é¼¯
  * @note
- *  todo: æœªå®ç°
+ *  todo: Î´ÊµÏÖ
  */
 DisjointSet& DisjointSet::operator=(const DisjointSet& disjoint_set) {
 
@@ -39,9 +39,9 @@ DisjointSet& DisjointSet::operator=(const DisjointSet& disjoint_set) {
 
 
 /*!
- * @brief æŸ¥æ‰¾(éé€’å½’)
- * @param value æ•°ç»„ç´¢å¼•
- * @return æ ¹èŠ‚ç‚¹
+ * @brief ²éÕÒ(·Çµİ¹é)
+ * @param value Êı×éË÷Òı
+ * @return ¸ù½Úµã
  */
 int DisjointSet::FindNonRecursive(int value) {
 
@@ -54,9 +54,9 @@ int DisjointSet::FindNonRecursive(int value) {
 
 
 /*!
- * @brief æŸ¥æ‰¾
- * @param value æ•°ç»„ç´¢å¼•
- * @return æ ¹èŠ‚ç‚¹
+ * @brief ²éÕÒ
+ * @param value Êı×éË÷Òı
+ * @return ¸ù½Úµã
  */
 int DisjointSet::Find(int value) {
   if (parent_[value] < 0) {
@@ -68,7 +68,7 @@ int DisjointSet::Find(int value) {
 
 
 /**
- * @brief åˆå¹¶é›†åˆ(Weighted)
+ * @brief ºÏ²¢¼¯ºÏ(Weighted)
  * @param node1
  * @param node2
  */
@@ -93,7 +93,7 @@ void DisjointSet::WeightedUnion(int node1, int node2) {
 
 
 /*!
- * @brief æŸ¥æ‰¾(å¯¹åŸä¹¦è¿›è¡Œä¼˜åŒ–)
+ * @brief ²éÕÒ(¶ÔÔ­Êé½øĞĞÓÅ»¯)
  * @param node1
  * @param node2
  */
@@ -106,6 +106,6 @@ void DisjointSet::Union(int node1, int node2) {
   }
 
   parent_[root1] += parent_[root2];
-  parent_[root2] = root1; // å°†æ ¹root2è¿æ¥åˆ°å¦ä¸€æ ¹root1ä¸‹é¢
+  parent_[root2] = root1; // ½«¸ùroot2Á¬½Óµ½ÁíÒ»¸ùroot1ÏÂÃæ
 }
 

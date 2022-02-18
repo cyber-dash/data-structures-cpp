@@ -1,12 +1,12 @@
 /*!
  * @file test.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief ç¨€ç–çŸ©é˜µæµ‹è¯•.cppæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Ï¡Êè¾ØÕó²âÊÔ.cppÎÄ¼ş
  * @version 0.2.1
  * @date 2021-05-16
  *
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 
@@ -18,7 +18,7 @@ void TestSparseMatrixConstructor() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                Test SparseMatrixConstructor               |"<<endl;
-  cout<<"|                    æµ‹è¯•é˜Ÿåˆ—ç¨€ç–çŸ©é˜µæ„é€ å‡½æ•°                   |"<<endl<<endl<<endl;
+  cout<<"|                    ²âÊÔ¶ÓÁĞÏ¡Êè¾ØÕó¹¹Ôìº¯Êı                   |"<<endl<<endl<<endl;
 
   SparseMatrix<int> sparse_matrix(100);
 
@@ -33,7 +33,7 @@ void TestSparseMatrixCopyConstructor() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|              Test SparseMatrixCopyConstructor             |"<<endl;
-  cout<<"|                  æµ‹è¯•é˜Ÿåˆ—ç¨€ç–çŸ©é˜µå¤åˆ¶æ„é€ å‡½æ•°                 |"<<endl<<endl<<endl;
+  cout<<"|                  ²âÊÔ¶ÓÁĞÏ¡Êè¾ØÕó¸´ÖÆ¹¹Ôìº¯Êı                 |"<<endl<<endl<<endl;
 
   SparseMatrix<int> sparse_matrix_1(100);
   sparse_matrix_1.SetRows(10);
@@ -41,11 +41,11 @@ void TestSparseMatrixCopyConstructor() {
   sparse_matrix_1.AddElement(3, 9, 100);
   sparse_matrix_1.AddElement(4, 17, 83);
 
-  cout<<"æ‰“å°sparse_matrix_1:"<<endl;
+  cout<<"´òÓ¡sparse_matrix_1:"<<endl;
   cout<<sparse_matrix_1<<endl<<endl;
 
   SparseMatrix<int> sparse_matrix_2(sparse_matrix_1);
-  cout<<"æ‰“å°sparse_matrix_2:"<<endl;
+  cout<<"´òÓ¡sparse_matrix_2:"<<endl;
   cout<<sparse_matrix_2;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -57,7 +57,7 @@ void TestSparseMatrixInput() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test SparseMatrixInput                  |"<<endl;
-  cout<<"|                    æµ‹è¯•é˜Ÿåˆ—ç¨€ç–çŸ©é˜µè¾“å…¥æ„é€                    |"<<endl<<endl<<endl;
+  cout<<"|                    ²âÊÔ¶ÓÁĞÏ¡Êè¾ØÕóÊäÈë¹¹Ôì                   |"<<endl<<endl<<endl;
 
   SparseMatrix<int> sparse_matrix_1(100);
 
@@ -75,7 +75,7 @@ void TestSparseMatrixTranspose() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test SparseMatrixTranspose                |"<<endl;
-  cout<<"|                     æµ‹è¯•é˜Ÿåˆ—ç¨€ç–çŸ©é˜µè½¬ç½®                     |"<<endl<<endl<<endl;
+  cout<<"|                     ²âÊÔ¶ÓÁĞÏ¡Êè¾ØÕó×ªÖÃ                     |"<<endl<<endl<<endl;
 
   SparseMatrix<double> sparse_matrix_1(100);
 
@@ -87,12 +87,12 @@ void TestSparseMatrixTranspose() {
   sparse_matrix_1.AddElement(6, 7, 432.569);
   sparse_matrix_1.AddElement(9, 19, 54.8);
 
-  cout<<"sparse_matrix_1çŸ©é˜µ:"<<endl;
+  cout<<"sparse_matrix_1¾ØÕó:"<<endl;
   cout<<sparse_matrix_1<<endl;
 
   SparseMatrix<double>* sparse_matrix_ptr = sparse_matrix_1.Transpose();
 
-  cout<<"è½¬ç½®åçš„çŸ©é˜µ:"<<endl;
+  cout<<"×ªÖÃºóµÄ¾ØÕó:"<<endl;
   cout<<*sparse_matrix_ptr<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -103,7 +103,7 @@ void TestSparseMatrixFastTranspose() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|               Test SparseMatrixFastTranspose              |"<<endl;
-  cout<<"|                   æµ‹è¯•é˜Ÿåˆ—ç¨€ç–çŸ©é˜µ(å¿«é€Ÿ)è½¬ç½®                  |"<<endl<<endl<<endl;
+  cout<<"|                   ²âÊÔ¶ÓÁĞÏ¡Êè¾ØÕó(¿ìËÙ)×ªÖÃ                  |"<<endl<<endl<<endl;
 
   SparseMatrix<double> sparse_matrix_1(100);
 
@@ -118,12 +118,12 @@ void TestSparseMatrixFastTranspose() {
   sparse_matrix_1.AddElement(49, 38, 19.7989);
   sparse_matrix_1.AddElement(49, 39, 64);
 
-  cout<<"sparse_matrix_1çŸ©é˜µ:"<<endl;
+  cout<<"sparse_matrix_1¾ØÕó:"<<endl;
   cout<<sparse_matrix_1<<endl;
 
   SparseMatrix<double>* sparse_matrix_ptr = sparse_matrix_1.FastTranspose();
 
-  cout<<"è½¬ç½®åçš„çŸ©é˜µ:"<<endl;
+  cout<<"×ªÖÃºóµÄ¾ØÕó:"<<endl;
   cout<<*sparse_matrix_ptr<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;

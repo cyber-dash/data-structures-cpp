@@ -1,11 +1,11 @@
 /*!
  * @file test.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å­å¥³å…„å¼Ÿæ ‘æµ‹è¯•.hæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ×ÓÅ®ĞÖµÜÊ÷²âÊÔ.hÎÄ¼ş
  * @version 0.2.1
  * @date 2020-11-01
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_CHILD_SIBLING_TREE_TEST_H
@@ -19,25 +19,25 @@
 using namespace std;
 
 
-// èŠ‚ç‚¹éå†å‡½æ•°
+// ½Úµã±éÀúº¯Êı
 // void visit(ChildSiblingNode<int>* node);
 
-// æµ‹è¯•ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå­å¥³å­©å­æ ‘
+// ²âÊÔÊ¹ÓÃ×Ö·û´®´´½¨×ÓÅ®º¢×ÓÊ÷
 void TestChildSiblingTreeCreateTreeByStr();
 
-// æµ‹è¯•æ·±åº¦
+// ²âÊÔÉî¶È
 void TestChildSiblingTreeDepth();
 
-// æµ‹è¯•èŠ‚ç‚¹æ•°é‡
+// ²âÊÔ½ÚµãÊıÁ¿
 void TestChildSiblingTreeNodeCount();
 
-// æµ‹è¯•å…ˆæ ¹éå†
+// ²âÊÔÏÈ¸ù±éÀú
 void TestChildSiblingTreePreOrder();
 
-// æµ‹è¯•åæ ¹éå†
+// ²âÊÔºó¸ù±éÀú
 void TestChildSiblingTreePostOrder();
 
-// æµ‹è¯•å±‚åºéå†
+// ²âÊÔ²ãĞò±éÀú
 void TestChildSiblingTreeLevelOrder();
 
 

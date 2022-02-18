@@ -1,22 +1,22 @@
 /*!
  * @file quick_sort.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å¿«é€Ÿæ’åº
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¿ìËÙÅÅĞò
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #include "util.h"
 
 
 /*!
- * @brief åˆ’åˆ†å‡½æ•°
- * @param arr æ•°ç»„
- * @param left å·¦è¾¹ç•Œ
- * @param right å³è¾¹ç•Œ
- * @return è½´
+ * @brief »®·Öº¯Êı
+ * @param arr Êı×é
+ * @param left ×ó±ß½ç
+ * @param right ÓÒ±ß½ç
+ * @return Öá
  */
 int Split(int* arr, int left, int right) {
 
@@ -48,10 +48,10 @@ int Split(int* arr, int left, int right) {
 
 
 /*!
- * @brief å¿«é€Ÿæ’åº(é€’å½’)
- * @param arr æ•°ç»„
- * @param left å·¦è¾¹ç•Œ
- * @param right å³è¾¹ç•Œ
+ * @brief ¿ìËÙÅÅĞò(µİ¹é)
+ * @param arr Êı×é
+ * @param left ×ó±ß½ç
+ * @param right ÓÒ±ß½ç
  */
 void QuickSort(int *arr, int left, int right) {
 

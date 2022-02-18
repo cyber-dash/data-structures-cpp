@@ -21,19 +21,19 @@ void TestOperatorEqual() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                       Test Operator=                      |"<<endl;
-  cout<<"|                     æµ‹è¯•æœç´¢äºŒå‰æ ‘=æ“ä½œ                     |"<<endl;
+  cout<<"|                     ²âÊÔËÑË÷¶ş²æÊ÷=²Ù×÷                     |"<<endl;
 
   // BST<string, string>* origin_search_tree_ptr = new BST<string, string>();
   BST<string, string> origin_search_tree_ptr;
 
-  string question1 = "æˆ‘æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "ÎÒ×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æˆ‘æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "ÎÒ×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æˆ‘æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "ÎÒ×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
   // origin_search_tree_ptr->Insert(answer1, question1);
   origin_search_tree_ptr.Insert(answer1, question1);
@@ -49,14 +49,14 @@ void TestOperatorEqual() {
   /*
   BST<string, string> origin_search_tree;
 
-  string question1 = "æˆ‘æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "ÎÒ×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æˆ‘æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "ÎÒ×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æˆ‘æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "ÎÒ×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
   origin_search_tree.Insert(answer1, question1);
   origin_search_tree.Insert(answer2, question2);
@@ -75,18 +75,18 @@ void TestBSTInsert() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test BST Insert                      |"<<endl;
-  cout<<"|                     æµ‹è¯•æœç´¢äºŒå‰æ ‘çš„æ’å…¥                     |"<<endl;
+  cout<<"|                     ²âÊÔËÑË÷¶ş²æÊ÷µÄ²åÈë                     |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 
-  string question1 = "æˆ‘æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "ÎÒ×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æˆ‘æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "ÎÒ×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æˆ‘æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "ÎÒ×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
@@ -104,33 +104,33 @@ void TestBSTRemove() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test BST Remove                      |"<<endl;
-  cout<<"|                     æµ‹è¯•æœç´¢äºŒå‰æ ‘çš„åˆ é™¤                     |"<<endl;
+  cout<<"|                     ²âÊÔËÑË÷¶ş²æÊ÷µÄÉ¾³ı                     |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 
-  string question1 = "æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
-  string question5 = "æœ€è®¨åŒçš„ç¼–ç¨‹è¯­è¨€";
+  string question5 = "×îÌÖÑáµÄ±à³ÌÓïÑÔ";
   string answer5 = "Java";
 
-  string question6 = "å¦‚æœæš´å¯Œäº†æƒ³å¹²å˜›";
-  string answer6 = "åŒ…å…»æ•°å­¦å®¶";
+  string question6 = "Èç¹û±©¸»ÁËÏë¸ÉÂï";
+  string answer6 = "°üÑøÊıÑ§¼Ò";
 
-  string question7 = "æ¨èå‡ é¦–æ­Œå¬";
+  string question7 = "ÍÆ¼ö¼¸Ê×¸èÌı";
   string answer7 = "Learning To Survive|Final Masquerade|Nothing";
 
-  string question8 = "æœ€åéšä¾¿è¯´å¥è¯";
-  string answer8 = "æç¼–ç¨‹ä¸€å®šè¦çˆ±è¿™ä¸ªä¸–ç•Œ, å¦åˆ™åªæœ‰æŠ˜ç£¨";
+  string question8 = "×îºóËæ±ãËµ¾ä»°";
+  string answer8 = "¸ã±à³ÌÒ»¶¨Òª°®Õâ¸öÊÀ½ç, ·ñÔòÖ»ÓĞÕÛÄ¥";
 
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
@@ -159,36 +159,36 @@ void TestBSTSearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test BST Search                      |"<<endl;
-  cout<<"|                     æµ‹è¯•æœç´¢äºŒå‰æ ‘çš„åˆ é™¤                     |"<<endl;
+  cout<<"|                     ²âÊÔËÑË÷¶ş²æÊ÷µÄÉ¾³ı                     |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 
-  string question1 = "æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
-  string question5 = "æœ€è®¨åŒçš„ç¼–ç¨‹è¯­è¨€";
+  string question5 = "×îÌÖÑáµÄ±à³ÌÓïÑÔ";
   string answer5 = "Java";
 
-  string question6 = "å¦‚æœæš´å¯Œäº†æƒ³å¹²å˜›";
-  string answer6 = "åŒ…å…»æ•°å­¦å®¶";
+  string question6 = "Èç¹û±©¸»ÁËÏë¸ÉÂï";
+  string answer6 = "°üÑøÊıÑ§¼Ò";
 
-  string question7 = "æ¨èå‡ é¦–æ­Œå¬";
+  string question7 = "ÍÆ¼ö¼¸Ê×¸èÌı";
   string answer7 = "Learning To Survive|Final Masquerade|Nothing";
 
-  string question8 = "æœ€åéšä¾¿è¯´å¥è¯";
-  string answer8 = "æç¼–ç¨‹ä¸€å®šè¦çˆ±è¿™ä¸ªä¸–ç•Œ, å¦åˆ™åªæœ‰æŠ˜ç£¨";
+  string question8 = "×îºóËæ±ãËµ¾ä»°";
+  string answer8 = "¸ã±à³ÌÒ»¶¨Òª°®Õâ¸öÊÀ½ç, ·ñÔòÖ»ÓĞÕÛÄ¥";
 
-  string question9 = "è®²ä¸€ä»¶åæ‚”çš„äº‹å„¿";
-  string answer9 = "çƒ‚åˆ°è‚šå­é‡Œä¹Ÿä¸ä¼šè¯´çš„";
+  string question9 = "½²Ò»¼şºó»ÚµÄÊÂ¶ù";
+  string answer9 = "ÀÃµ½¶Ç×ÓÀïÒ²²»»áËµµÄ";
 
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
@@ -203,19 +203,19 @@ void TestBSTSearch() {
   binary_search_tree->Remove(question9);
 
   BSTNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
-  if (the_9th_node == NULL) { // æ²¡æœ‰æœç´¢åˆ°
-    // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duckä¸å¿…"<<endl;
-    cout<<"æ­¤é—®é¢˜å·²åˆ é™¤"<<endl;
-  } else { // æœç´¢åˆ°
+  if (the_9th_node == NULL) { // Ã»ÓĞËÑË÷µ½
+    // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duck²»±Ø"<<endl;
+    cout<<"´ËÎÊÌâÒÑÉ¾³ı"<<endl;
+  } else { // ËÑË÷µ½
     cout<<"question9: "<<the_9th_node->GetKey()<<endl<<"answer9: "<<the_9th_node->GetData()<<endl;
   }
 
   cout<<endl;
 
   BSTNode<string, string>* the_8th_node = binary_search_tree->Search(question8);
-  if (the_8th_node == NULL) { // æ²¡æœ‰æœç´¢åˆ°
-    cout<<"Duckä¸å¿…"<<endl;
-  } else { // æœç´¢åˆ°
+  if (the_8th_node == NULL) { // Ã»ÓĞËÑË÷µ½
+    cout<<"Duck²»±Ø"<<endl;
+  } else { // ËÑË÷µ½
     cout<<"question8: "<<the_8th_node->GetKey()<<endl<<"answer8: "<<the_8th_node->GetData()<<endl;
   }
 
@@ -229,36 +229,36 @@ void TestAVLSearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test AVL Search                      |"<<endl;
-  cout<<"|                       æµ‹è¯•AVLæ ‘çš„åˆ é™¤                       |"<<endl;
+  cout<<"|                       ²âÊÔAVLÊ÷µÄÉ¾³ı                       |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
-  string question1 = "æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
-  string question5 = "æœ€è®¨åŒçš„ç¼–ç¨‹è¯­è¨€";
+  string question5 = "×îÌÖÑáµÄ±à³ÌÓïÑÔ";
   string answer5 = "Java";
 
-  string question6 = "å¦‚æœæš´å¯Œäº†æƒ³å¹²å˜›";
-  string answer6 = "åŒ…å…»æ•°å­¦å®¶";
+  string question6 = "Èç¹û±©¸»ÁËÏë¸ÉÂï";
+  string answer6 = "°üÑøÊıÑ§¼Ò";
 
-  string question7 = "æ¨èå‡ é¦–æ­Œå¬";
+  string question7 = "ÍÆ¼ö¼¸Ê×¸èÌı";
   string answer7 = "Learning To Survive|Final Masquerade|Nothing";
 
-  string question8 = "æœ€åéšä¾¿è¯´å¥è¯";
-  string answer8 = "æç¼–ç¨‹ä¸€å®šè¦çˆ±è¿™ä¸ªä¸–ç•Œ, å¦åˆ™åªæœ‰æŠ˜ç£¨";
+  string question8 = "×îºóËæ±ãËµ¾ä»°";
+  string answer8 = "¸ã±à³ÌÒ»¶¨Òª°®Õâ¸öÊÀ½ç, ·ñÔòÖ»ÓĞÕÛÄ¥";
 
-  string question9 = "è®²ä¸€ä»¶åæ‚”çš„äº‹å„¿";
-  string answer9 = "çƒ‚åˆ°è‚šå­é‡Œä¹Ÿä¸ä¼šè¯´çš„";
+  string question9 = "½²Ò»¼şºó»ÚµÄÊÂ¶ù";
+  string answer9 = "ÀÃµ½¶Ç×ÓÀïÒ²²»»áËµµÄ";
 
   AVL_tree->Insert(answer1, question1);
   AVL_tree->Insert(answer2, question2);
@@ -273,19 +273,19 @@ void TestAVLSearch() {
   AVL_tree->RemoveByCyberDash(question9);
 
   AVLNode<string, string>* the_9th_node = AVL_tree->Search(question9);
-  if (the_9th_node == NULL) { // æ²¡æœ‰æœç´¢åˆ°
-    // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duckä¸å¿…"<<endl;
-    cout<<"æ­¤é—®é¢˜å·²åˆ é™¤"<<endl;
-  } else { // æœç´¢åˆ°
+  if (the_9th_node == NULL) { // Ã»ÓĞËÑË÷µ½
+    // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duck²»±Ø"<<endl;
+    cout<<"´ËÎÊÌâÒÑÉ¾³ı"<<endl;
+  } else { // ËÑË÷µ½
     cout<<"question9: "<<the_9th_node->GetKey()<<endl<<"answer9: "<<the_9th_node->GetData()<<endl;
   }
 
   cout<<endl;
 
   AVLNode<string, string>* the_8th_node = AVL_tree->Search(question8);
-  if (the_8th_node == NULL) { // æ²¡æœ‰æœç´¢åˆ°
-    cout<<"Duckä¸å¿…"<<endl;
-  } else { // æœç´¢åˆ°
+  if (the_8th_node == NULL) { // Ã»ÓĞËÑË÷µ½
+    cout<<"Duck²»±Ø"<<endl;
+  } else { // ËÑË÷µ½
     cout<<"question8: "<<the_8th_node->GetKey()<<endl<<"answer8: "<<the_8th_node->GetData()<<endl;
   }
 
@@ -299,36 +299,36 @@ void TestBSTMaxAndMin() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test BST Max and Min                   |"<<endl;
-  cout<<"|                  æµ‹è¯•æœç´¢äºŒå‰æ ‘çš„æœ€å¤§å€¼/æœ€å°å€¼                 |"<<endl;
+  cout<<"|                  ²âÊÔËÑË÷¶ş²æÊ÷µÄ×î´óÖµ/×îĞ¡Öµ                 |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 
-  string question1 = "æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
-  string question5 = "æœ€è®¨åŒçš„ç¼–ç¨‹è¯­è¨€";
+  string question5 = "×îÌÖÑáµÄ±à³ÌÓïÑÔ";
   string answer5 = "Java";
 
-  string question6 = "å¦‚æœæš´å¯Œäº†æƒ³å¹²å˜›";
-  string answer6 = "åŒ…å…»æ•°å­¦å®¶";
+  string question6 = "Èç¹û±©¸»ÁËÏë¸ÉÂï";
+  string answer6 = "°üÑøÊıÑ§¼Ò";
 
-  string question7 = "æ¨èå‡ é¦–æ­Œå¬";
+  string question7 = "ÍÆ¼ö¼¸Ê×¸èÌı";
   string answer7 = "Learning To Survive|Final Masquerade|Nothing";
 
-  string question8 = "æœ€åéšä¾¿è¯´å¥è¯";
-  string answer8 = "æç¼–ç¨‹ä¸€å®šè¦çˆ±è¿™ä¸ªä¸–ç•Œ, å¦åˆ™åªæœ‰æŠ˜ç£¨";
+  string question8 = "×îºóËæ±ãËµ¾ä»°";
+  string answer8 = "¸ã±à³ÌÒ»¶¨Òª°®Õâ¸öÊÀ½ç, ·ñÔòÖ»ÓĞÕÛÄ¥";
 
-  string question9 = "è®²ä¸€ä»¶åæ‚”çš„äº‹å„¿";
-  string answer9 = "é‚£äº›æ— æ³•å½¢å®¹çš„ç—›, è§ä¸å¾—å…‰";
+  string question9 = "½²Ò»¼şºó»ÚµÄÊÂ¶ù";
+  string answer9 = "ÄÇĞ©ÎŞ·¨ĞÎÈİµÄÍ´, ¼û²»µÃ¹â";
 
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
@@ -354,36 +354,36 @@ void TestAVLMaxAndMin() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                     Test AVL Max & Min                    |"<<endl;
-  cout<<"|                    æµ‹è¯•AVLæ ‘çš„æœ€å¤§å€¼/æœ€å°å€¼                  |"<<endl;
+  cout<<"|                    ²âÊÔAVLÊ÷µÄ×î´óÖµ/×îĞ¡Öµ                  |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
-  string question1 = "æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
-  string question5 = "æœ€è®¨åŒçš„ç¼–ç¨‹è¯­è¨€";
+  string question5 = "×îÌÖÑáµÄ±à³ÌÓïÑÔ";
   string answer5 = "Java";
 
-  string question6 = "å¦‚æœæš´å¯Œäº†æƒ³å¹²å˜›";
-  string answer6 = "åŒ…å…»æ•°å­¦å®¶";
+  string question6 = "Èç¹û±©¸»ÁËÏë¸ÉÂï";
+  string answer6 = "°üÑøÊıÑ§¼Ò";
 
-  string question7 = "æ¨èå‡ é¦–æ­Œå¬";
+  string question7 = "ÍÆ¼ö¼¸Ê×¸èÌı";
   string answer7 = "Learning To Survive|Final Masquerade|Nothing";
 
-  string question8 = "æœ€åéšä¾¿è¯´å¥è¯";
-  string answer8 = "æç¼–ç¨‹ä¸€å®šè¦çˆ±è¿™ä¸ªä¸–ç•Œ, å¦åˆ™åªæœ‰æŠ˜ç£¨";
+  string question8 = "×îºóËæ±ãËµ¾ä»°";
+  string answer8 = "¸ã±à³ÌÒ»¶¨Òª°®Õâ¸öÊÀ½ç, ·ñÔòÖ»ÓĞÕÛÄ¥";
 
-  string question9 = "è®²ä¸€ä»¶åæ‚”çš„äº‹å„¿";
-  string answer9 = "é‚£äº›æ— æ³•å½¢å®¹çš„ç—›, è§ä¸å¾—å…‰";
+  string question9 = "½²Ò»¼şºó»ÚµÄÊÂ¶ù";
+  string answer9 = "ÄÇĞ©ÎŞ·¨ĞÎÈİµÄÍ´, ¼û²»µÃ¹â";
 
   AVL_tree->Insert(answer1, question1);
   AVL_tree->Insert(answer2, question2);
@@ -409,36 +409,36 @@ void TestBSTMin() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                        Test BST Min                       |"<<endl;
-  cout<<"|                     æµ‹è¯•æœç´¢äºŒå‰æ ‘çš„æœ€å°å€¼                    |"<<endl;
+  cout<<"|                     ²âÊÔËÑË÷¶ş²æÊ÷µÄ×îĞ¡Öµ                    |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 
-  string question1 = "æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
-  string question5 = "æœ€è®¨åŒçš„ç¼–ç¨‹è¯­è¨€";
+  string question5 = "×îÌÖÑáµÄ±à³ÌÓïÑÔ";
   string answer5 = "Java";
 
-  string question6 = "å¦‚æœæš´å¯Œäº†æƒ³å¹²å˜›";
-  string answer6 = "åŒ…å…»æ•°å­¦å®¶";
+  string question6 = "Èç¹û±©¸»ÁËÏë¸ÉÂï";
+  string answer6 = "°üÑøÊıÑ§¼Ò";
 
-  string question7 = "æ¨èå‡ é¦–æ­Œå¬";
+  string question7 = "ÍÆ¼ö¼¸Ê×¸èÌı";
   string answer7 = "Learning To Survive|Final Masquerade|Nothing";
 
-  string question8 = "æœ€åéšä¾¿è¯´å¥è¯";
-  string answer8 = "æç¼–ç¨‹ä¸€å®šè¦çˆ±è¿™ä¸ªä¸–ç•Œ, å¦åˆ™åªæœ‰æŠ˜ç£¨";
+  string question8 = "×îºóËæ±ãËµ¾ä»°";
+  string answer8 = "¸ã±à³ÌÒ»¶¨Òª°®Õâ¸öÊÀ½ç, ·ñÔòÖ»ÓĞÕÛÄ¥";
 
-  string question9 = "è®²ä¸€ä»¶åæ‚”çš„äº‹å„¿";
-  string answer9 = "é‚£äº›æ— æ³•å½¢å®¹çš„ç—›, è§ä¸å¾—å…‰";
+  string question9 = "½²Ò»¼şºó»ÚµÄÊÂ¶ù";
+  string answer9 = "ÄÇĞ©ÎŞ·¨ĞÎÈİµÄÍ´, ¼û²»µÃ¹â";
 
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
@@ -462,36 +462,36 @@ void TestBSTMakeEmpty() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                     Test BST MakeEmpty                    |"<<endl;
-  cout<<"|                      æµ‹è¯•æœç´¢äºŒå‰æ ‘çš„åˆ é™¤                    |"<<endl;
+  cout<<"|                      ²âÊÔËÑË÷¶ş²æÊ÷µÄÉ¾³ı                    |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 
-  string question1 = "æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
-  string question5 = "æœ€è®¨åŒçš„ç¼–ç¨‹è¯­è¨€";
+  string question5 = "×îÌÖÑáµÄ±à³ÌÓïÑÔ";
   string answer5 = "Java";
 
-  string question6 = "å¦‚æœæš´å¯Œäº†æƒ³å¹²å˜›";
-  string answer6 = "åŒ…å…»æ•°å­¦å®¶";
+  string question6 = "Èç¹û±©¸»ÁËÏë¸ÉÂï";
+  string answer6 = "°üÑøÊıÑ§¼Ò";
 
-  string question7 = "æ¨èå‡ é¦–æ­Œå¬";
+  string question7 = "ÍÆ¼ö¼¸Ê×¸èÌı";
   string answer7 = "Learning To Survive|Final Masquerade|Nothing";
 
-  string question8 = "æœ€åéšä¾¿è¯´å¥è¯";
-  string answer8 = "æç¼–ç¨‹ä¸€å®šè¦çˆ±è¿™ä¸ªä¸–ç•Œ, å¦åˆ™åªæœ‰æŠ˜ç£¨";
+  string question8 = "×îºóËæ±ãËµ¾ä»°";
+  string answer8 = "¸ã±à³ÌÒ»¶¨Òª°®Õâ¸öÊÀ½ç, ·ñÔòÖ»ÓĞÕÛÄ¥";
 
-  string question9 = "è®²ä¸€ä»¶åæ‚”çš„äº‹å„¿";
-  string answer9 = "çƒ‚åˆ°è‚šå­é‡Œä¹Ÿä¸ä¼šè¯´çš„";
+  string question9 = "½²Ò»¼şºó»ÚµÄÊÂ¶ù";
+  string answer9 = "ÀÃµ½¶Ç×ÓÀïÒ²²»»áËµµÄ";
 
   binary_search_tree->Insert(answer1, question1);
   binary_search_tree->Insert(answer2, question2);
@@ -515,21 +515,21 @@ void TestAVLInsert() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test AVL Insert                      |"<<endl;
-  cout<<"|                     æµ‹è¯•å¹³è¡¡äºŒå‰æ ‘çš„æ’å…¥                     |"<<endl;
+  cout<<"|                     ²âÊÔÆ½ºâ¶ş²æÊ÷µÄ²åÈë                     |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
-  string question1 = "æˆ‘æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "ÎÒ×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æˆ‘æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "ÎÒ×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æˆ‘æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "ÎÒ×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
   AVL_tree->Insert(answer1, question1);
   AVL_tree->Insert(answer2, question2);
@@ -548,7 +548,7 @@ void TestAVLInsert2() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                     Test AVL Insert2                      |"<<endl;
-  cout<<"|                    æµ‹è¯•å¹³è¡¡äºŒå‰æ ‘çš„æ’å…¥2                     |"<<endl;
+  cout<<"|                    ²âÊÔÆ½ºâ¶ş²æÊ÷µÄ²åÈë2                     |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
@@ -581,21 +581,21 @@ void TestAVLInsertByCyberDash() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test AVL InsertByCyberDash                |"<<endl;
-  cout<<"|               æµ‹è¯•å¹³è¡¡äºŒå‰æ ‘çš„æ’å…¥(CyberDashç‰ˆæœ¬)            |"<<endl;
+  cout<<"|               ²âÊÔÆ½ºâ¶ş²æÊ÷µÄ²åÈë(CyberDash°æ±¾)            |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
-  string question1 = "æˆ‘æœ€çˆ±çš„ä¹é˜Ÿ";
-  string answer1 = "æ—è‚¯å…¬å›­";
+  string question1 = "ÎÒ×î°®µÄÀÖ¶Ó";
+  string answer1 = "ÁÖ¿Ï¹«Ô°";
 
-  string question2 = "æˆ‘æœ€çˆ±çš„æ¸¸æˆ";
+  string question2 = "ÎÒ×î°®µÄÓÎÏ·";
   string answer2 = "Dota2";
 
-  string question3 = "æˆ‘æœ€çˆ±çš„ç”µå½±";
-  string answer3 = "ã€Šé»‘å®¢å¸å›½ã€‹";
+  string question3 = "ÎÒ×î°®µÄµçÓ°";
+  string answer3 = "¡¶ºÚ¿ÍµÛ¹ú¡·";
 
-  string question4 = "æœ€çˆ±çš„è¿åŠ¨";
-  string answer4 = "è¶³çƒ";
+  string question4 = "×î°®µÄÔË¶¯";
+  string answer4 = "×ãÇò";
 
   AVL_tree->InsertByCyberDash(answer1, question1);
   AVL_tree->InsertByCyberDash(answer2, question2);
@@ -614,7 +614,7 @@ void TestAVLRemoveByCyberDash() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test AVL RemoveByCyberDash                |"<<endl;
-  cout<<"|               æµ‹è¯•å¹³è¡¡äºŒå‰æ ‘çš„åˆ é™¤(CyberDashç‰ˆæœ¬)             |"<<endl;
+  cout<<"|               ²âÊÔÆ½ºâ¶ş²æÊ÷µÄÉ¾³ı(CyberDash°æ±¾)             |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
@@ -643,17 +643,17 @@ void TestBSTAndAVLHeight() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test BST & AVL Height                   |"<<endl;
-  cout<<"|                  æµ‹è¯•æœç´¢äºŒå‰æ ‘/AVLæ ‘çš„é«˜åº¦                  |"<<endl;
+  cout<<"|                  ²âÊÔËÑË÷¶ş²æÊ÷/AVLÊ÷µÄ¸ß¶È                  |"<<endl;
 
   string keyArr[19] =
     { "a", "d", "c", "b", "e", "f", "g", "h", "i", "k", "l", "j", "m", "n", "r", "p", "q", "o", "s" };
   string elemArr[19] =
     { "a", "d", "c", "b", "e", "f", "g", "h", "i", "k", "l", "j", "m", "n", "r", "p", "q", "o", "s" };
 
-  cout<<"åˆ†åˆ«å‘BSTå’ŒAVLæ ‘æ’å…¥:"<<endl;
+  cout<<"·Ö±ğÏòBSTºÍAVLÊ÷²åÈë:"<<endl;
   for (int i = 0; i < 19; i++) {
     cout<<"\"key:"<<keyArr[i]<<"/elem:"<<elemArr[i]<<"\"  ";
-    // å››ä¸ªä¸€è¡Œ
+    // ËÄ¸öÒ»ĞĞ
     if (i % 4 == 3 && i != 0) {
       cout<<endl;
     }
@@ -672,8 +672,8 @@ void TestBSTAndAVLHeight() {
 
   cout<<endl<<endl;
 
-  cout<<"BSTæ ‘é«˜åº¦: "<<bst_tree->Height()<<endl;
-  cout<<"AVLæ ‘é«˜åº¦: "<<AVL_tree->Height()<<endl;
+  cout<<"BSTÊ÷¸ß¶È: "<<bst_tree->Height()<<endl;
+  cout<<"AVLÊ÷¸ß¶È: "<<AVL_tree->Height()<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }

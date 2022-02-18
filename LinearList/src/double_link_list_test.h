@@ -12,23 +12,23 @@ using namespace std;
 
 
 /*!
- * @brief åŒå‘é“¾è¡¨æµ‹è¯•ç±»
+ * @brief Ë«ÏòÁ´±í²âÊÔÀà
  */
 class DoubleLinkListTest {
 public:
-  /*! @brief æµ‹è¯•æŒ‰æ–¹å‘æ’å…¥ */
+  /*! @brief ²âÊÔ°´·½Ïò²åÈë */
   static void TestInsertByDirection();
-  /*! @brief æµ‹è¯•åˆ é™¤ */
+  /*! @brief ²âÊÔÉ¾³ı */
   static void TestRemoveByDirection();
-  /*! @brief æµ‹è¯•é•¿åº¦ */
+  /*! @brief ²âÊÔ³¤¶È */
   static void TestLength();
-  /*! @brief æµ‹è¯•é“¾è¡¨æ˜¯å¦ä¸ºç©º */
+  /*! @brief ²âÊÔÁ´±íÊÇ·ñÎª¿Õ */
   static void TestEmpty();
-  /*! @brief æµ‹è¯•é“¾è¡¨æŸ¥æ‰¾ */
+  /*! @brief ²âÊÔÁ´±í²éÕÒ */
   static void TestSearch();
-  /*! @brief æµ‹è¯•é“¾è¡¨å®šä½ */
+  /*! @brief ²âÊÔÁ´±í¶¨Î» */
   static void TestLocate();
-  /*! @brief æµ‹è¯•è·å–è®¾ç½®æ•°æ® */
+  /*! @brief ²âÊÔ»ñÈ¡ÉèÖÃÊı¾İ */
   static void TestGetDataAndSetData();
 };
 
@@ -37,7 +37,7 @@ void DoubleLinkListTest::TestInsertByDirection() {
   cout << endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|              Test DoubleList InsertByDirection            |"<<endl;
-  cout<<"|                     æµ‹è¯•åŒå‘é“¾è¡¨æŒ‰æ–¹å‘æ’å…¥                    |"<<endl<<endl<<endl;
+  cout<<"|                     ²âÊÔË«ÏòÁ´±í°´·½Ïò²åÈë                    |"<<endl<<endl<<endl;
 
   DoubleLinkList<string>* band_list = new DoubleLinkList<string>();
 
@@ -56,7 +56,7 @@ void DoubleLinkListTest::TestRemoveByDirection() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|              Test DoubleList RemoveByDirection            |"<<endl;
-  cout<<"|                     æµ‹è¯•åŒå‘é“¾è¡¨æŒ‰æ–¹å‘åˆ é™¤                   |"<<endl<<endl<<endl;
+  cout<<"|                     ²âÊÔË«ÏòÁ´±í°´·½ÏòÉ¾³ı                   |"<<endl<<endl<<endl;
 
   DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
 
@@ -71,13 +71,13 @@ void DoubleLinkListTest::TestRemoveByDirection() {
   int delete_pos = 3;
   city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
 
-  cout<<"å‘ååˆ é™¤åŸå¸‚"<<delete_pos<<"ä¹‹å: "<<endl;
+  cout<<"ÏòºóÉ¾³ı³ÇÊĞ"<<delete_pos<<"Ö®ºó: "<<endl;
   city_list->Output();
 
   delete_pos = 1;
   city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
 
-  cout<<"å‘ååˆ é™¤åŸå¸‚"<<delete_pos<<"ä¹‹å: "<<endl;
+  cout<<"ÏòºóÉ¾³ı³ÇÊĞ"<<delete_pos<<"Ö®ºó: "<<endl;
   city_list->Output();
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -89,7 +89,7 @@ void DoubleLinkListTest::TestLength(){
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test DoubleList Length                  |"<<endl;
-  cout<<"|                       æµ‹è¯•åŒå‘é“¾è¡¨é•¿åº¦                      |"<<endl<<endl<<endl;
+  cout<<"|                       ²âÊÔË«ÏòÁ´±í³¤¶È                      |"<<endl<<endl<<endl;
 
   DoubleLinkList<int>* double_list;
   double_list = new DoubleLinkList<int>();
@@ -98,7 +98,7 @@ void DoubleLinkListTest::TestLength(){
   double_list->Insert(1,2);
   double_list->Insert(2,3);
 
-  cout<<"åŒå‘é“¾è¡¨é•¿åº¦: "<<double_list->Length()<<endl;
+  cout<<"Ë«ÏòÁ´±í³¤¶È: "<<double_list->Length()<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -109,7 +109,7 @@ void DoubleLinkListTest::TestEmpty(){
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test DoubleList Empty                   |"<<endl;
-  cout<<"|                        æµ‹è¯•åŒå‘é“¾è¡¨æ˜¯å¦ä¸ºç©º                  |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔË«ÏòÁ´±íÊÇ·ñÎª¿Õ                  |"<<endl<<endl<<endl;
 
   DoubleLinkList<string>* double_link;
   double_link = new DoubleLinkList<string>();
@@ -144,7 +144,7 @@ void DoubleLinkListTest::TestSearch(){
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test DoubleList Search                  |"<<endl;
-  cout<<"|                       æµ‹è¯•åŒå‘é“¾è¡¨æŸ¥æ‰¾                      |"<<endl<<endl<<endl;
+  cout<<"|                       ²âÊÔË«ÏòÁ´±í²éÕÒ                      |"<<endl<<endl<<endl;
 
   DoubleLinkList<int>* double_list;
   double_list = new DoubleLinkList<int>();
@@ -168,7 +168,7 @@ void DoubleLinkListTest::TestLocate() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                  Test DoubleList Locate                   |"<<endl;
-  cout<<"|                       æµ‹è¯•åŒå‘é“¾è¡¨å®šä½                       |"<<endl<<endl<<endl;
+  cout<<"|                       ²âÊÔË«ÏòÁ´±í¶¨Î»                       |"<<endl<<endl<<endl;
 
   DoubleLinkList<int>* double_list = new DoubleLinkList<int>();
 
@@ -189,7 +189,7 @@ void DoubleLinkListTest::TestGetDataAndSetData() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|              Test DoubleList GetData And SetData          |"<<endl;
-  cout<<"|                   æµ‹è¯•åŒå‘é“¾è¡¨è·å–/è®¾ç½®æ•°æ®é¡¹                 |"<<endl<<endl<<endl;
+  cout<<"|                   ²âÊÔË«ÏòÁ´±í»ñÈ¡/ÉèÖÃÊı¾İÏî                 |"<<endl<<endl<<endl;
 
   DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
 

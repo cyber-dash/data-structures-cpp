@@ -75,75 +75,75 @@ protected:
   // AVLNode<Elem, Key>* SearchInSubTree_(Key key, const AVLNode<Elem, Key>*& sub_tree_root_ptr);
   AVLNode<Elem, Key>* SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr);
   bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
-  // å¹³è¡¡æ ‘å­æ ‘æ’å…¥(CyberDashå®ç°ç‰ˆæœ¬)
+  // Æ½ºâÊ÷×ÓÊ÷²åÈë(CyberDashÊµÏÖ°æ±¾)
   bool InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
   bool RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
 
-  // å·¦å•æ—‹è½¬(Rotation Left), å›¾7.15(a)çš„æƒ…å½¢
+  // ×óµ¥Ğı×ª(Rotation Left), Í¼7.15(a)µÄÇéĞÎ
   void RotateLeft_(AVLNode<Elem, Key>*& node_ptr);
-  // å³å•æ—‹è½¬(Rotation Right), å›¾7.16(a)çš„æƒ…å½¢
+  // ÓÒµ¥Ğı×ª(Rotation Right), Í¼7.16(a)µÄÇéĞÎ
   void RotateRight_(AVLNode<Elem, Key>*& node_ptr);
-  // å…ˆå·¦åå³åŒæ—‹è½¬(Rotation Left Right), å›¾7.17(a)çš„æƒ…å½¢
+  // ÏÈ×óºóÓÒË«Ğı×ª(Rotation Left Right), Í¼7.17(a)µÄÇéĞÎ
   void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr);
-  // å…ˆå³åå·¦åŒæ—‹è½¬(Rotation Right Left), å›¾7.18(a)çš„æƒ…å½¢
+  // ÏÈÓÒºó×óË«Ğı×ª(Rotation Right Left), Í¼7.18(a)µÄÇéĞÎ
   void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr);
 
 
-  // å­æ ‘ä¸­å…³é”®ç æœ€å°é¡¹
+  // ×ÓÊ÷ÖĞ¹Ø¼üÂë×îĞ¡Ïî
   AVLNode<Elem, Key>* MinInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
 
-  // å­æ ‘ä¸­å…³é”®ç æœ€å¤§é¡¹
+  // ×ÓÊ÷ÖĞ¹Ø¼üÂë×î´óÏî
   AVLNode<Elem, Key>* MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
-  // AVLå­æ ‘çš„é«˜åº¦
+  // AVL×ÓÊ÷µÄ¸ß¶È
   int SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr);
 
   void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*));
 
-  AVLNode<Elem, Key>* root_node_ptr_; // æ ¹èŠ‚ç‚¹
+  AVLNode<Elem, Key>* root_node_ptr_; // ¸ù½Úµã
 };
 
 
 /**
- * å·¦å•æ—‹è½¬(Rotation Left), å›¾7.15(a)çš„æƒ…å½¢
- * @tparam Elem æœç´¢ç»“æœ(æ•°æ®)æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param node_ptr AVLæ ‘èŠ‚ç‚¹æŒ‡é’ˆçš„å¼•ç”¨
+ * ×óµ¥Ğı×ª(Rotation Left), Í¼7.15(a)µÄÇéĞÎ
+ * @tparam Elem ËÑË÷½á¹û(Êı¾İ)Ä£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param node_ptr AVLÊ÷½ÚµãÖ¸ÕëµÄÒıÓÃ
  */
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // å›¾7.15(b)
+  // Í¼7.15(b)
   AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
   node_ptr = sub_left_node_ptr->RightChildPtr();
 
-  // å›¾7.15(c)
+  // Í¼7.15(c)
   sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr());
   node_ptr->SetLeftChildPtr(sub_left_node_ptr);
 
-  // è°ƒæ•´å¹³è¡¡å› å­
+  // µ÷ÕûÆ½ºâÒò×Ó
   node_ptr->balance_factor = 0;
   sub_left_node_ptr->balance_factor = 0;
 }
 
 
 /**
- * å³å•æ—‹è½¬(Rotation Right), å›¾7.16(a)çš„æƒ…å½¢
- * @tparam Elem æœç´¢ç»“æœ(æ•°æ®)æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param node_ptr AVLæ ‘èŠ‚ç‚¹æŒ‡é’ˆçš„å¼•ç”¨
+ * ÓÒµ¥Ğı×ª(Rotation Right), Í¼7.16(a)µÄÇéĞÎ
+ * @tparam Elem ËÑË÷½á¹û(Êı¾İ)Ä£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param node_ptr AVLÊ÷½ÚµãÖ¸ÕëµÄÒıÓÃ
  */
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateRight_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // å›¾7.16(b)
+  // Í¼7.16(b)
   AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
   node_ptr = sub_right_node_ptr->LeftChildPtr();
 
-  // å›¾7.16(c)
+  // Í¼7.16(c)
   sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr());
   node_ptr->SetRightChildPtr(sub_right_node_ptr);
 
-  // è°ƒæ•´å¹³è¡¡å› å­
+  // µ÷ÕûÆ½ºâÒò×Ó
   node_ptr->balance_factor = 0;
   sub_right_node_ptr->balance_factor = 0;
 }
@@ -152,14 +152,14 @@ void AVLTree<Elem, Key>::RotateRight_(AVLNode<Elem, Key>*& node_ptr) {
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // å›¾7.17(b)
+  // Í¼7.17(b)
   AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
   AVLNode<Elem, Key>* sub_left_node_ptr = sub_right_node_ptr->LeftChildPtr();
   node_ptr = sub_left_node_ptr->RightChildPtr();
 
-  // å›¾7.17(c)
-  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptræˆä¸ºæ–°æ ¹å‰, ç”©æ‰å®ƒçš„å·¦å­æ ‘
-  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // å·¦å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
+  // Í¼7.17(c)
+  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÇ°, Ë¦µôËüµÄ×ó×ÓÊ÷
+  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // ×óµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
 
   if (node_ptr->balance_factor <= 0) {
     sub_left_node_ptr->balance_factor = 0;
@@ -167,8 +167,8 @@ void AVLTree<Elem, Key>::RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
     sub_left_node_ptr->balance_factor = -1;
   }
 
-  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptræˆä¸ºæ–°æ ¹ä¹‹å‰, ç”©æ‰å®ƒçš„å³å­æ ‘
-  node_ptr->SetRightChildPtr(sub_right_node_ptr); // å³å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
+  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÖ®Ç°, Ë¦µôËüµÄÓÒ×ÓÊ÷
+  node_ptr->SetRightChildPtr(sub_right_node_ptr); // ÓÒµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
 
   if (node_ptr->balance_factor == -1) {
     sub_right_node_ptr->balance_factor = 1;
@@ -183,14 +183,14 @@ void AVLTree<Elem, Key>::RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // å›¾7.18(b)
+  // Í¼7.18(b)
   AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
   AVLNode<Elem, Key>* sub_right_node_ptr= sub_left_node_ptr->RightChildPtr();
   node_ptr = sub_right_node_ptr->LeftChildPtr();
 
-  // å›¾7.18(c)
-  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptræˆä¸ºæ–°æ ¹ä¹‹å‰, ç”©æ‰å®ƒçš„å³å­æ ‘
-  node_ptr->SetRightChildPtr(sub_right_node_ptr); // å³å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
+  // Í¼7.18(c)
+  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÖ®Ç°, Ë¦µôËüµÄÓÒ×ÓÊ÷
+  node_ptr->SetRightChildPtr(sub_right_node_ptr); // ÓÒµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
 
   if (node_ptr->balance_factor >= 0) {
     sub_right_node_ptr->balance_factor = 0;
@@ -198,8 +198,8 @@ void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
     sub_right_node_ptr->balance_factor = 1;
   }
 
-  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptræˆä¸ºæ–°æ ¹å‰, ç”©æ‰å®ƒçš„å·¦å­æ ‘
-  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // å·¦å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
+  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÇ°, Ë¦µôËüµÄ×ó×ÓÊ÷
+  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // ×óµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
 
   if (node_ptr->balance_factor == 1) {
     sub_left_node_ptr->balance_factor = -1;
@@ -224,17 +224,17 @@ bool AVLTree<Elem, Key>::InsertByCyberDash(Elem data, Key key) {
 
 
 /**
- * @brief å­æ ‘ä¸­æ’å…¥èŠ‚ç‚¹(é€’å½’)
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param elem æ•°æ®é¡¹
- * @param key å…³é”®ç 
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+ * @brief ×ÓÊ÷ÖĞ²åÈë½Úµã(µİ¹é)
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param elem Êı¾İÏî
+ * @param key ¹Ø¼üÂë
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @return ÊÇ·ñ²åÈë³É¹¦
  * @note
- * å¦‚æœæ ¹èŠ‚ç‚¹æŒ‡é’ˆä¸ºNULL, åˆ™åˆ›å»ºèŠ‚ç‚¹
- * åˆ¤æ–­æ’å…¥å…³é”®ç ä¸å­æ ‘æ ¹èŠ‚ç‚¹å…³é”®ç çš„å¤§å°å…³ç³», åœ¨å·¦å­æ ‘orå³å­æ ‘åšæ’å…¥æ“ä½œ(é€’å½’)
- * å¦‚æœå…³é”®ç ç›¸åŒ, åˆ™è¿”å›false
+ * Èç¹û¸ù½ÚµãÖ¸ÕëÎªNULL, Ôò´´½¨½Úµã
+ * ÅĞ¶Ï²åÈë¹Ø¼üÂëÓë×ÓÊ÷¸ù½Úµã¹Ø¼üÂëµÄ´óĞ¡¹ØÏµ, ÔÚ×ó×ÓÊ÷orÓÒ×ÓÊ÷×ö²åÈë²Ù×÷(µİ¹é)
+ * Èç¹û¹Ø¼üÂëÏàÍ¬, Ôò·µ»Øfalse
  */
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
@@ -244,9 +244,9 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
 
   stack<AVLNode<Elem, Key>*> AVL_node_stack;
 
-  // å¯»æ‰¾æ’å…¥ä½ç½®
+  // Ñ°ÕÒ²åÈëÎ»ÖÃ
   while (cur_node_ptr != NULL) {
-    // æ‰¾åˆ°ç­‰äºkeyçš„ç»“ç‚¹, æ— æ³•æ’å…¥, (åŸä¹¦ä½¿ç”¨elem)
+    // ÕÒµ½µÈÓÚkeyµÄ½áµã, ÎŞ·¨²åÈë, (Ô­ÊéÊ¹ÓÃelem)
     if (key == cur_node_ptr->GetKey()) {
       return false;
     }
@@ -264,7 +264,7 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
   cur_node_ptr = new AVLNode<Elem, Key>(elem, key);
   /* error handler */
 
-  // ç©ºæ ‘, æ–°ç»“ç‚¹æˆä¸ºæ ¹èŠ‚ç‚¹
+  // ¿ÕÊ÷, ĞÂ½áµã³ÉÎª¸ù½Úµã
   if (cur_stack_node_ptr == NULL) {
     sub_tree_root_ptr = cur_node_ptr;
     return true;
@@ -276,7 +276,7 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
     cur_stack_node_ptr->SetRightChildPtr(cur_node_ptr);
   }
 
-  // é‡æ–°å¹³è¡¡åŒ–
+  // ÖØĞÂÆ½ºâ»¯
   while (AVL_node_stack.empty() == false) {
     cur_stack_node_ptr = AVL_node_stack.top();
     AVL_node_stack.pop();
@@ -287,23 +287,23 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
       cur_stack_node_ptr->balance_factor++;
     }
 
-    // ç¬¬1ç§æƒ…å†µ, å¹³è¡¡é€€å‡º
+    // µÚ1ÖÖÇé¿ö, Æ½ºâÍË³ö
     if (cur_stack_node_ptr->balance_factor == 0) {
       break;
     }
 
-    // ç¬¬2ç§æƒ…å†µ, |å¹³è¡¡å› å­| = 1
+    // µÚ2ÖÖÇé¿ö, |Æ½ºâÒò×Ó| = 1
     if (cur_stack_node_ptr->balance_factor == 1 || cur_stack_node_ptr->balance_factor == -1) {
       cur_node_ptr = cur_stack_node_ptr;
-    } else { // ç¬¬3ç§æƒ…å†µ, |bf| = 2
+    } else { // µÚ3ÖÖÇé¿ö, |bf| = 2
       int stack_node_rotate_flag = (cur_stack_node_ptr->balance_factor < 0) ? -1 : 1;
-      if (cur_node_ptr->balance_factor == stack_node_rotate_flag) { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åŒå·, å•æ—‹è½¬
+      if (cur_node_ptr->balance_factor == stack_node_rotate_flag) { // Á½¸ö½áµãµÄÆ½ºâÒò×ÓÍ¬ºÅ, µ¥Ğı×ª
         if (stack_node_rotate_flag == -1) {
-          this->RotateRight_(cur_stack_node_ptr); // å³å•æ—‹è½¬
+          this->RotateRight_(cur_stack_node_ptr); // ÓÒµ¥Ğı×ª
         } else {
-          this->RotateLeft_(cur_stack_node_ptr); // å·¦å•æ—‹è½¬
+          this->RotateLeft_(cur_stack_node_ptr); // ×óµ¥Ğı×ª
         }
-      } else { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åå·, åŒæ—‹è½¬
+      } else { // Á½¸ö½áµãµÄÆ½ºâÒò×Ó·´ºÅ, Ë«Ğı×ª
         if (stack_node_rotate_flag == -1) {
           this->RotateLeftRight_(cur_stack_node_ptr);
         } else {
@@ -311,7 +311,7 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
         }
       }
 
-      break; // ä¸å†å‘ä¸Šè°ƒæ•´
+      break; // ²»ÔÙÏòÉÏµ÷Õû
     }
   }
 
@@ -337,16 +337,16 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetInsertNodePtrAndInitStack(Key key,
 
   AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
 
-  // å¯»æ‰¾æ’å…¥ä½ç½®
+  // Ñ°ÕÒ²åÈëÎ»ÖÃ
   while (cur_node_ptr != NULL) {
-    // æ‰¾åˆ°ç­‰äºkeyçš„ç»“ç‚¹, æ— æ³•æ’å…¥, todo: åŸä¹¦ä½¿ç”¨elem
+    // ÕÒµ½µÈÓÚkeyµÄ½áµã, ÎŞ·¨²åÈë, todo: Ô­ÊéÊ¹ÓÃelem
     if (key == cur_node_ptr->GetKey()) {
       return NULL;
     }
 
     AVL_node_stack.push(cur_node_ptr);
 
-    // åŸä¹¦ä½¿ç”¨elem, æ­¤å¤„ä½¿ç”¨å…³é”®ç 
+    // Ô­ÊéÊ¹ÓÃelem, ´Ë´¦Ê¹ÓÃ¹Ø¼üÂë
     if (key < cur_node_ptr->GetKey()) {
       cur_node_ptr = cur_node_ptr->LeftChildPtr();
     } else {
@@ -365,9 +365,9 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Key key,
 
   AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
 
-  // å¯»æ‰¾åˆ é™¤ä½ç½®
+  // Ñ°ÕÒÉ¾³ıÎ»ÖÃ
   while (cur_node_ptr != NULL) {
-    // æ‰¾åˆ°ç­‰äºkeyçš„ç»“ç‚¹, æ— æ³•æ’å…¥
+    // ÕÒµ½µÈÓÚkeyµÄ½áµã, ÎŞ·¨²åÈë
     if (key == cur_node_ptr->GetKey()) {
       break;
     }
@@ -386,15 +386,15 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Key key,
 
 
 /**
- * @brief åœ¨å­æ ‘ä¸­, ä½¿ç”¨å…³é”®ç è¿›è¡Œæœç´¢
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param key å…³é”®ç 
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @return æœç´¢ç»“æœ
+ * @brief ÔÚ×ÓÊ÷ÖĞ, Ê¹ÓÃ¹Ø¼üÂë½øĞĞËÑË÷
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param key ¹Ø¼üÂë
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @return ËÑË÷½á¹û
  * @note
- * 1. å¦‚æœå­æ ‘æ ¹èŠ‚ç‚¹ä¸ºNULL, è¿”å›NULL
- * 2. ä½¿ç”¨å½“å‰éå†èŠ‚ç‚¹çš„key, ä¸å‚æ•°keyä½œæ¯”è¾ƒ, åˆ†åˆ«è¿›è¡Œé€’å½’å’Œè¿”å›æœç´¢ç»“æœ(ç»ˆæ­¢é€’å½’)
+ * 1. Èç¹û×ÓÊ÷¸ù½ÚµãÎªNULL, ·µ»ØNULL
+ * 2. Ê¹ÓÃµ±Ç°±éÀú½ÚµãµÄkey, Óë²ÎÊıkey×÷±È½Ï, ·Ö±ğ½øĞĞµİ¹éºÍ·µ»ØËÑË÷½á¹û(ÖÕÖ¹µİ¹é)
  */
 template <class Elem, class Key>
 AVLNode<Elem, Key>* AVLTree<Elem, Key>::SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr) {
@@ -415,30 +415,30 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::SearchInSubTree_(Key key, AVLNode<Elem, 
 
 
 /**
- * @brief å¹³è¡¡æ ‘å­æ ‘æ’å…¥(CyberDashå®ç°ç‰ˆæœ¬)
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param elem æ•°æ®é¡¹
- * @param key å…³é”®ç 
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+ * @brief Æ½ºâÊ÷×ÓÊ÷²åÈë(CyberDashÊµÏÖ°æ±¾)
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param elem Êı¾İÏî
+ * @param key ¹Ø¼üÂë
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @return ÊÇ·ñ²åÈë³É¹¦
  * @note
- * 1. é¦–å…ˆæ‰¾åˆ°æ’å…¥ä½ç½®, å¹¶ä¸”ä½¿ç”¨æ ˆä¿å­˜
- * 2. åˆ†3ç§æƒ…å†µ, è¿›è¡Œå¹³è¡¡åŒ–
- * 3. å¹³è¡¡åŒ–ç»“æŸåçš„æ”¶å°¾å·¥ä½œ
+ * 1. Ê×ÏÈÕÒµ½²åÈëÎ»ÖÃ, ²¢ÇÒÊ¹ÓÃÕ»±£´æ
+ * 2. ·Ö3ÖÖÇé¿ö, ½øĞĞÆ½ºâ»¯
+ * 3. Æ½ºâ»¯½áÊøºóµÄÊÕÎ²¹¤×÷
  */
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
 
   stack<AVLNode<Elem, Key>* > AVL_node_stack;
 
-  // è·å–æ’å…¥ä½ç½®, åˆå§‹åŒ–æ ˆ
+  // »ñÈ¡²åÈëÎ»ÖÃ, ³õÊ¼»¯Õ»
   AVLNode<Elem, Key>* insert_node_ptr = GetInsertNodePtrAndInitStack(key, sub_tree_root_ptr, AVL_node_stack);
 
   insert_node_ptr = new AVLNode<Elem, Key>(elem, key);
   /* error handler */
 
-  // ç©ºæ ‘, æ–°ç»“ç‚¹æˆä¸ºæ ¹èŠ‚ç‚¹, å¹¶è¿”å›
+  // ¿ÕÊ÷, ĞÂ½áµã³ÉÎª¸ù½Úµã, ²¢·µ»Ø
   if (AVL_node_stack.empty()) {
     sub_tree_root_ptr = insert_node_ptr;
     return true;
@@ -446,7 +446,7 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
 
   AVLNode<Elem, Key>* stack_node_ptr = AVL_node_stack.top();
 
-  // åŸä¹¦ä½¿ç”¨elemåšæ¯”è¾ƒ, åº”è¯¥æ˜¯é”™äº†
+  // Ô­ÊéÊ¹ÓÃelem×ö±È½Ï, Ó¦¸ÃÊÇ´íÁË
   if (key < stack_node_ptr->GetKey()) {
     stack_node_ptr->SetLeftChildPtr(insert_node_ptr);
   } else {
@@ -455,37 +455,37 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
 
   AVLNode<Elem, Key>* stack_node_child_ptr = insert_node_ptr;
 
-  // é‡æ–°å¹³è¡¡åŒ–
+  // ÖØĞÂÆ½ºâ»¯
   while (AVL_node_stack.empty() == false) {
 
-    // æ ˆé¡¶å‡ºæ ˆ
+    // Õ»¶¥³öÕ»
     stack_node_ptr = AVL_node_stack.top();
     AVL_node_stack.pop();
 
-    // è°ƒæ•´å¹³è¡¡å› å­
+    // µ÷ÕûÆ½ºâÒò×Ó
     if (stack_node_child_ptr == stack_node_ptr->LeftChildPtr()) {
       stack_node_ptr->balance_factor--;
     } else {
       stack_node_ptr->balance_factor++;
     }
 
-    // ç¬¬1ç§æƒ…å†µ, å¹³è¡¡é€€å‡º
+    // µÚ1ÖÖÇé¿ö, Æ½ºâÍË³ö
     if (stack_node_ptr->balance_factor == 0) {
       break;
     }
 
-    // ç¬¬2ç§æƒ…å†µ, |å¹³è¡¡å› å­| = 1
+    // µÚ2ÖÖÇé¿ö, |Æ½ºâÒò×Ó| = 1
     if (stack_node_ptr->balance_factor == 1 || stack_node_ptr->balance_factor == -1) {
       stack_node_child_ptr = stack_node_ptr;
-    } else { // ç¬¬3ç§æƒ…å†µ, |bf| = 2
+    } else { // µÚ3ÖÖÇé¿ö, |bf| = 2
       int stack_node_rotate_flag = (stack_node_ptr->balance_factor < 0) ? -1 : 1;
-      if (stack_node_child_ptr->balance_factor == stack_node_rotate_flag) { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åŒå·, å•æ—‹è½¬
+      if (stack_node_child_ptr->balance_factor == stack_node_rotate_flag) { // Á½¸ö½áµãµÄÆ½ºâÒò×ÓÍ¬ºÅ, µ¥Ğı×ª
         if (stack_node_rotate_flag == -1) {
-          this->RotateRight_(stack_node_ptr); // å³å•æ—‹è½¬
+          this->RotateRight_(stack_node_ptr); // ÓÒµ¥Ğı×ª
         } else {
-          this->RotateLeft_(stack_node_ptr); // å·¦å•æ—‹è½¬
+          this->RotateLeft_(stack_node_ptr); // ×óµ¥Ğı×ª
         }
-      } else { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åå·, åŒæ—‹è½¬
+      } else { // Á½¸ö½áµãµÄÆ½ºâÒò×Ó·´ºÅ, Ë«Ğı×ª
         if (stack_node_rotate_flag == -1) {
           this->RotateLeftRight_(stack_node_ptr);
         } else {
@@ -493,11 +493,11 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
         }
       }
 
-      break; // ä¸å†å‘ä¸Šè°ƒæ•´
+      break; // ²»ÔÙÏòÉÏµ÷Õû
     }
   }
 
-  // å·²ç»å®Œæˆå¹³è¡¡åŒ–çš„æ ‘, å®Œæˆæœ€åå¤„ç†
+  // ÒÑ¾­Íê³ÉÆ½ºâ»¯µÄÊ÷, Íê³É×îºó´¦Àí
   if (AVL_node_stack.empty() == true) {
     sub_tree_root_ptr = stack_node_ptr;
   } else {
@@ -514,11 +514,11 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
 
 
 /**
- * @brief å¹³è¡¡æ ‘å­æ ‘åˆ é™¤èŠ‚ç‚¹(CyberDashå®ç°ç‰ˆæœ¬)
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @param key å¾…åˆ é™¤å…³é”®ç 
+ * @brief Æ½ºâÊ÷×ÓÊ÷É¾³ı½Úµã(CyberDashÊµÏÖ°æ±¾)
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @param key ´ıÉ¾³ı¹Ø¼üÂë
  * @return
  */
 template<class Elem, class Key>
@@ -532,11 +532,11 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
                                                                      AVL_node_stack);
 
   if (delete_node_ptr == NULL) {
-    return false; // æœªæ‰¾åˆ°åˆ é™¤ç»“ç‚¹
+    return false; // Î´ÕÒµ½É¾³ı½áµã
   }
 
   if (delete_node_ptr->LeftChildPtr() != NULL && delete_node_ptr->RightChildPtr() != NULL) {
-    AVL_node_stack.push(delete_node_ptr); // å°†å¾…åˆ é™¤èŠ‚ç‚¹å…¥stack
+    AVL_node_stack.push(delete_node_ptr); // ½«´ıÉ¾³ı½ÚµãÈëstack
 
     cur_node_pre_ptr = delete_node_ptr->LeftChildPtr();
     while(cur_node_pre_ptr->RightChildPtr() != NULL) {
@@ -550,30 +550,30 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
     delete_node_ptr = cur_node_pre_ptr;
   }
 
-  AVLNode<Elem, Key>* child_of_delete_node_ptr = NULL; // è¢«åˆ é™¤èŠ‚ç‚¹çš„å­©å­èŠ‚ç‚¹
+  AVLNode<Elem, Key>* child_of_delete_node_ptr = NULL; // ±»É¾³ı½ÚµãµÄº¢×Ó½Úµã
 
-  // æ‰¾åˆ°æ­¤æ—¶çš„å¾…åˆ é™¤èŠ‚ç‚¹çš„ä¸€ä¸ªå­©å­èŠ‚ç‚¹, ç”¨ä½œè¿æ¥
+  // ÕÒµ½´ËÊ±µÄ´ıÉ¾³ı½ÚµãµÄÒ»¸öº¢×Ó½Úµã, ÓÃ×÷Á¬½Ó
   if (delete_node_ptr->LeftChildPtr() != NULL) {
     child_of_delete_node_ptr = delete_node_ptr->LeftChildPtr();
   } else {
     child_of_delete_node_ptr = delete_node_ptr->RightChildPtr();
   }
 
-  if (AVL_node_stack.empty() == true) { // åˆ é™¤çš„æ˜¯æ ¹èŠ‚ç‚¹
+  if (AVL_node_stack.empty() == true) { // É¾³ıµÄÊÇ¸ù½Úµã
     sub_tree_root_ptr = child_of_delete_node_ptr;
   } else {
 
     AVLNode<Elem, Key>* cur_stack_node_ptr = AVL_node_stack.top();
 
-    if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) { // è¢«åˆ é™¤èŠ‚ç‚¹æ˜¯cur_stack_node_ptrçš„å·¦å­©å­
-      cur_stack_node_ptr->SetLeftChildPtr(child_of_delete_node_ptr); // è¿æ¥
-    } else { // è¢«åˆ é™¤èŠ‚ç‚¹æ˜¯cur_stack_node_ptrçš„å³å­©å­
-      cur_stack_node_ptr->SetRightChildPtr(child_of_delete_node_ptr); // è¿æ¥
+    if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) { // ±»É¾³ı½ÚµãÊÇcur_stack_node_ptrµÄ×óº¢×Ó
+      cur_stack_node_ptr->SetLeftChildPtr(child_of_delete_node_ptr); // Á¬½Ó
+    } else { // ±»É¾³ı½ÚµãÊÇcur_stack_node_ptrµÄÓÒº¢×Ó
+      cur_stack_node_ptr->SetRightChildPtr(child_of_delete_node_ptr); // Á¬½Ó
     }
 
     AVLNode<Elem, Key>* parent_node_ptr;
 
-    // é‡æ–°å¹³è¡¡åŒ–
+    // ÖØĞÂÆ½ºâ»¯
     while (AVL_node_stack.empty() == false) {
 
       AVLNode<Elem, Key>* grand_parent_node_ptr = NULL;
@@ -598,7 +598,7 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
         grand_parent_direction = 0;
       }
 
-      if (parent_node_ptr->balance_factor == 1 || parent_node_ptr->balance_factor == -1) { // å›¾7.20
+      if (parent_node_ptr->balance_factor == 1 || parent_node_ptr->balance_factor == -1) { // Í¼7.20
         break;
       }
 
@@ -625,13 +625,13 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
           break;
         }
 
-        if (child_of_delete_node_ptr->balance_factor == parent_direction) { // å›¾7.23, ä¸¤èŠ‚ç‚¹å¹³è¡¡å› å­åŒå·
+        if (child_of_delete_node_ptr->balance_factor == parent_direction) { // Í¼7.23, Á½½ÚµãÆ½ºâÒò×ÓÍ¬ºÅ
           if (parent_direction == -1) {
             this->RotateRight_(parent_node_ptr);
           } else {
             this->RotateLeft_(parent_node_ptr);
           }
-        } else { // å›¾7.24, ä¸¤èŠ‚ç‚¹å¹³è¡¡å› å­åå·
+        } else { // Í¼7.24, Á½½ÚµãÆ½ºâÒò×Ó·´ºÅ
           if (parent_direction == -1) {
             this->RotateLeftRight_(parent_node_ptr);
           } else {
@@ -639,7 +639,7 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
           }
         }
 
-        // æ—‹è½¬å, æ–°æ ¹ä¸ä¸Šå±‚è¿æ¥
+        // Ğı×ªºó, ĞÂ¸ùÓëÉÏ²ãÁ¬½Ó
         if (grand_parent_direction == -1) {
           grand_parent_node_ptr->SetLeftChildPtr(parent_node_ptr);
         } else {
@@ -647,7 +647,7 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
         }
       }
 
-      child_of_delete_node_ptr = parent_node_ptr; // å›¾7.21, |bf| = 0
+      child_of_delete_node_ptr = parent_node_ptr; // Í¼7.21, |bf| = 0
     }
 
     if (AVL_node_stack.empty() == true) {
@@ -663,7 +663,7 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
 
 
 /**
- * @brief æ‰“å°å­æ ‘(é€’å½’)
+ * @brief ´òÓ¡×ÓÊ÷(µİ¹é)
  * @tparam Elem
  * @tparam Key
  * @param sub_tree_root_ptr
@@ -728,13 +728,13 @@ Elem AVLTree<Elem, Key>::Max() {
 
 
 /**
- * @brief å­æ ‘ä¸­å…³é”®ç æœ€å¤§é¡¹
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @return å…³é”®ç æœ€å¤§é¡¹
+ * @brief ×ÓÊ÷ÖĞ¹Ø¼üÂë×î´óÏî
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @return ¹Ø¼üÂë×î´óÏî
  * @note
- * å³å­©å­èŠ‚ç‚¹è¿­ä»£
+ * ÓÒº¢×Ó½Úµãµü´ú
  */
 template <class Elem, class Key>
 AVLNode<Elem, Key>* AVLTree<Elem, Key>::MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const {

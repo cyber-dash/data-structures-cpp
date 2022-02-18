@@ -1,11 +1,11 @@
 /*!
  * @file min_heap.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief æœ€å°å †å®ç°
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ×îĞ¡¶ÑÊµÏÖ
  * @version 0.2.1
  * @date 2021-07-14
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_MIN_HEAP_H
@@ -22,8 +22,8 @@ using namespace std;
 
 
 /*!
- * @brief æœ€å°å †æ¨¡æ¿ç±»
- * @tparam E ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ×îĞ¡¶ÑÄ£°åÀà
+ * @tparam E ÀàĞÍÄ£°å²ÎÊı
  */
 template <class E>
 class MinHeap {
@@ -56,7 +56,7 @@ MinHeap<E>::MinHeap(int size) {
 
   heap_array_ = new E[max_size_];
   if (heap_array_ == NULL) {
-    cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
     exit(1);
   }
 
@@ -70,7 +70,7 @@ MinHeap<E>::MinHeap(E arr[], int arr_size) {
   heap_array_ = new E[max_size_];
 
   if (heap_array_ == NULL) {
-    cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
     exit(1);
   }
 
@@ -182,11 +182,11 @@ template<class T>
 void MinHeap<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDashæˆå‘˜:"<<endl
-      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
-      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash³ÉÔ±:"<<endl
+      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
+      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
+      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 

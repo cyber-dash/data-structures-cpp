@@ -1,12 +1,12 @@
 /*!
  * @file test.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å¹¿ä¹‰è¡¨æµ‹è¯•.cppæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¹ãÒå±í²âÊÔ.cppÎÄ¼ş
  * @version 0.2.1
  * @date 2021-05-19
  *
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 
@@ -19,7 +19,7 @@ void TestCreateListByString() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test GeneralizedList Depth                |"<<endl;
-  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨æ·±åº¦                       |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔ¹ãÒå±íÉî¶È                       |"<<endl<<endl<<endl;
 
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -32,7 +32,7 @@ void TestHeadAndTail() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test GeneralizedList Depth                |"<<endl;
-  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨æ·±åº¦                       |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔ¹ãÒå±íÉî¶È                       |"<<endl<<endl<<endl;
 
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -44,7 +44,7 @@ void TestDepth() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test GeneralizedList Depth                |"<<endl;
-  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨æ·±åº¦                       |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔ¹ãÒå±íÉî¶È                       |"<<endl<<endl<<endl;
 
   string gen_list_string1 = "A(#);";
   string gen_list_string2 = "A(a);";
@@ -90,7 +90,7 @@ void TestLength() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                Test GeneralizedList Length                |"<<endl;
-  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨é•¿åº¦                       |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔ¹ãÒå±í³¤¶È                       |"<<endl<<endl<<endl;
 
   string gen_list_string1 = "A(#);";
   string gen_list_string2 = "A(a);";

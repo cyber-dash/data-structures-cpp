@@ -19,11 +19,11 @@ public:
 
 
 /**
- * @brief æœç´¢å…³é”®ç ä¸ºkeyçš„æ•°æ®å…ƒç´ 
+ * @brief ËÑË÷¹Ø¼üÂëÎªkeyµÄÊı¾İÔªËØ
  * @tparam Elem
- * @tparam Key æœç´¢ç æ¨¡æ¿ç±»å‹
- * @param key æœç´¢ç 
- * @return æ•°æ®æ‰€åœ¨çš„ä½ç½®
+ * @tparam Key ËÑË÷ÂëÄ£°åÀàĞÍ
+ * @param key ËÑË÷Âë
+ * @return Êı¾İËùÔÚµÄÎ»ÖÃ
  */
 template<class Elem, class Key>
 int SearchList<Elem, Key>::SeqSearch(const Key& key) const {

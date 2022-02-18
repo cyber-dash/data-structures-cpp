@@ -1,11 +1,11 @@
 /*!
  * @file thread_tree.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief çº¿ç´¢æ ‘
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ÏßË÷Ê÷
  * @version 0.2.1
  * @date 2021-05-13
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_THREAD_TREE_H
@@ -24,8 +24,8 @@ const int IS_THREAD_NODE = 1;
 
 
 /*!
- * @brief çº¿ç´¢æ ‘ç»“ç‚¹æ¨¡æ¿ç»“æ„ä½“
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ÏßË÷Ê÷½áµãÄ£°å½á¹¹Ìå
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 struct ThreadNode {
@@ -33,9 +33,9 @@ struct ThreadNode {
   int left_tag;
   int right_tag;
 
-  ThreadNode<T>* left_child; //!< å·¦å­©å­
-  ThreadNode<T>* right_child; //!< å³å­©å­
-  T data; //!< æ•°æ®é¡¹
+  ThreadNode<T>* left_child; //!< ×óº¢×Ó
+  ThreadNode<T>* right_child; //!< ÓÒº¢×Ó
+  T data; //!< Êı¾İÏî
 
   ThreadNode(const T& data):
       data(data),
@@ -45,8 +45,8 @@ struct ThreadNode {
 
 
 /*!
- * @brief çº¿ç´¢æ ‘æ¨¡æ¿ç±»
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ÏßË÷Ê÷Ä£°åÀà
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 class ThreadTree {
@@ -54,42 +54,42 @@ public:
   ThreadTree(): root_(NULL) {}
 
   /*!
-   * @brief è·å–æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
-   * @return æ ¹ç»“ç‚¹æŒ‡é’ˆ
+   * @brief »ñÈ¡¸ù½ÚµãÖ¸Õë
+   * @return ¸ù½áµãÖ¸Õë
    */
   ThreadNode<T>* Root() { return root_; }
 
   /*!
-   * @brief æ’å…¥ç»“ç‚¹
-   * @param data æ•°æ®
-   * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+   * @brief ²åÈë½áµã
+   * @param data Êı¾İ
+   * @return ÊÇ·ñ²åÈë³É¹¦
    */
   bool Insert(const T& data) { return Insert_(root_, data);}
 
-  // æˆ‘ä»¬æ˜¯CyberDash
+  // ÎÒÃÇÊÇCyberDash
   void CyberDashShow();
 
-  /* ä¸­åºçº¿ç´¢æ ‘ */
+  /* ÖĞĞòÏßË÷Ê÷ */
 
-  // åˆ›å»ºä¸­åºçº¿ç´¢
+  // ´´½¨ÖĞĞòÏßË÷
   void CreateInOrderThread();
-  // ä¸­åºçº¿ç´¢ç¬¬ä¸€ä¸ªçº¿ç´¢ç»“ç‚¹
+  // ÖĞĞòÏßË÷µÚÒ»¸öÏßË÷½áµã
   ThreadNode<T>* First(ThreadNode<T>* node);
-  // æ±‚(nodeä¸ºæ ¹çš„)å½“å‰äºŒå‰æ ‘çš„æœ€åä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹çš„èŠ‚ç‚¹æŒ‡é’ˆ
+  // Çó(nodeÎª¸ùµÄ)µ±Ç°¶ş²æÊ÷µÄ×îºóÒ»¸öÏßË÷½ÚµãµÄ½ÚµãÖ¸Õë
   ThreadNode<T>* Last(ThreadNode<T>* node);
-  // ä¸­åºçº¿ç´¢ä¸‹ä¸€ä¸ªçº¿ç´¢ç»“ç‚¹
+  // ÖĞĞòÏßË÷ÏÂÒ»¸öÏßË÷½áµã
   ThreadNode<T>* Next(ThreadNode<T>* node);
-  // ä¸­åºçº¿ç´¢å‰ä¸€ä¸ªçº¿ç´¢ç»“ç‚¹
+  // ÖĞĞòÏßË÷Ç°Ò»¸öÏßË÷½áµã
   ThreadNode<T>* Prior(ThreadNode<T>* node);
-  // ä¸­åºçº¿ç´¢çˆ¶ç»“ç‚¹
+  // ÖĞĞòÏßË÷¸¸½áµã
   ThreadNode<T>* Parent(ThreadNode<T>* node_ptr) { return Parent_(node_ptr); }
-  // ä¸­åºçº¿ç´¢äºŒå‰æ ‘ä¸­åºéå†
+  // ÖĞĞòÏßË÷¶ş²æÊ÷ÖĞĞò±éÀú
   void InOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
-  // ä¸­åºçº¿ç´¢äºŒå‰æ ‘å‰åºéå†
+  // ÖĞĞòÏßË÷¶ş²æÊ÷Ç°Ğò±éÀú
   void PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr));
-  // ä¸­åºçº¿ç´¢äºŒå‰æ ‘ååºéå†
+  // ÖĞĞòÏßË÷¶ş²æÊ÷ºóĞò±éÀú
   void PostOrderTraverse(void (*visit)(ThreadNode<T> *p));
-  // ä¸­åºçº¿ç´¢äºŒå‰å­æ ‘, æ‰¾åˆ°åç»­éå†ç¬¬ä¸€ä¸ªç»“ç‚¹(ä¹¦ä¸­æœªå®ç°)
+  // ÖĞĞòÏßË÷¶ş²æ×ÓÊ÷, ÕÒµ½ºóĞø±éÀúµÚÒ»¸ö½áµã(ÊéÖĞÎ´ÊµÏÖ)
   ThreadNode<T>* FindFirstNodeForPostOrderTraverse(ThreadNode<T>* node_ptr);
   //
   void InsertRight(ThreadNode<T>* s, ThreadNode<T> *r);
@@ -100,45 +100,45 @@ public:
   //
   void DeleteLeft(ThreadNode<T>* s);
 
-  /* å‰åºçº¿ç´¢æ ‘ */
+  /* Ç°ĞòÏßË÷Ê÷ */
 
-  // åˆ›å»ºå‰åºçº¿ç´¢
+  // ´´½¨Ç°ĞòÏßË÷
   void CreatePreOrderThread();
-  // å‰åºçº¿ç´¢äºŒå‰æ ‘ä¸‹ä¸€ä¸ªç»“ç‚¹
+  // Ç°ĞòÏßË÷¶ş²æÊ÷ÏÂÒ»¸ö½áµã
   ThreadNode<T>* PreOrderNext(ThreadNode<T>* node_ptr);
-  // å‰åºçº¿ç´¢äºŒå‰æ ‘å‰ä¸€ä¸ªç»“ç‚¹
+  // Ç°ĞòÏßË÷¶ş²æÊ÷Ç°Ò»¸ö½áµã
   ThreadNode<T>* PreOrderPrior(ThreadNode<T> *current);
 
-  /* ååºçº¿ç´¢æ ‘ */
-  // åˆ›å»ºååºçº¿ç´¢
+  /* ºóĞòÏßË÷Ê÷ */
+  // ´´½¨ºóĞòÏßË÷
   void CreatePostThread();
-  // ååºçº¿ç´¢äºŒå‰æ ‘ä¸‹ä¸€ä¸ªç»“ç‚¹
+  // ºóĞòÏßË÷¶ş²æÊ÷ÏÂÒ»¸ö½áµã
   ThreadNode<T>* PostOrderNext(ThreadNode<T> *current);
-  // ååºçº¿ç´¢äºŒå‰æ ‘å‰ä¸€ä¸ªç»“ç‚¹
+  // ºóĞòÏßË÷¶ş²æÊ÷Ç°Ò»¸ö½áµã
   ThreadNode<T>* PostOrderPrior(ThreadNode<T> *current);
 
 protected:
   ThreadNode<T>* root_;
-  // å­æ ‘åˆ›å»ºä¸­åºçº¿ç´¢
+  // ×ÓÊ÷´´½¨ÖĞĞòÏßË÷
   void CreateSubInOrderThread_(ThreadNode<T>*& node, ThreadNode<T>*& pre_node);
-  // å­æ ‘åˆ›å»ºå‰åºçº¿ç´¢
+  // ×ÓÊ÷´´½¨Ç°ĞòÏßË÷
   void CreateSubPreOrderThread_(ThreadNode<T>*& node, ThreadNode<T>*& pre_node);
-  // å­æ ‘åˆ›å»ºååºçº¿ç´¢
+  // ×ÓÊ÷´´½¨ºóĞòÏßË÷
   void CreatePostOrderThread_(ThreadNode<T>*& node, ThreadNode<T>*& pre_node);
-  // çˆ¶èŠ‚ç‚¹æŒ‡é’ˆ
+  // ¸¸½ÚµãÖ¸Õë
   ThreadNode<T>* Parent_(ThreadNode<T>* node);
-  // å­æ ‘æ’å…¥
+  // ×ÓÊ÷²åÈë
   bool Insert_(ThreadNode<T>*& node, const T& data);
 };
 
 
 /*!
- * @brief æ±‚(node_pträ¸ºæ ¹çš„)å½“å‰ä¸­åºçº¿ç´¢æ ‘çš„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆ
- * @tparam T æ ‘èŠ‚ç‚¹æ•°æ®ç±»å‹
- * @param node å½“å‰é€‰ä¸­çš„èŠ‚ç‚¹
- * @return ç»“ç‚¹æŒ‡é’ˆ
+ * @brief Çó(node_ptrÎª¸ùµÄ)µ±Ç°ÖĞĞòÏßË÷Ê÷µÄµÚÒ»¸ö½ÚµãÖ¸Õë
+ * @tparam T Ê÷½ÚµãÊı¾İÀàĞÍ
+ * @param node µ±Ç°Ñ¡ÖĞµÄ½Úµã
+ * @return ½áµãÖ¸Õë
  * @note
- * å·¦å­æ ‘éå†è‡³æœ€æ·±çš„èŠ‚ç‚¹
+ * ×ó×ÓÊ÷±éÀúÖÁ×îÉîµÄ½Úµã
  */
 template <class T>
 ThreadNode<T>* ThreadTree<T>::First(ThreadNode<T>* node) {
@@ -156,12 +156,12 @@ ThreadNode<T>* ThreadTree<T>::First(ThreadNode<T>* node) {
 
 
 /*!
- * @brief ä¸­åºçº¿ç´¢æ ‘çš„ä¸‹ä¸€èŠ‚ç‚¹
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param node å½“å‰é€‰ä¸­èŠ‚ç‚¹
- * @return NextèŠ‚ç‚¹æŒ‡é’ˆ
+ * @brief ÖĞĞòÏßË÷Ê÷µÄÏÂÒ»½Úµã
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param node µ±Ç°Ñ¡ÖĞ½Úµã
+ * @return Next½ÚµãÖ¸Õë
  * @note
- * æœ€å³å­èŠ‚ç‚¹çš„First()
+ * ×îÓÒ×Ó½ÚµãµÄFirst()
  */
 template <class T>
 ThreadNode<T>* ThreadTree<T>::Next(ThreadNode<T>* node) {
@@ -180,12 +180,12 @@ ThreadNode<T>* ThreadTree<T>::Next(ThreadNode<T>* node) {
 
 
 /*!
- * @brief æ±‚(node_pträ¸ºæ ¹çš„)å½“å‰äºŒå‰æ ‘çš„æœ€åä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹çš„èŠ‚ç‚¹æŒ‡é’ˆ
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param node å½“å‰èŠ‚ç‚¹
- * @return æœ€åä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹çš„æŒ‡é’ˆ
+ * @brief Çó(node_ptrÎª¸ùµÄ)µ±Ç°¶ş²æÊ÷µÄ×îºóÒ»¸öÏßË÷½ÚµãµÄ½ÚµãÖ¸Õë
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param node µ±Ç°½Úµã
+ * @return ×îºóÒ»¸öÏßË÷½ÚµãµÄÖ¸Õë
  * @note
- * æœ€å³å­èŠ‚ç‚¹(å¯èƒ½éå¶å­)
+ * ×îÓÒ×Ó½Úµã(¿ÉÄÜ·ÇÒ¶×Ó)
  */
 template <class T>
 ThreadNode<T>* ThreadTree<T>::Last(ThreadNode<T> *node) {
@@ -203,8 +203,8 @@ ThreadNode<T>* ThreadTree<T>::Last(ThreadNode<T> *node) {
 
 
 /*!
- * @brief ä¸­åºçº¿ç´¢å‰ä¸€ä¸ªçº¿ç´¢ç»“ç‚¹
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ÖĞĞòÏßË÷Ç°Ò»¸öÏßË÷½áµã
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  * @param node
  * @return
  */
@@ -221,9 +221,9 @@ ThreadNode<T>* ThreadTree<T>::Prior(ThreadNode<T>* node) {
 
 
 /*!
- * @brief ä¸­åºçº¿ç´¢äºŒå‰æ ‘ä¸­åºéå†
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param visit éå†å‡½æ•°
+ * @brief ÖĞĞòÏßË÷¶ş²æÊ÷ÖĞĞò±éÀú
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param visit ±éÀúº¯Êı
  */
 template <class T>
 void ThreadTree<T>::InOrderTraverse(void (*visit)(ThreadNode<T>* node)) {
@@ -234,10 +234,10 @@ void ThreadTree<T>::InOrderTraverse(void (*visit)(ThreadNode<T>* node)) {
 
 
 /*!
- * @brief åˆ›å»ºä¸­åºçº¿ç´¢
- * @tparam T æ ‘èŠ‚ç‚¹æ•°æ®ç±»å‹
+ * @brief ´´½¨ÖĞĞòÏßË÷
+ * @tparam T Ê÷½ÚµãÊı¾İÀàĞÍ
  * @note
- * è°ƒç”¨CreateInOrderSubThread_
+ * µ÷ÓÃCreateInOrderSubThread_
  */
 template <class T>
 void ThreadTree<T>::CreateInOrderThread() {
@@ -249,7 +249,7 @@ void ThreadTree<T>::CreateInOrderThread() {
 
   CreateSubInOrderThread_(root_, pre_node_ptr);
 
-  // æœ€åä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹, æ”¶å°¾å·¥ä½œ
+  // ×îºóÒ»¸öÏßË÷½Úµã, ÊÕÎ²¹¤×÷
   if (pre_node_ptr != NULL) {
     pre_node_ptr->right_child = NULL;
     pre_node_ptr->right_tag = IS_THREAD_NODE;
@@ -258,17 +258,17 @@ void ThreadTree<T>::CreateInOrderThread() {
 
 
 /*!
- * @brief å­æ ‘åˆ›å»ºä¸­åºçº¿ç´¢(é€’å½’)
- * @tparam T æ ‘èŠ‚ç‚¹æ•°æ®ç±»å‹
- * @param node å½“å‰èŠ‚ç‚¹
- * @param pre_node å½“å‰èŠ‚ç‚¹çš„å‰é©±èŠ‚ç‚¹
+ * @brief ×ÓÊ÷´´½¨ÖĞĞòÏßË÷(µİ¹é)
+ * @tparam T Ê÷½ÚµãÊı¾İÀàĞÍ
+ * @param node µ±Ç°½Úµã
+ * @param pre_node µ±Ç°½ÚµãµÄÇ°Çı½Úµã
  * @note
- * é€’å½’ç»ˆæ­¢æ¡ä»¶:
- *    å½“å‰èŠ‚ç‚¹ä¸ºnull
- * åˆ†æ²»é€’å½’:
- *    å·¦å­æ ‘æ‰§è¡Œ
- *    è°ƒæ•´çº¿ç´¢
- *    å³å­æ ‘æ‰§è¡Œ
+ * µİ¹éÖÕÖ¹Ìõ¼ş:
+ *    µ±Ç°½ÚµãÎªnull
+ * ·ÖÖÎµİ¹é:
+ *    ×ó×ÓÊ÷Ö´ĞĞ
+ *    µ÷ÕûÏßË÷
+ *    ÓÒ×ÓÊ÷Ö´ĞĞ
  */
 template <class T>
 void ThreadTree<T>::CreateSubInOrderThread_(ThreadNode<T>*& node, ThreadNode<T>*& pre_node) {
@@ -277,28 +277,28 @@ void ThreadTree<T>::CreateSubInOrderThread_(ThreadNode<T>*& node, ThreadNode<T>*
     return;
   }
 
-  // å·¦å­æ ‘åˆ†æ²»
+  // ×ó×ÓÊ÷·ÖÖÎ
   CreateSubInOrderThread_(node->left_child, pre_node);
 
-  // (åˆ©ç”¨left_child_)
-  // å¦‚æœleft_child_æŒ‡é’ˆä¸ºNULL,
-  // åˆ™å°†node_ptr->left_child_æŒ‡å‘pre_node_ptr, åŠ å…¥çº¿ç´¢æ ‘
+  // (ÀûÓÃleft_child_)
+  // Èç¹ûleft_child_Ö¸ÕëÎªNULL,
+  // Ôò½«node_ptr->left_child_Ö¸Ïòpre_node_ptr, ¼ÓÈëÏßË÷Ê÷
   if (node->left_child == NULL) {
     node->left_child = pre_node;
     node->left_tag = IS_THREAD_NODE;
   }
 
-  // (åˆ©ç”¨right_child_)
-  // å¦‚æœå‰ä¸€èŠ‚ç‚¹pre_node_pträ¸ä¸ºNULL, å¹¶ä¸”å®ƒçš„right_child_ä¸ä¸ºNULL,
-  // åˆ™å‰ä¸€èŠ‚ç‚¹çš„right_child_æŒ‡å‘node_ptr, åŠ å…¥çº¿ç´¢æ ‘
+  // (ÀûÓÃright_child_)
+  // Èç¹ûÇ°Ò»½Úµãpre_node_ptr²»ÎªNULL, ²¢ÇÒËüµÄright_child_²»ÎªNULL,
+  // ÔòÇ°Ò»½ÚµãµÄright_child_Ö¸Ïònode_ptr, ¼ÓÈëÏßË÷Ê÷
   if (pre_node != NULL && pre_node->right_child == NULL) {
     pre_node->right_child = node;
     pre_node->right_tag = IS_THREAD_NODE;
   }
 
-  pre_node = node; // pre_node_ptrèŠ‚ç‚¹åç§»
+  pre_node = node; // pre_node_ptr½ÚµãºóÒÆ
 
-  // å³å­æ ‘åˆ†æ²»
+  // ÓÒ×ÓÊ÷·ÖÖÎ
   CreateSubInOrderThread_(node->right_child, pre_node);
 }
 
@@ -328,32 +328,32 @@ void ThreadTree<T>::CreateSubPreOrderThread_(ThreadNode<T>*& node, ThreadNode<T>
     return;
   }
 
-  // (åˆ©ç”¨left_child_)
-  // å¦‚æœleft_child_æŒ‡é’ˆä¸ºNULL,
-  // åˆ™å°†node_ptr->left_child_æŒ‡å‘pre_node_ptr, åŠ å…¥çº¿ç´¢æ ‘
+  // (ÀûÓÃleft_child_)
+  // Èç¹ûleft_child_Ö¸ÕëÎªNULL,
+  // Ôò½«node_ptr->left_child_Ö¸Ïòpre_node_ptr, ¼ÓÈëÏßË÷Ê÷
   if (node->left_child == NULL) {
     node->left_child = pre_node;
     node->left_tag = IS_THREAD_NODE;
   }
 
-  // (åˆ©ç”¨right_child_)
-  // å¦‚æœå‰ä¸€èŠ‚ç‚¹pre_node_pträ¸ä¸ºNULL, å¹¶ä¸”å®ƒçš„right_child_ä¸ä¸ºNULL,
-  // åˆ™å‰ä¸€èŠ‚ç‚¹çš„right_child_æŒ‡å‘node_ptr, åŠ å…¥çº¿ç´¢æ ‘
+  // (ÀûÓÃright_child_)
+  // Èç¹ûÇ°Ò»½Úµãpre_node_ptr²»ÎªNULL, ²¢ÇÒËüµÄright_child_²»ÎªNULL,
+  // ÔòÇ°Ò»½ÚµãµÄright_child_Ö¸Ïònode_ptr, ¼ÓÈëÏßË÷Ê÷
   if (pre_node != NULL && pre_node->right_child == NULL) {
     pre_node->right_child = node;
     pre_node->right_tag = IS_THREAD_NODE;
   }
 
-  pre_node = node; // pre_node_ptrèŠ‚ç‚¹åç§»
+  pre_node = node; // pre_node_ptr½ÚµãºóÒÆ
 
-  // å·¦å­æ ‘åˆ†æ²»
-  // CreateSubPreOrderThread_(node_ptr->left_child_, pre_node_ptr); // å·¦å­æ ‘éå†
+  // ×ó×ÓÊ÷·ÖÖÎ
+  // CreateSubPreOrderThread_(node_ptr->left_child_, pre_node_ptr); // ×ó×ÓÊ÷±éÀú
   if (node->left_tag == IS_CHILD) {
-    CreateSubPreOrderThread_(node->left_child, pre_node); // å·¦å­æ ‘éå†
+    CreateSubPreOrderThread_(node->left_child, pre_node); // ×ó×ÓÊ÷±éÀú
   }
 
-  // å³å­æ ‘åˆ†æ²»
-  CreateSubPreOrderThread_(node->right_child, pre_node); // å³å­æ ‘éå†
+  // ÓÒ×ÓÊ÷·ÖÖÎ
+  CreateSubPreOrderThread_(node->right_child, pre_node); // ÓÒ×ÓÊ÷±éÀú
 }
 
 
@@ -439,10 +439,10 @@ ThreadNode<T> *ThreadTree<T>::PreOrderPrior(ThreadNode<T> *current) {
 
 
 /**
- * @brief ä¸­åºçº¿ç´¢äºŒå‰æ ‘å‰åºéå†
- * è‹¥å½“å‰ç»“ç‚¹æœ‰å·¦å­å¥³, åˆ™å‰åºçš„åç»§ç»“ç‚¹ä¸ºå·¦å­©å­èŠ‚ç‚¹
- * å¦åˆ™, è‹¥å½“å‰ç»“ç‚¹æœ‰å³å­å¥³, åˆ™å‰åºçš„åç»§ç»“ç‚¹ä¸ºå³å­©å­èŠ‚ç‚¹
- * å¯¹äºå¶å­ç»“ç‚¹, æ²¿ç€ä¸­åºåç»§çº¿ç´¢, èµ°åˆ°ä¸€ä¸ªæœ‰å³å­å¥³ç»“ç‚¹çš„ç»“ç‚¹, è¿™ä¸ªå³å­å¥³ç»“ç‚¹å°±æ˜¯å½“å‰ç»“ç‚¹çš„å‰åºåç»§ç»“ç‚¹
+ * @brief ÖĞĞòÏßË÷¶ş²æÊ÷Ç°Ğò±éÀú
+ * Èôµ±Ç°½áµãÓĞ×ó×ÓÅ®, ÔòÇ°ĞòµÄºó¼Ì½áµãÎª×óº¢×Ó½Úµã
+ * ·ñÔò, Èôµ±Ç°½áµãÓĞÓÒ×ÓÅ®, ÔòÇ°ĞòµÄºó¼Ì½áµãÎªÓÒº¢×Ó½Úµã
+ * ¶ÔÓÚÒ¶×Ó½áµã, ÑØ×ÅÖĞĞòºó¼ÌÏßË÷, ×ßµ½Ò»¸öÓĞÓÒ×ÓÅ®½áµãµÄ½áµã, Õâ¸öÓÒ×ÓÅ®½áµã¾ÍÊÇµ±Ç°½áµãµÄÇ°Ğòºó¼Ì½áµã
  * @tparam T
  * @param visit
  */
@@ -453,11 +453,11 @@ void ThreadTree<T>::PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr)) {
   while (cur != NULL) {
     visit(cur);
 
-    if (cur->left_tag == IS_CHILD) { // è‹¥æœ‰å·¦å­å¥³, åˆ™ä¸ºå‰åºåç»§
+    if (cur->left_tag == IS_CHILD) { // ÈôÓĞ×ó×ÓÅ®, ÔòÎªÇ°Ğòºó¼Ì
       cur = cur->left_child;
-    } else if (cur->right_tag == IS_CHILD) { // å¦åˆ™è‹¥æœ‰å³å­å¥³, åˆ™ä¸ºå‰åºåç»§
+    } else if (cur->right_tag == IS_CHILD) { // ·ñÔòÈôÓĞÓÒ×ÓÅ®, ÔòÎªÇ°Ğòºó¼Ì
       cur = cur->right_child;
-    } else { // å¯¹äºå¶å­ç»“ç‚¹, æ²¿ç€ä¸­åºåç»§çº¿ç´¢, èµ°åˆ°ä¸€ä¸ªæœ‰å³å­å¥³ç»“ç‚¹çš„ç»“ç‚¹, è¿™ä¸ªå³å­å¥³ç»“ç‚¹å°±æ˜¯å½“å‰ç»“ç‚¹çš„å‰åºåç»§ç»“ç‚¹
+    } else { // ¶ÔÓÚÒ¶×Ó½áµã, ÑØ×ÅÖĞĞòºó¼ÌÏßË÷, ×ßµ½Ò»¸öÓĞÓÒ×ÓÅ®½áµãµÄ½áµã, Õâ¸öÓÒ×ÓÅ®½áµã¾ÍÊÇµ±Ç°½áµãµÄÇ°Ğòºó¼Ì½áµã
       while (cur != NULL && cur->right_tag == IS_THREAD_NODE) {
         cur = cur->right_child;
       }
@@ -471,14 +471,14 @@ void ThreadTree<T>::PreOrderTraverse(void (*visit)(ThreadNode<T>* node_ptr)) {
 
 
 /**
- * @brief ä¸­åºçº¿ç´¢äºŒå‰æ ‘, åç»­éå†
- * é‡å¤ä¸‹è¿°è¿‡ç¨‹, ç›´åˆ°å¶ç»“ç‚¹ä¸ºæ­¢:
- *    ä»æ ¹å‡ºå‘, æ²¿ç€å·¦å­æ ‘é“¾ä¸€ç›´æ‰¾ä¸‹å», æ‰¾åˆ°å·¦å­©å­ä¸å†æ˜¯åšå­©å­æŒ‡é’ˆçš„ç»“ç‚¹
- *    å†æ‰¾åˆ°è¯¥ç»“ç‚¹çš„å³å­©å­, ä»¥æ­¤ç»“ç‚¹ä¸ºæ ¹çš„å­æ ‘ä¸Š,
- * æ¥ç€, ä»æ­¤ç»“ç‚¹å¼€å§‹ååºéå†, æ¯æ¬¡å…ˆæ‰¾åˆ°å½“å‰èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹
- *    å¦‚æœå½“å‰ç»“ç‚¹æ˜¯çˆ¶èŠ‚ç‚¹çš„å³å­©å­orè™½ç„¶æ˜¯è¿™ä¸ªçˆ¶èŠ‚ç‚¹çš„å·¦å­©å­, ä½†è¿™ä¸ªçˆ¶èŠ‚ç‚¹æ²¡æœ‰å³å­©å­
- *       åˆ™ååºä¸‹çš„åç»§ä¸ºè¯¥çˆ¶èŠ‚ç‚¹
- *    å¦åˆ™, åœ¨å½“å‰ç»“ç‚¹çš„å³å­æ ‘(å¦‚æœå­˜åœ¨)ä¸Šé‡å¤æ‰§è¡Œä¸Šé¢çš„æ“ä½œ
+ * @brief ÖĞĞòÏßË÷¶ş²æÊ÷, ºóĞø±éÀú
+ * ÖØ¸´ÏÂÊö¹ı³Ì, Ö±µ½Ò¶½áµãÎªÖ¹:
+ *    ´Ó¸ù³ö·¢, ÑØ×Å×ó×ÓÊ÷Á´Ò»Ö±ÕÒÏÂÈ¥, ÕÒµ½×óº¢×Ó²»ÔÙÊÇ×öº¢×ÓÖ¸ÕëµÄ½áµã
+ *    ÔÙÕÒµ½¸Ã½áµãµÄÓÒº¢×Ó, ÒÔ´Ë½áµãÎª¸ùµÄ×ÓÊ÷ÉÏ,
+ * ½Ó×Å, ´Ó´Ë½áµã¿ªÊ¼ºóĞò±éÀú, Ã¿´ÎÏÈÕÒµ½µ±Ç°½ÚµãµÄ¸¸½Úµã
+ *    Èç¹ûµ±Ç°½áµãÊÇ¸¸½ÚµãµÄÓÒº¢×ÓorËäÈ»ÊÇÕâ¸ö¸¸½ÚµãµÄ×óº¢×Ó, µ«Õâ¸ö¸¸½ÚµãÃ»ÓĞÓÒº¢×Ó
+ *       ÔòºóĞòÏÂµÄºó¼ÌÎª¸Ã¸¸½Úµã
+ *    ·ñÔò, ÔÚµ±Ç°½áµãµÄÓÒ×ÓÊ÷(Èç¹û´æÔÚ)ÉÏÖØ¸´Ö´ĞĞÉÏÃæµÄ²Ù×÷
  * @tparam T
  * @param visit
  */
@@ -488,11 +488,11 @@ void ThreadTree<T>::PostOrderTraverse(void (*visit)(ThreadNode<T>*)) {
   ThreadNode<T>* cur = FindFirstNodeForPostOrderTraverse(root_);
   ThreadNode<T> *cur_parent;
 
-  visit(cur); // è®¿é—®ç¬¬ä¸€ä¸ªç»“ç‚¹
+  visit(cur); // ·ÃÎÊµÚÒ»¸ö½áµã
 
   while ((cur_parent = Parent_(cur)) != NULL) {
-    if (cur_parent->right_child == cur ||  // å½“å‰ç»“ç‚¹æ˜¯çˆ¶èŠ‚ç‚¹çš„å³å­©å­
-        cur_parent->right_tag == IS_THREAD_NODE) // å½“å‰ç»“ç‚¹æ˜¯çˆ¶èŠ‚ç‚¹å·¦å­©å­, å¹¶ä¸”çˆ¶èŠ‚ç‚¹æ²¡æœ‰å³å­©å­
+    if (cur_parent->right_child == cur ||  // µ±Ç°½áµãÊÇ¸¸½ÚµãµÄÓÒº¢×Ó
+        cur_parent->right_tag == IS_THREAD_NODE) // µ±Ç°½áµãÊÇ¸¸½Úµã×óº¢×Ó, ²¢ÇÒ¸¸½ÚµãÃ»ÓĞÓÒº¢×Ó
     {
       cur = cur_parent;
     } else {
@@ -505,10 +505,10 @@ void ThreadTree<T>::PostOrderTraverse(void (*visit)(ThreadNode<T>*)) {
 
 
 /**
- * @brief ä¸­åºçº¿ç´¢æ ‘åç»­éå†, æ‰¾åˆ°ç¬¬ä¸€ä¸ªéå†ç»“ç‚¹(ä»¥node_pträ¸ºæ ¹)
- * é‡å¤ä¸‹è¿°è¿‡ç¨‹, ç›´åˆ°å¶ç»“ç‚¹ä¸ºæ­¢:
- *    æ²¿ç€å·¦å­æ ‘é“¾ä¸€ç›´æ‰¾ä¸‹å», æ‰¾åˆ°å·¦å­©å­ä¸å†æ˜¯åšå­©å­æŒ‡é’ˆçš„ç»“ç‚¹
- *    å†æ‰¾åˆ°è¯¥ç»“ç‚¹çš„å³å­©å­, ä»¥æ­¤ç»“ç‚¹ä¸ºæ ¹çš„å­æ ‘ä¸Š,
+ * @brief ÖĞĞòÏßË÷Ê÷ºóĞø±éÀú, ÕÒµ½µÚÒ»¸ö±éÀú½áµã(ÒÔnode_ptrÎª¸ù)
+ * ÖØ¸´ÏÂÊö¹ı³Ì, Ö±µ½Ò¶½áµãÎªÖ¹:
+ *    ÑØ×Å×ó×ÓÊ÷Á´Ò»Ö±ÕÒÏÂÈ¥, ÕÒµ½×óº¢×Ó²»ÔÙÊÇ×öº¢×ÓÖ¸ÕëµÄ½áµã
+ *    ÔÙÕÒµ½¸Ã½áµãµÄÓÒº¢×Ó, ÒÔ´Ë½áµãÎª¸ùµÄ×ÓÊ÷ÉÏ,
  * @tparam T
  * @param node_ptr
  * @return
@@ -531,14 +531,14 @@ ThreadNode<T>* ThreadTree<T>::FindFirstNodeForPostOrderTraverse(ThreadNode<T>* n
 
 
 /*!
- * @brief ä¸­åºçº¿ç´¢äºŒå‰æ ‘æ±‚çˆ¶èŠ‚ç‚¹
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param node ç»“ç‚¹æŒ‡é’ˆ
- * @return çˆ¶ç»“ç‚¹çŸ¥çœŸå‡
+ * @brief ÖĞĞòÏßË÷¶ş²æÊ÷Çó¸¸½Úµã
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param node ½áµãÖ¸Õë
+ * @return ¸¸½áµãÖªÕæ¼Ù
  * @note
- * ä¸¤æ¡è·¯å¾„:
- *   1: ä»å½“å‰ç»“ç‚¹èµ°åˆ°æ ‘ä¸Šå±‚çš„ä¸€ä¸ªä¸­åºå‰é©±(ä¸ä¸€å®šæ˜¯ç›´æ¥å‰é©±), ç„¶åå‘å³ä¸‹æ‰¾çˆ¶èŠ‚ç‚¹
- *   2: ä»å½“å‰ç»“ç‚¹èµ°åˆ°ä¹¦ä¸Šå±‚çš„ä¸€ä¸ªä¸­åºåç»§(ä¸ä¸€å®šæ˜¯ç›´æ¥åç»§), ç„¶åå‘å·¦ä¸‹æ‰¾çˆ¶èŠ‚ç‚¹
+ * Á½ÌõÂ·¾¶:
+ *   1: ´Óµ±Ç°½áµã×ßµ½Ê÷ÉÏ²ãµÄÒ»¸öÖĞĞòÇ°Çı(²»Ò»¶¨ÊÇÖ±½ÓÇ°Çı), È»ºóÏòÓÒÏÂÕÒ¸¸½Úµã
+ *   2: ´Óµ±Ç°½áµã×ßµ½ÊéÉÏ²ãµÄÒ»¸öÖĞĞòºó¼Ì(²»Ò»¶¨ÊÇÖ±½Óºó¼Ì), È»ºóÏò×óÏÂÕÒ¸¸½Úµã
  */
 template <class T>
 ThreadNode<T>* ThreadTree<T>::Parent_(ThreadNode<T>* node) {
@@ -547,38 +547,38 @@ ThreadNode<T>* ThreadTree<T>::Parent_(ThreadNode<T>* node) {
     return NULL;
   }
 
-  /* å°è¯•è·¯å¾„1 */
-  // éå†è‡³æœ€å·¦å­èŠ‚ç‚¹
+  /* ³¢ÊÔÂ·¾¶1 */
+  // ±éÀúÖÁ×î×ó×Ó½Úµã
   ThreadNode<T>* left_side_child = node;
   while (left_side_child->left_tag == IS_CHILD) {
     left_side_child = left_side_child->left_child;
   }
 
-  if (left_side_child->left_child != NULL) { // å¦‚æœç­‰äºNULL, åˆ™å¯»æ‰¾æ ‘ä¸Šå±‚çš„ä¸­åºå‰é©±å¤±è´¥, è·¯å¾„1å¤±è´¥
-    ThreadNode<T>* upper_level_pre_node = left_side_child->left_child; // æ ‘ä¸Šå±‚çš„ä¸­åºå‰é©±
+  if (left_side_child->left_child != NULL) { // Èç¹ûµÈÓÚNULL, ÔòÑ°ÕÒÊ÷ÉÏ²ãµÄÖĞĞòÇ°ÇıÊ§°Ü, Â·¾¶1Ê§°Ü
+    ThreadNode<T>* upper_level_pre_node = left_side_child->left_child; // Ê÷ÉÏ²ãµÄÖĞĞòÇ°Çı
 
-    // å‘å³ä¸‹æ‰¾çˆ¶èŠ‚ç‚¹
+    // ÏòÓÒÏÂÕÒ¸¸½Úµã
     while (upper_level_pre_node != NULL &&
            upper_level_pre_node->left_child != node &&
            upper_level_pre_node->right_child != node) {
       upper_level_pre_node = upper_level_pre_node->right_child;
     }
 
-    if (upper_level_pre_node != NULL) { // å¦‚æœä¸ç­‰äºNULL, åˆ™æ‰¾åˆ°çˆ¶èŠ‚ç‚¹, å¦åˆ™è·¯å¾„1å¤±è´¥
+    if (upper_level_pre_node != NULL) { // Èç¹û²»µÈÓÚNULL, ÔòÕÒµ½¸¸½Úµã, ·ñÔòÂ·¾¶1Ê§°Ü
       return upper_level_pre_node;
     }
   }
 
-  /* å°è¯•è·¯å¾„2 */
-  // éå†è‡³æœ€å³å­èŠ‚ç‚¹
+  /* ³¢ÊÔÂ·¾¶2 */
+  // ±éÀúÖÁ×îÓÒ×Ó½Úµã
   ThreadNode<T>* right_side_child = node;
   while (right_side_child->right_tag == IS_CHILD) {
     right_side_child = right_side_child->right_child;
   }
 
-  ThreadNode<T>* upper_level_post_node = right_side_child->right_child; // æ ‘ä¸Šå±‚çš„ä¸­åºåç»§
+  ThreadNode<T>* upper_level_post_node = right_side_child->right_child; // Ê÷ÉÏ²ãµÄÖĞĞòºó¼Ì
 
-  // å‘å·¦ä¸‹æ‰¾çˆ¶èŠ‚ç‚¹
+  // Ïò×óÏÂÕÒ¸¸½Úµã
   while (upper_level_post_node != NULL &&
          upper_level_post_node->left_child != node &&
          upper_level_post_node->right_child != node) {
@@ -590,11 +590,11 @@ ThreadNode<T>* ThreadTree<T>::Parent_(ThreadNode<T>* node) {
 
 
 /*!
- * @brief äºŒå‰æ ‘æ’å…¥(å»ºç«‹çº¿ç´¢ä¹‹å‰)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param node è¢«æ’å…¥çš„å­æ ‘çš„æ ¹ç»“ç‚¹
- * @param data æ•°æ®é¡¹
- * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+ * @brief ¶ş²æÊ÷²åÈë(½¨Á¢ÏßË÷Ö®Ç°)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param node ±»²åÈëµÄ×ÓÊ÷µÄ¸ù½áµã
+ * @param data Êı¾İÏî
+ * @return ÊÇ·ñ²åÈë³É¹¦
  */
 template<class T>
 bool ThreadTree<T>::Insert_(ThreadNode<T>*& node, const T& data) {
@@ -617,10 +617,10 @@ bool ThreadTree<T>::Insert_(ThreadNode<T>*& node, const T& data) {
 
 
 /*!
- * @brief äºŒå‰å­æ ‘çš„æ·±åº¦
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param node äºŒå‰å­æ ‘çš„æ ¹
- * @return æ·±åº¦
+ * @brief ¶ş²æ×ÓÊ÷µÄÉî¶È
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param node ¶ş²æ×ÓÊ÷µÄ¸ù
+ * @return Éî¶È
  */
 template<class T>
 int Height(ThreadNode<T>* node) {
@@ -793,12 +793,12 @@ template<class T>
 void ThreadTree<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDashæˆå‘˜:"<<endl
-      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
-      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data_-structure-cpp"<<endl
+      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash³ÉÔ±:"<<endl
+      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
+      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
+      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
+      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data_-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 

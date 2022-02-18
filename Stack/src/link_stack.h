@@ -1,11 +1,11 @@
 /*!
  * @file link_stack.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief é“¾å¼æ ˆæ¨¡æ¿ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Á´Ê½Õ»Ä£°åÀà
  * @version 0.2.1
  * @date 2020-07-28
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_LINK_STACK_H
@@ -20,67 +20,67 @@ using namespace std;
 
 
 /*!
- * @brief ç»“ç‚¹æ¨¡æ¿ç»“æ„ä½“
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ½áµãÄ£°å½á¹¹Ìå
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 struct LinkNode {
   explicit LinkNode(LinkNode<T>* node = NULL): link(node) {}
   explicit LinkNode(const T& data, LinkNode<T>* node = NULL): data(data), link(node) {}
 
-  T data; //!< æ•°æ®é¡¹
-  LinkNode<T>* link; //!< ä¸‹ä¸€ç»“ç‚¹
+  T data; //!< Êı¾İÏî
+  LinkNode<T>* link; //!< ÏÂÒ»½áµã
 };
 
 
 /*!
- * @brief é“¾å¼æ ˆæ¨¡æ¿ç±»
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief Á´Ê½Õ»Ä£°åÀà
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 class LinkStack: public Stack<T>{
 
 public:
-  /*! @brief æ„é€ å‡½æ•° */
+  /*! @brief ¹¹Ôìº¯Êı */
   LinkStack(): top_(NULL) {}
-  // ææ„å‡½æ•°
+  // Îö¹¹º¯Êı
   ~LinkStack();
-  // å…¥æ ˆ
+  // ÈëÕ»
   void Push(const T& data);
-  // å‡ºæ ˆ(ä¿å­˜æ•°æ®)
+  // ³öÕ»(±£´æÊı¾İ)
   bool Pop(T& data);
-  // å‡ºæ ˆ(ä¸ä¿å­˜æ•°æ®)
+  // ³öÕ»(²»±£´æÊı¾İ)
   bool Pop();
-  // è·å–æ ˆé¡¶æ•°æ®
+  // »ñÈ¡Õ»¶¥Êı¾İ
   bool GetTop(T& data) const;
-  // åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
+  // ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
   bool IsEmpty() const;
-  // è·å–æ ˆå¤§å°
+  // »ñÈ¡Õ»´óĞ¡
   int GetSize() const;
-  // æ¸…ç©º
+  // Çå¿Õ
   void MakeEmpty();
 
-  // è·å–æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
+  // »ñÈ¡Õ»¶¥½áµãÖ¸Õë
   LinkNode<T>* GetTopPtr();
 
-  //è¿·å®«é—®é¢˜
+  //ÃÔ¹¬ÎÊÌâ
   // int SeekPath(int x,int y);
 
-  // é‡è½½<<(æ‰“å°æ ˆ)
+  // ÖØÔØ<<(´òÓ¡Õ»)
   template<class U>
   friend ostream& operator<<(ostream& os, LinkStack<T>& stack);
 
   void CyberDashShow();
 
 private:
-  LinkNode<T>* top_;     //!< æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
+  LinkNode<T>* top_;     //!< Õ»¶¥½áµãÖ¸Õë
 };
 
 
 /*!
- * @brief ææ„å‡½æ•°
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @note æ˜¾å¼é”€æ¯æ—¶è°ƒç”¨
+ * @brief Îö¹¹º¯Êı
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @note ÏÔÊ½Ïú»ÙÊ±µ÷ÓÃ
  */
 template<class T>
 LinkStack<T>::~LinkStack<T>() {
@@ -89,9 +89,9 @@ LinkStack<T>::~LinkStack<T>() {
 
 
 /*!
- * @brief è·å–æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @return æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
+ * @brief »ñÈ¡Õ»¶¥½áµãÖ¸Õë
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @return Õ»¶¥½áµãÖ¸Õë
  */
 template<class T>
 LinkNode<T>* LinkStack<T>::GetTopPtr() {
@@ -100,8 +100,8 @@ LinkNode<T>* LinkStack<T>::GetTopPtr() {
 
 
 /*!
- * @brief å…¥æ ˆ
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ÈëÕ»
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template <class T>
 void LinkStack<T>::Push(const T& data)
@@ -114,10 +114,10 @@ void LinkStack<T>::Push(const T& data)
 
 
 /**
- * @brief å‡ºæ ˆ(ä¿å­˜æ•°æ®é¡¹)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param data æ•°æ®(ä¿å­˜æ•°æ®é¡¹)
- * @return æ˜¯å¦æˆåŠŸ
+ * @brief ³öÕ»(±£´æÊı¾İÏî)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param data Êı¾İ(±£´æÊı¾İÏî)
+ * @return ÊÇ·ñ³É¹¦
  */
 template <class T>
 bool LinkStack<T>::Pop(T& data)
@@ -139,10 +139,10 @@ bool LinkStack<T>::Pop(T& data)
 
 
 /**
- * @brief å‡ºæ ˆ(ä¸ä¿å­˜æ•°æ®é¡¹)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param data æ•°æ®(ä¿å­˜æ•°æ®é¡¹)
- * @return æ˜¯å¦æˆåŠŸ
+ * @brief ³öÕ»(²»±£´æÊı¾İÏî)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param data Êı¾İ(±£´æÊı¾İÏî)
+ * @return ÊÇ·ñ³É¹¦
  */
 template <class T>
 bool LinkStack<T>::Pop()
@@ -162,11 +162,11 @@ bool LinkStack<T>::Pop()
 
 
 /*!
- * @brief è·å–æ ˆé¡¶å…ƒç´ 
- * @tparam T æ ˆå…ƒç´ ç±»å‹
- * @return è¿”å›æ“ä½œæ˜¯å¦æ‰§è¡ŒæˆåŠŸ
+ * @brief »ñÈ¡Õ»¶¥ÔªËØ
+ * @tparam T Õ»ÔªËØÀàĞÍ
+ * @return ·µ»Ø²Ù×÷ÊÇ·ñÖ´ĞĞ³É¹¦
  * @note
- * ä»…ä»…è·å–æ ˆé¡¶å…ƒç´ ï¼Œä¸éœ€è¦å°†æ ˆé¡¶å…ƒç´ åˆ é™¤
+ * ½ö½ö»ñÈ¡Õ»¶¥ÔªËØ£¬²»ĞèÒª½«Õ»¶¥ÔªËØÉ¾³ı
  */
 template <class T>
 bool LinkStack<T>::GetTop(T& data) const
@@ -182,8 +182,8 @@ bool LinkStack<T>::GetTop(T& data) const
 
 
 /*!
- * @brief è·å–æ ˆçš„å¤§å°
- * @return æ ˆçš„å¤§å°
+ * @brief »ñÈ¡Õ»µÄ´óĞ¡
+ * @return Õ»µÄ´óĞ¡
  */
 template<class T>
 int LinkStack<T>::GetSize() const {
@@ -201,8 +201,8 @@ int LinkStack<T>::GetSize() const {
 
 
 /*!
- * @brief åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
- * @return æ˜¯å¦ä¸ºç©º
+ * @brief ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
+ * @return ÊÇ·ñÎª¿Õ
  */
 template<class T>
 bool LinkStack<T>::IsEmpty() const {
@@ -215,10 +215,10 @@ bool LinkStack<T>::IsEmpty() const {
 
 
 /**
- * @brief æ¸…ç©ºæ ˆ
- * @tparam T æ ˆå…ƒç´ ç±»å‹
+ * @brief Çå¿ÕÕ»
+ * @tparam T Õ»ÔªËØÀàĞÍ
  * @note
- * éœ€è¦é‡Šæ”¾æ ˆä¸­æ¯ä¸ªå…ƒç´ 
+ * ĞèÒªÊÍ·ÅÕ»ÖĞÃ¿¸öÔªËØ
  */
 template<class T>
 void LinkStack<T>::MakeEmpty() {
@@ -241,16 +241,16 @@ int LinkStack<T>::SeekPath(int x,int y){
 
 
 /**
- * @brief é‡è½½<<(æ‰“å°æ ˆ)
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param os è¾“å‡ºæµ
- * @param link_stack æ ˆ
- * @return è¾“å‡ºæµ
+ * @brief ÖØÔØ<<(´òÓ¡Õ»)
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param os Êä³öÁ÷
+ * @param link_stack Õ»
+ * @return Êä³öÁ÷
  */
 template<class T>
 ostream& operator<<(ostream& os, LinkStack<T>& stack) {
 
-  os<<"æ ˆä¸­å…ƒç´ ä¸ªæ•°: "<<stack.GetSize()<<endl;
+  os<<"Õ»ÖĞÔªËØ¸öÊı: "<<stack.GetSize()<<endl;
 
   LinkNode<T>* cur = stack.GetTopPtr();
 
@@ -267,12 +267,12 @@ template<class T>
 void LinkStack<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDashæˆå‘˜:"<<endl
-      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
-      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash³ÉÔ±:"<<endl
+      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
+      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
+      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
+      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 

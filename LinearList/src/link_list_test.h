@@ -1,11 +1,11 @@
 /*!
  * @file link_list_test.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å•é“¾è¡¨æµ‹è¯•ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief µ¥Á´±í²âÊÔÀà
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021
- * **CyberDashè®¡ç®—æœºè€ƒç ”**
+ * **CyberDash¼ÆËã»ú¿¼ÑĞ**
  */
 
 #ifndef CYBER_DASH_LINK_LIST_TEST_H
@@ -16,32 +16,32 @@
 
 
 /*!
- * @brief å•é“¾è¡¨æµ‹è¯•ç±»
+ * @brief µ¥Á´±í²âÊÔÀà
  */
 class LinkListTest {
 public:
-  /*! @brief æµ‹è¯•å¤åˆ¶æ„é€ å‡½æ•° */
+  /*! @brief ²âÊÔ¸´ÖÆ¹¹Ôìº¯Êı */
   static void TestCopyConstructor();
 
-  /*! @brief æµ‹è¯•æ’å…¥ */
+  /*! @brief ²âÊÔ²åÈë */
   static void TestInsert();
 
-  /*! @brief æµ‹è¯•é•¿åº¦ */
+  /*! @brief ²âÊÔ³¤¶È */
   static void TestLength();
 
-  /*! @brief æµ‹è¯•åˆ é™¤ */
+  /*! @brief ²âÊÔÉ¾³ı */
   static void TestRemove();
 
-  /*! @brief æµ‹è¯•æ¸…é™¤é“¾è¡¨ */
+  /*! @brief ²âÊÔÇå³ıÁ´±í */
   static void TestMakeEmpty();
 
-  /*! @brief æµ‹è¯•æŸ¥æ‰¾ */
+  /*! @brief ²âÊÔ²éÕÒ */
   static void TestSearch();
 
-  /*! @brief æµ‹è¯•å®šä½ */
+  /*! @brief ²âÊÔ¶¨Î» */
   static void TestLocate();
 
-  /*! @brief æµ‹è¯•è®¾ç½®å’Œè·å–æ•°æ® */
+  /*! @brief ²âÊÔÉèÖÃºÍ»ñÈ¡Êı¾İ */
   static void TestGetDataAndSetData();
 };
 
@@ -50,7 +50,7 @@ void LinkListTest::TestCopyConstructor() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                Test LinkList CopyConstructor              |" << endl;
-  cout << "|                       æµ‹è¯•é“¾è¡¨å¤åˆ¶æ„é€                        |" << endl << endl << endl;
+  cout << "|                       ²âÊÔÁ´±í¸´ÖÆ¹¹Ôì                       |" << endl << endl << endl;
 
   LinkList<string> link_list;
 
@@ -73,7 +73,7 @@ void LinkListTest::TestInsert() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                    Test LinkList Insert                   |" << endl;
-  cout << "|                         æµ‹è¯•é“¾è¡¨æ’å…¥                        |" << endl << endl << endl;
+  cout << "|                         ²âÊÔÁ´±í²åÈë                        |" << endl << endl << endl;
 
   LinkList<int>* link_list = new LinkList<int>();
 
@@ -91,7 +91,7 @@ void LinkListTest::TestLength() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                    Test LinkList Length                   |" << endl;
-  cout << "|                         æµ‹è¯•é“¾è¡¨é•¿åº¦                        |" << endl << endl << endl;
+  cout << "|                         ²âÊÔÁ´±í³¤¶È                        |" << endl << endl << endl;
 
   LinkList<int> *link_list = new LinkList<int>();
 
@@ -99,7 +99,7 @@ void LinkListTest::TestLength() {
   link_list->Insert(1, 2);
   link_list->Insert(2, 3);
 
-  cout << "é“¾è¡¨é•¿åº¦: " << link_list->Length() << endl;
+  cout << "Á´±í³¤¶È: " << link_list->Length() << endl;
 
   cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -109,7 +109,7 @@ void LinkListTest::TestRemove() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                    Test LinkList Remove                   |" << endl;
-  cout << "|                         æµ‹è¯•é“¾è¡¨åˆ é™¤                        |" << endl << endl << endl;
+  cout << "|                         ²âÊÔÁ´±íÉ¾³ı                        |" << endl << endl << endl;
 
   LinkList<string>* link_list = new LinkList<string>();
 
@@ -119,10 +119,10 @@ void LinkListTest::TestRemove() {
   link_list->Insert(3, "Shenzhen");
   link_list->Insert(4, "Caoxian");
 
-  cout << "åˆ é™¤å‰çš„é“¾è¡¨:" << endl;
+  cout << "É¾³ıÇ°µÄÁ´±í:" << endl;
   link_list->Output();
 
-  cout << "æµ‹è¯•åˆ é™¤åŠŸèƒ½:" << endl;
+  cout << "²âÊÔÉ¾³ı¹¦ÄÜ:" << endl;
 
   string delete_str;
   link_list->Remove(1, delete_str);
@@ -140,7 +140,7 @@ void LinkListTest::TestMakeEmpty() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                  Test LinkList MakeEmpty                  |" << endl;
-  cout << "|                         æµ‹è¯•æ¸…é™¤é“¾è¡¨                        |" << endl << endl << endl;
+  cout << "|                         ²âÊÔÇå³ıÁ´±í                        |" << endl << endl << endl;
 
   LinkList<double>* link_list = new LinkList<double>();
 
@@ -165,7 +165,7 @@ void LinkListTest::TestSearch() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                   Test LinkList Search                    |" << endl;
-  cout << "|                         æµ‹è¯•é“¾è¡¨æœç´¢                        |" << endl << endl << endl;
+  cout << "|                         ²âÊÔÁ´±íËÑË÷                        |" << endl << endl << endl;
 
   LinkList<string>* link_list = new LinkList<string>();
 
@@ -190,7 +190,7 @@ void LinkListTest::TestLocate() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                   Test LinkList LocateByDirection                    |" << endl;
-  cout << "|                         æµ‹è¯•é“¾è¡¨å®šä½                        |" << endl << endl << endl;
+  cout << "|                         ²âÊÔÁ´±í¶¨Î»                        |" << endl << endl << endl;
 
   LinkList<string>* link_list = new LinkList<string>();
 
@@ -214,7 +214,7 @@ void LinkListTest::TestGetDataAndSetData() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|              Test LinkList GetDataAndSetData              |" << endl;
-  cout << "|                     æµ‹è¯•é“¾è¡¨è®¾ç½®å’Œè·å–æ•°æ®                   |" << endl << endl << endl;
+  cout << "|                     ²âÊÔÁ´±íÉèÖÃºÍ»ñÈ¡Êı¾İ                   |" << endl << endl << endl;
 
   LinkList<string>* link_list = new LinkList<string>();
 

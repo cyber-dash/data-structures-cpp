@@ -1,11 +1,11 @@
 /*!
  * @file graph_algorithm.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å›¾ç®—æ³•.hæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Í¼Ëã·¨.hÎÄ¼ş
  * @version 0.2.1
  * @date 2021-02-04
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_GRAPH_ALGORITHM_H
@@ -24,64 +24,64 @@
 using namespace std;
 
 
-// å›¾æ·±åº¦ä¼˜å…ˆéå†
+// Í¼Éî¶ÈÓÅÏÈ±éÀú
 template<class T, class E>
 void DFS(Graph<T, E>& graph, const T& vertex);
 
 
-// å›¾æ·±åº¦ä¼˜å…ˆéå†(é€’å½’)
+// Í¼Éî¶ÈÓÅÏÈ±éÀú(µİ¹é)
 template<class T, class E>
 void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set);
 
 
-// å›¾å¹¿åº¦ä¼˜å…ˆéå†
+// Í¼¹ã¶ÈÓÅÏÈ±éÀú
 template<class T, class E>
 void BFS(Graph<T, E>& graph, const T& vertex);
 
 
-// æ±‚å›¾çš„è¿é€šåˆ†é‡
+// ÇóÍ¼µÄÁ¬Í¨·ÖÁ¿
 template<class T, class E>
 void Components(Graph<T, E>& graph);
 
 
 /*!
- * @brief æœ€å°ç”Ÿæˆæ ‘ç»“ç‚¹ç»“æ„ä½“
+ * @brief ×îĞ¡Éú³ÉÊ÷½áµã½á¹¹Ìå
  */
 template<class V, class W>
 struct MSTEdgeNode {
-  /*! @brief æ„é€ å‡½æ•°(ç©ºå‚æ•°) */
+  /*! @brief ¹¹Ôìº¯Êı(¿Õ²ÎÊı) */
   MSTEdgeNode() {}
-  /*! @brief æ„é€ å‡½æ•°() */
+  /*! @brief ¹¹Ôìº¯Êı() */
   MSTEdgeNode(W value): weight(value) {}
-  /*! @brief é‡è½½<= */
+  /*! @brief ÖØÔØ<= */
   bool operator<=(MSTEdgeNode<V, W>& node) { return weight <= node.weight; }
-  /*! @brief é‡è½½> */
+  /*! @brief ÖØÔØ> */
   bool operator>(MSTEdgeNode<V, W>& node) { return weight > node.weight; }
 
-  V tail; //!< å°¾ç»“ç‚¹
-  V head; //!< å¤´ç»“ç‚¹
-  W weight; //!< è¾¹æƒé‡
+  V tail; //!< Î²½áµã
+  V head; //!< Í·½áµã
+  W weight; //!< ±ßÈ¨ÖØ
 };
 
 
 /*!
- * @brief æœ€å°ç”Ÿæˆæ ‘æ¨¡æ¿ç±»
- * @tparam T ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
- * @tparam E è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ×îĞ¡Éú³ÉÊ÷Ä£°åÀà
+ * @tparam T ½áµãÀàĞÍÄ£°å²ÎÊı
+ * @tparam E ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
  */
 template<class T, class E>
 class MinSpanTree {
 protected:
-  MSTEdgeNode<T, E>* edge_node_array_; //!< æœ€å°ç”Ÿæˆæ ‘ç»“ç‚¹æ•°ç»„
-  int max_size_; //!< æœ€å¤§ç»“ç‚¹æ•°
-  int cur_size_; //!< å½“å‰ç”Ÿæˆæ ‘çš„èŠ‚ç‚¹æ•°é‡
+  MSTEdgeNode<T, E>* edge_node_array_; //!< ×îĞ¡Éú³ÉÊ÷½áµãÊı×é
+  int max_size_; //!< ×î´ó½áµãÊı
+  int cur_size_; //!< µ±Ç°Éú³ÉÊ÷µÄ½ÚµãÊıÁ¿
 public:
-  // æ„é€ å‡½æ•°
+  // ¹¹Ôìº¯Êı
   MinSpanTree(int size): max_size_(size), cur_size_(0) {
     edge_node_array_ = new MSTEdgeNode<T, E>[size];
   }
 
-  // å‘edge_node_array_æ’å…¥ç»“ç‚¹
+  // Ïòedge_node_array_²åÈë½áµã
   int Insert(MSTEdgeNode<T, E>& edge_node) {
     if (cur_size_ >= max_size_) {
       return -1;
@@ -93,7 +93,7 @@ public:
     return cur_size_ - 1;
   }
 
-  /*! @brief æ˜¾ç¤ºæœ€å°ç”Ÿæˆæ ‘ */
+  /*! @brief ÏÔÊ¾×îĞ¡Éú³ÉÊ÷ */
   void Show() {
     E sum = 0;
     for (int i = 0; i < cur_size_; i++) {
@@ -102,12 +102,12 @@ public:
            << edge_node_array_[i].weight << endl;
     }
 
-    cout<<"æœ€å°ç”Ÿæˆæ ‘è¾¹, æ€»æƒå€¼: "<<sum<<endl;
+    cout<<"×îĞ¡Éú³ÉÊ÷±ß, ×ÜÈ¨Öµ: "<<sum<<endl;
   }
 };
 
 
-// Kruskalæœ€å°ç”Ÿæˆæ ‘
+// Kruskal×îĞ¡Éú³ÉÊ÷
 template<class T, class E>
 void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree);
 
@@ -117,17 +117,17 @@ template<class T, class E>
 void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
 
 
-// Primç®—æ³•æœ´ç´ å®ç°
+// PrimËã·¨ÆÓËØÊµÏÖ
 template<class T, class E>
 void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
 
 
-// è¿ªæ°æ–¯ç‰¹æ‹‰(Dijkstra)æœ€çŸ­è·¯å¾„
+// µÏ½ÜË¹ÌØÀ­(Dijkstra)×î¶ÌÂ·¾¶
 template<class T, class E>
 void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
 
 
-// æ˜¾ç¤ºè¿ªæ°æ–¯ç‰¹æ‹‰(Dijkstra)æœ€çŸ­è·¯å¾„
+// ÏÔÊ¾µÏ½ÜË¹ÌØÀ­(Dijkstra)×î¶ÌÂ·¾¶
 template<class T, class E>
 void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
 

@@ -1,20 +1,20 @@
 /*!
  * @file insert_sort.cpp
- * @author CyberDash璁＄畻鏈鸿�冪爺, cyberdash@163.com(鎶栭煶id:cyberdash_yuan)
- * @brief 鎻掑叆鎺掑簭
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 插入排序
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash璁＄畻鏈鸿�冪爺
+ *  CyberDash计算机考研
  */
 
 #include "util.h"
 
 
 /*!
- * @brief 鎻掑叆鎺掑簭
- * @param arr 鏁扮粍
- * @param size 鏁扮粍闀垮害
+ * @brief 插入排序
+ * @param arr 数组
+ * @param size 数组长度
  */
 void InsertSort(int* arr, int size) {
 

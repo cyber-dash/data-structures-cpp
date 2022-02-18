@@ -1,11 +1,11 @@
 /*!
  * @file test.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief æ’åºæµ‹è¯•.cppæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ÅÅĞò²âÊÔ.cppÎÄ¼ş
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #include "test.h"
@@ -22,17 +22,17 @@ void TestBubbleSort() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Bubble Sort                     |"<<endl;
-  cout<<"|                        æµ‹è¯•å†’æ³¡æ’åº                         |"<<endl;
+  cout<<"|                        ²âÊÔÃ°ÅİÅÅĞò                         |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"å†’æ³¡æ’åºå‰:"<<endl;
+  cout<<"Ã°ÅİÅÅĞòÇ°:"<<endl;
   PrintArray(array, array_size);
 
   BubbleSort(array, array_size);
 
-  cout<<"å†’æ³¡æ’åºå:"<<endl;
+  cout<<"Ã°ÅİÅÅĞòºó:"<<endl;
   PrintArray(array, array_size);
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;
@@ -44,17 +44,17 @@ void TestSelectSort() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Select Sort                     |"<<endl;
-  cout<<"|                        æµ‹è¯•é€‰æ‹©æ’åº                         |"<<endl;
+  cout<<"|                        ²âÊÔÑ¡ÔñÅÅĞò                         |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"é€‰æ‹©æ’åºå‰:"<<endl;
+  cout<<"Ñ¡ÔñÅÅĞòÇ°:"<<endl;
   PrintArray(array, array_size);
 
   SelectSort(array, array_size);
 
-  cout<<"é€‰æ‹©æ’åºå:"<<endl;
+  cout<<"Ñ¡ÔñÅÅĞòºó:"<<endl;
   PrintArray(array, array_size);
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;
@@ -66,17 +66,17 @@ void TestInsertSort() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Insert Sort                     |"<<endl;
-  cout<<"|                         æµ‹è¯•æ’å…¥æ’åº                        |"<<endl;
+  cout<<"|                         ²âÊÔ²åÈëÅÅĞò                        |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"æ’å…¥æ’åºå‰:"<<endl;
+  cout<<"²åÈëÅÅĞòÇ°:"<<endl;
   PrintArray(array, array_size);
 
   InsertSort(array, array_size);
 
-  cout<<"æ’å…¥æ’åºå:"<<endl;
+  cout<<"²åÈëÅÅĞòºó:"<<endl;
   PrintArray(array, array_size);
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;
@@ -88,17 +88,17 @@ void TestMergeSort() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Merge Sort                      |"<<endl;
-  cout<<"|                         æµ‹è¯•å½’å¹¶æ’åº                        |"<<endl;
+  cout<<"|                         ²âÊÔ¹é²¢ÅÅĞò                        |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"å½’å¹¶æ’åºå‰:"<<endl;
+  cout<<"¹é²¢ÅÅĞòÇ°:"<<endl;
   PrintArray(array, array_size);
 
   MergeSort(array, array_size);
 
-  cout<<"å½’å¹¶æ’åºå:"<<endl;
+  cout<<"¹é²¢ÅÅĞòºó:"<<endl;
   PrintArray(array, array_size);
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;
@@ -110,17 +110,17 @@ void TestMergeSortNonRecursive() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|               Test Merge Sort(NonRecursive)               |"<<endl;
-  cout<<"|                     æµ‹è¯•å½’å¹¶æ’åº(éé€’å½’)                     |"<<endl;
+  cout<<"|                     ²âÊÔ¹é²¢ÅÅĞò(·Çµİ¹é)                     |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"å½’å¹¶æ’åº(éé€’å½’)å‰:"<<endl;
+  cout<<"¹é²¢ÅÅĞò(·Çµİ¹é)Ç°:"<<endl;
   PrintArray(array, array_size);
 
   MergeSortNonRecursive(array, array_size);
 
-  cout<<"å½’å¹¶æ’åº(éé€’å½’)å:"<<endl;
+  cout<<"¹é²¢ÅÅĞò(·Çµİ¹é)ºó:"<<endl;
   PrintArray(array, array_size);
 
   cout<<"-------------------------------------------------------------"<<endl;
@@ -131,17 +131,17 @@ void TestQuickSort() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Quick Sort                      |"<<endl;
-  cout<<"|                        æµ‹è¯•å¿«é€Ÿæ’åº                         |"<<endl;
+  cout<<"|                        ²âÊÔ¿ìËÙÅÅĞò                         |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"å¿«é€Ÿæ’åºå‰:"<<endl;
+  cout<<"¿ìËÙÅÅĞòÇ°:"<<endl;
   PrintArray(array, array_size);
 
   QuickSort(array, 0, array_size - 1);
 
-  cout<<"å¿«é€Ÿæ’åºå:"<<endl;
+  cout<<"¿ìËÙÅÅĞòºó:"<<endl;
   PrintArray(array, array_size);
 
   cout<<"-------------------------------------------------------------"<<endl;
@@ -153,17 +153,17 @@ void TestHeapSort() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                       Test Heap Sort                      |"<<endl;
-  cout<<"|                         æµ‹è¯•å †æ’åº                          |"<<endl;
+  cout<<"|                         ²âÊÔ¶ÑÅÅĞò                          |"<<endl;
 
   int array[] = { 1, 4, 2, 8, 5, 7 };
   int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"å †æ’åºå‰:"<<endl;
+  cout<<"¶ÑÅÅĞòÇ°:"<<endl;
   PrintArray(array, array_size);
 
   HeapSort(array, array_size);
 
-  cout<<"å †æ’åºå:"<<endl;
+  cout<<"¶ÑÅÅĞòºó:"<<endl;
   PrintArray(array, array_size);
 
   cout<<"------------------------- CyberDash -------------------------"<<endl;

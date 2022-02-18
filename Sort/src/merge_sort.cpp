@@ -1,23 +1,23 @@
 /*!
  * @file merge_sort.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å½’å¹¶æ’åº
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¹é²¢ÅÅĞò
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 
 /*!
- * @brief åˆå¹¶å‡½æ•°
- * @param array å¾…åˆå¹¶æ•°ç»„(åŒ…å«ä¸¤ä¸ªå­æ•°ç»„)
- * @param cache_array ç¼“å­˜æ•°ç»„
- * @param left å·¦å­æ•°ç»„å·¦ä¾§
- * @param mid å·¦å­æ•°ç»„å³ä¾§
- * @param right å³å­æ•°ç»„å³ä¾§
+ * @brief ºÏ²¢º¯Êı
+ * @param array ´ıºÏ²¢Êı×é(°üº¬Á½¸ö×ÓÊı×é)
+ * @param cache_array »º´æÊı×é
+ * @param left ×ó×ÓÊı×é×ó²à
+ * @param mid ×ó×ÓÊı×éÓÒ²à
+ * @param right ÓÒ×ÓÊı×éÓÒ²à
  * @note
- * arrayå†…çš„ä¸¤ä¸ªæœ‰åºæ•°ç»„(å·¦å­æ•°ç»„å’Œå³å­æ•°ç»„,ä»¥left/mid/rightåˆ’åˆ†), åˆå¹¶æˆä¸ºä¸€ä¸ªæœ‰åºæ•°ç»„
+ * arrayÄÚµÄÁ½¸öÓĞĞòÊı×é(×ó×ÓÊı×éºÍÓÒ×ÓÊı×é,ÒÔleft/mid/right»®·Ö), ºÏ²¢³ÉÎªÒ»¸öÓĞĞòÊı×é
  */
 void Merge(int* array, int* cache_array, int left, int mid, int right) {
 
@@ -58,14 +58,14 @@ void Merge(int* array, int* cache_array, int left, int mid, int right) {
 
 
 /**
- * @brief å­æ•°ç»„å½’å¹¶æ’åº(é€’å½’/äºŒåˆ†)
- * @param array å¾…æ’åºæ•°ç»„
- * @param cache_array ç¼“å­˜æ•°ç»„(ç”¨äºè¾…åŠ©å½’å¹¶æ“ä½œ)
- * @param left å¾…æ’åºæ•°ç»„å·¦è¾¹ç•Œ
- * @param right å¾…æ’åºæ•°ç»„å³è¾¹ç•Œ
+ * @brief ×ÓÊı×é¹é²¢ÅÅĞò(µİ¹é/¶ş·Ö)
+ * @param array ´ıÅÅĞòÊı×é
+ * @param cache_array »º´æÊı×é(ÓÃÓÚ¸¨Öú¹é²¢²Ù×÷)
+ * @param left ´ıÅÅĞòÊı×é×ó±ß½ç
+ * @param right ´ıÅÅĞòÊı×éÓÒ±ß½ç
  * @note
- * ä½¿ç”¨å¾…æ’åºæ•°ç»„çš„å·¦å³è¾¹ç•Œ, å’Œç¼“å­˜æ•°ç»„.
- * ä½¿ç”¨äºŒåˆ†åˆ†æ²»æ³•, åˆ†åˆ«å¯¹å·¦å³ä¸¤ä¸ªå­æ•°ç»„(sub array)æ‰§è¡Œé€’å½’, å°†é€’å½’åçš„ä¸¤ä¸ªå·²æ’åºæ•°ç»„æ‰§è¡Œmerge
+ * Ê¹ÓÃ´ıÅÅĞòÊı×éµÄ×óÓÒ±ß½ç, ºÍ»º´æÊı×é.
+ * Ê¹ÓÃ¶ş·Ö·ÖÖÎ·¨, ·Ö±ğ¶Ô×óÓÒÁ½¸ö×ÓÊı×é(sub array)Ö´ĞĞµİ¹é, ½«µİ¹éºóµÄÁ½¸öÒÑÅÅĞòÊı×éÖ´ĞĞmerge
  */
 void SubArrayMergeSortRecursive(int* array, int* cache_array, int left, int right) {
 
@@ -73,21 +73,21 @@ void SubArrayMergeSortRecursive(int* array, int* cache_array, int left, int righ
     return;
   }
 
-  int mid = (left + right) / 2; // ä½¿ç”¨midåˆ’åˆ†å·¦å³å­æ•°ç»„
+  int mid = (left + right) / 2; // Ê¹ÓÃmid»®·Ö×óÓÒ×ÓÊı×é
 
-  SubArrayMergeSortRecursive(array, cache_array, left, mid); // å·¦ä¾§å­æ•°ç»„é€’å½’
-  SubArrayMergeSortRecursive(array, cache_array, mid + 1, right); // å³ä¾§å­æ•°ç»„é€’å½’
+  SubArrayMergeSortRecursive(array, cache_array, left, mid); // ×ó²à×ÓÊı×éµİ¹é
+  SubArrayMergeSortRecursive(array, cache_array, mid + 1, right); // ÓÒ²à×ÓÊı×éµİ¹é
 
   Merge(array, cache_array, left, mid, right);
 }
 
 
 /**
- * @brief å½’å¹¶æ’åº(ä½¿ç”¨é€’å½’/äºŒåˆ†)
- * @param array æ•°ç»„
- * @param arr_size æ•°ç»„é•¿åº¦
+ * @brief ¹é²¢ÅÅĞò(Ê¹ÓÃµİ¹é/¶ş·Ö)
+ * @param array Êı×é
+ * @param arr_size Êı×é³¤¶È
  * @note
- * è°ƒç”¨sub_array_merge_sort_recursiveå®ç°å½’å¹¶æ’åº
+ * µ÷ÓÃsub_array_merge_sort_recursiveÊµÏÖ¹é²¢ÅÅĞò
  */
 void MergeSort(int* array, int size) {
 
@@ -116,9 +116,9 @@ int GetNextTurnArrayCount(int array_count) {
 
 
 /*!
- * @brief å½’å¹¶æ’åº(éé€’å½’/äºŒåˆ†)
- * @param array æ•°ç»„
- * @param size æ•°ç»„é•¿åº¦
+ * @brief ¹é²¢ÅÅĞò(·Çµİ¹é/¶ş·Ö)
+ * @param array Êı×é
+ * @param size Êı×é³¤¶È
  */
 void MergeSortNonRecursive(int* array, int size) {
 

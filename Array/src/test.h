@@ -1,12 +1,12 @@
 /*!
  * @file test.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief ç¨€ç–çŸ©é˜µæµ‹è¯•å¤´æ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Ï¡Êè¾ØÕó²âÊÔÍ·ÎÄ¼ş
  * @version 0.2.1
  * @date 2021-05-13
  *
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_SPARSE_MATRIX_TEST_H
@@ -16,19 +16,19 @@
 #include "sparse_matrix.h"
 
 
-/*! æµ‹è¯•ç¨€ç–çŸ©é˜µæ„é€ å‡½æ•° */
+/*! ²âÊÔÏ¡Êè¾ØÕó¹¹Ôìº¯Êı */
 void TestSparseMatrixConstructor();
 
-/*! æµ‹è¯•ç¨€ç–çŸ©é˜µå¤åˆ¶æ„é€ å‡½æ•° */
+/*! ²âÊÔÏ¡Êè¾ØÕó¸´ÖÆ¹¹Ôìº¯Êı */
 void TestSparseMatrixCopyConstructor();
 
-/*! æµ‹è¯•ç¨€ç–çŸ©é˜µå¤åˆ¶è¾“å…¥ */
+/*! ²âÊÔÏ¡Êè¾ØÕó¸´ÖÆÊäÈë */
 void TestSparseMatrixInput();
 
-/*! æµ‹è¯•ç¨€ç–çŸ©é˜µè½¬ç½® */
+/*! ²âÊÔÏ¡Êè¾ØÕó×ªÖÃ */
 void TestSparseMatrixTranspose();
 
-/*! æµ‹è¯•ç¨€ç–çŸ©é˜µå¿«é€Ÿè½¬ç½® */
+/*! ²âÊÔÏ¡Êè¾ØÕó¿ìËÙ×ªÖÃ */
 void TestSparseMatrixFastTranspose();
 
 
