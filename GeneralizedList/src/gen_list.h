@@ -16,6 +16,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <algorithm>
 #include "gen_list_node.h"
 
 
@@ -51,7 +52,10 @@ public:
   // 删除结点, todo: 未实现
   void Remove(GenListNode<T>* node_ptr);
 
+  // 打印广义表(终端)
   void Print();
+
+  string ToString();
 
   GenListNode<T>* ref_node_; //!< 广义表的引用结点
 
@@ -60,7 +64,8 @@ public:
   friend istream& operator>>(istream& in, GenList<T>& gen_list);
 
 private:
-  void SubGenPrintRecursive_(GenListNode<T>* node);
+  // 子表打印
+  void SubGenPrintRecursive_(GenListNode<T>* node, vector<T>& char_vec);
   // 子表长度(递归)
   int SubGenListLengthRecursive_(GenListNode<T>* node);
   // 子表深度(递归)
@@ -487,37 +492,53 @@ GenListNode<T>* GenList<T>::NewChildGenListNode_() {
 
 template<class T>
 void GenList<T>::Print() {
-  this->SubGenPrintRecursive_(this->ref_node_);
+  vector<T> char_vec;
+  this->SubGenPrintRecursive_(this->ref_node_, char_vec);
+
+  string gen_list_string(char_vec.begin(), char_vec.end());
+  cout<<gen_list_string;
 }
 
 
 template<class T>
-void GenList<T>::SubGenPrintRecursive_(GenListNode<T>* ref_type_node) {
+string GenList<T>::ToString() {
+  vector<T> char_vec;
+  this->SubGenPrintRecursive_(this->ref_node_, char_vec);
+
+  string gen_list_string(char_vec.begin(), char_vec.end());
+  return gen_list_string;
+}
+
+
+template<class T>
+void GenList<T>::SubGenPrintRecursive_(GenListNode<T>* ref_type_node, vector<T>& char_vec) {
 
   for (int i = 0; i < this->gen_list_node_vec_.size(); i++) {
     if (this->gen_list_node_vec_[i] == ref_type_node) {
-      cout<<this->gen_list_name_vec_[i]<<'(';
+      char_vec.push_back(this->gen_list_name_vec_[i]);
+      char_vec.push_back('(');
     }
   }
 
   GenListNode<T>* cur_node = ref_type_node->next;
   if (cur_node == NULL) {
-    cout<<"#)";
+    char_vec.push_back('#');
+    char_vec.push_back(')');
   }
 
   while (cur_node != NULL) {
     if (cur_node->type == GenListNode<T>::CHILD_LIST_TYPE) {
-      SubGenPrintRecursive_(cur_node->union_info.ref_node);
+      SubGenPrintRecursive_(cur_node->union_info.ref_node, char_vec);
     } else if (cur_node->type == GenListNode<T>::ELEM_TYPE) {
-      cout<<cur_node->union_info.value;
+      char_vec.push_back(cur_node->union_info.value);
     }
     if (cur_node->next != NULL) {
-      cout<<',';
+      char_vec.push_back(',');
     }
     cur_node = cur_node->next;
   }
 
-  cout<<')';
+  char_vec.push_back(')');
 }
 
 

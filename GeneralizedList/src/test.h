@@ -29,7 +29,4 @@ void TestDepth();
 void TestLength();
 
 
-void TestPrint();
-
-
 #endif // CYBER_DASH_GEN_LIST_TEST_H

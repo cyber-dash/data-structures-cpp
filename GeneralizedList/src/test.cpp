@@ -73,13 +73,13 @@ void TestDepth() {
   gen_list6.CreateListByString(gen_list_string6);
   gen_list7.CreateListByString(gen_list_string7);
 
-  cout << "\"" << gen_list_string1 << "\"" << " depth: " << gen_list1.Depth() << endl; // 0
-  cout << "\"" << gen_list_string2 << "\"" << " depth: " << gen_list2.Depth() << endl; // 1
-  cout << "\"" << gen_list_string3 << "\"" << " depth: " << gen_list3.Depth() << endl; // 2
-  cout << "\"" << gen_list_string4 << "\"" << " depth: " << gen_list4.Depth() << endl; // 2
-  cout << "\"" << gen_list_string5 << "\"" << " depth: " << gen_list5.Depth() << endl; // 2
-  cout << "\"" << gen_list_string6 << "\"" << " depth: " << gen_list6.Depth() << endl; // 2
-  cout << "\"" << gen_list_string7 << "\"" << " depth: " << gen_list7.Depth() << endl; // 3
+  cout << "\"" << gen_list1.ToString() << "\"" << " depth: " << gen_list1.Depth() << endl; // 0
+  cout << "\"" << gen_list2.ToString() << "\"" << " depth: " << gen_list2.Depth() << endl; // 1
+  cout << "\"" << gen_list3.ToString() << "\"" << " depth: " << gen_list3.Depth() << endl; // 2
+  cout << "\"" << gen_list4.ToString() << "\"" << " depth: " << gen_list4.Depth() << endl; // 2
+  cout << "\"" << gen_list5.ToString() << "\"" << " depth: " << gen_list5.Depth() << endl; // 2
+  cout << "\"" << gen_list6.ToString() << "\"" << " depth: " << gen_list6.Depth() << endl; // 2
+  cout << "\"" << gen_list7.ToString() << "\"" << " depth: " << gen_list7.Depth() << endl; // 3
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -99,7 +99,6 @@ void TestLength() {
   string gen_list_string5 = "A(a,B(#));";
   string gen_list_string6 = "E(B(#),D(B(#)));";
   string gen_list_string7 = "E(B(C(a)),D(a),G(#));";
-
 
   GenList<char> gen_list1;
   GenList<char> gen_list2;
@@ -128,16 +127,4 @@ void TestLength() {
   cout << "\"" << gen_list_string7 << "\"" << " length: " << gen_list7.Length() << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
-}
-
-
-void TestPrint() {
-  // string gen_list_string1 = "A(#);";
-  // string gen_list_string1 = "A(a,b,c);";
-  string gen_list_string1 = "E(B(C(a)),D(a),G(#));";
-
-  GenList<char> gen_list1;
-  gen_list1.CreateListByString(gen_list_string1);
-
-  gen_list1.Print();
 }
