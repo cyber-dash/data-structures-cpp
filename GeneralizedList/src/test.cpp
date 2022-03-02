@@ -48,9 +48,9 @@ void TestDepth() {
 
   string gen_list_string1 = "A(#);";
   string gen_list_string2 = "A(a);";
-  string gen_list_string3 = "A(a,b);";
-  string gen_list_string4 = "A(a,B(a));";
-  string gen_list_string5 = "A(a,B(#));";
+  string gen_list_string3 = "A(a,B(a));";
+  string gen_list_string4 = "A(a,B(#));";
+  string gen_list_string5 = "A(B(#),C(a,b,c));";
   string gen_list_string6 = "E(B(#),D(B(#)));";
   string gen_list_string7 = "E(B(C(a)),D(a),G(#));";
 
@@ -128,4 +128,16 @@ void TestLength() {
   cout << "\"" << gen_list_string7 << "\"" << " length: " << gen_list7.Length() << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
+
+
+void TestPrint() {
+  // string gen_list_string1 = "A(#);";
+  // string gen_list_string1 = "A(a,b,c);";
+  string gen_list_string1 = "E(B(C(a)),D(a),G(#));";
+
+  GenList<char> gen_list1;
+  gen_list1.CreateListByString(gen_list_string1);
+
+  gen_list1.Print();
 }

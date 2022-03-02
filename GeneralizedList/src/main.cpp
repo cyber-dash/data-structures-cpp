@@ -17,9 +17,13 @@ using namespace std;
 
 int main() {
 
+  /*
   TestDepth();
 
   TestLength();
+   */
+
+  TestPrint();
 
   return 0;
 }
