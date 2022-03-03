@@ -4,7 +4,6 @@
  * @brief 广义表结点模板类
  * @version 0.2.1
  * @date 2021-07-14
- *
  * @copyright Copyright (c) 2021
  *  CyberDash计算机考研
  */

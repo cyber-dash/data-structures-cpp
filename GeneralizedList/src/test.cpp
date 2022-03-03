@@ -73,13 +73,13 @@ void TestDepth() {
   gen_list6.CreateListByString(gen_list_string6);
   gen_list7.CreateListByString(gen_list_string7);
 
-  cout << "\"" << gen_list1.ToString() << "\"" << " depth: " << gen_list1.Depth() << endl; // 0
-  cout << "\"" << gen_list2.ToString() << "\"" << " depth: " << gen_list2.Depth() << endl; // 1
-  cout << "\"" << gen_list3.ToString() << "\"" << " depth: " << gen_list3.Depth() << endl; // 2
-  cout << "\"" << gen_list4.ToString() << "\"" << " depth: " << gen_list4.Depth() << endl; // 2
-  cout << "\"" << gen_list5.ToString() << "\"" << " depth: " << gen_list5.Depth() << endl; // 2
-  cout << "\"" << gen_list6.ToString() << "\"" << " depth: " << gen_list6.Depth() << endl; // 2
-  cout << "\"" << gen_list7.ToString() << "\"" << " depth: " << gen_list7.Depth() << endl; // 3
+  cout << "\"" << gen_list1.ToString() << "\"" << " 深度: " << gen_list1.Depth() << endl; // 0
+  cout << "\"" << gen_list2.ToString() << "\"" << " 深度: " << gen_list2.Depth() << endl; // 1
+  cout << "\"" << gen_list3.ToString() << "\"" << " 深度: " << gen_list3.Depth() << endl; // 2
+  cout << "\"" << gen_list4.ToString() << "\"" << " 深度: " << gen_list4.Depth() << endl; // 2
+  cout << "\"" << gen_list5.ToString() << "\"" << " 深度: " << gen_list5.Depth() << endl; // 2
+  cout << "\"" << gen_list6.ToString() << "\"" << " 深度: " << gen_list6.Depth() << endl; // 2
+  cout << "\"" << gen_list7.ToString() << "\"" << " 深度: " << gen_list7.Depth() << endl; // 3
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -118,13 +118,13 @@ void TestLength() {
   gen_list6.CreateListByString(gen_list_string6);
   gen_list7.CreateListByString(gen_list_string7);
 
-  cout << "\"" << gen_list_string1 << "\"" << " length: " << gen_list1.Length() << endl;
-  cout << "\"" << gen_list_string2 << "\"" << " length: " << gen_list2.Length() << endl;
-  cout << "\"" << gen_list_string3 << "\"" << " length: " << gen_list3.Length() << endl;
-  cout << "\"" << gen_list_string4 << "\"" << " length: " << gen_list4.Length() << endl;
-  cout << "\"" << gen_list_string5 << "\"" << " length: " << gen_list5.Length() << endl;
-  cout << "\"" << gen_list_string6 << "\"" << " length: " << gen_list6.Length() << endl;
-  cout << "\"" << gen_list_string7 << "\"" << " length: " << gen_list7.Length() << endl;
+  cout << "\"" << gen_list_string1 << "\"" << " 长度: " << gen_list1.Length() << endl;
+  cout << "\"" << gen_list_string2 << "\"" << " 长度: " << gen_list2.Length() << endl;
+  cout << "\"" << gen_list_string3 << "\"" << " 长度: " << gen_list3.Length() << endl;
+  cout << "\"" << gen_list_string4 << "\"" << " 长度: " << gen_list4.Length() << endl;
+  cout << "\"" << gen_list_string5 << "\"" << " 长度: " << gen_list5.Length() << endl;
+  cout << "\"" << gen_list_string6 << "\"" << " 长度: " << gen_list6.Length() << endl;
+  cout << "\"" << gen_list_string7 << "\"" << " 长度: " << gen_list7.Length() << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

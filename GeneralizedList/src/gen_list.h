@@ -52,9 +52,6 @@ public:
   // 删除结点, todo: 未实现
   void Remove(GenListNode<T>* node_ptr);
 
-  // 打印广义表(终端)
-  void Print();
-
   string ToString();
 
   GenListNode<T>* ref_node_; //!< 广义表的引用结点
@@ -65,9 +62,9 @@ public:
 
 private:
   // 子表打印
-  void SubGenPrintRecursive_(GenListNode<T>* node, vector<T>& char_vec);
+  void SubGenToStringRecursive_(GenListNode<T>* node, vector<T>& char_vec);
   // 子表长度(递归)
-  int SubGenListLengthRecursive_(GenListNode<T>* node);
+  int SubGenListLengthRecursive_(GenListNode<T>* un_ref_type_node);
   // 子表深度(递归)
   int SubGenListDepthRecursive_(GenListNode<T>* ref_type_node);
 
@@ -82,14 +79,14 @@ private:
   void PassRightBracketAfterSharpChar(queue<T>& char_queue);
 
   // 新建元素结点
-  GenListNode<T>* NewElemNode_(T chr);
+  GenListNode<T>* NewElemTypeNode_(T chr);
   // 新建子表节点
   GenListNode<T>* NewChildGenListNode_();
 
   // 查找已经被引用的结点
   GenListNode<T>* FindReferredNodePtr_(T chr);
   // 复制子树, todo: 未测试
-  GenListNode<T>* Copy_(GenListNode<T>*& node);
+  GenListNode<T>* Copy_(GenListNode<T>*& ref_type_node);
 
   vector<T> gen_list_name_vec_; //!< 各表节点的vector
   vector<GenListNode<T>*> gen_list_node_vec_; //!< 各表节点指针的vector
@@ -154,29 +151,29 @@ void GenList<T>::CopyFrom(GenList<T>& src_gen_list) {
 
 
 template<class T>
-GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& node) {
+GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& ref_type_node) {
 
   GenListNode<T> cur_node = NULL;
 
-  if (node != NULL) {
+  if (ref_type_node != NULL) {
     cur_node = new GenListNode<T>();
-    cur_node.type = node->type;
+    cur_node.type = ref_type_node->type;
 
-    switch (node->type) {
+    switch (ref_type_node->type) {
       case GenListNode<T>::REF_TYPE:
-          cur_node->union_info.ref_count = node->union_info.ref_count;
+          cur_node->union_info.ref_count = ref_type_node->union_info.ref_count;
         break;
       case GenListNode<T>::ELEM_TYPE:
-          cur_node->union_info.value = node->union_info.value;
+          cur_node->union_info.value = ref_type_node->union_info.value;
         break;
       case GenListNode<T>::CHILD_LIST_TYPE:
-          cur_node.union_info.ref_node = Copy_(node->union_info.ref_node);
+          cur_node.union_info.ref_node = Copy_(ref_type_node->union_info.ref_node);
         break;
       default:
         break;
     }
 
-      cur_node.next = Copy_(node->next);
+      cur_node.next = Copy_(ref_type_node->next);
   }
 
   return cur_node;
@@ -186,16 +183,16 @@ GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& node) {
 /*!
  * @brief 获取子表长度(递归)
  * @tparam T 参数模板类型
- * @param node 子表引用(起始)结点指针
+ * @param un_ref_type_node 非引用类型(type为1或2)结点指针
  * @return 长度
  */
 template<class T>
-int GenList<T>::SubGenListLengthRecursive_(GenListNode<T>* node) {
-  if (node == NULL) {
+int GenList<T>::SubGenListLengthRecursive_(GenListNode<T>* un_ref_type_node) {
+  if (un_ref_type_node == NULL) {
     return 0;
   }
 
-  int sub_list_length = SubGenListLengthRecursive_(node->next) + 1;
+  int sub_list_length = SubGenListLengthRecursive_(un_ref_type_node->next) + 1;
 
   return sub_list_length;
 }
@@ -228,7 +225,7 @@ int GenList<T>::Depth() {
 /*!
  * @brief 获取子表深度(递归)
  * @tparam T 类型模板参数
- * @param ref_type_node 子表的引用结点指针
+ * @param ref_type_node 子表的引用类型(type为0)结点指针
  * @return 深度
  */
 template<class T>
@@ -362,7 +359,7 @@ void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode
     }
   } else if (isalpha(chr) && islower(chr)) {
     if (!in_referred_list) {  // 没有在进行遍历子表
-      node = NewElemNode_(chr);
+      node = NewElemTypeNode_(chr);
       CreateGenListByQueueRecursive(char_queue, node, in_referred_list);
     }
   } else if (chr == ',') {
@@ -390,7 +387,7 @@ void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode
  * @note
  * 先将字符串放入队列中
  * 调用CreateGenListByQueueRecursive
- * 调整ref_node_
+ * 调整ref_node_指向的结点
  */
 template<class T>
 void GenList<T>::CreateListByString(string gen_list_string) {
@@ -465,7 +462,7 @@ GenListNode<T>* GenList<T>::FindReferredNodePtr_(T chr) {
  * @return 结点地址
  */
 template<class T>
-GenListNode<T>* GenList<T>::NewElemNode_(T chr) {
+GenListNode<T>* GenList<T>::NewElemTypeNode_(T chr) {
 
   GenListNode<T>* node = new GenListNode<T>();
   node->type = GenListNode<T>::ELEM_TYPE;
@@ -491,27 +488,23 @@ GenListNode<T>* GenList<T>::NewChildGenListNode_() {
 
 
 template<class T>
-void GenList<T>::Print() {
-  vector<T> char_vec;
-  this->SubGenPrintRecursive_(this->ref_node_, char_vec);
-
-  string gen_list_string(char_vec.begin(), char_vec.end());
-  cout<<gen_list_string;
-}
-
-
-template<class T>
 string GenList<T>::ToString() {
   vector<T> char_vec;
-  this->SubGenPrintRecursive_(this->ref_node_, char_vec);
+  this->SubGenToStringRecursive_(this->ref_node_, char_vec);
 
   string gen_list_string(char_vec.begin(), char_vec.end());
   return gen_list_string;
 }
 
 
+/*!
+ * @brief 子表的字符化(递归)
+ * @tparam T
+ * @param ref_type_node
+ * @param char_vec
+ */
 template<class T>
-void GenList<T>::SubGenPrintRecursive_(GenListNode<T>* ref_type_node, vector<T>& char_vec) {
+void GenList<T>::SubGenToStringRecursive_(GenListNode<T>* ref_type_node, vector<T>& char_vec) {
 
   for (int i = 0; i < this->gen_list_node_vec_.size(); i++) {
     if (this->gen_list_node_vec_[i] == ref_type_node) {
@@ -528,7 +521,7 @@ void GenList<T>::SubGenPrintRecursive_(GenListNode<T>* ref_type_node, vector<T>&
 
   while (cur_node != NULL) {
     if (cur_node->type == GenListNode<T>::CHILD_LIST_TYPE) {
-      SubGenPrintRecursive_(cur_node->union_info.ref_node, char_vec);
+      SubGenToStringRecursive_(cur_node->union_info.ref_node, char_vec);
     } else if (cur_node->type == GenListNode<T>::ELEM_TYPE) {
       char_vec.push_back(cur_node->union_info.value);
     }
