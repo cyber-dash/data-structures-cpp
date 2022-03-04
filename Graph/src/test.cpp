@@ -1,12 +1,12 @@
 /*!
  * @file test.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief å›¾æµ‹è¯•.cppæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Í¼²âÊÔ.cppÎÄ¼ş
  * @version 0.2.1
  * @date 2021-10-9
  *
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #include "test.h"
@@ -17,24 +17,24 @@
 using namespace std;
 
 
-// æµ‹è¯•çŸ©é˜µå›¾çš„çŸ©é˜µ
+// ²âÊÔ¾ØÕóÍ¼µÄ¾ØÕó
 void TestMatrixGraphMatrix() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test PrintMatrix                     |"<<endl;
-  cout<<"|                       æµ‹è¯•çŸ©é˜µå›¾çš„çŸ©é˜µ                      |"<<endl;
+  cout<<"|                       ²âÊÔ¾ØÕóÍ¼µÄ¾ØÕó                      |"<<endl;
 
   MatrixGraph<string, double> matrix_graph(10);
-  matrix_graph.InsertVertex("åœ°çƒ");
-  matrix_graph.InsertVertex("ç«æ˜Ÿ");
-  matrix_graph.InsertVertex("æœ¨æ˜Ÿ");
-  matrix_graph.InsertVertex("æ°´æ˜Ÿ");
+  matrix_graph.InsertVertex("µØÇò");
+  matrix_graph.InsertVertex("»ğĞÇ");
+  matrix_graph.InsertVertex("Ä¾ĞÇ");
+  matrix_graph.InsertVertex("Ë®ĞÇ");
 
-  matrix_graph.InsertEdge("åœ°çƒ", "ç«æ˜Ÿ", 0.8);
-  matrix_graph.InsertEdge("ç«æ˜Ÿ", "æœ¨æ˜Ÿ", 3.9);
-  matrix_graph.InsertEdge("æœ¨æ˜Ÿ", "æ°´æ˜Ÿ", 7.3);
-  matrix_graph.InsertEdge("åœ°çƒ", "æœ¨æ˜Ÿ", 11.3);
-  matrix_graph.InsertEdge("ç«æ˜Ÿ", "æ°´æ˜Ÿ", 0.3);
+  matrix_graph.InsertEdge("µØÇò", "»ğĞÇ", 0.8);
+  matrix_graph.InsertEdge("»ğĞÇ", "Ä¾ĞÇ", 3.9);
+  matrix_graph.InsertEdge("Ä¾ĞÇ", "Ë®ĞÇ", 7.3);
+  matrix_graph.InsertEdge("µØÇò", "Ä¾ĞÇ", 11.3);
+  matrix_graph.InsertEdge("»ğĞÇ", "Ë®ĞÇ", 0.3);
 
   matrix_graph.PrintMatrix();
 
@@ -42,26 +42,26 @@ void TestMatrixGraphMatrix() {
 }
 
 
-// æµ‹è¯•ä½¿ç”¨ç»“ç‚¹ç´¢å¼•è·å–ç»“ç‚¹
+// ²âÊÔÊ¹ÓÃ½áµãË÷Òı»ñÈ¡½áµã
 void TestGetVertexByIndex() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test GetVertexByIndex                   |"<<endl;
-  cout<<"|                   æµ‹è¯•ä½¿ç”¨ç»“ç‚¹ç´¢å¼•è·å–ç»“ç‚¹                    |"<<endl;
+  cout<<"|                   ²âÊÔÊ¹ÓÃ½áµãË÷Òı»ñÈ¡½áµã                    |"<<endl;
 
-  cout<<"**é‚»æ¥è¡¨å›¾**"<<endl;
+  cout<<"**ÁÚ½Ó±íÍ¼**"<<endl;
   AdjacencyListGraph<string, double> adjacency_list_graph;
 
-  adjacency_list_graph.InsertVertex("åŒ—äº¬");
-  adjacency_list_graph.InsertVertex("ä¸Šæµ·");
-  adjacency_list_graph.InsertVertex("å¹¿å·");
-  adjacency_list_graph.InsertVertex("æ·±åœ³");
+  adjacency_list_graph.InsertVertex("±±¾©");
+  adjacency_list_graph.InsertVertex("ÉÏº£");
+  adjacency_list_graph.InsertVertex("¹ãÖİ");
+  adjacency_list_graph.InsertVertex("ÉîÛÚ");
 
-  adjacency_list_graph.InsertEdge("åŒ—äº¬", "ä¸Šæµ·", 0.8);
-  adjacency_list_graph.InsertEdge("ä¸Šæµ·", "å¹¿å·", 3.9);
-  adjacency_list_graph.InsertEdge("å¹¿å·", "æ·±åœ³", 7.3);
-  adjacency_list_graph.InsertEdge("åŒ—äº¬", "å¹¿å·", 11.3);
-  adjacency_list_graph.InsertEdge("ä¸Šæµ·", "æ·±åœ³", 0.3);
+  adjacency_list_graph.InsertEdge("±±¾©", "ÉÏº£", 0.8);
+  adjacency_list_graph.InsertEdge("ÉÏº£", "¹ãÖİ", 3.9);
+  adjacency_list_graph.InsertEdge("¹ãÖİ", "ÉîÛÚ", 7.3);
+  adjacency_list_graph.InsertEdge("±±¾©", "¹ãÖİ", 11.3);
+  adjacency_list_graph.InsertEdge("ÉÏº£", "ÉîÛÚ", 0.3);
 
   string BJ;
   string SH;
@@ -73,44 +73,44 @@ void TestGetVertexByIndex() {
   adjacency_list_graph.GetVertexByIndex(GZ, 2);
   adjacency_list_graph.GetVertexByIndex(SZ, 3);
 
-  cout<<"ç»“ç‚¹0: "<<BJ<<endl;
-  cout<<"ç»“ç‚¹1: "<<SH<<endl;
-  cout<<"ç»“ç‚¹2: "<<GZ<<endl;
-  cout<<"ç»“ç‚¹3: "<<SZ<<endl;
+  cout<<"½áµã0: "<<BJ<<endl;
+  cout<<"½áµã1: "<<SH<<endl;
+  cout<<"½áµã2: "<<GZ<<endl;
+  cout<<"½áµã3: "<<SZ<<endl;
 
-  cout<<endl<<"**çŸ©é˜µå›¾**"<<endl;
+  cout<<endl<<"**¾ØÕóÍ¼**"<<endl;
   MatrixGraph<string, double> matrix_graph(10);
-  matrix_graph.InsertVertex("åœ°çƒ");
-  matrix_graph.InsertVertex("ç«æ˜Ÿ");
-  matrix_graph.InsertVertex("æœ¨æ˜Ÿ");
-  matrix_graph.InsertVertex("æ°´æ˜Ÿ");
+  matrix_graph.InsertVertex("µØÇò");
+  matrix_graph.InsertVertex("»ğĞÇ");
+  matrix_graph.InsertVertex("Ä¾ĞÇ");
+  matrix_graph.InsertVertex("Ë®ĞÇ");
 
-  matrix_graph.InsertEdge("åœ°çƒ", "ç«æ˜Ÿ", 0.8);
-  matrix_graph.InsertEdge("ç«æ˜Ÿ", "æœ¨æ˜Ÿ", 3.9);
-  matrix_graph.InsertEdge("æœ¨æ˜Ÿ", "æ°´æ˜Ÿ", 7.3);
-  matrix_graph.InsertEdge("åœ°çƒ", "æœ¨æ˜Ÿ", 11.3);
-  matrix_graph.InsertEdge("ç«æ˜Ÿ", "æ°´æ˜Ÿ", 0.3);
+  matrix_graph.InsertEdge("µØÇò", "»ğĞÇ", 0.8);
+  matrix_graph.InsertEdge("»ğĞÇ", "Ä¾ĞÇ", 3.9);
+  matrix_graph.InsertEdge("Ä¾ĞÇ", "Ë®ĞÇ", 7.3);
+  matrix_graph.InsertEdge("µØÇò", "Ä¾ĞÇ", 11.3);
+  matrix_graph.InsertEdge("»ğĞÇ", "Ë®ĞÇ", 0.3);
 
   matrix_graph.GetVertexByIndex(BJ, 0);
   matrix_graph.GetVertexByIndex(SH, 1);
   matrix_graph.GetVertexByIndex(GZ, 2);
   matrix_graph.GetVertexByIndex(SZ, 3);
 
-  cout<<"ç»“ç‚¹0: "<<BJ<<endl;
-  cout<<"ç»“ç‚¹1: "<<SH<<endl;
-  cout<<"ç»“ç‚¹2: "<<GZ<<endl;
-  cout<<"ç»“ç‚¹3: "<<SZ<<endl;
+  cout<<"½áµã0: "<<BJ<<endl;
+  cout<<"½áµã1: "<<SH<<endl;
+  cout<<"½áµã2: "<<GZ<<endl;
+  cout<<"½áµã3: "<<SZ<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
-// æµ‹è¯•DFS
+// ²âÊÔDFS
 void TestDFS() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                          Test DFS                         |"<<endl;
-  cout<<"|                       æµ‹è¯•æ·±åº¦ä¼˜å…ˆéå†                      |"<<endl;
+  cout<<"|                       ²âÊÔÉî¶ÈÓÅÏÈ±éÀú                      |"<<endl;
 
   int v0 = 0;
   int v1 = 1;
@@ -150,22 +150,22 @@ void TestDFS() {
   matrix_graph.InsertEdge(v0, v4, 100);
   matrix_graph.InsertEdge(v2, v4, 10);
 
-  cout<<"**é‚»æ¥è¡¨å›¾**"<<endl;
+  cout<<"**ÁÚ½Ó±íÍ¼**"<<endl;
   DFS(adjacency_list_graph, v0);
 
-  cout<<endl<<"**çŸ©é˜µå›¾**"<<endl;
+  cout<<endl<<"**¾ØÕóÍ¼**"<<endl;
   DFS(matrix_graph, v0);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
-// æµ‹è¯•BFS
+// ²âÊÔBFS
 void TestBFS() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                          Test BFS                         |"<<endl;
-  cout<<"|                       æµ‹è¯•å¹¿åº¦ä¼˜å…ˆéå†                      |"<<endl;
+  cout<<"|                       ²âÊÔ¹ã¶ÈÓÅÏÈ±éÀú                      |"<<endl;
 
   int v0 = 0;
   int v1 = 1;
@@ -204,10 +204,10 @@ void TestBFS() {
   matrix_graph.InsertEdge(v0, v4, 100);
   matrix_graph.InsertEdge(v2, v4, 10);
 
-  cout<<"**é‚»æ¥è¡¨å›¾**"<<endl;
+  cout<<"**ÁÚ½Ó±íÍ¼**"<<endl;
   BFS(adjacency_list_graph, v0);
 
-  cout<<endl<<"**çŸ©é˜µå›¾**"<<endl;
+  cout<<endl<<"**¾ØÕóÍ¼**"<<endl;
   BFS(matrix_graph, v0);
 
   cout<<"-------------------------------------------------------------"<<endl;
@@ -219,12 +219,12 @@ void TestComponents() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Components                      |"<<endl;
-  cout<<"|                        æµ‹è¯•è¿é€šåˆ†é‡                         |"<<endl;
-  cout<<"|  èŠ‚ç‚¹:                                                     |"<<endl;
+  cout<<"|                        ²âÊÔÁ¬Í¨·ÖÁ¿                         |"<<endl;
+  cout<<"|  ½Úµã:                                                     |"<<endl;
   cout<<"|    0, 1, 2, 3                                             |"<<endl;
-  cout<<"|  è¾¹:                                                      |"<<endl;
-  cout<<"|    0-1æƒå€¼: 0.8                                            |"<<endl<<endl;
-  cout<<"|    2-3æƒå€¼: 7.3                                            |"<<endl<<endl;
+  cout<<"|  ±ß:                                                      |"<<endl;
+  cout<<"|    0-1È¨Öµ: 0.8                                            |"<<endl<<endl;
+  cout<<"|    2-3È¨Öµ: 7.3                                            |"<<endl<<endl;
 
   AdjacencyListGraph<int, double> adjacency_list_graph;
 
@@ -246,10 +246,10 @@ void TestComponents() {
   matrix_graph.InsertEdge(0, 1, 0.8);
   matrix_graph.InsertEdge(2, 3, 7.3);
 
-  cout<<"**é‚»æ¥è¡¨å›¾æµ‹è¯•**"<<endl;
+  cout<<"**ÁÚ½Ó±íÍ¼²âÊÔ**"<<endl;
   Components(adjacency_list_graph);
 
-  cout<<endl<<"**çŸ©é˜µå›¾æµ‹è¯•**"<<endl;
+  cout<<endl<<"**¾ØÕóÍ¼²âÊÔ**"<<endl;
   Components(matrix_graph);
 
   cout<<"-------------------------------------------------------------"<<endl;
@@ -260,20 +260,20 @@ void TestKruskal() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                        Test Kruskal                       |"<<endl;
-  cout<<"|                       æµ‹è¯•Kruskalç®—æ³•                      |"<<endl;
-  cout<<"|  èŠ‚ç‚¹:                                                     |"<<endl;
-  cout<<"|    \"åŒ—äº¬\", \"ä¸Šæµ·\", \"å¹¿å·\", \"æ·±åœ³\"                           |"<<endl;
-  cout<<"|  è¾¹:                                                      |"<<endl;
-  cout<<"|    \"åŒ—äº¬\"-\"ä¸Šæµ·\"æƒå€¼: 0.8                                   |"<<endl<<endl;
-  cout<<"|    \"ä¸Šæµ·\"-\"å¹¿å·\"æƒå€¼: 3.9                                   |"<<endl<<endl;
-  cout<<"|    \"å¹¿å·\"-\"æ·±åœ³\"æƒå€¼: 7.3                                   |"<<endl<<endl;
-  cout<<"|    \"åŒ—äº¬\"-\"å¹¿å·\"æƒå€¼: 11.3                                  |"<<endl<<endl;
-  cout<<"|    \"ä¸Šæµ·\"-\"æ·±åœ³\"æƒå€¼: 0.3                                   |"<<endl<<endl;
+  cout<<"|                       ²âÊÔKruskalËã·¨                      |"<<endl;
+  cout<<"|  ½Úµã:                                                     |"<<endl;
+  cout<<"|    \"±±¾©\", \"ÉÏº£\", \"¹ãÖİ\", \"ÉîÛÚ\"                           |"<<endl;
+  cout<<"|  ±ß:                                                      |"<<endl;
+  cout<<"|    \"±±¾©\"-\"ÉÏº£\"È¨Öµ: 0.8                                   |"<<endl<<endl;
+  cout<<"|    \"ÉÏº£\"-\"¹ãÖİ\"È¨Öµ: 3.9                                   |"<<endl<<endl;
+  cout<<"|    \"¹ãÖİ\"-\"ÉîÛÚ\"È¨Öµ: 7.3                                   |"<<endl<<endl;
+  cout<<"|    \"±±¾©\"-\"¹ãÖİ\"È¨Öµ: 11.3                                  |"<<endl<<endl;
+  cout<<"|    \"ÉÏº£\"-\"ÉîÛÚ\"È¨Öµ: 0.3                                   |"<<endl<<endl;
 
-  string BJ = "åŒ—äº¬";
-  string SH = "ä¸Šæµ·";
-  string GZ = "å¹¿å·";
-  string SZ = "æ·±åœ³";
+  string BJ = "±±¾©";
+  string SH = "ÉÏº£";
+  string GZ = "¹ãÖİ";
+  string SZ = "ÉîÛÚ";
 
   MinSpanTree<string, double> min_span_tree_adj(100);
   MinSpanTree<string, double> min_span_tree_matrix(100);
@@ -303,11 +303,11 @@ void TestKruskal() {
   matrix_graph.InsertEdge(BJ, GZ, 11.3);
   matrix_graph.InsertEdge(SH, SZ, 0.3);
 
-  cout<<"**é‚»æ¥è¡¨å›¾æµ‹è¯•**"<<endl;
+  cout<<"**ÁÚ½Ó±íÍ¼²âÊÔ**"<<endl;
   Kruskal(adjacency_list_graph, min_span_tree_adj);
   min_span_tree_adj.Show();
 
-  cout<<endl<<"**çŸ©é˜µå›¾æµ‹è¯•**"<<endl;
+  cout<<endl<<"**¾ØÕóÍ¼²âÊÔ**"<<endl;
   Kruskal(matrix_graph, min_span_tree_matrix);
 
   min_span_tree_matrix.Show();
@@ -319,20 +319,20 @@ void TestPrim() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                         Test Prim                         |"<<endl;
-  cout<<"|                        æµ‹è¯•Primç®—æ³•                        |"<<endl;
-  cout<<"|  èŠ‚ç‚¹:                                                     |"<<endl;
-  cout<<"|    \"åŒ—äº¬\", \"ä¸Šæµ·\", \"å¹¿å·\", \"æ·±åœ³\"                           |"<<endl;
-  cout<<"|  è¾¹:                                                      |"<<endl;
-  cout<<"|    \"åŒ—äº¬\"-\"ä¸Šæµ·\"æƒå€¼: 0.8                                   |"<<endl<<endl;
-  cout<<"|    \"ä¸Šæµ·\"-\"å¹¿å·\"æƒå€¼: 3.9                                   |"<<endl<<endl;
-  cout<<"|    \"å¹¿å·\"-\"æ·±åœ³\"æƒå€¼: 7.3                                   |"<<endl<<endl;
-  cout<<"|    \"åŒ—äº¬\"-\"å¹¿å·\"æƒå€¼: 11.3                                  |"<<endl<<endl;
-  cout<<"|    \"ä¸Šæµ·\"-\"æ·±åœ³\"æƒå€¼: 0.3                                   |"<<endl<<endl;
+  cout<<"|                        ²âÊÔPrimËã·¨                        |"<<endl;
+  cout<<"|  ½Úµã:                                                     |"<<endl;
+  cout<<"|    \"±±¾©\", \"ÉÏº£\", \"¹ãÖİ\", \"ÉîÛÚ\"                           |"<<endl;
+  cout<<"|  ±ß:                                                      |"<<endl;
+  cout<<"|    \"±±¾©\"-\"ÉÏº£\"È¨Öµ: 0.8                                   |"<<endl<<endl;
+  cout<<"|    \"ÉÏº£\"-\"¹ãÖİ\"È¨Öµ: 3.9                                   |"<<endl<<endl;
+  cout<<"|    \"¹ãÖİ\"-\"ÉîÛÚ\"È¨Öµ: 7.3                                   |"<<endl<<endl;
+  cout<<"|    \"±±¾©\"-\"¹ãÖİ\"È¨Öµ: 11.3                                  |"<<endl<<endl;
+  cout<<"|    \"ÉÏº£\"-\"ÉîÛÚ\"È¨Öµ: 0.3                                   |"<<endl<<endl;
 
-  string BJ = "åŒ—äº¬";
-  string SH = "ä¸Šæµ·";
-  string GZ = "å¹¿å·";
-  string SZ = "æ·±åœ³";
+  string BJ = "±±¾©";
+  string SH = "ÉÏº£";
+  string GZ = "¹ãÖİ";
+  string SZ = "ÉîÛÚ";
 
   AdjacencyListGraph<string, double> adjacency_list_graph;
 
@@ -360,15 +360,15 @@ void TestPrim() {
   matrix_graph.InsertEdge(BJ, GZ, 11.3);
   matrix_graph.InsertEdge(SH, SZ, 0.3);
 
-  cout<<endl<<"**é‚»æ¥è¡¨å›¾æµ‹è¯•**"<<endl;
+  cout<<endl<<"**ÁÚ½Ó±íÍ¼²âÊÔ**"<<endl;
   MinSpanTree<string, double> min_span_tree_adj(100);
-  // Prim(adjacency_list_graph, BJ, min_span_tree_adj); // æ®·ä¹¦åŸç‰ˆå®ç°
-  Prim(adjacency_list_graph, BJ, min_span_tree_adj); // æœ´ç´ ç‰ˆPrim
+  // Prim(adjacency_list_graph, BJ, min_span_tree_adj); // ÒóÊéÔ­°æÊµÏÖ
+  Prim(adjacency_list_graph, BJ, min_span_tree_adj); // ÆÓËØ°æPrim
   min_span_tree_adj.Show();
 
-  cout<<endl<<"**çŸ©é˜µå›¾æµ‹è¯•**"<<endl;
+  cout<<endl<<"**¾ØÕóÍ¼²âÊÔ**"<<endl;
   MinSpanTree<string, double> min_span_tree_matrix(100);
-  Prim(matrix_graph, BJ, min_span_tree_matrix); // æœ´ç´ ç‰ˆPrim
+  Prim(matrix_graph, BJ, min_span_tree_matrix); // ÆÓËØ°æPrim
   min_span_tree_matrix.Show();
 
   cout<<"-------------------------------------------------------------"<<endl;
@@ -379,13 +379,13 @@ void TestDijkstraShortestPath() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test DijkstraShortestPath                 |"<<endl;
-  cout<<"|                     æµ‹è¯•Dijkstraæœ€çŸ­è·¯å¾„                    |"<<endl;
+  cout<<"|                     ²âÊÔDijkstra×î¶ÌÂ·¾¶                    |"<<endl;
 
-  string v0 = "åŒ—äº¬";
-  string v1 = "ä¸Šæµ·";
-  string v2 = "å¹¿å·";
-  string v3 = "æ·±åœ³";
-  string v4 = "æ­å·";
+  string v0 = "±±¾©";
+  string v1 = "ÉÏº£";
+  string v2 = "¹ãÖİ";
+  string v3 = "ÉîÛÚ";
+  string v4 = "º¼Öİ";
 
   AdjacencyListGraph<string, double> adjacency_list_graph;
 
@@ -419,14 +419,14 @@ void TestDijkstraShortestPath() {
   matrix_graph.InsertEdge(v0, v4, 100.003);
   matrix_graph.InsertEdge(v2, v4, 9.34);
 
-  cout<<endl<<"**é‚»æ¥è¡¨å›¾Dijkstraæµ‹è¯•**"<<endl;
+  cout<<endl<<"**ÁÚ½Ó±íÍ¼Dijkstra²âÊÔ**"<<endl;
   double min_dist_arr_adj[5];
   int from_path_arr_adj[5];
 
   DijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
   PrintDijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
 
-  cout<<endl<<"**çŸ©é˜µå›¾æµ‹è¯•**"<<endl;
+  cout<<endl<<"**¾ØÕóÍ¼²âÊÔ**"<<endl;
   double min_dist_arr_matrix[5];
   int from_path_arr_matrix[5];
 
@@ -437,7 +437,7 @@ void TestDijkstraShortestPath() {
 }
 
 
-// å…³äºCyberDash, :)
+// ¹ØÓÚCyberDash, :)
 void TestCyberDashShow() {
   MatrixGraph<int, int> cyber_dash_graph;
   cyber_dash_graph.CyberDashShow();

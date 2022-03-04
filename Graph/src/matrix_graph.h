@@ -1,11 +1,11 @@
 /*!
  * @file matrix_graph.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief çŸ©é˜µå›¾æ¨¡æ¿ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¾ØÕóÍ¼Ä£°åÀà
  * @version 0.2.1
  * @date 2021-07-14
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_MATRIX_GRAPH_H
@@ -20,89 +20,89 @@ using namespace std;
 
 
 /*!
- * @brief çŸ©é˜µå›¾æ¨¡æ¿ç±»
- * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
- * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ¾ØÕóÍ¼Ä£°åÀà
+ * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
+ * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
  */
 template<class V, class W>
 class MatrixGraph: public Graph<V, W> {
 
 public:
-  // æ„é€ å‡½æ•°
+  // ¹¹Ôìº¯Êı
   MatrixGraph(int size = DEFAULT_VERTICES);
 
-  // ææ„å‡½æ•°
+  // Îö¹¹º¯Êı
   ~MatrixGraph();
 
   /*!
-   * @brief è·å–èŠ‚ç‚¹(ç”±ç»“ç‚¹ç´¢å¼•)
-   * @param vertex ç»“ç‚¹(ç”¨äºä¿å­˜ç»“æœ)
-   * @param vertex_index ç»“ç‚¹ç´¢å¼•
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡½Úµã(ÓÉ½áµãË÷Òı)
+   * @param vertex ½áµã(ÓÃÓÚ±£´æ½á¹û)
+   * @param vertex_index ½áµãË÷Òı
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   bool GetVertexByIndex(V& vertex, int vertex_index);
 
   /*!
-   * @brief è·å–è¾¹æƒå€¼
-   * @param weight è¾¹æƒå€¼(ç”¨äºä¿å­˜ç»“æœ)
-   * @param vertex1 è¾¹çš„èŠ‚ç‚¹1
-   * @param vertex2 è¾¹çš„èŠ‚ç‚¹2
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡±ßÈ¨Öµ
+   * @param weight ±ßÈ¨Öµ(ÓÃÓÚ±£´æ½á¹û)
+   * @param vertex1 ±ßµÄ½Úµã1
+   * @param vertex2 ±ßµÄ½Úµã2
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   bool GetWeight(W& weight, V vertex1, V vertex2);
 
   /*!
-   * @brief æ’å…¥ç»“ç‚¹
-   * @param vertex èŠ‚ç‚¹
-   * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+   * @brief ²åÈë½áµã
+   * @param vertex ½Úµã
+   * @return ÊÇ·ñ²åÈë³É¹¦
    */
   bool InsertVertex(const V& vertex);
 
   /*!
-   * @brief åˆ é™¤ç»“ç‚¹
-   * @param vertex èŠ‚ç‚¹
-   * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
+   * @brief É¾³ı½áµã
+   * @param vertex ½Úµã
+   * @return ÊÇ·ñÉ¾³ı³É¹¦
    */
   bool RemoveVertex(V vertex);
 
   /*!
-   * @brief æ’å…¥è¾¹
-   * @param vertex1 è¾¹èŠ‚ç‚¹1
-   * @param vertex2 è¾¹èŠ‚ç‚¹2
-   * @param weight è¾¹æƒå€¼
-   * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+   * @brief ²åÈë±ß
+   * @param vertex1 ±ß½Úµã1
+   * @param vertex2 ±ß½Úµã2
+   * @param weight ±ßÈ¨Öµ
+   * @return ÊÇ·ñ²åÈë³É¹¦
    */
   bool InsertEdge(V vertex1, V vertex2, W weight);
 
   /*!
-   * @brief åˆ é™¤è¾¹
-   * @param vertex1 è¾¹ç»“ç‚¹1
-   * @param vertex2 è¾¹ç»“ç‚¹2
-   * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
+   * @brief É¾³ı±ß
+   * @param vertex1 ±ß½áµã1
+   * @param vertex2 ±ß½áµã2
+   * @return ÊÇ·ñÉ¾³ı³É¹¦
    */
   bool RemoveEdge(V vertex1, V vertex2);
 
   /*!
-   * è·å–ç¬¬ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
-   * @param first_neighbor ç¬¬ä¸€ä¸ªç›¸é‚»ç»“ç‚¹(ç”¨äºä¿å­˜èŠ‚ç‚¹)
-   * @param vertex èŠ‚ç‚¹
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * »ñÈ¡µÚÒ»¸öÏàÁÚ½áµã
+   * @param first_neighbor µÚÒ»¸öÏàÁÚ½áµã(ÓÃÓÚ±£´æ½Úµã)
+   * @param vertex ½Úµã
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex);
 
   /*!
-   * @brief è·å–ä¸‹ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
-   * @param next_neighbor_vertex ä¸‹ä¸€ä¸ªç›¸é‚»ç»“ç‚¹(ç”¨äºä¿å­˜ç»“ç‚¹)
-   * @param vertex ç»“ç‚¹
-   * @param neighbor_vertex å½“å‰ç›¸é‚»ç»“ç‚¹
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡ÏÂÒ»¸öÏàÁÚ½áµã
+   * @param next_neighbor_vertex ÏÂÒ»¸öÏàÁÚ½áµã(ÓÃÓÚ±£´æ½áµã)
+   * @param vertex ½áµã
+   * @param neighbor_vertex µ±Ç°ÏàÁÚ½áµã
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   bool GetNextNeighborVertex(V& next_neighbor_vertex, const V& vertex, const V& neighbor_vertex);
 
   /*!
-   * @brief è·å–ç»“ç‚¹ç´¢å¼•
-   * @param vertex ç»“ç‚¹
-   * @return ç»“ç‚¹ç´¢å¼•
+   * @brief »ñÈ¡½áµãË÷Òı
+   * @param vertex ½áµã
+   * @return ½áµãË÷Òı
    */
   int GetVertexIndex(V vertex);
 
@@ -115,16 +115,16 @@ public:
   void CyberDashShow();
 
 private:
-  V* vertices_list_; //!< ç»“ç‚¹åˆ—è¡¨
-  W** edge_matrix_; //!< è¾¹çŸ©é˜µ
+  V* vertices_list_; //!< ½áµãÁĞ±í
+  W** edge_matrix_; //!< ±ß¾ØÕó
 };
 
 
 /*!
- * @brief æ„é€ å‡½æ•°
- * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
- * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
- * @param size æœ€å¤§ç»“ç‚¹æ•°
+ * @brief ¹¹Ôìº¯Êı
+ * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
+ * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
+ * @param size ×î´ó½áµãÊı
  */
 template<class V, class W>
 MatrixGraph<V, W>::MatrixGraph(int size) {
@@ -133,7 +133,7 @@ MatrixGraph<V, W>::MatrixGraph(int size) {
   this->vertices_num_ = 0;
   this->edge_count_ = 0;
 
-  // æ‰€æœ‰èŠ‚ç‚¹
+  // ËùÓĞ½Úµã
   this->vertices_list_ = new V[this->max_vertices_num_];
   /* error handler */
 
@@ -141,7 +141,7 @@ MatrixGraph<V, W>::MatrixGraph(int size) {
   /* error handler */
 
   for (int i = 0; i < this->max_vertices_num_; i++) {
-    this->edge_matrix_[i] = new W[this->max_vertices_num_]; // èŠ‚ç‚¹iå¯¹åº”çš„æ‰€æœ‰è¾¹
+    this->edge_matrix_[i] = new W[this->max_vertices_num_]; // ½Úµãi¶ÔÓ¦µÄËùÓĞ±ß
     for (int j = 0; j < this->max_vertices_num_; j++) {
       this->edge_matrix_[i][j] = (i == j) ? 0 : MAX_WEIGHT;
     }
@@ -150,9 +150,9 @@ MatrixGraph<V, W>::MatrixGraph(int size) {
 
 
 /*!
- * @brief ææ„å‡½æ•°
- * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
- * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief Îö¹¹º¯Êı
+ * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
+ * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
  */
 template<class V, class W>
 MatrixGraph<V, W>::~MatrixGraph() {
@@ -162,13 +162,13 @@ MatrixGraph<V, W>::~MatrixGraph() {
 
 
 /*!
- * @brief ä½¿ç”¨ç»“ç‚¹ç´¢å¼•è·å–ç»“ç‚¹
- * @param vertex ç»“ç‚¹(ä¿å­˜ç»“æœçš„èŠ‚ç‚¹)
- * @param vertex_index ç»“ç‚¹ç´¢å¼•
- * @return æ˜¯å¦è·å–æˆåŠŸ
+ * @brief Ê¹ÓÃ½áµãË÷Òı»ñÈ¡½áµã
+ * @param vertex ½áµã(±£´æ½á¹ûµÄ½Úµã)
+ * @param vertex_index ½áµãË÷Òı
+ * @return ÊÇ·ñ»ñÈ¡³É¹¦
  */
-template<class T, class E>
-bool MatrixGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
+template<class V, class M>
+bool MatrixGraph<V, M>::GetVertexByIndex(V& vertex, int vertex_index) {
   if (vertex_index >= 0 && vertex_index <= this->vertices_num_) {
     vertex = this->vertices_list_[vertex_index];
     return true;
@@ -179,7 +179,7 @@ bool MatrixGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
 
 
 /*!
- * @brief è·å–è¾¹æƒå€¼
+ * @brief »ñÈ¡±ßÈ¨Öµ
  * @tparam V
  * @tparam W
  * @param weight
@@ -236,8 +236,8 @@ bool MatrixGraph<V, W>::GetFirstNeighborVertex(V& first_neighbor, const V& verte
 }
 
 
-template<class T, class E>
-bool MatrixGraph<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& vertex, const T& neighbor_vertex) {
+template<class V, class W>
+bool MatrixGraph<V, W>::GetNextNeighborVertex(V& next_neighbor_vertex, const V& vertex, const V& neighbor_vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
   int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);
@@ -247,8 +247,8 @@ bool MatrixGraph<T, E>::GetNextNeighborVertex(T& next_neighbor_vertex, const T& 
   }
 
   for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertices_num_; cur_index ++) {
-    E weight;
-    T cur_vertex;
+    W weight;
+    V cur_vertex;
 
     bool done = GetVertexByIndex(cur_vertex, cur_index);
     if (!done) {
@@ -308,7 +308,7 @@ bool MatrixGraph<T, E>::RemoveVertex(T vertex) {
     return false;
   }
 
-  // åªå‰©1ä¸ªé¡¶ç‚¹ todo: ä¹¦ä¸Šçš„é€»è¾‘, å®é™…ä¸Šå¯ä»¥åˆ é™¤
+  // Ö»Ê£1¸ö¶¥µã todo: ÊéÉÏµÄÂß¼­, Êµ¼ÊÉÏ¿ÉÒÔÉ¾³ı
   if (this->vertices_num_ == 1) {
     return false;
   }
@@ -450,12 +450,12 @@ template<class T, class E>
 void MatrixGraph<T, E>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDashæˆå‘˜:"<<endl
-      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
-      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash³ÉÔ±:"<<endl
+      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
+      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
+      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
+      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 
