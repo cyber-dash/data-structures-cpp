@@ -209,30 +209,30 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
 
 /*!
  * @brief Prim算法(优化)
- * @tparam T 结点类型模板参数
- * @tparam E 边权值类型模板参数
+ * @tparam Vertex 结点类型模板参数
+ * @tparam Weight 边权值类型模板参数
  * @param graph 图
  * @param vertex 起始节点(起始可以不用这个参数, 参考教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
  * 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
  */
-template<class T, class E>
-void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
+template<class Vertex, class Weight>
+void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
-  MSTEdgeNode<T, E> mst_edge_node;
+  MSTEdgeNode<Vertex, Weight> mst_edge_node;
 
   int count = 1; // 起始vertex进入mst节点集合, count=1
   int vertex_num = graph.NumberOfVertices();
   int edge_num = graph.NumberOfEdges();
 
-  MinHeap<MSTEdgeNode<T, E> > min_heap(edge_num);
+  MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);
 
-  set<T> mst_vertex_set; // 原书中的Vmst
+  set<Vertex> mst_vertex_set; // 原书中的Vmst
   mst_vertex_set.insert(vertex);
 
   do {
-    T neighbor_vertex;
+    Vertex neighbor_vertex;
     bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
 
     while (has_neighbor) {
@@ -246,7 +246,7 @@ void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree) {
         min_heap.Insert(mst_edge_node);
       }
 
-      T next_neighbor_vertex;
+      Vertex next_neighbor_vertex;
       has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
 
       if (has_neighbor) {
@@ -338,7 +338,7 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  * @brief 迪杰斯特拉(Dijkstra)最短路径
  * @tparam Vertex 图节点模板类型
  * @tparam Weight 图边权值模板类型
- * @param graph 图类型
+ * @param graph 图的引用
  * @param origin_vertex 起始节点
  * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
  * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点

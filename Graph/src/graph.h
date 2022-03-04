@@ -19,10 +19,10 @@ const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 矩阵图剔除这个逻辑
 
 /*!
  * @brief 图基类(模板类)
- * @tparam V 节点类型模板参数
- * @tparam W 边权值类型模板参数
+ * @tparam Vertex 节点类型模板参数
+ * @tparam Weight 边权值类型模板参数
  */
-template<class V, class W>
+template<class Vertex, class Weight>
 class Graph {
 public:
 
@@ -44,7 +44,7 @@ public:
    * @param vertex_index 结点索引
    * @return 是否获取成功
    */
-  virtual bool GetVertexByIndex(V& vertex, int vertex_index) = 0;
+  virtual bool GetVertexByIndex(Vertex& vertex, int vertex_index) = 0;
 
   /*!
    * @brief 获取边权值
@@ -53,7 +53,7 @@ public:
    * @param v2 边的另一个节点
    * @return 是否获取成功
    */
-  virtual bool GetWeight(W& weight, V v1, V v2) = 0;
+  virtual bool GetWeight(Weight& weight, Vertex v1, Vertex v2) = 0;
 
   /*!
    * @brief 获取结点的第一个相邻结点
@@ -61,7 +61,7 @@ public:
    * @param vertex 结点
    * @return 是否获取成功
    */
-  virtual bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex) = 0;
+  virtual bool GetFirstNeighborVertex(Vertex& first_neighbor, const Vertex& vertex) = 0;
 
   /*!
    * @brief 获取结点的下一个相邻结点
@@ -70,14 +70,14 @@ public:
    * @param neighbor_vertex 结点的一个相邻节点
    * @return 是否获取成功
    */
-  virtual bool GetNextNeighborVertex(V& next_neighbor, const V& vertex, const V& neighbor_vertex) = 0;
+  virtual bool GetNextNeighborVertex(Vertex& next_neighbor, const Vertex& vertex, const Vertex& neighbor_vertex) = 0;
 
   /*!
    * @brief 插入结点
    * @param vertex 结点
    * @return 是否插入成功
    */
-  virtual bool InsertVertex(const V& vertex) = 0;
+  virtual bool InsertVertex(const Vertex& vertex) = 0;
 
   /*!
    * @brief 插入边
@@ -86,14 +86,14 @@ public:
    * @param weight 边的权值
    * @return 是否插入成功
    */
-  virtual bool InsertEdge(V vertex1, V vertex2, W weight) = 0;
+  virtual bool InsertEdge(Vertex vertex1, Vertex vertex2, Weight weight) = 0;
 
   /*!
    * @brief 删除结点
    * @param v 节点
    * @return 是否删除成功
    */
-  virtual bool RemoveVertex(V v) = 0;
+  virtual bool RemoveVertex(Vertex v) = 0;
 
   /*!
    * @brief 删除边
@@ -101,14 +101,14 @@ public:
    * @param v2 边的另一个节点
    * @return 是否删除成功
    */
-  virtual bool RemoveEdge(V v1, V v2) = 0;
+  virtual bool RemoveEdge(Vertex v1, Vertex v2) = 0;
 
   /*!
    * @brief 获取结点的索引值
    * @param vertex 节点
    * @return 是否获取成功
    */
-  virtual int GetVertexIndex(V vertex) = 0;
+  virtual int GetVertexIndex(Vertex vertex) = 0;
 
 protected:
   int max_vertices_num_; //!< 图节点数量最大限制
