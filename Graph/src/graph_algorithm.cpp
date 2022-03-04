@@ -365,7 +365,7 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
     // 将边(origin_vertex --> vertex_i)的值, 保存到min_dist_arr[i], 如果不存在, 则min_dist_arr[i]为MAX_WEIGHT
     bool get_weight_done = graph.GetWeight(min_dist_arr[i], origin_vertex, vertex_i);
     if (!get_weight_done) {
-      min_dist_arr[i] = (Weight)MAX_WEIGHT;
+      min_dist_arr[i] = (Weight)MAX_WEIGHT; // 其实可以用其他的方式表示没有边:-)
     }
 
     // 如果边(origin_vertex --> vertex_i)存在, 则from_path_arr[i]的值, 为索引origin_vertex_idx; 否则为-1
@@ -383,7 +383,7 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
   // 将图中其他vertex_num - 1个节点, 按照贪心策略, 执行算法, 并加入到集合vertex_set
   for (int i = 0; i < vertex_num - 1; i++) {
     Weight cur_min_dist = (Weight)MAX_WEIGHT; // 以origin_vertex为起点, 某个节点为终点的最短路径(当前最短路径)
-    Vertex cur_min_dist_dest_vertex; // 当前最短路径的终点
+    Vertex cur_min_dist_dest_vertex;          // 当前最短路径的终点
 
     // 原点到各节点中的最短路径, 保存到cur_min_dist(当前最短路径), 并更新cur_min_dist_dest_vertex(当前最短路径终点)
     for (int j = 0; j < vertex_num; j++) {
@@ -393,7 +393,7 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
       graph.GetVertexByIndex(vertex_j, j);
       /* error handler */
 
-      // 如果idx_j_vertex已经在vertex_set中, continue
+      // 如果vertex_j已经在vertex_set中, continue
       if (vertex_set.find(vertex_j) != vertex_set.end()) {
         continue;
       }
@@ -405,17 +405,21 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
       }
     }
 
-    vertex_set.insert(cur_min_dist_dest_vertex); // 将cur_min_dist_dest_vertex插入到vertex_set
+    // 将cur_min_dist_dest_vertex插入到vertex_set
+    vertex_set.insert(cur_min_dist_dest_vertex);
 
+    // 拿到cur_min_dist_dest_vertex结点对应的结点索引
     int cur_min_dist_dest_vertex_idx = graph.GetVertexIndex(cur_min_dist_dest_vertex);
 
     // Dijkstra核心算法
     for (int j = 0; j < vertex_num; j++) {
+
+      // 拿到索引j对应的结点vertex_j
       Vertex vertex_j;
       graph.GetVertexByIndex(vertex_j, j);
       /* error handler */
 
-      // 如果idx_j_vertex已经在vertex_set中, continue
+      // 如果vertex_j已经在vertex_set中, continue
       if (vertex_set.find(vertex_j) != vertex_set.end()) {
         continue;
       }
@@ -423,17 +427,18 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
       // 边(cur_min_dist_dest_vertex --> vertex_j)的值, 赋给weight
       Weight weight;
       bool get_weight_done = graph.GetWeight(weight, cur_min_dist_dest_vertex, vertex_j);
-      if (!get_weight_done) {
-        continue; // 如果没有边
+      if (!get_weight_done) { // 如果没有边, continue
+        continue;
       }
 
-      // 如果
-      // 边(origin_vertex --> cur_min_dist_dest_vertex)的weight
-      //  +
-      // 边(cur_min_dist_dest_vertex --> dix_j_vertex)的weight(也就是变量weight)
-      //  <
-      // 边(origin_vertex --> dix_j_vertex)的weight
-      // 更新min_dist_arr[j]和from_path_arr[j]
+      // 如果:
+      //   边 (origin_vertex --> cur_min_dist_dest_vertex)               的weight
+      //    +
+      //   边                   (cur_min_dist_dest_vertex  --> vertex_j) 的weight
+      //    <
+      //   边 (origin_vertex                -->                vertex_j) 的weight
+      // 则:
+      //   更新min_dist_arr[j]和from_path_arr[j]
       if (min_dist_arr[cur_min_dist_dest_vertex_idx] + weight < min_dist_arr[j])
       {
         min_dist_arr[j] = min_dist_arr[cur_min_dist_dest_vertex_idx] + weight;
