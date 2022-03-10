@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file main.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑÐ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Í¼demoÑÝÊ¾
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å›¾demoæ¼”ç¤º
  * @version 0.2.1
  * @date 2021-07-14
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑÐ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include "graph_algorithm.cpp"

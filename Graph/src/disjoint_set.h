@@ -1,12 +1,12 @@
-/*!
+ï»¿/*!
  * @file disjoint_set.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ²¢²é¼¯.hÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å¹¶æŸ¥é›†.hæ–‡ä»¶
  * @version 0.2.1
  * @date 2021-02-21
  *
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_DISJOINT_SET_H
@@ -14,34 +14,34 @@
 
 
 /*!
- * @brief ²¢²é¼¯Àà
+ * @brief å¹¶æŸ¥é›†ç±»
  */
 class DisjointSet {
 
 public:
-  // ¹¹Ôìº¯Êı
+  // æ„é€ å‡½æ•°
   DisjointSet(int size);
 
-  /*! @brief Îö¹¹º¯Êı */
+  /*! @brief ææ„å‡½æ•° */
   ~DisjointSet() { delete[] parent_; }
 
-  // ºÏ²¢Á½¸ö¼¯ºÏ
+  // åˆå¹¶ä¸¤ä¸ªé›†åˆ
   void Union(int root1, int root2);
 
-  // ÖØÔØ=
+  // é‡è½½=
   DisjointSet& operator=(const DisjointSet& disjoint_set);
 
-  // ²éÕÒ
+  // æŸ¥æ‰¾
   int Find(int value);
 
-  // ºÏ²¢¼¯ºÏ(Weighted)
+  // åˆå¹¶é›†åˆ(Weighted)
   void WeightedUnion(int node1, int node2);
 
-  // ²éÕÒ(·Çµİ¹é)
+  // æŸ¥æ‰¾(éé€’å½’)
   int FindNonRecursive(int value);
 private:
-  int size_; //!< ´óĞ¡
-  int* parent_; //!< ¸¸½ÚµãÊı×é
+  int size_; //!< å¤§å°
+  int* parent_; //!< çˆ¶èŠ‚ç‚¹æ•°ç»„
 };
 
 

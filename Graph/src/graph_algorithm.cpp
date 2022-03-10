@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file graph_algorithm.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Í¼Ëã·¨.cppÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å›¾ç®—æ³•.cppæ–‡ä»¶
  * @version 0.2.1
  * @date 2021-02-04
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include "graph_algorithm.h"
@@ -13,11 +13,11 @@
 
 
 /*!
- * @brief Í¼Éî¶ÈÓÅÏÈ±éÀú
- * @tparam T ½áµãÀàĞÍÄ£°æ²ÎÊı
- * @tparam E ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼
- * @param vertex ±éÀúÆğÊ¼½áµã
+ * @brief å›¾æ·±åº¦ä¼˜å…ˆéå†
+ * @tparam T ç»“ç‚¹ç±»å‹æ¨¡ç‰ˆå‚æ•°
+ * @tparam E è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾
+ * @param vertex éå†èµ·å§‹ç»“ç‚¹
  */
 template<class T, class E>
 void DFS(Graph<T, E>& graph, const T& vertex) {
@@ -29,13 +29,13 @@ void DFS(Graph<T, E>& graph, const T& vertex) {
 
 
 /*!
- * @brief Í¼Éî¶ÈÓÅÏÈ±éÀú(µİ¹é)
- * @tparam T ½ÚµãÀàĞÍÄ£°å²ÎÊı
- * @tparam E ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼
- * @param vertex ±éÀúÆğÊ¼½áµã
- * @param visited_vertex_set ÒÑ·ÃÎÊ½Úµã¼¯ºÏ
- * @note ÀûÓÃº¯ÊıµÄµ÷ÓÃ¹ØÏµÀ´Ä£ÄâÕ»
+ * @brief å›¾æ·±åº¦ä¼˜å…ˆéå†(é€’å½’)
+ * @tparam T èŠ‚ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam E è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾
+ * @param vertex éå†èµ·å§‹ç»“ç‚¹
+ * @param visited_vertex_set å·²è®¿é—®èŠ‚ç‚¹é›†åˆ
+ * @note åˆ©ç”¨å‡½æ•°çš„è°ƒç”¨å…³ç³»æ¥æ¨¡æ‹Ÿæ ˆ
  */
 template<class T, class E>
 void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set) {
@@ -63,13 +63,13 @@ void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set) {
 
 
 /*!
- * @brief Í¼¹ã¶ÈÓÅÏÈ±éÀú
- * @tparam T ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam E ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼
- * @param vertex ±éÀúÆğÊ¼½áµã
+ * @brief å›¾å¹¿åº¦ä¼˜å…ˆéå†
+ * @tparam T ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam E è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾
+ * @param vertex éå†èµ·å§‹ç»“ç‚¹
  * @note
- * Ê¹ÓÃ¶ÓÁĞ½øĞĞ¹ã¶ÈÓÅÏÈ±éÀú
+ * ä½¿ç”¨é˜Ÿåˆ—è¿›è¡Œå¹¿åº¦ä¼˜å…ˆéå†
  */
 template<class T, class E>
 void BFS(Graph<T, E>& graph, const T& vertex) {
@@ -78,15 +78,15 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
   visited_vertex_set.insert(vertex);
 
   queue<T> vertex_queue;
-  vertex_queue.push(vertex); // ±éÀúÆğÊ¼½áµãÈë¶ÓÁĞ
+  vertex_queue.push(vertex); // éå†èµ·å§‹ç»“ç‚¹å…¥é˜Ÿåˆ—
 
   cout<<"Vertex "<<vertex<<endl;
 
   while (!vertex_queue.empty()) {
-    T front_vertex = vertex_queue.front(); // Ã¿´ÎÈ¡¶ÓÍ·
+    T front_vertex = vertex_queue.front(); // æ¯æ¬¡å–é˜Ÿå¤´
     vertex_queue.pop();
 
-    // ÒÑÈ¡³öµÄ¶ÓÍ·½áµãµÄÏàÁÚ½áµãÈë¶Ó
+    // å·²å–å‡ºçš„é˜Ÿå¤´ç»“ç‚¹çš„ç›¸é‚»ç»“ç‚¹å…¥é˜Ÿ
     T neighbor_vertex;
     bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, front_vertex);
 
@@ -108,37 +108,37 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
 
 
 /*!
- * @brief ÇóÍ¼µÄÁ¬Í¨·ÖÁ¿
- * @tparam T ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam E ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼
+ * @brief æ±‚å›¾çš„è¿é€šåˆ†é‡
+ * @tparam T ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam E è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾
  * @note
- * 1. Ê¹ÓÃvisited_vertex_set±£´æÒÑ¾­±éÀú¹ıµÄ½Úµã
- * 2. Ã¿±éÀúÒ»¸ö½Úµãvertex
- *   Èç¹ûÔÚvisited_vertex_setÖĞ, ÔòÒÑ¾­ÔÚÄ³Á¬Í¨·ÖÁ¿ÖĞ, ²»ÔÙ´¦Àí;
- *   Èç¹û²»ÔÚvisited_vertex_setÖĞ, Ê¹ÓÃDFS¶Ôvertex½øĞĞ±éÀú, Á¬Í¨·ÖÁ¿ÊıÁ¿+1
+ * 1. ä½¿ç”¨visited_vertex_setä¿å­˜å·²ç»éå†è¿‡çš„èŠ‚ç‚¹
+ * 2. æ¯éå†ä¸€ä¸ªèŠ‚ç‚¹vertex
+ *   å¦‚æœåœ¨visited_vertex_setä¸­, åˆ™å·²ç»åœ¨æŸè¿é€šåˆ†é‡ä¸­, ä¸å†å¤„ç†;
+ *   å¦‚æœä¸åœ¨visited_vertex_setä¸­, ä½¿ç”¨DFSå¯¹vertexè¿›è¡Œéå†, è¿é€šåˆ†é‡æ•°é‡+1
  */
 template<class T, class E>
 void Components(Graph<T, E>& graph) {
 
-  int vertices_num = graph.NumberOfVertices(); // Í¼ÄÚ½ÚµãµÄÊıÁ¿
-  set<T> visited_vertex_set; // Ê¹ÓÃset±£´æÒÑ¾­±éÀú¹ıµÄ½Úµã
+  int vertices_num = graph.NumberOfVertices(); // å›¾å†…èŠ‚ç‚¹çš„æ•°é‡
+  set<T> visited_vertex_set; // ä½¿ç”¨setä¿å­˜å·²ç»éå†è¿‡çš„èŠ‚ç‚¹
 
-  int component_index = 1; // ³õÊ¼Á¬Í¨·ÖÁ¿Îª1
+  int component_index = 1; // åˆå§‹è¿é€šåˆ†é‡ä¸º1
 
   for (int i = 0; i < vertices_num; i++) {
 
     T vertex;
-    bool done = graph.GetVertexByIndex(vertex, i); // »ñÈ¡Ë÷Òıi¶ÔÓ¦µÄ½Úµãvertex
+    bool done = graph.GetVertexByIndex(vertex, i); // è·å–ç´¢å¼•iå¯¹åº”çš„èŠ‚ç‚¹vertex
 
     if (done) {
-      // Èç¹ûvisited_vertex_setÖĞ, Ã»ÓĞ²éµ½vertex, ËµÃ÷vertexÔÚÒ»¸öĞÂµÄÁªÍ¨·ÖÁ¿ÖĞ
-      // ¶ÔvertexÖ´ĞĞDFS±éÀú(ÊéÖĞµÄËã·¨, Ê¹ÓÃBFSÒ²¿ÉÒÔ)
+      // å¦‚æœvisited_vertex_setä¸­, æ²¡æœ‰æŸ¥åˆ°vertex, è¯´æ˜vertexåœ¨ä¸€ä¸ªæ–°çš„è”é€šåˆ†é‡ä¸­
+      // å¯¹vertexæ‰§è¡ŒDFSéå†(ä¹¦ä¸­çš„ç®—æ³•, ä½¿ç”¨BFSä¹Ÿå¯ä»¥)
       if (visited_vertex_set.find(vertex) == visited_vertex_set.end()) {
-        cout<<"Á¬Í¨·ÖÁ¿"<<component_index<<":"<<endl;
+        cout<<"è¿é€šåˆ†é‡"<<component_index<<":"<<endl;
         DFSOnVertex(graph, vertex, visited_vertex_set);
 
-        component_index++; // Á¬Í¨·ÖÁ¿ÊıÁ¿+1
+        component_index++; // è¿é€šåˆ†é‡æ•°é‡+1
         cout<<endl;
       }
     }
@@ -147,11 +147,11 @@ void Components(Graph<T, E>& graph) {
 
 
 /*!
- * @brief KruskalËã·¨
- * @tparam T ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam E ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼
- * @param min_span_tree ×îĞ¡Éú³ÉÊ÷
+ * @brief Kruskalç®—æ³•
+ * @tparam T ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam E è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾
+ * @param min_span_tree æœ€å°ç”Ÿæˆæ ‘
  */
 template<class T, class E>
 void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
@@ -208,27 +208,27 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
 
 
 /*!
- * @brief PrimËã·¨(ÓÅ»¯)
- * @tparam Vertex ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam Weight ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼
- * @param vertex ÆğÊ¼½Úµã(ÆğÊ¼¿ÉÒÔ²»ÓÃÕâ¸ö²ÎÊı, ²Î¿¼½Ì¿ÆÊé, ´Ë´¦±£Áô)
- * @param min_span_tree ×îĞ¡Éú³ÉÊ÷
+ * @brief Primç®—æ³•(ä¼˜åŒ–)
+ * @tparam Vertex ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam Weight è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾
+ * @param vertex èµ·å§‹èŠ‚ç‚¹(èµ·å§‹å¯ä»¥ä¸ç”¨è¿™ä¸ªå‚æ•°, å‚è€ƒæ•™ç§‘ä¹¦, æ­¤å¤„ä¿ç•™)
+ * @param min_span_tree æœ€å°ç”Ÿæˆæ ‘
  * @note
- * ÒóÈËÀ¥°æ½Ì²ÄµÄÊµÏÖ, ´ËÎª¾­¹ıÓÅ»¯µÄ°æ±¾, ÓÅ»¯µãÔÚ¶ÑµÄ²Ù×÷
+ * æ®·äººæ˜†ç‰ˆæ•™æçš„å®ç°, æ­¤ä¸ºç»è¿‡ä¼˜åŒ–çš„ç‰ˆæœ¬, ä¼˜åŒ–ç‚¹åœ¨å †çš„æ“ä½œ
  */
 template<class Vertex, class Weight>
 void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
   MSTEdgeNode<Vertex, Weight> mst_edge_node;
 
-  int count = 1; // ÆğÊ¼vertex½øÈëmst½Úµã¼¯ºÏ, count=1
+  int count = 1; // èµ·å§‹vertexè¿›å…¥mstèŠ‚ç‚¹é›†åˆ, count=1
   int vertex_num = graph.NumberOfVertices();
   int edge_num = graph.NumberOfEdges();
 
   MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);
 
-  set<Vertex> mst_vertex_set; // Ô­ÊéÖĞµÄVmst
+  set<Vertex> mst_vertex_set; // åŸä¹¦ä¸­çš„Vmst
   mst_vertex_set.insert(vertex);
 
   do {
@@ -273,23 +273,23 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
 
 
 /*!
- * @brief PrimËã·¨ÊµÏÖ
- * @tparam Vertex ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam Weight ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼
- * @param vertex ÆğÊ¼½Úµã(ÆäÊµ¿ÉÒÔ²»ÓÃÕâ¸ö²ÎÊı, ²ÎÕÕ½Ì¿ÆÊé, ´Ë´¦±£Áô)
- * @param min_span_tree ×îĞ¡Éú³ÉÊ÷
+ * @brief Primç®—æ³•å®ç°
+ * @tparam Vertex ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam Weight è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾
+ * @param vertex èµ·å§‹èŠ‚ç‚¹(å…¶å®å¯ä»¥ä¸ç”¨è¿™ä¸ªå‚æ•°, å‚ç…§æ•™ç§‘ä¹¦, æ­¤å¤„ä¿ç•™)
+ * @param min_span_tree æœ€å°ç”Ÿæˆæ ‘
  */
 template<class Vertex, class Weight>
 void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
   MSTEdgeNode<Vertex, Weight> mst_edge_node;
 
-  int count = 1; // ÆğÊ¼vertex½øÈëmst½Úµã¼¯ºÏ, count=1
+  int count = 1; // èµ·å§‹vertexè¿›å…¥mstèŠ‚ç‚¹é›†åˆ, count=1
   int vertex_num = graph.NumberOfVertices();
   int edge_num = graph.NumberOfEdges();
 
-  set<Vertex> mst_vertex_set; // Ô­ÊéÖĞµÄVmst
+  set<Vertex> mst_vertex_set; // åŸä¹¦ä¸­çš„Vmst
   mst_vertex_set.insert(vertex);
 
   do {
@@ -335,14 +335,14 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
 
 
 /**
- * @brief µÏ½ÜË¹ÌØÀ­(Dijkstra)×î¶ÌÂ·¾¶
- * @tparam Vertex Í¼½ÚµãÄ£°åÀàĞÍ
- * @tparam Weight Í¼±ßÈ¨ÖµÄ£°åÀàĞÍ
- * @param graph Í¼µÄÒıÓÃ
- * @param origin_vertex ÆğÊ¼½Úµã
- * @param min_dist_arr ×î¶ÌÂ·¾¶Êı×é, dist[i]±íÊ¾: Â·¾¶ÆğÊ¼½Úµãµ½Ë÷Òıi½ÚµãµÄ×î¶ÌÂ·¾¶µÄÈ¨Öµ
- * @param from_path_arr Â·¾¶Êı×é, from_path_arr[i]±íÊ¾: ÒÔË÷Òıi½ÚµãÎªÖÕµãµÄ±ßµÄÆğÊ¼½Úµã
- * @note Ì°ĞÄËã·¨
+ * @brief è¿ªæ°æ–¯ç‰¹æ‹‰(Dijkstra)æœ€çŸ­è·¯å¾„
+ * @tparam Vertex å›¾èŠ‚ç‚¹æ¨¡æ¿ç±»å‹
+ * @tparam Weight å›¾è¾¹æƒå€¼æ¨¡æ¿ç±»å‹
+ * @param graph å›¾çš„å¼•ç”¨
+ * @param origin_vertex èµ·å§‹èŠ‚ç‚¹
+ * @param min_dist_arr æœ€çŸ­è·¯å¾„æ•°ç»„, dist[i]è¡¨ç¤º: è·¯å¾„èµ·å§‹èŠ‚ç‚¹åˆ°ç´¢å¼•ièŠ‚ç‚¹çš„æœ€çŸ­è·¯å¾„çš„æƒå€¼
+ * @param from_path_arr è·¯å¾„æ•°ç»„, from_path_arr[i]è¡¨ç¤º: ä»¥ç´¢å¼•ièŠ‚ç‚¹ä¸ºç»ˆç‚¹çš„è¾¹çš„èµ·å§‹èŠ‚ç‚¹
+ * @note è´ªå¿ƒç®—æ³•
  */
 template<class Vertex, class Weight>
 void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
@@ -352,23 +352,23 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
 {
   int vertex_num = graph.NumberOfVertices();
   set<Vertex> vertex_set;
-  int origin_vertex_idx = graph.GetVertexIndex(origin_vertex); // origin_vertex½ÚµãµÄË÷Òı
+  int origin_vertex_idx = graph.GetVertexIndex(origin_vertex); // origin_vertexèŠ‚ç‚¹çš„ç´¢å¼•
 
-  // ³õÊ¼»¯
+  // åˆå§‹åŒ–
   for (int i = 0; i < vertex_num; i++) {
 
-    // »ñÈ¡Ë÷Òıi¶ÔÓ¦µÄ½Úµãvertex_i
+    // è·å–ç´¢å¼•iå¯¹åº”çš„èŠ‚ç‚¹vertex_i
     Vertex vertex_i;
     bool get_vertex_done = graph.GetVertexByIndex(vertex_i, i);
     /* error handler */
 
-    // ½«±ß(origin_vertex --> vertex_i)µÄÖµ, ±£´æµ½min_dist_arr[i], Èç¹û²»´æÔÚ, Ôòmin_dist_arr[i]ÎªMAX_WEIGHT
+    // å°†è¾¹(origin_vertex --> vertex_i)çš„å€¼, ä¿å­˜åˆ°min_dist_arr[i], å¦‚æœä¸å­˜åœ¨, åˆ™min_dist_arr[i]ä¸ºMAX_WEIGHT
     bool get_weight_done = graph.GetWeight(min_dist_arr[i], origin_vertex, vertex_i);
     if (!get_weight_done) {
-      min_dist_arr[i] = (Weight)MAX_WEIGHT; // ÆäÊµ¿ÉÒÔÓÃÆäËûµÄ·½Ê½±íÊ¾Ã»ÓĞ±ß:-)
+      min_dist_arr[i] = (Weight)MAX_WEIGHT; // å…¶å®å¯ä»¥ç”¨å…¶ä»–çš„æ–¹å¼è¡¨ç¤ºæ²¡æœ‰è¾¹:-)
     }
 
-    // Èç¹û±ß(origin_vertex --> vertex_i)´æÔÚ, Ôòfrom_path_arr[i]µÄÖµ, ÎªË÷Òıorigin_vertex_idx; ·ñÔòÎª-1
+    // å¦‚æœè¾¹(origin_vertex --> vertex_i)å­˜åœ¨, åˆ™from_path_arr[i]çš„å€¼, ä¸ºç´¢å¼•origin_vertex_idx; å¦åˆ™ä¸º-1
     if (vertex_i != origin_vertex && get_weight_done && get_vertex_done) {
       from_path_arr[i] = origin_vertex_idx;
     } else {
@@ -376,24 +376,24 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
     }
   }
 
-  // ½Úµãorigin_vertex¼ÓÈëµ½¼¯ºÏvertex_set
+  // èŠ‚ç‚¹origin_vertexåŠ å…¥åˆ°é›†åˆvertex_set
   vertex_set.insert(origin_vertex);
   min_dist_arr[origin_vertex_idx] = 0;
 
-  // ½«Í¼ÖĞÆäËûvertex_num - 1¸ö½Úµã, °´ÕÕÌ°ĞÄ²ßÂÔ, Ö´ĞĞËã·¨, ²¢¼ÓÈëµ½¼¯ºÏvertex_set
+  // å°†å›¾ä¸­å…¶ä»–vertex_num - 1ä¸ªèŠ‚ç‚¹, æŒ‰ç…§è´ªå¿ƒç­–ç•¥, æ‰§è¡Œç®—æ³•, å¹¶åŠ å…¥åˆ°é›†åˆvertex_set
   for (int i = 0; i < vertex_num - 1; i++) {
-    Weight cur_min_dist = (Weight)MAX_WEIGHT; // ÒÔorigin_vertexÎªÆğµã, Ä³¸ö½ÚµãÎªÖÕµãµÄ×î¶ÌÂ·¾¶(µ±Ç°×î¶ÌÂ·¾¶)
-    Vertex cur_min_dist_dest_vertex;          // µ±Ç°×î¶ÌÂ·¾¶µÄÖÕµã
+    Weight cur_min_dist = (Weight)MAX_WEIGHT; // ä»¥origin_vertexä¸ºèµ·ç‚¹, æŸä¸ªèŠ‚ç‚¹ä¸ºç»ˆç‚¹çš„æœ€çŸ­è·¯å¾„(å½“å‰æœ€çŸ­è·¯å¾„)
+    Vertex cur_min_dist_dest_vertex;          // å½“å‰æœ€çŸ­è·¯å¾„çš„ç»ˆç‚¹
 
-    // Ô­µãµ½¸÷½ÚµãÖĞµÄ×î¶ÌÂ·¾¶, ±£´æµ½cur_min_dist(µ±Ç°×î¶ÌÂ·¾¶), ²¢¸üĞÂcur_min_dist_dest_vertex(µ±Ç°×î¶ÌÂ·¾¶ÖÕµã)
+    // åŸç‚¹åˆ°å„èŠ‚ç‚¹ä¸­çš„æœ€çŸ­è·¯å¾„, ä¿å­˜åˆ°cur_min_dist(å½“å‰æœ€çŸ­è·¯å¾„), å¹¶æ›´æ–°cur_min_dist_dest_vertex(å½“å‰æœ€çŸ­è·¯å¾„ç»ˆç‚¹)
     for (int j = 0; j < vertex_num; j++) {
 
-      // ÄÃµ½Ë÷Òıj¶ÔÓ¦µÄ½Úµãvertex_j
+      // æ‹¿åˆ°ç´¢å¼•jå¯¹åº”çš„èŠ‚ç‚¹vertex_j
       Vertex vertex_j;
       graph.GetVertexByIndex(vertex_j, j);
       /* error handler */
 
-      // Èç¹ûvertex_jÒÑ¾­ÔÚvertex_setÖĞ, continue
+      // å¦‚æœvertex_jå·²ç»åœ¨vertex_setä¸­, continue
       if (vertex_set.find(vertex_j) != vertex_set.end()) {
         continue;
       }
@@ -405,40 +405,40 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
       }
     }
 
-    // ½«cur_min_dist_dest_vertex²åÈëµ½vertex_set
+    // å°†cur_min_dist_dest_vertexæ’å…¥åˆ°vertex_set
     vertex_set.insert(cur_min_dist_dest_vertex);
 
-    // ÄÃµ½cur_min_dist_dest_vertex½áµã¶ÔÓ¦µÄ½áµãË÷Òı
+    // æ‹¿åˆ°cur_min_dist_dest_vertexç»“ç‚¹å¯¹åº”çš„ç»“ç‚¹ç´¢å¼•
     int cur_min_dist_dest_vertex_idx = graph.GetVertexIndex(cur_min_dist_dest_vertex);
 
-    // DijkstraºËĞÄËã·¨
+    // Dijkstraæ ¸å¿ƒç®—æ³•
     for (int j = 0; j < vertex_num; j++) {
 
-      // ÄÃµ½Ë÷Òıj¶ÔÓ¦µÄ½áµãvertex_j
+      // æ‹¿åˆ°ç´¢å¼•jå¯¹åº”çš„ç»“ç‚¹vertex_j
       Vertex vertex_j;
       graph.GetVertexByIndex(vertex_j, j);
       /* error handler */
 
-      // Èç¹ûvertex_jÒÑ¾­ÔÚvertex_setÖĞ, continue
+      // å¦‚æœvertex_jå·²ç»åœ¨vertex_setä¸­, continue
       if (vertex_set.find(vertex_j) != vertex_set.end()) {
         continue;
       }
 
-      // ±ß(cur_min_dist_dest_vertex --> vertex_j)µÄÖµ, ¸³¸øweight
+      // è¾¹(cur_min_dist_dest_vertex --> vertex_j)çš„å€¼, èµ‹ç»™weight
       Weight weight;
       bool get_weight_done = graph.GetWeight(weight, cur_min_dist_dest_vertex, vertex_j);
-      if (!get_weight_done) { // Èç¹ûÃ»ÓĞ±ß, continue
+      if (!get_weight_done) { // å¦‚æœæ²¡æœ‰è¾¹, continue
         continue;
       }
 
-      // Èç¹û:
-      //   ±ß (origin_vertex --> cur_min_dist_dest_vertex)               µÄweight
+      // å¦‚æœ:
+      //   è¾¹ (origin_vertex --> cur_min_dist_dest_vertex)               çš„weight
       //    +
-      //   ±ß                   (cur_min_dist_dest_vertex  --> vertex_j) µÄweight
+      //   è¾¹                   (cur_min_dist_dest_vertex  --> vertex_j) çš„weight
       //    <
-      //   ±ß (origin_vertex                -->                vertex_j) µÄweight
-      // Ôò:
-      //   ¸üĞÂmin_dist_arr[j]ºÍfrom_path_arr[j]
+      //   è¾¹ (origin_vertex                -->                vertex_j) çš„weight
+      // åˆ™:
+      //   æ›´æ–°min_dist_arr[j]å’Œfrom_path_arr[j]
       if (min_dist_arr[cur_min_dist_dest_vertex_idx] + weight < min_dist_arr[j])
       {
         min_dist_arr[j] = min_dist_arr[cur_min_dist_dest_vertex_idx] + weight;
@@ -450,32 +450,32 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
 
 
 /*!
- * @brief ÏÔÊ¾µÏ½ÜË¹ÌØÀ­(Dijkstra)×î¶ÌÂ·¾¶
- * @tparam T ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam E ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param graph Í¼ÀàĞÍ
- * @param origin_vertex Â·¾¶ÆğÊ¼½Úµã
- * @param min_dist_arr ×î¶ÌÂ·¾¶Êı×é, dist[i]±íÊ¾: Â·¾¶ÆğÊ¼½Úµãµ½Ë÷Òıi½ÚµãµÄ×î¶ÌÂ·¾¶µÄÈ¨Öµ
- * @param from_path_arr Â·¾¶Êı×é, from_path_arr[i]±íÊ¾: ÒÔË÷Òıi½ÚµãÎªÖÕµãµÄ±ßµÄÆğÊ¼½Úµã
+ * @brief æ˜¾ç¤ºè¿ªæ°æ–¯ç‰¹æ‹‰(Dijkstra)æœ€çŸ­è·¯å¾„
+ * @tparam T ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam E è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param graph å›¾ç±»å‹
+ * @param origin_vertex è·¯å¾„èµ·å§‹èŠ‚ç‚¹
+ * @param min_dist_arr æœ€çŸ­è·¯å¾„æ•°ç»„, dist[i]è¡¨ç¤º: è·¯å¾„èµ·å§‹èŠ‚ç‚¹åˆ°ç´¢å¼•ièŠ‚ç‚¹çš„æœ€çŸ­è·¯å¾„çš„æƒå€¼
+ * @param from_path_arr è·¯å¾„æ•°ç»„, from_path_arr[i]è¡¨ç¤º: ä»¥ç´¢å¼•ièŠ‚ç‚¹ä¸ºç»ˆç‚¹çš„è¾¹çš„èµ·å§‹èŠ‚ç‚¹
  */
 template<class T, class E>
 void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]) {
-  cout << "´Ó¶¥µã" << origin_vertex << "µ½ÆäËû¸÷¶¥µãµÄ×î¶ÌÂ·¾¶Îª: " << endl;
+  cout << "ä»é¡¶ç‚¹" << origin_vertex << "åˆ°å…¶ä»–å„é¡¶ç‚¹çš„æœ€çŸ­è·¯å¾„ä¸º: " << endl;
 
   int vertex_count = graph.NumberOfVertices();
   int origin_vertex_idx = graph.GetVertexIndex(origin_vertex);
 
-  // ÓÃÓÚ´æ·ÅÒÔÄ³¸ö½ÚµãÎªÖÕµãµÄ×î¶ÌÂ·¾¶¾­¹ıµÄ½Úµã
+  // ç”¨äºå­˜æ”¾ä»¥æŸä¸ªèŠ‚ç‚¹ä¸ºç»ˆç‚¹çš„æœ€çŸ­è·¯å¾„ç»è¿‡çš„èŠ‚ç‚¹
   int* cur_pre_path_arr = new int[vertex_count];
   /* error handler */
 
-  // ·Ö±ğÏÔÊ¾origin_vertexµ½¸÷¸ö½ÚµãµÄ×î¶ÌÂ·¾¶
+  // åˆ†åˆ«æ˜¾ç¤ºorigin_vertexåˆ°å„ä¸ªèŠ‚ç‚¹çš„æœ€çŸ­è·¯å¾„
   for (int i = 0; i < vertex_count; i++) {
     if (i == origin_vertex_idx) {
       continue;
     }
 
-    int pre_vertex_idx = i; // ÒÔË÷Òıi½ÚµãÎªÖÕµã
+    int pre_vertex_idx = i; // ä»¥ç´¢å¼•ièŠ‚ç‚¹ä¸ºç»ˆç‚¹
     int idx = 0;
 
     while (pre_vertex_idx != origin_vertex_idx) {
@@ -484,11 +484,11 @@ void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_a
       pre_vertex_idx = from_path_arr[pre_vertex_idx];
     }
 
-    // »ñÈ¡Ë÷ÒıiµÄ½Úµã
+    // è·å–ç´¢å¼•içš„èŠ‚ç‚¹
     T idx_i_vertex;
     graph.GetVertexByIndex(idx_i_vertex, i);
 
-    cout << "¶¥µã" << idx_i_vertex << "µÄ×î¶ÌÂ·¾¶Îª:" << origin_vertex << " ";
+    cout << "é¡¶ç‚¹" << idx_i_vertex << "çš„æœ€çŸ­è·¯å¾„ä¸º:" << origin_vertex << " ";
 
     while (idx > 0) {
       idx--;
@@ -496,7 +496,7 @@ void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_a
       cout << idx_i_vertex << " ";
     }
 
-    cout << "×î¶ÌÂ·¾¶³¤¶ÈÎª:" << min_dist_arr[i] << endl;
+    cout << "æœ€çŸ­è·¯å¾„é•¿åº¦ä¸º:" << min_dist_arr[i] << endl;
   }
 
   delete[] cur_pre_path_arr;
