@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file test.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ×ÓÅ®ĞÖµÜÊ÷²âÊÔ.cppÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å­å¥³å…„å¼Ÿæ ‘æµ‹è¯•.cppæ–‡ä»¶
  * @version 0.2.1
  * @date 2020-11-01
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include "test.h"
@@ -13,8 +13,8 @@
 
 
 /*!
- * @brief ½Úµã±éÀúº¯Êı
- * @param node ½Úµã(Ö¸Õë)
+ * @brief èŠ‚ç‚¹éå†å‡½æ•°
+ * @param node èŠ‚ç‚¹(æŒ‡é’ˆ)
  */
 void visit(ChildSiblingNode<int>* node) {
   cout << node->data << " ";
@@ -22,24 +22,24 @@ void visit(ChildSiblingNode<int>* node) {
 
 
 /*!
- * @brief ²âÊÔÊ¹ÓÃ×Ö·û´®´´½¨×ÓÅ®º¢×ÓÊ÷
+ * @brief æµ‹è¯•ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå­å¥³å­©å­æ ‘
  */
 void TestChildSiblingTreeCreateTreeByStr() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|              Test ChildSiblingTree CreateByStr            |" << endl;
-  cout << "|                   ²âÊÔÊ¹ÓÃ×Ö·û´®´´½¨×ÓÅ®º¢×ÓÊ÷                  |" << endl << endl;
+  cout << "|                   æµ‹è¯•ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå­å¥³å­©å­æ ‘                  |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
-  cout << "×Ö·û´®: " << str << endl << endl;
+  cout << "å­—ç¬¦ä¸²: " << str << endl << endl;
 
   ChildSiblingTree<int> child_sibling_tree;
   child_sibling_tree.CreateTreeByStr(str);
 
   int node_count = child_sibling_tree.NodeCount();
-  cout << "Ê÷µÄ½ÚµãÊıÁ¿: " << node_count << endl;
+  cout << "æ ‘çš„èŠ‚ç‚¹æ•°é‡: " << node_count << endl;
 
-  cout << "µ÷ÓÃShowTreeÏÔÊ¾: ";
+  cout << "è°ƒç”¨ShowTreeæ˜¾ç¤º: ";
   child_sibling_tree.ShowTree();
 
   cout << endl;
@@ -49,65 +49,65 @@ void TestChildSiblingTreeCreateTreeByStr() {
 
 
 /*!
- * @brief ²âÊÔÉî¶È
+ * @brief æµ‹è¯•æ·±åº¦
  */
 void TestChildSiblingTreeDepth() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                 Test ChildSiblingTree Depth               |" << endl;
-  cout << "|                          ²âÊÔÉî¶È                           |" << endl << endl;
+  cout << "|                          æµ‹è¯•æ·±åº¦                           |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
-  cout << "×Ö·û´®: " << str << endl << endl;
+  cout << "å­—ç¬¦ä¸²: " << str << endl << endl;
 
   ChildSiblingTree<int> child_sibling_tree;
   child_sibling_tree.CreateTreeByStr(str);
 
   int depth = child_sibling_tree.Depth();
-  cout << "Éî¶È: " << depth << endl;
+  cout << "æ·±åº¦: " << depth << endl;
 
   cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 /*!
- * @brief ²âÊÔ½ÚµãÊıÁ¿
+ * @brief æµ‹è¯•èŠ‚ç‚¹æ•°é‡
  */
 void TestChildSiblingTreeNodeCount() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|               Test ChildSiblingTree NodeCount             |" << endl;
-  cout << "|                         ²âÊÔ½ÚµãÊıÁ¿                         |" << endl << endl;
+  cout << "|                         æµ‹è¯•èŠ‚ç‚¹æ•°é‡                         |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
-  cout << "×Ö·û´®: " << str << endl << endl;
+  cout << "å­—ç¬¦ä¸²: " << str << endl << endl;
 
   ChildSiblingTree<int> child_sibling_tree;
   child_sibling_tree.CreateTreeByStr(str);
 
   int node_count = child_sibling_tree.NodeCount();
-  cout << "½ÚµãÊıÁ¿: " << node_count << endl;
+  cout << "èŠ‚ç‚¹æ•°é‡: " << node_count << endl;
 
   cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 /*!
- * @brief ²âÊÔÏÈ¸ù±éÀú
+ * @brief æµ‹è¯•å…ˆæ ¹éå†
  */
 void TestChildSiblingTreePreOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|                Test ChildSiblingTree PreOrderByOstream             |" << endl;
-  cout << "|                         ²âÊÔÏÈ¸ù±éÀú                        |" << endl << endl;
+  cout << "|                         æµ‹è¯•å…ˆæ ¹éå†                        |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
-  cout << "×Ö·û´®: " << str << endl << endl;
+  cout << "å­—ç¬¦ä¸²: " << str << endl << endl;
 
   ChildSiblingTree<int> child_sibling_tree;
   child_sibling_tree.CreateTreeByStr(str);
 
-  cout << "ÏÈ¸ù±éÀú: " << endl;
+  cout << "å…ˆæ ¹éå†: " << endl;
   child_sibling_tree.PreOrder(visit);
 
   cout << endl;
@@ -117,21 +117,21 @@ void TestChildSiblingTreePreOrder() {
 
 
 /*!
- * @brief ²âÊÔºó¸ù±éÀú
+ * @brief æµ‹è¯•åæ ¹éå†
  */
 void TestChildSiblingTreePostOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|               Test ChildSiblingTree PostOrderByOstream             |" << endl;
-  cout << "|                         ²âÊÔºó¸ù±éÀú                        |" << endl << endl;
+  cout << "|                         æµ‹è¯•åæ ¹éå†                        |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
-  cout << "×Ö·û´®: " << str << endl << endl;
+  cout << "å­—ç¬¦ä¸²: " << str << endl << endl;
 
   ChildSiblingTree<int> child_sibling_tree;
   child_sibling_tree.CreateTreeByStr(str);
 
-  cout << "ºó¸ù±éÀú: " << endl;
+  cout << "åæ ¹éå†: " << endl;
   child_sibling_tree.PostOrder(visit);
 
   cout << endl;
@@ -141,21 +141,21 @@ void TestChildSiblingTreePostOrder() {
 
 
 /*!
- * @brief ²âÊÔ²ãĞò±éÀú
+ * @brief æµ‹è¯•å±‚åºéå†
  */
 void TestChildSiblingTreeLevelOrder() {
   cout << endl;
   cout << "|------------------------ CyberDash ------------------------|" << endl;
   cout << "|              Test ChildSiblingTree LevelOrder             |" << endl;
-  cout << "|                         ²âÊÔ²ãĞò±éÀú                        |" << endl << endl;
+  cout << "|                         æµ‹è¯•å±‚åºéå†                        |" << endl << endl;
 
   char* str = (char*)"(0(1(2))(2))";
-  cout << "×Ö·û´®: " << str << endl << endl;
+  cout << "å­—ç¬¦ä¸²: " << str << endl << endl;
 
   ChildSiblingTree<int> child_sibling_tree;
   child_sibling_tree.CreateTreeByStr(str);
 
-  cout << "²ãĞò±éÀú: " << endl;
+  cout << "å±‚åºéå†: " << endl;
   child_sibling_tree.LevelOrder(cout);
 
   cout << endl;
