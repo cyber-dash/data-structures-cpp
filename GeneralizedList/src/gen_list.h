@@ -1,12 +1,12 @@
 /*!
  * @file gen_list.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¹ãÒå±íÄ£°åÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å¹¿ä¹‰è¡¨æ¨¡æ¿ç±»
  * @version 0.2.1
  * @date 2021-07-14
  *
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_GENERALIZED_LIST_H
@@ -16,124 +16,129 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <algorithm>
 #include "gen_list_node.h"
 
 
 using namespace std;
 
 
-//! ¹ãÒå±íÄ£°åÀà
+//! å¹¿ä¹‰è¡¨æ¨¡æ¿ç±»
 template<class T>
 class GenList {
 
 public:
 
-  // ¹¹Ôìº¯Êı
+  // æ„é€ å‡½æ•°
   GenList();
 
-  // ÏßĞÔ±íÍ·½áµã
+  // çº¿æ€§è¡¨å¤´ç»“ç‚¹
   bool Head(Item<T>& item);
-  // ÏßĞÔ±íÎ²
+  // çº¿æ€§è¡¨å°¾
   bool Tail(GenList<T>& tail_list);
 
   void CopyFrom(GenList<T>& src_gen_list);
 
-  // ³¤¶È
+  // é•¿åº¦
   int Length();
-  // Éî¶È
+  // æ·±åº¦
   int Depth();
 
-  // Ê¹ÓÃchar¶ÓÁĞ´´½¨¹ãÒå±í(µİ¹é)
-  void CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node_ptr, bool& in_referred_list);
-  // Ê¹ÓÃ×Ö·û´®´´½¨¹ãÒå±í
+  // ä½¿ç”¨charé˜Ÿåˆ—åˆ›å»ºå¹¿ä¹‰è¡¨(é€’å½’)
+  void CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node, bool& in_referred_list);
+  // ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå¹¿ä¹‰è¡¨
   void CreateListByString(string gen_list_string);
 
-  // É¾³ı½áµã, todo: Î´ÊµÏÖ
+  // åˆ é™¤ç»“ç‚¹, todo: æœªå®ç°
   void Remove(GenListNode<T>* node_ptr);
 
-  GenListNode<T>* ref_node_ptr; //!< ¹ãÒå±íµÄÒıÓÃ½áµã
+  string ToString();
 
-  // ÊäÈë¹ãÒå±í
+  GenListNode<T>* ref_node_; //!< å¹¿ä¹‰è¡¨çš„å¼•ç”¨ç»“ç‚¹
+
+  // è¾“å…¥å¹¿ä¹‰è¡¨
   template<class U>
   friend istream& operator>>(istream& in, GenList<T>& gen_list);
 
 private:
-  // ×Ó±í³¤¶È(µİ¹é)
-  int SubGenListLengthRecursive_(GenListNode<T>* node_ptr);
-  // ×Ó±íÉî¶È(µİ¹é)
-  int SubGenListDepthRecursive_(GenListNode<T>* node_ptr);
+  // å­è¡¨æ‰“å°
+  void SubGenToStringRecursive_(GenListNode<T>* node, vector<T>& char_vec);
+  // å­è¡¨é•¿åº¦(é€’å½’)
+  int SubGenListLengthRecursive_(GenListNode<T>* un_ref_type_node);
+  // å­è¡¨æ·±åº¦(é€’å½’)
+  int SubGenListDepthRecursive_(GenListNode<T>* ref_type_node);
 
-  // ÊÇ·ñÊÇ±íÃû(´óĞ´×ÖÄ¸)
+  // æ˜¯å¦æ˜¯è¡¨å(å¤§å†™å­—æ¯)
   bool IsGenListNameChar_(T chr);
-  // ÊÇ·ñÊÇ±íÆğÊ¼×Ö·û(´óĞ´×ÖÄ¸»òÕß'(')
+  // æ˜¯å¦æ˜¯è¡¨èµ·å§‹å­—ç¬¦(å¤§å†™å­—æ¯æˆ–è€…'(')
   bool IsGenListBeginChar_(T chr);
 
-  // ×óÀ¨ºÅ´¦Àí
+  // å·¦æ‹¬å·å¤„ç†
   void LeftBracketHandler_(queue<T>& char_queue);
-  // '#'¶ÔÓ¦µÄÓÒÀ¨ºÅ´¦Àí
+  // '#'å¯¹åº”çš„å³æ‹¬å·å¤„ç†
   void PassRightBracketAfterSharpChar(queue<T>& char_queue);
 
-  // ĞÂ½¨ÔªËØ½áµã
-  GenListNode<T>* NewElemNode_(T chr);
-  // ĞÂ½¨×Ó±í½Úµã
+  // æ–°å»ºå…ƒç´ ç»“ç‚¹
+  GenListNode<T>* NewElemTypeNode_(T chr);
+  // æ–°å»ºå­è¡¨èŠ‚ç‚¹
   GenListNode<T>* NewChildGenListNode_();
 
-  // ²éÕÒÒÑ¾­±»ÒıÓÃµÄ½áµã
+  // æŸ¥æ‰¾å·²ç»è¢«å¼•ç”¨çš„ç»“ç‚¹
   GenListNode<T>* FindReferredNodePtr_(T chr);
-  // ¸´ÖÆ×ÓÊ÷, todo: Î´²âÊÔ
-  GenListNode<T>* Copy_(GenListNode<T>*& node_ptr);
+  // å¤åˆ¶å­æ ‘, todo: æœªæµ‹è¯•
+  GenListNode<T>* Copy_(GenListNode<T>*& ref_type_node);
 
-  vector<T> gen_list_name_vec_; //!< ¸÷±í½ÚµãµÄvector
-  vector<GenListNode<T>*> gen_list_node_ptr_vec_; //!< ¸÷±í½ÚµãÖ¸ÕëµÄvector
+  vector<T> gen_list_name_vec_; //!< å„è¡¨èŠ‚ç‚¹çš„vector
+  vector<GenListNode<T>*> gen_list_node_vec_; //!< å„è¡¨èŠ‚ç‚¹æŒ‡é’ˆçš„vector
 };
 
 
 /*!
- * @brief ¹¹Ôìº¯Êı(ÎŞ²ÎÊı)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief æ„é€ å‡½æ•°(æ— å‚æ•°)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
 GenList<T>::GenList() {
-  ref_node_ptr = new GenListNode<T>();
-  if (ref_node_ptr == NULL) {
+  this->ref_node_ = new GenListNode<T>();
+  if (this->ref_node_ == NULL) {
     cerr<<"GenList constructor wrong."<<endl;
   }
 }
 
 
 /*!
- * @brief ÏßĞÔ±íÍ·½áµã
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param item Êı¾İ±äÁ¿(´æ´¢±íÍ·Êı¾İ)
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief çº¿æ€§è¡¨å¤´ç»“ç‚¹
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param item æ•°æ®å˜é‡(å­˜å‚¨è¡¨å¤´æ•°æ®)
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class T>
 bool GenList<T>::Head(Item<T>& item) {
 
-  if (this->ref_node_ptr->next == NULL) {
+  if (this->ref_node_->next == NULL) {
     return false;
   } else {
-    item.type = this->ref_node_ptr->type;
-    item.union_info = this->ref_node_ptr->union_info;
+    item.type = this->ref_node_->type;
+    item.union_info = this->ref_node_->union_info;
   }
 }
 
 
 /*!
- * @brief ÏßĞÔ±íÎ²
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param tail_list ¹ãÒå±í±äÁ¿(´æ´¢±íÎ²)
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief çº¿æ€§è¡¨å°¾
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param tail_list å¹¿ä¹‰è¡¨å˜é‡(å­˜å‚¨è¡¨å°¾)
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class T>
 bool GenList<T>::Tail(GenList<T>& tail_list) {
 
-  if (ref_node_ptr->next == NULL) {
+  if (ref_node_->next == NULL) {
     return false;
   } else {
-    tail_list.ref_node_ptr->type = GenListNode<T>::REF_TYPE;
-    tail_list.ref_node_ptr->union_info.ref_count = 0;
-    tail_list.ref_node_ptr->next = CopyFrom(ref_node_ptr->next->next);
+    tail_list.ref_node_->type = GenListNode<T>::REF_TYPE;
+    tail_list.ref_node_->union_info.ref_count = 0;
+    tail_list.ref_node_->next = CopyFrom(this->ref_node_->next->next);
   }
 }
 
@@ -141,120 +146,120 @@ bool GenList<T>::Tail(GenList<T>& tail_list) {
 
 template<class T>
 void GenList<T>::CopyFrom(GenList<T>& src_gen_list) {
-  ref_node_ptr = Copy_(src_gen_list.ref_node_ptr);
+  ref_node_ = Copy_(src_gen_list.ref_node_);
 }
 
 
 template<class T>
-GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& node_ptr) {
+GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& ref_type_node) {
 
-  GenListNode<T> cur_node_ptr = NULL;
+  GenListNode<T> cur_node = NULL;
 
-  if (node_ptr != NULL) {
-    cur_node_ptr = new GenListNode<T>();
-    cur_node_ptr.type = node_ptr->type;
+  if (ref_type_node != NULL) {
+    cur_node = new GenListNode<T>();
+    cur_node.type = ref_type_node->type;
 
-    switch (node_ptr->type) {
+    switch (ref_type_node->type) {
       case GenListNode<T>::REF_TYPE:
-        cur_node_ptr->union_info.ref_count = node_ptr->union_info.ref_count;
+          cur_node->union_info.ref_count = ref_type_node->union_info.ref_count;
         break;
       case GenListNode<T>::ELEM_TYPE:
-        cur_node_ptr->union_info.value = node_ptr->union_info.value;
+          cur_node->union_info.value = ref_type_node->union_info.value;
         break;
       case GenListNode<T>::CHILD_LIST_TYPE:
-        cur_node_ptr.union_info.ref_node_ptr = Copy_(node_ptr->union_info.ref_node_ptr);
+          cur_node.union_info.ref_node = Copy_(ref_type_node->union_info.ref_node);
         break;
       default:
         break;
     }
 
-    cur_node_ptr.next = Copy_(node_ptr->next);
+      cur_node.next = Copy_(ref_type_node->next);
   }
 
-  return cur_node_ptr;
+  return cur_node;
 }
 
 
 /*!
- * @brief »ñÈ¡×Ó±í³¤¶È(µİ¹é)
- * @tparam T ²ÎÊıÄ£°åÀàĞÍ
- * @param node_ptr ×Ó±íÒıÓÃ(ÆğÊ¼)½áµãÖ¸Õë
- * @return ³¤¶È
+ * @brief è·å–å­è¡¨é•¿åº¦(é€’å½’)
+ * @tparam T å‚æ•°æ¨¡æ¿ç±»å‹
+ * @param un_ref_type_node éå¼•ç”¨ç±»å‹(typeä¸º1æˆ–2)ç»“ç‚¹æŒ‡é’ˆ
+ * @return é•¿åº¦
  */
 template<class T>
-int GenList<T>::SubGenListLengthRecursive_(GenListNode<T>* node_ptr) {
-  if (node_ptr == NULL) {
+int GenList<T>::SubGenListLengthRecursive_(GenListNode<T>* un_ref_type_node) {
+  if (un_ref_type_node == NULL) {
     return 0;
   }
 
-  int sub_list_length = SubGenListLengthRecursive_(node_ptr->next) + 1;
+  int sub_list_length = SubGenListLengthRecursive_(un_ref_type_node->next) + 1;
 
   return sub_list_length;
 }
 
 
 /*!
- * @brief »ñÈ¡³¤¶È
- * @tparam T ²ÎÊıÄ£°åÀàĞÍ
- * @return ³¤¶È
+ * @brief è·å–é•¿åº¦
+ * @tparam T å‚æ•°æ¨¡æ¿ç±»å‹
+ * @return é•¿åº¦
  */
 template<class T>
 int GenList<T>::Length() {
-  int list_length = SubGenListLengthRecursive_(this->ref_node_ptr->next);
+  int list_length = SubGenListLengthRecursive_(this->ref_node_->next);
 
   return list_length;
 }
 
 
 /*!
- * @brief »ñÈ¡Éî¶È
- * @tparam T ²ÎÊıÄ£°åÀàĞÍ
- * @return Éî¶È
+ * @brief è·å–æ·±åº¦
+ * @tparam T å‚æ•°æ¨¡æ¿ç±»å‹
+ * @return æ·±åº¦
  */
 template<class T>
 int GenList<T>::Depth() {
-  return SubGenListDepthRecursive_(ref_node_ptr);
+  return SubGenListDepthRecursive_(this->ref_node_);
 }
 
 
 /*!
- * @brief »ñÈ¡×Ó±íÉî¶È(µİ¹é)
- * @tparam T ²ÎÊıÄ£°åÀàĞÍ
- * @param node_ptr ×Ó±íÒıÓÃ(ÆğÊ¼)½áµãÖ¸Õë
- * @return Éî¶È
+ * @brief è·å–å­è¡¨æ·±åº¦(é€’å½’)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param ref_type_node å­è¡¨çš„å¼•ç”¨ç±»å‹(typeä¸º0)ç»“ç‚¹æŒ‡é’ˆ
+ * @return æ·±åº¦
  */
 template<class T>
-int GenList<T>::SubGenListDepthRecursive_(GenListNode<T> *node_ptr) {
+int GenList<T>::SubGenListDepthRecursive_(GenListNode<T>* ref_type_node) {
 
-  GenListNode<T>* cur_node_ptr = node_ptr->next;
+  GenListNode<T>* cur_node = ref_type_node->next;
 
-  if (cur_node_ptr == NULL) {
+  if (cur_node == NULL) {
     return 1;
   }
 
-  int maxSubListDepth = 0;
+  int max_sub_list_depth = 1; // 1ä¸ºæ·±åº¦çš„æœ€å°å¯èƒ½å€¼
 
-  while (cur_node_ptr != NULL) {
+  while (cur_node != NULL) {
 
-    if (cur_node_ptr->type == GenListNode<T>::CHILD_LIST_TYPE) {
+    if (cur_node->type == GenListNode<T>::CHILD_LIST_TYPE) {
 
-      int curSubListDepth = SubGenListDepthRecursive_(cur_node_ptr->union_info.ref_node_ptr);
-      if (maxSubListDepth < curSubListDepth) {
-        maxSubListDepth = curSubListDepth;
+      int sub_list_depth = SubGenListDepthRecursive_(cur_node->union_info.ref_node);
+      if (max_sub_list_depth < sub_list_depth) {
+          max_sub_list_depth = sub_list_depth;
       }
     }
 
-    cur_node_ptr = cur_node_ptr->next;
+    cur_node = cur_node->next;
   }
 
-  return maxSubListDepth + 1;
+  return max_sub_list_depth + 1;
 }
 
 
 /*!
- * @brief ×óÀ¨ºÅ´¦Àíº¯Êı
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param char_queue ×Ö·û¶ÓÁĞ
+ * @brief å·¦æ‹¬å·å¤„ç†å‡½æ•°
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param char_queue å­—ç¬¦é˜Ÿåˆ—
  */
 template<class T>
 void GenList<T>::LeftBracketHandler_(queue<T>& char_queue) {
@@ -267,8 +272,8 @@ void GenList<T>::LeftBracketHandler_(queue<T>& char_queue) {
 
 
 /*!
- * @brief '#'¶ÔÓ¦µÄÓÒÀ¨ºÅ´¦Àí
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief '#'å¯¹åº”çš„å³æ‹¬å·å¤„ç†
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  * @param char_queue
  */
 template<class T>
@@ -282,10 +287,10 @@ void GenList<T>::PassRightBracketAfterSharpChar(queue<T>& char_queue) {
 
 
 /*!
- * @brief ÅĞ¶ÏÊÇ·ñÊÇ±íÃû(´óĞ´×ÖÄ¸)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param chr ÏßĞÔ±í×Ö·û´®ÖĞµÄÄ³¸ö×Ö·û
- * @return ÊÇor·ñ
+ * @brief åˆ¤æ–­æ˜¯å¦æ˜¯è¡¨å(å¤§å†™å­—æ¯)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param chr çº¿æ€§è¡¨å­—ç¬¦ä¸²ä¸­çš„æŸä¸ªå­—ç¬¦
+ * @return æ˜¯orå¦
  */
 template<class T>
 bool GenList<T>::IsGenListNameChar_(T chr) {
@@ -294,10 +299,10 @@ bool GenList<T>::IsGenListNameChar_(T chr) {
 
 
 /*!
- * @brief ÅĞ¶ÏÊÇ·ñÊÇÏßĞÔ±íµÄÆğÊ¼×Ö·û, ´óĞ´×ÖÄ¸»òÕß'('
- * @tparam T ÏßĞÔ±í½ÚµãÊı¾İÀàĞÍ
- * @param chr ÏßĞÔ±í×Ö·û´®ÖĞµÄÄ³¸ö×Ö·û
- * @return ÊÇor·ñ
+ * @brief åˆ¤æ–­æ˜¯å¦æ˜¯çº¿æ€§è¡¨çš„èµ·å§‹å­—ç¬¦, å¤§å†™å­—æ¯æˆ–è€…'('
+ * @tparam T çº¿æ€§è¡¨èŠ‚ç‚¹æ•°æ®ç±»å‹
+ * @param chr çº¿æ€§è¡¨å­—ç¬¦ä¸²ä¸­çš„æŸä¸ªå­—ç¬¦
+ * @return æ˜¯orå¦
  */
 template<class T>
 bool GenList<T>::IsGenListBeginChar_(T chr) {
@@ -306,69 +311,68 @@ bool GenList<T>::IsGenListBeginChar_(T chr) {
 
 
 /*!
- * @brief Ê¹ÓÃchar¶ÓÁĞ´´½¨¹ãÒå±í(µİ¹é)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param char_queue char¶ÓÁĞ
- * @param node_ptr ½ÚµãÖ¸Õë
- * @param in_referred_list ¸Ã½ÚµãÊÇ·ñÒÑ¾­±»ÒıÓÃ
+ * @brief ä½¿ç”¨charé˜Ÿåˆ—åˆ›å»ºå¹¿ä¹‰è¡¨(é€’å½’)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param char_queue charé˜Ÿåˆ—
+ * @param node èŠ‚ç‚¹æŒ‡é’ˆ
+ * @param in_referred_list è¯¥èŠ‚ç‚¹æ˜¯å¦å·²ç»è¢«å¼•ç”¨
  */
 template<class T>
-void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node_ptr, bool& in_referred_list) {
+void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node, bool& in_referred_list) {
 
+  // å­—ç¬¦é˜Ÿåˆ—å‡ºé˜Ÿ
   T chr = char_queue.front();
   char_queue.pop();
 
-  GenListNode<T>* referred_node_ptr = NULL;
+  GenListNode<T>* referred_node = NULL;
 
-  bool is_gen_list_begin_char = IsGenListBeginChar_(chr);
+  bool is_gen_list_begin_char = this->IsGenListBeginChar_(chr); // æ˜¯å¦æ˜¯å¤§å†™å­—æ¯æˆ–è€…'('
   if (is_gen_list_begin_char) {
 
-    bool is_gen_list_name_char = IsGenListNameChar_(chr);
-    if (is_gen_list_name_char) { // ´óĞ´×ÖÄ¸
+    bool is_gen_list_name_char = this->IsGenListNameChar_(chr); // æ˜¯å¦æ˜¯å¤§å†™å­—æ¯
+    if (is_gen_list_name_char) {
 
-      referred_node_ptr = FindReferredNodePtr_(chr); // ¼ì²éÊÇ·ñÔÚvectorÄÚ
+      referred_node = this->FindReferredNodePtr_(chr); // æ£€æŸ¥è¯¥å­—ç¬¦æ‰€å¯¹åº”çš„ç»“ç‚¹, æ˜¯å¦å·²ç»åœ¨vectorå†…
 
-      if (referred_node_ptr != NULL) {
-        node_ptr = NewChildGenListNode_(); // ´´½¨Ò»¸ö×Ó±íÀàĞÍ(2)µÄ½Úµã
-        node_ptr->union_info.ref_node_ptr = referred_node_ptr; // Ö¸µ½Ò»¸öÒÑ¾­´æÔÚµÄ±í
-        referred_node_ptr->union_info.ref_count++; // ÒıÓÃÊı+1
+      if (referred_node != NULL) {
+        node = this->NewChildGenListNode_(); // åˆ›å»ºä¸€ä¸ªå­è¡¨ç»“ç‚¹, å³ç±»å‹(2)çš„èŠ‚ç‚¹
+        node->union_info.ref_node = referred_node; // æŒ‡åˆ°è¿™ä¸ªå·²ç»å­˜åœ¨çš„å­è¡¨
+        referred_node->union_info.ref_count++; // è¯¥å­—è¡¨å¯¹åº”çš„å¼•ç”¨æ•°+1
 
         in_referred_list = true;
-      } else { // ²»ÔÚnode vectorÄÚ
-        node_ptr = NewChildGenListNode_(); // ´´½¨Ò»¸ö×Ó±íÀàĞÍ(2)µÄ½Úµã
+      } else { // ä¸åœ¨node vectorå†…
+        node = this->NewChildGenListNode_();              // åˆ›å»ºä¸€ä¸ªç±»å‹(2)çš„å­è¡¨èŠ‚ç‚¹, nodeæŒ‡åˆ°è¯¥ç»“ç‚¹
+        GenListNode<T>* ref_type_node = new GenListNode<T>();  // åˆ›å»ºä¸€ä¸ªç±»å‹(0)çš„å¼•ç”¨èŠ‚ç‚¹
+        ref_type_node->union_info.ref_count = 1;               // å¼•ç”¨ç»“ç‚¹çš„å¼•ç”¨æ•°ref_countåˆå§‹åŒ–ä¸º1
+        node->union_info.ref_node = ref_type_node;             // å­è¡¨ç»“ç‚¹çš„ref_node --> å¼•ç”¨ç»“ç‚¹
 
-        GenListNode<T>* ref_node_ptr = new GenListNode<T>();
-        ref_node_ptr->union_info.ref_count = 1;
-
-        node_ptr->union_info.ref_node_ptr = ref_node_ptr; // ´´½¨Ò»¸ö×Ó±íµÄ0½Úµã
-
-        gen_list_name_vec_.push_back(chr);
-        gen_list_node_ptr_vec_.push_back(ref_node_ptr);
+        this->gen_list_name_vec_.push_back(chr);
+        this->gen_list_node_vec_.push_back(ref_type_node);
 
         in_referred_list = false;
       }
 
-      LeftBracketHandler_(char_queue);
+      LeftBracketHandler_(char_queue); // å°†é˜Ÿåˆ—ä¸­çš„'('å‡ºé˜Ÿ
 
-      CreateGenListByQueueRecursive(char_queue, node_ptr->union_info.ref_node_ptr->next, in_referred_list);
-      CreateGenListByQueueRecursive(char_queue, node_ptr, in_referred_list);
+      CreateGenListByQueueRecursive(char_queue, node->union_info.ref_node->next, in_referred_list);
+      CreateGenListByQueueRecursive(char_queue, node, in_referred_list);
     }
   } else if (isalpha(chr) && islower(chr)) {
-    if (!in_referred_list) {
-      node_ptr = NewElemNode_(chr);
-      CreateGenListByQueueRecursive(char_queue, node_ptr, in_referred_list);
+    if (!in_referred_list) {  // æ²¡æœ‰åœ¨è¿›è¡Œéå†å­è¡¨
+      node = NewElemTypeNode_(chr);
+      CreateGenListByQueueRecursive(char_queue, node, in_referred_list);
     }
   } else if (chr == ',') {
-    CreateGenListByQueueRecursive(char_queue, node_ptr->next, in_referred_list);
+    CreateGenListByQueueRecursive(char_queue, node->next, in_referred_list);
   } else if (chr == ')') {
     if (!in_referred_list) {
-      node_ptr->next = NULL;
+      node->next = NULL;
     }
     in_referred_list = false;
   }
   else if (chr == '#') {
     if (!in_referred_list) {
-      node_ptr = NULL;
+      node = NULL;
       PassRightBracketAfterSharpChar(char_queue);
     }
     in_referred_list = false;
@@ -377,40 +381,39 @@ void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode
 
 
 /*!
- * @brief Ê¹ÓÃ×Ö·û´®´´½¨¹ãÒå±í
- * @tparam T Ä£°å½ÚµãÀàĞÍ
- * @param gen_list_string ¹ãÒå±í×Ö·û´®
+ * @brief ä½¿ç”¨å­—ç¬¦ä¸²åˆ›å»ºå¹¿ä¹‰è¡¨
+ * @tparam T æ¨¡æ¿èŠ‚ç‚¹ç±»å‹
+ * @param gen_list_string å¹¿ä¹‰è¡¨å­—ç¬¦ä¸²
  * @note
- * ÏÈ½«×Ö·û´®·ÅÈë¶ÓÁĞÖĞ
- * µ÷ÓÃCreateGenListByQueueRecursive
- * µ÷Õûref_node_ptr
+ * å…ˆå°†å­—ç¬¦ä¸²æ”¾å…¥é˜Ÿåˆ—ä¸­
+ * è°ƒç”¨CreateGenListByQueueRecursive
+ * è°ƒæ•´ref_node_æŒ‡å‘çš„ç»“ç‚¹
  */
 template<class T>
 void GenList<T>::CreateListByString(string gen_list_string) {
 
-  // ÏÈ½«×Ö·û´®·ÅÈë¶ÓÁĞÖĞ
+  // å…ˆå°†å­—ç¬¦ä¸²æ”¾å…¥é˜Ÿåˆ—ä¸­
   queue<T> char_queue;
   for (int i = 0; i < gen_list_string.length(); i++) {
-    char cur_chr = gen_list_string[i];
-    char_queue.push(cur_chr);
+    char_queue.push(gen_list_string[i]);
   }
 
   bool in_referred_list = false;
 
-  // µ÷ÓÃCreateGenListByQueueRecursive
-  this->CreateGenListByQueueRecursive(char_queue, this->ref_node_ptr->next, in_referred_list);
+  // è°ƒç”¨CreateGenListByQueueRecursive
+  this->CreateGenListByQueueRecursive(char_queue, this->ref_node_->next, in_referred_list);
 
-  // µ÷Õûref_node_ptr
-  this->ref_node_ptr = this->ref_node_ptr->next->union_info.ref_node_ptr;
+  // è°ƒæ•´ref_node_
+  this->ref_node_ = this->ref_node_->next->union_info.ref_node;
 }
 
 
 /*!
- * @brief ÊäÈë¹ãÒå±í(ÖØÔØ±ê×¼ÊäÈë)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param in ÊäÈëÁ÷
- * @param gen_list ¹ãÒå±í(µÄÒıÓÃ)
- * @return ÊäÈëÁ÷(µÄÒıÓÃ)
+ * @brief è¾“å…¥å¹¿ä¹‰è¡¨(é‡è½½æ ‡å‡†è¾“å…¥)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param in è¾“å…¥æµ
+ * @param gen_list å¹¿ä¹‰è¡¨(çš„å¼•ç”¨)
+ * @return è¾“å…¥æµ(çš„å¼•ç”¨)
  */
 template<class T>
 istream& operator>>(istream& in, GenList<T>& gen_list) {
@@ -427,59 +430,108 @@ istream& operator>>(istream& in, GenList<T>& gen_list) {
 
 
 /*!
- * @brief ²éÕÒÒÑ¾­±»ÒıÓÃµÄ½áµã
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param chr ×Ö·û
- * @return ÒÑ¾­±»ÒıÓÃµÄ½ÚµãµÄµØÖ·
+ * @brief æŸ¥æ‰¾å·²ç»è¢«å¼•ç”¨çš„ç»“ç‚¹
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param chr å­—ç¬¦
+ * @return å·²ç»è¢«å¼•ç”¨çš„èŠ‚ç‚¹çš„åœ°å€
  */
 template<class T>
 GenListNode<T>* GenList<T>::FindReferredNodePtr_(T chr) {
 
-  GenListNode<T>* node_ptr = NULL;
+  GenListNode<T>* node = NULL;
 
   typename vector<T>::iterator name_iter = gen_list_name_vec_.begin();
-  typename vector<GenListNode<T>*>::iterator node_iter = gen_list_node_ptr_vec_.begin();
+  typename vector<GenListNode<T>*>::iterator node_iter = gen_list_node_vec_.begin();
 
-  for (; name_iter != gen_list_name_vec_.end(); name_iter++, node_iter++) {
+  // éå†this->gen_list_name, æ‰¾åˆ°å­˜åœ¨äºå­—ç¬¦ä¸²ä¸­çš„å­—ç¬¦
+  for (; name_iter != this->gen_list_name_vec_.end(); name_iter++, node_iter++) {
     if (chr == *name_iter) {
-      node_ptr = *node_iter;
+      node = *node_iter;
       break;
     }
   }
 
-  return node_ptr;
+  return node;
 }
 
 
 /*!
- * @brief ĞÂ½¨ÔªËØ½áµã
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param chr ×Ö·û
- * @return ½áµãµØÖ·
+ * @brief æ–°å»ºå…ƒç´ ç»“ç‚¹
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param chr å­—ç¬¦
+ * @return ç»“ç‚¹åœ°å€
  */
 template<class T>
-GenListNode<T>* GenList<T>::NewElemNode_(T chr) {
+GenListNode<T>* GenList<T>::NewElemTypeNode_(T chr) {
 
-  GenListNode<T>* node_ptr = new GenListNode<T>();
-  node_ptr->type = GenListNode<T>::ELEM_TYPE;
-  node_ptr->union_info.value = chr;
+  GenListNode<T>* node = new GenListNode<T>();
+  node->type = GenListNode<T>::ELEM_TYPE;
+  node->union_info.value = chr;
 
-  return node_ptr;
+  return node;
 }
 
 
 /*!
- * @brief ĞÂ½¨×Ó±í½Úµã
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return ½áµãµØÖ·
+ * @brief æ–°å»ºå­è¡¨èŠ‚ç‚¹
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return ç»“ç‚¹åœ°å€
  */
 template<class T>
 GenListNode<T>* GenList<T>::NewChildGenListNode_() {
 
-  GenListNode<T>* node_ptr = new GenListNode<T>();
-  node_ptr->type = GenListNode<T>::CHILD_LIST_TYPE;
+  GenListNode<T>* node = new GenListNode<T>();
+  node->type = GenListNode<T>::CHILD_LIST_TYPE;
 
-  return node_ptr;
+  return node;
+}
+
+
+template<class T>
+string GenList<T>::ToString() {
+  vector<T> char_vec;
+  this->SubGenToStringRecursive_(this->ref_node_, char_vec);
+
+  string gen_list_string(char_vec.begin(), char_vec.end());
+  return gen_list_string;
+}
+
+
+/*!
+ * @brief å­è¡¨çš„å­—ç¬¦åŒ–(é€’å½’)
+ * @tparam T
+ * @param ref_type_node
+ * @param char_vec
+ */
+template<class T>
+void GenList<T>::SubGenToStringRecursive_(GenListNode<T>* ref_type_node, vector<T>& char_vec) {
+
+  for (int i = 0; i < this->gen_list_node_vec_.size(); i++) {
+    if (this->gen_list_node_vec_[i] == ref_type_node) {
+      char_vec.push_back(this->gen_list_name_vec_[i]);
+      char_vec.push_back('(');
+    }
+  }
+
+  GenListNode<T>* cur_node = ref_type_node->next;
+  if (cur_node == NULL) {
+    char_vec.push_back('#');
+    char_vec.push_back(')');
+  }
+
+  while (cur_node != NULL) {
+    if (cur_node->type == GenListNode<T>::CHILD_LIST_TYPE) {
+      SubGenToStringRecursive_(cur_node->union_info.ref_node, char_vec);
+    } else if (cur_node->type == GenListNode<T>::ELEM_TYPE) {
+      char_vec.push_back(cur_node->union_info.value);
+    }
+    if (cur_node->next != NULL) {
+      char_vec.push_back(',');
+    }
+    cur_node = cur_node->next;
+  }
+
+  char_vec.push_back(')');
 }
 
 

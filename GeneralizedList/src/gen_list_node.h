@@ -1,12 +1,11 @@
 /*!
  * @file gen_list_node.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¹ãÒå±í½áµãÄ£°åÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å¹¿ä¹‰è¡¨ç»“ç‚¹æ¨¡æ¿ç±»
  * @version 0.2.1
  * @date 2021-07-14
- *
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_GEN_LIST_NODE_H
@@ -21,21 +20,21 @@ template<class T>
 class GenListNode;
 
 
-//! ¹ãÒå±í½ÚµãUnionÀàĞÍ
+//! å¹¿ä¹‰è¡¨èŠ‚ç‚¹Unionç±»å‹
 template<class T>
 union GenNodeUnion {
-  int ref_count; //!< ÒıÓÃ¼ÆÊı
-  T value; //!< Êı¾İ
-  GenListNode<T>* ref_node_ptr; //!< ÏÂÒ»¸ö±íµÄµØÖ·
+  int ref_count; //!< å¼•ç”¨è®¡æ•°
+  T value; //!< æ•°æ®
+  GenListNode<T>* ref_node; //!< ä¸‹ä¸€ä¸ªè¡¨çš„åœ°å€
 };
 
 
-//! ¹ãÒå±íÊı¾İÏîÀà(ÓÃÓÚ±£´æÊı¾İ½ÚµãµÄĞÅÏ¢)
+//! å¹¿ä¹‰è¡¨æ•°æ®é¡¹ç±»(ç”¨äºä¿å­˜æ•°æ®èŠ‚ç‚¹çš„ä¿¡æ¯)
 template<class T>
 class Item {
 public:
   /*!
-   * @brief ¹¹Ôìº¯Êı
+   * @brief æ„é€ å‡½æ•°
    */
   Item() {
     this->type = GenListNode<T>::REF_TYPE;
@@ -43,42 +42,42 @@ public:
   }
 
   /*!
-   * @brief ¸´ÖÆ¹¹Ôìº¯Êı
-   * @param item ½ÚµãÊı¾İ
+   * @brief å¤åˆ¶æ„é€ å‡½æ•°
+   * @param item èŠ‚ç‚¹æ•°æ®
    */
   Item(Item<T>& item) {
     this->type = item.union_type_;
     this->union_info = item.union_info;
   }
 
-  int type; //!< ÀàĞÍ
-  GenNodeUnion<T> union_info; //!< unionĞÅÏ¢
+  int type; //!< ç±»å‹
+  GenNodeUnion<T> union_info; //!< unionä¿¡æ¯
 };
 
 
-//! ¹ãÒå±í½áµã
+//! å¹¿ä¹‰è¡¨ç»“ç‚¹
 template<class T>
 class GenListNode {
 
 public:
 
-  /*! @brief ¹¹Ôìº¯Êı(¿Õ±í) */
+  /*! @brief æ„é€ å‡½æ•°(ç©ºè¡¨) */
   GenListNode(): type(GenListNode<T>::REF_TYPE), next(NULL) { union_info.ref_count = 0; }
 
   /*!
-   * @brief ¹¹Ôìº¯Êı(Ê¹ÓÃ½áµã)
-   * @param node ¹ãÒå±í½Úµã(ÒıÓÃ)
+   * @brief æ„é€ å‡½æ•°(ä½¿ç”¨ç»“ç‚¹)
+   * @param node å¹¿ä¹‰è¡¨èŠ‚ç‚¹(å¼•ç”¨)
    */
   GenListNode(GenListNode<T>& node):
       type(node.type), next(node.next), union_info(node.union_info) {}
 
-  int type; //!< ÀàĞÍ
-  GenNodeUnion<T> union_info; //!< UnionÀàĞÍ
-  GenListNode<T>* next; //!< ÏÂÒ»½ÚµãÖ¸Õë
+  int type; //!< ç±»å‹
+  GenNodeUnion<T> union_info; //!< Unionç±»å‹
+  GenListNode<T>* next; //!< ä¸‹ä¸€èŠ‚ç‚¹æŒ‡é’ˆ
 
-  static const int REF_TYPE = 0; //!< ÒıÓÃÀàĞÍ
-  static const int ELEM_TYPE = 1; //!< Êı¾İ½ÚµãÀàĞÍ
-  static const int CHILD_LIST_TYPE = 2; //!< ×Ó±íÀàĞÍ
+  static const int REF_TYPE = 0; //!< å¼•ç”¨ç±»å‹
+  static const int ELEM_TYPE = 1; //!< æ•°æ®èŠ‚ç‚¹ç±»å‹
+  static const int CHILD_LIST_TYPE = 2; //!< å­è¡¨ç±»å‹
 };
 
 

@@ -1,12 +1,12 @@
 /*!
  * @file test.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¹ãÒå±í²âÊÔ.cppÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å¹¿ä¹‰è¡¨æµ‹è¯•.cppæ–‡ä»¶
  * @version 0.2.1
  * @date 2021-05-19
  *
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 
@@ -19,7 +19,7 @@ void TestCreateListByString() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test GeneralizedList Depth                |"<<endl;
-  cout<<"|                        ²âÊÔ¹ãÒå±íÉî¶È                       |"<<endl<<endl<<endl;
+  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨æ·±åº¦                       |"<<endl<<endl<<endl;
 
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -32,7 +32,7 @@ void TestHeadAndTail() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test GeneralizedList Depth                |"<<endl;
-  cout<<"|                        ²âÊÔ¹ãÒå±íÉî¶È                       |"<<endl<<endl<<endl;
+  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨æ·±åº¦                       |"<<endl<<endl<<endl;
 
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -44,13 +44,13 @@ void TestDepth() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                 Test GeneralizedList Depth                |"<<endl;
-  cout<<"|                        ²âÊÔ¹ãÒå±íÉî¶È                       |"<<endl<<endl<<endl;
+  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨æ·±åº¦                       |"<<endl<<endl<<endl;
 
   string gen_list_string1 = "A(#);";
   string gen_list_string2 = "A(a);";
-  string gen_list_string3 = "A(a,b);";
-  string gen_list_string4 = "A(a,B(a));";
-  string gen_list_string5 = "A(a,B(#));";
+  string gen_list_string3 = "A(a,B(a));";
+  string gen_list_string4 = "A(a,B(#));";
+  string gen_list_string5 = "A(B(#),C(a,b,c));";
   string gen_list_string6 = "E(B(#),D(B(#)));";
   string gen_list_string7 = "E(B(C(a)),D(a),G(#));";
 
@@ -73,13 +73,13 @@ void TestDepth() {
   gen_list6.CreateListByString(gen_list_string6);
   gen_list7.CreateListByString(gen_list_string7);
 
-  cout << "\"" << gen_list_string1 << "\"" << " depth: " << gen_list1.Depth() << endl; // 0
-  cout << "\"" << gen_list_string2 << "\"" << " depth: " << gen_list2.Depth() << endl; // 1
-  cout << "\"" << gen_list_string3 << "\"" << " depth: " << gen_list3.Depth() << endl; // 2
-  cout << "\"" << gen_list_string4 << "\"" << " depth: " << gen_list4.Depth() << endl; // 2
-  cout << "\"" << gen_list_string5 << "\"" << " depth: " << gen_list5.Depth() << endl; // 2
-  cout << "\"" << gen_list_string6 << "\"" << " depth: " << gen_list6.Depth() << endl; // 2
-  cout << "\"" << gen_list_string7 << "\"" << " depth: " << gen_list7.Depth() << endl; // 3
+  cout << "\"" << gen_list1.ToString() << "\"" << " æ·±åº¦: " << gen_list1.Depth() << endl; // 0
+  cout << "\"" << gen_list2.ToString() << "\"" << " æ·±åº¦: " << gen_list2.Depth() << endl; // 1
+  cout << "\"" << gen_list3.ToString() << "\"" << " æ·±åº¦: " << gen_list3.Depth() << endl; // 2
+  cout << "\"" << gen_list4.ToString() << "\"" << " æ·±åº¦: " << gen_list4.Depth() << endl; // 2
+  cout << "\"" << gen_list5.ToString() << "\"" << " æ·±åº¦: " << gen_list5.Depth() << endl; // 2
+  cout << "\"" << gen_list6.ToString() << "\"" << " æ·±åº¦: " << gen_list6.Depth() << endl; // 2
+  cout << "\"" << gen_list7.ToString() << "\"" << " æ·±åº¦: " << gen_list7.Depth() << endl; // 3
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -90,7 +90,7 @@ void TestLength() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                Test GeneralizedList Length                |"<<endl;
-  cout<<"|                        ²âÊÔ¹ãÒå±í³¤¶È                       |"<<endl<<endl<<endl;
+  cout<<"|                        æµ‹è¯•å¹¿ä¹‰è¡¨é•¿åº¦                       |"<<endl<<endl<<endl;
 
   string gen_list_string1 = "A(#);";
   string gen_list_string2 = "A(a);";
@@ -99,7 +99,6 @@ void TestLength() {
   string gen_list_string5 = "A(a,B(#));";
   string gen_list_string6 = "E(B(#),D(B(#)));";
   string gen_list_string7 = "E(B(C(a)),D(a),G(#));";
-
 
   GenList<char> gen_list1;
   GenList<char> gen_list2;
@@ -119,13 +118,13 @@ void TestLength() {
   gen_list6.CreateListByString(gen_list_string6);
   gen_list7.CreateListByString(gen_list_string7);
 
-  cout << "\"" << gen_list_string1 << "\"" << " length: " << gen_list1.Length() << endl;
-  cout << "\"" << gen_list_string2 << "\"" << " length: " << gen_list2.Length() << endl;
-  cout << "\"" << gen_list_string3 << "\"" << " length: " << gen_list3.Length() << endl;
-  cout << "\"" << gen_list_string4 << "\"" << " length: " << gen_list4.Length() << endl;
-  cout << "\"" << gen_list_string5 << "\"" << " length: " << gen_list5.Length() << endl;
-  cout << "\"" << gen_list_string6 << "\"" << " length: " << gen_list6.Length() << endl;
-  cout << "\"" << gen_list_string7 << "\"" << " length: " << gen_list7.Length() << endl;
+  cout << "\"" << gen_list_string1 << "\"" << " é•¿åº¦: " << gen_list1.Length() << endl;
+  cout << "\"" << gen_list_string2 << "\"" << " é•¿åº¦: " << gen_list2.Length() << endl;
+  cout << "\"" << gen_list_string3 << "\"" << " é•¿åº¦: " << gen_list3.Length() << endl;
+  cout << "\"" << gen_list_string4 << "\"" << " é•¿åº¦: " << gen_list4.Length() << endl;
+  cout << "\"" << gen_list_string5 << "\"" << " é•¿åº¦: " << gen_list5.Length() << endl;
+  cout << "\"" << gen_list_string6 << "\"" << " é•¿åº¦: " << gen_list6.Length() << endl;
+  cout << "\"" << gen_list_string7 << "\"" << " é•¿åº¦: " << gen_list7.Length() << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
