@@ -1,5 +1,5 @@
 //
-// Created by alei_go@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/11/1.
+// Created by alei_go@163.com(¶¶Òô: cyberdash_yuan) on 2020/11/1.
 //
 
 #include <iostream>
@@ -16,7 +16,7 @@ MinHeap<E>::MinHeap(int sz) {
   heap = new E[maxHeapSize];
 
   if (heap == NULL) {
-    cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
     exit(1);
   }
 
@@ -30,7 +30,7 @@ MinHeap<E>::MinHeap(E arr[], int n) {
   heap = new E[maxHeapSize];
 
   if (heap == NULL) {
-    cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
     exit(1);
   }
 

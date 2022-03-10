@@ -1,11 +1,11 @@
 /*!
  * @file bubble_sort.cpp
- * @author CyberDash璁＄畻鏈鸿�冪爺, cyberdash@163.com(鎶栭煶id:cyberdash_yuan)
- * @brief 鍐掓场鎺掑簭
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 冒泡排序
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash璁＄畻鏈鸿�冪爺
+ *  CyberDash计算机考研
  */
 
 #include "util.h"

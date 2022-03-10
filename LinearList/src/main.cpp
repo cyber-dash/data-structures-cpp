@@ -1,5 +1,5 @@
 //
-// Created by cyberdash@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/7/15.
+// Created by cyberdash@163.com(¶¶Òô: cyberdash_yuan) on 2020/7/15.
 //
 
 #include "link_list_test.h"

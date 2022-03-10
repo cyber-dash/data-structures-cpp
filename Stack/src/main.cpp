@@ -1,11 +1,11 @@
 /*!
  * @file main.cpp
- * @author CyberDash璁＄畻鏈鸿�冪爺, cyberdash@163.com(鎶栭煶id:cyberdash_yuan)
- * @brief 鏍坉emo婕旂ず
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 栈demo演示
  * @version 0.2.1
  * @date 2020-07-15
  * @copyright Copyright (c) 2021
- *  CyberDash璁＄畻鏈鸿�冪爺
+ *  CyberDash计算机考研
  */
 
 #include <iostream>
@@ -19,7 +19,7 @@ int main() {
 
   LinkStack<int> test_stack;
 
-  // 鎿嶄綔 int 绫诲瀷鐨勬爤
+  // 操作 int 类型的栈
   test_stack.Push(1);
   test_stack.Push(2);
   test_stack.Push(3);

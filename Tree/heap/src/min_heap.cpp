@@ -1,5 +1,5 @@
 //
-// Created by alei_go@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/11/1.
+// Created by alei_go@163.com(¶¶Òô: cyberdash_yuan) on 2020/11/1.
 //
 
 #include <iostream>
@@ -17,7 +17,7 @@ MinHeap<E>::MinHeap(int size) {
 
   heap_array_ = new E[max_size_];
   if (heap_array_ == NULL) {
-    cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
     exit(1);
   }
 
@@ -31,7 +31,7 @@ MinHeap<E>::MinHeap(E arr[], int arr_size) {
   heap_array_ = new E[max_size_];
 
   if (heap_array_ == NULL) {
-    cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
     exit(1);
   }
 
@@ -143,11 +143,11 @@ template<class T>
 void MinHeap<T>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDashæˆå‘˜:"<<endl
-      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸Žé€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
-      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)"<<endl<<endl
-      <<"æ•°æ®ç»“æž„å¼€æºä»£ç (C++æ¸…åŽå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑÐ\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDash³ÉÔ±:"<<endl
+      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ÐÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ÐÅÏ¢ÓëÍ¨ÐÅÏµÍ³ÑÐ¾¿Éú)"<<endl
+      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊýÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑÐ¾¿Éú)"<<endl<<endl
+      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑÐ¾¿Éú)"<<endl<<endl
+      <<"Êý¾Ý½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉý¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }

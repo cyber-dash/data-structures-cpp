@@ -1,11 +1,11 @@
 /*!
  * @file queue.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief é˜Ÿåˆ—è™šåŸºç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¶ÓÁĞĞé»ùÀà
  * @version 0.2.1
  * @date 2021-07-14
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #ifndef CYBER_DASH_QUEUE_H
@@ -13,42 +13,42 @@
 
 
 /*!
- * @brief é˜Ÿåˆ—è™šåŸºç±»
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @brief ¶ÓÁĞĞé»ùÀà
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
  */
 template<class T>
 class Queue {
 public:
    /*!
-   * @brief å…¥é˜Ÿ
-   * @param data å…¥é˜ŸèŠ‚ç‚¹çš„å€¼
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief Èë¶Ó
+   * @param data Èë¶Ó½ÚµãµÄÖµ
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual bool EnQueue(const T& data) = 0;
 
    /*!
-   * @brief å‡ºé˜Ÿ
-   * @param data å‡ºé˜ŸèŠ‚ç‚¹çš„å€¼
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief ³ö¶Ó
+   * @param data ³ö¶Ó½ÚµãµÄÖµ
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual bool DeQueue(T& data) = 0;
 
    /*!
-   * @brief è·å–å¤´èŠ‚ç‚¹
-   * @param data å¤´èŠ‚ç‚¹çš„å€¼
-   * @return æ˜¯å¦è·å–æˆåŠŸ
+   * @brief »ñÈ¡Í·½Úµã
+   * @param data Í·½ÚµãµÄÖµ
+   * @return ÊÇ·ñ»ñÈ¡³É¹¦
    */
   virtual bool GetFront(T& data) const = 0;
 
    /*!
-   * @brief é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
-   * @return æ˜¯å¦ä¸ºç©º
+   * @brief ¶ÓÁĞÊÇ·ñÎª¿Õ
+   * @return ÊÇ·ñÎª¿Õ
    */
   virtual bool IsEmpty() const = 0;
 
    /*!
-   * @brief è·å–é˜Ÿåˆ—é•¿åº¦
-   * @return é˜Ÿåˆ—é•¿åº¦
+   * @brief »ñÈ¡¶ÓÁĞ³¤¶È
+   * @return ¶ÓÁĞ³¤¶È
    */
   virtual int GetSize() const = 0;
 };

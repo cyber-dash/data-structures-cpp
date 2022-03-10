@@ -1,11 +1,11 @@
 /*!
  * @file test.cpp
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief é˜Ÿåˆ—æµ‹è¯•.cppæ–‡ä»¶
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief ¶ÓÁĞ²âÊÔ.cppÎÄ¼ş
  * @version 0.2.1
  * @date 2021-10-9
  * @copyright Copyright (c) 2021
- *  CyberDashè®¡ç®—æœºè€ƒç ”
+ *  CyberDash¼ÆËã»ú¿¼ÑĞ
  */
 
 #include "test.h"
@@ -17,19 +17,19 @@ void TestGetSize() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test Queue GetSize                     |"<<endl;
-  cout<<"|                        æµ‹è¯•é˜Ÿåˆ—Size                        |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔ¶ÓÁĞSize                        |"<<endl<<endl<<endl;
 
   LinkQueue<string> old_memory_queue;
 
   string old_memory[12] = {
-      "ååå¤å¤æœˆå…‰å¤ªè¿·æƒ‘", "å´è¿˜æŒ‚åœ¨å¤©ä¸€è¾¹å˜²ç¬‘æˆ‘",
-      "è¿‡åˆ†åœ¨æ„åˆ«äººç»™çš„å†·æ¼ ", "æˆ‘è¯¥å¼€å§‹ä¸ºè‡ªå·±è€Œæ´»",
+      "·´·´¸´¸´ÔÂ¹âÌ«ÃÔ»ó", "È´»¹¹ÒÔÚÌìÒ»±ß³°Ğ¦ÎÒ",
+      "¹ı·ÖÔÚÒâ±ğÈË¸øµÄÀäÄ®", "ÎÒ¸Ã¿ªÊ¼Îª×Ô¼º¶ø»î",
 
-      "è½»è½»æŠŠæ²‰é‡çš„è¿‡å»ä¸Šé”", "ç¦»å¼€æ›¾ç»è¢«ä½ æººçˆ±çš„æˆ‘",
-      "ç¦»å¼€é‚£ç¦»ä¸å¼€ä½ çš„æ‡¦å¼±", "ç»§ç»­å¾€å‰æ‰¾å¦ä¸€ä¸ªè‡ªæˆ‘",
+      "ÇáÇá°Ñ³ÁÖØµÄ¹ıÈ¥ÉÏËø", "Àë¿ªÔø¾­±»ÄãÄç°®µÄÎÒ",
+      "Àë¿ªÄÇÀë²»¿ªÄãµÄÅ³Èõ", "¼ÌĞøÍùÇ°ÕÒÁíÒ»¸ö×ÔÎÒ",
 
-      "ç»ˆäºæŠŠå¿ƒç—›çš„è¿‡å»æŒ£è„±", "ç¦»å¼€è‡ªå·±çœ‹æ¸…çœŸå‡å¯¹é”™",
-      "ä¸æ˜¯é£è›¾æ²¡èµ„æ ¼æ‰‘ç«", "ä¼¤åˆ°äº†åº•æ€»æœ‰æ¸…é†’æ—¶å€™"
+      "ÖÕÓÚ°ÑĞÄÍ´µÄ¹ıÈ¥ÕõÍÑ", "Àë¿ª×Ô¼º¿´ÇåÕæ¼Ù¶Ô´í",
+      "²»ÊÇ·É¶êÃ»×Ê¸ñÆË»ğ", "ÉËµ½ÁËµ××ÜÓĞÇåĞÑÊ±ºò"
   };
 
   for (int i = 0; i < 12; i++) {
@@ -47,7 +47,7 @@ void TestEnQueue() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test Queue Enqueue                     |"<<endl;
-  cout<<"|                        æµ‹è¯•é˜Ÿåˆ—å…¥é˜Ÿ                         |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔ¶ÓÁĞÈë¶Ó                         |"<<endl<<endl<<endl;
 
   LinkQueue<int> int_queue;
 
@@ -68,7 +68,7 @@ void TestDeQueue() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test Queue Dequeue                     |"<<endl;
-  cout<<"|                        æµ‹è¯•é˜Ÿåˆ—å‡ºé˜Ÿ                         |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔ¶ÓÁĞ³ö¶Ó                         |"<<endl<<endl<<endl;
 
   LinkQueue<double> double_queue;
 
@@ -96,17 +96,17 @@ void TestGetFrontAndGetRear() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                Test Queue GetFront & GetRear              |"<<endl;
-  cout<<"|                   æµ‹è¯•é˜Ÿåˆ—è·å–é˜Ÿå¤´/è·å–é˜Ÿå°¾                   |"<<endl<<endl<<endl;
+  cout<<"|                   ²âÊÔ¶ÓÁĞ»ñÈ¡¶ÓÍ·/»ñÈ¡¶ÓÎ²                   |"<<endl<<endl<<endl;
 
   LinkQueue<string> string_queue;
 
-  string_queue.EnQueue("å¬æˆ‘çš„");
-  string_queue.EnQueue("ä¹°ä¹°ä¹°");
-  string_queue.EnQueue("ä¹°å†°ç®±");
-  string_queue.EnQueue("ä»€ä¹ˆéƒ½è¦å¬æˆ‘çš„");
-  string_queue.EnQueue("é—¹å¤Ÿäº†æ²¡æœ‰");
-  string_queue.EnQueue("æˆ‘ä¸è¦ä½ è§‰å¾—");
-  string_queue.EnQueue("æˆ‘è¦æˆ‘è§‰å¾—");
+  string_queue.EnQueue("ÌıÎÒµÄ");
+  string_queue.EnQueue("ÂòÂòÂò");
+  string_queue.EnQueue("Âò±ùÏä");
+  string_queue.EnQueue("Ê²Ã´¶¼ÒªÌıÎÒµÄ");
+  string_queue.EnQueue("ÄÖ¹»ÁËÃ»ÓĞ");
+  string_queue.EnQueue("ÎÒ²»ÒªÄã¾õµÃ");
+  string_queue.EnQueue("ÎÒÒªÎÒ¾õµÃ");
 
   string front_data;
   string rear_data;
@@ -124,7 +124,7 @@ void TestIsEmpty() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                   Test Queue MakeEmpty                    |"<<endl;
-  cout<<"|                        æµ‹è¯•æ¸…ç©ºé˜Ÿåˆ—                         |"<<endl<<endl<<endl;
+  cout<<"|                        ²âÊÔÇå¿Õ¶ÓÁĞ                         |"<<endl<<endl<<endl;
   LinkQueue<string> LinkinPark_song_queue;
 
   LinkinPark_song_queue.EnQueue("<In the end>");
@@ -157,17 +157,17 @@ void TestOperatorCout() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test Operator <<                     |"<<endl;
-  cout<<"|                      æµ‹è¯•é˜Ÿåˆ—operator<<                    |"<<endl<<endl<<endl;
+  cout<<"|                      ²âÊÔ¶ÓÁĞoperator<<                    |"<<endl<<endl<<endl;
 
   LinkQueue<string> string_queue;
 
-  string_queue.EnQueue("å¬æˆ‘çš„");
-  string_queue.EnQueue("ä¹°ä¹°ä¹°");
-  string_queue.EnQueue("ä¹°å†°ç®±");
-  string_queue.EnQueue("ä»€ä¹ˆéƒ½è¦å¬æˆ‘çš„");
-  string_queue.EnQueue("é—¹å¤Ÿäº†æ²¡æœ‰");
-  string_queue.EnQueue("æˆ‘ä¸è¦ä½ è§‰å¾—");
-  string_queue.EnQueue("æˆ‘è¦æˆ‘è§‰å¾—");
+  string_queue.EnQueue("ÌıÎÒµÄ");
+  string_queue.EnQueue("ÂòÂòÂò");
+  string_queue.EnQueue("Âò±ùÏä");
+  string_queue.EnQueue("Ê²Ã´¶¼ÒªÌıÎÒµÄ");
+  string_queue.EnQueue("ÄÖ¹»ÁËÃ»ÓĞ");
+  string_queue.EnQueue("ÎÒ²»ÒªÄã¾õµÃ");
+  string_queue.EnQueue("ÎÒÒªÎÒ¾õµÃ");
 
   cout<<string_queue;
 }

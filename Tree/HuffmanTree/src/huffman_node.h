@@ -1,5 +1,5 @@
 //
-// Created by alei_go@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/11/1.
+// Created by alei_go@163.com(¶¶Òô: cyberdash_yuan) on 2020/11/1.
 //
 
 #ifndef CYBER_DASH_HUFFMAN_TREE_NODE_H

@@ -1,11 +1,11 @@
 /*!
  * @file seq_list_test.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief é¡ºåºè¡¨æµ‹è¯•ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Ë³Ğò±í²âÊÔÀà
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021
- * **CyberDashè®¡ç®—æœºè€ƒç ”**
+ * **CyberDash¼ÆËã»ú¿¼ÑĞ**
  */
 
 #ifndef CYBER_DASH_SEQ_LIST_TEST_H
@@ -19,33 +19,33 @@ using namespace std;
 
 
 /*!
- * @brief é¡ºåºè¡¨æµ‹è¯•ç±»
+ * @brief Ë³Ğò±í²âÊÔÀà
  */
 class SeqListTest {
 public:
-  /*! @brief æµ‹è¯•æ’å…¥ */
+  /*! @brief ²âÊÔ²åÈë */
   static void TestInsert();
-  /*! @brief æµ‹è¯•åˆ é™¤ */
+  /*! @brief ²âÊÔÉ¾³ı */
   static void TestRemove();
-  /*! @brief æµ‹è¯•æ€»é•¿åº¦ */
+  /*! @brief ²âÊÔ×Ü³¤¶È */
   static void TestSize();
-  /*! @brief æµ‹è¯•å½“å‰é•¿åº¦ */
+  /*! @brief ²âÊÔµ±Ç°³¤¶È */
   static void TestLength();
-  /*! @brief æµ‹è¯•æ˜¯å¦ä¸ºç©º */
+  /*! @brief ²âÊÔÊÇ·ñÎª¿Õ */
   static void TestEmpty();
-  /*! @brief æµ‹è¯•æœç´¢ */
+  /*! @brief ²âÊÔËÑË÷ */
   static void TestSearch();
-  /*! @brief æµ‹è¯•å®šä½ */
+  /*! @brief ²âÊÔ¶¨Î» */
   static void TestLocate();
-  /*! @brief æµ‹è¯•è·å–æ•°æ® */
+  /*! @brief ²âÊÔ»ñÈ¡Êı¾İ */
   static void TestGetData();
-  /*! @brief æµ‹è¯•è®¾ç½®æ•°æ® */
+  /*! @brief ²âÊÔÉèÖÃÊı¾İ */
   static void TestSetData();
-  /*! @brief æµ‹è¯•æ’åº */
+  /*! @brief ²âÊÔÅÅĞò */
   static void TestSort();
-  /*! @brief æµ‹è¯•ä¸¤ä¸ªé¡ºåºè¡¨å¹¶é›† */
+  /*! @brief ²âÊÔÁ½¸öË³Ğò±í²¢¼¯ */
   static void TestUnion();
-  /*! @brief æµ‹è¯•ä¸¤ä¸ªé¡ºåºè¡¨äº¤é›† */
+  /*! @brief ²âÊÔÁ½¸öË³Ğò±í½»¼¯ */
   static void TestIntersection();
 };
 
@@ -54,7 +54,7 @@ void SeqListTest::TestInsert() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Insert                     "<<endl;
-  cout<<"                         æµ‹è¯•é¡ºåºè¡¨æ’å…¥                        "<<endl<<endl<<endl;
+  cout<<"                         ²âÊÔË³Ğò±í²åÈë                        "<<endl<<endl<<endl;
 
   SeqList<int> seq_list(3);
 
@@ -76,7 +76,7 @@ void SeqListTest::TestRemove() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Remove                     "<<endl;
-  cout<<"                         æµ‹è¯•é¡ºåºè¡¨åˆ é™¤                         "<<endl<<endl<<endl;
+  cout<<"                         ²âÊÔË³Ğò±íÉ¾³ı                         "<<endl<<endl<<endl;
 
   SeqList<int> seq_list(3);
 
@@ -88,7 +88,7 @@ void SeqListTest::TestRemove() {
   seq_list.Insert(1, num2);
   seq_list.Insert(2, num3);
 
-  // åˆ é™¤ä½ç½®3(æ³¨æ„æœ¬å®ç°æ˜¯ä»1å¼€å§‹è®¡æ•°)çš„æ•°æ®
+  // É¾³ıÎ»ÖÃ3(×¢Òâ±¾ÊµÏÖÊÇ´Ó1¿ªÊ¼¼ÆÊı)µÄÊı¾İ
   int delete_num;
   seq_list.Remove(3, delete_num);
 
@@ -102,7 +102,7 @@ void SeqListTest::TestSize() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                      Test SeqList Size                      "<<endl;
-  cout<<"                        æµ‹è¯•é¡ºåºè¡¨Size                         "<<endl<<endl<<endl;
+  cout<<"                        ²âÊÔË³Ğò±íSize                         "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
 
@@ -116,7 +116,7 @@ void SeqListTest::TestLength() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Length                     "<<endl;
-  cout<<"                       æµ‹è¯•é¡ºåºè¡¨Length                        "<<endl<<endl<<endl;
+  cout<<"                       ²âÊÔË³Ğò±íLength                        "<<endl<<endl<<endl;
 
   SeqList<string> seq_list(3);
 
@@ -138,7 +138,7 @@ void SeqListTest::TestEmpty() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Empty                      "<<endl;
-  cout<<"                        æµ‹è¯•é¡ºåºè¡¨Empty                        "<<endl<<endl<<endl;
+  cout<<"                        ²âÊÔË³Ğò±íEmpty                        "<<endl<<endl<<endl;
 
   SeqList<string> seq_list(3);
 
@@ -171,7 +171,7 @@ void SeqListTest::TestSearch() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList Search                     "<<endl;
-  cout<<"                         æµ‹è¯•é¡ºåºè¡¨æŸ¥æ‰¾                        "<<endl<<endl<<endl;
+  cout<<"                         ²âÊÔË³Ğò±í²éÕÒ                        "<<endl<<endl<<endl;
 
   SeqList<int> seq_list(3);
 
@@ -195,7 +195,7 @@ void SeqListTest::TestLocate() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList LocateByDirection                     "<<endl;
-  cout<<"                        æµ‹è¯•é¡ºåºè¡¨Locate                       "<<endl<<endl<<endl;
+  cout<<"                        ²âÊÔË³Ğò±íLocate                       "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
 
@@ -219,7 +219,7 @@ void SeqListTest::TestGetData() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList GetData                    "<<endl;
-  cout<<"                       æµ‹è¯•é¡ºåºè¡¨GetData                       "<<endl<<endl<<endl;
+  cout<<"                       ²âÊÔË³Ğò±íGetData                       "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
 
@@ -244,7 +244,7 @@ void SeqListTest::TestSetData() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                     Test SeqList SetData                    "<<endl;
-  cout<<"                       æµ‹è¯•é¡ºåºè¡¨SetData                       "<<endl<<endl<<endl;
+  cout<<"                       ²âÊÔË³Ğò±íSetData                       "<<endl<<endl<<endl;
 
   SeqList<double> seq_list(3);
 
@@ -273,7 +273,7 @@ void SeqListTest::TestSort() {
     cout<<endl;
     cout<<"------------------------- CyberDash -------------------------"<<endl;
     cout<<"                      Test SeqList Sort                      "<<endl;
-    cout<<"                         æµ‹è¯•é¡ºåºè¡¨Sort                        "<<endl<<endl<<endl;
+    cout<<"                         ²âÊÔË³Ğò±íSort                        "<<endl<<endl<<endl;
 
     SeqList<double> seq_list(5);
 
@@ -296,7 +296,7 @@ void SeqListTest::TestUnion() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"                      Test SeqList Union                     "<<endl;
-  cout<<"                        æµ‹è¯•é¡ºåºè¡¨Union                        "<<endl<<endl<<endl;
+  cout<<"                        ²âÊÔË³Ğò±íUnion                        "<<endl<<endl<<endl;
 
   SeqList<int> seq_list_a(10);
   SeqList<int> seq_list_b(10);
@@ -322,7 +322,7 @@ void SeqListTest::TestIntersection() {
   cout<<endl;
   cout<<"------------------------- CyberDash -------------------------"<<endl;
   cout<<"               Test SeqList SeqListIntersection              "<<endl;
-  cout<<"                         æµ‹è¯•é¡ºåºè¡¨äº¤é›†                        "<<endl<<endl<<endl;
+  cout<<"                         ²âÊÔË³Ğò±í½»¼¯                        "<<endl<<endl<<endl;
 
   SeqList<int> seq_list_a(10);
   SeqList<int> seq_list_b(10);

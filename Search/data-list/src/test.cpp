@@ -13,23 +13,23 @@ void TestSearchListSeqSearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                  Test SearchListSeqSearch                 |"<<endl;
-  cout<<"|                      æµ‹è¯•é¡ºåºè¡¨çš„é¡ºåºæœç´¢                    |"<<endl;
+  cout<<"|                      ²âÊÔË³Ðò±íµÄË³ÐòËÑË÷                    |"<<endl;
 
   int size = 100;
   SearchList<string, string> search_list(size);
 
-  search_list.Insert("My hometown", "åŒ—äº¬");
-  search_list.Insert("My senior high school", "åŒ—äº¬æ±‡æ–‡ä¸­å­¦");
-  search_list.Insert("My college", "åŒ—äº¬é‚®ç”µå¤§å­¦");
+  search_list.Insert("My hometown", "±±¾©");
+  search_list.Insert("My senior high school", "±±¾©»ãÎÄÖÐÑ§");
+  search_list.Insert("My college", "±±¾©ÓÊµç´óÑ§");
 
   int pos1 = search_list.SeqSearch("My hometown");
   int pos2 = search_list.SeqSearch("My senior high school");
   int pos3 = search_list.SeqSearch("My college");
 
-  cout<<"(ä»Ž1å¼€å§‹)"<<endl;
-  cout<<"\"My hometown\"æœç´¢ä½ç½®: "<<pos1<<endl;
-  cout<<"\"My senior high school\"æœç´¢ä½ç½®: "<<pos2<<endl;
-  cout<<"\"My college\"æœç´¢ä½ç½®: "<<pos3<<endl;
+  cout<<"(´Ó1¿ªÊ¼)"<<endl;
+  cout<<"\"My hometown\"ËÑË÷Î»ÖÃ: "<<pos1<<endl;
+  cout<<"\"My senior high school\"ËÑË÷Î»ÖÃ: "<<pos2<<endl;
+  cout<<"\"My college\"ËÑË÷Î»ÖÃ: "<<pos3<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -39,23 +39,23 @@ void TestSearchListSeqSearchRecursive() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|             Test SearchListSeqSearchRecursive             |"<<endl;
-  cout<<"|                    æµ‹è¯•é¡ºåºè¡¨çš„é¡ºåºæœç´¢(é€’å½’)                 |"<<endl;
+  cout<<"|                    ²âÊÔË³Ðò±íµÄË³ÐòËÑË÷(µÝ¹é)                 |"<<endl;
 
   int size = 100;
   SearchList<string, string> search_list(size);
 
-  search_list.Insert("My hometown", "åŒ—äº¬");
-  search_list.Insert("My senior high school", "åŒ—äº¬æ±‡æ–‡ä¸­å­¦");
-  search_list.Insert("My college", "åŒ—äº¬é‚®ç”µå¤§å­¦");
+  search_list.Insert("My hometown", "±±¾©");
+  search_list.Insert("My senior high school", "±±¾©»ãÎÄÖÐÑ§");
+  search_list.Insert("My college", "±±¾©ÓÊµç´óÑ§");
 
   int pos1 = search_list.SeqSearchRecursive("My hometown", 1);
   int pos2 = search_list.SeqSearchRecursive("My senior high school", 1);
   int pos3 = search_list.SeqSearchRecursive("My college", 1);
 
-  cout<<"(ä»Ž1å¼€å§‹)"<<endl;
-  cout<<"\"My hometown\"æœç´¢ä½ç½®: "<<pos1<<endl;
-  cout<<"\"My senior high school\"æœç´¢ä½ç½®: "<<pos2<<endl;
-  cout<<"\"My college\"æœç´¢ä½ç½®: "<<pos3<<endl;
+  cout<<"(´Ó1¿ªÊ¼)"<<endl;
+  cout<<"\"My hometown\"ËÑË÷Î»ÖÃ: "<<pos1<<endl;
+  cout<<"\"My senior high school\"ËÑË÷Î»ÖÃ: "<<pos2<<endl;
+  cout<<"\"My college\"ËÑË÷Î»ÖÃ: "<<pos3<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -65,23 +65,23 @@ void TestSortedListSeqSearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                  Test SortedListSeqSearch                 |"<<endl;
-  cout<<"|                    æµ‹è¯•æœ‰åºé¡ºåºè¡¨çš„é¡ºåºæœç´¢                   |"<<endl;
+  cout<<"|                    ²âÊÔÓÐÐòË³Ðò±íµÄË³ÐòËÑË÷                   |"<<endl;
 
   int size = 100;
   SortedList<string, string> sorted_list(size);
 
-  sorted_list.Insert("My hometown", "åŒ—äº¬");
-  sorted_list.Insert("My senior high school", "åŒ—äº¬æ±‡æ–‡ä¸­å­¦");
-  sorted_list.Insert("My college", "åŒ—äº¬é‚®ç”µå¤§å­¦");
+  sorted_list.Insert("My hometown", "±±¾©");
+  sorted_list.Insert("My senior high school", "±±¾©»ãÎÄÖÐÑ§");
+  sorted_list.Insert("My college", "±±¾©ÓÊµç´óÑ§");
 
   int pos1 = sorted_list.SeqSearch("My hometown");
   int pos2 = sorted_list.SeqSearch("My senior high school");
   int pos3 = sorted_list.SeqSearch("My college");
 
-  cout<<"(ä»Ž1å¼€å§‹)"<<endl;
-  cout<<"\"My hometown\"æœç´¢ä½ç½®: "<<pos1<<endl;
-  cout<<"\"My senior high school\"æœç´¢ä½ç½®: "<<pos2<<endl;
-  cout<<"\"My college\"æœç´¢ä½ç½®: "<<pos3<<endl;
+  cout<<"(´Ó1¿ªÊ¼)"<<endl;
+  cout<<"\"My hometown\"ËÑË÷Î»ÖÃ: "<<pos1<<endl;
+  cout<<"\"My senior high school\"ËÑË÷Î»ÖÃ: "<<pos2<<endl;
+  cout<<"\"My college\"ËÑË÷Î»ÖÃ: "<<pos3<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -91,23 +91,23 @@ void TestSortedListBinarySearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                Test SortedListBinarySearch                |"<<endl;
-  cout<<"|                æµ‹è¯•æœ‰åºé¡ºåºè¡¨çš„æŠ˜åŠæœç´¢(éžé€’å½’)                   |"<<endl;
+  cout<<"|                ²âÊÔÓÐÐòË³Ðò±íµÄÕÛ°ëËÑË÷(·ÇµÝ¹é)                   |"<<endl;
 
   int size = 100;
   SortedList<string, string> sorted_list(size);
 
-  sorted_list.Insert("My hometown", "åŒ—äº¬");
-  sorted_list.Insert("My senior high school", "åŒ—äº¬æ±‡æ–‡ä¸­å­¦");
-  sorted_list.Insert("My college", "åŒ—äº¬é‚®ç”µå¤§å­¦");
+  sorted_list.Insert("My hometown", "±±¾©");
+  sorted_list.Insert("My senior high school", "±±¾©»ãÎÄÖÐÑ§");
+  sorted_list.Insert("My college", "±±¾©ÓÊµç´óÑ§");
 
   int pos1 = sorted_list.BinarySearch("My hometown");
   int pos2 = sorted_list.BinarySearch("My senior high school");
   int pos3 = sorted_list.BinarySearch("My college");
 
-  cout<<"(ä»Ž1å¼€å§‹)"<<endl;
-  cout<<"\"My hometown\"æœç´¢ä½ç½®: "<<pos1<<endl;
-  cout<<"\"My senior high school\"æœç´¢ä½ç½®: "<<pos2<<endl;
-  cout<<"\"My college\"æœç´¢ä½ç½®: "<<pos3<<endl;
+  cout<<"(´Ó1¿ªÊ¼)"<<endl;
+  cout<<"\"My hometown\"ËÑË÷Î»ÖÃ: "<<pos1<<endl;
+  cout<<"\"My senior high school\"ËÑË÷Î»ÖÃ: "<<pos2<<endl;
+  cout<<"\"My college\"ËÑË÷Î»ÖÃ: "<<pos3<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -117,23 +117,23 @@ void TestSortedListBinarySearchRecursive() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|            Test SortedListBinarySearchRecursive           |"<<endl;
-  cout<<"|                  æµ‹è¯•æœ‰åºé¡ºåºè¡¨çš„æŠ˜åŠæœç´¢(é€’å½’)               |"<<endl;
+  cout<<"|                  ²âÊÔÓÐÐòË³Ðò±íµÄÕÛ°ëËÑË÷(µÝ¹é)               |"<<endl;
 
   int size = 100;
   SortedList<string, string> sorted_list(size);
 
-  sorted_list.Insert("My hometown", "åŒ—äº¬");
-  sorted_list.Insert("My senior high school", "åŒ—äº¬æ±‡æ–‡ä¸­å­¦");
-  sorted_list.Insert("My college", "åŒ—äº¬é‚®ç”µå¤§å­¦");
+  sorted_list.Insert("My hometown", "±±¾©");
+  sorted_list.Insert("My senior high school", "±±¾©»ãÎÄÖÐÑ§");
+  sorted_list.Insert("My college", "±±¾©ÓÊµç´óÑ§");
 
   int pos1 = sorted_list.BinarySearchRecursive("My hometown", 1, sorted_list.Length());
   int pos2 = sorted_list.BinarySearchRecursive("My senior high school", 1, sorted_list.Length());
   int pos3 = sorted_list.BinarySearchRecursive("My college", 1, sorted_list.Length());
 
-  cout<<"(ä»Ž1å¼€å§‹)"<<endl;
-  cout<<"\"My hometown\"æœç´¢ä½ç½®: "<<pos1<<endl;
-  cout<<"\"My senior high school\"æœç´¢ä½ç½®: "<<pos2<<endl;
-  cout<<"\"My college\"æœç´¢ä½ç½®: "<<pos3<<endl;
+  cout<<"(´Ó1¿ªÊ¼)"<<endl;
+  cout<<"\"My hometown\"ËÑË÷Î»ÖÃ: "<<pos1<<endl;
+  cout<<"\"My senior high school\"ËÑË÷Î»ÖÃ: "<<pos2<<endl;
+  cout<<"\"My college\"ËÑË÷Î»ÖÃ: "<<pos3<<endl;
 
   cout<<"-------------------------------------------------------------"<<endl;
 }

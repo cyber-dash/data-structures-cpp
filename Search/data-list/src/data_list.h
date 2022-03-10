@@ -106,7 +106,7 @@ bool DataList<Elem, Key>::Remove(const Key& key, Elem& elem) {
     return false;
   }
 
-  // éå†, æ‰¾åˆ°å¯¹åº”elemç›¸åŒçš„, å¦‚æœæ²¡æœ‰åˆ™éå†è‡³æ•°ç»„ç´¢å¼•current_size_
+  // ±éÀú, ÕÒµ½¶ÔÓ¦elemÏàÍ¬µÄ, Èç¹ûÃ»ÓĞÔò±éÀúÖÁÊı×éË÷Òıcurrent_size_
   int i;
   for (i = 0; i < current_size_ && element_array_[i].GetKey() != key; i++) {
   }

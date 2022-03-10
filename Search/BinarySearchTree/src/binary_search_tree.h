@@ -62,46 +62,46 @@ public:
   BST<Elem, Key>& operator=(const BST<Elem, Key>& origin_BST);
 
 protected:
-  BSTNode<Elem, Key>* root_node_ptr_; // æ ¹èŠ‚ç‚¹
+  BSTNode<Elem, Key>* root_node_ptr_; // ¸ù½Úµã
 
-  // å­æ ‘ä¸­æ’å…¥èŠ‚ç‚¹(é€’å½’)
+  // ×ÓÊ÷ÖĞ²åÈë½Úµã(µİ¹é)
   bool InsertInSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 
-  // å­æ ‘ä¸­åˆ é™¤èŠ‚ç‚¹(é€’å½’)
+  // ×ÓÊ÷ÖĞÉ¾³ı½Úµã(µİ¹é)
   bool RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr);
 
-  // åœ¨å­æ ‘ä¸­, ä½¿ç”¨å…³é”®ç è¿›è¡Œæœç´¢
+  // ÔÚ×ÓÊ÷ÖĞ, Ê¹ÓÃ¹Ø¼üÂë½øĞĞËÑË÷
   BSTNode<Elem, Key>* SearchInSubTree_(Key key, BSTNode<Elem, Key>* sub_tree_root_ptr);
 
   int SubTreeHeight_(BSTNode<Elem, Key>* sub_tree_root_ptr);
 
-  // æ¸…é™¤å­æ ‘(é€’å½’)
+  // Çå³ı×ÓÊ÷(µİ¹é)
   void MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr);
 
-  // æ‰“å°å­æ ‘(é€’å½’/ä¸­åº)
+  // ´òÓ¡×ÓÊ÷(µİ¹é/ÖĞĞò)
   void PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>* p)) const;
 
-  // å¤åˆ¶ä¸€é¢—æ ‘
+  // ¸´ÖÆÒ»¿ÅÊ÷
   BSTNode<Elem, Key>* Copy_(const BSTNode<Elem, Key>* origin_tree_root_ptr);
 
-  // å­æ ‘ä¸­å…³é”®ç æœ€å°é¡¹
+  // ×ÓÊ÷ÖĞ¹Ø¼üÂë×îĞ¡Ïî
   BSTNode<Elem, Key>* MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
 
-  // å­æ ‘ä¸­å…³é”®ç æœ€å¤§é¡¹
+  // ×ÓÊ÷ÖĞ¹Ø¼üÂë×î´óÏî
   BSTNode<Elem, Key>* MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const;
 };
 
 
 /**
- * @brief åœ¨å­æ ‘ä¸­, ä½¿ç”¨å…³é”®ç è¿›è¡Œæœç´¢
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param key å…³é”®ç 
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @return æœç´¢ç»“æœ
+ * @brief ÔÚ×ÓÊ÷ÖĞ, Ê¹ÓÃ¹Ø¼üÂë½øĞĞËÑË÷
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param key ¹Ø¼üÂë
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @return ËÑË÷½á¹û
  * @note
- * 1. å¦‚æœå­æ ‘æ ¹èŠ‚ç‚¹ä¸ºNULL, è¿”å›NULL
- * 2. ä½¿ç”¨å½“å‰éå†èŠ‚ç‚¹çš„key, ä¸å‚æ•°keyä½œæ¯”è¾ƒ, åˆ†åˆ«è¿›è¡Œé€’å½’å’Œè¿”å›æœç´¢ç»“æœ(ç»ˆæ­¢é€’å½’)
+ * 1. Èç¹û×ÓÊ÷¸ù½ÚµãÎªNULL, ·µ»ØNULL
+ * 2. Ê¹ÓÃµ±Ç°±éÀú½ÚµãµÄkey, Óë²ÎÊıkey×÷±È½Ï, ·Ö±ğ½øĞĞµİ¹éºÍ·µ»ØËÑË÷½á¹û(ÖÕÖ¹µİ¹é)
  */
 template <class Elem, class Key>
 BSTNode<Elem, Key>* BST<Elem, Key>::SearchInSubTree_(Key key, BSTNode<Elem, Key>* sub_tree_root_ptr) {
@@ -138,17 +138,17 @@ Elem BST<Elem, Key>::Min() {
 
 
 /**
- * @brief å­æ ‘ä¸­æ’å…¥èŠ‚ç‚¹(é€’å½’)
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param elem æ•°æ®é¡¹
- * @param key å…³é”®ç 
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @return æ˜¯å¦æ’å…¥æˆåŠŸ
+ * @brief ×ÓÊ÷ÖĞ²åÈë½Úµã(µİ¹é)
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param elem Êı¾İÏî
+ * @param key ¹Ø¼üÂë
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @return ÊÇ·ñ²åÈë³É¹¦
  * @note
- * å¦‚æœæ ¹èŠ‚ç‚¹æŒ‡é’ˆä¸ºNULL, åˆ™åˆ›å»ºèŠ‚ç‚¹
- * åˆ¤æ–­æ’å…¥å…³é”®ç ä¸å­æ ‘æ ¹èŠ‚ç‚¹å…³é”®ç çš„å¤§å°å…³ç³», åœ¨å·¦å­æ ‘orå³å­æ ‘åšæ’å…¥æ“ä½œ(é€’å½’)
- * å¦‚æœå…³é”®ç ç›¸åŒ, åˆ™è¿”å›false
+ * Èç¹û¸ù½ÚµãÖ¸ÕëÎªNULL, Ôò´´½¨½Úµã
+ * ÅĞ¶Ï²åÈë¹Ø¼üÂëÓë×ÓÊ÷¸ù½Úµã¹Ø¼üÂëµÄ´óĞ¡¹ØÏµ, ÔÚ×ó×ÓÊ÷orÓÒ×ÓÊ÷×ö²åÈë²Ù×÷(µİ¹é)
+ * Èç¹û¹Ø¼üÂëÏàÍ¬, Ôò·µ»Øfalse
  */
 template <class Elem, class Key>
 bool BST<Elem, Key>::InsertInSubTree_(Elem elem, Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
@@ -176,17 +176,17 @@ BST<Elem, Key>::BST(Key key, Elem elem) {
 
 
 /**
- * @brief å­æ ‘ä¸­åˆ é™¤èŠ‚ç‚¹(é€’å½’)
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param key å¾…åˆ é™¤èŠ‚ç‚¹çš„æ•°æ®ç 
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
+ * @brief ×ÓÊ÷ÖĞÉ¾³ı½Úµã(µİ¹é)
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param key ´ıÉ¾³ı½ÚµãµÄÊı¾İÂë
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @return ÊÇ·ñÉ¾³ı³É¹¦
  * @note
- * 1. å¦‚æœå­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆä¸ºNULL, åˆ™è¿”å›false
- * 2. é€’å½’åˆ†æ²», æ‰¾åˆ°åˆ é™¤èŠ‚ç‚¹çš„ä½ç½®
- * 3. å¦‚æœæœ‰ä¸¤ä¸ªå­©å­èŠ‚ç‚¹, ä½¿ç”¨ä¸­åºå‰é©±oråç»§, æ›¿æ¢æ‰å¾…åˆ é™¤èŠ‚ç‚¹
- * 4. å¦‚æœåªæœ‰ä¸€ä¸ªå­©å­èŠ‚ç‚¹, åˆ™å°†è¯¥å­©å­æå‡è‡³å¾…åˆ é™¤èŠ‚ç‚¹
+ * 1. Èç¹û×ÓÊ÷¸ù½ÚµãÖ¸ÕëÎªNULL, Ôò·µ»Øfalse
+ * 2. µİ¹é·ÖÖÎ, ÕÒµ½É¾³ı½ÚµãµÄÎ»ÖÃ
+ * 3. Èç¹ûÓĞÁ½¸öº¢×Ó½Úµã, Ê¹ÓÃÖĞĞòÇ°Çıorºó¼Ì, Ìæ»»µô´ıÉ¾³ı½Úµã
+ * 4. Èç¹ûÖ»ÓĞÒ»¸öº¢×Ó½Úµã, Ôò½«¸Ãº¢×ÓÌáÉıÖÁ´ıÉ¾³ı½Úµã
  */
 template <class Elem, class Key>
 bool BST<Elem, Key>::RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_root_ptr) {
@@ -201,22 +201,22 @@ bool BST<Elem, Key>::RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_roo
     return RemoveInSubTree_(key, sub_tree_root_ptr->RightChildPtr());
   }
 
-  // åˆ é™¤sub_tree_root_ptr, ä½¿ç”¨ä¸­åºå‰é©±oråç»§æ›¿æ¢æ‰è¯¥èŠ‚ç‚¹, æ­¤å¤„ä½¿ç”¨åç»§
-  if (sub_tree_root_ptr->LeftChildPtr() != NULL && sub_tree_root_ptr->RightChildPtr() != NULL) { // å­˜åœ¨å·¦å³å­©å­
+  // É¾³ısub_tree_root_ptr, Ê¹ÓÃÖĞĞòÇ°Çıorºó¼ÌÌæ»»µô¸Ã½Úµã, ´Ë´¦Ê¹ÓÃºó¼Ì
+  if (sub_tree_root_ptr->LeftChildPtr() != NULL && sub_tree_root_ptr->RightChildPtr() != NULL) { // ´æÔÚ×óÓÒº¢×Ó
 
     BSTNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr->RightChildPtr();
     while (cur_node_ptr->LeftChildPtr()!= NULL) {
       cur_node_ptr = cur_node_ptr->LeftChildPtr();
     }
 
-    // æ‹¿åˆ°åç»§èŠ‚ç‚¹çš„æ•°æ®, ä½œä¸ºæ›¿æ¢æ•°æ®
+    // ÄÃµ½ºó¼Ì½ÚµãµÄÊı¾İ, ×÷ÎªÌæ»»Êı¾İ
     Elem replace_data = cur_node_ptr->GetData();
     Key replace_key = cur_node_ptr->GetKey();
 
     sub_tree_root_ptr->SetData(replace_data);
     sub_tree_root_ptr->SetKey(replace_key);
 
-    // åˆ é™¤æ›¿æ¢æ•°æ®åŸå…ˆæ‰€åœ¨çš„èŠ‚ç‚¹
+    // É¾³ıÌæ»»Êı¾İÔ­ÏÈËùÔÚµÄ½Úµã
     return RemoveInSubTree_(replace_key, sub_tree_root_ptr->RightChildPtr());
   } else {
     BSTNode<Elem, Key>* delete_node_ptr = sub_tree_root_ptr;
@@ -236,14 +236,14 @@ bool BST<Elem, Key>::RemoveInSubTree_(Key key, BSTNode<Elem, Key>*& sub_tree_roo
 
 
 /**
- * @brief æ¸…é™¤å­æ ‘(é€’å½’)
- * @tparam Elem æ•°æ®é¡¹ç±»å‹æ¨¡æ¿
- * @tparam Key å…³é”®ç ç±»å‹æ¨¡æ¿
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
+ * @brief Çå³ı×ÓÊ÷(µİ¹é)
+ * @tparam Elem Êı¾İÏîÀàĞÍÄ£°å
+ * @tparam Key ¹Ø¼üÂëÀàĞÍÄ£°å
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½ÚµãÖ¸Õë
  * @note
- * å¦‚æœsub_tree_root_pträ¸ºNULL, åˆ™é€’å½’ç»“æŸ
- * å¯¹å·¦å³å­æ ‘, é€’å½’æ‰§è¡Œå‡½æ•°
- * å¯¹å­æ ‘èŠ‚ç‚¹æ‰§è¡Œdeleteå’Œç½®NULLæ“ä½œ
+ * Èç¹ûsub_tree_root_ptrÎªNULL, Ôòµİ¹é½áÊø
+ * ¶Ô×óÓÒ×ÓÊ÷, µİ¹éÖ´ĞĞº¯Êı
+ * ¶Ô×ÓÊ÷½ÚµãÖ´ĞĞdeleteºÍÖÃNULL²Ù×÷
  */
 template <class Elem, class Key>
 void BST<Elem, Key>::MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr) {
@@ -261,20 +261,20 @@ void BST<Elem, Key>::MakeEmptySubTree_(BSTNode<Elem, Key>*& sub_tree_root_ptr) {
 
 
 /**
- * @brief æ‰“å°å­æ ‘(é€’å½’/ä¸­åº)
- * @tparam Elem æ•°æ®é¡¹ç±»å‹æ¨¡æ¿
- * @tparam Key å…³é”®ç ç±»å‹æ¨¡æ¿
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
- * @param visit è®¿é—®å‡½æ•°
+ * @brief ´òÓ¡×ÓÊ÷(µİ¹é/ÖĞĞò)
+ * @tparam Elem Êı¾İÏîÀàĞÍÄ£°å
+ * @tparam Key ¹Ø¼üÂëÀàĞÍÄ£°å
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½ÚµãÖ¸Õë
+ * @param visit ·ÃÎÊº¯Êı
  * @note
- * æ‰“å°æ ¼å¼: "[å­æ ‘æ ¹èŠ‚ç‚¹]([å­æ ‘æ ¹èŠ‚ç‚¹å·¦å­æ ‘], [å­æ ‘æ ¹èŠ‚ç‚¹å³å­æ ‘])"
+ * ´òÓ¡¸ñÊ½: "[×ÓÊ÷¸ù½Úµã]([×ÓÊ÷¸ù½Úµã×ó×ÓÊ÷], [×ÓÊ÷¸ù½ÚµãÓÒ×ÓÊ÷])"
  *
- * 1. è®¿é—®/æ‰“å°å­æ ‘æ ¹èŠ‚ç‚¹
- * 2. æ‰“å°â€œ(â€
- * 3. è®¿é—®/æ‰“å°å­æ ‘æ ¹èŠ‚ç‚¹çš„å·¦å­æ ‘
- * 4. æ‰“å°â€œ,â€
- * 5. è®¿é—®/æ‰“å°å­æ ‘æ ¹èŠ‚ç‚¹çš„å³å­æ ‘
- * 6. æ‰“å°â€œ)â€
+ * 1. ·ÃÎÊ/´òÓ¡×ÓÊ÷¸ù½Úµã
+ * 2. ´òÓ¡¡°(¡±
+ * 3. ·ÃÎÊ/´òÓ¡×ÓÊ÷¸ù½ÚµãµÄ×ó×ÓÊ÷
+ * 4. ´òÓ¡¡°,¡±
+ * 5. ·ÃÎÊ/´òÓ¡×ÓÊ÷¸ù½ÚµãµÄÓÒ×ÓÊ÷
+ * 6. ´òÓ¡¡°)¡±
  */
 template <class Elem, class Key>
 void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(BSTNode<Elem, Key>*)) const {
@@ -298,11 +298,11 @@ void BST<Elem, Key>::PrintSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr, void (
 
 
 /**
- * @brief å¤åˆ¶ä¸€é¢—æ ‘
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param origin_tree_root_ptr æºå­æ ‘
- * @return æ–°æ ‘çš„æ ¹èŠ‚ç‚¹
+ * @brief ¸´ÖÆÒ»¿ÅÊ÷
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param origin_tree_root_ptr Ô´×ÓÊ÷
+ * @return ĞÂÊ÷µÄ¸ù½Úµã
  */
 template <class Elem, class Key>
 BSTNode<Elem, Key>* BST<Elem, Key>::Copy_(const BSTNode<Elem, Key>* origin_tree_root_ptr) {
@@ -324,13 +324,13 @@ BSTNode<Elem, Key>* BST<Elem, Key>::Copy_(const BSTNode<Elem, Key>* origin_tree_
 
 
 /**
- * @brief å­æ ‘ä¸­å…³é”®ç æœ€å°é¡¹
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @return å…³é”®ç æœ€å°é¡¹
+ * @brief ×ÓÊ÷ÖĞ¹Ø¼üÂë×îĞ¡Ïî
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @return ¹Ø¼üÂë×îĞ¡Ïî
  * @note
- * å·¦å­©å­èŠ‚ç‚¹è¿­ä»£
+ * ×óº¢×Ó½Úµãµü´ú
  */
 template <class Elem, class Key>
 BSTNode<Elem, Key>* BST<Elem, Key>::MinInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const {
@@ -350,13 +350,13 @@ BSTNode<Elem, Key>* BST<Elem, Key>::MinInSubTree_(BSTNode<Elem, Key>* sub_tree_r
 
 
 /**
- * @brief å­æ ‘ä¸­å…³é”®ç æœ€å¤§é¡¹
- * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
- * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
- * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
- * @return å…³é”®ç æœ€å¤§é¡¹
+ * @brief ×ÓÊ÷ÖĞ¹Ø¼üÂë×î´óÏî
+ * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
+ * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
+ * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
+ * @return ¹Ø¼üÂë×î´óÏî
  * @note
- * å³å­©å­èŠ‚ç‚¹è¿­ä»£
+ * ÓÒº¢×Ó½Úµãµü´ú
  */
 template <class Elem, class Key>
 BSTNode<Elem, Key>* BST<Elem, Key>::MaxInSubTree_(BSTNode<Elem, Key>* sub_tree_root_ptr) const {

@@ -1,11 +1,11 @@
 /*!
  * @file seq_list_algorithm.h
- * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
- * @brief é¡ºåºè¡¨ç®—æ³•æµ‹è¯•ç±»
+ * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
+ * @brief Ë³Ğò±íËã·¨²âÊÔÀà
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021
- * **CyberDashè®¡ç®—æœºè€ƒç ”**
+ * **CyberDash¼ÆËã»ú¿¼ÑĞ**
  */
 
 #ifndef CYBER_DASH_SEQ_LIST_ALGORITHM_H
@@ -16,12 +16,12 @@
 
 
 /*!
- * @brief é¡ºåºè¡¨æ±‚å¹¶é›†
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param seq_list_a é¡ºåºè¡¨a(å¹¶è¿ç®—åçš„è¡¨)
- * @param seq_list_b é¡ºåºè¡¨b
+ * @brief Ë³Ğò±íÇó²¢¼¯
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param seq_list_a Ë³Ğò±ía(²¢ÔËËãºóµÄ±í)
+ * @param seq_list_b Ë³Ğò±íb
  * @note
- * éå†é¡ºåºè¡¨b, å¯¹æ¯ä¸ªå…ƒç´ , å¦‚æœåœ¨è¡¨aä¸­ä¸å­˜åœ¨, åˆ™æ’å…¥åˆ°è¡¨aä¸­
+ * ±éÀúË³Ğò±íb, ¶ÔÃ¿¸öÔªËØ, Èç¹ûÔÚ±íaÖĞ²»´æÔÚ, Ôò²åÈëµ½±íaÖĞ
  */
 template<class T>
 void SeqListUnion(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
@@ -43,10 +43,10 @@ void SeqListUnion(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
 
 
 /*!
- * @brief é¡ºåºè¡¨æ±‚äº¤é›†
- * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
- * @param seq_list_a é¡ºåºè¡¨a(äº¤è¿ç®—åçš„è¡¨)
- * @param seq_list_b é¡ºåºè¡¨b
+ * @brief Ë³Ğò±íÇó½»¼¯
+ * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @param seq_list_a Ë³Ğò±ía(½»ÔËËãºóµÄ±í)
+ * @param seq_list_b Ë³Ğò±íb
  */
 template<class T>
 void SeqListIntersection(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
