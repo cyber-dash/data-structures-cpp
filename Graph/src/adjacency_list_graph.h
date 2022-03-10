@@ -1,12 +1,12 @@
-/*!
+ï»¿/*!
  * @file adjacency_list_graph.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ÁÚ½Ó±íÍ¼Ä£°åÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief é‚»æ¥è¡¨å›¾æ¨¡æ¿ç±»
  * @version 0.2.1
  * @date 2021-01-16
  *
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_ADJACENCY_LIST_GRAPH_H
@@ -22,113 +22,113 @@ using namespace std;
 
 
 /*!
- * @brief ÁÚ½Ó±íÍ¼±ß½á¹¹ÌåÄ£°å
+ * @brief é‚»æ¥è¡¨å›¾è¾¹ç»“æ„ä½“æ¨¡æ¿
  * @tparam V
  * @tparam W
  */
 template <class V, class W>
 struct Edge {
-  /*! @brief ¹¹Ôìº¯Êı(ÎŞ²ÎÊı) */
+  /*! @brief æ„é€ å‡½æ•°(æ— å‚æ•°) */
   Edge() {}
 
-  /*! @brief ¹¹Ôìº¯Êı(±ßÖÕµãµÄ½áµãË÷Òıand±ßÈ¨ÖØ) */
+  /*! @brief æ„é€ å‡½æ•°(è¾¹ç»ˆç‚¹çš„ç»“ç‚¹ç´¢å¼•andè¾¹æƒé‡) */
   Edge(int num, W weight): dest_index(num), weight(weight), next(NULL) {}
 
-  /*! @brief ÖØÔØ!= */
+  /*! @brief é‡è½½!= */
   bool operator != (Edge<V, W>& edge) const {
     return (dest_index != edge.dest_index);
   }
 
-  int dest_index; //!< ±ßÖÕµãµÄ½áµãË÷Òı
-  W weight; //!< ±ßÈ¨ÖØ
-  Edge<V, W>* next; //!< ÏÂÒ»ÁÚ½Ó±íÍ¼±ßµÄÖ¸Õë
+  int dest_index; //!< è¾¹ç»ˆç‚¹çš„ç»“ç‚¹ç´¢å¼•
+  W weight; //!< è¾¹æƒé‡
+  Edge<V, W>* next; //!< ä¸‹ä¸€é‚»æ¥è¡¨å›¾è¾¹çš„æŒ‡é’ˆ
 };
 
 
 /*!
- * @brief ÁÚ½Ó±íÍ¼½Úµã½á¹¹Ìå
- * @tparam V ½áµã²ÎÊıÄ£°åÀàĞÍ
- * @tparam W ±ßÈ¨Öµ²ÎÊıÄ£°åÀàĞÍ
+ * @brief é‚»æ¥è¡¨å›¾èŠ‚ç‚¹ç»“æ„ä½“
+ * @tparam V ç»“ç‚¹å‚æ•°æ¨¡æ¿ç±»å‹
+ * @tparam W è¾¹æƒå€¼å‚æ•°æ¨¡æ¿ç±»å‹
  */
 template<class V, class W>
 struct Vertex {
-  V vertex; //!< ½áµã
-  Edge<V, W>* adjacency_list; //!< ÁÚ½Ó±í
+  V vertex; //!< ç»“ç‚¹
+  Edge<V, W>* adjacency_list; //!< é‚»æ¥è¡¨
 };
 
 
 /*!
- * @brief ÁÚ½Ó±íÍ¼Ä£°åÀà
- * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
+ * @brief é‚»æ¥è¡¨å›¾æ¨¡æ¿ç±»
+ * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class V, class W>
 class AdjacencyListGraph: public Graph<V, W> {
 public:
 
-  // ¹¹Ôìº¯Êı
+  // æ„é€ å‡½æ•°
   AdjacencyListGraph(int size = DEFAULT_VERTICES);
 
-  // Îö¹¹º¯Êı
+  // ææ„å‡½æ•°
   ~AdjacencyListGraph();
 
   /**
-   * @brief Ê¹ÓÃ½áµãË÷Òı»ñÈ¡½áµã
-   * @param vertex ½áµã(±£´æ½á¹ûµÄ½Úµã)
-   * @param vertex_index ½áµãË÷Òı
-   * @return ÊÇ·ñ»ñÈ¡³É¹¦
+   * @brief ä½¿ç”¨ç»“ç‚¹ç´¢å¼•è·å–ç»“ç‚¹
+   * @param vertex ç»“ç‚¹(ä¿å­˜ç»“æœçš„èŠ‚ç‚¹)
+   * @param vertex_index ç»“ç‚¹ç´¢å¼•
+   * @return æ˜¯å¦è·å–æˆåŠŸ
    */
   bool GetVertexByIndex(V& vertex, int vertex_index);
 
   /**
-   * @brief »ñÈ¡±ßÈ¨Öµ
-   * @param weight ±ßÈ¨Öµ(ÓÃÓÚ±£´æ½á¹û)
-   * @param vertex1 ±ßµÄ½Úµã1
-   * @param vertex2 ±ßµÄ½Úµã2
-   * @return ÊÇ·ñ»ñÈ¡³É¹¦
+   * @brief è·å–è¾¹æƒå€¼
+   * @param weight è¾¹æƒå€¼(ç”¨äºä¿å­˜ç»“æœ)
+   * @param vertex1 è¾¹çš„èŠ‚ç‚¹1
+   * @param vertex2 è¾¹çš„èŠ‚ç‚¹2
+   * @return æ˜¯å¦è·å–æˆåŠŸ
    */
   bool GetWeight(W& weight, V vertex1, V vertex2);
 
-  // ²åÈë½áµã
+  // æ’å…¥ç»“ç‚¹
   bool InsertVertex(const V& vertex);
 
-  // É¾³ı½áµã
+  // åˆ é™¤ç»“ç‚¹
   bool RemoveVertex(V vertex);
 
-  // ²åÈë±ß
+  // æ’å…¥è¾¹
   bool InsertEdge(V vertex1, V vertex2, W weight);
 
-  // É¾³ı±ß
+  // åˆ é™¤è¾¹
   bool RemoveEdge(V vertex1, V vertex2);
 
-  // »ñÈ¡µÚÒ»¸öÏàÁÚ½áµã
+  // è·å–ç¬¬ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
   bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex);
 
-  // »ñÈ¡ÏÂÒ»¸öÏàÁÚ½áµã
+  // è·å–ä¸‹ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
   bool GetNextNeighborVertex(V& next_neighbor, const V& vertex, const V& neighbor_vertex);
 
-  // »ñÈ¡½áµãË÷Òı
+  // è·å–ç»“ç‚¹ç´¢å¼•
   int GetVertexIndex(V vertex);
 
-  // ÊäÈëÍ¼(ÖØÔØ±ê×¼ÊäÈë)
+  // è¾“å…¥å›¾(é‡è½½æ ‡å‡†è¾“å…¥)
   template<class U>
   friend istream& operator>>(istream& in, AdjacencyListGraph<V, W>& graph_adjacency_list);
-  // ´òÓ¡Í¼(ÖØÔØ±ê×¼Êä³ö)
+  // æ‰“å°å›¾(é‡è½½æ ‡å‡†è¾“å‡º)
   template<class U>
   friend ostream& operator<<(ostream& out, AdjacencyListGraph<V, W>& graph_adjacency_list);
 
-  /*! @brief ÎÒÃÇÊÇCyberDash :-) */
+  /*! @brief æˆ‘ä»¬æ˜¯CyberDash :-) */
   void CyberDashShow();
 private:
-  Vertex<V, W>* vertex_table_; //!< ÁÚ½ÓµãÊı×é
+  Vertex<V, W>* vertex_table_; //!< é‚»æ¥ç‚¹æ•°ç»„
 };
 
 
 /*!
- * @brief ¹¹Ôìº¯Êı
- * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param size ½áµãÊıÁ¿
+ * @brief æ„é€ å‡½æ•°
+ * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param size ç»“ç‚¹æ•°é‡
  */
 template<class V, class W>
 AdjacencyListGraph<V, W>::AdjacencyListGraph(int size) {
@@ -164,10 +164,10 @@ AdjacencyListGraph<T, E>::~AdjacencyListGraph() {
 
 
 /**
- * @brief Ê¹ÓÃ½áµãË÷Òı»ñÈ¡½áµã
- * @param vertex ½áµã(±£´æ½á¹ûµÄ½Úµã)
- * @param vertex_index ½áµãË÷Òı
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief ä½¿ç”¨ç»“ç‚¹ç´¢å¼•è·å–ç»“ç‚¹
+ * @param vertex ç»“ç‚¹(ä¿å­˜ç»“æœçš„èŠ‚ç‚¹)
+ * @param vertex_index ç»“ç‚¹ç´¢å¼•
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class T, class E>
 bool AdjacencyListGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
@@ -182,13 +182,13 @@ bool AdjacencyListGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
 
 
 /*!
- * @brief »ñÈ¡±ßÈ¨Öµ
- * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param weight ±ßÈ¨Öµ(ÓÃÓÚ±£´æ½á¹û)
- * @param vertex1 ½áµã1
- * @param vertex2 ½áµã2
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief è·å–è¾¹æƒå€¼
+ * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param weight è¾¹æƒå€¼(ç”¨äºä¿å­˜ç»“æœ)
+ * @param vertex1 ç»“ç‚¹1
+ * @param vertex2 ç»“ç‚¹2
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class V, class W>
 bool AdjacencyListGraph<V, W>::GetWeight(W& weight, V vertex1, V vertex2) {
@@ -216,29 +216,29 @@ bool AdjacencyListGraph<V, W>::GetWeight(W& weight, V vertex1, V vertex2) {
 
 
 /*!
- * @brief ²åÈë½áµã
- * @param vertex ½Úµã
- * @return ÊÇ·ñ²åÈë³É¹¦
+ * @brief æ’å…¥ç»“ç‚¹
+ * @param vertex èŠ‚ç‚¹
+ * @return æ˜¯å¦æ’å…¥æˆåŠŸ
  */
 template<class V, class W>
 bool AdjacencyListGraph<V, W>::InsertVertex(const V& vertex) {
 
-  // Èç¹ûÒÑÓĞ½ÚµãÊı´óÓÚÏŞÖÆ, Ôò²»Ö´ĞĞ²åÈë, ·µ»ØÊ§°Ü
+  // å¦‚æœå·²æœ‰èŠ‚ç‚¹æ•°å¤§äºé™åˆ¶, åˆ™ä¸æ‰§è¡Œæ’å…¥, è¿”å›å¤±è´¥
   if (this->vertices_num_ == this->max_vertices_num_) {
     return false;
   }
 
-  this->vertex_table_[this->vertices_num_].vertex = vertex; // vertex_table_Ôö¼Ó½áµãÊı¾İ
-  this->vertices_num_++; // ½áµãÊıÔö¼Ó
+  this->vertex_table_[this->vertices_num_].vertex = vertex; // vertex_table_å¢åŠ ç»“ç‚¹æ•°æ®
+  this->vertices_num_++; // ç»“ç‚¹æ•°å¢åŠ 
 
   return true;
 }
 
 
 /*!
- * @brief É¾³ı½áµã
- * @param vertex ½Úµã
- * @return ÊÇ·ñÉ¾³ı³É¹¦
+ * @brief åˆ é™¤ç»“ç‚¹
+ * @param vertex èŠ‚ç‚¹
+ * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
  */
 template<class V, class W>
 bool AdjacencyListGraph<V, W>::RemoveVertex(V vertex) {
@@ -308,11 +308,11 @@ bool AdjacencyListGraph<V, W>::RemoveVertex(V vertex) {
 
 
 /*!
- * @brief ²åÈë±ß
- * @param vertex1 ±ß½Úµã1
- * @param vertex2 ±ß½Úµã2
- * @param weight ±ßÈ¨Öµ
- * @return ÊÇ·ñ²åÈë³É¹¦
+ * @brief æ’å…¥è¾¹
+ * @param vertex1 è¾¹èŠ‚ç‚¹1
+ * @param vertex2 è¾¹èŠ‚ç‚¹2
+ * @param weight è¾¹æƒå€¼
+ * @return æ˜¯å¦æ’å…¥æˆåŠŸ
  */
 template<class V, class W>
 bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
@@ -320,12 +320,12 @@ bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
   int vertex1_index = this->GetVertexIndex(vertex1);
   int vertex2_index = this->GetVertexIndex(vertex2);
 
-  // ¼ì²évertex1ºÍvertex2ºÏ·¨ĞÔ, ÊÇ·ñÔÚÍ¼ÖĞ
+  // æ£€æŸ¥vertex1å’Œvertex2åˆæ³•æ€§, æ˜¯å¦åœ¨å›¾ä¸­
   if (vertex1_index < 0 || vertex1_index >= this->vertices_num_ || vertex2_index < 0 || vertex2_index >= this->vertices_num_) {
     return false;
   }
 
-  // ÔÚÁÚ½Ó±íÖĞÕÒ vertex1_index --> vertex2_index ÊÇ·ñ´æÔÚ, Èç¹û´æÔÚËµÃ÷±ßÒÑ¾­´æÔÚ, ²»ÄÜ²åÈë
+  // åœ¨é‚»æ¥è¡¨ä¸­æ‰¾ vertex1_index --> vertex2_index æ˜¯å¦å­˜åœ¨, å¦‚æœå­˜åœ¨è¯´æ˜è¾¹å·²ç»å­˜åœ¨, ä¸èƒ½æ’å…¥
   Edge<V, W>* cur_edge = this->vertex_table_[vertex1_index].adjacency_list;
   while (cur_edge != NULL && cur_edge->dest_index != vertex2_index) {
     cur_edge = cur_edge->next;
@@ -339,7 +339,7 @@ bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
   Edge<V, W>* v1_dest_edge = new Edge<V, W>(); // vertex2 --> vertex1
   /* error handler */
 
-  // ¸üĞÂÁÚ½Ó±íÄÚ¶ÔÓ¦µÄÊı¾İ
+  // æ›´æ–°é‚»æ¥è¡¨å†…å¯¹åº”çš„æ•°æ®
   v2_dest_edge->dest_index = vertex2_index;
   v2_dest_edge->weight = weight;
   v2_dest_edge->next = this->vertex_table_[vertex1_index].adjacency_list;
@@ -350,22 +350,22 @@ bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
   v1_dest_edge->next = this->vertex_table_[vertex2_index].adjacency_list;
   this->vertex_table_[vertex2_index].adjacency_list = v1_dest_edge;
 
-  this->edge_count_++; // ±ßµÄÊıÁ¿+1
+  this->edge_count_++; // è¾¹çš„æ•°é‡+1
 
   return true;
 }
 
 
 /*!
- * @brief É¾³ı±ß
- * @param vertex1 ±ß½áµã1
- * @param vertex2 ±ß½áµã2
- * @return ÊÇ·ñÉ¾³ı³É¹¦
+ * @brief åˆ é™¤è¾¹
+ * @param vertex1 è¾¹ç»“ç‚¹1
+ * @param vertex2 è¾¹ç»“ç‚¹2
+ * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
  */
 template<class V, class W>
 bool AdjacencyListGraph<V, W>::RemoveEdge(V vertex1, V vertex2) {
 
-  // »ñÈ¡Á½¸ö½áµãÔÚvertex_table_µÄÊı×éË÷Òı, Èç¹ûÓĞÒ»¸ö²»´æÔÚ, Ôò·µ»Øfalse
+  // è·å–ä¸¤ä¸ªç»“ç‚¹åœ¨vertex_table_çš„æ•°ç»„ç´¢å¼•, å¦‚æœæœ‰ä¸€ä¸ªä¸å­˜åœ¨, åˆ™è¿”å›false
   int vertex1_index = this->GetVertexIndex(vertex1);
   int vertex2_index = this->GetVertexIndex(vertex2);
 
@@ -373,34 +373,34 @@ bool AdjacencyListGraph<V, W>::RemoveEdge(V vertex1, V vertex2) {
     return false;
   }
 
-  Edge<V, W>* delete_edge; // ´ıÉ¾³ı½áµã
-  Edge<V, W>* prior_edge; // ´ıÉ¾³ı½áµãµÄÇ°Ò»½Úµã
-  Edge<V, W>* first_edge; // µÚÒ»¸öÁÚ½Ó½áµã¾ÍÊÇ´ıÉ¾³ı½áµã
+  Edge<V, W>* delete_edge; // å¾…åˆ é™¤ç»“ç‚¹
+  Edge<V, W>* prior_edge; // å¾…åˆ é™¤ç»“ç‚¹çš„å‰ä¸€èŠ‚ç‚¹
+  Edge<V, W>* first_edge; // ç¬¬ä¸€ä¸ªé‚»æ¥ç»“ç‚¹å°±æ˜¯å¾…åˆ é™¤ç»“ç‚¹
 
-  // vertex1 --> vertex2×öÉ¾³ı
+  // vertex1 --> vertex2åšåˆ é™¤
   delete_edge = this->vertex_table_[vertex1_index].adjacency_list;
   prior_edge = NULL;
   first_edge = this->vertex_table_[vertex1_index].adjacency_list;
 
-  // ¶¨Î»delete_edge_ptrºÍprior_edge_ptr
+  // å®šä½delete_edge_ptrå’Œprior_edge_ptr
   while (delete_edge != NULL && delete_edge->dest_index != vertex2_index) {
     prior_edge = delete_edge;
     delete_edge = delete_edge->next;
   }
 
   if (delete_edge != NULL) {
-    if (first_edge == delete_edge) { // Èç¹ûµÚÒ»¸öÁÚ½Ó½áµã¾ÍÊÇ´ıÉ¾³ı½áµã
+    if (first_edge == delete_edge) { // å¦‚æœç¬¬ä¸€ä¸ªé‚»æ¥ç»“ç‚¹å°±æ˜¯å¾…åˆ é™¤ç»“ç‚¹
       this->vertex_table_[vertex1_index].adjacency_list = delete_edge->next;
-    } else { // µÚÒ»¸ö½áµã²»ÊÇ´ıÉ¾³ı½áµã
+    } else { // ç¬¬ä¸€ä¸ªç»“ç‚¹ä¸æ˜¯å¾…åˆ é™¤ç»“ç‚¹
       prior_edge->next = delete_edge->next;
 
       delete delete_edge;
     }
   } else {
-    return false; // Èç¹ûÃ»ÓĞ´ıÉ¾³ı½áµã, Ôò·µ»Øfalse
+    return false; // å¦‚æœæ²¡æœ‰å¾…åˆ é™¤ç»“ç‚¹, åˆ™è¿”å›false
   }
 
-  // vertex2 --> vertex1×öÉ¾³ı
+  // vertex2 --> vertex1åšåˆ é™¤
   delete_edge = this->vertex_table_[vertex2_index].adjacency_list;
   prior_edge = NULL;
   first_edge = this->vertex_table_[vertex2_index].adjacency_list;
@@ -422,7 +422,7 @@ bool AdjacencyListGraph<V, W>::RemoveEdge(V vertex1, V vertex2) {
     return false;
   }
 
-  // ±ßµÄ×ÜÊı¼õ1
+  // è¾¹çš„æ€»æ•°å‡1
   this->edge_count_--;
 
   return true;
@@ -430,23 +430,23 @@ bool AdjacencyListGraph<V, W>::RemoveEdge(V vertex1, V vertex2) {
 
 
 /*!
- * @brief »ñÈ¡µÚÒ»¸öÏàÁÚ½áµã
- * @param first_neighbor µÚÒ»¸öÏàÁÚ½áµã(ÓÃÓÚ±£´æ½Úµã)
- * @param vertex ½Úµã
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief è·å–ç¬¬ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
+ * @param first_neighbor ç¬¬ä¸€ä¸ªç›¸é‚»ç»“ç‚¹(ç”¨äºä¿å­˜èŠ‚ç‚¹)
+ * @param vertex èŠ‚ç‚¹
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class V, class W>
 bool AdjacencyListGraph<V, W>::GetFirstNeighborVertex(V& first_neighbor, const V& vertex) {
 
-  int vertex_index = this->GetVertexIndex(vertex); // »ñÈ¡½áµãÔÚvertex_table_µÄÊı×éË÷Òı
+  int vertex_index = this->GetVertexIndex(vertex); // è·å–ç»“ç‚¹åœ¨vertex_table_çš„æ•°ç»„ç´¢å¼•
 
   if (vertex_index >= 0) {
     Edge<V, W>* edge = this->vertex_table_[vertex_index].adjacency_list;
     if (edge != NULL) {
 
-      int neighbor_index = edge->dest_index; // µÚÒ»¸öÁÚ½Ó½áµãµÄdest_index_
+      int neighbor_index = edge->dest_index; // ç¬¬ä¸€ä¸ªé‚»æ¥ç»“ç‚¹çš„dest_index_
 
-      bool has_vertex = this->GetVertexByIndex(first_neighbor, neighbor_index); // È¡dest_index¶ÔÓ¦µÄ½áµã
+      bool has_vertex = this->GetVertexByIndex(first_neighbor, neighbor_index); // å–dest_indexå¯¹åº”çš„ç»“ç‚¹
 
       return has_vertex;
     }
@@ -457,29 +457,29 @@ bool AdjacencyListGraph<V, W>::GetFirstNeighborVertex(V& first_neighbor, const V
 
 
 /*!
- * @brief »ñÈ¡ÏÂÒ»¸öÏàÁÚ½áµã
- * @param next_neighbor ÏÂÒ»¸öÏàÁÚ½áµã(ÓÃÓÚ±£´æ½áµã)
- * @param vertex ½áµã
- * @param neighbor_vertex µ±Ç°ÏàÁÚ½áµã
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief è·å–ä¸‹ä¸€ä¸ªç›¸é‚»ç»“ç‚¹
+ * @param next_neighbor ä¸‹ä¸€ä¸ªç›¸é‚»ç»“ç‚¹(ç”¨äºä¿å­˜ç»“ç‚¹)
+ * @param vertex ç»“ç‚¹
+ * @param neighbor_vertex å½“å‰ç›¸é‚»ç»“ç‚¹
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class V, class W>
 bool AdjacencyListGraph<V, W>::GetNextNeighborVertex(V& next_neighbor, const V& vertex, const V& neighbor_vertex) {
 
-  // ÄÃµ½vertexºÍneighbor_vertex¶ÔÓ¦µÄvertex_table_µÄÊı×éË÷Òı
+  // æ‹¿åˆ°vertexå’Œneighbor_vertexå¯¹åº”çš„vertex_table_çš„æ•°ç»„ç´¢å¼•
   int vertex_index = GetVertexIndex(vertex);
   int neighbor_index = GetVertexIndex(neighbor_vertex);
 
   if (vertex_index >= 0) {
 
-    // ÁÚ½Ó±íÖĞ, ÕÒµ½neighbor_vertexµÄÎ»ÖÃ
+    // é‚»æ¥è¡¨ä¸­, æ‰¾åˆ°neighbor_vertexçš„ä½ç½®
     Edge<V, W>* edge_ptr = this->vertex_table_[vertex_index].adjacency_list;
 
     while (edge_ptr->next != NULL && edge_ptr->dest_index != neighbor_index) {
       edge_ptr = edge_ptr->next;
     }
 
-    // ½«ÏÂÒ»¸öÎ»ÖÃµÄ½áµã¸³¸ønext_neighbor
+    // å°†ä¸‹ä¸€ä¸ªä½ç½®çš„ç»“ç‚¹èµ‹ç»™next_neighbor
     if (edge_ptr != NULL && edge_ptr->next != NULL) {
       int next_neighbor_index = edge_ptr->next->dest_index;
 
@@ -494,12 +494,12 @@ bool AdjacencyListGraph<V, W>::GetNextNeighborVertex(V& next_neighbor, const V& 
 
 
 /*!
- * @brief ÊäÈëÍ¼
- * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param in ÊäÈëÁ÷(ÒıÓÃ)
- * @param graph_adjacency_list ÁÚ½Ó±íÍ¼
- * @return ÊäÈëÁ÷(ÒıÓÃ)
+ * @brief è¾“å…¥å›¾
+ * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param in è¾“å…¥æµ(å¼•ç”¨)
+ * @param graph_adjacency_list é‚»æ¥è¡¨å›¾
+ * @return è¾“å…¥æµ(å¼•ç”¨)
  */
 template<class V, class W>
 istream& operator>>(istream& in, AdjacencyListGraph<V, W>& graph_adjacency_list) {
@@ -550,12 +550,12 @@ istream& operator>>(istream& in, AdjacencyListGraph<V, W>& graph_adjacency_list)
 
 
 /*!
- * @brief Êä³ö(´òÓ¡)Í¼
- * @tparam V ½áµãÀàĞÍÄ£°å²ÎÊı
- * @tparam W ±ßÈ¨ÖµÀàĞÍÄ£°å²ÎÊı
- * @param out Êä³öÁ÷(ÒıÓÃ)
- * @param graph_adjacency_list ÁÚ½Ó±íÍ¼
- * @return Êä³öÁ÷(ÒıÓÃ)
+ * @brief è¾“å‡º(æ‰“å°)å›¾
+ * @tparam V ç»“ç‚¹ç±»å‹æ¨¡æ¿å‚æ•°
+ * @tparam W è¾¹æƒå€¼ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param out è¾“å‡ºæµ(å¼•ç”¨)
+ * @param graph_adjacency_list é‚»æ¥è¡¨å›¾
+ * @return è¾“å‡ºæµ(å¼•ç”¨)
  */
 template<class V, class W>
 ostream& operator<<(ostream& out, AdjacencyListGraph<V, W>& graph_adjacency_list) {
@@ -596,16 +596,16 @@ ostream& operator<<(ostream& out, AdjacencyListGraph<V, W>& graph_adjacency_list
 
 
 /*!
- * @brief »ñÈ¡½áµãË÷Òı
- * @param vertex ½áµã
- * @return ½áµãË÷Òı
+ * @brief è·å–ç»“ç‚¹ç´¢å¼•
+ * @param vertex ç»“ç‚¹
+ * @return ç»“ç‚¹ç´¢å¼•
  */
 template<class V, class W>
 int AdjacencyListGraph<V, W>::GetVertexIndex(V vertex) {
 
-  int vertex_index = -1; // Èç¹ûÍ¼ÖĞÃ»ÓĞ¸Ã½áµã, Ôò·µ»Ø-1
+  int vertex_index = -1; // å¦‚æœå›¾ä¸­æ²¡æœ‰è¯¥ç»“ç‚¹, åˆ™è¿”å›-1
 
-  // ÔÚvertex_table_ÖĞ²éÄÄ¸öµÄvalue_Îªvertex
+  // åœ¨vertex_table_ä¸­æŸ¥å“ªä¸ªçš„value_ä¸ºvertex
   for (int i = 0; i < this->vertices_num_; i++) {
     if (this->vertex_table_[i].vertex == vertex) {
       vertex_index = i;
@@ -621,11 +621,11 @@ template<class V, class W>
 void AdjacencyListGraph<V, W>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
-      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan"<<endl<<endl
+      <<"CyberDashæˆå‘˜:"<<endl
+      <<"å…ƒå“¥(cyberdash@163.com), "<<"åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)"<<endl
+      <<"ç£Šå“¥(alei_go@163.com), "<<"å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)"<<endl<<endl
+      <<"æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 

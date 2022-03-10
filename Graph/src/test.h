@@ -1,12 +1,12 @@
-/*!
+ï»¿/*!
  * @file test.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Í¼²âÊÔÍ·ÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å›¾æµ‹è¯•å¤´æ–‡ä»¶
  * @version 0.2.1
  * @date 2021-10-9
  *
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 #ifndef CYBER_DASH_GRAPH_TEST_H
 #define CYBER_DASH_GRAPH_TEST_H
@@ -17,31 +17,31 @@
 #include <iostream>
 
 
-/*! ²âÊÔ¾ØÕóÍ¼µÄ¾ØÕó */
+/*! æµ‹è¯•çŸ©é˜µå›¾çš„çŸ©é˜µ */
 void TestMatrixGraphMatrix();
 
-/*! ²âÊÔÊ¹ÓÃ½áµãË÷Òı»ñÈ¡½áµã */
+/*! æµ‹è¯•ä½¿ç”¨ç»“ç‚¹ç´¢å¼•è·å–ç»“ç‚¹ */
 void TestGetVertexByIndex();
 
-/*! ²âÊÔDFS */
+/*! æµ‹è¯•DFS */
 void TestDFS();
 
-/*! ²âÊÔBFS */
+/*! æµ‹è¯•BFS */
 void TestBFS();
 
-/*! ²âÊÔÁ¬Í¨·ÖÁ¿ */
+/*! æµ‹è¯•è¿é€šåˆ†é‡ */
 void TestComponents();
 
-/*! ²âÊÔKrusKal */
+/*! æµ‹è¯•KrusKal */
 void TestKruskal();
 
-/*! ²âÊÔPrimËã·¨ */
+/*! æµ‹è¯•Primç®—æ³• */
 void TestPrim();
 
-/*! ²âÊÔDijkstra×îĞ¡Éú³ÉÊ÷ */
+/*! æµ‹è¯•Dijkstraæœ€å°ç”Ÿæˆæ ‘ */
 void TestDijkstraShortestPath();
 
-/*! ¹ØÓÚCyberDash */
+/*! å…³äºCyberDash */
 void TestCyberDashShow();
 
 
