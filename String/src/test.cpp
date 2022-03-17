@@ -1,76 +1,76 @@
 /*!
  * @file test.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑÐ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ×Ö·û´®Æ¥Åä²âÊÔ.cppÎÄ¼þ
+ * @author CyberDashï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, cyberdash@163.com(ï¿½ï¿½ï¿½ï¿½id:cyberdash_yuan)
+ * @brief ï¿½Ö·ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½.cppï¿½Ä¼ï¿½
  * @version 0.2.1
  * @date 2021-08-23
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑÐ
+ *  CyberDashï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 
 #include "test.h"
 #include "cyber_dash_string.h"
 
 
-/*! ²âÊÔBFËã·¨ */
+/*! ï¿½ï¿½ï¿½ï¿½BFï¿½ã·¨ */
 void TestBFFind() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test BruteForceFind                    |"<<endl;
-  cout<<"|                          ²âÊÔBFËã·¨                        |"<<endl<<endl<<endl;
+  cout<<"|                          ï¿½ï¿½ï¿½ï¿½BFï¿½ã·¨                        |"<<endl<<endl<<endl;
 
   CyberDashString target_str("hand in hand we can, start to understand");
   CyberDashString pattern_str_1("hand");
   CyberDashString pattern_str_2("understand");
 
-  cout << "Ä¿±ê´®: " << target_str << endl << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_1 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.BruteForceFind(pattern_str_1, 0) << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_2 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.BruteForceFind(pattern_str_2, 0) << endl;
+  cout << "Ä¿ï¿½ê´®: " << target_str << endl << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_1 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.BruteForceFind(pattern_str_1, 0) << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_2 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.BruteForceFind(pattern_str_2, 0) << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
-/*! ²âÊÔKMPËã·¨ */
+/*! ï¿½ï¿½ï¿½ï¿½KMPï¿½ã·¨ */
 void TestKMPFind() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                        Test KMPFind                       |"<<endl;
-  cout<<"|                         ²âÊÔKMPËã·¨                        |"<<endl<<endl<<endl;
+  cout<<"|                         ï¿½ï¿½ï¿½ï¿½KMPï¿½ã·¨                        |"<<endl<<endl<<endl;
 
   CyberDashString target_str("aaaabcd56****abcd56abcd7777");
   CyberDashString pattern_str_1("abcd56abcd7");
   CyberDashString pattern_str_2("ababc");
   CyberDashString pattern_str_3("bcd56abc");
 
-  cout << "Ä¿±ê´®: " << target_str << endl << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_1 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.KMPFind(pattern_str_1, 0) << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_2 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.KMPFind(pattern_str_2, 0) << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_3 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.KMPFind(pattern_str_3, 0) << endl;
+  cout << "Ä¿ï¿½ê´®: " << target_str << endl << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_1 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.KMPFind(pattern_str_1, 0) << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_2 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.KMPFind(pattern_str_2, 0) << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_3 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.KMPFind(pattern_str_3, 0) << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
-/*! ²âÊÔKMP(CyberDash°æ±¾)Ëã·¨ */
+/*! ï¿½ï¿½ï¿½ï¿½KMP(CyberDashï¿½æ±¾)ï¿½ã·¨ */
 void TestKMPFindCyberDash() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                    Test KMPFindCyberDash                  |"<<endl;
-  cout<<"|                         ²âÊÔKMPËã·¨                        |"<<endl<<endl<<endl;
+  cout<<"|                         ï¿½ï¿½ï¿½ï¿½KMPï¿½ã·¨                        |"<<endl<<endl<<endl;
 
   CyberDashString target_str("aaaabcd56****abcd56abcd7777");
   CyberDashString pattern_str_1("abcd56abcd7");
   CyberDashString pattern_str_2("ababc");
   CyberDashString pattern_str_3("bcd56abc");
 
-  cout << "Ä¿±ê´®: " << target_str << endl << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_1 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.KMPFindCyberDash(pattern_str_1, 0) << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_2 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.KMPFindCyberDash(pattern_str_2, 0) << endl;
-  cout << "Ä£Ê½´®\"" << pattern_str_3 << "\"µÄÆ¥ÅäÎ»ÖÃ: " << target_str.KMPFindCyberDash(pattern_str_3, 0) << endl;
+  cout << "Ä¿ï¿½ê´®: " << target_str << endl << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_1 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.KMPFindCyberDash(pattern_str_1, 0) << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_2 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.KMPFindCyberDash(pattern_str_2, 0) << endl;
+  cout << "Ä£Ê½ï¿½ï¿½\"" << pattern_str_3 << "\"ï¿½ï¿½Æ¥ï¿½ï¿½Î»ï¿½ï¿½: " << target_str.KMPFindCyberDash(pattern_str_3, 0) << endl;
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
