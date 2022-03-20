@@ -1,4 +1,4 @@
-//
+ï»¿//
 // Created by cyberdash@163.com on 2021/5/29.
 //
 
@@ -10,44 +10,45 @@
 
 
 template<class Elem, class Key>
-class SearchList: public DataList<Elem, Key> {
+class SearchList : public DataList<Elem, Key> {
 public:
-  SearchList(int size = DEFAULT_SIZE): DataList<Elem, Key>(size) {}
-  int SeqSearch(const Key& key) const;
-  virtual int SeqSearchRecursive(const Key& key, int pos) const;
+    SearchList(int size = DEFAULT_SIZE) : DataList<Elem, Key>(size) {}
+    int SeqSearch(const Key& key) const;
+    virtual int SeqSearchRecursive(const Key& key, int pos) const;
 };
 
 
 /**
- * @brief ËÑË÷¹Ø¼üÂëÎªkeyµÄÊı¾İÔªËØ
+ * @brief æœç´¢å…³é”®ç ä¸ºkeyçš„æ•°æ®å…ƒç´ 
  * @tparam Elem
- * @tparam Key ËÑË÷ÂëÄ£°åÀàĞÍ
- * @param key ËÑË÷Âë
- * @return Êı¾İËùÔÚµÄÎ»ÖÃ
+ * @tparam Key æœç´¢ç æ¨¡æ¿ç±»å‹
+ * @param key æœç´¢ç 
+ * @return æ•°æ®æ‰€åœ¨çš„ä½ç½®
  */
 template<class Elem, class Key>
 int SearchList<Elem, Key>::SeqSearch(const Key& key) const {
 
-  int i = 0;
-  while (this->element_array_[i].GetKey() != key) {
-    i++;
-  }
+    int i = 0;
+    while (this->element_array_[i].GetKey() != key) {
+        i++;
+    }
 
-  return i + 1;
+    return i + 1;
 }
 
 
 template<class Elem, class Key>
 int SearchList<Elem, Key>::SeqSearchRecursive(const Key& key, int pos) const {
-  if (pos > this->current_size_) {
-    return 0;
-  }
+    if (pos > this->current_size_) {
+        return 0;
+    }
 
-  if (this->element_array_[pos - 1].GetKey() == key) {
-    return pos;
-  } else {
-    return SeqSearchRecursive(key, pos + 1);
-  }
+    if (this->element_array_[pos - 1].GetKey() == key) {
+        return pos;
+    }
+    else {
+        return SeqSearchRecursive(key, pos + 1);
+    }
 }
 
 

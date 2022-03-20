@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by cyberdash@163.com on 2021/5/29.
 //
 
@@ -9,16 +9,15 @@ using namespace std;
 
 int main() {
 
-  TestSearchListSeqSearch();
+	TestSearchListSeqSearch();
 
-  TestSearchListSeqSearchRecursive();
+	TestSearchListSeqSearchRecursive();
 
-  TestSortedListSeqSearch();
+	TestSortedListSeqSearch();
 
-  TestSortedListBinarySearch();
+	TestSortedListBinarySearch();
 
-  TestSortedListBinarySearchRecursive();
+	TestSortedListBinarySearchRecursive();
 
-  return 0;
+	return 0;
 }
-
