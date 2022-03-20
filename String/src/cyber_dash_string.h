@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file cyber_dash_string.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ×Ö·û´®Æ¥ÅäÄ£°åÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å­—ç¬¦ä¸²åŒ¹é…æ¨¡æ¿ç±»
  * @version 0.2.1
  * @date 2021-07-29
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_YUAN_STRING_H
@@ -23,491 +23,501 @@ const int DEFAULT_SIZE = 128;
 
 
 /*!
- * @brief CyberDash×Ö·û´®Àà
+ * @brief CyberDashå­—ç¬¦ä¸²ç±»
  */
 class CyberDashString {
 
 public:
-  // ¹¹Ôìº¯Êı(×Ö·û´®³¤¶È)
-  CyberDashString(int size = DEFAULT_SIZE);
-  /*! ¹¹Ôìº¯Êı */
-  CyberDashString(const char* char_ptr);
-  /*! Îö¹¹º¯Êı */
-  ~CyberDashString() { delete[] char_array_; };
+    // æ„é€ å‡½æ•°(å­—ç¬¦ä¸²é•¿åº¦)
+    CyberDashString(int size = DEFAULT_SIZE);
+    /*! æ„é€ å‡½æ•° */
+    CyberDashString(const char* char_ptr);
+    /*! ææ„å‡½æ•° */
+    ~CyberDashString() { delete[] char_array_; };
 
-  int Length() const { return this->length_; };
-  CyberDashString operator() (int index, int len) const;
-  bool operator == (const CyberDashString& cyber_dash_str) const;
-  bool operator != (CyberDashString& cyber_dash_str) const;
-  bool operator ! () const;
-  CyberDashString& operator = (const CyberDashString& cyber_dash_str);
-  CyberDashString& operator += (CyberDashString& cyber_dash_str);
-  char& operator[] (int index);
+    int Length() const { return this->length_; };
+    CyberDashString operator() (int index, int len) const;
+    bool operator == (const CyberDashString& cyber_dash_str) const;
+    bool operator != (CyberDashString& cyber_dash_str) const;
+    bool operator ! () const;
+    CyberDashString& operator = (const CyberDashString& cyber_dash_str);
+    CyberDashString& operator += (CyberDashString& cyber_dash_str);
+    char& operator[] (int index);
 
-  // BF×Ö·û´®Æ¥Åä
-  int BruteForceFind(CyberDashString& pattern, int offset) const;
+    // BFå­—ç¬¦ä¸²åŒ¹é…
+    int BruteForceFind(CyberDashString& pattern, int offset) const;
 
-  // KMP×Ö·û´®Æ¥Åä²éÕÒ
-  int KMPFind(CyberDashString& pattern, int offset) const;
+    // KMPå­—ç¬¦ä¸²åŒ¹é…æŸ¥æ‰¾
+    int KMPFind(CyberDashString& pattern, int offset) const;
 
-  // KMP×Ö·û´®Æ¥Åä²éÕÒ(Ê¹ÓÃKMPNextByCyberDashÉú³ÉnextÊı×é)
-  int KMPFindCyberDash(CyberDashString& pattern, int offset) const;
+    // KMPå­—ç¬¦ä¸²åŒ¹é…æŸ¥æ‰¾(ä½¿ç”¨KMPNextByCyberDashç”Ÿæˆnextæ•°ç»„)
+    int KMPFindCyberDash(CyberDashString& pattern, int offset) const;
 
-  // ÖØÔØ<<
-  friend ostream& operator<<(ostream& os, CyberDashString& cyber_dash_str) {
-    os << cyber_dash_str.char_array_;
-    return os;
-  }
+    // é‡è½½<<
+    friend ostream& operator<<(ostream& os, CyberDashString& cyber_dash_str) {
+        os << cyber_dash_str.char_array_;
+        return os;
+    }
 
-  static void CyberDashShow();
+    static void CyberDashShow();
 
-  static int* KMPNext(const char* pattern, int pattern_len);
-  static int* KMPNextByCyberDash(const char* pattern, int pattern_len);
-  static void PrintNextArray(const int* next_arr, int next_arr_len);
+    static int* KMPNext(const char* pattern, int pattern_len);
+    static int* KMPNextByCyberDash(const char* pattern, int pattern_len);
+    static void PrintNextArray(const int* next_arr, int next_arr_len);
 
 private:
-  char* char_array_; //!< ×Ö·û´®Êı×é
-  int length_; //!< µ±Ç°×Ö·û´®³¤¶È
-  int max_size_; //!< ×î´ó³¤¶È
+    char* char_array_; //!< å­—ç¬¦ä¸²æ•°ç»„
+    int length_; //!< å½“å‰å­—ç¬¦ä¸²é•¿åº¦
+    int max_size_; //!< æœ€å¤§é•¿åº¦
 };
 
 
 /*!
- * @brief ¹¹Ôìº¯Êı(×Ö·û´®³¤¶È)
- * @param size ×Ö·û´®×î´ó³¤¶È
+ * @brief æ„é€ å‡½æ•°(å­—ç¬¦ä¸²é•¿åº¦)
+ * @param size å­—ç¬¦ä¸²æœ€å¤§é•¿åº¦
  */
 CyberDashString::CyberDashString(int size) {
 
-  max_size_ = size;
+    max_size_ = size;
 
-  char_array_ = new char[max_size_ + 1];
-  if (char_array_ == NULL) {
-    cerr<<"Allocation Error"<<endl;
-    exit(1);
-  }
+    char_array_ = new char[max_size_ + 1];
+    if (char_array_ == NULL) {
+        cerr << "Allocation Error" << endl;
+        exit(1);
+    }
 
-  length_ = 0;
-  // ÏÈÈ«²¿ÖÃ0
-  memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
+    length_ = 0;
+    // å…ˆå…¨éƒ¨ç½®0
+    memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
 }
 
 
 /*!
- * @brief ¹¹Ôìº¯Êı(×Ö·û´®)
- * @param char_ptr ×Ö·û´®
+ * @brief æ„é€ å‡½æ•°(å­—ç¬¦ä¸²)
+ * @param char_ptr å­—ç¬¦ä¸²
  */
 CyberDashString::CyberDashString(const char* char_ptr) {
-  int char_len = strlen(char_ptr);
+    int char_len = strlen(char_ptr);
 
-  if (char_len > DEFAULT_SIZE) {
-    max_size_ = char_len;
-  } else {
-    max_size_ = DEFAULT_SIZE;
-  }
+    if (char_len > DEFAULT_SIZE) {
+        max_size_ = char_len;
+    }
+    else {
+        max_size_ = DEFAULT_SIZE;
+    }
 
-  char_array_ = new char[max_size_ + 1];
-  if (char_array_ == NULL) {
-    cerr<<"Allocation Error"<<endl;
-    exit(1);
-  }
+    char_array_ = new char[max_size_ + 1];
+    if (char_array_ == NULL) {
+        cerr << "Allocation Error" << endl;
+        exit(1);
+    }
 
-  length_ = char_len;
+    length_ = char_len;
 
-  // ÏÈÈ«²¿ÖÃ0
-  memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
-  // ÔÙ¸´ÖÆ×Ö·û´®ÄÚÈİ
-  memcpy(char_array_, char_ptr, sizeof(char) * char_len);
+    // å…ˆå…¨éƒ¨ç½®0
+    memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
+    // å†å¤åˆ¶å­—ç¬¦ä¸²å†…å®¹
+    memcpy(char_array_, char_ptr, sizeof(char) * char_len);
 }
 
 
 /*!
- * @brief ÖØÔØ()
- * @param index ÆğÊ¼index
- * @param offset Æ«ÒÆÁ¿
- * @return ×Ö·û´®
+ * @brief é‡è½½()
+ * @param index èµ·å§‹index
+ * @param offset åç§»é‡
+ * @return å­—ç¬¦ä¸²
  */
 CyberDashString CyberDashString::operator () (int index, int offset) const {
 
-  CyberDashString ret_str(offset + 1);
+    CyberDashString ret_str(offset + 1);
 
-  if (index < 0 || index + offset > max_size_ || offset <= 0 || index + 1 > length_) {
+    if (index < 0 || index + offset > max_size_ || offset <= 0 || index + 1 > length_) {
 
-    ret_str.length_ = 0;
-    ret_str.char_array_[0] = '\0';
-  } else {
+        ret_str.length_ = 0;
+        ret_str.char_array_[0] = '\0';
+    }
+    else {
 
-    if (index + offset > length_) {
-      offset = length_ - index;
+        if (index + offset > length_) {
+            offset = length_ - index;
+        }
+
+        ret_str.length_ = offset;
+
+        memcpy(ret_str.char_array_, char_array_ + index, sizeof(char) * offset);
+
+        ret_str.char_array_[offset] = '\0';
     }
 
-    ret_str.length_ = offset;
-
-    memcpy(ret_str.char_array_, char_array_ + index, sizeof(char) * offset);
-
-    ret_str.char_array_[offset] = '\0';
-  }
-
-  return ret_str;
+    return ret_str;
 }
 
 
 /*!
- * @brief ÖØÔØ==
- * @param cyber_dash_str ×Ö·û´®
- * @return ÊÇ·ñÏàÍ¬
+ * @brief é‡è½½==
+ * @param cyber_dash_str å­—ç¬¦ä¸²
+ * @return æ˜¯å¦ç›¸åŒ
  */
 bool CyberDashString::operator == (const CyberDashString& cyber_dash_str) const {
-  int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
-  if (cmp_res == 0) {
-    return true;
-  } else {
-    return false;
-  }
+    int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
+    if (cmp_res == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 /*!
- * @brief ÖØÔØ!=
- * @param cyber_dash_str ×Ö·û´®
- * @return ÊÇ·ñ²»Í¬
+ * @brief é‡è½½!=
+ * @param cyber_dash_str å­—ç¬¦ä¸²
+ * @return æ˜¯å¦ä¸åŒ
  */
 bool CyberDashString::operator != (CyberDashString& cyber_dash_str) const {
-  int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
-  if (cmp_res != 0) {
-    return true;
-  } else {
-    return false;
-  }
+    int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
+    if (cmp_res != 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 // todo
 bool CyberDashString::operator ! () const {
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÖØÔØ=
- * @param src_str Ô´×Ö·û´®
- * @return ×ÔÉí×Ö·û´®
+ * @brief é‡è½½=
+ * @param src_str æºå­—ç¬¦ä¸²
+ * @return è‡ªèº«å­—ç¬¦ä¸²
  */
 CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
 
-  if (&src_str != this) {
+    if (&src_str != this) {
 
-    delete[] char_array_;
+        delete[] char_array_;
 
-    char_array_ = new char[src_str.max_size_ + 1];
-    if (char_array_ == NULL) {
-      cerr<<"´æ´¢·ÖÅäÊ§°Ü!"<<endl;
-      exit(1);
+        char_array_ = new char[src_str.max_size_ + 1];
+        if (char_array_ == NULL) {
+            cerr << "å­˜å‚¨åˆ†é…å¤±è´¥!" << endl;
+            exit(1);
+        }
+
+        memcpy(char_array_, src_str.char_array_, sizeof(char) * src_str.length_);
+
+        length_ = src_str.length_;
+
+    }
+    else {
+        cout << "å­—ç¬¦ä¸²è‡ªèº«èµ‹å€¼å‡ºé”™" << endl;
     }
 
-    memcpy(char_array_, src_str.char_array_, sizeof(char) * src_str.length_);
-
-    length_ = src_str.length_;
-
-  } else {
-    cout<<"×Ö·û´®×ÔÉí¸³Öµ³ö´í"<<endl;
-  }
-
-  return *this;
+    return *this;
 }
 
 
 // todo
 CyberDashString& CyberDashString::operator += (CyberDashString& cyber_dash_str) {
-  return *this;
+    return *this;
 }
 
 
 /*!
- * @brief ÖØÔØ[]
+ * @brief é‡è½½[]
  * @param index
  * @return
  */
 char& CyberDashString::operator[] (int index) {
-  if (index < 0 || index >= Length()) {
-    cerr<<"Out of Range."<<endl;
-    exit(1);
-  }
+    if (index < 0 || index >= Length()) {
+        cerr << "Out of Range." << endl;
+        exit(1);
+    }
 
-  return char_array_[index];
+    return char_array_[index];
 }
 
 
 /*!
- * @brief BF×Ö·û´®Æ¥Åä
- * @param pattern Ä£Ê½´®
- * @param offset Ä¿±ê´®µÄÆğÊ¼Æ«ÒÆÁ¿
- * @return Ä¿±ê´®ÖĞµÄÆ¥ÅäÎ»ÖÃ, -1Îª²»Æ¥Åä / ÆäËûÎªµÚÒ»¸öÆ¥Åä×Ö·ûµÄÊı×éË÷ÒıÖµ
+ * @brief BFå­—ç¬¦ä¸²åŒ¹é…
+ * @param pattern æ¨¡å¼ä¸²
+ * @param offset ç›®æ ‡ä¸²çš„èµ·å§‹åç§»é‡
+ * @return ç›®æ ‡ä¸²ä¸­çš„åŒ¹é…ä½ç½®, -1ä¸ºä¸åŒ¹é… / å…¶ä»–ä¸ºç¬¬ä¸€ä¸ªåŒ¹é…å­—ç¬¦çš„æ•°ç»„ç´¢å¼•å€¼
  */
 int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const {
 
-  int match_offset = -1;
-  int pattern_idx;
+    int match_offset = -1;
+    int pattern_idx;
 
-  for (int i = offset; i <= length_ - pattern.length_; i++) {
-    for (pattern_idx = 0; pattern_idx < pattern.length_; pattern_idx++) {
-      if (char_array_[i + pattern_idx] != pattern[pattern_idx]) {
-        break;
-      }
+    for (int i = offset; i <= length_ - pattern.length_; i++) {
+        for (pattern_idx = 0; pattern_idx < pattern.length_; pattern_idx++) {
+            if (char_array_[i + pattern_idx] != pattern[pattern_idx]) {
+                break;
+            }
+        }
+
+        if (pattern_idx == pattern.length_) {
+            match_offset = i;
+            break;
+        }
     }
 
-    if (pattern_idx == pattern.length_) {
-      match_offset = i;
-      break;
-    }
-  }
-
-  return match_offset;
+    return match_offset;
 }
 
 
 /*!
- * @brief ÇóÄ£Ê½´®µÄnextÊı×é
- * @param pattern Ä£Ê½´®µÚÒ»¸ö×Ö·û´®µÄÖ¸Õë
- * @param pattern_len Ä£Ê½´®³¤¶È
- * @return nextÊı×éÆğÊ¼µØÖ·
+ * @brief æ±‚æ¨¡å¼ä¸²çš„nextæ•°ç»„
+ * @param pattern æ¨¡å¼ä¸²ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²çš„æŒ‡é’ˆ
+ * @param pattern_len æ¨¡å¼ä¸²é•¿åº¦
+ * @return nextæ•°ç»„èµ·å§‹åœ°å€
  */
 int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
 
-  // ·ÖÅänextÊı×éÄÚ´æ
-  int* next = new int[pattern_len];
-  if (next == NULL) {
-    cerr<<"next array allocate error"<<endl;
-    return NULL;
-  }
-
-  /// ÉèÖÃnext[0] = -1
-  int i = 0;
-  int starting_index = -1;
-
-  next[0] = starting_index;
-
-  while (i < pattern_len) {
-
-    /// Ê¹ÓÃnext[0]´¦Àínext[1]
-    /// µ±Ä£Ê½´®×Ö·ûpattern[1]Ê§ÅäÊ±, ±ØÈ»´Ópattern[0]¿ªÊ¼ÖØĞÂ½øĞĞÆ¥Åä, Òò´Ënext[1] = 0
-    /// ´Ë´¦Âß¼­¿ÉÒÔºÍÏÂÃæµÄpattern[i] == pattern[starting_index]·ÖÖ§Âß¼­ºÏ²¢
-    /// Òò´Ënext[0] = -1
-    /// ÆäÓà²¿·ÖÔòÏàÍ¬(´úÂë¿ÉÒÔºÏ²¢)
-    if (starting_index == -1) {
-      i++;
-      starting_index++;
-      next[i] = starting_index;
+    // åˆ†é…nextæ•°ç»„å†…å­˜
+    int* next = new int[pattern_len];
+    if (next == NULL) {
+        cerr << "next array allocate error" << endl;
+        return NULL;
     }
-      /// Ê¹ÓÃnext[i]Çónext[i + 1]
-    else
-    {
-      /// Èç¹ûpattern[i]ºÍpattern[starting_index]ÏàÍ¬, Ôò×óÓÒÁ½²àµÄÏàÍ¬×Ö·û´®ÇøÓòÀ©Õ¹
-      /// Ê¾Àı
-      ///  a b c d 5 6 a b c d 7
-      ///  a b
-      ///              a b
-      ///                  ^
-      ///                  |
-      ///
-      ///
-      /// i == 8, starting_index == 2
-      /// pattern[8] == pattern[2] == 'c', ×ßif( == )·ÖÖ§:
-      ///     8++ -> 9,
-      ///     starting_index++ -> 3
-      ///     next[9] == pattern[3]
-      ///
-      ///
-      ///  a b c d 5 6 a b c d 7
-      ///  a b c
-      ///              a b c
-      ///                    ^
-      ///                    |
-      ///
-      if (pattern[i] == pattern[starting_index]) {
-        i++;
-        starting_index++;
-        next[i] = starting_index;
-      }
-        /// Èç¹ûpattern[i]ºÍpattern[starting_index]²»Í¬, ÔòÊ¹ÓÃnextÊı×é½øĞĞµİ¹é, Öğ²½ÑéÖ¤
-      else
-      {
-        starting_index = next[starting_index];
-      }
-    }
-  }
 
-  return next;
+    /// è®¾ç½®next[0] = -1
+    int i = 0;
+    int starting_index = -1;
+
+    next[0] = starting_index;
+
+    while (i < pattern_len) {
+
+        /// ä½¿ç”¨next[0]å¤„ç†next[1]
+        /// å½“æ¨¡å¼ä¸²å­—ç¬¦pattern[1]å¤±é…æ—¶, å¿…ç„¶ä»pattern[0]å¼€å§‹é‡æ–°è¿›è¡ŒåŒ¹é…, å› æ­¤next[1] = 0
+        /// æ­¤å¤„é€»è¾‘å¯ä»¥å’Œä¸‹é¢çš„pattern[i] == pattern[starting_index]åˆ†æ”¯é€»è¾‘åˆå¹¶
+        /// å› æ­¤next[0] = -1
+        /// å…¶ä½™éƒ¨åˆ†åˆ™ç›¸åŒ(ä»£ç å¯ä»¥åˆå¹¶)
+        if (starting_index == -1) {
+            i++;
+            starting_index++;
+            next[i] = starting_index;
+        }
+        /// ä½¿ç”¨next[i]æ±‚next[i + 1]
+        else
+        {
+            /// å¦‚æœpattern[i]å’Œpattern[starting_index]ç›¸åŒ, åˆ™å·¦å³ä¸¤ä¾§çš„ç›¸åŒå­—ç¬¦ä¸²åŒºåŸŸæ‰©å±•
+            /// ç¤ºä¾‹
+            ///  a b c d 5 6 a b c d 7
+            ///  a b
+            ///              a b
+            ///                  ^
+            ///                  |
+            ///
+            ///
+            /// i == 8, starting_index == 2
+            /// pattern[8] == pattern[2] == 'c', èµ°if( == )åˆ†æ”¯:
+            ///     8++ -> 9,
+            ///     starting_index++ -> 3
+            ///     next[9] == pattern[3]
+            ///
+            ///
+            ///  a b c d 5 6 a b c d 7
+            ///  a b c
+            ///              a b c
+            ///                    ^
+            ///                    |
+            ///
+            if (pattern[i] == pattern[starting_index]) {
+                i++;
+                starting_index++;
+                next[i] = starting_index;
+            }
+            /// å¦‚æœpattern[i]å’Œpattern[starting_index]ä¸åŒ, åˆ™ä½¿ç”¨nextæ•°ç»„è¿›è¡Œé€’å½’, é€æ­¥éªŒè¯
+            else
+            {
+                starting_index = next[starting_index];
+            }
+        }
+    }
+
+    return next;
 }
 
 
 /*!
- * @brief ÇóÄ£Ê½´®µÄnextÊı×é(CyberDash°æ±¾)
- * @param pattern Ä£Ê½´®µÚÒ»¸ö×Ö·û´®µÄÖ¸Õë
- * @param pattern_len Ä£Ê½´®³¤¶È
- * @return nextÊı×éÆğÊ¼µØÖ·
+ * @brief æ±‚æ¨¡å¼ä¸²çš„nextæ•°ç»„(CyberDashç‰ˆæœ¬)
+ * @param pattern æ¨¡å¼ä¸²ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸²çš„æŒ‡é’ˆ
+ * @param pattern_len æ¨¡å¼ä¸²é•¿åº¦
+ * @return nextæ•°ç»„èµ·å§‹åœ°å€
  */
 int* CyberDashString::KMPNextByCyberDash(const char* pattern, int pattern_len) {
 
-  int* next = new int[pattern_len];
-  if (next == NULL) {
-    cerr<<"next array allocate error"<<endl;
-    return NULL;
-  }
-
-  next[0] = -1;
-  next[1] = 0;
-
-  int i = 1;
-  int starting_index = 0;
-
-  while (i < pattern_len) {
-    if (pattern[i] == pattern[starting_index]) {
-      i++;
-      starting_index++;
-      next[i] = starting_index;
-    } else {
-      if (starting_index == 0) {
-        i++;
-        next[i] = starting_index;
-      } else {
-        starting_index = next[starting_index];
-      }
+    int* next = new int[pattern_len];
+    if (next == NULL) {
+        cerr << "next array allocate error" << endl;
+        return NULL;
     }
-  }
 
-  return next;
+    next[0] = -1;
+    next[1] = 0;
+
+    int i = 1;
+    int starting_index = 0;
+
+    while (i < pattern_len) {
+        if (pattern[i] == pattern[starting_index]) {
+            i++;
+            starting_index++;
+            next[i] = starting_index;
+        }
+        else {
+            if (starting_index == 0) {
+                i++;
+                next[i] = starting_index;
+            }
+            else {
+                starting_index = next[starting_index];
+            }
+        }
+    }
+
+    return next;
 }
 
 
 /*!
- * @brief ´òÓ¡nextÊı×é
- * @param next_arr nextÊı×é
+ * @brief æ‰“å°nextæ•°ç»„
+ * @param next_arr nextæ•°ç»„
  * @param next_arr_len
  */
 void CyberDashString::PrintNextArray(const int* next_arr, int next_arr_len) {
-  /// Ê¾Àı
-  /// Ä£Ê½×Ö·û´®:  a b c d 5 6 a b c d 7
-  /// nextÊı×é:  -1 0 0 0 0 0 0 1 2 3 4
-  for (int i = 0; i < next_arr_len; i++) {
-    cout << *(next_arr + i) << " ";
-  }
-  cout<<endl;
+    /// ç¤ºä¾‹
+    /// æ¨¡å¼å­—ç¬¦ä¸²:  a b c d 5 6 a b c d 7
+    /// nextæ•°ç»„:  -1 0 0 0 0 0 0 1 2 3 4
+    for (int i = 0; i < next_arr_len; i++) {
+        cout << *(next_arr + i) << " ";
+    }
+    cout << endl;
 }
 
 
 /*!
- * @brief KMP×Ö·û´®Æ¥Åä²éÕÒ
- * @param pattern Ä£Ê½´®
- * @param offset Ä¿±ê´®µÄÆğÊ¼Æ«ÒÆÁ¿
- * @return Ä¿±ê´®ÖĞµÄÆ¥ÅäÎ»ÖÃ, -1Îª²»Æ¥Åä / ÆäËûÎªµÚÒ»¸öÆ¥Åä×Ö·ûµÄÊı×éË÷ÒıÖµ
+ * @brief KMPå­—ç¬¦ä¸²åŒ¹é…æŸ¥æ‰¾
+ * @param pattern æ¨¡å¼ä¸²
+ * @param offset ç›®æ ‡ä¸²çš„èµ·å§‹åç§»é‡
+ * @return ç›®æ ‡ä¸²ä¸­çš„åŒ¹é…ä½ç½®, -1ä¸ºä¸åŒ¹é… / å…¶ä»–ä¸ºç¬¬ä¸€ä¸ªåŒ¹é…å­—ç¬¦çš„æ•°ç»„ç´¢å¼•å€¼
  * @note
  */
 int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
 
-  int pattern_len = pattern.Length();
-  int* next = KMPNext(pattern.char_array_, pattern_len);
-  if (next == NULL) {
-    cerr<<"next array allocation error"<<endl;
-    return -2; //
-  }
-
-  // cout<<"Ä£Ê½´®: "<<pattern<<endl<<"¶ÔÓ¦µÄnextÊı×é: ";
-  // PrintNextArray(next, pattern_len); // show the next array
-
-  int pattern_str_i = 0;
-  int target_str_i = offset;
-
-  while (pattern_str_i < pattern_len && target_str_i < this->length_) {
-    /// Èç¹ûÄ£Ê½´®×Ö·û(Î»ÖÃpattern_str_i)ºÍÄ¿±ê´®×Ö·û(Î»ÖÃtarget_str_i)ÏàÍ¬, ÔòÏòºóÒÆÎ»
-    if (pattern[pattern_str_i] == this->char_array_[target_str_i]) {
-      pattern_str_i++;
-      target_str_i++;
+    int pattern_len = pattern.Length();
+    int* next = KMPNext(pattern.char_array_, pattern_len);
+    if (next == NULL) {
+        cerr << "next array allocation error" << endl;
+        return -2; //
     }
-      /// Èç¹ûÄ£Ê½´®×Ö·û(Î»ÖÃpattern_str_i)ºÍÄ¿±ê´®×Ö·û(Î»ÖÃtarget_str_i)²»Í¬
-    else
-    {
-      // Èç¹ûÊÇÄ£Ê½´®µÚ1¸ö×Ö·û²»Æ¥Åä, ÔòÄ¿±ê´®ÏòºóÒÆÎ»
-      if (pattern_str_i == 0) {
-        target_str_i++;
-      }
-        // Èç¹û²»ÊÇÄ£Ê½´®µÚ1¸ö×Ö·û²»Æ¥Åä, Ôò´ÓÄ£Ê½´®µÄnext[pattern_str_i]¿ªÊ¼Ö´ĞĞÏÂÒ»ÌËÆ¥Åä
-      else
-      {
-        pattern_str_i = next[pattern_str_i];
-      }
+
+    cout<<"æ¨¡å¼ä¸²: "<<pattern<<endl<<"å¯¹åº”çš„nextæ•°ç»„: ";
+    PrintNextArray(next, pattern_len); // show the next array
+
+    int pattern_str_i = 0;      // æ¨¡å¼ä¸²èµ·å§‹ä½ç½®
+    int target_str_i = offset;  // ç›®æ ‡ä¸²èµ·å§‹ä½ç½®
+
+    while (pattern_str_i < pattern_len && target_str_i < this->length_) {
+        /// å¦‚æœæ¨¡å¼ä¸²å­—ç¬¦(ä½ç½®pattern_str_i)å’Œç›®æ ‡ä¸²å­—ç¬¦(ä½ç½®target_str_i)ç›¸åŒ, åˆ™å‘åç§»ä½
+        if (pattern[pattern_str_i] == this->char_array_[target_str_i]) {
+            pattern_str_i++;
+            target_str_i++;
+        }
+        /// å¦‚æœæ¨¡å¼ä¸²å­—ç¬¦(ä½ç½®pattern_str_i)å’Œç›®æ ‡ä¸²å­—ç¬¦(ä½ç½®target_str_i)ä¸åŒ
+        else
+        {
+            // å¦‚æœæ˜¯æ¨¡å¼ä¸²ç¬¬1ä¸ªå­—ç¬¦ä¸åŒ¹é…, åˆ™ç›®æ ‡ä¸²å‘åç§»ä½
+            if (pattern_str_i == 0) {
+                target_str_i++;
+            }
+            // å¦‚æœä¸æ˜¯æ¨¡å¼ä¸²ç¬¬1ä¸ªå­—ç¬¦ä¸åŒ¹é…, åˆ™ä»æ¨¡å¼ä¸²çš„next[pattern_str_i]å¼€å§‹æ‰§è¡Œä¸‹ä¸€è¶ŸåŒ¹é…
+            else
+            {
+                pattern_str_i = next[pattern_str_i];
+            }
+        }
     }
-  }
 
-  delete[] next; // É¾³ınextÊı×é
+    // delete[] next; // åˆ é™¤nextæ•°ç»„
 
-  int match_pos;
+    int match_pos;
 
-  if (pattern_str_i < pattern_len) {
-    match_pos = -1; // ²»Æ¥Åä
-  } else {
-    match_pos = target_str_i - pattern_len; // Ëã³öÄ¿±ê´®ÖĞÆ¥ÅäµÄµÚÒ»¸ö×Ö·ûµÄ(ÔÚÄ¿±ê´®ÖĞµÄ)Î»ÖÃ
-  }
+    if (pattern_str_i < pattern_len) {
+        match_pos = -1; // ä¸åŒ¹é…
+    }
+    else {
+        match_pos = target_str_i - pattern_len; // ç®—å‡ºç›®æ ‡ä¸²ä¸­åŒ¹é…çš„ç¬¬ä¸€ä¸ªå­—ç¬¦çš„(åœ¨ç›®æ ‡ä¸²ä¸­çš„)ä½ç½®
+    }
 
-  return match_pos;
+    return match_pos;
 }
 
 
 /*!
- * @brief KMP×Ö·û´®Æ¥Åä²éÕÒ(Ê¹ÓÃKMPNextByCyberDashÉú³ÉnextÊı×é)
- * @param pattern Ä£Ê½´®
- * @param offset Ä¿±ê´®µÄÆğÊ¼Æ«ÒÆÁ¿
- * @return Ä¿±ê´®ÖĞµÄÆ¥ÅäÎ»ÖÃ, -1Îª²»Æ¥Åä / ÆäËûÎªµÚÒ»¸öÆ¥Åä×Ö·ûµÄÊı×éË÷ÒıÖµ
+ * @brief KMPå­—ç¬¦ä¸²åŒ¹é…æŸ¥æ‰¾(ä½¿ç”¨KMPNextByCyberDashç”Ÿæˆnextæ•°ç»„)
+ * @param pattern æ¨¡å¼ä¸²
+ * @param offset ç›®æ ‡ä¸²çš„èµ·å§‹åç§»é‡
+ * @return ç›®æ ‡ä¸²ä¸­çš„åŒ¹é…ä½ç½®, -1ä¸ºä¸åŒ¹é… / å…¶ä»–ä¸ºç¬¬ä¸€ä¸ªåŒ¹é…å­—ç¬¦çš„æ•°ç»„ç´¢å¼•å€¼
  * @note
  */
 int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) const {
 
-  int match_pos;
+    int match_pos;
 
-  int pattern_len = pattern.Length();
-  int* next = KMPNextByCyberDash(pattern.char_array_, pattern_len);
-  // PrintNextArray(next, pattern_len);
-  if (!next) {
-    cerr<<"next array allocation error"<<endl;
-    return -2;
-  }
-
-  int pattern_index = 0;
-  int target_str_index = offset;
-
-  while (pattern_index < pattern_len && target_str_index < length_) {
-    if (pattern_index == -1 || pattern[pattern_index] == char_array_[target_str_index]) {
-      pattern_index++;
-      target_str_index++;
-    } else {
-      pattern_index = next[pattern_index];
+    int pattern_len = pattern.Length();
+    int* next = KMPNextByCyberDash(pattern.char_array_, pattern_len);
+    // PrintNextArray(next, pattern_len);
+    if (!next) {
+        cerr << "next array allocation error" << endl;
+        return -2;
     }
-  }
 
-  delete[] next;
+    int pattern_index = 0;
+    int target_str_index = offset;
 
-  if (pattern_index < pattern_len) {
-    match_pos = -1;
-  } else {
-    match_pos = target_str_index - pattern_len;
-  }
+    while (pattern_index < pattern_len && target_str_index < length_) {
+        if (pattern_index == -1 || pattern[pattern_index] == char_array_[target_str_index]) {
+            pattern_index++;
+            target_str_index++;
+        }
+        else {
+            pattern_index = next[pattern_index];
+        }
+    }
 
-  return match_pos;
+    delete[] next;
+
+    if (pattern_index < pattern_len) {
+        match_pos = -1;
+    }
+    else {
+        match_pos = target_str_index - pattern_len;
+    }
+
+    return match_pos;
 }
 
 
 /*!
- * @brief ÎÒÃÇÊÇCyberDash:-)
+ * @brief æˆ‘ä»¬æ˜¯CyberDash:-)
  */
 void CyberDashString::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
-      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 

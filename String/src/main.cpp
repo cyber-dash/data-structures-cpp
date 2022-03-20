@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file main.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ×Ö·û´®Æ¥ÅäDemoÑİÊ¾
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å­—ç¬¦ä¸²åŒ¹é…Demoæ¼”ç¤º
  * @version 0.2.1
  * @date 2021-08-23
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include <iostream>
