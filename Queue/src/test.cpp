@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file test.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¶ÓÁĞ²âÊÔ.cppÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief é˜Ÿåˆ—æµ‹è¯•.cppæ–‡ä»¶
  * @version 0.2.1
  * @date 2021-10-9
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include "test.h"
@@ -14,160 +14,162 @@
 
 void TestGetSize() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                    Test Queue GetSize                     |"<<endl;
-  cout<<"|                        ²âÊÔ¶ÓÁĞSize                        |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test Queue GetSize                     |" << endl;
+    cout << "|                        æµ‹è¯•é˜Ÿåˆ—Size                        |" << endl << endl << endl;
 
-  LinkQueue<string> old_memory_queue;
+    LinkQueue<string> old_memory_queue;
 
-  string old_memory[12] = {
-      "·´·´¸´¸´ÔÂ¹âÌ«ÃÔ»ó", "È´»¹¹ÒÔÚÌìÒ»±ß³°Ğ¦ÎÒ",
-      "¹ı·ÖÔÚÒâ±ğÈË¸øµÄÀäÄ®", "ÎÒ¸Ã¿ªÊ¼Îª×Ô¼º¶ø»î",
+    string old_memory[12] = {
+        "ååå¤å¤æœˆå…‰å¤ªè¿·æƒ‘", "å´è¿˜æŒ‚åœ¨å¤©ä¸€è¾¹å˜²ç¬‘æˆ‘",
+        "è¿‡åˆ†åœ¨æ„åˆ«äººç»™çš„å†·æ¼ ", "æˆ‘è¯¥å¼€å§‹ä¸ºè‡ªå·±è€Œæ´»",
 
-      "ÇáÇá°Ñ³ÁÖØµÄ¹ıÈ¥ÉÏËø", "Àë¿ªÔø¾­±»ÄãÄç°®µÄÎÒ",
-      "Àë¿ªÄÇÀë²»¿ªÄãµÄÅ³Èõ", "¼ÌĞøÍùÇ°ÕÒÁíÒ»¸ö×ÔÎÒ",
+        "è½»è½»æŠŠæ²‰é‡çš„è¿‡å»ä¸Šé”", "ç¦»å¼€æ›¾ç»è¢«ä½ æººçˆ±çš„æˆ‘",
+        "ç¦»å¼€é‚£ç¦»ä¸å¼€ä½ çš„æ‡¦å¼±", "ç»§ç»­å¾€å‰æ‰¾å¦ä¸€ä¸ªè‡ªæˆ‘",
 
-      "ÖÕÓÚ°ÑĞÄÍ´µÄ¹ıÈ¥ÕõÍÑ", "Àë¿ª×Ô¼º¿´ÇåÕæ¼Ù¶Ô´í",
-      "²»ÊÇ·É¶êÃ»×Ê¸ñÆË»ğ", "ÉËµ½ÁËµ××ÜÓĞÇåĞÑÊ±ºò"
-  };
+        "ç»ˆäºæŠŠå¿ƒç—›çš„è¿‡å»æŒ£è„±", "ç¦»å¼€è‡ªå·±çœ‹æ¸…çœŸå‡å¯¹é”™",
+        "ä¸æ˜¯é£è›¾æ²¡èµ„æ ¼æ‰‘ç«", "ä¼¤åˆ°äº†åº•æ€»æœ‰æ¸…é†’æ—¶å€™"
+    };
 
-  for (int i = 0; i < 12; i++) {
-    cout<<"Old memory enqueue: "<<old_memory[i]<<endl;
-    old_memory_queue.EnQueue(old_memory[i]);
-  }
+    for (int i = 0; i < 12; i++) {
+        cout << "Old memory enqueue: " << old_memory[i] << endl;
+        old_memory_queue.EnQueue(old_memory[i]);
+    }
 
-  cout<<endl<<"Old memory queue size: "<<old_memory_queue.GetSize()<<endl;
+    cout << endl << "Old memory queue size: " << old_memory_queue.GetSize() << endl;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void TestEnQueue() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                    Test Queue Enqueue                     |"<<endl;
-  cout<<"|                        ²âÊÔ¶ÓÁĞÈë¶Ó                         |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test Queue Enqueue                     |" << endl;
+    cout << "|                        æµ‹è¯•é˜Ÿåˆ—å…¥é˜Ÿ                         |" << endl << endl << endl;
 
-  LinkQueue<int> int_queue;
+    LinkQueue<int> int_queue;
 
-  cout<<"Enqueue 4 integers."<<endl<<endl;
+    cout << "Enqueue 4 integers." << endl << endl;
 
-  int_queue.EnQueue(1);
-  int_queue.EnQueue(2);
-  int_queue.EnQueue(3);
-  int_queue.EnQueue(4);
+    int_queue.EnQueue(1);
+    int_queue.EnQueue(2);
+    int_queue.EnQueue(3);
+    int_queue.EnQueue(4);
 
-  cout << int_queue;
+    cout << int_queue;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void TestDeQueue() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                    Test Queue Dequeue                     |"<<endl;
-  cout<<"|                        ²âÊÔ¶ÓÁĞ³ö¶Ó                         |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test Queue Dequeue                     |" << endl;
+    cout << "|                        æµ‹è¯•é˜Ÿåˆ—å‡ºé˜Ÿ                         |" << endl << endl << endl;
 
-  LinkQueue<double> double_queue;
+    LinkQueue<double> double_queue;
 
-  cout<<"double_queue enqueue 4 numbers."<<endl;
+    cout << "double_queue enqueue 4 numbers." << endl;
 
-  double_queue.EnQueue(1.1);
-  double_queue.EnQueue(2.2);
-  double_queue.EnQueue(3.3);
-  double_queue.EnQueue(4.4);
+    double_queue.EnQueue(1.1);
+    double_queue.EnQueue(2.2);
+    double_queue.EnQueue(3.3);
+    double_queue.EnQueue(4.4);
 
-  cout << double_queue << endl;
+    cout << double_queue << endl;
 
-  cout<<"double_queue dequeue."<<endl<<endl;
+    cout << "double_queue dequeue." << endl << endl;
 
-  double frontData;
-  double_queue.DeQueue(frontData);
+    double frontData;
+    double_queue.DeQueue(frontData);
 
-  cout << double_queue;
+    cout << double_queue;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void TestGetFrontAndGetRear() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                Test Queue GetFront & GetRear              |"<<endl;
-  cout<<"|                   ²âÊÔ¶ÓÁĞ»ñÈ¡¶ÓÍ·/»ñÈ¡¶ÓÎ²                   |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                Test Queue GetFront & GetRear              |" << endl;
+    cout << "|                   æµ‹è¯•é˜Ÿåˆ—è·å–é˜Ÿå¤´/è·å–é˜Ÿå°¾                   |" << endl << endl << endl;
 
-  LinkQueue<string> string_queue;
+    LinkQueue<string> string_queue;
 
-  string_queue.EnQueue("ÌıÎÒµÄ");
-  string_queue.EnQueue("ÂòÂòÂò");
-  string_queue.EnQueue("Âò±ùÏä");
-  string_queue.EnQueue("Ê²Ã´¶¼ÒªÌıÎÒµÄ");
-  string_queue.EnQueue("ÄÖ¹»ÁËÃ»ÓĞ");
-  string_queue.EnQueue("ÎÒ²»ÒªÄã¾õµÃ");
-  string_queue.EnQueue("ÎÒÒªÎÒ¾õµÃ");
+    string_queue.EnQueue("å¬æˆ‘çš„");
+    string_queue.EnQueue("ä¹°ä¹°ä¹°");
+    string_queue.EnQueue("ä¹°å†°ç®±");
+    string_queue.EnQueue("ä»€ä¹ˆéƒ½è¦å¬æˆ‘çš„");
+    string_queue.EnQueue("é—¹å¤Ÿäº†æ²¡æœ‰");
+    string_queue.EnQueue("æˆ‘ä¸è¦ä½ è§‰å¾—");
+    string_queue.EnQueue("æˆ‘è¦æˆ‘è§‰å¾—");
 
-  string front_data;
-  string rear_data;
+    string front_data;
+    string rear_data;
 
-  string_queue.GetFront(front_data);
-  string_queue.GetRear(rear_data);
-  cout<<"The front of the queue: "<<front_data<<endl;
-  cout<<"The rear of the queue: "<<rear_data<<endl;
+    string_queue.GetFront(front_data);
+    string_queue.GetRear(rear_data);
+    cout << "The front of the queue: " << front_data << endl;
+    cout << "The rear of the queue: " << rear_data << endl;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void TestIsEmpty() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                   Test Queue MakeEmpty                    |"<<endl;
-  cout<<"|                        ²âÊÔÇå¿Õ¶ÓÁĞ                         |"<<endl<<endl<<endl;
-  LinkQueue<string> LinkinPark_song_queue;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                   Test Queue MakeEmpty                    |" << endl;
+    cout << "|                        æµ‹è¯•æ¸…ç©ºé˜Ÿåˆ—                         |" << endl << endl << endl;
+    LinkQueue<string> LinkinPark_song_queue;
 
-  LinkinPark_song_queue.EnQueue("<In the end>");
-  LinkinPark_song_queue.EnQueue("<Crawling>");
-  LinkinPark_song_queue.EnQueue("<One more light>");
+    LinkinPark_song_queue.EnQueue("<In the end>");
+    LinkinPark_song_queue.EnQueue("<Crawling>");
+    LinkinPark_song_queue.EnQueue("<One more light>");
 
-  bool is_empty = LinkinPark_song_queue.IsEmpty();
-  if (is_empty) {
-    cout<<"LinkinPark_song_queue is empty."<<endl;
-  } else {
-    cout<<"LinkinPark_song_queue isn't empty."<<endl;
-  }
+    bool is_empty = LinkinPark_song_queue.IsEmpty();
+    if (is_empty) {
+        cout << "LinkinPark_song_queue is empty." << endl;
+    }
+    else {
+        cout << "LinkinPark_song_queue isn't empty." << endl;
+    }
 
-  cout<<endl<<"call function MakeEmpty."<<endl<<endl;
+    cout << endl << "call function MakeEmpty." << endl << endl;
 
-  LinkinPark_song_queue.MakeEmpty();
+    LinkinPark_song_queue.MakeEmpty();
 
-  is_empty = LinkinPark_song_queue.IsEmpty();
-  if (is_empty) {
-    cout<<"LinkinPark_song_queue is empty."<<endl;
-  } else {
-    cout<<"LinkinPark_song_queue isn't empty."<<endl;
-  }
+    is_empty = LinkinPark_song_queue.IsEmpty();
+    if (is_empty) {
+        cout << "LinkinPark_song_queue is empty." << endl;
+    }
+    else {
+        cout << "LinkinPark_song_queue isn't empty." << endl;
+    }
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void TestOperatorCout() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test Operator <<                     |"<<endl;
-  cout<<"|                      ²âÊÔ¶ÓÁĞoperator<<                    |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                      Test Operator <<                     |" << endl;
+    cout << "|                      æµ‹è¯•é˜Ÿåˆ—operator<<                    |" << endl << endl << endl;
 
-  LinkQueue<string> string_queue;
+    LinkQueue<string> string_queue;
 
-  string_queue.EnQueue("ÌıÎÒµÄ");
-  string_queue.EnQueue("ÂòÂòÂò");
-  string_queue.EnQueue("Âò±ùÏä");
-  string_queue.EnQueue("Ê²Ã´¶¼ÒªÌıÎÒµÄ");
-  string_queue.EnQueue("ÄÖ¹»ÁËÃ»ÓĞ");
-  string_queue.EnQueue("ÎÒ²»ÒªÄã¾õµÃ");
-  string_queue.EnQueue("ÎÒÒªÎÒ¾õµÃ");
+    string_queue.EnQueue("å¬æˆ‘çš„");
+    string_queue.EnQueue("ä¹°ä¹°ä¹°");
+    string_queue.EnQueue("ä¹°å†°ç®±");
+    string_queue.EnQueue("ä»€ä¹ˆéƒ½è¦å¬æˆ‘çš„");
+    string_queue.EnQueue("é—¹å¤Ÿäº†æ²¡æœ‰");
+    string_queue.EnQueue("æˆ‘ä¸è¦ä½ è§‰å¾—");
+    string_queue.EnQueue("æˆ‘è¦æˆ‘è§‰å¾—");
 
-  cout<<string_queue;
+    cout << string_queue;
 }

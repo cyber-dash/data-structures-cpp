@@ -1,11 +1,11 @@
-/**
+ï»¿/**
  * @file link_queue.h
- * @author cyberdash@163.com(¶¶Òô: cyberdash_yuan)
- * @brief Á´±íÊµÏÖ¶ÓÁĞ
+ * @author cyberdash@163.com(æŠ–éŸ³: cyberdash_yuan)
+ * @brief é“¾è¡¨å®ç°é˜Ÿåˆ—
  * @version 0.2.1
  * @date 2021-07-28
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_LINK_QUEUE_H
@@ -21,327 +21,329 @@ using namespace std;
 
 
 /*!
- * @brief Á´±í¶ÓÁĞ½áµãÄ£°å½á¹¹Ìå
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief é“¾è¡¨é˜Ÿåˆ—ç»“ç‚¹æ¨¡æ¿ç»“æ„ä½“
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template <class T>
-class LinkNode{
+class LinkNode {
 
 public:
-  /*!
-   * @brief ¹¹Ôìº¯Êı(ÏÂÒ»½áµãÖ¸Õë)
-   * @param node ÏÂÒ»½áµãÖ¸Õë
-   */
-  LinkNode(LinkNode<T>* node = NULL): link_(node) {}
+    /*!
+     * @brief æ„é€ å‡½æ•°(ä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ)
+     * @param node ä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ
+     */
+    LinkNode(LinkNode<T>* node = NULL) : link_(node) {}
 
-  /**
-   * @brief ¹¹Ôìº¯Êı(Êı¾İÏî&ÏÂÒ»½áµãÖ¸Õë)
-   * @param data Êı¾İÏî
-   * @param node ÏÂÒ»½áµãÖ¸Õë
-   */
-  LinkNode(const T& data, LinkNode<T>* node = NULL): data_(data), link_(node) {}
+    /**
+     * @brief æ„é€ å‡½æ•°(æ•°æ®é¡¹&ä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ)
+     * @param data æ•°æ®é¡¹
+     * @param node ä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ
+     */
+    LinkNode(const T& data, LinkNode<T>* node = NULL) : data_(data), link_(node) {}
 
-  /**
-   * @brief »ñÈ¡µ±Ç°½áµãÖµ
-   * @return T ÀàĞÍÄ£°å²ÎÊı
-   */
-  T GetData() { return data_; }
+    /**
+     * @brief è·å–å½“å‰ç»“ç‚¹å€¼
+     * @return T ç±»å‹æ¨¡æ¿å‚æ•°
+     */
+    T GetData() { return data_; }
 
-  /*!
-   * @brief ÉèÖÃµ±Ç°½áµãÖµ
-   * @param data ÊäÈëµÄ½áµãÖµ
-   * @return ÊÇ·ñ³É¹¦
-   */
-  bool SetData(const T& data)
-  {
-    data_ = data;
-    return true;
-  }
+    /*!
+     * @brief è®¾ç½®å½“å‰ç»“ç‚¹å€¼
+     * @param data è¾“å…¥çš„ç»“ç‚¹å€¼
+     * @return æ˜¯å¦æˆåŠŸ
+     */
+    bool SetData(const T& data)
+    {
+        data_ = data;
+        return true;
+    }
 
-  /*!
-   * @brief »ñÈ¡ÏÂÒ»½áµã
-   * @return LinkNode<T>* ·µ»ØÏÂÒ»½áµã
-   */
-  LinkNode<T>* GetLink() { return link_; }
+    /*!
+     * @brief è·å–ä¸‹ä¸€ç»“ç‚¹
+     * @return LinkNode<T>* è¿”å›ä¸‹ä¸€ç»“ç‚¹
+     */
+    LinkNode<T>* GetLink() { return link_; }
 
-  /*!
-   * @brief ÉèÖÃÏÂÒ»½áµã
-   * @param node ÏÂÒ»½áµãÖ¸Õë
-   * @return ÊÇ·ñ³É¹¦
-   */
-  bool SetLink(LinkNode<T>* node)
-  {
-    link_ = node;
-    return true;
-  }
+    /*!
+     * @brief è®¾ç½®ä¸‹ä¸€ç»“ç‚¹
+     * @param node ä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ
+     * @return æ˜¯å¦æˆåŠŸ
+     */
+    bool SetLink(LinkNode<T>* node)
+    {
+        link_ = node;
+        return true;
+    }
 
 private:
-  T data_; //!< ½áµãÊı¾İÏî
-  LinkNode<T>* link_; //!< ÏÂÒ»½áµã
+    T data_; //!< ç»“ç‚¹æ•°æ®é¡¹
+    LinkNode<T>* link_; //!< ä¸‹ä¸€ç»“ç‚¹
 };
 
 
 /**
- * @brief Á´±í¶ÓÁĞÄ£°åÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief é“¾è¡¨é˜Ÿåˆ—æ¨¡æ¿ç±»
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template <class T>
-class LinkQueue: public Queue<T> {
+class LinkQueue : public Queue<T> {
 
 public:
-  /*! @brief ¹¹Ôìº¯Êı */
-  LinkQueue(): front_(NULL), rear_(NULL) {}
+    /*! @brief æ„é€ å‡½æ•° */
+    LinkQueue() : front_(NULL), rear_(NULL) {}
 
-  /*! @brief Îö¹¹º¯Êı */
-  ~LinkQueue() { MakeEmpty(); }
+    /*! @brief ææ„å‡½æ•° */
+    ~LinkQueue() { MakeEmpty(); }
 
-  /*!
-   * @brief Èë¶Ó
-   * @param data Êı¾İÏî
-   * @return ÊÇ·ñÈë¶Ó³É¹¦
-   */
-  bool EnQueue(const T& data);
+    /*!
+     * @brief å…¥é˜Ÿ
+     * @param data æ•°æ®é¡¹
+     * @return æ˜¯å¦å…¥é˜ŸæˆåŠŸ
+     */
+    bool EnQueue(const T& data);
 
-  // ³ö¶Ó(±£´æÊı¾İ)
-  bool DeQueue(T& data);
+    // å‡ºé˜Ÿ(ä¿å­˜æ•°æ®)
+    bool DeQueue(T& data);
 
-  // ³ö¶Ó(²»±£´æÊı¾İ)
-  bool DeQueue();
+    // å‡ºé˜Ÿ(ä¸ä¿å­˜æ•°æ®)
+    bool DeQueue();
 
-  // »ñÈ¡¶ÓÍ·Êı¾İ
-  bool GetFront(T& data) const;
+    // è·å–é˜Ÿå¤´æ•°æ®
+    bool GetFront(T& data) const;
 
-  // »ñÈ¡¶ÓÎ²Êı¾İ
-  bool GetRear(T& data) const;
+    // è·å–é˜Ÿå°¾æ•°æ®
+    bool GetRear(T& data) const;
 
-  // ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ
-  bool IsEmpty() const;
+    // åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
+    bool IsEmpty() const;
 
-  // »ñÈ¡¶ÓÁĞ³¤¶È
-  int GetSize() const;
+    // è·å–é˜Ÿåˆ—é•¿åº¦
+    int GetSize() const;
 
-  // Çå¿Õ¶ÓÁĞ
-  void MakeEmpty();
+    // æ¸…ç©ºé˜Ÿåˆ—
+    void MakeEmpty();
 
-  /*!
-   * @brief »ñÈ¡¶ÓÍ·½áµãÖ¸Õë
-   * @return ¶ÓÍ·½áµãÖ¸Õë
-   */
-  LinkNode<T>* GetFrontPtr() { return this->front_; }
+    /*!
+     * @brief è·å–é˜Ÿå¤´ç»“ç‚¹æŒ‡é’ˆ
+     * @return é˜Ÿå¤´ç»“ç‚¹æŒ‡é’ˆ
+     */
+    LinkNode<T>* GetFrontPtr() { return this->front_; }
 
-  /*!
-   * @brief »ñÈ¡¶ÓÎ²½áµãÖ¸Õë
-   * @return LinkNode<T>* ¶ÓÎ²½áµãÖ¸Õë
-   */
-  LinkNode<T>* GetRearPtr() { return this->rear_; }
+    /*!
+     * @brief è·å–é˜Ÿå°¾ç»“ç‚¹æŒ‡é’ˆ
+     * @return LinkNode<T>* é˜Ÿå°¾ç»“ç‚¹æŒ‡é’ˆ
+     */
+    LinkNode<T>* GetRearPtr() { return this->rear_; }
 
-  // ÖØÔØ<<(´òÓ¡¶ÓÁĞ)
-  template<class U>
-  friend ostream& operator<<(ostream& os, LinkQueue<T>& link_queue);
-  
-  // ÎÒÃÇÊÇCyberDash:-)
-  void CyberDashShow();
+    // é‡è½½<<(æ‰“å°é˜Ÿåˆ—)
+    template<class U>
+    friend ostream& operator<<(ostream& os, LinkQueue<T>& link_queue);
+
+    // æˆ‘ä»¬æ˜¯CyberDash:-)
+    void CyberDashShow();
 
 private:
-  LinkNode<T>* front_; //!< ¶ÓÍ·Ö¸Õë
-  LinkNode<T>* rear_; //!< ¶ÓÎ²Ö¸Õë
+    LinkNode<T>* front_; //!< é˜Ÿå¤´æŒ‡é’ˆ
+    LinkNode<T>* rear_; //!< é˜Ÿå°¾æŒ‡é’ˆ
 };
 
 
 /*!
- * @brief Èë¶Ó
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ
- * @return ÊÇ·ñ³É¹¦
+ * @brief å…¥é˜Ÿ
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®
+ * @return æ˜¯å¦æˆåŠŸ
  */
 template<class T>
 bool LinkQueue<T>::EnQueue(const T& data) {
 
-  LinkNode<T>* new_node = new LinkNode<T>(data);
-  if (new_node == NULL) {
-    return false;
-  }
+    LinkNode<T>* new_node = new LinkNode<T>(data);
+    if (new_node == NULL) {
+        return false;
+    }
 
-  if (IsEmpty()) {
-    this->front_ = new_node;
-    this->rear_ = new_node;
-  } else {
-    this->rear_->SetLink(new_node);
-    this->rear_ = new_node;
-  }
+    if (IsEmpty()) {
+        this->front_ = new_node;
+        this->rear_ = new_node;
+    }
+    else {
+        this->rear_->SetLink(new_node);
+        this->rear_ = new_node;
+    }
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ³ö¶Ó(±£´æÊı¾İ)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ(±£´æ³ö¶Ó½áµãµÄÊı¾İÏî)
- * @return ÊÇ·ñ³ö¶Ó³É¹¦
+ * @brief å‡ºé˜Ÿ(ä¿å­˜æ•°æ®)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®(ä¿å­˜å‡ºé˜Ÿç»“ç‚¹çš„æ•°æ®é¡¹)
+ * @return æ˜¯å¦å‡ºé˜ŸæˆåŠŸ
  */
 template<class T>
 bool LinkQueue<T>::DeQueue(T& data) {
 
-  if (IsEmpty()) {
-    return false;
-  }
+    if (IsEmpty()) {
+        return false;
+    }
 
-  LinkNode<T>* cur = front_;
+    LinkNode<T>* cur = front_;
 
-  data = cur->GetData();
-  this->front_ = this->front_->GetLink();
+    data = cur->GetData();
+    this->front_ = this->front_->GetLink();
 
-  delete cur;
-  cur = NULL;
+    delete cur;
+    cur = NULL;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ³ö¶Ó(²»±£´æÊı¾İ)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ(±£´æ³ö¶Ó½áµãµÄÊı¾İÏî)
- * @return ÊÇ·ñ³ö¶Ó³É¹¦
+ * @brief å‡ºé˜Ÿ(ä¸ä¿å­˜æ•°æ®)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®(ä¿å­˜å‡ºé˜Ÿç»“ç‚¹çš„æ•°æ®é¡¹)
+ * @return æ˜¯å¦å‡ºé˜ŸæˆåŠŸ
  */
 template<class T>
 bool LinkQueue<T>::DeQueue() {
 
-  if (IsEmpty()) {
-    return false;
-  }
+    if (IsEmpty()) {
+        return false;
+    }
 
-  LinkNode<T>* cur = this->front_;
+    LinkNode<T>* cur = this->front_;
 
-  this->front_ = this->front_->GetLink();
+    this->front_ = this->front_->GetLink();
 
-  delete cur;
-  cur = NULL;
+    delete cur;
+    cur = NULL;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief »ñÈ¡¶ÓÍ·Êı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ(ÓÃÓÚ±£´æ¶ÓÍ·Êı¾İÏî)
- * @return ÊÇ·ñ³É¹¦
+ * @brief è·å–é˜Ÿå¤´æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®(ç”¨äºä¿å­˜é˜Ÿå¤´æ•°æ®é¡¹)
+ * @return æ˜¯å¦æˆåŠŸ
  */
 template<class T>
 bool LinkQueue<T>::GetFront(T& data) const {
 
-  if (IsEmpty()) {
-    return false;
-  }
+    if (IsEmpty()) {
+        return false;
+    }
 
-  data = this->front_->GetData();
+    data = this->front_->GetData();
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief »ñÈ¡¶ÓÎ²Êı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ(ÓÃÓÚ±£´æÊı¾İÏî)
- * @return ÊÇ·ñ³É¹¦
+ * @brief è·å–é˜Ÿå°¾æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®(ç”¨äºä¿å­˜æ•°æ®é¡¹)
+ * @return æ˜¯å¦æˆåŠŸ
  */
 template<class T>
 bool LinkQueue<T>::GetRear(T& data) const {
 
-  if (IsEmpty()) {
-    return false;
-  }
+    if (IsEmpty()) {
+        return false;
+    }
 
-  data = this->rear_->GetData();
+    data = this->rear_->GetData();
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return ÊÇ·ñÎª¿Õ
+ * @brief åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return æ˜¯å¦ä¸ºç©º
  */
 template<class T>
 bool LinkQueue<T>::IsEmpty() const {
-  if (this->front_ == NULL) {
-    return true;
-  } else {
-    return false;
-  }
+    if (this->front_ == NULL) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 /*!
- * @brief »ñÈ¡¶ÓÁĞ³¤¶È
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return ¶ÓÁĞ³¤¶È
+ * @brief è·å–é˜Ÿåˆ—é•¿åº¦
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return é˜Ÿåˆ—é•¿åº¦
  */
 template<class T>
 int LinkQueue<T>::GetSize() const {
 
-  int count = 0;
-  LinkNode<T>* cur = this->front_;
+    int count = 0;
+    LinkNode<T>* cur = this->front_;
 
-  while (cur != NULL) {
-    cur = cur->GetLink();
-    count++;
-  }
+    while (cur != NULL) {
+        cur = cur->GetLink();
+        count++;
+    }
 
-  return count;
+    return count;
 }
 
 
 /*!
- * @brief Çå¿Õ¶ÓÁĞ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief æ¸…ç©ºé˜Ÿåˆ—
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
 void LinkQueue<T>::MakeEmpty() {
-  while (!this->IsEmpty()) {
-    this->DeQueue();
-  }
+    while (!this->IsEmpty()) {
+        this->DeQueue();
+    }
 }
 
 
 /*!
- * @brief ÖØÔØ<<(´òÓ¡¶ÓÁĞ)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param os Êä³öÁ÷
- * @param link_queue Á´±í¶ÓÁĞ
- * @return Êä³öÁ÷
+ * @brief é‡è½½<<(æ‰“å°é˜Ÿåˆ—)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param os è¾“å‡ºæµ
+ * @param link_queue é“¾è¡¨é˜Ÿåˆ—
+ * @return è¾“å‡ºæµ
  */
 template<class T>
 ostream& operator<<(ostream& os, LinkQueue<T>& link_queue) {
 
-  os<<"The size of link queue: "<<link_queue.GetSize()<<endl;
+    os << "The size of link queue: " << link_queue.GetSize() << endl;
 
-  LinkNode<T>* cur_ptr = link_queue.GetFrontPtr();
+    LinkNode<T>* cur_ptr = link_queue.GetFrontPtr();
 
-  for (int i = 1; cur_ptr != NULL; i++) {
-    os<<i<<":"<<cur_ptr->GetData()<<endl;
-    cur_ptr = cur_ptr->GetLink();
-  }
+    for (int i = 1; cur_ptr != NULL; i++) {
+        os << i << ":" << cur_ptr->GetData() << endl;
+        cur_ptr = cur_ptr->GetLink();
+    }
 
-  return os;
+    return os;
 }
 
 
 template<class T>
 void LinkQueue<T>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
-      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 #endif //CYBER_DASH_LINK_QUEUE_H

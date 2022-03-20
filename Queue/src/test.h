@@ -1,33 +1,33 @@
-/*!
+ï»¿/*!
  * @file test.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¶ÓÁĞ²âÊÔÍ·ÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief é˜Ÿåˆ—æµ‹è¯•å¤´æ–‡ä»¶
  * @version 0.2.1
  * @date 2021-10-9
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_QUEUE_TEST_H
 #define CYBER_DASH_QUEUE_TEST_H
 
 
-/*! @brief ²âÊÔ»ñÈ¡¶ÓÁĞ³¤¶È */
+ /*! @brief æµ‹è¯•è·å–é˜Ÿåˆ—é•¿åº¦ */
 void TestGetSize();
 
-/*! @brief ²âÊÔÈë¶Ó */
+/*! @brief æµ‹è¯•å…¥é˜Ÿ */
 void TestEnQueue();
 
-/*! @brief ²âÊÔ³ö¶Ó */
+/*! @brief æµ‹è¯•å‡ºé˜Ÿ */
 void TestDeQueue();
 
-/*! @brief ²âÊÔ»ñÈ¡¶ÓÁĞÍ·/Î²½Úµã */
+/*! @brief æµ‹è¯•è·å–é˜Ÿåˆ—å¤´/å°¾èŠ‚ç‚¹ */
 void TestGetFrontAndGetRear();
 
-/*! @brief ²âÊÔ¶ÓÁĞÊÇ·ñÎª¿Õ */
+/*! @brief æµ‹è¯•é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º */
 void TestIsEmpty();
 
-/*! @brief ²âÊÔÖØÔØ<< */
+/*! @brief æµ‹è¯•é‡è½½<< */
 void TestOperatorCout();
 
 
