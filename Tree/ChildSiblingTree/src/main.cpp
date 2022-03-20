@@ -11,23 +11,22 @@
 #include "test.h"
 
 
-using namespace std;
+	using namespace std;
 
 
 int main() {
 
-  TestChildSiblingTreeCreateTreeByStr();
+	TestChildSiblingTreeCreateTreeByStr();
 
-  TestChildSiblingTreeDepth();
+	TestChildSiblingTreeDepth();
 
-  TestChildSiblingTreeNodeCount();
+	TestChildSiblingTreeNodeCount();
 
-  TestChildSiblingTreePostOrder();
+	TestChildSiblingTreePostOrder();
 
-  TestChildSiblingTreePreOrder();
+	TestChildSiblingTreePreOrder();
 
-  TestChildSiblingTreeLevelOrder();
+	TestChildSiblingTreeLevelOrder();
 
-  return 0;
+	return 0;
 }
-

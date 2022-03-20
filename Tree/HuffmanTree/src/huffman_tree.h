@@ -1,5 +1,5 @@
-//
-// Created by alei_go@163.com(∂∂“Ù: cyberdash_yuan) on 2020/11/1.
+Ôªø//
+// Created by alei_go@163.com(: cyberdash_yuan) on 2020/11/1.
 //
 
 #ifndef CYBER_DASH_HUFFMAN_TREE_H
@@ -17,14 +17,13 @@ public:
 
 	void showTree() { showTree(root); }
 
-  void CyberDashShow();
+	void CyberDashShow();
 
 protected:
-	HuffmanNode<T> *root;
-	void deleteTree(HuffmanNode<T> *t);
-	void mergeTree(HuffmanNode<T> *ht1, HuffmanNode<T> *ht2, HuffmanNode<T> *&parent);
-	void showTree(HuffmanNode<T> * t);
+	HuffmanNode<T>* root;
+	void deleteTree(HuffmanNode<T>* t);
+	void mergeTree(HuffmanNode<T>* ht1, HuffmanNode<T>* ht2, HuffmanNode<T>*& parent);
+	void showTree(HuffmanNode<T>* t);
 };
 
 #endif //CYBER_DASH_HUFFMAN_TREE_H
-

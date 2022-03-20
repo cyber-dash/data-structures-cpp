@@ -1,5 +1,5 @@
-//
-// Created by alei_go@163.com(¶¶Òô: cyberdash_yuan) on 2020/11/1.
+ï»¿//
+// Created by alei_go@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/11/1.
 //
 
 #include <iostream>
@@ -13,7 +13,7 @@ using namespace std;
 template <class T>
 HuffmanTree<T>::HuffmanTree(float w[], int n) {
 	MinHeap<HuffmanNode<T> > hp;
-	HuffmanNode<T> *parent, *first, *second, *work, temp;
+	HuffmanNode<T>* parent, * first, * second, * work, temp;
 
 	for (int i = 0; i < n; i++) {
 		work = new HuffmanNode<T>;
@@ -38,7 +38,7 @@ HuffmanTree<T>::HuffmanTree(float w[], int n) {
 
 
 template <class T>
-void HuffmanTree<T>::deleteTree(HuffmanNode<T> *t) {
+void HuffmanTree<T>::deleteTree(HuffmanNode<T>* t) {
 	if (t == NULL) {
 		return;
 	}
@@ -51,12 +51,12 @@ void HuffmanTree<T>::deleteTree(HuffmanNode<T> *t) {
 
 template <class T>
 void HuffmanTree<T>::
-mergeTree(HuffmanNode<T> *ht1, HuffmanNode<T> *ht2, HuffmanNode<T> *&parent) {
+mergeTree(HuffmanNode<T>* ht1, HuffmanNode<T>* ht2, HuffmanNode<T>*& parent) {
 	parent = new HuffmanNode<T>;
 
 	parent->left_child = ht1;
 	parent->rightChild = ht2;
-	parent->parent = parent; 
+	parent->parent = parent;
 
 	parent->data = ht1->data + ht2->data;
 	ht1->parent = ht2->parent = parent;
@@ -64,8 +64,8 @@ mergeTree(HuffmanNode<T> *ht1, HuffmanNode<T> *ht2, HuffmanNode<T> *&parent) {
 
 
 template <class T>
-void HuffmanTree<T>::showTree(HuffmanNode<T> * t) {
-	if (t == NULL){
+void HuffmanTree<T>::showTree(HuffmanNode<T>* t) {
+	if (t == NULL) {
 		return;
 	}
 
@@ -80,13 +80,13 @@ void HuffmanTree<T>::showTree(HuffmanNode<T> * t) {
 
 template<class T>
 void HuffmanTree<T>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑÐ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ÐÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ÐÅÏ¢ÓëÍ¨ÐÅÏµÍ³ÑÐ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊýÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑÐ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑÐ¾¿Éú)"<<endl<<endl
-      <<"Êý¾Ý½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉý¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+	cout << endl
+		<< "*************************************** CyberDash ***************************************" << endl << endl
+		<< "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+		<< "CyberDashæˆå‘˜:" << endl
+		<< "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸Žé€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+		<< "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+		<< "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+		<< "æ•°æ®ç»“æž„å¼€æºä»£ç (C++æ¸…åŽå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+		<< endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }

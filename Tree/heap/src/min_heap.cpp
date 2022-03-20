@@ -1,5 +1,5 @@
-//
-// Created by alei_go@163.com(¶¶Òô: cyberdash_yuan) on 2020/11/1.
+ï»¿//
+// Created by alei_go@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/11/1.
 //
 
 #include <iostream>
@@ -13,141 +13,143 @@ using namespace std;
 template <class E>
 MinHeap<E>::MinHeap(int size) {
 
-  max_size_ = (size > DEFAULT_SIZE) ? size : DEFAULT_SIZE;
+    max_size_ = (size > DEFAULT_SIZE) ? size : DEFAULT_SIZE;
 
-  heap_array_ = new E[max_size_];
-  if (heap_array_ == NULL) {
-    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
-    exit(1);
-  }
+    heap_array_ = new E[max_size_];
+    if (heap_array_ == NULL) {
+        cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+        exit(1);
+    }
 
-  current_size_ = 0;
+    current_size_ = 0;
 }
 
 
 template <class E>
 MinHeap<E>::MinHeap(E arr[], int arr_size) {
-  max_size_ = (arr_size > DEFAULT_SIZE) ? arr_size : DEFAULT_SIZE;
-  heap_array_ = new E[max_size_];
+    max_size_ = (arr_size > DEFAULT_SIZE) ? arr_size : DEFAULT_SIZE;
+    heap_array_ = new E[max_size_];
 
-  if (heap_array_ == NULL) {
-    cerr << "¶Ñ´æ´¢·ÖÅäÊ§°Ü£¡" << endl;
-    exit(1);
-  }
+    if (heap_array_ == NULL) {
+        cerr << "å †å­˜å‚¨åˆ†é…å¤±è´¥ï¼" << endl;
+        exit(1);
+    }
 
-  for (int i = 0; i < arr_size; i++) {
-    heap_array_[i] = arr[i];
-  }
+    for (int i = 0; i < arr_size; i++) {
+        heap_array_[i] = arr[i];
+    }
 
-  current_size_ = arr_size;
+    current_size_ = arr_size;
 
-  int current_index_ = (current_size_ - 2) / 2;
+    int current_index_ = (current_size_ - 2) / 2;
 
-  while (current_index_ >= 0) {
-    siftDown(current_index_, current_size_ - 1);
-    current_index_--;
-  }
+    while (current_index_ >= 0) {
+        siftDown(current_index_, current_size_ - 1);
+        current_index_--;
+    }
 }
 
 
 template <class E>
 void MinHeap<E>::siftDown(int start, int end) {
 
-  int cur = start;
+    int cur = start;
 
-  int left_child = 2 * cur + 1;
-  int right_child = left_child + 1;
+    int left_child = 2 * cur + 1;
+    int right_child = left_child + 1;
 
-  int min_child = left_child;
+    int min_child = left_child;
 
-  E cur_value = heap_array_[cur];
+    E cur_value = heap_array_[cur];
 
-  while (left_child <= end) {
+    while (left_child <= end) {
 
-    // find the min child
-    if (left_child < end && heap_array_[left_child] > heap_array_[right_child]) {
-      min_child = right_child;
+        // find the min child
+        if (left_child < end && heap_array_[left_child] > heap_array_[right_child]) {
+            min_child = right_child;
+        }
+
+        if (cur_value <= heap_array_[min_child]) {
+            break;
+        }
+        else {
+            heap_array_[cur] = heap_array_[min_child];
+            cur = min_child;
+
+            left_child = 2 * min_child + 1;
+            right_child = left_child + 1;
+            min_child = left_child;
+        }
     }
 
-    if (cur_value <= heap_array_[min_child]) {
-      break;
-    } else {
-      heap_array_[cur] =  heap_array_[min_child];
-      cur = min_child;
-
-      left_child = 2 * min_child + 1;
-      right_child = left_child + 1;
-      min_child = left_child;
-    }
-  }
-
-  heap_array_[cur] = cur_value;
+    heap_array_[cur] = cur_value;
 }
 
 
 template <class E>
 void MinHeap<E>::siftUp(int start) {
-  int j = start, i = (j - 1) / 2;
-  E temp = heap_array_[j];
+    int j = start, i = (j - 1) / 2;
+    E temp = heap_array_[j];
 
-  while (j > 0) {
-    if (heap_array_[i] <= temp) {
-      break;
-    } else {
-      heap_array_[j] = heap_array_[i];
-      j = i;
-      i = (i - 1) / 2;
+    while (j > 0) {
+        if (heap_array_[i] <= temp) {
+            break;
+        }
+        else {
+            heap_array_[j] = heap_array_[i];
+            j = i;
+            i = (i - 1) / 2;
+        }
     }
-  }
 
-  heap_array_[j] = temp;
+    heap_array_[j] = temp;
 }
 
 
 template <class E>
 bool MinHeap<E>::Insert(const E& item) {
 
-  if (current_size_ == max_size_) {
-    cerr << "Heap Full." << endl;
-    return false;
-  }
+    if (current_size_ == max_size_) {
+        cerr << "Heap Full." << endl;
+        return false;
+    }
 
-  heap_array_[current_size_] = item;
+    heap_array_[current_size_] = item;
 
-  siftUp(current_size_);
+    siftUp(current_size_);
 
-  current_size_++;
+    current_size_++;
 
-  return true;
+    return true;
 }
 
 
 template <class E>
 bool MinHeap<E>::RemoveMin(E& x) {
-  if (!current_size_) {
-    cerr << "Heap Empty." << endl;
-    return false;
-  }
+    if (!current_size_) {
+        cerr << "Heap Empty." << endl;
+        return false;
+    }
 
-  x = heap_array_[0];
-  heap_array_[0] = heap_array_[current_size_ - 1];
-  current_size_--;
+    x = heap_array_[0];
+    heap_array_[0] = heap_array_[current_size_ - 1];
+    current_size_--;
 
-  siftDown(0, current_size_ - 1);
+    siftDown(0, current_size_ - 1);
 
-  return true;
+    return true;
 }
 
 
 template<class T>
 void MinHeap<T>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑÐ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ÐÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ÐÅÏ¢ÓëÍ¨ÐÅÏµÍ³ÑÐ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊýÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑÐ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑÐ¾¿Éú)"<<endl<<endl
-      <<"Êý¾Ý½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉý¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸Žé€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æž„å¼€æºä»£ç (C++æ¸…åŽå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }

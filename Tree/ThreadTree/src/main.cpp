@@ -1,5 +1,5 @@
-//
-// Created by alei_go@163.com(¶¶Òô: cyberdash_yuan) on 2020/11/1.
+ï»¿//
+// Created by alei_go@163.com(æŠ–éŸ³: cyberdash_yuan) on 2020/11/1.
 //
 
 #include "test.h"
@@ -10,86 +10,86 @@ using namespace std;
 
 int main() {
 
-  // ²âÊÔFirst
-  TestFirst();
+    // æµ‹è¯•First
+    TestFirst();
 
-  // ²âÊÔLast
-  TestLast();
+    // æµ‹è¯•Last
+    TestLast();
 
-  // ²âÊÔNext(ÖĞĞò)
-  TestNext();
+    // æµ‹è¯•Next(ä¸­åº)
+    TestNext();
 
-  // ²âÊÔPrior(ÖĞĞò)
-  TestPrior();
+    // æµ‹è¯•Prior(ä¸­åº)
+    TestPrior();
 
-  // ²âÊÔParent(ÖĞĞò)
-  TestParent();
+    // æµ‹è¯•Parent(ä¸­åº)
+    TestParent();
 
-  // ²âÊÔÖĞĞòÏßË÷Ê÷ÖĞĞò±éÀú
-  TestInOrderTraverseOfInOrderThread();
+    // æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘ä¸­åºéå†
+    TestInOrderTraverseOfInOrderThread();
 
-  // ²âÊÔÖĞĞòÏßË÷Ê÷Ç°Ğò±éÀú
-  TestPreOrderTraverseOfInOrderThread();
+    // æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘å‰åºéå†
+    TestPreOrderTraverseOfInOrderThread();
 
-  // ²âÊÔÖĞĞòÏßË÷Ê÷ºóĞò±éÀú
-  TestPostOrderTraverseOfInOrderThread();
+    // æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘ååºéå†
+    TestPostOrderTraverseOfInOrderThread();
 
-  /*
-  int num;
-  int i = 0;
+    /*
+    int num;
+    int i = 0;
 
-  ThreadTree<int> tree;
+    ThreadTree<int> tree;
 
-  cout << "Input the nodes num in the binary tree: ";
-  cin >> num;
+    cout << "Input the nodes num in the binary tree: ";
+    cin >> num;
 
-  for (i = 0 ; i < num; i++) {
-    tree.Insert_(i);
-  }
+    for (i = 0 ; i < num; i++) {
+      tree.Insert_(i);
+    }
 
-  tree.CreateInOrderThread();
+    tree.CreateInOrderThread();
 
-  cout  << "pre order: " << endl;
-  tree.PreOrderTraverse(visit);
-  cout << endl;
-  cout  << "in order: " << endl;
-  tree.InOrderTraverse(visit);
-  cout << endl;
-  cout  << "post order: " << endl;
-  tree.PostOrderTraverse(visit);
-  cout << endl;
+    cout  << "pre order: " << endl;
+    tree.PreOrderTraverse(visit);
+    cout << endl;
+    cout  << "in order: " << endl;
+    tree.InOrderTraverse(visit);
+    cout << endl;
+    cout  << "post order: " << endl;
+    tree.PostOrderTraverse(visit);
+    cout << endl;
 
-  ThreadNode<int> *node = tree.First(tree.GetRoot());
-  cout << "first element is :" << node->data_ << endl;
+    ThreadNode<int> *node = tree.First(tree.GetRoot());
+    cout << "first element is :" << node->data_ << endl;
 
-  node = tree.Next(node);
-  cout << "next element is :" << node->data_ << endl;
+    node = tree.Next(node);
+    cout << "next element is :" << node->data_ << endl;
 
-  node = tree.Last(tree.GetRoot());
-  cout << "last element is :" << node->data_ << endl;
+    node = tree.Last(tree.GetRoot());
+    cout << "last element is :" << node->data_ << endl;
 
-  node = tree.Prior(node);
-  cout << "prior element is :" << node->data_ << endl;
+    node = tree.Prior(node);
+    cout << "prior element is :" << node->data_ << endl;
 
-  ThreadNode<int> *t_first = tree.First(tree.GetRoot());
-  ThreadNode<int> *tmp = new ThreadNode<int>(111);
+    ThreadNode<int> *t_first = tree.First(tree.GetRoot());
+    ThreadNode<int> *tmp = new ThreadNode<int>(111);
 
-  tree.InsertRight(tree.First(tree.GetRoot()), tmp);
+    tree.InsertRight(tree.First(tree.GetRoot()), tmp);
 
-  tmp = new ThreadNode<int>(222);
-  tree.InsertLeft(tree.First(tree.GetRoot()), tmp);
+    tmp = new ThreadNode<int>(222);
+    tree.InsertLeft(tree.First(tree.GetRoot()), tmp);
 
-  cout  << "in order: " << endl;
-  tree.InOrderTraverse(visit);
-  cout << endl;
+    cout  << "in order: " << endl;
+    tree.InOrderTraverse(visit);
+    cout << endl;
 
-  tree.DeleteRight(t_first);
-  tree.DeleteLeft(t_first);
+    tree.DeleteRight(t_first);
+    tree.DeleteLeft(t_first);
 
-  cout  << "in order: " << endl;
-  tree.InOrderTraverse(visit);
-  cout << endl;
+    cout  << "in order: " << endl;
+    tree.InOrderTraverse(visit);
+    cout << endl;
 
-  tree.CyberDashShow();
-   */
+    tree.CyberDashShow();
+     */
 }
