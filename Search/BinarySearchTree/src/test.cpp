@@ -159,7 +159,7 @@ void TestBSTSearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test BST Search                      |"<<endl;
-  cout<<"|                     ²âÊÔËÑË÷¶þ²æÊ÷µÄÉ¾³ý                     |"<<endl;
+  cout<<"|                     ²âÊÔËÑË÷¶þ²æÊ÷µÄËÑË÷                     |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 
@@ -229,7 +229,7 @@ void TestAVLSearch() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test AVL Search                      |"<<endl;
-  cout<<"|                       ²âÊÔAVLÊ÷µÄÉ¾³ý                       |"<<endl;
+  cout<<"|                       ²âÊÔAVLÊ÷µÄËÑË÷                       |"<<endl;
 
   AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
@@ -270,7 +270,7 @@ void TestAVLSearch() {
   AVL_tree->Insert(answer8, question8);
   AVL_tree->Insert(answer9, question9);
 
-  AVL_tree->RemoveByCyberDash(question9);
+  // AVL_tree->RemoveByCyberDash(question9);
 
   AVLNode<string, string>* the_9th_node = AVL_tree->Search(question9);
   if (the_9th_node == NULL) { // Ã»ÓÐËÑË÷µ½
@@ -462,7 +462,7 @@ void TestBSTMakeEmpty() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                     Test BST MakeEmpty                    |"<<endl;
-  cout<<"|                      ²âÊÔËÑË÷¶þ²æÊ÷µÄÉ¾³ý                    |"<<endl;
+  cout<<"|                      ²âÊÔËÑË÷¶þ²æÊ÷µÄÇå³ý                    |"<<endl;
 
   BST<string, string>* binary_search_tree = new BST<string, string>();
 

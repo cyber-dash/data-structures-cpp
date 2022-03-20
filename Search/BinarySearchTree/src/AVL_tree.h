@@ -1,4 +1,4 @@
-//
+ï»¿//
 // Created by cyberdash@163.com on 2021/7/5.
 //
 
@@ -11,659 +11,695 @@
 
 
 template<class Elem, class Key>
-class AVLNode: public BSTNode<Elem, Key> {
+class AVLNode : public BSTNode<Elem, Key> {
 public:
-  AVLNode():
-    left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
-  AVLNode(const Elem& elem, const Key& key):
-    elem_(elem), key_(key), left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
-  AVLNode(Elem elem, Key key, AVLNode<Elem, Key>* left_child_ptr, AVLNode<Elem, Key>* right_child_ptr):
-    elem_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr), balance_factor(0) {}
+    AVLNode() :
+        left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
+    AVLNode(const Elem& elem, const Key& key) :
+        elem_(elem), key_(key), left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
+    AVLNode(Elem elem, Key key, AVLNode<Elem, Key>* left_child_ptr, AVLNode<Elem, Key>* right_child_ptr) :
+        elem_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr), balance_factor(0) {}
 
-  void SetLeftChildPtr(AVLNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
-  void SetRightChildPtr(AVLNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
+    void SetLeftChildPtr(AVLNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
+    void SetRightChildPtr(AVLNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
 
-  void SetData(const Elem& elem) { this->elem_ = elem;}
-  Elem GetData() { return this->elem_; }
+    void SetData(const Elem& elem) { this->elem_ = elem; }
+    Elem GetData() { return this->elem_; }
 
-  void SetKey(const Key& key) { this->key_ = key; }
-  Key GetKey() { return this->key_; }
+    void SetKey(const Key& key) { this->key_ = key; }
+    Key GetKey() { return this->key_; }
 
-  AVLNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
-  AVLNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
+    AVLNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
+    AVLNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
 
-  int balance_factor;
+    int balance_factor;
 
 protected:
 
-  AVLNode<Elem, Key>* left_child_ptr_;
-  AVLNode<Elem, Key>* right_child_ptr_;
+    AVLNode<Elem, Key>* left_child_ptr_;
+    AVLNode<Elem, Key>* right_child_ptr_;
 
-  Elem elem_;
-  Key key_;
+    Elem elem_;
+    Key key_;
 };
 
 
 template<class Elem, class Key>
-class AVLTree: public BST<Elem, Key> {
+class AVLTree : public BST<Elem, Key> {
 public:
-  AVLTree(): root_node_ptr_(NULL) {}
-  AVLNode<Elem, Key>*& RootRef() { return (AVLNode<Elem, Key>*&)this->root_node_ptr_; }
-  AVLNode<Elem, Key>* Root() { return (AVLNode<Elem, Key>*)this->root_node_ptr_; }
+    AVLTree() : root_node_ptr_(NULL) {}
+    AVLNode<Elem, Key>*& RootRef() { return (AVLNode<Elem, Key>*&)this->root_node_ptr_; }
+    AVLNode<Elem, Key>* Root() { return (AVLNode<Elem, Key>*)this->root_node_ptr_; }
 
-  bool Insert(Elem data, Key key);
-  bool InsertByCyberDash(Elem data, Key key);
-  // bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(RootRef(), key); }
-  bool RemoveByCyberDash(Key key);
-  AVLNode<Elem, Key>* Search (Key key) { return this->SearchInSubTree_(key, this->root_node_ptr_); }
-  int Height() { return this->SubTreeHeight_(this->root_node_ptr_); }
+    bool Insert(Elem data, Key key);
+    bool InsertByCyberDash(Elem data, Key key);
+    // bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(RootRef(), key); }
+    bool RemoveByCyberDash(Key key);
+    AVLNode<Elem, Key>* Search(Key key) { return this->SearchInSubTree_(key, this->root_node_ptr_); }
+    int Height() { return this->SubTreeHeight_(this->root_node_ptr_); }
 
 
-  Elem Max();
-  Elem Min();
-  void PrintTree(void (*visit)(AVLNode<Elem, Key>*));
+    Elem Max();
+    Elem Min();
+    void PrintTree(void (*visit)(AVLNode<Elem, Key>*));
 
-  static AVLNode<Elem, Key>* GetInsertNodePtrAndInitStack(Key key,
-                                                   AVLNode<Elem, Key>* node_ptr,
-                                                   stack<AVLNode<Elem, Key>*>& AVL_node_stack);
+    static AVLNode<Elem, Key>* GetInsertNodePtrAndInitStack(Key key,
+        AVLNode<Elem, Key>* node_ptr,
+        stack<AVLNode<Elem, Key>*>& AVL_node_stack);
 
-  static AVLNode<Elem, Key>* GetDeleteNodePtrAndInitStack(Key key,
-                                                          AVLNode<Elem, Key>* node_ptr,
-                                                          stack<AVLNode<Elem, Key>*>& AVL_node_stack);
+    static AVLNode<Elem, Key>* GetDeleteNodePtrAndInitStack(Key key,
+        AVLNode<Elem, Key>* node_ptr,
+        stack<AVLNode<Elem, Key>*>& AVL_node_stack);
 
 protected:
-  // AVLNode<Elem, Key>* SearchInSubTree_(Key key, const AVLNode<Elem, Key>*& sub_tree_root_ptr);
-  AVLNode<Elem, Key>* SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr);
-  bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
-  // Æ½ºâÊ÷×ÓÊ÷²åÈë(CyberDashÊµÏÖ°æ±¾)
-  bool InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
-  bool RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
+    // AVLNode<Elem, Key>* SearchInSubTree_(Key key, const AVLNode<Elem, Key>*& sub_tree_root_ptr);
+    AVLNode<Elem, Key>* SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr);
+    bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
+    // å¹³è¡¡æ ‘å­æ ‘æ’å…¥(CyberDashå®ç°ç‰ˆæœ¬)
+    bool InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
+    bool RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
 
-  // ×óµ¥Ğı×ª(Rotation Left), Í¼7.15(a)µÄÇéĞÎ
-  void RotateLeft_(AVLNode<Elem, Key>*& node_ptr);
-  // ÓÒµ¥Ğı×ª(Rotation Right), Í¼7.16(a)µÄÇéĞÎ
-  void RotateRight_(AVLNode<Elem, Key>*& node_ptr);
-  // ÏÈ×óºóÓÒË«Ğı×ª(Rotation Left Right), Í¼7.17(a)µÄÇéĞÎ
-  void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr);
-  // ÏÈÓÒºó×óË«Ğı×ª(Rotation Right Left), Í¼7.18(a)µÄÇéĞÎ
-  void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr);
+    // å·¦å•æ—‹è½¬(Rotation Left), å›¾7.15(a)çš„æƒ…å½¢
+    void RotateLeft_(AVLNode<Elem, Key>*& node_ptr);
+    // å³å•æ—‹è½¬(Rotation Right), å›¾7.16(a)çš„æƒ…å½¢
+    void RotateRight_(AVLNode<Elem, Key>*& node_ptr);
+    // å…ˆå·¦åå³åŒæ—‹è½¬(Rotation Left Right), å›¾7.17(a)çš„æƒ…å½¢
+    void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr);
+    // å…ˆå³åå·¦åŒæ—‹è½¬(Rotation Right Left), å›¾7.18(a)çš„æƒ…å½¢
+    void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr);
 
 
-  // ×ÓÊ÷ÖĞ¹Ø¼üÂë×îĞ¡Ïî
-  AVLNode<Elem, Key>* MinInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
+    // å­æ ‘ä¸­å…³é”®ç æœ€å°é¡¹
+    AVLNode<Elem, Key>* MinInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
 
-  // ×ÓÊ÷ÖĞ¹Ø¼üÂë×î´óÏî
-  AVLNode<Elem, Key>* MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
-  // AVL×ÓÊ÷µÄ¸ß¶È
-  int SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr);
+    // å­æ ‘ä¸­å…³é”®ç æœ€å¤§é¡¹
+    AVLNode<Elem, Key>* MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
+    // AVLå­æ ‘çš„é«˜åº¦
+    int SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr);
 
-  void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*));
+    void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*));
 
-  AVLNode<Elem, Key>* root_node_ptr_; // ¸ù½Úµã
+    AVLNode<Elem, Key>* root_node_ptr_; // æ ¹èŠ‚ç‚¹
 };
 
 
 /**
- * ×óµ¥Ğı×ª(Rotation Left), Í¼7.15(a)µÄÇéĞÎ
- * @tparam Elem ËÑË÷½á¹û(Êı¾İ)Ä£°åÀàĞÍ
- * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
- * @param node_ptr AVLÊ÷½ÚµãÖ¸ÕëµÄÒıÓÃ
+ * å·¦å•æ—‹è½¬(Rotation Left), å›¾7.15(a)çš„æƒ…å½¢
+ * @tparam Elem æœç´¢ç»“æœ(æ•°æ®)æ¨¡æ¿ç±»å‹
+ * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
+ * @param node_ptr AVLæ ‘èŠ‚ç‚¹æŒ‡é’ˆçš„å¼•ç”¨
  */
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // Í¼7.15(b)
-  AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
-  node_ptr = sub_left_node_ptr->RightChildPtr();
+    // å›¾7.15(b)
+    AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
+    node_ptr = sub_left_node_ptr->RightChildPtr();
 
-  // Í¼7.15(c)
-  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr());
-  node_ptr->SetLeftChildPtr(sub_left_node_ptr);
+    // å›¾7.15(c)
+    sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr());
+    node_ptr->SetLeftChildPtr(sub_left_node_ptr);
 
-  // µ÷ÕûÆ½ºâÒò×Ó
-  node_ptr->balance_factor = 0;
-  sub_left_node_ptr->balance_factor = 0;
+    // è°ƒæ•´å¹³è¡¡å› å­
+    node_ptr->balance_factor = 0;
+    sub_left_node_ptr->balance_factor = 0;
 }
 
 
 /**
- * ÓÒµ¥Ğı×ª(Rotation Right), Í¼7.16(a)µÄÇéĞÎ
- * @tparam Elem ËÑË÷½á¹û(Êı¾İ)Ä£°åÀàĞÍ
- * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
- * @param node_ptr AVLÊ÷½ÚµãÖ¸ÕëµÄÒıÓÃ
+ * å³å•æ—‹è½¬(Rotation Right), å›¾7.16(a)çš„æƒ…å½¢
+ * @tparam Elem æœç´¢ç»“æœ(æ•°æ®)æ¨¡æ¿ç±»å‹
+ * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
+ * @param node_ptr AVLæ ‘èŠ‚ç‚¹æŒ‡é’ˆçš„å¼•ç”¨
  */
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateRight_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // Í¼7.16(b)
-  AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
-  node_ptr = sub_right_node_ptr->LeftChildPtr();
+    // å›¾7.16(b)
+    AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
+    node_ptr = sub_right_node_ptr->LeftChildPtr();
 
-  // Í¼7.16(c)
-  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr());
-  node_ptr->SetRightChildPtr(sub_right_node_ptr);
+    // å›¾7.16(c)
+    sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr());
+    node_ptr->SetRightChildPtr(sub_right_node_ptr);
 
-  // µ÷ÕûÆ½ºâÒò×Ó
-  node_ptr->balance_factor = 0;
-  sub_right_node_ptr->balance_factor = 0;
+    // è°ƒæ•´å¹³è¡¡å› å­
+    node_ptr->balance_factor = 0;
+    sub_right_node_ptr->balance_factor = 0;
 }
 
 
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // Í¼7.17(b)
-  AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
-  AVLNode<Elem, Key>* sub_left_node_ptr = sub_right_node_ptr->LeftChildPtr();
-  node_ptr = sub_left_node_ptr->RightChildPtr();
+    // å›¾7.17(b)
+    AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
+    AVLNode<Elem, Key>* sub_left_node_ptr = sub_right_node_ptr->LeftChildPtr();
+    node_ptr = sub_left_node_ptr->RightChildPtr();
 
-  // Í¼7.17(c)
-  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÇ°, Ë¦µôËüµÄ×ó×ÓÊ÷
-  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // ×óµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
+    // å›¾7.17(c)
+    sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptræˆä¸ºæ–°æ ¹å‰, ç”©æ‰å®ƒçš„å·¦å­æ ‘
+    node_ptr->SetLeftChildPtr(sub_left_node_ptr); // å·¦å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
 
-  if (node_ptr->balance_factor <= 0) {
-    sub_left_node_ptr->balance_factor = 0;
-  } else {
-    sub_left_node_ptr->balance_factor = -1;
-  }
+    if (node_ptr->balance_factor <= 0) {
+        sub_left_node_ptr->balance_factor = 0;
+    }
+    else {
+        sub_left_node_ptr->balance_factor = -1;
+    }
 
-  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÖ®Ç°, Ë¦µôËüµÄÓÒ×ÓÊ÷
-  node_ptr->SetRightChildPtr(sub_right_node_ptr); // ÓÒµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
+    sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptræˆä¸ºæ–°æ ¹ä¹‹å‰, ç”©æ‰å®ƒçš„å³å­æ ‘
+    node_ptr->SetRightChildPtr(sub_right_node_ptr); // å³å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
 
-  if (node_ptr->balance_factor == -1) {
-    sub_right_node_ptr->balance_factor = 1;
-  } else {
-    sub_right_node_ptr->balance_factor = 0;
-  }
+    if (node_ptr->balance_factor == -1) {
+        sub_right_node_ptr->balance_factor = 1;
+    }
+    else {
+        sub_right_node_ptr->balance_factor = 0;
+    }
 
-  node_ptr->balance_factor = 0;
+    node_ptr->balance_factor = 0;
 }
 
 
 template<class Elem, class Key>
 void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
-  // Í¼7.18(b)
-  AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
-  AVLNode<Elem, Key>* sub_right_node_ptr= sub_left_node_ptr->RightChildPtr();
-  node_ptr = sub_right_node_ptr->LeftChildPtr();
+    // å›¾7.18(b)
+    AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
+    AVLNode<Elem, Key>* sub_right_node_ptr = sub_left_node_ptr->RightChildPtr();
+    node_ptr = sub_right_node_ptr->LeftChildPtr();
 
-  // Í¼7.18(c)
-  sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÖ®Ç°, Ë¦µôËüµÄÓÒ×ÓÊ÷
-  node_ptr->SetRightChildPtr(sub_right_node_ptr); // ÓÒµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
+    // å›¾7.18(c)
+    sub_right_node_ptr->SetLeftChildPtr(node_ptr->RightChildPtr()); // node_ptræˆä¸ºæ–°æ ¹ä¹‹å‰, ç”©æ‰å®ƒçš„å³å­æ ‘
+    node_ptr->SetRightChildPtr(sub_right_node_ptr); // å³å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
 
-  if (node_ptr->balance_factor >= 0) {
-    sub_right_node_ptr->balance_factor = 0;
-  } else {
-    sub_right_node_ptr->balance_factor = 1;
-  }
+    if (node_ptr->balance_factor >= 0) {
+        sub_right_node_ptr->balance_factor = 0;
+    }
+    else {
+        sub_right_node_ptr->balance_factor = 1;
+    }
 
-  sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptr³ÉÎªĞÂ¸ùÇ°, Ë¦µôËüµÄ×ó×ÓÊ÷
-  node_ptr->SetLeftChildPtr(sub_left_node_ptr); // ×óµ¥Ğı×ª, node_ptr³ÉÎªĞÂ¸ù
+    sub_left_node_ptr->SetRightChildPtr(node_ptr->LeftChildPtr()); // node_ptræˆä¸ºæ–°æ ¹å‰, ç”©æ‰å®ƒçš„å·¦å­æ ‘
+    node_ptr->SetLeftChildPtr(sub_left_node_ptr); // å·¦å•æ—‹è½¬, node_ptræˆä¸ºæ–°æ ¹
 
-  if (node_ptr->balance_factor == 1) {
-    sub_left_node_ptr->balance_factor = -1;
-  } else {
-    sub_left_node_ptr->balance_factor = 0;
-  }
+    if (node_ptr->balance_factor == 1) {
+        sub_left_node_ptr->balance_factor = -1;
+    }
+    else {
+        sub_left_node_ptr->balance_factor = 0;
+    }
 
-  node_ptr->balance_factor = 0;
+    node_ptr->balance_factor = 0;
 }
 
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::Insert(Elem data, Key key) {
-  return this->InsertInSubTree_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
+    return this->InsertInSubTree_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
 }
 
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertByCyberDash(Elem data, Key key) {
-  return this->InsertInSubTreeByCyberDash_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
+    return this->InsertInSubTreeByCyberDash_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
 }
 
 
 /**
- * @brief ×ÓÊ÷ÖĞ²åÈë½Úµã(µİ¹é)
- * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
- * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
- * @param elem Êı¾İÏî
- * @param key ¹Ø¼üÂë
- * @param sub_tree_root_ptr ×ÓÊ÷¸ù½ÚµãÖ¸Õë
- * @return ÊÇ·ñ²åÈë³É¹¦
+ * @brief å­æ ‘ä¸­æ’å…¥èŠ‚ç‚¹(é€’å½’)
+ * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
+ * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
+ * @param elem æ•°æ®é¡¹
+ * @param key å…³é”®ç 
+ * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
+ * @return æ˜¯å¦æ’å…¥æˆåŠŸ
  * @note
- * Èç¹û¸ù½ÚµãÖ¸ÕëÎªNULL, Ôò´´½¨½Úµã
- * ÅĞ¶Ï²åÈë¹Ø¼üÂëÓë×ÓÊ÷¸ù½Úµã¹Ø¼üÂëµÄ´óĞ¡¹ØÏµ, ÔÚ×ó×ÓÊ÷orÓÒ×ÓÊ÷×ö²åÈë²Ù×÷(µİ¹é)
- * Èç¹û¹Ø¼üÂëÏàÍ¬, Ôò·µ»Øfalse
+ * å¦‚æœæ ¹èŠ‚ç‚¹æŒ‡é’ˆä¸ºNULL, åˆ™åˆ›å»ºèŠ‚ç‚¹
+ * åˆ¤æ–­æ’å…¥å…³é”®ç ä¸å­æ ‘æ ¹èŠ‚ç‚¹å…³é”®ç çš„å¤§å°å…³ç³», åœ¨å·¦å­æ ‘orå³å­æ ‘åšæ’å…¥æ“ä½œ(é€’å½’)
+ * å¦‚æœå…³é”®ç ç›¸åŒ, åˆ™è¿”å›false
  */
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
 
-  AVLNode<Elem, Key>* cur_stack_node_ptr = NULL;
-  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    AVLNode<Elem, Key>* cur_stack_node_ptr = NULL;
+    AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
 
-  stack<AVLNode<Elem, Key>*> AVL_node_stack;
+    stack<AVLNode<Elem, Key>*> AVL_node_stack;
 
-  // Ñ°ÕÒ²åÈëÎ»ÖÃ
-  while (cur_node_ptr != NULL) {
-    // ÕÒµ½µÈÓÚkeyµÄ½áµã, ÎŞ·¨²åÈë, (Ô­ÊéÊ¹ÓÃelem)
-    if (key == cur_node_ptr->GetKey()) {
-      return false;
+    // å¯»æ‰¾æ’å…¥ä½ç½®
+    while (cur_node_ptr != NULL) {
+        // æ‰¾åˆ°ç­‰äºkeyçš„ç»“ç‚¹, æ— æ³•æ’å…¥, (åŸä¹¦ä½¿ç”¨elem)
+        if (key == cur_node_ptr->GetKey()) {
+            return false;
+        }
+
+        cur_stack_node_ptr = cur_node_ptr;
+        AVL_node_stack.push(cur_stack_node_ptr);
+
+        if (key < cur_node_ptr->GetKey()) {
+            cur_node_ptr = cur_node_ptr->LeftChildPtr();
+        }
+        else {
+            cur_node_ptr = cur_node_ptr->RightChildPtr();
+        }
     }
 
-    cur_stack_node_ptr = cur_node_ptr;
-    AVL_node_stack.push(cur_stack_node_ptr);
+    cur_node_ptr = new AVLNode<Elem, Key>(elem, key);
+    /* error handler */
 
-    if (key < cur_node_ptr->GetKey()) {
-      cur_node_ptr = cur_node_ptr->LeftChildPtr();
-    } else {
-      cur_node_ptr = cur_node_ptr->RightChildPtr();
+    // ç©ºæ ‘, æ–°ç»“ç‚¹æˆä¸ºæ ¹èŠ‚ç‚¹
+    if (cur_stack_node_ptr == NULL) {
+        sub_tree_root_ptr = cur_node_ptr;
+        return true;
     }
-  }
 
-  cur_node_ptr = new AVLNode<Elem, Key>(elem, key);
-  /* error handler */
+    if (key < cur_stack_node_ptr->GetKey()) {
+        cur_stack_node_ptr->SetLeftChildPtr(cur_node_ptr);
+    }
+    else {
+        cur_stack_node_ptr->SetRightChildPtr(cur_node_ptr);
+    }
 
-  // ¿ÕÊ÷, ĞÂ½áµã³ÉÎª¸ù½Úµã
-  if (cur_stack_node_ptr == NULL) {
-    sub_tree_root_ptr = cur_node_ptr;
+    // é‡æ–°å¹³è¡¡åŒ–
+    while (AVL_node_stack.empty() == false) {
+        cur_stack_node_ptr = AVL_node_stack.top();
+        AVL_node_stack.pop();
+
+        if (cur_node_ptr == cur_stack_node_ptr->LeftChildPtr()) {
+            cur_stack_node_ptr->balance_factor--;
+        }
+        else {
+            cur_stack_node_ptr->balance_factor++;
+        }
+
+        // ç¬¬1ç§æƒ…å†µ, å¹³è¡¡é€€å‡º
+        if (cur_stack_node_ptr->balance_factor == 0) {
+            break;
+        }
+
+        // ç¬¬2ç§æƒ…å†µ, |å¹³è¡¡å› å­| = 1
+        if (cur_stack_node_ptr->balance_factor == 1 || cur_stack_node_ptr->balance_factor == -1) {
+            cur_node_ptr = cur_stack_node_ptr;
+        }
+        else { // ç¬¬3ç§æƒ…å†µ, |bf| = 2
+            int stack_node_rotate_flag = (cur_stack_node_ptr->balance_factor < 0) ? -1 : 1;
+            if (cur_node_ptr->balance_factor == stack_node_rotate_flag) { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åŒå·, å•æ—‹è½¬
+                if (stack_node_rotate_flag == -1) {
+                    this->RotateRight_(cur_stack_node_ptr); // å³å•æ—‹è½¬
+                }
+                else {
+                    this->RotateLeft_(cur_stack_node_ptr); // å·¦å•æ—‹è½¬
+                }
+            }
+            else { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åå·, åŒæ—‹è½¬
+                if (stack_node_rotate_flag == -1) {
+                    this->RotateLeftRight_(cur_stack_node_ptr);
+                }
+                else {
+                    this->RotateRightLeft_(cur_stack_node_ptr);
+                }
+            }
+
+            break; // ä¸å†å‘ä¸Šè°ƒæ•´
+        }
+    }
+
+    if (AVL_node_stack.empty() == true) {
+        sub_tree_root_ptr = cur_stack_node_ptr;
+    }
+    else {
+        AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
+        if (stack_top_node_ptr->GetKey() > cur_stack_node_ptr->GetKey()) {
+            stack_top_node_ptr->SetLeftChildPtr(cur_stack_node_ptr);
+        }
+        else {
+            stack_top_node_ptr->SetRightChildPtr(cur_stack_node_ptr);
+        }
+    }
+
     return true;
-  }
-
-  if (key < cur_stack_node_ptr->GetKey()) {
-    cur_stack_node_ptr->SetLeftChildPtr(cur_node_ptr);
-  } else {
-    cur_stack_node_ptr->SetRightChildPtr(cur_node_ptr);
-  }
-
-  // ÖØĞÂÆ½ºâ»¯
-  while (AVL_node_stack.empty() == false) {
-    cur_stack_node_ptr = AVL_node_stack.top();
-    AVL_node_stack.pop();
-
-    if (cur_node_ptr == cur_stack_node_ptr->LeftChildPtr()) {
-      cur_stack_node_ptr->balance_factor--;
-    } else {
-      cur_stack_node_ptr->balance_factor++;
-    }
-
-    // µÚ1ÖÖÇé¿ö, Æ½ºâÍË³ö
-    if (cur_stack_node_ptr->balance_factor == 0) {
-      break;
-    }
-
-    // µÚ2ÖÖÇé¿ö, |Æ½ºâÒò×Ó| = 1
-    if (cur_stack_node_ptr->balance_factor == 1 || cur_stack_node_ptr->balance_factor == -1) {
-      cur_node_ptr = cur_stack_node_ptr;
-    } else { // µÚ3ÖÖÇé¿ö, |bf| = 2
-      int stack_node_rotate_flag = (cur_stack_node_ptr->balance_factor < 0) ? -1 : 1;
-      if (cur_node_ptr->balance_factor == stack_node_rotate_flag) { // Á½¸ö½áµãµÄÆ½ºâÒò×ÓÍ¬ºÅ, µ¥Ğı×ª
-        if (stack_node_rotate_flag == -1) {
-          this->RotateRight_(cur_stack_node_ptr); // ÓÒµ¥Ğı×ª
-        } else {
-          this->RotateLeft_(cur_stack_node_ptr); // ×óµ¥Ğı×ª
-        }
-      } else { // Á½¸ö½áµãµÄÆ½ºâÒò×Ó·´ºÅ, Ë«Ğı×ª
-        if (stack_node_rotate_flag == -1) {
-          this->RotateLeftRight_(cur_stack_node_ptr);
-        } else {
-          this->RotateRightLeft_(cur_stack_node_ptr);
-        }
-      }
-
-      break; // ²»ÔÙÏòÉÏµ÷Õû
-    }
-  }
-
-  if (AVL_node_stack.empty() == true) {
-    sub_tree_root_ptr = cur_stack_node_ptr;
-  } else {
-    AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
-    if (stack_top_node_ptr->GetKey() > cur_stack_node_ptr->GetKey()) {
-      stack_top_node_ptr->SetLeftChildPtr(cur_stack_node_ptr);
-    } else {
-      stack_top_node_ptr->SetRightChildPtr(cur_stack_node_ptr);
-    }
-  }
-
-  return true;
 }
 
 
 template<class Elem, class Key>
 AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetInsertNodePtrAndInitStack(Key key,
-                                                 AVLNode<Elem, Key>* node_ptr,
-                                                 stack<AVLNode<Elem, Key>*>& AVL_node_stack) {
+    AVLNode<Elem, Key>* node_ptr,
+    stack<AVLNode<Elem, Key>*>& AVL_node_stack) {
 
-  AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
+    AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
 
-  // Ñ°ÕÒ²åÈëÎ»ÖÃ
-  while (cur_node_ptr != NULL) {
-    // ÕÒµ½µÈÓÚkeyµÄ½áµã, ÎŞ·¨²åÈë, todo: Ô­ÊéÊ¹ÓÃelem
-    if (key == cur_node_ptr->GetKey()) {
-      return NULL;
+    // å¯»æ‰¾æ’å…¥ä½ç½®
+    while (cur_node_ptr != NULL) {
+        // æ‰¾åˆ°ç­‰äºkeyçš„ç»“ç‚¹, æ— æ³•æ’å…¥, todo: åŸä¹¦ä½¿ç”¨elem
+        if (key == cur_node_ptr->GetKey()) {
+            return NULL;
+        }
+
+        AVL_node_stack.push(cur_node_ptr);
+
+        // åŸä¹¦ä½¿ç”¨elem, æ­¤å¤„ä½¿ç”¨å…³é”®ç 
+        if (key < cur_node_ptr->GetKey()) {
+            cur_node_ptr = cur_node_ptr->LeftChildPtr();
+        }
+        else {
+            cur_node_ptr = cur_node_ptr->RightChildPtr();
+        }
     }
 
-    AVL_node_stack.push(cur_node_ptr);
-
-    // Ô­ÊéÊ¹ÓÃelem, ´Ë´¦Ê¹ÓÃ¹Ø¼üÂë
-    if (key < cur_node_ptr->GetKey()) {
-      cur_node_ptr = cur_node_ptr->LeftChildPtr();
-    } else {
-      cur_node_ptr = cur_node_ptr->RightChildPtr();
-    }
-  }
-
-  return cur_node_ptr;
+    return cur_node_ptr;
 }
 
 
 template<class Elem, class Key>
 AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Key key,
-                                                                     AVLNode<Elem, Key>* node_ptr,
-                                                                     stack<AVLNode<Elem, Key>*>& AVL_node_stack) {
+    AVLNode<Elem, Key>* node_ptr,
+    stack<AVLNode<Elem, Key>*>& AVL_node_stack) {
 
-  AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
+    AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
 
-  // Ñ°ÕÒÉ¾³ıÎ»ÖÃ
-  while (cur_node_ptr != NULL) {
-    // ÕÒµ½µÈÓÚkeyµÄ½áµã, ÎŞ·¨²åÈë
-    if (key == cur_node_ptr->GetKey()) {
-      break;
+    // å¯»æ‰¾åˆ é™¤ä½ç½®
+    while (cur_node_ptr != NULL) {
+        // æ‰¾åˆ°ç­‰äºkeyçš„ç»“ç‚¹, æ— æ³•æ’å…¥
+        if (key == cur_node_ptr->GetKey()) {
+            break;
+        }
+
+        AVL_node_stack.push(cur_node_ptr);
+
+        if (key < cur_node_ptr->GetKey()) {
+            cur_node_ptr = cur_node_ptr->LeftChildPtr();
+        }
+        else {
+            cur_node_ptr = cur_node_ptr->RightChildPtr();
+        }
     }
 
-    AVL_node_stack.push(cur_node_ptr);
-
-    if (key < cur_node_ptr->GetKey()) {
-      cur_node_ptr = cur_node_ptr->LeftChildPtr();
-    } else {
-      cur_node_ptr = cur_node_ptr->RightChildPtr();
-    }
-  }
-
-  return cur_node_ptr;
+    return cur_node_ptr;
 }
 
 
 /**
- * @brief ÔÚ×ÓÊ÷ÖĞ, Ê¹ÓÃ¹Ø¼üÂë½øĞĞËÑË÷
- * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
- * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
- * @param key ¹Ø¼üÂë
- * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
- * @return ËÑË÷½á¹û
+ * @brief åœ¨å­æ ‘ä¸­, ä½¿ç”¨å…³é”®ç è¿›è¡Œæœç´¢
+ * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
+ * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
+ * @param key å…³é”®ç 
+ * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
+ * @return æœç´¢ç»“æœ
  * @note
- * 1. Èç¹û×ÓÊ÷¸ù½ÚµãÎªNULL, ·µ»ØNULL
- * 2. Ê¹ÓÃµ±Ç°±éÀú½ÚµãµÄkey, Óë²ÎÊıkey×÷±È½Ï, ·Ö±ğ½øĞĞµİ¹éºÍ·µ»ØËÑË÷½á¹û(ÖÕÖ¹µİ¹é)
+ * 1. å¦‚æœå­æ ‘æ ¹èŠ‚ç‚¹ä¸ºNULL, è¿”å›NULL
+ * 2. ä½¿ç”¨å½“å‰éå†èŠ‚ç‚¹çš„key, ä¸å‚æ•°keyä½œæ¯”è¾ƒ, åˆ†åˆ«è¿›è¡Œé€’å½’å’Œè¿”å›æœç´¢ç»“æœ(ç»ˆæ­¢é€’å½’)
  */
 template <class Elem, class Key>
 AVLNode<Elem, Key>* AVLTree<Elem, Key>::SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr) {
-  if (sub_tree_root_ptr == NULL) {
-    return NULL;
-  }
+    if (sub_tree_root_ptr == NULL) {
+        return NULL;
+    }
 
-  Key cur_key = sub_tree_root_ptr->GetKey();
+    Key cur_key = sub_tree_root_ptr->GetKey();
 
-  if (key < cur_key) {
-    return SearchInSubTree_(key, sub_tree_root_ptr->LeftChildPtr());
-  } else if (key > cur_key) {
-    return SearchInSubTree_(key, sub_tree_root_ptr->RightChildPtr());
-  } else {
-    return sub_tree_root_ptr;
-  }
+    if (key < cur_key) {
+        return SearchInSubTree_(key, sub_tree_root_ptr->LeftChildPtr());
+    }
+    else if (key > cur_key) {
+        return SearchInSubTree_(key, sub_tree_root_ptr->RightChildPtr());
+    }
+    else {
+        return sub_tree_root_ptr;
+    }
 }
 
 
 /**
- * @brief Æ½ºâÊ÷×ÓÊ÷²åÈë(CyberDashÊµÏÖ°æ±¾)
- * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
- * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
- * @param elem Êı¾İÏî
- * @param key ¹Ø¼üÂë
- * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
- * @return ÊÇ·ñ²åÈë³É¹¦
+ * @brief å¹³è¡¡æ ‘å­æ ‘æ’å…¥(CyberDashå®ç°ç‰ˆæœ¬)
+ * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
+ * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
+ * @param elem æ•°æ®é¡¹
+ * @param key å…³é”®ç 
+ * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
+ * @return æ˜¯å¦æ’å…¥æˆåŠŸ
  * @note
- * 1. Ê×ÏÈÕÒµ½²åÈëÎ»ÖÃ, ²¢ÇÒÊ¹ÓÃÕ»±£´æ
- * 2. ·Ö3ÖÖÇé¿ö, ½øĞĞÆ½ºâ»¯
- * 3. Æ½ºâ»¯½áÊøºóµÄÊÕÎ²¹¤×÷
+ * 1. é¦–å…ˆæ‰¾åˆ°æ’å…¥ä½ç½®, å¹¶ä¸”ä½¿ç”¨æ ˆä¿å­˜
+ * 2. åˆ†3ç§æƒ…å†µ, è¿›è¡Œå¹³è¡¡åŒ–
+ * 3. å¹³è¡¡åŒ–ç»“æŸåçš„æ”¶å°¾å·¥ä½œ
  */
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
 
-  stack<AVLNode<Elem, Key>* > AVL_node_stack;
+    stack<AVLNode<Elem, Key>* > AVL_node_stack;
 
-  // »ñÈ¡²åÈëÎ»ÖÃ, ³õÊ¼»¯Õ»
-  AVLNode<Elem, Key>* insert_node_ptr = GetInsertNodePtrAndInitStack(key, sub_tree_root_ptr, AVL_node_stack);
+    // è·å–æ’å…¥ä½ç½®, åˆå§‹åŒ–æ ˆ
+    AVLNode<Elem, Key>* insert_node_ptr = GetInsertNodePtrAndInitStack(key, sub_tree_root_ptr, AVL_node_stack);
 
-  insert_node_ptr = new AVLNode<Elem, Key>(elem, key);
-  /* error handler */
+    insert_node_ptr = new AVLNode<Elem, Key>(elem, key);
+    /* error handler */
 
-  // ¿ÕÊ÷, ĞÂ½áµã³ÉÎª¸ù½Úµã, ²¢·µ»Ø
-  if (AVL_node_stack.empty()) {
-    sub_tree_root_ptr = insert_node_ptr;
+    // ç©ºæ ‘, æ–°ç»“ç‚¹æˆä¸ºæ ¹èŠ‚ç‚¹, å¹¶è¿”å›
+    if (AVL_node_stack.empty()) {
+        sub_tree_root_ptr = insert_node_ptr;
+        return true;
+    }
+
+    AVLNode<Elem, Key>* stack_node_ptr = AVL_node_stack.top();
+
+    // åŸä¹¦ä½¿ç”¨elemåšæ¯”è¾ƒ, åº”è¯¥æ˜¯é”™äº†
+    if (key < stack_node_ptr->GetKey()) {
+        stack_node_ptr->SetLeftChildPtr(insert_node_ptr);
+    }
+    else {
+        stack_node_ptr->SetRightChildPtr(insert_node_ptr);
+    }
+
+    AVLNode<Elem, Key>* stack_node_child_ptr = insert_node_ptr;
+
+    // é‡æ–°å¹³è¡¡åŒ–
+    while (AVL_node_stack.empty() == false) {
+
+        // æ ˆé¡¶å‡ºæ ˆ
+        stack_node_ptr = AVL_node_stack.top();
+        AVL_node_stack.pop();
+
+        // è°ƒæ•´å¹³è¡¡å› å­
+        if (stack_node_child_ptr == stack_node_ptr->LeftChildPtr()) {
+            stack_node_ptr->balance_factor--;
+        }
+        else {
+            stack_node_ptr->balance_factor++;
+        }
+
+        // ç¬¬1ç§æƒ…å†µ, å¹³è¡¡é€€å‡º
+        if (stack_node_ptr->balance_factor == 0) {
+            break;
+        }
+
+        // ç¬¬2ç§æƒ…å†µ, |å¹³è¡¡å› å­| = 1
+        if (stack_node_ptr->balance_factor == 1 || stack_node_ptr->balance_factor == -1) {
+            stack_node_child_ptr = stack_node_ptr;
+        }
+        else { // ç¬¬3ç§æƒ…å†µ, |bf| = 2
+            int stack_node_rotate_flag = (stack_node_ptr->balance_factor < 0) ? -1 : 1;
+            if (stack_node_child_ptr->balance_factor == stack_node_rotate_flag) { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åŒå·, å•æ—‹è½¬
+                if (stack_node_rotate_flag == -1) {
+                    this->RotateRight_(stack_node_ptr); // å³å•æ—‹è½¬
+                }
+                else {
+                    this->RotateLeft_(stack_node_ptr); // å·¦å•æ—‹è½¬
+                }
+            }
+            else { // ä¸¤ä¸ªç»“ç‚¹çš„å¹³è¡¡å› å­åå·, åŒæ—‹è½¬
+                if (stack_node_rotate_flag == -1) {
+                    this->RotateLeftRight_(stack_node_ptr);
+                }
+                else {
+                    this->RotateRightLeft_(stack_node_ptr);
+                }
+            }
+
+            break; // ä¸å†å‘ä¸Šè°ƒæ•´
+        }
+    }
+
+    // å·²ç»å®Œæˆå¹³è¡¡åŒ–çš„æ ‘, å®Œæˆæœ€åå¤„ç†
+    if (AVL_node_stack.empty() == true) {
+        sub_tree_root_ptr = stack_node_ptr;
+    }
+    else {
+        AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
+        if (stack_top_node_ptr->GetKey() > stack_node_ptr->GetKey()) {
+            stack_top_node_ptr->SetLeftChildPtr(stack_node_ptr);
+        }
+        else {
+            stack_top_node_ptr->SetRightChildPtr(stack_node_ptr);
+        }
+    }
+
     return true;
-  }
-
-  AVLNode<Elem, Key>* stack_node_ptr = AVL_node_stack.top();
-
-  // Ô­ÊéÊ¹ÓÃelem×ö±È½Ï, Ó¦¸ÃÊÇ´íÁË
-  if (key < stack_node_ptr->GetKey()) {
-    stack_node_ptr->SetLeftChildPtr(insert_node_ptr);
-  } else {
-    stack_node_ptr->SetRightChildPtr(insert_node_ptr);
-  }
-
-  AVLNode<Elem, Key>* stack_node_child_ptr = insert_node_ptr;
-
-  // ÖØĞÂÆ½ºâ»¯
-  while (AVL_node_stack.empty() == false) {
-
-    // Õ»¶¥³öÕ»
-    stack_node_ptr = AVL_node_stack.top();
-    AVL_node_stack.pop();
-
-    // µ÷ÕûÆ½ºâÒò×Ó
-    if (stack_node_child_ptr == stack_node_ptr->LeftChildPtr()) {
-      stack_node_ptr->balance_factor--;
-    } else {
-      stack_node_ptr->balance_factor++;
-    }
-
-    // µÚ1ÖÖÇé¿ö, Æ½ºâÍË³ö
-    if (stack_node_ptr->balance_factor == 0) {
-      break;
-    }
-
-    // µÚ2ÖÖÇé¿ö, |Æ½ºâÒò×Ó| = 1
-    if (stack_node_ptr->balance_factor == 1 || stack_node_ptr->balance_factor == -1) {
-      stack_node_child_ptr = stack_node_ptr;
-    } else { // µÚ3ÖÖÇé¿ö, |bf| = 2
-      int stack_node_rotate_flag = (stack_node_ptr->balance_factor < 0) ? -1 : 1;
-      if (stack_node_child_ptr->balance_factor == stack_node_rotate_flag) { // Á½¸ö½áµãµÄÆ½ºâÒò×ÓÍ¬ºÅ, µ¥Ğı×ª
-        if (stack_node_rotate_flag == -1) {
-          this->RotateRight_(stack_node_ptr); // ÓÒµ¥Ğı×ª
-        } else {
-          this->RotateLeft_(stack_node_ptr); // ×óµ¥Ğı×ª
-        }
-      } else { // Á½¸ö½áµãµÄÆ½ºâÒò×Ó·´ºÅ, Ë«Ğı×ª
-        if (stack_node_rotate_flag == -1) {
-          this->RotateLeftRight_(stack_node_ptr);
-        } else {
-          this->RotateRightLeft_(stack_node_ptr);
-        }
-      }
-
-      break; // ²»ÔÙÏòÉÏµ÷Õû
-    }
-  }
-
-  // ÒÑ¾­Íê³ÉÆ½ºâ»¯µÄÊ÷, Íê³É×îºó´¦Àí
-  if (AVL_node_stack.empty() == true) {
-    sub_tree_root_ptr = stack_node_ptr;
-  } else {
-    AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
-    if (stack_top_node_ptr->GetKey() > stack_node_ptr->GetKey()) {
-      stack_top_node_ptr->SetLeftChildPtr(stack_node_ptr);
-    } else {
-      stack_top_node_ptr->SetRightChildPtr(stack_node_ptr);
-    }
-  }
-
-  return true;
 }
 
 
 /**
- * @brief Æ½ºâÊ÷×ÓÊ÷É¾³ı½Úµã(CyberDashÊµÏÖ°æ±¾)
- * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
- * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
- * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
- * @param key ´ıÉ¾³ı¹Ø¼üÂë
+ * @brief å¹³è¡¡æ ‘å­æ ‘åˆ é™¤èŠ‚ç‚¹(CyberDashå®ç°ç‰ˆæœ¬)
+ * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
+ * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
+ * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
+ * @param key å¾…åˆ é™¤å…³é”®ç 
  * @return
  */
 template<class Elem, class Key>
-bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tree_root_ptr, Key key) {
-  AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
+bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key) {
+    AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
 
-  stack<AVLNode<Elem, Key>*> AVL_node_stack;
+    stack<AVLNode<Elem, Key>*> AVL_node_stack;
 
-  AVLNode<Elem, Key>* delete_node_ptr = GetDeleteNodePtrAndInitStack(key,
-                                                                     sub_tree_root_ptr,
-                                                                     AVL_node_stack);
+    AVLNode<Elem, Key>* delete_node_ptr = GetDeleteNodePtrAndInitStack(key,
+        sub_tree_root_ptr,
+        AVL_node_stack);
 
-  if (delete_node_ptr == NULL) {
-    return false; // Î´ÕÒµ½É¾³ı½áµã
-  }
-
-  if (delete_node_ptr->LeftChildPtr() != NULL && delete_node_ptr->RightChildPtr() != NULL) {
-    AVL_node_stack.push(delete_node_ptr); // ½«´ıÉ¾³ı½ÚµãÈëstack
-
-    cur_node_pre_ptr = delete_node_ptr->LeftChildPtr();
-    while(cur_node_pre_ptr->RightChildPtr() != NULL) {
-      AVL_node_stack.push(cur_node_pre_ptr);
-      cur_node_pre_ptr = cur_node_pre_ptr->RightChildPtr();
+    if (delete_node_ptr == NULL) {
+        return false; // æœªæ‰¾åˆ°åˆ é™¤ç»“ç‚¹
     }
 
-    delete_node_ptr->SetKey(cur_node_pre_ptr->GetKey());
-    delete_node_ptr->SetData(cur_node_pre_ptr->GetData());
+    if (delete_node_ptr->LeftChildPtr() != NULL && delete_node_ptr->RightChildPtr() != NULL) {
+        AVL_node_stack.push(delete_node_ptr); // å°†å¾…åˆ é™¤èŠ‚ç‚¹å…¥stack
 
-    delete_node_ptr = cur_node_pre_ptr;
-  }
+        cur_node_pre_ptr = delete_node_ptr->LeftChildPtr();
+        while (cur_node_pre_ptr->RightChildPtr() != NULL) {
+            AVL_node_stack.push(cur_node_pre_ptr);
+            cur_node_pre_ptr = cur_node_pre_ptr->RightChildPtr();
+        }
 
-  AVLNode<Elem, Key>* child_of_delete_node_ptr = NULL; // ±»É¾³ı½ÚµãµÄº¢×Ó½Úµã
+        delete_node_ptr->SetKey(cur_node_pre_ptr->GetKey());
+        delete_node_ptr->SetData(cur_node_pre_ptr->GetData());
 
-  // ÕÒµ½´ËÊ±µÄ´ıÉ¾³ı½ÚµãµÄÒ»¸öº¢×Ó½Úµã, ÓÃ×÷Á¬½Ó
-  if (delete_node_ptr->LeftChildPtr() != NULL) {
-    child_of_delete_node_ptr = delete_node_ptr->LeftChildPtr();
-  } else {
-    child_of_delete_node_ptr = delete_node_ptr->RightChildPtr();
-  }
-
-  if (AVL_node_stack.empty() == true) { // É¾³ıµÄÊÇ¸ù½Úµã
-    sub_tree_root_ptr = child_of_delete_node_ptr;
-  } else {
-
-    AVLNode<Elem, Key>* cur_stack_node_ptr = AVL_node_stack.top();
-
-    if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) { // ±»É¾³ı½ÚµãÊÇcur_stack_node_ptrµÄ×óº¢×Ó
-      cur_stack_node_ptr->SetLeftChildPtr(child_of_delete_node_ptr); // Á¬½Ó
-    } else { // ±»É¾³ı½ÚµãÊÇcur_stack_node_ptrµÄÓÒº¢×Ó
-      cur_stack_node_ptr->SetRightChildPtr(child_of_delete_node_ptr); // Á¬½Ó
+        delete_node_ptr = cur_node_pre_ptr;
     }
 
-    AVLNode<Elem, Key>* parent_node_ptr;
+    AVLNode<Elem, Key>* child_of_delete_node_ptr = NULL; // è¢«åˆ é™¤èŠ‚ç‚¹çš„å­©å­èŠ‚ç‚¹
 
-    // ÖØĞÂÆ½ºâ»¯
-    while (AVL_node_stack.empty() == false) {
-
-      AVLNode<Elem, Key>* grand_parent_node_ptr = NULL;
-      parent_node_ptr = AVL_node_stack.top();
-      AVL_node_stack.pop();
-
-      int grand_parent_direction;
-      int parent_direction;
-
-      if (parent_node_ptr->RightChildPtr() == child_of_delete_node_ptr) {
-        parent_node_ptr->balance_factor--;
-      } else {
-        parent_node_ptr->balance_factor++;
-      }
-
-      if (AVL_node_stack.empty() == false) {
-        grand_parent_node_ptr = AVL_node_stack.top();
-        AVL_node_stack.pop();
-
-        grand_parent_direction = (grand_parent_node_ptr->LeftChildPtr() == parent_node_ptr) ? -1 : 1;
-      } else {
-        grand_parent_direction = 0;
-      }
-
-      if (parent_node_ptr->balance_factor == 1 || parent_node_ptr->balance_factor == -1) { // Í¼7.20
-        break;
-      }
-
-      if (parent_node_ptr->balance_factor != 0) { // |bf| = 2
-        if (parent_node_ptr->balance_factor < 0) {
-          parent_direction = -1;
-          child_of_delete_node_ptr = parent_node_ptr->LeftChildPtr();
-        } else {
-          parent_direction = 1;
-          child_of_delete_node_ptr = parent_node_ptr->RightChildPtr();
-        }
-
-        if (child_of_delete_node_ptr->balance_factor == 0) {
-          if (parent_direction == -1) {
-            this->RotateRight_(parent_node_ptr);
-            parent_node_ptr->balance_factor = 1;
-            parent_node_ptr->LeftChildPtr()->balance_factor = -1;
-          } else {
-            this->RotateLeft_(parent_node_ptr);
-            parent_node_ptr->balance_factor = -1;
-            parent_node_ptr->RightChildPtr()->balance_factor = 1;
-          }
-
-          break;
-        }
-
-        if (child_of_delete_node_ptr->balance_factor == parent_direction) { // Í¼7.23, Á½½ÚµãÆ½ºâÒò×ÓÍ¬ºÅ
-          if (parent_direction == -1) {
-            this->RotateRight_(parent_node_ptr);
-          } else {
-            this->RotateLeft_(parent_node_ptr);
-          }
-        } else { // Í¼7.24, Á½½ÚµãÆ½ºâÒò×Ó·´ºÅ
-          if (parent_direction == -1) {
-            this->RotateLeftRight_(parent_node_ptr);
-          } else {
-            this->RotateRightLeft_(parent_node_ptr);
-          }
-        }
-
-        // Ğı×ªºó, ĞÂ¸ùÓëÉÏ²ãÁ¬½Ó
-        if (grand_parent_direction == -1) {
-          grand_parent_node_ptr->SetLeftChildPtr(parent_node_ptr);
-        } else {
-          grand_parent_node_ptr->SetRightChildPtr(parent_node_ptr);
-        }
-      }
-
-      child_of_delete_node_ptr = parent_node_ptr; // Í¼7.21, |bf| = 0
+    // æ‰¾åˆ°æ­¤æ—¶çš„å¾…åˆ é™¤èŠ‚ç‚¹çš„ä¸€ä¸ªå­©å­èŠ‚ç‚¹, ç”¨ä½œè¿æ¥
+    if (delete_node_ptr->LeftChildPtr() != NULL) {
+        child_of_delete_node_ptr = delete_node_ptr->LeftChildPtr();
+    }
+    else {
+        child_of_delete_node_ptr = delete_node_ptr->RightChildPtr();
     }
 
-    if (AVL_node_stack.empty() == true) {
-      sub_tree_root_ptr = parent_node_ptr;
+    if (AVL_node_stack.empty() == true) { // åˆ é™¤çš„æ˜¯æ ¹èŠ‚ç‚¹
+        sub_tree_root_ptr = child_of_delete_node_ptr;
     }
-  }
+    else {
 
-  delete delete_node_ptr;
-  delete_node_ptr = NULL;
+        AVLNode<Elem, Key>* cur_stack_node_ptr = AVL_node_stack.top();
 
-  return true;
+        if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) { // è¢«åˆ é™¤èŠ‚ç‚¹æ˜¯cur_stack_node_ptrçš„å·¦å­©å­
+            cur_stack_node_ptr->SetLeftChildPtr(child_of_delete_node_ptr); // è¿æ¥
+        }
+        else { // è¢«åˆ é™¤èŠ‚ç‚¹æ˜¯cur_stack_node_ptrçš„å³å­©å­
+            cur_stack_node_ptr->SetRightChildPtr(child_of_delete_node_ptr); // è¿æ¥
+        }
+
+        AVLNode<Elem, Key>* parent_node_ptr;
+
+        // é‡æ–°å¹³è¡¡åŒ–
+        while (AVL_node_stack.empty() == false) {
+
+            AVLNode<Elem, Key>* grand_parent_node_ptr = NULL;
+            parent_node_ptr = AVL_node_stack.top();
+            AVL_node_stack.pop();
+
+            int grand_parent_direction;
+            int parent_direction;
+
+            if (parent_node_ptr->RightChildPtr() == child_of_delete_node_ptr) {
+                parent_node_ptr->balance_factor--;
+            }
+            else {
+                parent_node_ptr->balance_factor++;
+            }
+
+            if (AVL_node_stack.empty() == false) {
+                grand_parent_node_ptr = AVL_node_stack.top();
+                AVL_node_stack.pop();
+
+                grand_parent_direction = (grand_parent_node_ptr->LeftChildPtr() == parent_node_ptr) ? -1 : 1;
+            }
+            else {
+                grand_parent_direction = 0;
+            }
+
+            if (parent_node_ptr->balance_factor == 1 || parent_node_ptr->balance_factor == -1) { // å›¾7.20
+                break;
+            }
+
+            if (parent_node_ptr->balance_factor != 0) { // |bf| = 2
+                if (parent_node_ptr->balance_factor < 0) {
+                    parent_direction = -1;
+                    child_of_delete_node_ptr = parent_node_ptr->LeftChildPtr();
+                }
+                else {
+                    parent_direction = 1;
+                    child_of_delete_node_ptr = parent_node_ptr->RightChildPtr();
+                }
+
+                if (child_of_delete_node_ptr && child_of_delete_node_ptr->balance_factor == 0) {
+                    if (parent_direction == -1) {
+                        this->RotateRight_(parent_node_ptr);
+                        parent_node_ptr->balance_factor = 1;
+                        parent_node_ptr->LeftChildPtr()->balance_factor = -1;
+                    }
+                    else {
+                        this->RotateLeft_(parent_node_ptr);
+                        parent_node_ptr->balance_factor = -1;
+                        parent_node_ptr->RightChildPtr()->balance_factor = 1;
+                    }
+
+                    break;
+                }
+
+                if (child_of_delete_node_ptr && child_of_delete_node_ptr->balance_factor == parent_direction) { // å›¾7.23, ä¸¤èŠ‚ç‚¹å¹³è¡¡å› å­åŒå·
+                    if (parent_direction == -1) {
+                        this->RotateRight_(parent_node_ptr);
+                    }
+                    else {
+                        this->RotateLeft_(parent_node_ptr);
+                    }
+                }
+                else { // å›¾7.24, ä¸¤èŠ‚ç‚¹å¹³è¡¡å› å­åå·
+                    if (parent_direction == -1) {
+                        this->RotateLeftRight_(parent_node_ptr);
+                    }
+                    else {
+                        this->RotateRightLeft_(parent_node_ptr);
+                    }
+                }
+
+                // æ—‹è½¬å, æ–°æ ¹ä¸ä¸Šå±‚è¿æ¥
+                if (grand_parent_direction == -1) {
+                    grand_parent_node_ptr->SetLeftChildPtr(parent_node_ptr);
+                }
+                else {
+                    grand_parent_node_ptr->SetRightChildPtr(parent_node_ptr);
+                }
+            }
+
+            child_of_delete_node_ptr = parent_node_ptr; // å›¾7.21, |bf| = 0
+        }
+
+        if (AVL_node_stack.empty() == true) {
+            sub_tree_root_ptr = parent_node_ptr;
+        }
+    }
+
+    delete delete_node_ptr;
+    delete_node_ptr = NULL;
+
+    return true;
 }
 
 
 /**
- * @brief ´òÓ¡×ÓÊ÷(µİ¹é)
+ * @brief æ‰“å°å­æ ‘(é€’å½’)
  * @tparam Elem
  * @tparam Key
  * @param sub_tree_root_ptr
@@ -672,107 +708,108 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key> *&sub_tr
 template <class Elem, class Key>
 void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) {
 
-  if (sub_tree_root_ptr == NULL) {
-    return;
-  }
+    if (sub_tree_root_ptr == NULL) {
+        return;
+    }
 
-  visit(sub_tree_root_ptr);
+    visit(sub_tree_root_ptr);
 
-  cout << "(";
+    cout << "(";
 
-  PrintSubTree_(sub_tree_root_ptr->LeftChildPtr(), visit);
+    PrintSubTree_(sub_tree_root_ptr->LeftChildPtr(), visit);
 
-  cout << ",";
+    cout << ",";
 
-  PrintSubTree_(sub_tree_root_ptr->RightChildPtr(), visit);
+    PrintSubTree_(sub_tree_root_ptr->RightChildPtr(), visit);
 
-  cout << ")";
+    cout << ")";
 }
 
 
 template<class Elem, class Key>
-void AVLTree<Elem, Key>::PrintTree(void (*visit)(AVLNode<Elem, Key> *)) {
-  this->PrintSubTree_((AVLNode<Elem, Key>*)this->root_node_ptr_, visit); cout << endl;
+void AVLTree<Elem, Key>::PrintTree(void (*visit)(AVLNode<Elem, Key>*)) {
+    this->PrintSubTree_((AVLNode<Elem, Key>*)this->root_node_ptr_, visit); cout << endl;
 }
 
 
 template<class Elem, class Key>
 bool AVLTree<Elem, Key>::RemoveByCyberDash(Key key) {
-  return this->RemoveInSubTreeByCyberDash_(this->RootRef(), key);
+    return this->RemoveInSubTreeByCyberDash_(this->RootRef(), key);
 }
 
 
 template <class Elem, class Key>
 AVLNode<Elem, Key>* AVLTree<Elem, Key>::MinInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const {
 
-  if (sub_tree_root_ptr == NULL) {
-    return NULL;
-  }
+    if (sub_tree_root_ptr == NULL) {
+        return NULL;
+    }
 
-  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
 
-  while (cur_node_ptr->LeftChildPtr() != NULL) {
-    cur_node_ptr = cur_node_ptr->LeftChildPtr();
-  }
+    while (cur_node_ptr->LeftChildPtr() != NULL) {
+        cur_node_ptr = cur_node_ptr->LeftChildPtr();
+    }
 
-  return cur_node_ptr;
+    return cur_node_ptr;
 }
 
 
 template<class Elem, class Key>
 Elem AVLTree<Elem, Key>::Max() {
-  AVLNode<Elem, Key>* root_node_ptr = this->root_node_ptr_;
-  AVLNode<Elem, Key>* max_node = this->MaxInSubTree_(root_node_ptr);
-  return max_node->GetData();
+    AVLNode<Elem, Key>* root_node_ptr = this->root_node_ptr_;
+    AVLNode<Elem, Key>* max_node = this->MaxInSubTree_(root_node_ptr);
+    return max_node->GetData();
 }
 
 
 /**
- * @brief ×ÓÊ÷ÖĞ¹Ø¼üÂë×î´óÏî
- * @tparam Elem Êı¾İÏîÄ£°åÀàĞÍ
- * @tparam Key ¹Ø¼üÂëÄ£°åÀàĞÍ
- * @param sub_tree_root_ptr ×ÓÊ÷¸ù½Úµã
- * @return ¹Ø¼üÂë×î´óÏî
+ * @brief å­æ ‘ä¸­å…³é”®ç æœ€å¤§é¡¹
+ * @tparam Elem æ•°æ®é¡¹æ¨¡æ¿ç±»å‹
+ * @tparam Key å…³é”®ç æ¨¡æ¿ç±»å‹
+ * @param sub_tree_root_ptr å­æ ‘æ ¹èŠ‚ç‚¹
+ * @return å…³é”®ç æœ€å¤§é¡¹
  * @note
- * ÓÒº¢×Ó½Úµãµü´ú
+ * å³å­©å­èŠ‚ç‚¹è¿­ä»£
  */
 template <class Elem, class Key>
 AVLNode<Elem, Key>* AVLTree<Elem, Key>::MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const {
 
-  if (sub_tree_root_ptr == NULL) {
-    return NULL;
-  }
+    if (sub_tree_root_ptr == NULL) {
+        return NULL;
+    }
 
-  AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
-  while (cur_node_ptr->RightChildPtr() != NULL) {
-    cur_node_ptr = cur_node_ptr->RightChildPtr();
-  }
+    AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    while (cur_node_ptr->RightChildPtr() != NULL) {
+        cur_node_ptr = cur_node_ptr->RightChildPtr();
+    }
 
-  return cur_node_ptr;
+    return cur_node_ptr;
 }
 
 
 template<class Elem, class Key>
 Elem AVLTree<Elem, Key>::Min() {
-  AVLNode<Elem, Key>* max_node = this->MinInSubTree_(this->Root());
-  return max_node->GetData();
+    AVLNode<Elem, Key>* max_node = this->MinInSubTree_(this->Root());
+    return max_node->GetData();
 }
 
 
 template<class Elem, class Key>
 int AVLTree<Elem, Key>::SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr) {
-  if (sub_tree_root_ptr == NULL) {
-    return 0;
-  }
-
-  int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->LeftChildPtr());
-  int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->RightChildPtr());
-
-  if (left_sub_tree_height < right_sub_tree_height) {
-    return right_sub_tree_height + 1;
-  } else {
-    return left_sub_tree_height + 1;
+    if (sub_tree_root_ptr == NULL) {
+        return 0;
     }
-  }
+
+    int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->LeftChildPtr());
+    int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->RightChildPtr());
+
+    if (left_sub_tree_height < right_sub_tree_height) {
+        return right_sub_tree_height + 1;
+    }
+    else {
+        return left_sub_tree_height + 1;
+    }
+}
 
 #endif // CYBER_DASH_AVL_TREE_H
