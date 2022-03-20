@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file main.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Õ»demoÑİÊ¾
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief æ ˆdemoæ¼”ç¤º
  * @version 0.2.1
  * @date 2020-07-15
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include <iostream>
@@ -17,34 +17,34 @@ using namespace std;
 
 int main() {
 
-  LinkStack<int> test_stack;
+	LinkStack<int> test_stack;
 
-  // ²Ù×÷ int ÀàĞÍµÄÕ»
-  test_stack.Push(1);
-  test_stack.Push(2);
-  test_stack.Push(3);
-  test_stack.Push(4);
+	// æ“ä½œ int ç±»å‹çš„æ ˆ
+	test_stack.Push(1);
+	test_stack.Push(2);
+	test_stack.Push(3);
+	test_stack.Push(4);
 
-  // test GetTop
-  int top_data;
-  test_stack.GetTop(top_data);
-  cout<<"top_data: "<<top_data<<endl;
+	// test GetTop
+	int top_data;
+	test_stack.GetTop(top_data);
+	cout << "top_data: " << top_data << endl;
 
-  // test operator<<
-  cout<<test_stack<<endl;
+	// test operator<<
+	cout << test_stack << endl;
 
-  // test Pop
-  int pop_data;
-  test_stack.Pop(pop_data);
-  test_stack.Pop(pop_data);
-  test_stack.Pop(pop_data);
-  cout<<test_stack<<endl;
+	// test Pop
+	int pop_data;
+	test_stack.Pop(pop_data);
+	test_stack.Pop(pop_data);
+	test_stack.Pop(pop_data);
+	cout << test_stack << endl;
 
-  test_stack.Pop(pop_data);
-  cout<<test_stack<<endl;
+	test_stack.Pop(pop_data);
+	cout << test_stack << endl;
 
-  // test CyberDashShow
-  test_stack.CyberDashShow();
+	// test CyberDashShow
+	test_stack.CyberDashShow();
 
-  return 0;
+	return 0;
 }

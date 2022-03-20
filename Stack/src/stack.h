@@ -1,55 +1,55 @@
-/*!
+ï»¿/*!
  * @file stack.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Õ»Ğé»ùÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief æ ˆè™šåŸºç±»
  * @version 0.2.1
  * @date 2020-07-28
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_STACK_H
 #define CYBER_DASH_STACK_H
 
 
-/*!
- * @brief Õ»Ğé»ùÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- */
+ /*!
+  * @brief æ ˆè™šåŸºç±»
+  * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+  */
 template<class T>
 class Stack {
 public:
-  /*!
-   * @brief ÈëÕ»
-   * @param data Êı¾İ
-   */
-  virtual void Push(const T& data) = 0;
+	/*!
+	 * @brief å…¥æ ˆ
+	 * @param data æ•°æ®
+	 */
+	virtual void Push(const T& data) = 0;
 
-  /*!
-   * @brief ³öÕ»(±£´æÊı¾İ)
-   * @param data Êı¾İ(±£´æÊı¾İÏî)
-   * @return ÊÇ·ñ³É¹¦
-   */
-  virtual bool Pop(T& data) = 0;
+	/*!
+	 * @brief å‡ºæ ˆ(ä¿å­˜æ•°æ®)
+	 * @param data æ•°æ®(ä¿å­˜æ•°æ®é¡¹)
+	 * @return æ˜¯å¦æˆåŠŸ
+	 */
+	virtual bool Pop(T& data) = 0;
 
-  /*!
-   * @brief »ñÈ¡Õ»¶¥Êı¾İ
-   * @param data Êı¾İ(±£´æÊı¾İÏî)
-   * @return ÊÇ·ñ³É¹¦
-   */
-  virtual bool GetTop(T& data) const = 0;
+	/*!
+	 * @brief è·å–æ ˆé¡¶æ•°æ®
+	 * @param data æ•°æ®(ä¿å­˜æ•°æ®é¡¹)
+	 * @return æ˜¯å¦æˆåŠŸ
+	 */
+	virtual bool GetTop(T& data) const = 0;
 
-  /*!
-   * @brief ÊÇ·ñÎª¿Õ
-   * @return ÊÇ·ñÎª¿Õ
-   */
-  virtual bool IsEmpty() const = 0;
+	/*!
+	 * @brief æ˜¯å¦ä¸ºç©º
+	 * @return æ˜¯å¦ä¸ºç©º
+	 */
+	virtual bool IsEmpty() const = 0;
 
-  /*!
-   * @brief »ñÈ¡´óĞ¡
-   * @return ´óĞ¡
-   */
-  virtual int GetSize() const = 0;
+	/*!
+	 * @brief è·å–å¤§å°
+	 * @return å¤§å°
+	 */
+	virtual int GetSize() const = 0;
 };
 
 

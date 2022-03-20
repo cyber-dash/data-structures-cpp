@@ -1,11 +1,11 @@
-/*!
- * @file link_stack.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Á´Ê½Õ»Ä£°åÀà
+ï»¿/* !
+ *@file link_stack.h
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief é“¾å¼æ ˆæ¨¡æ¿ç±»
  * @version 0.2.1
- * @date 2020-07-28
- * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ * @date 2020 - 07 - 28
+ * @copyright Copyright(c) 2021
+ * CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_LINK_STACK_H
@@ -20,215 +20,216 @@ using namespace std;
 
 
 /*!
- * @brief ½áµãÄ£°å½á¹¹Ìå
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief ç»“ç‚¹æ¨¡æ¿ç»“æ„ä½“
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template <class T>
 struct LinkNode {
-  explicit LinkNode(LinkNode<T>* node = NULL): link(node) {}
-  explicit LinkNode(const T& data, LinkNode<T>* node = NULL): data(data), link(node) {}
+    explicit LinkNode(LinkNode<T>* node = NULL) : link(node) {}
+    explicit LinkNode(const T& data, LinkNode<T>* node = NULL) : data(data), link(node) {}
 
-  T data; //!< Êı¾İÏî
-  LinkNode<T>* link; //!< ÏÂÒ»½áµã
+    T data; //!< æ•°æ®é¡¹
+    LinkNode<T>* link; //!< ä¸‹ä¸€ç»“ç‚¹
 };
 
 
 /*!
- * @brief Á´Ê½Õ»Ä£°åÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief é“¾å¼æ ˆæ¨¡æ¿ç±»
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template <class T>
-class LinkStack: public Stack<T>{
+class LinkStack : public Stack<T> {
 
 public:
-  /*! @brief ¹¹Ôìº¯Êı */
-  LinkStack(): top_(NULL) {}
-  // Îö¹¹º¯Êı
-  ~LinkStack();
-  // ÈëÕ»
-  void Push(const T& data);
-  // ³öÕ»(±£´æÊı¾İ)
-  bool Pop(T& data);
-  // ³öÕ»(²»±£´æÊı¾İ)
-  bool Pop();
-  // »ñÈ¡Õ»¶¥Êı¾İ
-  bool GetTop(T& data) const;
-  // ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
-  bool IsEmpty() const;
-  // »ñÈ¡Õ»´óĞ¡
-  int GetSize() const;
-  // Çå¿Õ
-  void MakeEmpty();
+    /*! @brief æ„é€ å‡½æ•° */
+    LinkStack() : top_(NULL) {}
+    // ææ„å‡½æ•°
+    ~LinkStack();
+    // å…¥æ ˆ
+    void Push(const T& data);
+    // å‡ºæ ˆ(ä¿å­˜æ•°æ®)
+    bool Pop(T& data);
+    // å‡ºæ ˆ(ä¸ä¿å­˜æ•°æ®)
+    bool Pop();
+    // è·å–æ ˆé¡¶æ•°æ®
+    bool GetTop(T& data) const;
+    // åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
+    bool IsEmpty() const;
+    // è·å–æ ˆå¤§å°
+    int GetSize() const;
+    // æ¸…ç©º
+    void MakeEmpty();
 
-  // »ñÈ¡Õ»¶¥½áµãÖ¸Õë
-  LinkNode<T>* GetTopPtr();
+    // è·å–æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
+    LinkNode<T>* GetTopPtr();
 
-  //ÃÔ¹¬ÎÊÌâ
-  // int SeekPath(int x,int y);
+    //è¿·å®«é—®é¢˜
+    // int SeekPath(int x,int y);
 
-  // ÖØÔØ<<(´òÓ¡Õ»)
-  template<class U>
-  friend ostream& operator<<(ostream& os, LinkStack<T>& stack);
+    // é‡è½½<<(æ‰“å°æ ˆ)
+    template<class U>
+    friend ostream& operator<<(ostream& os, LinkStack<T>& stack);
 
-  void CyberDashShow();
+    void CyberDashShow();
 
 private:
-  LinkNode<T>* top_;     //!< Õ»¶¥½áµãÖ¸Õë
+    LinkNode<T>* top_;     //!< æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
 };
 
 
 /*!
- * @brief Îö¹¹º¯Êı
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @note ÏÔÊ½Ïú»ÙÊ±µ÷ÓÃ
+ * @brief ææ„å‡½æ•°
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @note æ˜¾å¼é”€æ¯æ—¶è°ƒç”¨
  */
 template<class T>
 LinkStack<T>::~LinkStack<T>() {
-  MakeEmpty();
+    MakeEmpty();
 }
 
 
 /*!
- * @brief »ñÈ¡Õ»¶¥½áµãÖ¸Õë
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return Õ»¶¥½áµãÖ¸Õë
+ * @brief è·å–æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return æ ˆé¡¶ç»“ç‚¹æŒ‡é’ˆ
  */
 template<class T>
 LinkNode<T>* LinkStack<T>::GetTopPtr() {
-  return top_;
+    return top_;
 }
 
 
 /*!
- * @brief ÈëÕ»
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief å…¥æ ˆ
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template <class T>
 void LinkStack<T>::Push(const T& data)
 {
-  LinkNode<T>* node = new LinkNode<T>(data);
+    LinkNode<T>* node = new LinkNode<T>(data);
 
-  node->link = this->top_;
-  this->top_ = node;
+    node->link = this->top_;
+    this->top_ = node;
 }
 
 
 /**
- * @brief ³öÕ»(±£´æÊı¾İÏî)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ(±£´æÊı¾İÏî)
- * @return ÊÇ·ñ³É¹¦
+ * @brief å‡ºæ ˆ(ä¿å­˜æ•°æ®é¡¹)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®(ä¿å­˜æ•°æ®é¡¹)
+ * @return æ˜¯å¦æˆåŠŸ
  */
 template <class T>
 bool LinkStack<T>::Pop(T& data)
 {
-  if (IsEmpty()) {
-    return false;
-  }
+    if (IsEmpty()) {
+        return false;
+    }
 
-  LinkNode<T>* delete_node = this->top_;
-  this->top_ = this->top_->link;
+    LinkNode<T>* delete_node = this->top_;
+    this->top_ = this->top_->link;
 
-  data = delete_node->data;
+    data = delete_node->data;
 
-  delete delete_node;
-  delete_node = NULL;
+    delete delete_node;
+    delete_node = NULL;
 
-  return true;
+    return true;
 }
 
 
 /**
- * @brief ³öÕ»(²»±£´æÊı¾İÏî)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ(±£´æÊı¾İÏî)
- * @return ÊÇ·ñ³É¹¦
+ * @brief å‡ºæ ˆ(ä¸ä¿å­˜æ•°æ®é¡¹)
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®(ä¿å­˜æ•°æ®é¡¹)
+ * @return æ˜¯å¦æˆåŠŸ
  */
 template <class T>
 bool LinkStack<T>::Pop()
 {
-  if (IsEmpty()) {
-    return false;
-  }
+    if (IsEmpty()) {
+        return false;
+    }
 
-  LinkNode<T>* delete_node = this->top_;
-  this->top_ = this->top_->link;
+    LinkNode<T>* delete_node = this->top_;
+    this->top_ = this->top_->link;
 
-  delete delete_node;
-  delete_node = NULL;
+    delete delete_node;
+    delete_node = NULL;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief »ñÈ¡Õ»¶¥ÔªËØ
- * @tparam T Õ»ÔªËØÀàĞÍ
- * @return ·µ»Ø²Ù×÷ÊÇ·ñÖ´ĞĞ³É¹¦
+ * @brief è·å–æ ˆé¡¶å…ƒç´ 
+ * @tparam T æ ˆå…ƒç´ ç±»å‹
+ * @return è¿”å›æ“ä½œæ˜¯å¦æ‰§è¡ŒæˆåŠŸ
  * @note
- * ½ö½ö»ñÈ¡Õ»¶¥ÔªËØ£¬²»ĞèÒª½«Õ»¶¥ÔªËØÉ¾³ı
+ * ä»…ä»…è·å–æ ˆé¡¶å…ƒç´ ï¼Œä¸éœ€è¦å°†æ ˆé¡¶å…ƒç´ åˆ é™¤
  */
 template <class T>
 bool LinkStack<T>::GetTop(T& data) const
 {
-  if (IsEmpty()) {
-    return false;
-  }
+    if (IsEmpty()) {
+        return false;
+    }
 
-  data = this->top_->data;
+    data = this->top_->data;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief »ñÈ¡Õ»µÄ´óĞ¡
- * @return Õ»µÄ´óĞ¡
+ * @brief è·å–æ ˆçš„å¤§å°
+ * @return æ ˆçš„å¤§å°
  */
 template<class T>
 int LinkStack<T>::GetSize() const {
 
-  int count = 0;
-  LinkNode<T>* cur = this->top_;
+    int count = 0;
+    LinkNode<T>* cur = this->top_;
 
-  while (cur != NULL) {
-    count++;
-    cur = cur->link;
-  }
+    while (cur != NULL) {
+        count++;
+        cur = cur->link;
+    }
 
-  return count;
+    return count;
 }
 
 
 /*!
- * @brief ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
- * @return ÊÇ·ñÎª¿Õ
+ * @brief åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
+ * @return æ˜¯å¦ä¸ºç©º
  */
 template<class T>
 bool LinkStack<T>::IsEmpty() const {
-  if (this->top_ == NULL) {
-    return true;
-  } else {
-    return false;
-  }
+    if (this->top_ == NULL) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 /**
- * @brief Çå¿ÕÕ»
- * @tparam T Õ»ÔªËØÀàĞÍ
+ * @brief æ¸…ç©ºæ ˆ
+ * @tparam T æ ˆå…ƒç´ ç±»å‹
  * @note
- * ĞèÒªÊÍ·ÅÕ»ÖĞÃ¿¸öÔªËØ
+ * éœ€è¦é‡Šæ”¾æ ˆä¸­æ¯ä¸ªå…ƒç´ 
  */
 template<class T>
 void LinkStack<T>::MakeEmpty() {
-  while (this->top_ != NULL) {
-    LinkNode<T>* cur = this->top_;
-    top_ = top_->link;
+    while (this->top_ != NULL) {
+        LinkNode<T>* cur = this->top_;
+        top_ = top_->link;
 
-    delete cur;
-    cur = NULL;
-  }
+        delete cur;
+        cur = NULL;
+    }
 }
 
 
@@ -240,40 +241,40 @@ int LinkStack<T>::SeekPath(int x,int y){
  */
 
 
-/**
- * @brief ÖØÔØ<<(´òÓ¡Õ»)
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param os Êä³öÁ÷
- * @param link_stack Õ»
- * @return Êä³öÁ÷
- */
+ /**
+  * @brief é‡è½½<<(æ‰“å°æ ˆ)
+  * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+  * @param os è¾“å‡ºæµ
+  * @param link_stack æ ˆ
+  * @return è¾“å‡ºæµ
+  */
 template<class T>
 ostream& operator<<(ostream& os, LinkStack<T>& stack) {
 
-  os<<"Õ»ÖĞÔªËØ¸öÊı: "<<stack.GetSize()<<endl;
+    os << "æ ˆä¸­å…ƒç´ ä¸ªæ•°: " << stack.GetSize() << endl;
 
-  LinkNode<T>* cur = stack.GetTopPtr();
+    LinkNode<T>* cur = stack.GetTopPtr();
 
-  for (int i = 1; cur != NULL; i++) {
-    os << i << ":" << cur->data << endl;
-    cur = cur->link;
-  }
+    for (int i = 1; cur != NULL; i++) {
+        os << i << ":" << cur->data << endl;
+        cur = cur->link;
+    }
 
-  return os;
+    return os;
 }
 
 
 template<class T>
 void LinkStack<T>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
-      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 
