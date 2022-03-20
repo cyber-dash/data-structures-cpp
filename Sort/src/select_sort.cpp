@@ -1,21 +1,21 @@
-/*!
+ï»¿/*!
  * @file select_sort.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Ñ¡ÔñÅÅĞò
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief é€‰æ‹©æ’åº
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include "util.h"
 
 
-/*!
- * @brief Ñ¡ÔñÅÅĞò
- * @param arr Êı×é
- * @param size Êı×é³¤¶È
- */
+ /*!
+  * @brief é€‰æ‹©æ’åº
+  * @param arr æ•°ç»„
+  * @param size æ•°ç»„é•¿åº¦
+  */
 void SelectSort(int* arr, int size) {
 
     for (int i = 0; i < size; i++) {
@@ -30,6 +30,6 @@ void SelectSort(int* arr, int size) {
             }
         }
 
-      Swap(arr + i, arr + select_idx);
+        Swap(arr + i, arr + select_idx);
     }
 }

@@ -1,24 +1,24 @@
-/*!
+ï»¿/*!
  * @file util.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¹¤¾ß.hÎÄ¼ş
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å·¥å…·.hæ–‡ä»¶
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #ifndef CYBER_DASH_SORT_UTIL_H
 #define CYBER_DASH_SORT_UTIL_H
 
 
-/* ½»»» */
+ /* äº¤æ¢ */
 void Swap(int* a, int* b);
 
-/* ´òÓ¡Êı×é */
+/* æ‰“å°æ•°ç»„ */
 void PrintArray(int* arr, int array_size);
 
-/* ÎÒÃÇÊÇCyberDash */
+/* æˆ‘ä»¬æ˜¯CyberDash */
 void CyberDashShow();
 
 #endif //CYBER_DASH_SORT_UTIL_H

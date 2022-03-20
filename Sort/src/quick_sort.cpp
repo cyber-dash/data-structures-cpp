@@ -1,23 +1,23 @@
-/*!
+ï»¿/*!
  * @file quick_sort.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑÐ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¿ìËÙÅÅÐò
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å¿«é€ŸæŽ’åº
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑÐ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include "util.h"
 
 
-/*!
- * @brief »®·Öº¯Êý
- * @param arr Êý×é
- * @param left ×ó±ß½ç
- * @param right ÓÒ±ß½ç
- * @return Öá
- */
+ /*!
+  * @brief åˆ’åˆ†å‡½æ•°
+  * @param arr æ•°ç»„
+  * @param left å·¦è¾¹ç•Œ
+  * @param right å³è¾¹ç•Œ
+  * @return è½´
+  */
 int Split(int* arr, int left, int right) {
 
     int pivot = left;
@@ -26,7 +26,7 @@ int Split(int* arr, int left, int right) {
 
         for (; right >= pivot; right--) {
             if (arr[pivot] > arr[right]) {
-              Swap(arr + pivot, arr + right);
+                Swap(arr + pivot, arr + right);
                 left = pivot + 1;
                 pivot = right;
                 break;
@@ -35,7 +35,7 @@ int Split(int* arr, int left, int right) {
 
         for (; left <= pivot; left++) {
             if (arr[pivot] < arr[left]) {
-              Swap(arr + left, arr + pivot);
+                Swap(arr + left, arr + pivot);
                 right = pivot - 1;
                 pivot = left;
                 break;
@@ -48,21 +48,20 @@ int Split(int* arr, int left, int right) {
 
 
 /*!
- * @brief ¿ìËÙÅÅÐò(µÝ¹é)
- * @param arr Êý×é
- * @param left ×ó±ß½ç
- * @param right ÓÒ±ß½ç
+ * @brief å¿«é€ŸæŽ’åº(é€’å½’)
+ * @param arr æ•°ç»„
+ * @param left å·¦è¾¹ç•Œ
+ * @param right å³è¾¹ç•Œ
  */
-void QuickSort(int *arr, int left, int right) {
+void QuickSort(int* arr, int left, int right) {
 
-  if (left >= right) {
-    return;
-  }
+    if (left >= right) {
+        return;
+    }
 
-  int pivot = Split(arr, left, right);
+    int pivot = Split(arr, left, right);
 
-  QuickSort(arr, left, pivot - 1);
-  QuickSort(arr, pivot + 1, right);
+    QuickSort(arr, left, pivot - 1);
+    QuickSort(arr, pivot + 1, right);
 }
-
 

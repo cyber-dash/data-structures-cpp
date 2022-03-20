@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file util.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑÐ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ¹¤¾ß.cppÎÄ¼þ
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å·¥å…·.cppæ–‡ä»¶
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑÐ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include <iostream>
@@ -14,7 +14,7 @@
 using namespace std;
 
 
-void Swap(int *a, int *b) {
+void Swap(int* a, int* b) {
 
     if (*a == *b) {
         return;
@@ -26,34 +26,35 @@ void Swap(int *a, int *b) {
 }
 
 
-int* min_by_ptr(int *ptr1, int *ptr2) {
+int* min_by_ptr(int* ptr1, int* ptr2) {
 
     if (*ptr1 <= *ptr2) {
         return ptr1;
-    } else {
+    }
+    else {
         return ptr2;
     }
 }
 
 
-void PrintArray(int *arr, int array_size) {
+void PrintArray(int* arr, int array_size) {
 
-  for (int i = 0; i < array_size; i++) {
-    cout<<arr[i]<<" ";
-  }
+    for (int i = 0; i < array_size; i++) {
+        cout << arr[i] << " ";
+    }
 
-  cout<<endl;
+    cout << endl;
 }
 
 
 void CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑÐ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ÐÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ÐÅÏ¢ÓëÍ¨ÐÅÏµÍ³ÑÐ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊýÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑÐ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑÐ¾¿Éú)"<<endl<<endl
-      <<"Êý¾Ý½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉý¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸Žé€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æž„å¼€æºä»£ç (C++æ¸…åŽå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }

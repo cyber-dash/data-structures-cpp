@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file test.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ÅÅĞò²âÊÔ.cppÎÄ¼ş
+ * @author CyberDash, cyberdash@163.com(id:cyberdash_yuan)
+ * @brief .cppÄ¼
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑĞ
+ *  CyberDash
  */
 
 #include "test.h"
@@ -19,153 +19,152 @@ using namespace std;
 
 void TestBubbleSort() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test Bubble Sort                     |"<<endl;
-  cout<<"|                        ²âÊÔÃ°ÅİÅÅĞò                         |"<<endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                      Test Bubble Sort                     |" << endl;
+	cout << "|                        æµ‹è¯•å†’æ³¡æ’åº                         |" << endl;
 
-  int array[] = { 1, 4, 2, 8, 5, 7 };
-  int array_size = sizeof(array) / sizeof(int);
+	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"Ã°ÅİÅÅĞòÇ°:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå:" << endl;
+	PrintArray(array, array_size);
 
-  BubbleSort(array, array_size);
+	BubbleSort(array, array_size);
 
-  cout<<"Ã°ÅİÅÅĞòºó:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå‰:" << endl;
+	PrintArray(array, array_size);
 
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
+	cout << "------------------------- CyberDash -------------------------" << endl;
 }
 
 
 void TestSelectSort() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test Select Sort                     |"<<endl;
-  cout<<"|                        ²âÊÔÑ¡ÔñÅÅĞò                         |"<<endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                      Test Select Sort                     |" << endl;
+	cout << "|                        æµ‹è¯•é€‰æ‹©æ’åº                         |" << endl;
 
-  int array[] = { 1, 4, 2, 8, 5, 7 };
-  int array_size = sizeof(array) / sizeof(int);
+	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"Ñ¡ÔñÅÅĞòÇ°:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå:" << endl;
+	PrintArray(array, array_size);
 
-  SelectSort(array, array_size);
+	SelectSort(array, array_size);
 
-  cout<<"Ñ¡ÔñÅÅĞòºó:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå‰:" << endl;
+	PrintArray(array, array_size);
 
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
+	cout << "------------------------- CyberDash -------------------------" << endl;
 }
 
 
 void TestInsertSort() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test Insert Sort                     |"<<endl;
-  cout<<"|                         ²âÊÔ²åÈëÅÅĞò                        |"<<endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                      Test Insert Sort                     |" << endl;
+	cout << "|                         æµ‹è¯•æ’å…¥æ’åº                        |" << endl;
 
-  int array[] = { 1, 4, 2, 8, 5, 7 };
-  int array_size = sizeof(array) / sizeof(int);
+	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"²åÈëÅÅĞòÇ°:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå‰:" << endl;
+	PrintArray(array, array_size);
 
-  InsertSort(array, array_size);
+	InsertSort(array, array_size);
 
-  cout<<"²åÈëÅÅĞòºó:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå:" << endl;
+	PrintArray(array, array_size);
 
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
+	cout << "------------------------- CyberDash -------------------------" << endl;
 }
 
 
 void TestMergeSort() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test Merge Sort                      |"<<endl;
-  cout<<"|                         ²âÊÔ¹é²¢ÅÅĞò                        |"<<endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                      Test Merge Sort                      |" << endl;
+	cout << "|                         æµ‹è¯•å½’å¹¶æ’åº                        |" << endl;
 
-  int array[] = { 1, 4, 2, 8, 5, 7 };
-  int array_size = sizeof(array) / sizeof(int);
+	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"¹é²¢ÅÅĞòÇ°:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå‰:" << endl;
+	PrintArray(array, array_size);
 
-  MergeSort(array, array_size);
+	MergeSort(array, array_size);
 
-  cout<<"¹é²¢ÅÅĞòºó:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå:" << endl;
+	PrintArray(array, array_size);
 
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
+	cout << "------------------------- CyberDash -------------------------" << endl;
 }
 
 
 void TestMergeSortNonRecursive() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|               Test Merge Sort(NonRecursive)               |"<<endl;
-  cout<<"|                     ²âÊÔ¹é²¢ÅÅĞò(·Çµİ¹é)                     |"<<endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|               Test Merge Sort(NonRecursive)               |" << endl;
+	cout << "|                     æµ‹è¯•å¿«é€Ÿæ’åº(éé€’å½’)                     |" << endl;
 
-  int array[] = { 1, 4, 2, 8, 5, 7 };
-  int array_size = sizeof(array) / sizeof(int);
+	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"¹é²¢ÅÅĞò(·Çµİ¹é)Ç°:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå‰:" << endl;
+	PrintArray(array, array_size);
 
-  MergeSortNonRecursive(array, array_size);
+	MergeSortNonRecursive(array, array_size);
 
-  cout<<"¹é²¢ÅÅĞò(·Çµİ¹é)ºó:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå:" << endl;
+	PrintArray(array, array_size);
 
-  cout<<"-------------------------------------------------------------"<<endl;
+	cout << "-------------------------------------------------------------" << endl;
 }
 
 
 void TestQuickSort() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test Quick Sort                      |"<<endl;
-  cout<<"|                        ²âÊÔ¿ìËÙÅÅĞò                         |"<<endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                      Test Quick Sort                      |" << endl;
+	cout << "|                        æµ‹è¯•å¿«é€Ÿæ’åº                         |" << endl;
 
-  int array[] = { 1, 4, 2, 8, 5, 7 };
-  int array_size = sizeof(array) / sizeof(int);
+	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"¿ìËÙÅÅĞòÇ°:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå‰:" << endl;
+	PrintArray(array, array_size);
 
-  QuickSort(array, 0, array_size - 1);
+	QuickSort(array, 0, array_size - 1);
 
-  cout<<"¿ìËÙÅÅĞòºó:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå:" << endl;
+	PrintArray(array, array_size);
 
-  cout<<"-------------------------------------------------------------"<<endl;
+	cout << "-------------------------------------------------------------" << endl;
 }
 
 
 
 void TestHeapSort() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                       Test Heap Sort                      |"<<endl;
-  cout<<"|                         ²âÊÔ¶ÑÅÅĞò                          |"<<endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                       Test Heap Sort                      |" << endl;
+	cout << "|                         æµ‹è¯•å †æ’åº                         |" << endl;
 
-  int array[] = { 1, 4, 2, 8, 5, 7 };
-  int array_size = sizeof(array) / sizeof(int);
+	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array_size = sizeof(array) / sizeof(int);
 
-  cout<<"¶ÑÅÅĞòÇ°:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå‰:" << endl;
+	PrintArray(array, array_size);
 
-  HeapSort(array, array_size);
+	HeapSort(array, array_size);
 
-  cout<<"¶ÑÅÅĞòºó:"<<endl;
-  PrintArray(array, array_size);
+	cout << "æ’åºå:" << endl;
+	PrintArray(array, array_size);
 
-  cout<<"------------------------- CyberDash -------------------------"<<endl;
+	cout << "------------------------- CyberDash -------------------------" << endl;
 }
-

@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file main.cpp
- * @author CyberDash¼ÆËã»ú¿¼ÑÐ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ²âÊÔdemoÑÝÊ¾
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief æµ‹è¯•demoæ¼”ç¤º
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
- *  CyberDash¼ÆËã»ú¿¼ÑÐ
+ *  CyberDashè®¡ç®—æœºè€ƒç ”
  */
 
 #include "test.h"
@@ -13,21 +13,21 @@
 
 int main() {
 
-  TestBubbleSort();
+	TestBubbleSort();
 
-  TestSelectSort();
+	TestSelectSort();
 
-  TestInsertSort();
+	TestInsertSort();
 
-  TestMergeSort();
+	TestMergeSort();
 
-  TestMergeSortNonRecursive();
+	TestMergeSortNonRecursive();
 
-  TestQuickSort();
+	TestQuickSort();
 
-  TestHeapSort();
+	TestHeapSort();
 
-  CyberDashShow();
+	CyberDashShow();
 
-  return 0;
+	return 0;
 }
