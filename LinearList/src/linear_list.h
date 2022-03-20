@@ -1,75 +1,75 @@
-/*!
+ï»¿/*!
  * @file linear_list.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief ÏßĞÔ±í³éÏóÄ£°å»ùÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief çº¿æ€§è¡¨æŠ½è±¡æ¨¡æ¿åŸºç±»
  * @version 0.2.1
  * @date 2020-06-06
  * @copyright Copyright (c) 2021
- * **CyberDash¼ÆËã»ú¿¼ÑĞ**
+ * **CyberDashè®¡ç®—æœºè€ƒç ”**
  */
 
 #ifndef CYBER_DASH_LINEAR_LIST_H
 #define CYBER_DASH_LINEAR_LIST_H
 
 
-/*!
- * @brief ÏßĞÔ±í³éÏó»ùÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- */
+ /*!
+  * @brief çº¿æ€§è¡¨æŠ½è±¡åŸºç±»
+  * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+  */
 template <class T>
 class LinearList {
 public:
-  /*!
-   * @brief »ñÈ¡³¤¶È
-   * @return ÏßĞÔ±í³¤¶È
-   */
-  virtual int Length() const = 0;
+	/*!
+	 * @brief è·å–é•¿åº¦
+	 * @return çº¿æ€§è¡¨é•¿åº¦
+	 */
+	virtual int Length() const = 0;
 
-  /*!
-   * @brief »ñÈ¡µÚpos¸ö½áµãµÄÊı¾İÏî
-   * @param pos µÚpos¸ö
-   * @param data Êı¾İÏî(ÓÃÓÚ±£´æ½á¹û)
-   * @return ÊÇ·ñ»ñÈ¡³É¹¦
-   */
-  virtual bool GetData(int pos, T& data) const = 0;
+	/*!
+	 * @brief è·å–ç¬¬posä¸ªç»“ç‚¹çš„æ•°æ®é¡¹
+	 * @param pos ç¬¬posä¸ª
+	 * @param data æ•°æ®é¡¹(ç”¨äºä¿å­˜ç»“æœ)
+	 * @return æ˜¯å¦è·å–æˆåŠŸ
+	 */
+	virtual bool GetData(int pos, T& data) const = 0;
 
-  /*!
-   * @brief ÉèÖÃµÚpos¸ö½áµãµÄÊı¾İÏî
-   * @param pos µÚpos¸ö
-   * @param data Êı¾İÏî
-   * @return
-   */
-  virtual bool SetData(int pos, const T& data) = 0;
+	/*!
+	 * @brief è®¾ç½®ç¬¬posä¸ªç»“ç‚¹çš„æ•°æ®é¡¹
+	 * @param pos ç¬¬posä¸ª
+	 * @param data æ•°æ®é¡¹
+	 * @return
+	 */
+	virtual bool SetData(int pos, const T& data) = 0;
 
-  /*!
-   * @brief ÔÚµÚpos¸öÔªËØÖ®ºó, ²åÈëÊı¾İ
-   * @param pos Î»ÖÃpos
-   * @param data Êı¾İÏîÖµ
-   * @return ÊÇ·ñ³É¹¦
-   * @note
-   * Çø±ğÓÚÊı×é, ÒÔ1¿ªÊ¼\n
-   * µ±posÎª0Ê±, ±íÊ¾²åÈëÎ»ÖÃ1
-   */
-  virtual bool Insert(int pos, const T& data) = 0;
+	/*!
+	 * @brief åœ¨ç¬¬posä¸ªå…ƒç´ ä¹‹å, æ’å…¥æ•°æ®
+	 * @param pos ä½ç½®pos
+	 * @param data æ•°æ®é¡¹å€¼
+	 * @return æ˜¯å¦æˆåŠŸ
+	 * @note
+	 * åŒºåˆ«äºæ•°ç»„, ä»¥1å¼€å§‹\n
+	 * å½“posä¸º0æ—¶, è¡¨ç¤ºæ’å…¥ä½ç½®1
+	 */
+	virtual bool Insert(int pos, const T& data) = 0;
 
-  /*!
-   * @brief É¾³ıµÚpos¸öÔªËØ
-   * @param pos Î»ÖÃpos
-   * @param data Êı¾İÏîÖµ(±£´æ±»É¾³ıµÄÔªËØÊı¾İÏî)
-   * @return ÊÇ·ñ³É¹¦
-   */
-  virtual bool Remove(int pos, T& data) = 0;
+	/*!
+	 * @brief åˆ é™¤ç¬¬posä¸ªå…ƒç´ 
+	 * @param pos ä½ç½®pos
+	 * @param data æ•°æ®é¡¹å€¼(ä¿å­˜è¢«åˆ é™¤çš„å…ƒç´ æ•°æ®é¡¹)
+	 * @return æ˜¯å¦æˆåŠŸ
+	 */
+	virtual bool Remove(int pos, T& data) = 0;
 
-  /*!
-   * @brief ÅĞ¶ÏÊÇ·ñÎª¿Õ
-   * @return ÊÇ·ñÎª¿Õ
-   */
-  virtual bool IsEmpty() const = 0;
+	/*!
+	 * @brief åˆ¤æ–­æ˜¯å¦ä¸ºç©º
+	 * @return æ˜¯å¦ä¸ºç©º
+	 */
+	virtual bool IsEmpty() const = 0;
 
-  /*!
-   * @brief ´òÓ¡ÏßĞÔ±í
-   */
-  virtual void Output() = 0;
+	/*!
+	 * @brief æ‰“å°çº¿æ€§è¡¨
+	 */
+	virtual void Output() = 0;
 };
 
 

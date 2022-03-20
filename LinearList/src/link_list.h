@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file link_list.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief µ¥ÏòÁ´±íÄ£°åÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å•å‘é“¾è¡¨æ¨¡æ¿ç±»
  * @version 0.2.1
  * @date 2020-06-06
  * @copyright Copyright (c) 2021
- * **CyberDash¼ÆËã»ú¿¼ÑĞ**
+ * **CyberDashè®¡ç®—æœºè€ƒç ”**
  */
 
 #ifndef CYBER_DASH_LINK_LIST_H
@@ -21,298 +21,299 @@ using namespace std;
 
 
 /*!
- * @brief µ¥Á´±í½áµãÄ£°åÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief å•é“¾è¡¨ç»“ç‚¹æ¨¡æ¿ç±»
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template <class T>
 struct LinkNode {
-  /*! @brief ¹¹Ôìº¯Êı(ÏÂÒ»½áµãµØÖ·) */
-  explicit LinkNode(LinkNode<T>* node = NULL) { this->next = node; }
+    /*! @brief æ„é€ å‡½æ•°(ä¸‹ä¸€ç»“ç‚¹åœ°å€) */
+    explicit LinkNode(LinkNode<T>* node = NULL) { this->next = node; }
 
-  /*!
-   * @brief ¹¹Ôìº¯Êı(Êı¾İÏîºÍÏÂÒ»½áµãµØÖ·)
-   * @param data Êı¾İÏî
-   * @param ptr ÏÂÒ»½ÚµãµØÖ·
-   */
-  explicit LinkNode(const T& data, LinkNode<T>* node = NULL) {
-    this->data = data;
-    this->next = node;
-  }
+    /*!
+     * @brief æ„é€ å‡½æ•°(æ•°æ®é¡¹å’Œä¸‹ä¸€ç»“ç‚¹åœ°å€)
+     * @param data æ•°æ®é¡¹
+     * @param ptr ä¸‹ä¸€èŠ‚ç‚¹åœ°å€
+     */
+    explicit LinkNode(const T& data, LinkNode<T>* node = NULL) {
+        this->data = data;
+        this->next = node;
+    }
 
-  T data; //!< Á´±íÊı¾İÏî
-  LinkNode<T>* next; //!< ÏÂÒ»½áµã
+    T data; //!< é“¾è¡¨æ•°æ®é¡¹
+    LinkNode<T>* next; //!< ä¸‹ä¸€ç»“ç‚¹
 };
 
 
 /*!
- * @brief µ¥Á´±íÄ£°åÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief å•é“¾è¡¨æ¨¡æ¿ç±»
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
-class LinkList: public LinearList<T> {
+class LinkList : public LinearList<T> {
 public:
-  // ¹¹Ôìº¯Êı(ÎŞ²ÎÊı)
-  LinkList();
-  // ¸´ÖÆ¹¹Ôìº¯Êı
-  LinkList(const LinkList<T>& link_list);
-  // Îö¹¹º¯Êı
-  ~LinkList();
-  // Çå³ıÁ´±í
-  void MakeEmpty();
-  /*! @brief Á´±í³¤¶È */
-  int Length() const { return this->length_; }
-  /*! @brief Á´±íÍ·½áµã */
-  LinkNode<T>* Head() const { return this->head_; }
-  // ËÑË÷Êı¾İÏîÎªdataµÄÔªËØ
-  LinkNode<T>* Search(T data);
-  // Î»ÖÃposµÄ½áµãµØÖ·
-  LinkNode<T>* Locate(int pos);
-  // »ñÈ¡µÚpos¸ö½áµãµÄÊı¾İ
-  bool GetData(int pos, T& data) const;
-  // ÉèÖÃµÚpos¸ö½áµãµÄÊı¾İ
-  bool SetData(int pos, const T& data);
-  // ÔÚµÚpos¸öÔªËØ(Êı×éË÷Òıpos - 1)Ö®ºó, ²åÈëÊı¾İ
-  bool Insert(int pos, const T& data);
-  // ÔÚµÚpos¸öÔªËØ(Êı×éË÷Òıpos - 1)Ö®ºó, ²åÈë½áµã
-  bool Insert(int pos, LinkNode<T>* node_ptr);
-  // É¾³ıµÚpos¸ö½áµã
-  bool Remove(int pos, T& data);
-  // ÊÇ·ñÎª¿ÕÁ´±í
-  bool IsEmpty() const;
-  // ´òÓ¡Á´±í
-  void Output();
-  // ÎÒÃÇÊÇCyberDash
-  void CyberDashShow();
+    // æ„é€ å‡½æ•°(æ— å‚æ•°)
+    LinkList();
+    // å¤åˆ¶æ„é€ å‡½æ•°
+    LinkList(const LinkList<T>& link_list);
+    // ææ„å‡½æ•°
+    ~LinkList();
+    // æ¸…é™¤é“¾è¡¨
+    void MakeEmpty();
+    /*! @brief é“¾è¡¨é•¿åº¦ */
+    int Length() const { return this->length_; }
+    /*! @brief é“¾è¡¨å¤´ç»“ç‚¹ */
+    LinkNode<T>* Head() const { return this->head_; }
+    // æœç´¢æ•°æ®é¡¹ä¸ºdataçš„å…ƒç´ 
+    LinkNode<T>* Search(T data);
+    // ä½ç½®posçš„ç»“ç‚¹åœ°å€
+    LinkNode<T>* Locate(int pos);
+    // è·å–ç¬¬posä¸ªç»“ç‚¹çš„æ•°æ®
+    bool GetData(int pos, T& data) const;
+    // è®¾ç½®ç¬¬posä¸ªç»“ç‚¹çš„æ•°æ®
+    bool SetData(int pos, const T& data);
+    // åœ¨ç¬¬posä¸ªå…ƒç´ (æ•°ç»„ç´¢å¼•pos - 1)ä¹‹å, æ’å…¥æ•°æ®
+    bool Insert(int pos, const T& data);
+    // åœ¨ç¬¬posä¸ªå…ƒç´ (æ•°ç»„ç´¢å¼•pos - 1)ä¹‹å, æ’å…¥ç»“ç‚¹
+    bool Insert(int pos, LinkNode<T>* node_ptr);
+    // åˆ é™¤ç¬¬posä¸ªç»“ç‚¹
+    bool Remove(int pos, T& data);
+    // æ˜¯å¦ä¸ºç©ºé“¾è¡¨
+    bool IsEmpty() const;
+    // æ‰“å°é“¾è¡¨
+    void Output();
+    // æˆ‘ä»¬æ˜¯CyberDash
+    void CyberDashShow();
 
 private:
-  LinkNode<T>* head_; //!< Á´±íÍ·½áµã
-  int length_; //!< Á´±í³¤¶È
+    LinkNode<T>* head_; //!< é“¾è¡¨å¤´ç»“ç‚¹
+    int length_; //!< é“¾è¡¨é•¿åº¦
 };
 
 
 /*!
- * @brief ¹¹Ôìº¯Êı(ÎŞ²ÎÊı)
- * @tparam T ÀàĞÍ²ÎÊıÄ£°å
+ * @brief æ„é€ å‡½æ•°(æ— å‚æ•°)
+ * @tparam T ç±»å‹å‚æ•°æ¨¡æ¿
  */
 template<class T>
 LinkList<T>::LinkList() {
-  this->head_ = new LinkNode<T>();
-  /* error handler */
-  this->length_ = 0;
+    this->head_ = new LinkNode<T>();
+    /* error handler */
+    this->length_ = 0;
 };
 
 
 /*!
- * @brief ¸´ÖÆ¹¹Ôìº¯Êı
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param link_list Á´±íÒıÓÃ
+ * @brief å¤åˆ¶æ„é€ å‡½æ•°
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param link_list é“¾è¡¨å¼•ç”¨
  */
 template<class T>
 LinkList<T>::LinkList(const LinkList<T>& link_list) {
 
-  this->head_ = new LinkNode<T>();
-  LinkNode<T>* dest_ptr = this->Head();
+    this->head_ = new LinkNode<T>();
+    LinkNode<T>* dest_ptr = this->Head();
 
-  LinkNode<T>* src_ptr = link_list.Head();
+    LinkNode<T>* src_ptr = link_list.Head();
 
-  while (src_ptr->next != NULL) {
+    while (src_ptr->next != NULL) {
 
-    T data = src_ptr->next->data;
-    dest_ptr->next = new LinkNode<T>(data);
+        T data = src_ptr->next->data;
+        dest_ptr->next = new LinkNode<T>(data);
 
-    dest_ptr = dest_ptr->next;
-    src_ptr = src_ptr->next;
+        dest_ptr = dest_ptr->next;
+        src_ptr = src_ptr->next;
 
-    length_++;
-  }
+        length_++;
+    }
 
-  dest_ptr->next = NULL;
+    dest_ptr->next = NULL;
 }
 
 
 template<class T>
 LinkList<T>::~LinkList() {
-  this->MakeEmpty();
+    this->MakeEmpty();
 
-  delete this->head_;
-  this->head_ = NULL;
+    delete this->head_;
+    this->head_ = NULL;
 }
 
 
 /*!
- * @brief »ñÈ¡µÚpos¸ö½áµãµÄÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos µÚpos¸ö
- * @param data Êı¾İ(ÓÃÓÚ±£´æÊı¾İÏî)
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief è·å–ç¬¬posä¸ªç»“ç‚¹çš„æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ç¬¬posä¸ª
+ * @param data æ•°æ®(ç”¨äºä¿å­˜æ•°æ®é¡¹)
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class T>
 bool LinkList<T>::GetData(int pos, T& data) const {
 
-  if (pos < 1 || pos > this->Length()) {
-    return false;
-  }
+    if (pos < 1 || pos > this->Length()) {
+        return false;
+    }
 
-  LinkNode<T>* cur = this->head_;
+    LinkNode<T>* cur = this->head_;
 
-  while (pos > 0) {
-    cur = cur->next;
-    pos--;
-  }
+    while (pos > 0) {
+        cur = cur->next;
+        pos--;
+    }
 
-  data = cur->data;
+    data = cur->data;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÉèÖÃµÚpos¸ö½áµãµÄÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos µÚpos¸ö
- * @param data Êı¾İ
- * @return ÊÇ·ñÉèÖÃ³É¹¦
+ * @brief è®¾ç½®ç¬¬posä¸ªç»“ç‚¹çš„æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ç¬¬posä¸ª
+ * @param data æ•°æ®
+ * @return æ˜¯å¦è®¾ç½®æˆåŠŸ
  */
 template<class T>
 bool LinkList<T>::SetData(int pos, const T& data) {
 
-  if (pos < 1 || pos > Length()) {
-    return false;
-  }
+    if (pos < 1 || pos > Length()) {
+        return false;
+    }
 
-  LinkNode<T>* cur = this->head_;
+    LinkNode<T>* cur = this->head_;
 
-  while (pos > 0) {
-    cur = cur->next;
-    pos--;
-  }
+    while (pos > 0) {
+        cur = cur->next;
+        pos--;
+    }
 
-  cur->data = data;
+    cur->data = data;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief Çå³ıÁ´±í
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief æ¸…é™¤é“¾è¡¨
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
 void LinkList<T>::MakeEmpty() {
 
-  while (this->head_->next != NULL) {
+    while (this->head_->next != NULL) {
 
-    LinkNode<T>* delete_node_ptr = this->head_->next;
-    this->head_->next = this->head_->next->next;
+        LinkNode<T>* delete_node_ptr = this->head_->next;
+        this->head_->next = this->head_->next->next;
 
-    delete delete_node_ptr;
-    this->length_--;
-  }
+        delete delete_node_ptr;
+        this->length_--;
+    }
 }
 
 
 /*!
- * @brief ´òÓ¡Á´±í
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief æ‰“å°é“¾è¡¨
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
 void LinkList<T>::Output() {
 
-  if (this->head_->next == NULL) {
-    cout << "Empty list" << endl;
-    return;
-  }
+    if (this->head_->next == NULL) {
+        cout << "Empty list" << endl;
+        return;
+    }
 
-  LinkNode<T>* cur = Head()->next;
-  while(cur != NULL) {
-    cout << cur->data << " ";
-    cur = cur->next;
-  }
+    LinkNode<T>* cur = Head()->next;
+    while (cur != NULL) {
+        cout << cur->data << " ";
+        cur = cur->next;
+    }
 
-  cout << endl;
+    cout << endl;
 }
 
 
 /*!
- * @brief ÔÚµÚpos¸öÔªËØÖ®ºó, ²åÈëÊı¾İ
- * @param pos Î»ÖÃpos
- * @param data Êı¾İÏîÖµ
- * @return ÊÇ·ñ³É¹¦
+ * @brief åœ¨ç¬¬posä¸ªå…ƒç´ ä¹‹å, æ’å…¥æ•°æ®
+ * @param pos ä½ç½®pos
+ * @param data æ•°æ®é¡¹å€¼
+ * @return æ˜¯å¦æˆåŠŸ
  * @note
- * Çø±ğÓÚÊı×é, ÒÔ1¿ªÊ¼\n
- * µ±posÎª0Ê±, ±íÊ¾²åÈëÎ»ÖÃ1
+ * åŒºåˆ«äºæ•°ç»„, ä»¥1å¼€å§‹\n
+ * å½“posä¸º0æ—¶, è¡¨ç¤ºæ’å…¥ä½ç½®1
  */
 template<class T>
 bool LinkList<T>::Insert(int pos, const T& data) {
 
-  if (pos < 0 || pos > Length()) {
-    return false;
-  }
+    if (pos < 0 || pos > Length()) {
+        return false;
+    }
 
-  LinkNode<T>* node_ptr = new LinkNode<T>(data);
+    LinkNode<T>* node_ptr = new LinkNode<T>(data);
 
-  LinkNode<T>* cur = this->head_;
-  while (pos > 0) {
-    cur = cur->next;
-    pos--;
-  }
+    LinkNode<T>* cur = this->head_;
+    while (pos > 0) {
+        cur = cur->next;
+        pos--;
+    }
 
-  node_ptr->next = cur->next;
-  cur->next = node_ptr;
+    node_ptr->next = cur->next;
+    cur->next = node_ptr;
 
-  length_++;
+    length_++;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÔÚµÚpos¸öÔªËØÖ®ºó, ²åÈëÊı¾İ
- * @param pos Î»ÖÃpos
- * @param node_ptr Êı¾İÏî¶ÔÓ¦µÄ½áµãÖ¸Õë
- * @return ÊÇ·ñ³É¹¦
+ * @brief åœ¨ç¬¬posä¸ªå…ƒç´ ä¹‹å, æ’å…¥æ•°æ®
+ * @param pos ä½ç½®pos
+ * @param node_ptr æ•°æ®é¡¹å¯¹åº”çš„ç»“ç‚¹æŒ‡é’ˆ
+ * @return æ˜¯å¦æˆåŠŸ
  * @note
- * Çø±ğÓÚÊı×é, ÒÔ1¿ªÊ¼\n
- * µ±posÎª0Ê±, ±íÊ¾²åÈëÎ»ÖÃ1
+ * åŒºåˆ«äºæ•°ç»„, ä»¥1å¼€å§‹\n
+ * å½“posä¸º0æ—¶, è¡¨ç¤ºæ’å…¥ä½ç½®1
  */
 template<class T>
 bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
 
-  if (pos < 0 || pos > Length()) {
-    return false;
-  }
+    if (pos < 0 || pos > Length()) {
+        return false;
+    }
 
-  if (node_ptr == NULL) {
-    return false;
-  }
+    if (node_ptr == NULL) {
+        return false;
+    }
 
-  LinkNode<T>* cur = head_;
-  while (pos > 0) {
-    cur = cur->next;
-    pos--;
-  }
+    LinkNode<T>* cur = head_;
+    while (pos > 0) {
+        cur = cur->next;
+        pos--;
+    }
 
-  node_ptr->next = cur->next;
-  cur->next = node_ptr;
+    node_ptr->next = cur->next;
+    cur->next = node_ptr;
 
-  length_++;
+    length_++;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÊÇ·ñÎª¿ÕÁ´±í
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return ÊÇ·ñÎª¿ÕÁ´±í
+ * @brief æ˜¯å¦ä¸ºç©ºé“¾è¡¨
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return æ˜¯å¦ä¸ºç©ºé“¾è¡¨
  */
 template<class T>
 bool LinkList<T>::IsEmpty() const {
-  if (this->head_->next == NULL) {
-    return true;
-  } else {
-    return false;
-  }
+    if (this->head_->next == NULL) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
@@ -322,97 +323,97 @@ bool LinkList<T>::IsEmpty() const {
  */
 template<class T>
 void LinkList<T>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
-      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 
 /*!
- * @brief ËÑË÷Êı¾İÏîÎªdataµÄÔªËØ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ
- * @return ¶ÔÓ¦µÄ½áµãÖ¸Õë
+ * @brief æœç´¢æ•°æ®é¡¹ä¸ºdataçš„å…ƒç´ 
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®
+ * @return å¯¹åº”çš„ç»“ç‚¹æŒ‡é’ˆ
  */
 template<class T>
 LinkNode<T>* LinkList<T>::Search(T data) {
 
-  LinkNode<T>* cur = this->head_->next;
-  if (cur == NULL) { // ¿ÕÁ´±í
-    return NULL;
-  }
-
-  while (cur != NULL) {
-    if (cur->data == data) {
-      return cur;
+    LinkNode<T>* cur = this->head_->next;
+    if (cur == NULL) { // ç©ºé“¾è¡¨
+        return NULL;
     }
 
-    cur = cur->next;
-  }
+    while (cur != NULL) {
+        if (cur->data == data) {
+            return cur;
+        }
 
-  return NULL;
+        cur = cur->next;
+    }
+
+    return NULL;
 }
 
 
 /*!
- * @brief Î»ÖÃposµÄ½áµãµØÖ·
- * @tparam T ÀàĞÍÄ£°å½áµã
- * @param pos Î»ÖÃpos
- * @return ½áµãÖ¸Õë
+ * @brief ä½ç½®posçš„ç»“ç‚¹åœ°å€
+ * @tparam T ç±»å‹æ¨¡æ¿ç»“ç‚¹
+ * @param pos ä½ç½®pos
+ * @return ç»“ç‚¹æŒ‡é’ˆ
  */
 template<class T>
 LinkNode<T>* LinkList<T>::Locate(int pos) {
-  if (pos < 1 || pos > this->Length()) {
-    return NULL;
-  }
+    if (pos < 1 || pos > this->Length()) {
+        return NULL;
+    }
 
-  LinkNode<T>* cur = this->Head()->next;
-  for (int i = 1; i < pos; i++) {
-    cur = cur->next;
-  }
+    LinkNode<T>* cur = this->Head()->next;
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
 
-  return cur;
+    return cur;
 }
 
 
 /*!
- * @brief É¾³ıµÚpos¸ö½áµã
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos µÚpos¸ö
- * @param data Êı¾İ(ÓÃÓÚ±£´æ±»É¾³ı½áµãÊı¾İÏî)
- * @return ÊÇ·ñÉ¾³ı³É¹¦
+ * @brief åˆ é™¤ç¬¬posä¸ªç»“ç‚¹
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ç¬¬posä¸ª
+ * @param data æ•°æ®(ç”¨äºä¿å­˜è¢«åˆ é™¤ç»“ç‚¹æ•°æ®é¡¹)
+ * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
  * @note
- * ´Ó1¿ªÊ¼¼ÆÊı
+ * ä»1å¼€å§‹è®¡æ•°
  */
 template<class T>
-bool LinkList<T>::Remove(int pos, T &data) {
+bool LinkList<T>::Remove(int pos, T& data) {
 
-  if (this->Length() == 0 || pos < 1 || pos > this->Length()) {
-    return false;
-  }
+    if (this->Length() == 0 || pos < 1 || pos > this->Length()) {
+        return false;
+    }
 
-  LinkNode<T>* cur = this->head_;
+    LinkNode<T>* cur = this->head_;
 
-  for (int i = 1; i < pos; i++) {
-    cur = cur->next;
-  }
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
 
-  LinkNode<T>* delete_node_ptr = cur->next;
-  cur->next = delete_node_ptr->next;
+    LinkNode<T>* delete_node_ptr = cur->next;
+    cur->next = delete_node_ptr->next;
 
-  data = delete_node_ptr->data;
-  this->length_--;
+    data = delete_node_ptr->data;
+    this->length_--;
 
-  if (delete_node_ptr != NULL) {
-    delete delete_node_ptr;
-  }
+    if (delete_node_ptr != NULL) {
+        delete delete_node_ptr;
+    }
 
-  return true;
+    return true;
 }
 
 

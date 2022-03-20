@@ -1,5 +1,5 @@
-//
-// Created by cyberdash@163.com(∂∂“Ù: cyberdash_yuan) on 2020/7/15.
+Ôªø//
+// Created by cyberdash@163.com(: cyberdash_yuan) on 2020/7/15.
 //
 
 #include "link_list_test.h"
@@ -12,54 +12,54 @@ using namespace std;
 
 int main() {
 
-  /*
-  SeqListTest::TestInsert();
+	/*
+	SeqListTest::TestInsert();
 
-  SeqListTest::TestSize();
+	SeqListTest::TestSize();
 
-  SeqListTest::TestEmpty();
+	SeqListTest::TestEmpty();
 
-  SeqListTest::TestLength();
+	SeqListTest::TestLength();
 
-  SeqListTest::TestSearch();
+	SeqListTest::TestSearch();
 
-  SeqListTest::TestLocate();
+	SeqListTest::TestLocate();
 
-  SeqListTest::TestGetData();
+	SeqListTest::TestGetData();
 
-  SeqListTest::TestSetData();
+	SeqListTest::TestSetData();
 
-  SeqListTest::TestSort();
+	SeqListTest::TestSort();
 
-  SeqListTest::TestUnion();
+	SeqListTest::TestUnion();
 
-  SeqListTest::TestIntersection();
-  */
+	SeqListTest::TestIntersection();
+	*/
 
-  DoubleLinkListTest::TestInsertByDirection();
+	DoubleLinkListTest::TestInsertByDirection();
 
-  DoubleLinkListTest::TestRemoveByDirection();
+	DoubleLinkListTest::TestRemoveByDirection();
 
-  DoubleLinkListTest::TestLength();
+	DoubleLinkListTest::TestLength();
 
-  DoubleLinkListTest::TestLocate();
+	DoubleLinkListTest::TestLocate();
 
-  DoubleLinkListTest::TestEmpty();
+	DoubleLinkListTest::TestEmpty();
 
-  DoubleLinkListTest::TestSearch();
+	DoubleLinkListTest::TestSearch();
 
-  DoubleLinkListTest::TestGetDataAndSetData();
+	DoubleLinkListTest::TestGetDataAndSetData();
 
 
-  LinkListTest::TestCopyConstructor();
+	LinkListTest::TestCopyConstructor();
 
-  LinkListTest::TestRemove();
+	LinkListTest::TestRemove();
 
-  LinkListTest::TestMakeEmpty();
+	LinkListTest::TestMakeEmpty();
 
-  LinkListTest::TestLocate();
+	LinkListTest::TestLocate();
 
-  LinkListTest::TestGetDataAndSetData();
+	LinkListTest::TestGetDataAndSetData();
 
-  return 0;
+	return 0;
 }

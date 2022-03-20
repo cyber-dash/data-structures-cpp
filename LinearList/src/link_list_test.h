@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file link_list_test.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief µ¥Á´±í²âÊÔÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief å•é“¾è¡¨æµ‹è¯•ç±»
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021
- * **CyberDash¼ÆËã»ú¿¼ÑĞ**
+ * **CyberDashè®¡ç®—æœºè€ƒç ”**
  */
 
 #ifndef CYBER_DASH_LINK_LIST_TEST_H
@@ -15,223 +15,223 @@
 #include "link_list.h"
 
 
-/*!
- * @brief µ¥Á´±í²âÊÔÀà
- */
+ /*!
+  * @brief å•é“¾è¡¨æµ‹è¯•ç±»
+  */
 class LinkListTest {
 public:
-  /*! @brief ²âÊÔ¸´ÖÆ¹¹Ôìº¯Êı */
-  static void TestCopyConstructor();
+	/*! @brief æµ‹è¯•å¤åˆ¶æ„é€ å‡½æ•° */
+	static void TestCopyConstructor();
 
-  /*! @brief ²âÊÔ²åÈë */
-  static void TestInsert();
+	/*! @brief æµ‹è¯•æ’å…¥ */
+	static void TestInsert();
 
-  /*! @brief ²âÊÔ³¤¶È */
-  static void TestLength();
+	/*! @brief æµ‹è¯•é•¿åº¦ */
+	static void TestLength();
 
-  /*! @brief ²âÊÔÉ¾³ı */
-  static void TestRemove();
+	/*! @brief æµ‹è¯•åˆ é™¤ */
+	static void TestRemove();
 
-  /*! @brief ²âÊÔÇå³ıÁ´±í */
-  static void TestMakeEmpty();
+	/*! @brief æµ‹è¯•æ¸…é™¤é“¾è¡¨ */
+	static void TestMakeEmpty();
 
-  /*! @brief ²âÊÔ²éÕÒ */
-  static void TestSearch();
+	/*! @brief æµ‹è¯•æŸ¥æ‰¾ */
+	static void TestSearch();
 
-  /*! @brief ²âÊÔ¶¨Î» */
-  static void TestLocate();
+	/*! @brief æµ‹è¯•å®šä½ */
+	static void TestLocate();
 
-  /*! @brief ²âÊÔÉèÖÃºÍ»ñÈ¡Êı¾İ */
-  static void TestGetDataAndSetData();
+	/*! @brief æµ‹è¯•è®¾ç½®å’Œè·å–æ•°æ® */
+	static void TestGetDataAndSetData();
 };
 
 
 void LinkListTest::TestCopyConstructor() {
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                Test LinkList CopyConstructor              |" << endl;
-  cout << "|                       ²âÊÔÁ´±í¸´ÖÆ¹¹Ôì                       |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                Test LinkList CopyConstructor              |" << endl;
+	cout << "|                       æµ‹è¯•é“¾è¡¨å¤åˆ¶æ„é€                        |" << endl << endl << endl;
 
-  LinkList<string> link_list;
+	LinkList<string> link_list;
 
-  link_list.Insert(0, "Beijing");
-  link_list.Insert(1, "Shanghai");
-  link_list.Insert(2, "Guangzhou");
+	link_list.Insert(0, "Beijing");
+	link_list.Insert(1, "Shanghai");
+	link_list.Insert(2, "Guangzhou");
 
-  link_list.Output();
+	link_list.Output();
 
-  // LinkList<string>* link_list_2 = new LinkList<string>(link_list);
-  LinkList<string> link_list_2(link_list);
+	// LinkList<string>* link_list_2 = new LinkList<string>(link_list);
+	LinkList<string> link_list_2(link_list);
 
-  link_list_2.Output();
+	link_list_2.Output();
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void LinkListTest::TestInsert() {
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                    Test LinkList Insert                   |" << endl;
-  cout << "|                         ²âÊÔÁ´±í²åÈë                        |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                    Test LinkList Insert                   |" << endl;
+	cout << "|                         æµ‹è¯•é“¾è¡¨æ’å…¥                        |" << endl << endl << endl;
 
-  LinkList<int>* link_list = new LinkList<int>();
+	LinkList<int>* link_list = new LinkList<int>();
 
-  link_list->Insert(0, 1);
-  link_list->Insert(1, 2);
-  link_list->Insert(2, 3);
+	link_list->Insert(0, 1);
+	link_list->Insert(1, 2);
+	link_list->Insert(2, 3);
 
-  link_list->Output();
+	link_list->Output();
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void LinkListTest::TestLength() {
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                    Test LinkList Length                   |" << endl;
-  cout << "|                         ²âÊÔÁ´±í³¤¶È                        |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                    Test LinkList Length                   |" << endl;
+	cout << "|                         æµ‹è¯•é“¾è¡¨é•¿åº¦                        |" << endl << endl << endl;
 
-  LinkList<int> *link_list = new LinkList<int>();
+	LinkList<int>* link_list = new LinkList<int>();
 
-  link_list->Insert(0, 1);
-  link_list->Insert(1, 2);
-  link_list->Insert(2, 3);
+	link_list->Insert(0, 1);
+	link_list->Insert(1, 2);
+	link_list->Insert(2, 3);
 
-  cout << "Á´±í³¤¶È: " << link_list->Length() << endl;
+	cout << "é“¾è¡¨é•¿åº¦: " << link_list->Length() << endl;
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void LinkListTest::TestRemove() {
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                    Test LinkList Remove                   |" << endl;
-  cout << "|                         ²âÊÔÁ´±íÉ¾³ı                        |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                    Test LinkList Remove                   |" << endl;
+	cout << "|                         æµ‹è¯•é“¾è¡¨åˆ é™¤                        |" << endl << endl << endl;
 
-  LinkList<string>* link_list = new LinkList<string>();
+	LinkList<string>* link_list = new LinkList<string>();
 
-  link_list->Insert(0, "Beijing");
-  link_list->Insert(1, "Shanghai");
-  link_list->Insert(2, "Guangzhou");
-  link_list->Insert(3, "Shenzhen");
-  link_list->Insert(4, "Caoxian");
+	link_list->Insert(0, "Beijing");
+	link_list->Insert(1, "Shanghai");
+	link_list->Insert(2, "Guangzhou");
+	link_list->Insert(3, "Shenzhen");
+	link_list->Insert(4, "Caoxian");
 
-  cout << "É¾³ıÇ°µÄÁ´±í:" << endl;
-  link_list->Output();
+	cout << "åˆ é™¤å‰çš„é“¾è¡¨:" << endl;
+	link_list->Output();
 
-  cout << "²âÊÔÉ¾³ı¹¦ÄÜ:" << endl;
+	cout << "æµ‹è¯•åˆ é™¤åŠŸèƒ½:" << endl;
 
-  string delete_str;
-  link_list->Remove(1, delete_str);
-  link_list->Output();
-  link_list->Remove(4, delete_str);
-  link_list->Output();
-  link_list->Remove(2, delete_str);
-  link_list->Output();
+	string delete_str;
+	link_list->Remove(1, delete_str);
+	link_list->Output();
+	link_list->Remove(4, delete_str);
+	link_list->Output();
+	link_list->Remove(2, delete_str);
+	link_list->Output();
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void LinkListTest::TestMakeEmpty() {
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                  Test LinkList MakeEmpty                  |" << endl;
-  cout << "|                         ²âÊÔÇå³ıÁ´±í                        |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                  Test LinkList MakeEmpty                  |" << endl;
+	cout << "|                         æµ‹è¯•æ¸…é™¤é“¾è¡¨                        |" << endl << endl << endl;
 
-  LinkList<double>* link_list = new LinkList<double>();
+	LinkList<double>* link_list = new LinkList<double>();
 
-  link_list->Insert(0, 135.34);
-  link_list->Insert(1, 305.43);
-  link_list->Insert(2, 304.83);
-  link_list->Insert(3, 405.31);
-  link_list->Insert(4, 804.54);
+	link_list->Insert(0, 135.34);
+	link_list->Insert(1, 305.43);
+	link_list->Insert(2, 304.83);
+	link_list->Insert(3, 405.31);
+	link_list->Insert(4, 804.54);
 
-  link_list->Output();
+	link_list->Output();
 
-  link_list->MakeEmpty();
+	link_list->MakeEmpty();
 
-  link_list->Output();
+	link_list->Output();
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void LinkListTest::TestSearch() {
 
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                   Test LinkList Search                    |" << endl;
-  cout << "|                         ²âÊÔÁ´±íËÑË÷                        |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                   Test LinkList Search                    |" << endl;
+	cout << "|                         æµ‹è¯•é“¾è¡¨æœç´¢                        |" << endl << endl << endl;
 
-  LinkList<string>* link_list = new LinkList<string>();
+	LinkList<string>* link_list = new LinkList<string>();
 
-  link_list->Insert(0, "Beijing");
-  link_list->Insert(1, "Shanghai");
-  link_list->Insert(2, "Guangzhou");
-  link_list->Insert(3, "Shenzhen");
-  link_list->Insert(4, "Caoxian");
+	link_list->Insert(0, "Beijing");
+	link_list->Insert(1, "Shanghai");
+	link_list->Insert(2, "Guangzhou");
+	link_list->Insert(3, "Shenzhen");
+	link_list->Insert(4, "Caoxian");
 
-  LinkNode<string>* bj_node_ptr = link_list->Search("Beijing");
-  LinkNode<string>* cx_node_ptr = link_list->Search("Caoxian");
+	LinkNode<string>* bj_node_ptr = link_list->Search("Beijing");
+	LinkNode<string>* cx_node_ptr = link_list->Search("Caoxian");
 
-  cout << "bj_node_ptr->data: " << bj_node_ptr->data << endl;
-  cout << "cx_node_ptr->data: " << cx_node_ptr->data << endl;
+	cout << "bj_node_ptr->data: " << bj_node_ptr->data << endl;
+	cout << "cx_node_ptr->data: " << cx_node_ptr->data << endl;
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void LinkListTest::TestLocate() {
 
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|                   Test LinkList LocateByDirection                    |" << endl;
-  cout << "|                         ²âÊÔÁ´±í¶¨Î»                        |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                   Test LinkList LocateByDirection                    |" << endl;
+	cout << "|                         æµ‹è¯•é“¾è¡¨å®šä½                        |" << endl << endl << endl;
 
-  LinkList<string>* link_list = new LinkList<string>();
+	LinkList<string>* link_list = new LinkList<string>();
 
-  link_list->Insert(0, "Beijing");
-  link_list->Insert(1, "Shanghai");
-  link_list->Insert(2, "Guangzhou");
-  link_list->Insert(3, "Shenzhen");
-  link_list->Insert(4, "Caoxian");
+	link_list->Insert(0, "Beijing");
+	link_list->Insert(1, "Shanghai");
+	link_list->Insert(2, "Guangzhou");
+	link_list->Insert(3, "Shenzhen");
+	link_list->Insert(4, "Caoxian");
 
-  LinkNode<string>* pos_1_node_ptr = link_list->Locate(1);
-  LinkNode<string>* pos_2_node_ptr = link_list->Locate(2);
+	LinkNode<string>* pos_1_node_ptr = link_list->Locate(1);
+	LinkNode<string>* pos_2_node_ptr = link_list->Locate(2);
 
-  cout << "pos_1_node_ptr->data: " << pos_1_node_ptr->data << endl;
-  cout << "pos_2_node_ptr->data: " << pos_2_node_ptr->data << endl;
+	cout << "pos_1_node_ptr->data: " << pos_1_node_ptr->data << endl;
+	cout << "pos_2_node_ptr->data: " << pos_2_node_ptr->data << endl;
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void LinkListTest::TestGetDataAndSetData() {
-  cout << endl;
-  cout << "|------------------------ CyberDash ------------------------|" << endl;
-  cout << "|              Test LinkList GetDataAndSetData              |" << endl;
-  cout << "|                     ²âÊÔÁ´±íÉèÖÃºÍ»ñÈ¡Êı¾İ                   |" << endl << endl << endl;
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|              Test LinkList GetDataAndSetData              |" << endl;
+	cout << "|                     æµ‹è¯•é“¾è¡¨è®¾ç½®å’Œè·å–æ•°æ®                   |" << endl << endl << endl;
 
-  LinkList<string>* link_list = new LinkList<string>();
+	LinkList<string>* link_list = new LinkList<string>();
 
-  link_list->Insert(0, "Beijing");
-  link_list->Insert(1, "Shanghai");
-  link_list->Insert(2, "Guangzhou");
+	link_list->Insert(0, "Beijing");
+	link_list->Insert(1, "Shanghai");
+	link_list->Insert(2, "Guangzhou");
 
-  string city;
-  link_list->GetData(2, city);
-  cout << city << endl;
+	string city;
+	link_list->GetData(2, city);
+	cout << city << endl;
 
-  link_list->SetData(2, "Shenzhen");
+	link_list->SetData(2, "Shenzhen");
 
-  link_list->Output();
+	link_list->Output();
 
 
-  cout << "-------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 #endif // CYBER_DASH_LINK_LIST_TEST_H

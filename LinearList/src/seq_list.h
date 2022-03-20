@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file seq_list.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Ë³Ğò±íÄ£°åÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief é¡ºåºè¡¨æ¨¡æ¿ç±»
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021
- * **CyberDash¼ÆËã»ú¿¼ÑĞ**
+ * **CyberDashè®¡ç®—æœºè€ƒç ”**
  */
 
 #ifndef CYBER_DASH_SEQ_LIST_H
@@ -21,410 +21,416 @@ using namespace std;
 
 
 /*!
- * @brief Ë³Ğò±íÄ£°åÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief é¡ºåºè¡¨æ¨¡æ¿ç±»
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
-class SeqList: public LinearList<T> {
+class SeqList : public LinearList<T> {
 
 public:
-  // ¹¹Ôìº¯Êı(ÎŞ²ÎÊı)
-  SeqList(): data_array_(NULL), size_(0), last_idx_(-1) {}
+    // æ„é€ å‡½æ•°(æ— å‚æ•°)
+    SeqList() : data_array_(NULL), size_(0), last_idx_(-1) {}
 
-  // ¹¹Ôìº¯Êı(²ÎÊı:Ë³Ğò±í×Ü³¤¶È)
-  SeqList(int size);
+    // æ„é€ å‡½æ•°(å‚æ•°:é¡ºåºè¡¨æ€»é•¿åº¦)
+    SeqList(int size);
 
-  // ¸´ÖÆ¹¹Ôìº¯Êı(²ÎÊı:Ë³Ğò±í)
-  SeqList(SeqList<T>& seq_list);
+    // å¤åˆ¶æ„é€ å‡½æ•°(å‚æ•°:é¡ºåºè¡¨)
+    SeqList(SeqList<T>& seq_list);
 
-  // Îö¹¹º¯Êı
-  ~SeqList() { delete[] data_array_; }
+    // ææ„å‡½æ•°
+    ~SeqList() { delete[] data_array_; }
 
-  // »ñÈ¡×Ü³¤¶È
-  int Size() const;
+    // è·å–æ€»é•¿åº¦
+    int Size() const;
 
-  // »ñÈ¡µ±Ç°³¤¶È
-  int Length() const;
+    // è·å–å½“å‰é•¿åº¦
+    int Length() const;
 
-  // ËÑË÷
-  int Search(T& data) const;
+    // æœç´¢
+    int Search(T& data) const;
 
-  // ¶¨Î»
-  int Locate(int pos) const;
+    // å®šä½
+    int Locate(int pos) const;
 
-  // »ñÈ¡Î»ÖÃposµÄÊı¾İ
-  bool GetData(int pos, T& data) const;
+    // è·å–ä½ç½®posçš„æ•°æ®
+    bool GetData(int pos, T& data) const;
 
-  // ÉèÖÃÎ»ÖÃposµÄÊı¾İ
-  bool SetData(int pos, const T& data);
+    // è®¾ç½®ä½ç½®posçš„æ•°æ®
+    bool SetData(int pos, const T& data);
 
-  // Î»ÖÃpos²åÈëÊı¾İdata
-  bool Insert(int pos, const T& data);
+    // ä½ç½®posæ’å…¥æ•°æ®data
+    bool Insert(int pos, const T& data);
 
-  // É¾³ıÎ»ÖÃposµÄÊı¾İ
-  bool Remove(int pos, T& data);
+    // åˆ é™¤ä½ç½®posçš„æ•°æ®
+    bool Remove(int pos, T& data);
 
-  // ÊÇ·ñÎª¿Õ
-  bool IsEmpty() const;
+    // æ˜¯å¦ä¸ºç©º
+    bool IsEmpty() const;
 
-  // ÊÇ·ñÂú
-  bool IsFull() const;
+    // æ˜¯å¦æ»¡
+    bool IsFull() const;
 
-  // µ÷ÕûË³Ğò±íµÄ³¤¶È
-  int Resize(int new_size);
+    // è°ƒæ•´é¡ºåºè¡¨çš„é•¿åº¦
+    int Resize(int new_size);
 
-  // ÊäÈëË³Ğò±í
-  void Input();
+    // è¾“å…¥é¡ºåºè¡¨
+    void Input();
 
-  // ÅÅĞò
-  void Sort();
+    // æ’åº
+    void Sort();
 
-  // ´òÓ¡Ë³Ğò±í
-  void Output();
+    // æ‰“å°é¡ºåºè¡¨
+    void Output();
 
-  // ¸³ÖµÔËËã·ûÖØÔØº¯Êı
-  SeqList<T>& operator= (const SeqList<T>& seq_list);
+    // èµ‹å€¼è¿ç®—ç¬¦é‡è½½å‡½æ•°
+    SeqList<T>& operator= (const SeqList<T>& seq_list);
 
-  // ÎÒÃÇÊÇCyberDash
-  void CyberDashShow();
+    // æˆ‘ä»¬æ˜¯CyberDash
+    void CyberDashShow();
 
 private:
-  T* data_array_; //!< Êı¾İÏîÊı×é
-  int size_; //!< Ë³Ğò±í×Ü³¤¶È
-  int last_idx_; //!< ×îºóÒ»ÏîµÄÊı×éË÷Òı
+    T* data_array_; //!< æ•°æ®é¡¹æ•°ç»„
+    int size_; //!< é¡ºåºè¡¨æ€»é•¿åº¦
+    int last_idx_; //!< æœ€åä¸€é¡¹çš„æ•°ç»„ç´¢å¼•
 };
 
 
 /**
- * @brief ¹¹Ôìº¯Êı
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param size Ë³Ğò±ísize
+ * @brief æ„é€ å‡½æ•°
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param size é¡ºåºè¡¨size
  */
 template<class T>
 SeqList<T>::SeqList(int size) {
 
-  if (size > 0) {
-    this->size_ = size;
-    this->last_idx_ = -1;
-    this->data_array_ = new T[size];
-  }
+    if (size > 0) {
+        this->size_ = size;
+        this->last_idx_ = -1;
+        this->data_array_ = new T[size];
+    }
 
-  if (this->data_array_ == NULL) {
-    cerr<<"new error"<<endl;
-    exit(1);
-  }
+    if (this->data_array_ == NULL) {
+        cerr << "new error" << endl;
+        exit(1);
+    }
 }
 
 
 /*!
- * @brief ¸´ÖÆ¹¹Ôìº¯Êı
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param seq_list Ë³Ğò±í
+ * @brief å¤åˆ¶æ„é€ å‡½æ•°
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param seq_list é¡ºåºè¡¨
  */
 template<class T>
 SeqList<T>::SeqList(SeqList<T>& seq_list) {
 
-  this->size_ = seq_list.Size();
-  this->last_idx_ = seq_list.Length() - 1;
+    this->size_ = seq_list.Size();
+    this->last_idx_ = seq_list.Length() - 1;
 
-  if (this->size_ == 0) {
-    return;
-  }
+    if (this->size_ == 0) {
+        return;
+    }
 
-  this->data_array_ = new T[this->Size()];
-  if (this->data_array_ == NULL) {
-    cerr<<"´æ´¢·ÖÅä´íÎó!"<<endl;
-    exit(1);
-  }
+    this->data_array_ = new T[this->Size()];
+    if (this->data_array_ == NULL) {
+        cerr << "å­˜å‚¨åˆ†é…é”™è¯¯!" << endl;
+        exit(1);
+    }
 
-  for (int i = 1; i <= this->last_idx_ + 1; i++) {
-    T cur_value;
-    seq_list.GetData(i, cur_value);
-    this->data_array_[i - 1] = cur_value;
-  }
+    for (int i = 1; i <= this->last_idx_ + 1; i++) {
+        T cur_value;
+        seq_list.GetData(i, cur_value);
+        this->data_array_[i - 1] = cur_value;
+    }
 }
 
 
 /*!
- * @brief µ÷ÕûË³Ğò±íµÄ³¤¶È
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param new_size ĞÂµÄ×Ü³¤¶È
- * @return ĞÂµÄ×Ü³¤¶È
+ * @brief è°ƒæ•´é¡ºåºè¡¨çš„é•¿åº¦
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param new_size æ–°çš„æ€»é•¿åº¦
+ * @return æ–°çš„æ€»é•¿åº¦
  * @note
- * **·µ»ØÖµËµÃ÷**
- * -2: ·ÖÅäÄÚ´æÊ§°Ü
- * -1: ÎŞĞ§²ÎÊı
- * 0: ĞÂµÄ×Ü³¤¶ÈÓëÔ­À´µÄÏàÍ¬
+ * **è¿”å›å€¼è¯´æ˜**
+ * -2: åˆ†é…å†…å­˜å¤±è´¥
+ * -1: æ— æ•ˆå‚æ•°
+ * 0: æ–°çš„æ€»é•¿åº¦ä¸åŸæ¥çš„ç›¸åŒ
  */
 template<class T>
 int SeqList<T>::Resize(int new_size) {
 
-  if (new_size <= 0) {
-    cerr<<"ÎŞĞ§µÄÊı×é´óĞ¡"<<endl;
-    return -1;
-  }
+    if (new_size <= 0) {
+        cerr << "æ— æ•ˆçš„æ•°ç»„å¤§å°" << endl;
+        return -1;
+    }
 
-  if (new_size == this->Size()) {
-    cout<<"ÖØ·ÖÅäÊı×é³¤¶ÈÓëÔ­Êı×é³¤¶ÈÏàÍ¬"<<endl;
-    return 0;
-  }
+    if (new_size == this->Size()) {
+        cout << "é‡åˆ†é…æ•°ç»„é•¿åº¦ä¸åŸæ•°ç»„é•¿åº¦ç›¸åŒ" << endl;
+        return 0;
+    }
 
-  T* new_data_array = new T[this->Size()];
-  if (new_data_array == NULL) {
-    cerr<<"´æ´¢·ÖÅä´íÎó"<<endl;
-    return -2;
-  }
+    T* new_data_array = new T[this->Size()];
+    if (new_data_array == NULL) {
+        cerr << "å­˜å‚¨åˆ†é…é”™è¯¯" << endl;
+        return -2;
+    }
 
-  T* src_ptr = data_array_;
-  T* dest_ptr = new_data_array;
+    T* src_ptr = data_array_;
+    T* dest_ptr = new_data_array;
 
-  for (int i = 0; i < this->Length(); i++) {
-    *(dest_ptr + i) = *(src_ptr + i);
-  }
+    for (int i = 0; i < this->Length(); i++) {
+        *(dest_ptr + i) = *(src_ptr + i);
+    }
 
-  delete [] data_array_;
-  data_array_ = new_data_array;
+    delete[] data_array_;
+    data_array_ = new_data_array;
 
-  size_ = new_size;
+    size_ = new_size;
 
-  return new_size;
+    return new_size;
 }
 
 
 /*!
- * @brief ²éÕÒÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param data Êı¾İ
- * @return ÔÚË³Ğò±íÖĞµÄÎ»ÖÃ
+ * @brief æŸ¥æ‰¾æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param data æ•°æ®
+ * @return åœ¨é¡ºåºè¡¨ä¸­çš„ä½ç½®
  */
 template<class T>
 int SeqList<T>::Search(T& data) const {
 
-  int pos = 0; // ´Ó1¿ªÊ¼, ·µ»Ø0±íÊ¾Ã»ÓĞ²éµ½
+    int pos = 0; // ä»1å¼€å§‹, è¿”å›0è¡¨ç¤ºæ²¡æœ‰æŸ¥åˆ°
 
-  for (int i = 0; i <= last_idx_; i++) {
-    if (data_array_[i] == data) {
-      pos = i + 1;
-      break;
+    for (int i = 0; i <= last_idx_; i++) {
+        if (data_array_[i] == data) {
+            pos = i + 1;
+            break;
+        }
     }
-  }
 
-  return pos;
+    return pos;
 }
 
 
 /*!
- * @brief ¶¨Î»
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos µÚpos¸ö
- * @return Î»ÖÃpos
+ * @brief å®šä½
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ç¬¬posä¸ª
+ * @return ä½ç½®pos
  * @note
- * posÊÇÒÔ1ÎªÆğÊ¼, ²»Í¬ÓÚÊı×éÒÔ0¿ªÊ¼
+ * posæ˜¯ä»¥1ä¸ºèµ·å§‹, ä¸åŒäºæ•°ç»„ä»¥0å¼€å§‹
  */
 template<class T>
 int SeqList<T>::Locate(int pos) const {
-  if (pos >= 1 && pos <= last_idx_ + 1) {
-    return pos;
-  } else {
-    return 0;
-  }
+    if (pos >= 1 && pos <= last_idx_ + 1) {
+        return pos;
+    }
+    else {
+        return 0;
+    }
 };
 
 
 /*!
- * @brief »ñÈ¡Î»ÖÃposµÄÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃpos
- * @param data Êı¾İ(ÓÃÓÚ±£´æÊı¾İÏî)
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief è·å–ä½ç½®posçš„æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®pos
+ * @param data æ•°æ®(ç”¨äºä¿å­˜æ•°æ®é¡¹)
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class T>
 bool SeqList<T>::GetData(int pos, T& data) const {
-  if (pos > 0 && pos <= last_idx_ + 1) {
-    data = data_array_[pos - 1];
-    return true;
-  } else {
-    return false;
-  }
+    if (pos > 0 && pos <= last_idx_ + 1) {
+        data = data_array_[pos - 1];
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 /*!
- * @brief ÉèÖÃÎ»ÖÃposµÄÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃpos
- * @param data Êı¾İ
- * @return ÊÇ·ñÉèÖÃ³É¹¦
+ * @brief è®¾ç½®ä½ç½®posçš„æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®pos
+ * @param data æ•°æ®
+ * @return æ˜¯å¦è®¾ç½®æˆåŠŸ
  */
 template<class T>
 bool SeqList<T>::SetData(int pos, const T& data) {
-  if (pos > 0 && pos <= last_idx_ + 1) {
-    data_array_[pos - 1] = data;
-    return true;
-  } else {
-    return false;
-  }
+    if (pos > 0 && pos <= last_idx_ + 1) {
+        data_array_[pos - 1] = data;
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 /*!
- * @brief ÔÚµÚpos¸öÔªËØÖ®ºó, ²åÈëÊı¾İ
- * @param pos Î»ÖÃpos
- * @param data Êı¾İÏîÖµ
- * @return ÊÇ·ñ³É¹¦
+ * @brief åœ¨ç¬¬posä¸ªå…ƒç´ ä¹‹å, æ’å…¥æ•°æ®
+ * @param pos ä½ç½®pos
+ * @param data æ•°æ®é¡¹å€¼
+ * @return æ˜¯å¦æˆåŠŸ
  * @note
- * Çø±ğÓÚÊı×é, ÒÔ1¿ªÊ¼\n
- * µ±posÎª0Ê±, ±íÊ¾²åÈëÎ»ÖÃ1
+ * åŒºåˆ«äºæ•°ç»„, ä»¥1å¼€å§‹\n
+ * å½“posä¸º0æ—¶, è¡¨ç¤ºæ’å…¥ä½ç½®1
  */
 template<class T>
 bool SeqList<T>::Insert(int pos, const T& data) {
 
-  if (last_idx_ == size_ - 1) {
-    return false;
-  }
+    if (last_idx_ == size_ - 1) {
+        return false;
+    }
 
-  if (pos < 0 || pos > last_idx_ + 1) {
-    return false;
-  }
+    if (pos < 0 || pos > last_idx_ + 1) {
+        return false;
+    }
 
-  for (int i = last_idx_; i >= pos; i--) {
-    data_array_[i + 1] = data_array_[i];
-  }
+    for (int i = last_idx_; i >= pos; i--) {
+        data_array_[i + 1] = data_array_[i];
+    }
 
-  data_array_[pos] = data;
+    data_array_[pos] = data;
 
-  last_idx_++;
+    last_idx_++;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief É¾³ıÎ»ÖÃposµÄÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃpos
- * @param remove_data ±»É¾³ıµÄÊı¾İÏî
- * @return ÊÇ·ñÉ¾³ı³É¹¦
+ * @brief åˆ é™¤ä½ç½®posçš„æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®pos
+ * @param remove_data è¢«åˆ é™¤çš„æ•°æ®é¡¹
+ * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
  */
 template<class T>
 bool SeqList<T>::Remove(int pos, T& remove_data) {
 
-  if (last_idx_ == -1) {
-    return false;
-  }
+    if (last_idx_ == -1) {
+        return false;
+    }
 
-  if (pos < 1 || pos > last_idx_ + 1) {
-    return false;
-  }
+    if (pos < 1 || pos > last_idx_ + 1) {
+        return false;
+    }
 
-  remove_data = data_array_[pos - 1];
+    remove_data = data_array_[pos - 1];
 
-  for (int i = pos; i <= last_idx_; i++) {
-    data_array_[i - 1] = data_array_[i];
-  }
+    for (int i = pos; i <= last_idx_; i++) {
+        data_array_[i - 1] = data_array_[i];
+    }
 
-  last_idx_--;
+    last_idx_--;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÊÇ·ñÎª¿Õ±í
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return ÊÇ·ñÎª¿Õ
+ * @brief æ˜¯å¦ä¸ºç©ºè¡¨
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return æ˜¯å¦ä¸ºç©º
  */
 template<class T>
 bool SeqList<T>::IsEmpty() const {
-  if (last_idx_ == -1) {
-    return true;
-  } else {
-    return false;
-  }
+    if (last_idx_ == -1) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 /*!
- * @brief Ë³Ğò±íÊÇ·ñÂú
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return ÊÇ·ñÂú
+ * @brief é¡ºåºè¡¨æ˜¯å¦æ»¡
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return æ˜¯å¦æ»¡
  */
 template<class T>
 bool SeqList<T>::IsFull() const {
-  if (last_idx_ == size_ - 1) {
-    return true;
-  } else {
-    return false;
-  }
+    if (last_idx_ == size_ - 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 
 /*!
- * @brief ¸³ÖµÔËËã·ûÖØÔØº¯Êı
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param seq_list Ë³Ğò±í
- * @return Ë³Ğò±íÒıÓÃ
+ * @brief èµ‹å€¼è¿ç®—ç¬¦é‡è½½å‡½æ•°
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param seq_list é¡ºåºè¡¨
+ * @return é¡ºåºè¡¨å¼•ç”¨
  */
 template<class T>
 SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
 
-  this->size_ = seq_list.Size();
-  int p_length = seq_list.Length();
+    this->size_ = seq_list.Size();
+    int p_length = seq_list.Length();
 
-  for (int i = 0; i < p_length; i++) {
-    int curData;
-    seq_list.GetData(i, curData);
+    for (int i = 0; i < p_length; i++) {
+        int curData;
+        seq_list.GetData(i, curData);
 
-    this->SetData(i, curData);
-  }
+        this->SetData(i, curData);
+    }
 
-  return *this;
+    return *this;
 }
 
 
 /*!
- * @brief »ñÈ¡×Ü³¤¶È
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return ×Ü³¤¶È
+ * @brief è·å–æ€»é•¿åº¦
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return æ€»é•¿åº¦
  */
 template<class T>
 int SeqList<T>::Size() const {
-  return size_;
+    return size_;
 }
 
 
 /*!
- * @brief »ñÈ¡µ±Ç°³¤¶È
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @return µ±Ç°³¤¶È
+ * @brief è·å–å½“å‰é•¿åº¦
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @return å½“å‰é•¿åº¦
  */
 template<class T>
 int SeqList<T>::Length() const {
-  return last_idx_ + 1;
+    return last_idx_ + 1;
 }
 
 
 /*!
- * @brief ´òÓ¡Ë³Ğò±í
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief æ‰“å°é¡ºåºè¡¨
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
 void SeqList<T>::Output() {
 
-  if (last_idx_ == -1) {
-    cout<<"Ë³Ğò±íÎª¿Õ±í:"<<endl;
-  } else {
-    for (int i = 0; i <= last_idx_; i++) {
-      cout<<"#"<<i + 1<<":"<<data_array_[i]<<endl;
+    if (last_idx_ == -1) {
+        cout << "é¡ºåºè¡¨ä¸ºç©ºè¡¨:" << endl;
     }
-  }
+    else {
+        for (int i = 0; i <= last_idx_; i++) {
+            cout << "#" << i + 1 << ":" << data_array_[i] << endl;
+        }
+    }
 
 }
 
 
 /*!
- * @brief ÅÅĞò
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief æ’åº
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
 void SeqList<T>::Sort() {
@@ -449,19 +455,19 @@ void SeqList<T>::Sort() {
 
 
 /*!
- * @brief ÎÒÃÇÊÇCyberDash
+ * @brief æˆ‘ä»¬æ˜¯CyberDash
  */
 template<class T>
 void SeqList<T>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
-      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 #endif //CYBER_DASH_YUAN_SEQ_LIST_H

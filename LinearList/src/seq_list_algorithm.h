@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file seq_list_algorithm.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Ë³Ğò±íËã·¨²âÊÔÀà
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief é¡ºåºè¡¨ç®—æ³•æµ‹è¯•ç±»
  * @version 0.2.1
  * @date 2021-09-28
  * @copyright Copyright (c) 2021
- * **CyberDash¼ÆËã»ú¿¼ÑĞ**
+ * **CyberDashè®¡ç®—æœºè€ƒç ”**
  */
 
 #ifndef CYBER_DASH_SEQ_LIST_ALGORITHM_H
@@ -15,57 +15,58 @@
 #include "seq_list.h"
 
 
-/*!
- * @brief Ë³Ğò±íÇó²¢¼¯
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param seq_list_a Ë³Ğò±ía(²¢ÔËËãºóµÄ±í)
- * @param seq_list_b Ë³Ğò±íb
- * @note
- * ±éÀúË³Ğò±íb, ¶ÔÃ¿¸öÔªËØ, Èç¹ûÔÚ±íaÖĞ²»´æÔÚ, Ôò²åÈëµ½±íaÖĞ
- */
+ /*!
+  * @brief é¡ºåºè¡¨æ±‚å¹¶é›†
+  * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+  * @param seq_list_a é¡ºåºè¡¨a(å¹¶è¿ç®—åçš„è¡¨)
+  * @param seq_list_b é¡ºåºè¡¨b
+  * @note
+  * éå†é¡ºåºè¡¨b, å¯¹æ¯ä¸ªå…ƒç´ , å¦‚æœåœ¨è¡¨aä¸­ä¸å­˜åœ¨, åˆ™æ’å…¥åˆ°è¡¨aä¸­
+  */
 template<class T>
 void SeqListUnion(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
-  int a_length = seq_list_a.Length();
-  int b_length = seq_list_b.Length();
+    int a_length = seq_list_a.Length();
+    int b_length = seq_list_b.Length();
 
-  for (int i = 1; i <= b_length; i++) {
+    for (int i = 1; i <= b_length; i++) {
 
-    int list_b_item;
-    seq_list_b.GetData(i, list_b_item);
+        int list_b_item;
+        seq_list_b.GetData(i, list_b_item);
 
-    int pos = seq_list_a.Search(list_b_item);
-    if (pos == 0) {
-      seq_list_a.Insert(a_length, list_b_item);
-      a_length++;
+        int pos = seq_list_a.Search(list_b_item);
+        if (pos == 0) {
+            seq_list_a.Insert(a_length, list_b_item);
+            a_length++;
+        }
     }
-  }
 }
 
 
 /*!
- * @brief Ë³Ğò±íÇó½»¼¯
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param seq_list_a Ë³Ğò±ía(½»ÔËËãºóµÄ±í)
- * @param seq_list_b Ë³Ğò±íb
+ * @brief é¡ºåºè¡¨æ±‚äº¤é›†
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param seq_list_a é¡ºåºè¡¨a(äº¤è¿ç®—åçš„è¡¨)
+ * @param seq_list_b é¡ºåºè¡¨b
  */
 template<class T>
 void SeqListIntersection(SeqList<T>& seq_list_a, SeqList<T>& seq_list_b) {
 
-  int a_length = seq_list_a.Length();
+    int a_length = seq_list_a.Length();
 
-  int iter_pos = 1;
-  while (iter_pos <= a_length) {
-    int list_a_item;
-    seq_list_a.GetData(iter_pos, list_a_item);
+    int iter_pos = 1;
+    while (iter_pos <= a_length) {
+        int list_a_item;
+        seq_list_a.GetData(iter_pos, list_a_item);
 
-    int pos = seq_list_b.Search(list_a_item);
-    if (pos == 0) {
-      seq_list_a.Remove(iter_pos, list_a_item);
-      a_length--;
-    } else {
-      iter_pos++;
+        int pos = seq_list_b.Search(list_a_item);
+        if (pos == 0) {
+            seq_list_a.Remove(iter_pos, list_a_item);
+            a_length--;
+        }
+        else {
+            iter_pos++;
+        }
     }
-  }
 }
 
 

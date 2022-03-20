@@ -1,4 +1,4 @@
-//
+ï»¿//
 // Created by Zhongyuan.Li on 9/29/2021.
 //
 
@@ -12,196 +12,198 @@ using namespace std;
 
 
 /*!
- * @brief Ë«ÏòÁ´±í²âÊÔÀà
+ * @brief åŒå‘é“¾è¡¨æµ‹è¯•ç±»
  */
 class DoubleLinkListTest {
 public:
-  /*! @brief ²âÊÔ°´·½Ïò²åÈë */
-  static void TestInsertByDirection();
-  /*! @brief ²âÊÔÉ¾³ı */
-  static void TestRemoveByDirection();
-  /*! @brief ²âÊÔ³¤¶È */
-  static void TestLength();
-  /*! @brief ²âÊÔÁ´±íÊÇ·ñÎª¿Õ */
-  static void TestEmpty();
-  /*! @brief ²âÊÔÁ´±í²éÕÒ */
-  static void TestSearch();
-  /*! @brief ²âÊÔÁ´±í¶¨Î» */
-  static void TestLocate();
-  /*! @brief ²âÊÔ»ñÈ¡ÉèÖÃÊı¾İ */
-  static void TestGetDataAndSetData();
+    /*! @brief æµ‹è¯•æŒ‰æ–¹å‘æ’å…¥ */
+    static void TestInsertByDirection();
+    /*! @brief æµ‹è¯•åˆ é™¤ */
+    static void TestRemoveByDirection();
+    /*! @brief æµ‹è¯•é•¿åº¦ */
+    static void TestLength();
+    /*! @brief æµ‹è¯•é“¾è¡¨æ˜¯å¦ä¸ºç©º */
+    static void TestEmpty();
+    /*! @brief æµ‹è¯•é“¾è¡¨æŸ¥æ‰¾ */
+    static void TestSearch();
+    /*! @brief æµ‹è¯•é“¾è¡¨å®šä½ */
+    static void TestLocate();
+    /*! @brief æµ‹è¯•è·å–è®¾ç½®æ•°æ® */
+    static void TestGetDataAndSetData();
 };
 
 
 void DoubleLinkListTest::TestInsertByDirection() {
-  cout << endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|              Test DoubleList InsertByDirection            |"<<endl;
-  cout<<"|                     ²âÊÔË«ÏòÁ´±í°´·½Ïò²åÈë                    |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|              Test DoubleList InsertByDirection            |" << endl;
+    cout << "|                     æµ‹è¯•åŒå‘é“¾è¡¨æŒ‰æ–¹å‘æ’å…¥                    |" << endl << endl << endl;
 
-  DoubleLinkList<string>* band_list = new DoubleLinkList<string>();
+    DoubleLinkList<string>* band_list = new DoubleLinkList<string>();
 
-  band_list->InsertByDirection(0, "The Script", DoubleLinkList<string>::NEXT_DIRECTION);
-  band_list->InsertByDirection(1, "Linkin Park", DoubleLinkList<string>::NEXT_DIRECTION);
-  band_list->InsertByDirection(2, "Starship", DoubleLinkList<string>::NEXT_DIRECTION);
+    band_list->InsertByDirection(0, "The Script", DoubleLinkList<string>::NEXT_DIRECTION);
+    band_list->InsertByDirection(1, "Linkin Park", DoubleLinkList<string>::NEXT_DIRECTION);
+    band_list->InsertByDirection(2, "Starship", DoubleLinkList<string>::NEXT_DIRECTION);
 
-  band_list->Output();
+    band_list->Output();
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void DoubleLinkListTest::TestRemoveByDirection() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|              Test DoubleList RemoveByDirection            |"<<endl;
-  cout<<"|                     ²âÊÔË«ÏòÁ´±í°´·½ÏòÉ¾³ı                   |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|              Test DoubleList RemoveByDirection            |" << endl;
+    cout << "|                     æµ‹è¯•åŒå‘é“¾è¡¨æŒ‰æ–¹å‘åˆ é™¤                   |" << endl << endl << endl;
 
-  DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
+    DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
 
-  city_list->Insert(0, "Beijing");
-  city_list->Insert(1, "Shanghai");
-  city_list->Insert(2, "Shenzhen");
+    city_list->Insert(0, "Beijing");
+    city_list->Insert(1, "Shanghai");
+    city_list->Insert(2, "Shenzhen");
 
-  city_list->Output();
+    city_list->Output();
 
-  string delete_item;
+    string delete_item;
 
-  int delete_pos = 3;
-  city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
+    int delete_pos = 3;
+    city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
 
-  cout<<"ÏòºóÉ¾³ı³ÇÊĞ"<<delete_pos<<"Ö®ºó: "<<endl;
-  city_list->Output();
+    cout << "å‘ååˆ é™¤åŸå¸‚" << delete_pos << "ä¹‹å: " << endl;
+    city_list->Output();
 
-  delete_pos = 1;
-  city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
+    delete_pos = 1;
+    city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
 
-  cout<<"ÏòºóÉ¾³ı³ÇÊĞ"<<delete_pos<<"Ö®ºó: "<<endl;
-  city_list->Output();
+    cout << "å‘ååˆ é™¤åŸå¸‚" << delete_pos << "ä¹‹å: " << endl;
+    city_list->Output();
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
-void DoubleLinkListTest::TestLength(){
+void DoubleLinkListTest::TestLength() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                   Test DoubleList Length                  |"<<endl;
-  cout<<"|                       ²âÊÔË«ÏòÁ´±í³¤¶È                      |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                   Test DoubleList Length                  |" << endl;
+    cout << "|                       æµ‹è¯•åŒå‘é“¾è¡¨é•¿åº¦                      |" << endl << endl << endl;
 
-  DoubleLinkList<int>* double_list;
-  double_list = new DoubleLinkList<int>();
+    DoubleLinkList<int>* double_list;
+    double_list = new DoubleLinkList<int>();
 
-  double_list->Insert(0,1);
-  double_list->Insert(1,2);
-  double_list->Insert(2,3);
+    double_list->Insert(0, 1);
+    double_list->Insert(1, 2);
+    double_list->Insert(2, 3);
 
-  cout<<"Ë«ÏòÁ´±í³¤¶È: "<<double_list->Length()<<endl;
+    cout << "åŒå‘é“¾è¡¨é•¿åº¦: " << double_list->Length() << endl;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
-void DoubleLinkListTest::TestEmpty(){
+void DoubleLinkListTest::TestEmpty() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                   Test DoubleList Empty                   |"<<endl;
-  cout<<"|                        ²âÊÔË«ÏòÁ´±íÊÇ·ñÎª¿Õ                  |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                   Test DoubleList Empty                   |" << endl;
+    cout << "|                        æµ‹è¯•åŒå‘é“¾è¡¨æ˜¯å¦ä¸ºç©º                  |" << endl << endl << endl;
 
-  DoubleLinkList<string>* double_link;
-  double_link = new DoubleLinkList<string>();
+    DoubleLinkList<string>* double_link;
+    double_link = new DoubleLinkList<string>();
 
-  cout<<"Before insert any string:"<<endl;
+    cout << "Before insert any string:" << endl;
 
-  bool isEmpty = double_link->IsEmpty();
-  if (isEmpty) {
-    cout<<"The seq_list is empty."<<endl;
-  } else {
-    cout<<"The seq_list isn't empty."<<endl;
-  }
+    bool isEmpty = double_link->IsEmpty();
+    if (isEmpty) {
+        cout << "The seq_list is empty." << endl;
+    }
+    else {
+        cout << "The seq_list isn't empty." << endl;
+    }
 
-  string BJ = "Beijing";
-  double_link->Insert(0,BJ);
+    string BJ = "Beijing";
+    double_link->Insert(0, BJ);
 
-  cout<<"After insert the string \"Beijing\":"<<endl;
+    cout << "After insert the string \"Beijing\":" << endl;
 
-  isEmpty = double_link->IsEmpty();
-  if (isEmpty) {
-    cout<<"The seq_list is empty."<<endl;
-  } else {
-    cout<<"The seq_list isn't empty."<<endl;
-  }
+    isEmpty = double_link->IsEmpty();
+    if (isEmpty) {
+        cout << "The seq_list is empty." << endl;
+    }
+    else {
+        cout << "The seq_list isn't empty." << endl;
+    }
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
-void DoubleLinkListTest::TestSearch(){
+void DoubleLinkListTest::TestSearch() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                   Test DoubleList Search                  |"<<endl;
-  cout<<"|                       ²âÊÔË«ÏòÁ´±í²éÕÒ                      |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                   Test DoubleList Search                  |" << endl;
+    cout << "|                       æµ‹è¯•åŒå‘é“¾è¡¨æŸ¥æ‰¾                      |" << endl << endl << endl;
 
-  DoubleLinkList<int>* double_list;
-  double_list = new DoubleLinkList<int>();
+    DoubleLinkList<int>* double_list;
+    double_list = new DoubleLinkList<int>();
 
-  double_list->Insert(0,1);
-  double_list->Insert(1,2);
-  double_list->Insert(2,3);
+    double_list->Insert(0, 1);
+    double_list->Insert(1, 2);
+    double_list->Insert(2, 3);
 
-  DoubleLinkNode<int>* node_1 = double_list->Search(1);
-  DoubleLinkNode<int>* node_3 = double_list->Search(3);
+    DoubleLinkNode<int>* node_1 = double_list->Search(1);
+    DoubleLinkNode<int>* node_3 = double_list->Search(3);
 
-  cout << "The pos of " << 1 << " is " << node_1 <<endl;
-  cout << "The pos of " << 3 << " is " << node_3 <<endl;
+    cout << "The pos of " << 1 << " is " << node_1 << endl;
+    cout << "The pos of " << 3 << " is " << node_3 << endl;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void DoubleLinkListTest::TestLocate() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                  Test DoubleList Locate                   |"<<endl;
-  cout<<"|                       ²âÊÔË«ÏòÁ´±í¶¨Î»                       |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                  Test DoubleList Locate                   |" << endl;
+    cout << "|                       æµ‹è¯•åŒå‘é“¾è¡¨å®šä½                       |" << endl << endl << endl;
 
-  DoubleLinkList<int>* double_list = new DoubleLinkList<int>();
+    DoubleLinkList<int>* double_list = new DoubleLinkList<int>();
 
-  double_list->Insert(0,1);
-  double_list->Insert(1,2);
-  double_list->Insert(2,3);
+    double_list->Insert(0, 1);
+    double_list->Insert(1, 2);
+    double_list->Insert(2, 3);
 
-  DoubleLinkNode<int>* node_ptr = double_list->Locate(3);
+    DoubleLinkNode<int>* node_ptr = double_list->Locate(3);
 
-  cout<<"The node_ptr is: " <<node_ptr<<endl;
+    cout << "The node_ptr is: " << node_ptr << endl;
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void DoubleLinkListTest::TestGetDataAndSetData() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|              Test DoubleList GetData And SetData          |"<<endl;
-  cout<<"|                   ²âÊÔË«ÏòÁ´±í»ñÈ¡/ÉèÖÃÊı¾İÏî                 |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|              Test DoubleList GetData And SetData          |" << endl;
+    cout << "|                   æµ‹è¯•åŒå‘é“¾è¡¨è·å–/è®¾ç½®æ•°æ®é¡¹                 |" << endl << endl << endl;
 
-  DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
+    DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
 
-  city_list->Insert(0, "Beijing");
-  city_list->Insert(1, "Shanghai");
-  city_list->Insert(2, "Shenzhen");
+    city_list->Insert(0, "Beijing");
+    city_list->Insert(1, "Shanghai");
+    city_list->Insert(2, "Shenzhen");
 
-  string city_name;
-  city_list->GetData(1, city_name);
-  cout<<"The city_name: "<<city_name;
+    string city_name;
+    city_list->GetData(1, city_name);
+    cout << "The city_name: " << city_name;
 
-  cout<<endl<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << endl << "-------------------------------------------------------------" << endl << endl;
 }
 
 

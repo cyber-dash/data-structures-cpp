@@ -1,11 +1,11 @@
-/*!
+ï»¿/*!
  * @file double_link_list.h
- * @author CyberDash¼ÆËã»ú¿¼ÑĞ, cyberdash@163.com(¶¶Òôid:cyberdash_yuan)
- * @brief Ë«ÏòÁ´±í(Ñ­»·)
+ * @author CyberDashè®¡ç®—æœºè€ƒç ”, cyberdash@163.com(æŠ–éŸ³id:cyberdash_yuan)
+ * @brief åŒå‘é“¾è¡¨(å¾ªç¯)
  * @version 0.2.1
  * @date 2020-07-28
  * @copyright Copyright (c) 2021
- * **CyberDash¼ÆËã»ú¿¼ÑĞ**
+ * **CyberDashè®¡ç®—æœºè€ƒç ”**
  */
 
 #ifndef CYBER_DASH_DOUBLE_LINK_LIST_H
@@ -17,398 +17,401 @@
 #include <cstddef>
 
 
-/*!
- * @brief Ë«ÏòÁ´±í½áµãÄ£°åÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- */
+ /*!
+  * @brief åŒå‘é“¾è¡¨ç»“ç‚¹æ¨¡æ¿ç±»
+  * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+  */
 template <class T>
 struct DoubleLinkNode {
-  /*!
-   * @brief ¹¹Ôìº¯Êı(ÏÂÒ»½áµãÓëÉÏÒ»½áµãÖ¸Õë)
-   * @param next ÏÂÒ»½áµãÖ¸Õë
-   * @param prev ÉÏÒ»½áµãÖ¸Õë
-   */
-  explicit DoubleLinkNode(DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL): prev(prev), next(next) {}
+    /*!
+     * @brief æ„é€ å‡½æ•°(ä¸‹ä¸€ç»“ç‚¹ä¸ä¸Šä¸€ç»“ç‚¹æŒ‡é’ˆ)
+     * @param next ä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ
+     * @param prev ä¸Šä¸€ç»“ç‚¹æŒ‡é’ˆ
+     */
+    explicit DoubleLinkNode(DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL) : prev(prev), next(next) {}
 
-  /*!
-   * @brief ¹¹Ôìº¯Êı(Êı¾İÏî, ÉÏÒ»½áµãºÍÏÂÒ»½áµãÖ¸Õë)
-   * @param data Êı¾İÏî
-   * @param next ÏÂÒ»½áµãÖ¸Õë
-   * @param prev ÉÏÒ»½áµãÖ¸Õë
-   */
-  explicit DoubleLinkNode(const T& data, DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL):
-    data(data), prev(prev), next(next) {}
+    /*!
+     * @brief æ„é€ å‡½æ•°(æ•°æ®é¡¹, ä¸Šä¸€ç»“ç‚¹å’Œä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ)
+     * @param data æ•°æ®é¡¹
+     * @param next ä¸‹ä¸€ç»“ç‚¹æŒ‡é’ˆ
+     * @param prev ä¸Šä¸€ç»“ç‚¹æŒ‡é’ˆ
+     */
+    explicit DoubleLinkNode(const T& data, DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL) :
+        data(data), prev(prev), next(next) {}
 
-  T data; //!< Á´±íÊı¾İÏî
-  DoubleLinkNode<T>* next; //!< ÏÂÒ»½áµã
-  DoubleLinkNode<T>* prev; //!< ÉÏÒ»½áµã
+    T data; //!< é“¾è¡¨æ•°æ®é¡¹
+    DoubleLinkNode<T>* next; //!< ä¸‹ä¸€ç»“ç‚¹
+    DoubleLinkNode<T>* prev; //!< ä¸Šä¸€ç»“ç‚¹
 };
 
 
 /*!
- * @brief Ë«ÏòÁ´±íÄ£°åÀà
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief åŒå‘é“¾è¡¨æ¨¡æ¿ç±»
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
-class DoubleLinkList: public LinearList<T> {
+class DoubleLinkList : public LinearList<T> {
 public:
-  /*! @brief ¹¹Ôìº¯Êı(ÎŞ²ÎÊı) */
-  DoubleLinkList();
+    /*! @brief æ„é€ å‡½æ•°(æ— å‚æ•°) */
+    DoubleLinkList();
 
-  /*! @brief Îö¹¹º¯Êı */
-  ~DoubleLinkList();
+    /*! @brief ææ„å‡½æ•° */
+    ~DoubleLinkList();
 
-  /*! @brief ³¤¶È */
-  int Length() const { return this->length_; }
+    /*! @brief é•¿åº¦ */
+    int Length() const { return this->length_; }
 
-  /*! @brief ÊÇ·ñÎª¿Õ */
-  bool IsEmpty() const { return this->head_->next == this->head_; }
+    /*! @brief æ˜¯å¦ä¸ºç©º */
+    bool IsEmpty() const { return this->head_->next == this->head_; }
 
-  /*! @brief »ñÈ¡Á´±íÍ·½áµã */
-  DoubleLinkNode<T>* Head() const { return this->head_; }
+    /*! @brief è·å–é“¾è¡¨å¤´ç»“ç‚¹ */
+    DoubleLinkNode<T>* Head() const { return this->head_; }
 
-  // ËÑË÷
-  DoubleLinkNode<T>* Search(const T& data);
+    // æœç´¢
+    DoubleLinkNode<T>* Search(const T& data);
 
-  // °´·½Ïò¶¨Î»
-  DoubleLinkNode<T>* LocateByDirection(int pos, int direction);
+    // æŒ‰æ–¹å‘å®šä½
+    DoubleLinkNode<T>* LocateByDirection(int pos, int direction);
 
-  // ¶¨Î»
-  DoubleLinkNode<T>* Locate(int pos);
+    // å®šä½
+    DoubleLinkNode<T>* Locate(int pos);
 
-  // °´·½Ïò²åÈë
-  bool InsertByDirection(int pos, const T& data, int direction);
+    // æŒ‰æ–¹å‘æ’å…¥
+    bool InsertByDirection(int pos, const T& data, int direction);
 
-  // Ïòºó²åÈë
-  bool Insert(int pos, const T& data);
+    // å‘åæ’å…¥
+    bool Insert(int pos, const T& data);
 
-  // °´·½ÏòÉ¾³ı½áµã
-  bool RemoveByDirection(int pos, T& data, int direction);
+    // æŒ‰æ–¹å‘åˆ é™¤ç»“ç‚¹
+    bool RemoveByDirection(int pos, T& data, int direction);
 
-  // ÏòºóÉ¾³ı½Úµã
-  bool Remove(int pos, T& data);
+    // å‘ååˆ é™¤èŠ‚ç‚¹
+    bool Remove(int pos, T& data);
 
-  // »ñÈ¡½áµãÊı¾İ
-  bool GetData(int pos, T& data) const;
+    // è·å–ç»“ç‚¹æ•°æ®
+    bool GetData(int pos, T& data) const;
 
-  // ÉèÖÃ½áµãÊı¾İ
-  bool SetData(int pos, const T& data);
+    // è®¾ç½®ç»“ç‚¹æ•°æ®
+    bool SetData(int pos, const T& data);
 
-  //Ô¼Éª·ò»·
-  int LastRemaining(DoubleLinkNode* head, int m);
+    //çº¦ç‘Ÿå¤«ç¯
+    int LastRemaining(DoubleLinkNode<T>* head, int m);
 
-  // ´òÓ¡Ë«ÏòÁ´±í
-  void Output();
+    // æ‰“å°åŒå‘é“¾è¡¨
+    void Output();
 
-  // ÎÒÃÇÊÇCyberDash
-  void CyberDashShow();
+    // æˆ‘ä»¬æ˜¯CyberDash
+    void CyberDashShow();
 
-  static const int PREV_DIRECTION = 0;
-  static const int NEXT_DIRECTION = 1;
+    static const int PREV_DIRECTION = 0;
+    static const int NEXT_DIRECTION = 1;
 
 private:
-  DoubleLinkNode<T>* head_;
-  int length_;
+    DoubleLinkNode<T>* head_;
+    int length_;
 };
 
 
 /*!
- * @brief ¹¹Ôìº¯Êı(ÎŞ²ÎÊı)
+ * @brief æ„é€ å‡½æ•°(æ— å‚æ•°)
  */
 template<class T>
 DoubleLinkList<T>::DoubleLinkList() {
-  this->head_ = new DoubleLinkNode<T>();
-  /* error handler */
+    this->head_ = new DoubleLinkNode<T>();
+    /* error handler */
 
-  this->head_->next = this->head_;
-  this->head_->prev = this->head_;
+    this->head_->next = this->head_;
+    this->head_->prev = this->head_;
 
-  this->length_ = 0;
+    this->length_ = 0;
 }
 
 
 /*!
- * @brief Îö¹¹º¯Êı
+ * @brief ææ„å‡½æ•°
  */
 template<class T>
 DoubleLinkList<T>::~DoubleLinkList() {
 
-  while (this->head_->next != this->head_) {
-    DoubleLinkNode<T>* delete_node = this->head_->next;
-    this->head_->next = delete_node->next;
+    while (this->head_->next != this->head_) {
+        DoubleLinkNode<T>* delete_node = this->head_->next;
+        this->head_->next = delete_node->next;
 
-    delete delete_node;
-  }
+        delete delete_node;
+    }
 
-  delete this->head_;
-  this->head_ = NULL;
+    delete this->head_;
+    this->head_ = NULL;
 }
 
 
 /*!
- * @brief ËÑË÷
- * @param data Êı¾İ
- * @return ½áµãÖ¸Õë
+ * @brief æœç´¢
+ * @param data æ•°æ®
+ * @return ç»“ç‚¹æŒ‡é’ˆ
  * @note
- * ·µ»ØÊı¾İÏîµÈÓÚÊı¾İµÄ½áµã,
- * ÈôÃ»ÓĞ, Ôò·µ»ØNULL
+ * è¿”å›æ•°æ®é¡¹ç­‰äºæ•°æ®çš„ç»“ç‚¹,
+ * è‹¥æ²¡æœ‰, åˆ™è¿”å›NULL
  */
 template<class T>
-DoubleLinkNode<T>* DoubleLinkList<T>::Search(const T& data){
-  DoubleLinkNode<T>* cur = this->head_->next;
-  while (cur != this->head_ && cur->data != data) {
-    cur = cur->next;
-  }
+DoubleLinkNode<T>* DoubleLinkList<T>::Search(const T& data) {
+    DoubleLinkNode<T>* cur = this->head_->next;
+    while (cur != this->head_ && cur->data != data) {
+        cur = cur->next;
+    }
 
-  if (cur != this->head_) {
-    return cur;
-  }
+    if (cur != this->head_) {
+        return cur;
+    }
 
-  return NULL;
+    return NULL;
 }
 
 
 /*!
- * @brief °´·½Ïò¶¨Î»
- * @param pos Î»ÖÃ
- * @param direction ·½Ïò(0ÎªÏòÇ°£¬·Ç0ÎªÏòºó)
- * @return ½áµãÖ¸Õë
+ * @brief æŒ‰æ–¹å‘å®šä½
+ * @param pos ä½ç½®
+ * @param direction æ–¹å‘(0ä¸ºå‘å‰ï¼Œé0ä¸ºå‘å)
+ * @return ç»“ç‚¹æŒ‡é’ˆ
  * @note
- * ÊéÉÏµÄÂß¼­
- * Èç¹ûÊÇ¿ÕÁ´±í, µ±¶¨Î»Î»ÖÃ0Ê±, ·µ»ØÍ·½ÚµãµÄµØÖ·
- * Èç¹û²»ÊÇ¿ÕÁ´±í
- *  ¶¨Î»µ½, Ôò·µ»ØµØÖ·
- *  ¶¨Î»²»µ½, ·µ»ØNULL
+ * ä¹¦ä¸Šçš„é€»è¾‘
+ * å¦‚æœæ˜¯ç©ºé“¾è¡¨, å½“å®šä½ä½ç½®0æ—¶, è¿”å›å¤´èŠ‚ç‚¹çš„åœ°å€
+ * å¦‚æœä¸æ˜¯ç©ºé“¾è¡¨
+ *  å®šä½åˆ°, åˆ™è¿”å›åœ°å€
+ *  å®šä½ä¸åˆ°, è¿”å›NULL
  */
 template<class T>
 DoubleLinkNode<T>* DoubleLinkList<T>::LocateByDirection(int pos, int direction) {
 
-  if (this->head_->next == head_ || pos == 0) {
-    return this->head_;
-  }
-
-  DoubleLinkNode<T>* cur;
-  if (direction == DoubleLinkList::PREV_DIRECTION) {
-    cur = head_->prev;
-  } else {
-    cur = head_->next;
-  }
-
-  for (int i = 1; i < pos; i++) {
-    if (cur == this->head_) {
-      return NULL;
+    if (this->head_->next == head_ || pos == 0) {
+        return this->head_;
     }
-    
+
+    DoubleLinkNode<T>* cur;
     if (direction == DoubleLinkList::PREV_DIRECTION) {
-      cur = cur->prev;
-    } else {
-      cur = cur->next;
+        cur = head_->prev;
     }
-  }
+    else {
+        cur = head_->next;
+    }
 
-  if (cur != this->head_) {
-    return cur;
-  }
+    for (int i = 1; i < pos; i++) {
+        if (cur == this->head_) {
+            return NULL;
+        }
 
-  return NULL;
+        if (direction == DoubleLinkList::PREV_DIRECTION) {
+            cur = cur->prev;
+        }
+        else {
+            cur = cur->next;
+        }
+    }
+
+    if (cur != this->head_) {
+        return cur;
+    }
+
+    return NULL;
 }
 
 
 /*!
- * @brief Ïòºó¶¨Î»
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃ
- * @return ½áµãÖ¸Õë
+ * @brief å‘åå®šä½
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®
+ * @return ç»“ç‚¹æŒ‡é’ˆ
  */
 template<class T>
 DoubleLinkNode<T>* DoubleLinkList<T>::Locate(int pos) {
-  return this->LocateByDirection(pos, DoubleLinkList::NEXT_DIRECTION);
+    return this->LocateByDirection(pos, DoubleLinkList::NEXT_DIRECTION);
 }
 
 
 /*!
- * @brief °´·½Ïò²åÈë
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃ
- * @param data Êı¾İ
- * @param direction ·½Ïò
- * @return ÊÇ·ñ²åÈë³É¹¦
+ * @brief æŒ‰æ–¹å‘æ’å…¥
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®
+ * @param data æ•°æ®
+ * @param direction æ–¹å‘
+ * @return æ˜¯å¦æ’å…¥æˆåŠŸ
  */
 template<class T>
 bool DoubleLinkList<T>::InsertByDirection(int pos, const T& data, int direction) {
 
-  DoubleLinkNode<T>* cur = LocateByDirection(pos, direction);
-  if (cur == NULL) {
-    return false;
-  }
+    DoubleLinkNode<T>* cur = LocateByDirection(pos, direction);
+    if (cur == NULL) {
+        return false;
+    }
 
-  DoubleLinkNode<T>* new_node = new DoubleLinkNode<T>(data);
-  if (new_node == NULL) {
-    return false;
-  }
+    DoubleLinkNode<T>* new_node = new DoubleLinkNode<T>(data);
+    if (new_node == NULL) {
+        return false;
+    }
 
-  if (direction == DoubleLinkList::PREV_DIRECTION) {
-    new_node->prev = cur->prev;
-    cur->prev = new_node;
-    new_node->prev->next = new_node;
-    new_node->next = cur;
-  } else {
-    new_node->next = cur->next;
-    cur->next = new_node;
-    new_node->next->prev = new_node;
-    new_node->prev = cur;
-  }
+    if (direction == DoubleLinkList::PREV_DIRECTION) {
+        new_node->prev = cur->prev;
+        cur->prev = new_node;
+        new_node->prev->next = new_node;
+        new_node->next = cur;
+    }
+    else {
+        new_node->next = cur->next;
+        cur->next = new_node;
+        new_node->next->prev = new_node;
+        new_node->prev = cur;
+    }
 
-  this->length_++;
+    this->length_++;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief Ïòºó²åÈë
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃ
- * @param data Êı¾İ
- * @return ÊÇ·ñ²åÈë³É¹¦
+ * @brief å‘åæ’å…¥
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®
+ * @param data æ•°æ®
+ * @return æ˜¯å¦æ’å…¥æˆåŠŸ
  */
 template<class T>
-bool DoubleLinkList<T>::Insert(int pos, const T &data) {
-  return this->InsertByDirection(pos, data, DoubleLinkList::NEXT_DIRECTION);
+bool DoubleLinkList<T>::Insert(int pos, const T& data) {
+    return this->InsertByDirection(pos, data, DoubleLinkList::NEXT_DIRECTION);
 }
 
 
 /*!
- * @brief °´·½ÏòÉ¾³ı½áµã
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃ
- * @param data Êı¾İ(±£´æ±»É¾³ı½áµãÊı¾İÏî)
- * @param direction ·½Ïò
- * @return ÊÇ·ñÉ¾³ı³É¹¦
+ * @brief æŒ‰æ–¹å‘åˆ é™¤ç»“ç‚¹
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®
+ * @param data æ•°æ®(ä¿å­˜è¢«åˆ é™¤ç»“ç‚¹æ•°æ®é¡¹)
+ * @param direction æ–¹å‘
+ * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
  */
 template<class T>
-bool DoubleLinkList<T>::RemoveByDirection(int pos, T& data, int direction){
-  DoubleLinkNode<T>* cur = LocateByDirection(pos, direction);
-  if (cur == NULL) {
-    return false;
-  }
+bool DoubleLinkList<T>::RemoveByDirection(int pos, T& data, int direction) {
+    DoubleLinkNode<T>* cur = LocateByDirection(pos, direction);
+    if (cur == NULL) {
+        return false;
+    }
 
-  cur->next->prev = cur->prev;
-  cur->prev->next = cur->next;
-  data = cur->data;
+    cur->next->prev = cur->prev;
+    cur->prev->next = cur->next;
+    data = cur->data;
 
-  delete cur;
-  this->length_--;
+    delete cur;
+    this->length_--;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÏòºóÉ¾³ı½Úµã
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃ
- * @param data Êı¾İ(±£´æ±»É¾³ı½áµãÊı¾İÏî)
- * @return ÊÇ·ñÉ¾³ı³É¹¦
+ * @brief å‘ååˆ é™¤èŠ‚ç‚¹
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®
+ * @param data æ•°æ®(ä¿å­˜è¢«åˆ é™¤ç»“ç‚¹æ•°æ®é¡¹)
+ * @return æ˜¯å¦åˆ é™¤æˆåŠŸ
  */
 template<class T>
-bool DoubleLinkList<T>::Remove(int pos, T &data) {
-  return this->RemoveByDirection(pos, data, DoubleLinkList::NEXT_DIRECTION);
+bool DoubleLinkList<T>::Remove(int pos, T& data) {
+    return this->RemoveByDirection(pos, data, DoubleLinkList::NEXT_DIRECTION);
 }
 
 
 /*!
- * @brief »ñÈ¡½áµãÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃ
- * @param data Êı¾İ
- * @return ÊÇ·ñ»ñÈ¡³É¹¦
+ * @brief è·å–ç»“ç‚¹æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®
+ * @param data æ•°æ®
+ * @return æ˜¯å¦è·å–æˆåŠŸ
  */
 template<class T>
-bool DoubleLinkList<T>::GetData(int pos, T& data) const{
-  if (pos < 1 || pos > Length()) {
-    return false;
-  }
+bool DoubleLinkList<T>::GetData(int pos, T& data) const {
+    if (pos < 1 || pos > Length()) {
+        return false;
+    }
 
-  DoubleLinkNode<T>* cur = this->head_;
+    DoubleLinkNode<T>* cur = this->head_;
 
-  while (pos > 0) {
-    cur = cur->next;
-    pos--;
-  }
+    while (pos > 0) {
+        cur = cur->next;
+        pos--;
+    }
 
-  data = cur->data;
+    data = cur->data;
 
-  return true;
+    return true;
 }
 
 
 /*!
- * @brief ÉèÖÃ½áµãÊı¾İ
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
- * @param pos Î»ÖÃ
- * @param data Êı¾İ
- * @return ÊÇ·ñÉèÖÃ³É¹¦
+ * @brief è®¾ç½®ç»“ç‚¹æ•°æ®
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
+ * @param pos ä½ç½®
+ * @param data æ•°æ®
+ * @return æ˜¯å¦è®¾ç½®æˆåŠŸ
  */
 template<class T>
 bool DoubleLinkList<T>::SetData(int pos, const T& data) {
 
-  if (pos < 1 || pos > Length()) {
-    return false;
-  }
+    if (pos < 1 || pos > Length()) {
+        return false;
+    }
 
-  DoubleLinkNode<T>* cur = this->head_;
+    DoubleLinkNode<T>* cur = this->head_;
 
-  while (pos > 0) {
-    cur = cur->next;
-    pos--;
-  }
+    while (pos > 0) {
+        cur = cur->next;
+        pos--;
+    }
 
-  cur->data = data;
+    cur->data = data;
 
-  return true;
+    return true;
 }
 
 /*!
- * @brief Ô¼Éª·ò»·ÎÊÌâ
- * @param head Ê×Î»½áµã
- * @param m Êıµ½m¾Í³öÁĞ 
- * @return Ê£ÓàµÄ½áµãÖµ
+ * @brief çº¦ç‘Ÿå¤«ç¯é—®é¢˜
+ * @param head é¦–ä½ç»“ç‚¹
+ * @param m æ•°åˆ°må°±å‡ºåˆ—
+ * @return å‰©ä½™çš„ç»“ç‚¹å€¼
  */
 template<class T>
-int DoubleLinkList<T>::LastRemaining(DoubleLinkNode* head, int m){
-
+int DoubleLinkList<T>::LastRemaining(DoubleLinkNode<T>* head, int m) {
+    return -1; // todo: 
 }
 
 
 /*!
- * @brief ´òÓ¡Ë«ÏòÁ´±í
- * @tparam T ÀàĞÍÄ£°å²ÎÊı
+ * @brief æ‰“å°åŒå‘é“¾è¡¨
+ * @tparam T ç±»å‹æ¨¡æ¿å‚æ•°
  */
 template<class T>
-void DoubleLinkList<T>::Output(){
-  if (this->head_ == NULL) {
-    cout<<"Empty list"<<endl;
-    return;
-  }
+void DoubleLinkList<T>::Output() {
+    if (this->head_ == NULL) {
+        cout << "Empty list" << endl;
+        return;
+    }
 
-  cout << "Ïòºó±éÀúÊä³ö£º" << endl;
-  DoubleLinkNode<T>* cur = this->Head()->next;
-  while (cur != this->head_) {
-    cout << cur->data << "; ";
-    cur = cur->next;
-  }
-  cout << endl;
+    cout << "å‘åéå†è¾“å‡ºï¼š" << endl;
+    DoubleLinkNode<T>* cur = this->Head()->next;
+    while (cur != this->head_) {
+        cout << cur->data << "; ";
+        cur = cur->next;
+    }
+    cout << endl;
 
-  cout << "ÏòÇ°±éÀúÊä³ö" << endl;
-  cur = cur->prev;
-  while (cur != this->head_) {
-    cout << cur->data << "; ";
+    cout << "å‘å‰éå†è¾“å‡º" << endl;
     cur = cur->prev;
-  }
-  cout << endl;
+    while (cur != this->head_) {
+        cout << cur->data << "; ";
+        cur = cur->prev;
+    }
+    cout << endl;
 
-  cout<<endl;
+    cout << endl;
 }
 
 
@@ -416,15 +419,15 @@ void DoubleLinkList<T>::Output(){
 
 template<class T>
 void DoubleLinkList<T>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"¶¶ÒôºÅ\"CyberDash¼ÆËã»ú¿¼ÑĞ\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash³ÉÔ±:"<<endl
-      <<"Ôª¸ç(cyberdash@163.com), "<<"±±¾©ÓÊµç´óÑ§(Í¨ĞÅ¹¤³Ì±¾¿Æ)/±±¾©ÓÊµç´óÑ§(ĞÅÏ¢ÓëÍ¨ĞÅÏµÍ³ÑĞ¾¿Éú)"<<endl
-      <<"ÀÚ¸ç(alei_go@163.com), "<<"É½¶«Àí¹¤´óÑ§(ÊıÑ§±¾¿Æ)/±±¾©ÓÊµç´óÑ§(¼ÆËã»úÑĞ¾¿Éú)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"±±¾©ÓÊµç´óÑ§(¼ÆËã»úÔÚ¶ÁÑĞ¾¿Éú)"<<endl<<endl
-      <<"Êı¾İ½á¹¹¿ªÔ´´úÂë(C++Çå»ª´óÑ§ÒóÈËÀ¥)Ä§¸ÄÉı¼¶°æ±¾: https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
+    cout << endl
+        << "*************************************** CyberDash ***************************************" << endl << endl
+        << "æŠ–éŸ³å·\"CyberDashè®¡ç®—æœºè€ƒç ”\", id: cyberdash_yuan" << endl << endl
+        << "CyberDashæˆå‘˜:" << endl
+        << "å…ƒå“¥(cyberdash@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(é€šä¿¡å·¥ç¨‹æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(ä¿¡æ¯ä¸é€šä¿¡ç³»ç»Ÿç ”ç©¶ç”Ÿ)" << endl
+        << "ç£Šå“¥(alei_go@163.com), " << "å±±ä¸œç†å·¥å¤§å­¦(æ•°å­¦æœ¬ç§‘)/åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºç ”ç©¶ç”Ÿ)" << endl << endl
+        << "L_Dash(lyu2586@163.com), " << "åŒ—äº¬é‚®ç”µå¤§å­¦(è®¡ç®—æœºåœ¨è¯»ç ”ç©¶ç”Ÿ)" << endl << endl
+        << "æ•°æ®ç»“æ„å¼€æºä»£ç (C++æ¸…åå¤§å­¦æ®·äººæ˜†)é­”æ”¹å‡çº§ç‰ˆæœ¬: https://gitee.com/cyberdash/data-structure-cpp" << endl
+        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 
