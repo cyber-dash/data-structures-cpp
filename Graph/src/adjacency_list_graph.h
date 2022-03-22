@@ -145,12 +145,12 @@ AdjacencyListGraph<V, W>::AdjacencyListGraph(int size) {
 }
 
 
-template<class T, class E>
-AdjacencyListGraph<T, E>::~AdjacencyListGraph() {
+template<class Vertex, class Weight>
+AdjacencyListGraph<Vertex, Weight>::~AdjacencyListGraph() {
 
   for (int i = 0; i < this->vertices_num_; i++) {
 
-    Edge<T, E>* cur_edge = this->vertex_table_[i].adjacency_list;
+    Edge<Vertex, Weight>* cur_edge = this->vertex_table_[i].adjacency_list;
 
     while (cur_edge != NULL) {
       this->vertex_table_[i].adjacency_list = cur_edge->next;
@@ -169,8 +169,8 @@ AdjacencyListGraph<T, E>::~AdjacencyListGraph() {
  * @param vertex_index 结点索引
  * @return 是否获取成功
  */
-template<class T, class E>
-bool AdjacencyListGraph<T, E>::GetVertexByIndex(T& vertex, int vertex_index) {
+template<class Vertex, class Weight>
+bool AdjacencyListGraph<Vertex, Weight>::GetVertexByIndex(Vertex& vertex, int vertex_index) {
   if (vertex_index >= 0 && vertex_index < this->vertices_num_) {
     vertex = this->vertex_table_[vertex_index].vertex;
 

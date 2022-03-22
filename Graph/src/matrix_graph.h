@@ -266,8 +266,8 @@ bool MatrixGraph<V, W>::GetNextNeighborVertex(V& next_neighbor_vertex, const V& 
 }
 
 
-template<class T, class E>
-bool MatrixGraph<T, E>::InsertVertex(const T& vertex) {
+template<class Vertex, class Weight>
+bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
   if (this->vertices_num_ >= this->max_vertices_num_) {
     return false;
   }
@@ -279,8 +279,8 @@ bool MatrixGraph<T, E>::InsertVertex(const T& vertex) {
 }
 
 
-template<class T, class E>
-bool MatrixGraph<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
+template<class Vertex, class Weight>
+bool MatrixGraph<Vertex, Weight>::InsertEdge(Vertex vertex1, Vertex vertex2, Weight weight) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
@@ -299,8 +299,8 @@ bool MatrixGraph<T, E>::InsertEdge(T vertex1, T vertex2, E weight) {
 }
 
 
-template<class T, class E>
-bool MatrixGraph<T, E>::RemoveVertex(T vertex) {
+template<class Vertex, class Weight>
+bool MatrixGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
 
@@ -335,13 +335,13 @@ bool MatrixGraph<T, E>::RemoveVertex(T vertex) {
 }
 
 
-template<class T, class E>
-bool MatrixGraph<T, E>::RemoveEdge(T vertex1, T vertex2) {
+template<class Vertex, class Weight>
+bool MatrixGraph<Vertex, Weight>::RemoveEdge(Vertex vertex1, Vertex vertex2) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
 
-  E weight;
+  Weight weight;
   bool has_weight = GetWeight(weight, vertex1, vertex2);
   if (has_weight) {
     this->edge_matrix_[v1_index][v2_index] = MAX_WEIGHT;
@@ -356,14 +356,14 @@ bool MatrixGraph<T, E>::RemoveEdge(T vertex1, T vertex2) {
 }
 
 
-template<class T, class E>
-istream& operator>>(istream& in, MatrixGraph<T, E>& graph_matrix) {
+template<class Vertex, class Weight>
+istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
   int vertex_num;
   int edge_num;
-  T src_vertex;
-  T dest_vertex;
-  E weight;
+  Vertex src_vertex;
+  Vertex dest_vertex;
+  Weight weight;
 
   cout<<"Input the vertex_num and edge_num"<<endl;
   in >> vertex_num >> edge_num;
@@ -394,8 +394,8 @@ istream& operator>>(istream& in, MatrixGraph<T, E>& graph_matrix) {
 }
 
 
-template<class T, class E>
-ostream& operator<<(ostream& out, MatrixGraph<T, E>& graph_matrix) {
+template<class Vertex, class Weight>
+ostream& operator<<(ostream& out, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
   int vertex_num = graph_matrix.NumberOfVertices();
   int edge_num = graph_matrix.NumberOfEdges();
@@ -405,12 +405,12 @@ ostream& operator<<(ostream& out, MatrixGraph<T, E>& graph_matrix) {
   for (int src_vertex_index = 0; src_vertex_index < vertex_num; src_vertex_index++) {
     for (int dest_vertex_index = 0; dest_vertex_index < vertex_num; dest_vertex_index++) {
 
-      E weight = graph_matrix.GetWeight(src_vertex_index, dest_vertex_index);
+      Weight weight = graph_matrix.GetWeight(src_vertex_index, dest_vertex_index);
 
       if (weight > 0 && weight < MAX_WEIGHT) {
 
-        T e1 = graph_matrix.GetValue(src_vertex_index);
-        T e2 = graph_matrix.GetValue(dest_vertex_index);
+        Vertex e1 = graph_matrix.GetValue(src_vertex_index);
+        Vertex e2 = graph_matrix.GetValue(dest_vertex_index);
 
         out << "(" << e1 << "," << e2 << "," << weight << ")" << endl;
       }
@@ -419,8 +419,8 @@ ostream& operator<<(ostream& out, MatrixGraph<T, E>& graph_matrix) {
 }
 
 
-template<class T, class E>
-int MatrixGraph<T, E>::GetVertexIndex(T vertex) {
+template<class Vertex, class Weight>
+int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) {
 
   int vertex_index = -1;
 
@@ -435,8 +435,8 @@ int MatrixGraph<T, E>::GetVertexIndex(T vertex) {
 }
 
 
-template<class T, class E>
-void MatrixGraph<T, E>::PrintMatrix() {
+template<class Vertex, class Weight>
+void MatrixGraph<Vertex, Weight>::PrintMatrix() {
   for (int i = 0; i < this->vertices_num_; i++) {
     for (int j = 0; j < this->vertices_num_; j++) {
       cout<<this->edge_matrix_[i][j]<<"  ";
@@ -446,8 +446,8 @@ void MatrixGraph<T, E>::PrintMatrix() {
 }
 
 
-template<class T, class E>
-void MatrixGraph<T, E>::CyberDashShow() {
+template<class Vertex, class Weight>
+void MatrixGraph<Vertex, Weight>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
       <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl

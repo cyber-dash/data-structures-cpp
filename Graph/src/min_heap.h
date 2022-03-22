@@ -23,17 +23,17 @@ using namespace std;
 
 /*!
  * @brief 最小堆模板类
- * @tparam E 类型模板参数
+ * @tparam Weight 类型模板参数
  */
-template <class E>
+template <class Weight>
 class MinHeap {
 public:
   MinHeap(int size = DEFAULT_SIZE);
-  MinHeap(E arr[], int arr_size);
+  MinHeap(Weight arr[], int arr_size);
   ~MinHeap() {delete[] heap_array_;}
 
-  bool Insert(const E& item);
-  bool RemoveMin(E& value);
+  bool Insert(const Weight& item);
+  bool RemoveMin(Weight& value);
   bool IsEmpty() const { return current_size_ == 0 ? true : false; }
   bool IsFull() const { return current_size_ == max_size_ ? true : false; }
   void MakeEmpty() { current_size_ = 0; }
@@ -41,7 +41,7 @@ public:
   void CyberDashShow();
 
 private:
-  E* heap_array_;
+  Weight* heap_array_;
   int current_size_;
   int max_size_;
   void siftDown(int start, int end);
@@ -49,12 +49,12 @@ private:
 };
 
 
-template <class E>
-MinHeap<E>::MinHeap(int size) {
+template <class Weight>
+MinHeap<Weight>::MinHeap(int size) {
 
   max_size_ = (size > DEFAULT_SIZE) ? size : DEFAULT_SIZE;
 
-  heap_array_ = new E[max_size_];
+  heap_array_ = new Weight[max_size_];
   if (heap_array_ == NULL) {
     cerr << "堆存储分配失败！" << endl;
     exit(1);
@@ -64,10 +64,10 @@ MinHeap<E>::MinHeap(int size) {
 }
 
 
-template <class E>
-MinHeap<E>::MinHeap(E arr[], int arr_size) {
+template <class Weight>
+MinHeap<Weight>::MinHeap(Weight arr[], int arr_size) {
   max_size_ = (arr_size > DEFAULT_SIZE) ? arr_size : DEFAULT_SIZE;
-  heap_array_ = new E[max_size_];
+  heap_array_ = new Weight[max_size_];
 
   if (heap_array_ == NULL) {
     cerr << "堆存储分配失败！" << endl;
@@ -89,8 +89,8 @@ MinHeap<E>::MinHeap(E arr[], int arr_size) {
 }
 
 
-template <class E>
-void MinHeap<E>::siftDown(int start, int end) {
+template <class Weight>
+void MinHeap<Weight>::siftDown(int start, int end) {
 
   int cur = start;
 
@@ -99,7 +99,7 @@ void MinHeap<E>::siftDown(int start, int end) {
 
   int min_child = left_child;
 
-  E cur_value = heap_array_[cur];
+  Weight cur_value = heap_array_[cur];
 
   while (left_child <= end) {
 
@@ -124,10 +124,10 @@ void MinHeap<E>::siftDown(int start, int end) {
 }
 
 
-template <class E>
-void MinHeap<E>::siftUp(int start) {
+template <class Weight>
+void MinHeap<Weight>::siftUp(int start) {
   int j = start, i = (j - 1) / 2;
-  E temp = heap_array_[j];
+  Weight temp = heap_array_[j];
 
   while (j > 0) {
     if (heap_array_[i] <= temp) {
@@ -143,8 +143,8 @@ void MinHeap<E>::siftUp(int start) {
 }
 
 
-template <class E>
-bool MinHeap<E>::Insert(const E& item) {
+template <class Weight>
+bool MinHeap<Weight>::Insert(const Weight& item) {
 
   if (current_size_ == max_size_) {
     cerr << "Heap Full." << endl;
@@ -161,8 +161,8 @@ bool MinHeap<E>::Insert(const E& item) {
 }
 
 
-template <class E>
-bool MinHeap<E>::RemoveMin(E& x) {
+template <class Weight>
+bool MinHeap<Weight>::RemoveMin(Weight& x) {
   if (!current_size_) {
     cerr << "Heap Empty." << endl;
     return false;
@@ -178,8 +178,8 @@ bool MinHeap<E>::RemoveMin(E& x) {
 }
 
 
-template<class T>
-void MinHeap<T>::CyberDashShow() {
+template<class Vertex>
+void MinHeap<Vertex>::CyberDashShow() {
   cout<<endl
       <<"*************************************** CyberDash ***************************************"<<endl<<endl
       <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl

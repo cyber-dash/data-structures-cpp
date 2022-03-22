@@ -25,23 +25,23 @@ using namespace std;
 
 
 // 图深度优先遍历
-template<class T, class E>
-void DFS(Graph<T, E>& graph, const T& vertex);
+template<class Vertex, class Weight>
+void DFS(Graph<Vertex, Weight>& graph, const Vertex& vertex);
 
 
 // 图深度优先遍历(递归)
-template<class T, class E>
-void DFSOnVertex(Graph<T, E>& graph, T vertex, set<T>& visited_vertex_set);
+template<class Vertex, class Weight>
+void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visited_vertex_set);
 
 
 // 图广度优先遍历
-template<class T, class E>
-void BFS(Graph<T, E>& graph, const T& vertex);
+template<class Vertex, class Weight>
+void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex);
 
 
 // 求图的连通分量
-template<class T, class E>
-void Components(Graph<T, E>& graph);
+template<class Vertex, class Weight>
+void Components(Graph<Vertex, Weight>& graph);
 
 
 /*!
@@ -66,23 +66,23 @@ struct MSTEdgeNode {
 
 /*!
  * @brief 最小生成树模板类
- * @tparam T 结点类型模板参数
- * @tparam E 边权值类型模板参数
+ * @tparam Vertex 结点类型模板参数
+ * @tparam Weight 边权值类型模板参数
  */
-template<class T, class E>
+template<class Vertex, class Weight>
 class MinSpanTree {
 protected:
-  MSTEdgeNode<T, E>* edge_node_array_; //!< 最小生成树结点数组
+  MSTEdgeNode<Vertex, Weight>* edge_node_array_; //!< 最小生成树结点数组
   int max_size_; //!< 最大结点数
   int cur_size_; //!< 当前生成树的节点数量
 public:
   // 构造函数
   MinSpanTree(int size): max_size_(size), cur_size_(0) {
-    edge_node_array_ = new MSTEdgeNode<T, E>[size];
+    edge_node_array_ = new MSTEdgeNode<Vertex, Weight>[size];
   }
 
   // 向edge_node_array_插入结点
-  int Insert(MSTEdgeNode<T, E>& edge_node) {
+  int Insert(MSTEdgeNode<Vertex, Weight>& edge_node) {
     if (cur_size_ >= max_size_) {
       return -1;
     }
@@ -95,7 +95,7 @@ public:
 
   /*! @brief 显示最小生成树 */
   void Show() {
-    E sum = 0;
+    Weight sum = 0;
     for (int i = 0; i < cur_size_; i++) {
       sum += edge_node_array_[i].weight;
       cout << "head: " << edge_node_array_[i].head << ", tail: " << edge_node_array_[i].tail << ", weight: "
@@ -108,28 +108,28 @@ public:
 
 
 // Kruskal最小生成树
-template<class T, class E>
-void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree);
+template<class Vertex, class Weight>
+void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
 // Prim(Plus)
-template<class T, class E>
-void PrimPlus(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
+template<class Vertex, class Weight>
+void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
 // Prim算法朴素实现
-template<class T, class E>
-void Prim(Graph<T, E>& graph, T vertex, MinSpanTree<T, E>& min_span_tree);
+template<class Vertex, class Weight>
+void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
 // 迪杰斯特拉(Dijkstra)最短路径
-template<class T, class E>
-void DijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
+template<class Vertex, class Weight>
+void DijkstraShortestPath(Graph<Vertex, Weight>& graph, Vertex origin_vertex, Weight min_dist_arr[], int from_path_arr[]);
 
 
 // 显示迪杰斯特拉(Dijkstra)最短路径
-template<class T, class E>
-void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]);
+template<class Vertex, class Weight>
+void PrintDijkstraShortestPath(Graph<Vertex, Weight>& graph, Vertex origin_vertex, Weight min_dist_arr[], int from_path_arr[]);
 
 
 #endif // CYBER_DASH_GRAPH_ALGORITHM_H
