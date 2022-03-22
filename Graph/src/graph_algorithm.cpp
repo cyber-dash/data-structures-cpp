@@ -342,7 +342,18 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  * @param starting_vertex 起始结点
  * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
- * @note 贪心算法
+ * @note 
+ * S: 保存所有已知实际最短路径值的结点的集合
+ * Q: Q是结点的一个优先队列，以结点的最短路径估计, 进行排序
+ * function Dijkstra(图, 边集合, 起始点)
+ *     INITIALIZE-SINGLE-SOURCE(图, 起始点)   // 初始化, 每个除原点外的顶点的置为无穷大，distance[起始点索引] = 0
+ *     S <-- 空
+ *     Q <-- 起始点
+ *     while (Q中有元素)
+ *         do u <-- EXTRACT_MIN(Q)           // 选取u为Q中最短路径估计最小的结点
+ *         S <-- S and u
+ *         for u的每个邻接结点
+ *             松弛(u, v, 边集合)             // 松弛成功的结点会被加入到队列中
  */
 template<class Vertex, class Weight>
 void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
@@ -351,7 +362,7 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
                           int predecessor[])
 {
   int vertex_num = graph.NumberOfVertices();
-  set<Vertex> vertex_set;
+  set<Vertex> vertex_set;   // 这个set的本意, 是用来实现优先队列
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
 
   // 初始化
@@ -380,13 +391,13 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
   vertex_set.insert(starting_vertex);
   distance[starting_vertex_idx] = 0;
 
-  // 将图中其他vertex_num - 1个结点, 按照贪心策略, 执行算法, 并加入到集合vertex_set
   for (int i = 0; i < vertex_num - 1; i++) {
     Weight cur_min_dist = (Weight)MAX_WEIGHT; // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
     Vertex cur_min_dist_dest_vertex;          // 当前最短路径的终点
 
     // 找到起始点到(不在vertex_set的)各结点中的最短路径, 和
     // 该路径对应的结点cur_min_dist_dest_vertex和结点索引cur_min_dist_dest_vertex_idx
+    // todo: 可以进行堆优化
     for (int j = 0; j < vertex_num; j++) {
 
       // 拿到索引j对应的结点vertex_j
@@ -451,7 +462,7 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
 
 
 /*!
- * @brief 显示迪杰斯特拉(Dijkstra)最短路径
+ * @brief 打印迪杰斯特拉(Dijkstra)最短路径
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
  * @param graph 图类型

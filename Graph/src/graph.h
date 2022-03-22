@@ -14,7 +14,7 @@
 
 
 const int DEFAULT_VERTICES = 20; //<! 默认图结点个数
-const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 矩阵图剔除这个逻辑
+const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
 
 
 /*!

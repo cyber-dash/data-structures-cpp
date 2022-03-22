@@ -381,57 +381,55 @@ void TestDijkstraShortestPath() {
   cout<<"|                 Test DijkstraShortestPath                 |"<<endl;
   cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
 
-  string v0 = "北京";
-  string v1 = "上海";
-  string v2 = "广州";
-  string v3 = "深圳";
-  string v4 = "杭州";
+  string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
 
-  AdjacencyListGraph<string, double> adjacency_list_graph;
+  AdjacencyListGraph<string, double> adjacency_list_graph;	// 邻接表图
+  MatrixGraph<string, double> matrix_graph;					// 矩阵图
 
-  adjacency_list_graph.InsertVertex(v0);
-  adjacency_list_graph.InsertVertex(v1);
-  adjacency_list_graph.InsertVertex(v2);
-  adjacency_list_graph.InsertVertex(v3);
-  adjacency_list_graph.InsertVertex(v4);
+  // 将5个城市都加入到两个图中
+  for (int i = 0; i < 5; i++) {
+	  adjacency_list_graph.InsertVertex(city[i]);
+  }
+  for (int i = 0; i < 5; i++) {
+	  matrix_graph.InsertVertex(city[i]);
+  }
 
-  adjacency_list_graph.InsertEdge(v0, v1, 98.63);
-  adjacency_list_graph.InsertEdge(v1, v2, 51.52);
-  adjacency_list_graph.InsertEdge(v2, v3, 17);
-  adjacency_list_graph.InsertEdge(v3, v4, 58.98);
-  adjacency_list_graph.InsertEdge(v0, v3, 29.3);
-  adjacency_list_graph.InsertEdge(v0, v4, 100.003);
-  adjacency_list_graph.InsertEdge(v2, v4, 9.34);
+  // 北京 --> 上海, 98.63
+  // 上海 --> 广州, 51.52
+  // 广州 --> 深圳, 17 
+  // 深圳 --> 杭州, 58.98
+  // 北京 --> 深圳, 29.3
+  // 北京 --> 杭州, 100.003
+  // 广州 --> 杭州, 9.34
+  adjacency_list_graph.InsertEdge(city[0], city[1], 98.63);
+  adjacency_list_graph.InsertEdge(city[1], city[2], 51.52);
+  adjacency_list_graph.InsertEdge(city[2], city[3], 17);
+  adjacency_list_graph.InsertEdge(city[3], city[4], 58.98);
+  adjacency_list_graph.InsertEdge(city[0], city[3], 29.3);
+  adjacency_list_graph.InsertEdge(city[0], city[4], 100.003);
+  adjacency_list_graph.InsertEdge(city[2], city[4], 9.34);
 
-  MatrixGraph<string, double> matrix_graph;
-
-  matrix_graph.InsertVertex(v0);
-  matrix_graph.InsertVertex(v1);
-  matrix_graph.InsertVertex(v2);
-  matrix_graph.InsertVertex(v3);
-  matrix_graph.InsertVertex(v4);
-
-  matrix_graph.InsertEdge(v0, v1, 98.63);
-  matrix_graph.InsertEdge(v1, v2, 51.52);
-  matrix_graph.InsertEdge(v2, v3, 17);
-  matrix_graph.InsertEdge(v3, v4, 58.98);
-  matrix_graph.InsertEdge(v0, v3, 29.3);
-  matrix_graph.InsertEdge(v0, v4, 100.003);
-  matrix_graph.InsertEdge(v2, v4, 9.34);
+  matrix_graph.InsertEdge(city[0], city[1], 98.63);
+  matrix_graph.InsertEdge(city[1], city[2], 51.52);
+  matrix_graph.InsertEdge(city[2], city[3], 17);
+  matrix_graph.InsertEdge(city[2], city[4], 58.98);
+  matrix_graph.InsertEdge(city[0], city[3], 29.3);
+  matrix_graph.InsertEdge(city[0], city[4], 100.003);
+  matrix_graph.InsertEdge(city[2], city[4], 9.34);
 
   cout<<endl<<"**邻接表图Dijkstra测试**"<<endl;
   double min_dist_arr_adj[5];
   int from_path_arr_adj[5];
 
-  DijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
-  PrintDijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_adj, from_path_arr_adj);
+  DijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+  PrintDijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   double min_dist_arr_matrix[5];
   int from_path_arr_matrix[5];
 
-  DijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_matrix, from_path_arr_matrix);
-  PrintDijkstraShortestPath(adjacency_list_graph, v0, min_dist_arr_matrix, from_path_arr_matrix);
+  DijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+  PrintDijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
