@@ -30,11 +30,11 @@ void DFS(Graph<T, E>& graph, const T& vertex) {
 
 /*!
  * @brief 图深度优先遍历(递归)
- * @tparam T 节点类型模板参数
+ * @tparam T 结点类型模板参数
  * @tparam E 边权值类型模板参数
  * @param graph 图
  * @param vertex 遍历起始结点
- * @param visited_vertex_set 已访问节点集合
+ * @param visited_vertex_set 已访问结点集合
  * @note 利用函数的调用关系来模拟栈
  */
 template<class T, class E>
@@ -113,23 +113,23 @@ void BFS(Graph<T, E>& graph, const T& vertex) {
  * @tparam E 边权值类型模板参数
  * @param graph 图
  * @note
- * 1. 使用visited_vertex_set保存已经遍历过的节点
- * 2. 每遍历一个节点vertex
+ * 1. 使用visited_vertex_set保存已经遍历过的结点
+ * 2. 每遍历一个结点vertex
  *   如果在visited_vertex_set中, 则已经在某连通分量中, 不再处理;
  *   如果不在visited_vertex_set中, 使用DFS对vertex进行遍历, 连通分量数量+1
  */
 template<class T, class E>
 void Components(Graph<T, E>& graph) {
 
-  int vertices_num = graph.NumberOfVertices(); // 图内节点的数量
-  set<T> visited_vertex_set; // 使用set保存已经遍历过的节点
+  int vertices_num = graph.NumberOfVertices(); // 图内结点的数量
+  set<T> visited_vertex_set; // 使用set保存已经遍历过的结点
 
   int component_index = 1; // 初始连通分量为1
 
   for (int i = 0; i < vertices_num; i++) {
 
     T vertex;
-    bool done = graph.GetVertexByIndex(vertex, i); // 获取索引i对应的节点vertex
+    bool done = graph.GetVertexByIndex(vertex, i); // 获取索引i对应的结点vertex
 
     if (done) {
       // 如果visited_vertex_set中, 没有查到vertex, 说明vertex在一个新的联通分量中
@@ -212,7 +212,7 @@ void Kruskal(Graph<T, E>& graph, MinSpanTree<T, E>& min_span_tree) {
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
  * @param graph 图
- * @param vertex 起始节点(起始可以不用这个参数, 参考教科书, 此处保留)
+ * @param vertex 起始结点(起始可以不用这个参数, 参考教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
  * 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
@@ -222,7 +222,7 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
 
   MSTEdgeNode<Vertex, Weight> mst_edge_node;
 
-  int count = 1; // 起始vertex进入mst节点集合, count=1
+  int count = 1; // 起始vertex进入mst结点集合, count=1
   int vertex_num = graph.NumberOfVertices();
   int edge_num = graph.NumberOfEdges();
 
@@ -277,7 +277,7 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
  * @param graph 图
- * @param vertex 起始节点(其实可以不用这个参数, 参照教科书, 此处保留)
+ * @param vertex 起始结点(其实可以不用这个参数, 参照教科书, 此处保留)
  * @param min_span_tree 最小生成树
  */
 template<class Vertex, class Weight>
@@ -285,7 +285,7 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
 
   MSTEdgeNode<Vertex, Weight> mst_edge_node;
 
-  int count = 1; // 起始vertex进入mst节点集合, count=1
+  int count = 1; // 起始vertex进入mst结点集合, count=1
   int vertex_num = graph.NumberOfVertices();
   int edge_num = graph.NumberOfEdges();
 
@@ -334,61 +334,62 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
 }
 
 
-/**
+/*!
  * @brief 迪杰斯特拉(Dijkstra)最短路径
- * @tparam Vertex 图节点模板类型
+ * @tparam Vertex 图结点模板类型
  * @tparam Weight 图边权值模板类型
  * @param graph 图的引用
- * @param origin_vertex 起始节点
- * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
- * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
+ * @param starting_vertex 起始结点
+ * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
+ * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  * @note 贪心算法
  */
 template<class Vertex, class Weight>
 void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
-                          Vertex origin_vertex,
-                          Weight min_dist_arr[],
-                          int from_path_arr[])
+                          Vertex starting_vertex,
+                          Weight distance[],
+                          int predecessor[])
 {
   int vertex_num = graph.NumberOfVertices();
   set<Vertex> vertex_set;
-  int origin_vertex_idx = graph.GetVertexIndex(origin_vertex); // origin_vertex节点的索引
+  int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
 
   // 初始化
   for (int i = 0; i < vertex_num; i++) {
 
-    // 获取索引i对应的节点vertex_i
+    // 获取索引i对应的结点vertex_i
     Vertex vertex_i;
     bool get_vertex_done = graph.GetVertexByIndex(vertex_i, i);
     /* error handler */
 
-    // 将边(origin_vertex --> vertex_i)的值, 保存到min_dist_arr[i], 如果不存在, 则min_dist_arr[i]为MAX_WEIGHT
-    bool get_weight_done = graph.GetWeight(min_dist_arr[i], origin_vertex, vertex_i);
+    // 将边(starting_vertex --> vertex_i)的值, 保存到distance[i], 如果不存在, 则distance[i]为MAX_WEIGHT
+    bool get_weight_done = graph.GetWeight(distance[i], starting_vertex, vertex_i);
     if (!get_weight_done) {
-      min_dist_arr[i] = (Weight)MAX_WEIGHT; // 其实可以用其他的方式表示没有边:-)
+      distance[i] = (Weight)MAX_WEIGHT; // todo: 其实可以用其他的方式表示没有边:-)
     }
 
-    // 如果边(origin_vertex --> vertex_i)存在, 则from_path_arr[i]的值, 为索引origin_vertex_idx; 否则为-1
-    if (vertex_i != origin_vertex && get_weight_done && get_vertex_done) {
-      from_path_arr[i] = origin_vertex_idx;
+    // 如果边(starting_vertex --> vertex_i)存在, 则predecessor[i]的值, 为索引starting_vertex_idx; 否则为-1
+    if (vertex_i != starting_vertex && get_weight_done && get_vertex_done) {
+      predecessor[i] = starting_vertex_idx;
     } else {
-      from_path_arr[i] = -1;
+      predecessor[i] = -1;
     }
   }
 
-  // 节点origin_vertex加入到集合vertex_set
-  vertex_set.insert(origin_vertex);
-  min_dist_arr[origin_vertex_idx] = 0;
+  // 起始点starting_vertex加入到集合vertex_set
+  vertex_set.insert(starting_vertex);
+  distance[starting_vertex_idx] = 0;
 
-  // 将图中其他vertex_num - 1个节点, 按照贪心策略, 执行算法, 并加入到集合vertex_set
+  // 将图中其他vertex_num - 1个结点, 按照贪心策略, 执行算法, 并加入到集合vertex_set
   for (int i = 0; i < vertex_num - 1; i++) {
-    Weight cur_min_dist = (Weight)MAX_WEIGHT; // 以origin_vertex为起点, 某个节点为终点的最短路径(当前最短路径)
+    Weight cur_min_dist = (Weight)MAX_WEIGHT; // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
     Vertex cur_min_dist_dest_vertex;          // 当前最短路径的终点
 
-    // 原点到各节点中的最短路径, 保存到cur_min_dist(当前最短路径), 并更新cur_min_dist_dest_vertex(当前最短路径终点)
+    // 找到起始点到(不在vertex_set的)各结点中的最短路径, 和
+    // 该路径对应的结点cur_min_dist_dest_vertex和结点索引cur_min_dist_dest_vertex_idx
     for (int j = 0; j < vertex_num; j++) {
 
-      // 拿到索引j对应的节点vertex_j
+      // 拿到索引j对应的结点vertex_j
       Vertex vertex_j;
       graph.GetVertexByIndex(vertex_j, j);
       /* error handler */
@@ -398,20 +399,19 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
         continue;
       }
 
-      if (min_dist_arr[j] < cur_min_dist)
+      if (distance[j] < cur_min_dist)
       {
         cur_min_dist_dest_vertex = vertex_j;
-        cur_min_dist = min_dist_arr[j];
+        cur_min_dist = distance[j];
       }
     }
+
+    // cur_min_dist_dest_vertex结点对应的结点索引
+    int cur_min_dist_dest_vertex_idx = graph.GetVertexIndex(cur_min_dist_dest_vertex);
 
     // 将cur_min_dist_dest_vertex插入到vertex_set
     vertex_set.insert(cur_min_dist_dest_vertex);
 
-    // 拿到cur_min_dist_dest_vertex结点对应的结点索引
-    int cur_min_dist_dest_vertex_idx = graph.GetVertexIndex(cur_min_dist_dest_vertex);
-
-    // Dijkstra核心算法
     for (int j = 0; j < vertex_num; j++) {
 
       // 拿到索引j对应的结点vertex_j
@@ -431,18 +431,19 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
         continue;
       }
 
-      // 如果:
-      //   边 (origin_vertex --> cur_min_dist_dest_vertex)               的weight
+      // 松弛操作:
+      // 如果
+      //   边 (starting_vertex --> cur_min_dist_dest_vertex)                的weight
       //    +
-      //   边                   (cur_min_dist_dest_vertex  --> vertex_j) 的weight
+      //   边                     (cur_min_dist_dest_vertex  -->  vertex_j) 的weight
       //    <
-      //   边 (origin_vertex                -->                vertex_j) 的weight
-      // 则:
-      //   更新min_dist_arr[j]和from_path_arr[j]
-      if (min_dist_arr[cur_min_dist_dest_vertex_idx] + weight < min_dist_arr[j])
+      //   边 (starting_vertex                -->                 vertex_j) 的weight
+      // 则
+      //   更新distance[j]和predecessor[j]
+      if (distance[cur_min_dist_dest_vertex_idx] + weight < distance[j])
       {
-        min_dist_arr[j] = min_dist_arr[cur_min_dist_dest_vertex_idx] + weight;
-        from_path_arr[j] = cur_min_dist_dest_vertex_idx;
+        distance[j] = distance[cur_min_dist_dest_vertex_idx] + weight;
+        predecessor[j] = cur_min_dist_dest_vertex_idx;
       }
     }
   }
@@ -454,9 +455,9 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
  * @tparam T 结点类型模板参数
  * @tparam E 边权值类型模板参数
  * @param graph 图类型
- * @param origin_vertex 路径起始节点
- * @param min_dist_arr 最短路径数组, dist[i]表示: 路径起始节点到索引i节点的最短路径的权值
- * @param from_path_arr 路径数组, from_path_arr[i]表示: 以索引i节点为终点的边的起始节点
+ * @param origin_vertex 路径起始结点
+ * @param distance 最短路径数组, dist[i]表示: 路径起始结点到索引i结点的最短路径的权值
+ * @param predecessor 路径数组, predecessor[i]表示: 以索引i结点为终点的边的起始结点
  */
 template<class T, class E>
 void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_arr[], int from_path_arr[]) {
@@ -465,17 +466,17 @@ void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_a
   int vertex_count = graph.NumberOfVertices();
   int origin_vertex_idx = graph.GetVertexIndex(origin_vertex);
 
-  // 用于存放以某个节点为终点的最短路径经过的节点
+  // 用于存放以某个结点为终点的最短路径经过的结点
   int* cur_pre_path_arr = new int[vertex_count];
   /* error handler */
 
-  // 分别显示origin_vertex到各个节点的最短路径
+  // 分别显示origin_vertex到各个结点的最短路径
   for (int i = 0; i < vertex_count; i++) {
     if (i == origin_vertex_idx) {
       continue;
     }
 
-    int pre_vertex_idx = i; // 以索引i节点为终点
+    int pre_vertex_idx = i; // 以索引i结点为终点
     int idx = 0;
 
     while (pre_vertex_idx != origin_vertex_idx) {
@@ -484,7 +485,7 @@ void PrintDijkstraShortestPath(Graph<T, E>& graph, T origin_vertex, E min_dist_a
       pre_vertex_idx = from_path_arr[pre_vertex_idx];
     }
 
-    // 获取索引i的节点
+    // 获取索引i的结点
     T idx_i_vertex;
     graph.GetVertexByIndex(idx_i_vertex, i);
 
