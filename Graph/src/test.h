@@ -39,7 +39,10 @@ void TestKruskal();
 void TestPrim();
 
 /*! 测试Dijkstra最小生成树 */
-void TestDijkstraShortestPath();
+void TestDijkstra();
+
+/*! 测试BellmanFord最小生成树 */
+void TestBellmanFord();
 
 /*! 关于CyberDash */
 void TestCyberDashShow();

@@ -165,12 +165,12 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 
   DisjointSet disjoint_set(vertex_num);
 
-  for (int u = 0; u < vertex_num; ++u) {
-    for (int v = u + 1; v < vertex_num; v++) {
+  for (int u_idx = 0; u_idx < vertex_num; ++u_idx) {
+    for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
       Vertex vertex_u;
       Vertex vertex_v;
-      graph.GetVertexByIndex(vertex_u, u);
-      graph.GetVertexByIndex(vertex_v, v);
+      graph.GetVertexByIndex(vertex_u, u_idx);
+      graph.GetVertexByIndex(vertex_v, v_idx);
 
       Weight weight;
       bool get_weight_done = graph.GetWeight(weight, vertex_u, vertex_v);
@@ -208,17 +208,17 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 
 
 /*!
- * @brief Prim算法(优化)
+ * @brief Prim算法(使用堆实现的优先队列)
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
  * @param graph 图
  * @param vertex 起始结点(起始可以不用这个参数, 参考教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
- * 殷人昆版教材的实现, 此为经过优化的版本, 优化点在堆的操作
+ * 殷人昆版教材的实现, 此为经过优化的版本, 优化点在引入优先队列(堆优化)
  */
 template<class Vertex, class Weight>
-void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
+void PrimByHeap(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
   MSTEdgeNode<Vertex, Weight> mst_edge_node;
 
@@ -350,13 +350,13 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  *     S <-- 空
  *     Q <-- 起始点
  *     while (Q中有元素)
- *         do u <-- EXTRACT_MIN(Q)           // 选取u为Q中最短路径估计最小的结点
- *         S <-- S and u
+ *         do u_idx <-- EXTRACT_MIN(Q)           // 选取u为Q中最短路径估计最小的结点
+ *         S <-- S and u_idx
  *         for u的每个邻接结点
- *             松弛(u, v, 边集合)             // 松弛成功的结点会被加入到队列中
+ *             松弛(u_idx, v_idx, 边集合)             // 松弛成功的结点会被加入到队列中
  */
 template<class Vertex, class Weight>
-void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
+void Dijkstra(Graph<Vertex, Weight>& graph,
                           Vertex starting_vertex,
                           Weight distance[],
                           int predecessor[])
@@ -461,8 +461,93 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
 }
 
 
+// 贝尔曼福特(Bellman-Ford)最短路径
+template<class Vertex, class Weight>
+bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
+
+  int vertex_num = graph.NumberOfVertices();
+  int edge_num = graph.NumberOfEdges();
+  set<Vertex> vertex_set;
+  int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
+
+  // 初始化
+  for (int i = 0; i < vertex_num; i++) {
+
+    // 获取索引i对应的结点vertex_i
+    Vertex vertex_i;
+    bool get_vertex_done = graph.GetVertexByIndex(vertex_i, i);
+    /* error handler */
+
+    // 将边(starting_vertex --> vertex_i)的值, 保存到distance[i], 如果不存在, 则distance[i]为MAX_WEIGHT
+    bool get_weight_done = graph.GetWeight(distance[i], starting_vertex, vertex_i);
+    if (!get_weight_done) {
+      distance[i] = (Weight)MAX_WEIGHT; // todo: 其实可以用其他的方式表示没有边:-)
+    }
+
+    // 如果边(starting_vertex --> vertex_i)存在, 则predecessor[i]的值, 为索引starting_vertex_idx; 否则为-1
+    if (vertex_i != starting_vertex && get_weight_done && get_vertex_done) {
+      predecessor[i] = starting_vertex_idx;
+    } else {
+      predecessor[i] = -1;
+    }
+  }
+
+  for (int i = 0; i < edge_num - 1; i++) {
+
+      for (int u_idx = 0; u_idx < vertex_num; u_idx++) {
+          // for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
+          for (int v_idx = 0; v_idx < vertex_num; v_idx++) {
+			  Vertex vertex_u;
+			  Vertex vertex_v;
+			  graph.GetVertexByIndex(vertex_u, u_idx);
+			  graph.GetVertexByIndex(vertex_v, v_idx);
+
+			  Weight weight_u_v;
+			  bool get_weight_done = graph.GetWeight(weight_u_v, vertex_u, vertex_v);
+			  if (!get_weight_done) {
+                  continue;
+              }
+
+              // 边u-->v存在
+			  if (distance[u_idx] + weight_u_v < distance[v_idx]) {
+                  distance[v_idx] = distance[u_idx] + weight_u_v;
+                  predecessor[v_idx] = u_idx;
+			  }
+          }
+      }
+  }
+
+  bool has_negative_weight_cycle = false; // 默认没有负权环
+  bool negative_cycle_triggered = false;  // 是否除法负环检测规则
+  for (int u_idx = 0; u_idx < vertex_num; ++u_idx) {
+      for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
+		  Vertex vertex_u;
+		  Vertex vertex_v;
+		  graph.GetVertexByIndex(vertex_u, u_idx);
+		  graph.GetVertexByIndex(vertex_v, v_idx);
+
+		  Weight weight_u_v;
+		  bool get_weight_done = graph.GetWeight(weight_u_v, vertex_u, vertex_v);
+		  if (!get_weight_done) {
+			  continue;
+		  }
+          if (distance[u_idx] + weight_u_v < distance[v_idx]) {
+              negative_cycle_triggered = true;
+              break;
+          }
+      }
+      if (negative_cycle_triggered == true) {
+          has_negative_weight_cycle = true;
+          break;
+      }
+  }
+
+  return has_negative_weight_cycle;
+}
+
+
 /*!
- * @brief 打印迪杰斯特拉(Dijkstra)最短路径
+ * @brief 显示最短路径
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
  * @param graph 图类型
@@ -471,7 +556,7 @@ void DijkstraShortestPath(Graph<Vertex, Weight>& graph,
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  */
 template<class Vertex, class Weight>
-void PrintDijkstraShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
+void PrintShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
   cout << "从起始点(" << starting_vertex << ")到其他各顶点的最短路径为: " << endl;
 
   int vertex_count = graph.NumberOfVertices();

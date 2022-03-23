@@ -31,7 +31,9 @@ int main(int argc, char** argv) {
 
   TestKruskal();
 
-  TestDijkstraShortestPath();
+  TestDijkstra();
+
+  TestBellmanFord();
 
   TestCyberDashShow();
 

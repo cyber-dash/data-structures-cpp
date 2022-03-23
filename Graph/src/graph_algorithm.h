@@ -112,9 +112,9 @@ template<class Vertex, class Weight>
 void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
-// Prim(Plus)
+// Prim(使用堆实现的优先队列)
 template<class Vertex, class Weight>
-void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
+void PrimByHeap(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
 // Prim算法朴素实现
@@ -124,12 +124,17 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
 
 // 迪杰斯特拉(Dijkstra)最短路径
 template<class Vertex, class Weight>
-void DijkstraShortestPath(Graph<Vertex, Weight>& graph, Vertex origin_vertex, Weight min_dist_arr[], int from_path_arr[]);
+void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
 
 
 // 显示迪杰斯特拉(Dijkstra)最短路径
 template<class Vertex, class Weight>
-void PrintDijkstraShortestPath(Graph<Vertex, Weight>& graph, Vertex origin_vertex, Weight min_dist_arr[], int from_path_arr[]);
+void PrintShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
+
+
+// 贝尔曼福特(Bellman-Ford)最短路径
+template<class Vertex, class Weight>
+bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
 
 
 #endif // CYBER_DASH_GRAPH_ALGORITHM_H

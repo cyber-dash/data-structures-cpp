@@ -362,8 +362,7 @@ void TestPrim() {
 
   cout<<endl<<"**邻接表图测试**"<<endl;
   MinSpanTree<string, double> min_span_tree_adj(100);
-  // Prim(adjacency_list_graph, BJ, min_span_tree_adj); // 殷书原版实现
-  Prim(adjacency_list_graph, BJ, min_span_tree_adj); // 朴素版Prim
+  Prim(adjacency_list_graph, BJ, min_span_tree_adj); // 殷书原版堆优化
   min_span_tree_adj.Show();
 
   cout<<endl<<"**矩阵图测试**"<<endl;
@@ -375,10 +374,10 @@ void TestPrim() {
 }
 
 
-void TestDijkstraShortestPath() {
+void TestDijkstra() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                 Test DijkstraShortestPath                 |"<<endl;
+  cout<<"|                 Test Dijkstra                 |"<<endl;
   cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
 
   string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
@@ -421,15 +420,75 @@ void TestDijkstraShortestPath() {
   double min_dist_arr_adj[5];
   int from_path_arr_adj[5];
 
-  DijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
-  PrintDijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+  Dijkstra(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   double min_dist_arr_matrix[5];
   int from_path_arr_matrix[5];
 
-  DijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
-  PrintDijkstraShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+  Dijkstra(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+
+  cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+void TestBellmanFord() {
+  cout<<endl;
+  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+  cout<<"|                      Test BellmanFord                     |"<<endl;
+  cout<<"|                    测试BellmanFord最短路径                  |"<<endl;
+
+  string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
+
+  AdjacencyListGraph<string, double> adjacency_list_graph;	// 邻接表图
+  MatrixGraph<string, double> matrix_graph;					// 矩阵图
+
+  // 将5个城市都加入到两个图中
+  for (int i = 0; i < 5; i++) {
+	  adjacency_list_graph.InsertVertex(city[i]);
+  }
+  for (int i = 0; i < 5; i++) {
+	  matrix_graph.InsertVertex(city[i]);
+  }
+
+  // 北京 --> 上海, 98.63
+  // 上海 --> 广州, 51.52
+  // 广州 --> 深圳, 17 
+  // 深圳 --> 杭州, 58.98
+  // 北京 --> 深圳, 29.3
+  // 北京 --> 杭州, 100.003
+  // 广州 --> 杭州, 9.34
+  adjacency_list_graph.InsertEdge(city[0], city[1], 98.63);
+  adjacency_list_graph.InsertEdge(city[1], city[2], 51.52);
+  adjacency_list_graph.InsertEdge(city[2], city[3], 17);
+  adjacency_list_graph.InsertEdge(city[3], city[4], 58.98);
+  adjacency_list_graph.InsertEdge(city[0], city[3], 29.3);
+  adjacency_list_graph.InsertEdge(city[0], city[4], 100.003);
+  adjacency_list_graph.InsertEdge(city[2], city[4], 9.34);
+
+  matrix_graph.InsertEdge(city[0], city[1], 98.63);
+  matrix_graph.InsertEdge(city[1], city[2], 51.52);
+  matrix_graph.InsertEdge(city[2], city[3], 17);
+  matrix_graph.InsertEdge(city[2], city[4], 58.98);
+  matrix_graph.InsertEdge(city[0], city[3], 29.3);
+  matrix_graph.InsertEdge(city[0], city[4], 100.003);
+  matrix_graph.InsertEdge(city[2], city[4], 9.34);
+
+  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl;
+  double min_dist_arr_adj[5];
+  int from_path_arr_adj[5];
+
+  bool has = BellmanFord(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+
+  cout<<endl<<"**矩阵图测试**"<<endl;
+  double min_dist_arr_matrix[5];
+  int from_path_arr_matrix[5];
+
+  BellmanFord(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
