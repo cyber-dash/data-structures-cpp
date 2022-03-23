@@ -17,6 +17,24 @@ const int DEFAULT_VERTICES = 20; //<! 默认图结点个数
 const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
 
 
+/*
+// 通用边类, 可用于优化, todo:
+// template<class AdjListVertex, class Weight>
+template<class Vertex, class Weight>
+class GeneralEdge {
+public:
+  GeneralEdge(Vertex head, Vertex tail, Weight weight) {
+    this->head = head;
+    this->tail = tail;
+    this->weight = weight;
+  }
+  Weight weight;
+  Vertex head;
+  Vertex tail;
+};
+*/
+
+
 /*!
  * @brief 图基类(模板类)
  * @tparam Vertex 节点类型模板参数

@@ -51,7 +51,7 @@ struct Edge {
  * @tparam W 边权值参数模板类型
  */
 template<class V, class W>
-struct Vertex {
+struct AdjListVertex {
   V vertex; //!< 结点
   Edge<V, W>* adjacency_list; //!< 邻接表
 };
@@ -59,11 +59,11 @@ struct Vertex {
 
 /*!
  * @brief 邻接表图模板类
- * @tparam V 结点类型模板参数
- * @tparam W 边权值类型模板参数
+ * @tparam Vertex 结点类型模板参数
+ * @tparam Weight 边权值类型模板参数
  */
-template<class V, class W>
-class AdjacencyListGraph: public Graph<V, W> {
+template<class Vertex, class Weight>
+class AdjacencyListGraph: public Graph<Vertex, Weight> {
 public:
 
   // 构造函数
@@ -78,7 +78,7 @@ public:
    * @param vertex_index 结点索引
    * @return 是否获取成功
    */
-  bool GetVertexByIndex(V& vertex, int vertex_index);
+  bool GetVertexByIndex(Vertex& vertex, int vertex_index);
 
   /**
    * @brief 获取边权值
@@ -87,40 +87,40 @@ public:
    * @param vertex2 边的节点2
    * @return 是否获取成功
    */
-  bool GetWeight(W& weight, V vertex1, V vertex2);
+  bool GetWeight(Weight& weight, Vertex vertex1, Vertex vertex2);
 
   // 插入结点
-  bool InsertVertex(const V& vertex);
+  bool InsertVertex(const Vertex& vertex);
 
   // 删除结点
-  bool RemoveVertex(V vertex);
+  bool RemoveVertex(Vertex vertex);
 
   // 插入边
-  bool InsertEdge(V vertex1, V vertex2, W weight);
+  bool InsertEdge(Vertex vertex1, Vertex vertex2, Weight weight);
 
   // 删除边
-  bool RemoveEdge(V vertex1, V vertex2);
+  bool RemoveEdge(Vertex vertex1, Vertex vertex2);
 
   // 获取第一个相邻结点
-  bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex);
+  bool GetFirstNeighborVertex(Vertex& first_neighbor, const Vertex& vertex);
 
   // 获取下一个相邻结点
-  bool GetNextNeighborVertex(V& next_neighbor, const V& vertex, const V& neighbor_vertex);
+  bool GetNextNeighborVertex(Vertex& next_neighbor, const Vertex& vertex, const Vertex& neighbor_vertex);
 
   // 获取结点索引
-  int GetVertexIndex(V vertex);
+  int GetVertexIndex(Vertex vertex);
 
   // 输入图(重载标准输入)
   template<class U>
-  friend istream& operator>>(istream& in, AdjacencyListGraph<V, W>& graph_adjacency_list);
+  friend istream& operator>>(istream& in, AdjacencyListGraph<Vertex, Weight>& graph_adjacency_list);
   // 打印图(重载标准输出)
   template<class U>
-  friend ostream& operator<<(ostream& out, AdjacencyListGraph<V, W>& graph_adjacency_list);
+  friend ostream& operator<<(ostream& out, AdjacencyListGraph<Vertex, Weight>& graph_adjacency_list);
 
   /*! @brief 我们是CyberDash :-) */
   void CyberDashShow();
 private:
-  Vertex<V, W>* vertex_table_; //!< 邻接点数组
+  AdjListVertex<Vertex, Weight>* vertex_table_; //!< 邻接点数组
 };
 
 
@@ -137,7 +137,7 @@ AdjacencyListGraph<V, W>::AdjacencyListGraph(int size) {
   this->vertices_num_ = 0;
   this->edge_count_ = 0;
 
-  this->vertex_table_ = new Vertex<V, W>[this->max_vertices_num_];
+  this->vertex_table_ = new AdjListVertex<V, W>[this->max_vertices_num_];
 
   for (int i = 0; i < this->max_vertices_num_; i++) {
     this->vertex_table_[i].adjacency_list = NULL;

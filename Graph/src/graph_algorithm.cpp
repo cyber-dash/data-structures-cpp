@@ -40,7 +40,7 @@ void DFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 template<class Vertex, class Weight>
 void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visited_vertex_set) {
 
-  cout<<"Vertex: "<<vertex<<endl;
+  cout<<"AdjListVertex: "<<vertex<<endl;
 
   visited_vertex_set.insert(vertex);
 
@@ -80,7 +80,7 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
   queue<Vertex> vertex_queue;
   vertex_queue.push(vertex); // 遍历起始结点入队列
 
-  cout<<"Vertex "<<vertex<<endl;
+  cout<<"AdjListVertex "<<vertex<<endl;
 
   while (!vertex_queue.empty()) {
     Vertex front_vertex = vertex_queue.front(); // 每次取队头
@@ -92,7 +92,7 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 
     while (has_neighbor) {
       if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
-        cout<<"Vertex "<<neighbor_vertex<<endl;
+        cout<<"AdjListVertex "<<neighbor_vertex<<endl;
 
         visited_vertex_set.insert(neighbor_vertex);
 
@@ -189,7 +189,6 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 
   while (count < vertex_num) {
     min_heap.RemoveMin(edge_node);
-
 
     int tail_idx = graph.GetVertexIndex(edge_node.tail);
     int head_idx = graph.GetVertexIndex(edge_node.head);
@@ -493,9 +492,8 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
   }
 
   for (int i = 0; i < edge_num - 1; i++) {
-
+      // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:
       for (int u_idx = 0; u_idx < vertex_num; u_idx++) {
-          // for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
           for (int v_idx = 0; v_idx < vertex_num; v_idx++) {
 			  Vertex vertex_u;
 			  Vertex vertex_v;

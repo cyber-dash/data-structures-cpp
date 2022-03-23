@@ -14,6 +14,7 @@
 
 #include "graph.h"
 #include <iostream>
+#include <map>
 
 
 using namespace std;
@@ -21,11 +22,11 @@ using namespace std;
 
 /*!
  * @brief 矩阵图模板类
- * @tparam V 结点类型模板参数
- * @tparam W 边权值类型模板参数
+ * @tparam Vertex 结点类型模板参数
+ * @tparam Weight 边权值类型模板参数
  */
-template<class V, class W>
-class MatrixGraph: public Graph<V, W> {
+template<class Vertex, class Weight>
+class MatrixGraph: public Graph<Vertex, Weight> {
 
 public:
   // 构造函数
@@ -40,7 +41,7 @@ public:
    * @param vertex_index 结点索引
    * @return 是否获取成功
    */
-  bool GetVertexByIndex(V& vertex, int vertex_index);
+  bool GetVertexByIndex(Vertex& vertex, int vertex_index);
 
   /*!
    * @brief 获取边权值
@@ -49,21 +50,21 @@ public:
    * @param vertex2 边的节点2
    * @return 是否获取成功
    */
-  bool GetWeight(W& weight, V vertex1, V vertex2);
+  bool GetWeight(Weight& weight, Vertex vertex1, Vertex vertex2);
 
   /*!
    * @brief 插入结点
    * @param vertex 节点
    * @return 是否插入成功
    */
-  bool InsertVertex(const V& vertex);
+  bool InsertVertex(const Vertex& vertex);
 
   /*!
    * @brief 删除结点
    * @param vertex 节点
    * @return 是否删除成功
    */
-  bool RemoveVertex(V vertex);
+  bool RemoveVertex(Vertex vertex);
 
   /*!
    * @brief 插入边
@@ -72,7 +73,7 @@ public:
    * @param weight 边权值
    * @return 是否插入成功
    */
-  bool InsertEdge(V vertex1, V vertex2, W weight);
+  bool InsertEdge(Vertex vertex1, Vertex vertex2, Weight weight);
 
   /*!
    * @brief 删除边
@@ -80,7 +81,7 @@ public:
    * @param vertex2 边结点2
    * @return 是否删除成功
    */
-  bool RemoveEdge(V vertex1, V vertex2);
+  bool RemoveEdge(Vertex vertex1, Vertex vertex2);
 
   /*!
    * 获取第一个相邻结点
@@ -88,7 +89,7 @@ public:
    * @param vertex 节点
    * @return 是否获取成功
    */
-  bool GetFirstNeighborVertex(V& first_neighbor, const V& vertex);
+  bool GetFirstNeighborVertex(Vertex& first_neighbor, const Vertex& vertex);
 
   /*!
    * @brief 获取下一个相邻结点
@@ -97,26 +98,28 @@ public:
    * @param neighbor_vertex 当前相邻结点
    * @return 是否获取成功
    */
-  bool GetNextNeighborVertex(V& next_neighbor_vertex, const V& vertex, const V& neighbor_vertex);
+  bool GetNextNeighborVertex(Vertex& next_neighbor_vertex, const Vertex& vertex, const Vertex& neighbor_vertex);
 
   /*!
    * @brief 获取结点索引
    * @param vertex 结点
    * @return 结点索引
    */
-  int GetVertexIndex(V vertex);
+  int GetVertexIndex(Vertex vertex);
 
   template<class U>
-  friend istream& operator>>(istream& in, MatrixGraph<V, W>& graph_matrix);
+  friend istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix);
   template<class U>
-  friend ostream& operator<<(ostream& out, MatrixGraph<V, W>& graph_matrix);
+  friend ostream& operator<<(ostream& out, MatrixGraph<Vertex, Weight>& graph_matrix);
 
   void PrintMatrix();
   void CyberDashShow();
 
+  map<pair<Vertex, Vertex>, Weight> edge_map; // todo: 用于保存边集合, 未实现
+
 private:
-  V* vertices_list_; //!< 结点列表
-  W** edge_matrix_; //!< 边矩阵
+  Vertex* vertices_list_; //!< 结点列表
+  Weight** edge_matrix_; //!< 边矩阵
 };
 
 
@@ -295,6 +298,12 @@ bool MatrixGraph<Vertex, Weight>::InsertEdge(Vertex vertex1, Vertex vertex2, Wei
 
   this->edge_count_++;
 
+  pair<Vertex, Vertex> edge1(vertex1, vertex2);
+  pair<Vertex, Vertex> edge2(vertex2, vertex1);
+
+  this->edge_map.insert(pair<pair<Vertex, Vertex>, Weight>(edge1, weight));
+  this->edge_map.insert(pair<pair<Vertex, Vertex>, Weight>(edge2, weight));
+
   return true;
 }
 
@@ -370,7 +379,7 @@ istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
   for (int i = 0; i < vertex_num; i++) {
 
-    cout<<"Vertex "<<i<<":"<<endl;
+    cout<<"AdjListVertex "<<i<<":"<<endl;
     in >> src_vertex;
 
     graph_matrix.InsertVertex(src_vertex);
