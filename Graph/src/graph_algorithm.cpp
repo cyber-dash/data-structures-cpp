@@ -342,17 +342,18 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  * @note 
+ * Dijsktra算法伪代码
  * S: 保存所有已知实际最短路径值的结点的集合
  * Q: Q是结点的一个优先队列，以结点的最短路径估计, 进行排序
- * function Dijkstra(图, 边集合, 起始点)
+ * function Dijkstra
  *     INITIALIZE-SINGLE-SOURCE(图, 起始点)   // 初始化, 每个除原点外的顶点的置为无穷大，distance[起始点索引] = 0
  *     S <-- 空
  *     Q <-- 起始点
  *     while (Q中有元素)
- *         do u_idx <-- EXTRACT_MIN(Q)           // 选取u为Q中最短路径估计最小的结点
- *         S <-- S and u_idx
- *         for u的每个邻接结点
- *             松弛(u_idx, v_idx, 边集合)             // 松弛成功的结点会被加入到队列中
+ *         do u <-- EXTRACT_MIN(Q)           // 选取u为Q中最短路径估计最小的结点
+ *         S <-- S and u                     // u加入集合S
+ *         for u的每个邻接结点v:
+ *             松弛(u, v, 边集合)             // 松弛成功的结点会被加入到队列中
  */
 template<class Vertex, class Weight>
 void Dijkstra(Graph<Vertex, Weight>& graph,
@@ -460,7 +461,35 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
 }
 
 
-// 贝尔曼福特(Bellman-Ford)最短路径
+/*!
+ * 贝尔曼福特(Bellman-Ford)最短路径
+ * @tparam Vertex 图结点模板类型
+ * @tparam Weight 图边权值模板类型
+ * @param graph 图的引用
+ * @param starting_vertex 起始结点
+ * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
+ * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
+ * @return 是否有负环
+ * @note
+ * BellmanFord算法伪代码
+ *  // 初始化图
+ *  for 图中的每个结点v:
+ *      如果 v 是原点, 则: distance[v] = 0
+ *      否则: distance[v] <-- MAX(不存在路径)
+ *      predecessor[v] <-- null
+ *
+ *  // 对每一条边重复操作
+ *  for循环(图结点总数 - 1)次:
+ *      for 图的每一条边edge (u, v):
+ *          如果 distance[u] + 边(u, v)权重 < distance[v], 则:
+ *              distance[v] <-- distance[u] + 边(u, v)权重
+ *              predecessor[v] <-- u
+ *
+ *  // 检查是否有负权重的回路
+ *  for 每一条边edge (u, v):
+ *      如果 distance[u] + 边(u, v)权重 < distance[v], 则:
+ *          error "图包含负回路"
+ */
 template<class Vertex, class Weight>
 bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
 
@@ -492,7 +521,7 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
   }
 
   for (int i = 0; i < edge_num - 1; i++) {
-      // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:
+      // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:-)
       for (int u_idx = 0; u_idx < vertex_num; u_idx++) {
           for (int v_idx = 0; v_idx < vertex_num; v_idx++) {
 			  Vertex vertex_u;
@@ -517,6 +546,7 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 
   bool has_negative_weight_cycle = false; // 默认没有负权环
   bool negative_cycle_triggered = false;  // 是否除法负环检测规则
+  // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:-)
   for (int u_idx = 0; u_idx < vertex_num; ++u_idx) {
       for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
 		  Vertex vertex_u;
