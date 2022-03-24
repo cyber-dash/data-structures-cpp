@@ -521,34 +521,34 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
   }
 
   for (int i = 0; i < edge_num - 1; i++) {
-      // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:-)
-      for (int u_idx = 0; u_idx < vertex_num; u_idx++) {
-          for (int v_idx = 0; v_idx < vertex_num; v_idx++) {
-			  Vertex vertex_u;
-			  Vertex vertex_v;
-			  graph.GetVertexByIndex(vertex_u, u_idx);
-			  graph.GetVertexByIndex(vertex_v, v_idx);
+    // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:-)
+    for (int u_idx = 0; u_idx < vertex_num; u_idx++) {
+      for (int v_idx = 0; v_idx < vertex_num; v_idx++) {
+        Vertex vertex_u;
+        Vertex vertex_v;
+        graph.GetVertexByIndex(vertex_u, u_idx);
+        graph.GetVertexByIndex(vertex_v, v_idx);
 
-			  Weight weight_u_v;
-			  bool get_weight_done = graph.GetWeight(weight_u_v, vertex_u, vertex_v);
-			  if (!get_weight_done) {
-                  continue;
-              }
+        Weight weight_u_v;
+        bool get_weight_done = graph.GetWeight(weight_u_v, vertex_u, vertex_v);
+        if (!get_weight_done) {
+          continue;
+        }
 
-              // 边u-->v存在
+        // 边u-->v存在
 			  if (distance[u_idx] + weight_u_v < distance[v_idx]) {
-                  distance[v_idx] = distance[u_idx] + weight_u_v;
-                  predecessor[v_idx] = u_idx;
+          distance[v_idx] = distance[u_idx] + weight_u_v;
+          predecessor[v_idx] = u_idx;
 			  }
-          }
       }
+    }
   }
 
   bool has_negative_weight_cycle = false; // 默认没有负权环
   bool negative_cycle_triggered = false;  // 是否除法负环检测规则
   // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:-)
   for (int u_idx = 0; u_idx < vertex_num; ++u_idx) {
-      for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
+    for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
 		  Vertex vertex_u;
 		  Vertex vertex_v;
 		  graph.GetVertexByIndex(vertex_u, u_idx);
@@ -559,15 +559,15 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 		  if (!get_weight_done) {
 			  continue;
 		  }
-          if (distance[u_idx] + weight_u_v < distance[v_idx]) {
-              negative_cycle_triggered = true;
-              break;
-          }
-      }
-      if (negative_cycle_triggered == true) {
-          has_negative_weight_cycle = true;
+      if (distance[u_idx] + weight_u_v < distance[v_idx]) {
+          negative_cycle_triggered = true;
           break;
       }
+    }
+    if (negative_cycle_triggered == true) {
+        has_negative_weight_cycle = true;
+        break;
+    }
   }
 
   return has_negative_weight_cycle;
