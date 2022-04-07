@@ -316,6 +316,10 @@ bool GenList<T>::IsGenListBeginChar_(T chr) {
  * @param char_queue char队列
  * @param node 节点指针
  * @param in_referred_list 该节点是否已经被引用
+ * @note
+ *  注意: 本实现中, 子表名必须使用大写字母表示, 如E(B(C(a)),D(a),G(#));
+ *  如果想要实现兼容无需子表名的广义表, 如(((a)), (a))等, 则本项目的很多实现需要较大调整
+ *  特别是gen_list_name_vec_这个变量, 尽量取消使用这个结构
  */
 template<class T>
 void GenList<T>::CreateGenListByQueueRecursive(queue<T>& char_queue, GenListNode<T>*& node, bool& in_referred_list) {

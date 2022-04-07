@@ -28,5 +28,8 @@ void TestDepth();
 /*! 测试广义表的长度 */
 void TestLength();
 
+/*! 测试广义表的复制 */
+void TestCopy();
+
 
 #endif // CYBER_DASH_GEN_LIST_TEST_H
