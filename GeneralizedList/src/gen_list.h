@@ -37,6 +37,13 @@ public:
   // 线性表尾
   bool Tail(GenList<T>& tail_list);
 
+  // CyberDash批注:
+  // 殷人昆版本中, 使用了一段线性结构保存线性表的名称(大写字母),
+  // 原书中使用数组, 本代码使用vector, 因此在复制时, 需要将这部分vector也复制, 并做相应的数据指向
+  // 这种方式本身, 对复制操作就比较不友好，如果优化, 则结点元素与书中的结构不太相同
+  // 因此, 目前不再对此进行进一步实现。
+  //
+  // 未来如果实现它, 也只可能会在其他版本(或其他代码)中实现此功能
   void CopyFrom(GenList<T>& src_gen_list);
 
   // 长度
@@ -85,7 +92,7 @@ private:
 
   // 查找已经被引用的结点
   GenListNode<T>* FindReferredNodePtr_(T chr);
-  // 复制子树, todo: 未测试
+  // 复制子树,
   GenListNode<T>* Copy_(GenListNode<T>*& ref_type_node);
 
   vector<T> gen_list_name_vec_; //!< 各表节点的vector
@@ -143,7 +150,19 @@ bool GenList<T>::Tail(GenList<T>& tail_list) {
 }
 
 
-
+/*!
+ *
+ * @tparam T
+ * @param src_gen_list
+ * @note
+ * CyberDash批注:
+ * 殷人昆版本中, 使用了一段线性结构保存线性表的名称(大写字母),
+ * 原书中使用数组, 本代码使用vector, 因此在复制时, 需要将这部分vector也复制, 并做相应的数据指向
+ * 这种方式本身, 对复制操作就比较不友好，如果优化, 则结点元素与书中的结构不太相同
+ * 因此, 目前不再对此进行进一步实现。
+ *
+ * 未来如果实现它, 也只可能会在其他版本(或其他代码)中实现此功能
+ */
 template<class T>
 void GenList<T>::CopyFrom(GenList<T>& src_gen_list) {
   ref_node_ = Copy_(src_gen_list.ref_node_);
@@ -153,11 +172,11 @@ void GenList<T>::CopyFrom(GenList<T>& src_gen_list) {
 template<class T>
 GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& ref_type_node) {
 
-  GenListNode<T> cur_node = NULL;
+  GenListNode<T>* cur_node = NULL;
 
   if (ref_type_node != NULL) {
     cur_node = new GenListNode<T>();
-    cur_node.type = ref_type_node->type;
+    cur_node->type = ref_type_node->type;
 
     switch (ref_type_node->type) {
       case GenListNode<T>::REF_TYPE:
@@ -167,13 +186,13 @@ GenListNode<T>* GenList<T>::Copy_(GenListNode<T>*& ref_type_node) {
           cur_node->union_info.value = ref_type_node->union_info.value;
         break;
       case GenListNode<T>::CHILD_LIST_TYPE:
-          cur_node.union_info.ref_node = Copy_(ref_type_node->union_info.ref_node);
+          cur_node->union_info.ref_node = Copy_(ref_type_node->union_info.ref_node);
         break;
       default:
         break;
     }
 
-      cur_node.next = Copy_(ref_type_node->next);
+    cur_node->next = Copy_(ref_type_node->next);
   }
 
   return cur_node;
