@@ -181,10 +181,11 @@ bool SparseMatrix<T>::GetElement(int row, int col, T& value) {
  * @tparam T 类型模板参数
  * @param row 行索引
  * @param col 列索引
- * @param value 值
+ * @param value 元素值
  * @return 是否成功
  * @note
- * 在稀疏矩阵中某位置添加元素(如果该位置有元素, 则替换), todo: 可以加个参数, 设置是否替换
+ * 在稀疏矩阵中某位置添加元素(如果该位置有元素, 则替换),
+ * todo: 可以加个参数, 设置是否替换
  */
 template<class T>
 bool SparseMatrix<T>::AddAndReplaceElement(int row, int col, T value) {
@@ -215,7 +216,7 @@ bool SparseMatrix<T>::AddAndReplaceElement(int row, int col, T value) {
         return true;
     }
 
-    if (this->Terms() == this->MaxTerms()) { // 不能再插入
+    if (this->Terms() == this->MaxTerms() || this->Terms() == this->Rows()  * this->Cols()) { // 不能再插入
         return false;
     }
 
