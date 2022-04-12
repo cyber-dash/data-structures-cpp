@@ -77,8 +77,8 @@ public:
 
   // 获取元素
   bool GetElement(int row, int col, T& value);
-  // 添加元素(如果此位置元素存在, 则覆盖)
-  bool AddElement(int row, int col, T value);
+  // 添加(替换)元素
+  bool AddAndReplaceElement(int row, int col, T value);
 
   /*! @brief 获取元素数组起始地址 */
   TriTuple<T>* SparseMatrixArray() { return this->sparse_matrix_array_; }
@@ -177,40 +177,74 @@ bool SparseMatrix<T>::GetElement(int row, int col, T& value) {
 
 
 /*!
- * @brief 添加元素
+ * 添加(替换)元素
  * @tparam T 类型模板参数
  * @param row 行索引
  * @param col 列索引
  * @param value 值
- * @return 是否添加成功
+ * @return 是否成功
  * @note
- * 如果row/col对应的位置已经有数组元素, 则更新数组元素的值
+ * 在稀疏矩阵中某位置添加元素(如果该位置有元素, 则替换), todo: 可以加个参数, 设置是否替换
  */
 template<class T>
-bool SparseMatrix<T>::AddElement(int row, int col, T value) {
+bool SparseMatrix<T>::AddAndReplaceElement(int row, int col, T value) {
 
-  if (row >= this->Rows() || col >= this->Cols()) {
-    return false;
-  }
-
-  for (int i = 0; i < this->Terms(); i++) {
-    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
-      this->sparse_matrix_array_[i].value = value;
-      return true;
+    if (row >= this->Rows() || col >= this->Cols()) {
+        return false;
     }
-  }
 
-  if (this->Terms() == this->MaxTerms()) { // 不能再插入
-    return false;
-  }
+    int insert_pos = -1;
+    for (int i = 0; i < this->Terms(); i++) {
+        // 如果索引i的元素的row于插入位置相同
+        if (this->sparse_matrix_array_[i].row == row) {
+            // 若果索引i的元素的col大于等于插入位置
+            if (this->sparse_matrix_array_[i].col >= col) {
+                insert_pos = i;
+                break;
+            }
+        } else if (this->sparse_matrix_array_[i].row > row) {
+            insert_pos = i;
+            break;
+        }
+    }
 
-  this->sparse_matrix_array_[this->terms_].row =  row;
-  this->sparse_matrix_array_[this->terms_].col =  col;
-  this->sparse_matrix_array_[this->terms_].value = value;
+    if (this->sparse_matrix_array_[insert_pos].row == row &&
+        this->sparse_matrix_array_[insert_pos].col == col)
+    {
+        this->sparse_matrix_array_[insert_pos].value = value;
+        return true;
+    }
 
-  this->terms_++;
+    if (this->Terms() == this->MaxTerms()) { // 不能再插入
+        return false;
+    }
 
-  return true;
+    // sparse_matrix_array_中没有找到插入位置, 因此在最后一位插入
+    if (insert_pos == -1) {
+        insert_pos = this->Terms();
+    }
+
+    // 先插入到最后一个位置
+    this->sparse_matrix_array_[this->terms_].row =  row;
+    this->sparse_matrix_array_[this->terms_].col =  col;
+    this->sparse_matrix_array_[this->terms_].value = value;
+
+    // 从后向前, 依次相邻交换, 完成插入
+    for (int i = this->Terms(); i > insert_pos; i--) {
+        swap(&this->sparse_matrix_array_[i], &this->sparse_matrix_array_[i - 1]);
+    }
+
+    this->terms_++; // 插入后, 数量+1
+
+    return true;
+}
+
+
+template<class T>
+void swap(TriTuple<T>* a, TriTuple<T>* b) {
+    TriTuple<T> tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
 
 

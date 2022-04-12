@@ -38,8 +38,8 @@ void TestSparseMatrixCopyConstructor() {
   SparseMatrix<int> sparse_matrix_1(100);
   sparse_matrix_1.SetRows(10);
   sparse_matrix_1.SetCols(20);
-  sparse_matrix_1.AddElement(3, 9, 100);
-  sparse_matrix_1.AddElement(4, 17, 83);
+  sparse_matrix_1.AddAndReplaceElement(3, 9, 100);
+  sparse_matrix_1.AddAndReplaceElement(4, 17, 83);
 
   cout<<"打印sparse_matrix_1:"<<endl;
   cout<<sparse_matrix_1<<endl<<endl;
@@ -82,10 +82,10 @@ void TestSparseMatrixTranspose() {
   sparse_matrix_1.SetRows(10);
   sparse_matrix_1.SetCols(20);
 
-  sparse_matrix_1.AddElement(0, 1, 11.345);
-  sparse_matrix_1.AddElement(1, 0, 4.2);
-  sparse_matrix_1.AddElement(6, 7, 432.569);
-  sparse_matrix_1.AddElement(9, 19, 54.8);
+  sparse_matrix_1.AddAndReplaceElement(0, 1, 11.345);
+  sparse_matrix_1.AddAndReplaceElement(1, 0, 4.2);
+  sparse_matrix_1.AddAndReplaceElement(6, 7, 432.569);
+  sparse_matrix_1.AddAndReplaceElement(9, 19, 54.8);
 
   cout<<"sparse_matrix_1矩阵:"<<endl;
   cout<<sparse_matrix_1<<endl;
@@ -110,13 +110,13 @@ void TestSparseMatrixFastTranspose() {
   sparse_matrix_1.SetRows(50);
   sparse_matrix_1.SetCols(40);
 
-  sparse_matrix_1.AddElement(0, 0, 9);
-  sparse_matrix_1.AddElement(0, 1, 11.345);
-  sparse_matrix_1.AddElement(1, 0, 4.2);
-  sparse_matrix_1.AddElement(6, 7, 432.569);
-  sparse_matrix_1.AddElement(6, 22, 5490.989);
-  sparse_matrix_1.AddElement(49, 38, 19.7989);
-  sparse_matrix_1.AddElement(49, 39, 64);
+  sparse_matrix_1.AddAndReplaceElement(0, 0, 9);
+  sparse_matrix_1.AddAndReplaceElement(49, 38, 19.7989);
+  sparse_matrix_1.AddAndReplaceElement(0, 1, 11.345);
+  sparse_matrix_1.AddAndReplaceElement(6, 7, 432.569);
+  sparse_matrix_1.AddAndReplaceElement(6, 22, 5490.989);
+  sparse_matrix_1.AddAndReplaceElement(1, 0, 4.2);
+  sparse_matrix_1.AddAndReplaceElement(49, 39, 64);
 
   cout<<"sparse_matrix_1矩阵:"<<endl;
   cout<<sparse_matrix_1<<endl;
