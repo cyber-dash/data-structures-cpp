@@ -209,7 +209,8 @@ bool SparseMatrix<T>::AddAndReplaceElement(int row, int col, T value) {
         }
     }
 
-    if (this->sparse_matrix_array_[insert_pos].row == row &&
+    if (insert_pos != -1 &&
+        this->sparse_matrix_array_[insert_pos].row == row &&
         this->sparse_matrix_array_[insert_pos].col == col)
     {
         this->sparse_matrix_array_[insert_pos].value = value;
