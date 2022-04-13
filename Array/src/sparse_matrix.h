@@ -185,7 +185,7 @@ bool SparseMatrix<T>::GetElement(int row, int col, T& value) {
  * @return 是否成功
  * @note
  * 在稀疏矩阵中某位置添加元素(如果该位置有元素, 则替换),
- * todo: 可以加个参数, 设置是否替换
+ *  todo: 可以加个参数, 设置是否替换
  */
 template<class T>
 bool SparseMatrix<T>::AddAndReplaceElement(int row, int col, T value) {
@@ -394,8 +394,8 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
  *
  *  \n先初始化以上两个数组 \n\n
  *  遍历sparse_matrix_array_ \n
- *  对第i个元素进行转置矩阵对应的赋值 \n
- *  赋值结束后, 更新trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col]的值(下一次转置矩阵数组执行保存的位置向后挪一位) \n
+ *  对原矩阵三元组第i个元素, 进行转置矩阵三元组对应位置的赋值 \n
+ *  赋值结束后, 更新trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col]的值(下一次转置矩阵数组执行的位置, 向后挪一位) \n
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
@@ -418,7 +418,8 @@ SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
 
   // 将转置数组每行有多少个元素, 保存到row_item_count_arr
   for (int i = 0; i < this->Terms(); i++) {
-    row_item_count_arr[this->SparseMatrixArray()[i].col]++;
+    int curRow = this->SparseMatrixArray()[i].col;  // 转置后的行索引
+    row_item_count_arr[curRow]++;
   }
 
   // 初始化转置数组的三元组数组sparse_matrix_array的分布
@@ -442,9 +443,9 @@ SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
     // 当前稀疏矩阵的三元组数组的数组索引, 取iter_pos_arr[cur_row];
     int cur_sparse_matrix_index = iter_pos_arr[cur_row];
 
-    // 转置矩阵的三元组数组
+    // 转置矩阵的三元组数组(首地址)
     TriTuple<T>* trans_sparse_matrix_array = trans_sparse_matrix->SparseMatrixArray();
-    // 原矩阵的三元组数组
+    // 原矩阵的三元组数组(首地址)
     TriTuple<T>* src_spase_matrix_array = this->SparseMatrixArray();
 
     // 转置矩阵元素的row/col于原数组互换, value相同
