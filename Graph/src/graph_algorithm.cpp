@@ -181,7 +181,6 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 
         min_heap.Insert(edge_node);
       }
-
     }
   }
 
@@ -278,58 +277,72 @@ void PrimByHeap(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex,
  * @param graph 图
  * @param vertex 起始结点(其实可以不用这个参数, 参照教科书, 此处保留)
  * @param min_span_tree 最小生成树
+ * @note
+ * 设参数graph对应图{ V(结点集合), { E(边集合) } },
+ * min_span_tree为最小生成树边(包括权值)的集合, 假设其对应结点集合为min_span_tree.
+ *
+ * 算法从mst_vertex_set = { vertex }开始(只包含起始结点),
+ *
+ * 循环以下操作:
+ *     在所有u ∈ mst_vertex_set, v ∈ (V - mst_vertex_set)的边(u, v) ∈ E中,
+ *     找一条权值最小的边(head, tail), 权值weight,
+ *         加入min_span_tree(以MSTEdgeNode的方式)
+ *         结点u加入mst_vertex_set,
+ *     直到mst_vertex_set = V为止
+ *
+ * 此时min_span_tree中有n-1条边, 为最小生成树
  */
 template<class Vertex, class Weight>
 void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
-  MSTEdgeNode<Vertex, Weight> mst_edge_node;
-
-  int count = 1; // 起始vertex进入mst结点集合, count=1
   int vertex_num = graph.NumberOfVertices();
   int edge_num = graph.NumberOfEdges();
 
-  set<Vertex> mst_vertex_set; // 原书中的Vmst
-  mst_vertex_set.insert(vertex);
+  set<Vertex> mst_vertex_set;       // 原书中的Vmst, 已经在MST中的结点集合
+  mst_vertex_set.insert(vertex);    // 起始结点插入
 
+  //
   do {
+    // Vertex cur_vertex;                                          // 遍历结点
+    MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);   // 小顶堆
 
-    MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);
+    // 将所有u ∈ mst_vertex_set, v ∈ V - mst_vertex_set对应的边(u, v), 插入到min_heap
+    // 插入小顶堆后, 堆顶既是权值最小边
+    for (typename set<Vertex>::iterator iter = mst_vertex_set.begin(); iter != mst_vertex_set.end(); iter++) {
+      Vertex cur_vertex = *iter;
 
-    for (typename set<Vertex>::iterator set_iter = mst_vertex_set.begin(); set_iter != mst_vertex_set.end(); set_iter++) {
-      vertex = *set_iter;
-
+      // 当前结点cur_vertex的所有不在mst_vertex_set的邻接结点, 对应的边
+      // 插入到min_heap
       Vertex neighbor_vertex;
-      bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
-
+      bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, cur_vertex);
       while (has_neighbor) {
         if (mst_vertex_set.find(neighbor_vertex) == mst_vertex_set.end()) {
 
-          mst_edge_node.tail = vertex;
-          mst_edge_node.head = neighbor_vertex;
+          MSTEdgeNode<Vertex, Weight> cur_mst_edge_node;
+          cur_mst_edge_node.head = cur_vertex;
+          cur_mst_edge_node.tail = neighbor_vertex;
 
-          graph.GetWeight(mst_edge_node.weight, vertex, neighbor_vertex);
+          graph.GetWeight(cur_mst_edge_node.weight, cur_vertex, neighbor_vertex);
 
-          min_heap.Insert(mst_edge_node);
+          min_heap.Insert(cur_mst_edge_node);
         }
 
+        // 定位到下一个邻接结点
         Vertex next_neighbor_vertex;
-        has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
-
+        has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, cur_vertex, neighbor_vertex);
         if (has_neighbor) {
           neighbor_vertex = next_neighbor_vertex;
         }
       }
     }
 
-    min_heap.RemoveMin(mst_edge_node);
+    MSTEdgeNode<Vertex, Weight> mst_edge_node;  // 最短边
+    min_heap.RemoveMin(mst_edge_node);       // 小顶堆删除存在堆顶的最短边
+    min_span_tree.Insert(mst_edge_node);     // 最短边进入min_span_tree
 
-    min_span_tree.Insert(mst_edge_node);
+    mst_vertex_set.insert(mst_edge_node.tail);
 
-    vertex = mst_edge_node.head;
-    mst_vertex_set.insert(vertex);
-    count++;
-
-  } while (count < vertex_num);
+  } while (mst_vertex_set.size() < vertex_num); // 循环n-1次, 插入n-1条边
 }
 
 
