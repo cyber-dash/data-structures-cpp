@@ -45,22 +45,24 @@ void Components(Graph<Vertex, Weight>& graph);
 
 
 /*!
- * @brief 最小生成树结点结构体
+ * 最小生成树结点结构体
+ * @tparam Vertex
+ * @tparam Weight
  */
-template<class V, class W>
+template<class Vertex, class Weight>
 struct MSTEdgeNode {
   /*! @brief 构造函数(空参数) */
   MSTEdgeNode() {}
   /*! @brief 构造函数() */
-  MSTEdgeNode(W value): weight(value) {}
+  MSTEdgeNode(Weight value): weight(value) {}
   /*! @brief 重载<= */
-  bool operator<=(MSTEdgeNode<V, W>& node) { return weight <= node.weight; }
+  bool operator<=(MSTEdgeNode<Vertex, Weight>& node) { return weight <= node.weight; }
   /*! @brief 重载> */
-  bool operator>(MSTEdgeNode<V, W>& node) { return weight > node.weight; }
+  bool operator>(MSTEdgeNode<Vertex, Weight>& node) { return weight > node.weight; }
 
-  V tail; //!< 尾结点
-  V head; //!< 头结点
-  W weight; //!< 边权重
+  Vertex tail; //!< 尾结点
+  Vertex head; //!< 头结点
+  Weight weight; //!< 边权重
 };
 
 
@@ -71,23 +73,23 @@ struct MSTEdgeNode {
  */
 template<class Vertex, class Weight>
 class MinSpanTree {
-protected:
-  MSTEdgeNode<Vertex, Weight>* edge_node_array_; //!< 最小生成树结点数组
-  int max_size_; //!< 最大结点数
-  int cur_size_; //!< 当前生成树的节点数量
 public:
-  // 构造函数
+  /*! 构造函数 */
   MinSpanTree(int size): max_size_(size), cur_size_(0) {
     edge_node_array_ = new MSTEdgeNode<Vertex, Weight>[size];
   }
 
-  // 向edge_node_array_插入结点
-  int Insert(MSTEdgeNode<Vertex, Weight>& edge_node) {
+  /*!
+   * 向MST插入结点
+   * @param mst_edge_node MSTEdgeNode类型结点
+   * @return 当前最小生成树边的数量
+   */
+  int Insert(MSTEdgeNode<Vertex, Weight>& mst_edge_node) {
     if (cur_size_ >= max_size_) {
       return -1;
     }
 
-    edge_node_array_[cur_size_] = edge_node;
+    edge_node_array_[cur_size_] = mst_edge_node;
     cur_size_++;
 
     return cur_size_ - 1;
@@ -95,7 +97,7 @@ public:
 
   /*! @brief 显示最小生成树 */
   void Show() {
-    Weight sum = 0;
+    Weight sum = 0; // 总权值
     for (int i = 0; i < cur_size_; i++) {
       sum += edge_node_array_[i].weight;
       cout << "head: " << edge_node_array_[i].head << ", tail: " << edge_node_array_[i].tail << ", weight: "
@@ -104,6 +106,10 @@ public:
 
     cout<<"最小生成树边, 总权值: "<<sum<<endl;
   }
+protected:
+  MSTEdgeNode<Vertex, Weight>* edge_node_array_; //!< 最小生成树结点数组
+  int max_size_; //!< 最大结点数
+  int cur_size_; //!< 当前生成树的节点数量
 };
 
 
