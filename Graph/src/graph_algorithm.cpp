@@ -40,7 +40,7 @@ void DFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 template<class Vertex, class Weight>
 void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visited_vertex_set) {
 
-  cout<<"AdjListVertex: "<<vertex<<endl;
+  cout<<"访问结点: "<<vertex<<endl;
 
   visited_vertex_set.insert(vertex);
 
@@ -74,25 +74,28 @@ void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visit
 template<class Vertex, class Weight>
 void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 
-  set<Vertex> visited_vertex_set;
-  visited_vertex_set.insert(vertex);
+  cout<<"访问结点: "<<vertex<<endl;
 
-  queue<Vertex> vertex_queue;
-  vertex_queue.push(vertex); // 遍历起始结点入队列
+  set<Vertex> visited_vertex_set;       // 已访问结点集合
+  visited_vertex_set.insert(vertex);    // 插入已访问的起始结点vertex
 
-  cout<<"AdjListVertex "<<vertex<<endl;
+  queue<Vertex> vertex_queue;           // 结点队列
+  vertex_queue.push(vertex);            // 已访问的起始结点vertex入队
 
   while (!vertex_queue.empty()) {
     Vertex front_vertex = vertex_queue.front(); // 每次取队头
     vertex_queue.pop();
 
-    // 已取出的队头结点的相邻结点入队
+    // 遍历:已取出的队头结点的相邻结点
+    //    如果
+    //        未访问该结点
+    //    则
+    //        入队
     Vertex neighbor_vertex;
     bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, front_vertex);
-
     while (has_neighbor) {
-      if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
-        cout<<"AdjListVertex "<<neighbor_vertex<<endl;
+      if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {   // 如果未访问
+        cout<<"访问结点: "<<neighbor_vertex<<endl;
 
         visited_vertex_set.insert(neighbor_vertex);
 
@@ -101,7 +104,9 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 
       Vertex next_neighbor_vertex;
       has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, front_vertex, neighbor_vertex);
-      neighbor_vertex = next_neighbor_vertex;
+      if (has_neighbor) {
+        neighbor_vertex = next_neighbor_vertex;
+      }
     }
   }
 }
@@ -229,7 +234,7 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 
 
 /*!
- * @brief Prim算法(使用堆实现的优先队列)
+ * @brief Prim算法(堆操作优化)
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
  * @param graph 图
@@ -301,9 +306,9 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
  * @param vertex 起始结点(其实可以不用这个参数, 参照教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
- * 
+ * 
  * 参数graph对应图{ V(结点集合), { E(边集合) } },
- * min_span_tree为最小生成树边(包括权值)的集合, 假设其对应结点集合为min_span_tree.
+ * min_span_tree为最小生成树边(包括权值)的集合, 假设其对应结点集合为mst_vertex_set.
  *
  * 算法从mst_vertex_set = { vertex }开始(只包含起始结点),
  *
@@ -386,13 +391,15 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  * @param graph 图的引用
  * @param starting_vertex 起始结点
  * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
- * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
- * @note 
- * Dijsktra算法伪代码
+ * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点的索引
+ * @note
+ *
+ * Dijkstra算法伪代码
+ *
  * S: 保存所有已知实际最短路径值的结点的集合
  * Q: Q是结点的一个优先队列，以结点的最短路径估计, 进行排序
  * function Dijkstra
- *     INITIALIZE-SINGLE-SOURCE(图, 起始点)   // 初始化, 每个除原点外的顶点的置为无穷大，distance[起始点索引] = 0
+ *     INITIALIZE-SINGLE-SOURCE(图, 起始点)   // 初始化, 每个除原点外的顶点的值为无穷大，distance[起始点索引] = 0
  *     S <-- 空
  *     Q <-- 起始点
  *     while (Q中有元素)
