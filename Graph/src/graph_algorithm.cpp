@@ -543,34 +543,48 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  * @return 是否有负环
  * @note
- * BellmanFord算法伪代码
- *  // 初始化图
- *  for 图中的每个结点v:
- *      如果 v 是原点, 则: distance[v] = 0
- *      否则: distance[v] <-- MAX(不存在路径)
- *      predecessor[v] <-- null
  *
- *  // 对每一条边重复操作
- *  for循环(图结点总数 - 1)次:
- *      for 图的每一条边edge (u, v):
- *          如果 distance[u] + 边(u, v)权重 < distance[v], 则:
- *              distance[v] <-- distance[u] + 边(u, v)权重
- *              predecessor[v] <-- u
  *
- *  // 检查是否有负权重的回路
- *  for 每一条边edge (u, v):
- *      如果 distance[u] + 边(u, v)权重 < distance[v], 则:
- *          error "图包含负回路"
+ * BellmanFord算法:
+ *
+ *     --- 初始化 ---
+ *
+ *     for 图中的每个结点v:
+ *         如果(starting_vertex, v)没有边:
+ *             distance[v] <-- MAX(不存在路径)
+ *         否则:
+ *             如果 v 是starting_vertex(起始点):
+ *                 distance[v] = 0
+ *                 predecessor[v] <-- -1(没有前一结点)
+ *             否则:
+ *                 distance[v] = 边(starting_vertex, v)的长度(权值)
+ *                 predecessor[v] <-- starting_vertex_index(结点starting_vertex的索引) // v的前一结点是starting_vertex
+ *
+ *
+ *     --- 动态规划 ---
+ *
+ *     for循环(图结点总数 - 1)次:
+ *         for 图的每一条边edge (u, v):
+ *             // 松弛
+ *             如果 distance[u] + 边(u, v)权重 < distance[v]:
+ *                 distance[v] <-- distance[u] + 边(u, v)权重
+ *                 predecessor[v] <-- u
+ *
+ *
+ *     --- 检查是否有负权重的回路 ---
+ *
+ *     for 每一条边edge (u, v):
+ *         如果 distance[u] + 边(u, v)权重 < distance[v]:
+ *             error "图包含负回路"
  */
 template<class Vertex, class Weight>
 bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
 
   int vertex_num = graph.NumberOfVertices();
-  int edge_num = graph.NumberOfEdges();
-  set<Vertex> vertex_set;
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
 
-  // 初始化
+  // --- 初始化 ---
+
   for (int i = 0; i < vertex_num; i++) {
 
     // 获取索引i对应的结点vertex_i
@@ -592,8 +606,10 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
     }
   }
 
-  for (int i = 0; i < edge_num - 1; i++) {
-    // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:-)
+  // --- 动态规划 ---
+
+  for (int i = 0; i < vertex_num - 1; i++) {
+    // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历 todo:-)
     for (int u_idx = 0; u_idx < vertex_num; u_idx++) {
       for (int v_idx = 0; v_idx < vertex_num; v_idx++) {
         Vertex vertex_u;
@@ -608,17 +624,18 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
         }
 
         // 边u-->v存在
-			  if (distance[u_idx] + weight_u_v < distance[v_idx]) {
+		if (distance[u_idx] + weight_u_v < distance[v_idx]) {
           distance[v_idx] = distance[u_idx] + weight_u_v;
           predecessor[v_idx] = u_idx;
-			  }
+		}
       }
     }
   }
 
+  // --- 检查是否有负权重的回路 ---
   bool has_negative_weight_cycle = false; // 默认没有负权环
   bool negative_cycle_triggered = false;  // 是否除法负环检测规则
-  // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, todo:-)
+  // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历, todo:-)
   for (int u_idx = 0; u_idx < vertex_num; ++u_idx) {
     for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
 		  Vertex vertex_u;
