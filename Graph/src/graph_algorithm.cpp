@@ -241,7 +241,7 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
  * @param vertex 起始结点(起始可以不用这个参数, 参考教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
- * todo: 代码结构有优化空间, 参考Prim函数
+ * todo: 变量, 结构有调整优化空间, 参考Prim函数
  */
 template<class Vertex, class Weight>
 void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
@@ -306,7 +306,7 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
  * @param vertex 起始结点(其实可以不用这个参数, 参照教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
- * 
+ *
  * 参数graph对应图{ V(结点集合), { E(边集合) } },
  * min_span_tree为最小生成树边(包括权值)的集合, 假设其对应结点集合为mst_vertex_set.
  *
@@ -396,17 +396,32 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  *
  * Dijkstra算法伪代码
  *
- * S: 保存所有已知实际最短路径值的结点的集合
- * Q: Q是结点的一个优先队列，以结点的最短路径估计, 进行排序
- * function Dijkstra
- *     INITIALIZE-SINGLE-SOURCE(图, 起始点)   // 初始化, 每个除原点外的顶点的值为无穷大，distance[起始点索引] = 0
- *     S <-- 空
- *     Q <-- 起始点
- *     while (Q中有元素)
- *         do u <-- EXTRACT_MIN(Q)           // 选取u为Q中最短路径估计最小的结点
- *         S <-- S and u                     // u加入集合S
+ * vertex_set: 保存所有已知实际(起始点 --> 该结点)最短路径值的结点的集合
+ * PriorityQueue: 结点的一个优先队列，以结点的最短路径估计(起始点 --> 该节点的路径值), 进行排序
+ *
+ *
+ * 迪杰斯特拉算法:
+ *
+ *     --- 初始化 ---
+ *
+ *     // 起始点到每个(原点以外的)结点的distance为无穷大，distance[起始点索引] = 0
+ *     INITIALIZE-SINGLE-SOURCE(graph(图), starting_vertex(起始点))
+ *
+ *     // vertex_set初始化为空
+ *     vertex_set(结点集合) <-- 空
+ *
+ *     // 起始点进入优先队列
+ *     PriorityQueue(优先队列) <-- 起始点
+ *
+ *
+ *
+ *     --- 贪心 ---
+ *
+ *     while (PriorityQueue中有元素)
+ *         do u <-- EXTRACT_MIN(PriorityQueue)  // 选取u为PriorityQueue中, 最短路径估计最小(起始点到该节点的路径最短)的结点
+ *         vertex_set <-- vertex_set and u      // u加入集合vertex_set
  *         for u的每个邻接结点v:
- *             松弛(u, v, 边集合)             // 松弛成功的结点会被加入到队列中
+ *             松弛(u, v, 边集合)                 // 松弛成功的结点, 会被加入到vertex_set
  */
 template<class Vertex, class Weight>
 void Dijkstra(Graph<Vertex, Weight>& graph,
@@ -415,10 +430,12 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
                           int predecessor[])
 {
   int vertex_num = graph.NumberOfVertices();
-  set<Vertex> vertex_set;   // 这个set的本意, 是用来实现优先队列
+  set<Vertex> vertex_set;
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
 
-  // 初始化
+  //
+  // --- 初始化 ---
+  //
   for (int i = 0; i < vertex_num; i++) {
 
     // 获取索引i对应的结点vertex_i
@@ -440,17 +457,16 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
     }
   }
 
-  // 起始点starting_vertex加入到集合vertex_set
-  vertex_set.insert(starting_vertex);
-  distance[starting_vertex_idx] = 0;
+  vertex_set.insert(starting_vertex);   // 起始点starting_vertex加入到集合vertex_set
+  distance[starting_vertex_idx] = 0;    // 起始点到自身的最短路径值为0
 
   for (int i = 0; i < vertex_num - 1; i++) {
-    Weight cur_min_dist = (Weight)MAX_WEIGHT; // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
-    Vertex cur_min_dist_dest_vertex;          // 当前最短路径的终点
+    Weight cur_min_dist = (Weight)MAX_WEIGHT;   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
+    Vertex cur_min_dist_ending_vertex;          // 当前最短路径对应的的终点结点
 
-    // 找到起始点到(不在vertex_set的)各结点中的最短路径, 和
-    // 该路径对应的结点cur_min_dist_dest_vertex和结点索引cur_min_dist_dest_vertex_idx
-    // todo: 可以进行堆优化
+    // 找到起始点到(不在vertex_set的)各结点中的最短路径,
+    // 和该路径对应的终点结点cur_min_dist_ending_vertex与终点结点索引cur_min_dist_ending_vertex_idx
+    // todo: 本实现未单独构造优先队列, 而是使用遍历的方式进行比较查找, 如想使用优先队列可以用堆
     for (int j = 0; j < vertex_num; j++) {
 
       // 拿到索引j对应的结点vertex_j
@@ -465,17 +481,20 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
 
       if (distance[j] < cur_min_dist)
       {
-        cur_min_dist_dest_vertex = vertex_j;
+        cur_min_dist_ending_vertex = vertex_j;
         cur_min_dist = distance[j];
       }
     }
 
-    // cur_min_dist_dest_vertex结点对应的结点索引
-    int cur_min_dist_dest_vertex_idx = graph.GetVertexIndex(cur_min_dist_dest_vertex);
+    int cur_min_dist_ending_vertex_idx = graph.GetVertexIndex(cur_min_dist_ending_vertex);
 
-    // 将cur_min_dist_dest_vertex插入到vertex_set
-    vertex_set.insert(cur_min_dist_dest_vertex);
+    // 将cur_min_dist_ending_vertex插入到vertex_set
+    vertex_set.insert(cur_min_dist_ending_vertex);
 
+    //
+    // --- 贪心 ---
+    // 对cur_min_dist_ending_vertex的每个(未进入vertex_set的)相邻节点执行松弛
+    //
     for (int j = 0; j < vertex_num; j++) {
 
       // 拿到索引j对应的结点vertex_j
@@ -488,26 +507,26 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
         continue;
       }
 
-      // 边(cur_min_dist_dest_vertex --> vertex_j)的值, 赋给weight
+      // 边(cur_min_dist_ending_vertex --> vertex_j)的值, 赋给weight
       Weight weight;
-      bool get_weight_done = graph.GetWeight(weight, cur_min_dist_dest_vertex, vertex_j);
+      bool get_weight_done = graph.GetWeight(weight, cur_min_dist_ending_vertex, vertex_j);
       if (!get_weight_done) { // 如果没有边, continue
         continue;
       }
 
       // 松弛操作:
       // 如果
-      //   边 (starting_vertex --> cur_min_dist_dest_vertex)                的weight
+      //   边 (starting_vertex  --> cur_min_dist_ending_vertex)                的weight
       //    +
-      //   边                     (cur_min_dist_dest_vertex  -->  vertex_j) 的weight
+      //   边                      (cur_min_dist_ending_vertex  -->  vertex_j) 的weight
       //    <
-      //   边 (starting_vertex                -->                 vertex_j) 的weight
+      //   边 (starting_vertex  ---------------------------------->  vertex_j) 的weight
       // 则
       //   更新distance[j]和predecessor[j]
-      if (distance[cur_min_dist_dest_vertex_idx] + weight < distance[j])
+      if (distance[cur_min_dist_ending_vertex_idx] + weight < distance[j])
       {
-        distance[j] = distance[cur_min_dist_dest_vertex_idx] + weight;
-        predecessor[j] = cur_min_dist_dest_vertex_idx;
+        distance[j] = distance[cur_min_dist_ending_vertex_idx] + weight;
+        predecessor[j] = cur_min_dist_ending_vertex_idx;
       }
     }
   }
