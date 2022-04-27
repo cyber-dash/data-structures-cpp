@@ -87,10 +87,8 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
     vertex_queue.pop();
 
     // 遍历:已取出的队头结点的相邻结点
-    //    如果
-    //        未访问该结点
-    //    则
-    //        入队
+    //     如果未访问该结点:
+    //         入队
     Vertex neighbor_vertex;
     bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, front_vertex);
     while (has_neighbor) {
@@ -466,7 +464,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
 
     // 找到起始点到(不在vertex_set的)各结点中的最短路径,
     // 和该路径对应的终点结点cur_min_dist_ending_vertex与终点结点索引cur_min_dist_ending_vertex_idx
-    // todo: 本实现未单独构造优先队列, 而是使用遍历的方式进行比较查找, 如想使用优先队列可以用堆
+    // todo: 本实现未单独构造优先队列, 而是使用遍历的方式进行比较查找, 如想使用优先队列可以用堆 :-)
     for (int j = 0; j < vertex_num; j++) {
 
       // 拿到索引j对应的结点vertex_j
@@ -623,7 +621,7 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
           continue;
         }
 
-        // 边u-->v存在
+        // 松弛
 		if (distance[u_idx] + weight_u_v < distance[v_idx]) {
           distance[v_idx] = distance[u_idx] + weight_u_v;
           predecessor[v_idx] = u_idx;
@@ -634,28 +632,29 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 
   // --- 检查是否有负权重的回路 ---
   bool has_negative_weight_cycle = false; // 默认没有负权环
-  bool negative_cycle_triggered = false;  // 是否除法负环检测规则
-  // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历, todo:-)
+  // 遍历边, 以下结点的两层循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历, todo:-)
   for (int u_idx = 0; u_idx < vertex_num; ++u_idx) {
     for (int v_idx = u_idx + 1; v_idx < vertex_num; v_idx++) {
-		  Vertex vertex_u;
-		  Vertex vertex_v;
-		  graph.GetVertexByIndex(vertex_u, u_idx);
-		  graph.GetVertexByIndex(vertex_v, v_idx);
 
-		  Weight weight_u_v;
-		  bool get_weight_done = graph.GetWeight(weight_u_v, vertex_u, vertex_v);
-		  if (!get_weight_done) {
-			  continue;
-		  }
-      if (distance[u_idx] + weight_u_v < distance[v_idx]) {
-          negative_cycle_triggered = true;
-          break;
+      Vertex vertex_u;
+      Vertex vertex_v;
+      graph.GetVertexByIndex(vertex_u, u_idx);
+      graph.GetVertexByIndex(vertex_v, v_idx);
+
+      Weight weight_u_v;
+      bool get_weight_done = graph.GetWeight(weight_u_v, vertex_u, vertex_v);
+      if (!get_weight_done) {
+        continue;
       }
-    }
-    if (negative_cycle_triggered == true) {
+
+      if (distance[u_idx] + weight_u_v < distance[v_idx]) {
         has_negative_weight_cycle = true;
         break;
+      }
+    }
+
+    if (has_negative_weight_cycle == true) {
+      break;
     }
   }
 

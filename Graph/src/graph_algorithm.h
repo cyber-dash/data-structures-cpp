@@ -24,6 +24,97 @@
 using namespace std;
 
 
+/*!
+ * 最小生成树结点结构体
+ * @tparam Vertex 结点类型模板参数
+ * @tparam Weight 边权值类型模板参数
+ */
+template<class Vertex, class Weight>
+struct MSTEdgeNode {
+    /*! @brief 构造函数(空参数) */
+    MSTEdgeNode() {}
+
+    /*!
+     * 构造函数(边权值)
+     * @param weight 边权值
+     */
+    MSTEdgeNode(Weight weight): weight(weight) {}
+
+    /*!
+     * 重载 <=
+     * @param node MST结点
+     * @return 比较结果
+     */
+    bool operator<=(MSTEdgeNode<Vertex, Weight>& node) { return weight <= node.weight; }
+
+    /*!
+     * 重载 >
+     * @param node MST结点
+     * @return 比较结果
+     */
+    bool operator>(MSTEdgeNode<Vertex, Weight>& node) { return weight > node.weight; }
+
+    Vertex tail; //!< 尾结点
+    Vertex head; //!< 头结点
+    Weight weight; //!< 边权重
+};
+
+
+/*!
+ * @brief 最小生成树模板类
+ * @tparam Vertex 结点类型模板参数
+ * @tparam Weight 边权值类型模板参数
+ * @note
+ * 最小生成树的大多数算法, 利用了MST性质:
+ *     假设N = { V(结点), { E(边) } }是一个连通网, U是顶点集V的一个非空子集.
+ *     若
+ *         (u, v)是一条具有最小权值的边, 其中u ∈ U, v ∈ V - U,
+ *     则
+ *         必存在一颗包含边(u, v)的最小生成树
+ */
+template<class Vertex, class Weight>
+class MinSpanTree {
+public:
+    /*! 构造函数 */
+    MinSpanTree(int size): max_size_(size), cur_size_(0) {
+        array_ = new MSTEdgeNode<Vertex, Weight>[size];
+    }
+
+    /*!
+     * 向MST插入结点
+     * @param mst_edge_node MSTEdgeNode类型结点
+     * @return 当前最小生成树边的数量
+     */
+    int Insert(MSTEdgeNode<Vertex, Weight>& mst_edge_node) {
+        if (cur_size_ >= max_size_) {
+            return -1;
+        }
+
+        array_[cur_size_] = mst_edge_node;
+        cur_size_++;
+
+        return cur_size_ - 1;
+    }
+
+    /*! @brief 显示最小生成树 */
+    void Show() {
+        Weight sum = 0; // 总权值
+        for (int i = 0; i < cur_size_; i++) {
+            sum += array_[i].weight;
+            cout << "head: " << array_[i].head << ", tail: " << array_[i].tail << ", weight: "
+                 << array_[i].weight << endl;
+        }
+
+        cout<<"最小生成树边, 总权值: "<<sum<<endl;
+    }
+
+protected:
+    MSTEdgeNode<Vertex, Weight>* array_; //!< 最小生成树结点数组
+    int max_size_; //!< 最大结点数
+    int cur_size_; //!< 当前生成树的节点数量
+};
+
+
 // 图深度优先遍历
 template<class Vertex, class Weight>
 void DFS(Graph<Vertex, Weight>& graph, const Vertex& vertex);
@@ -43,81 +134,6 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex);
 template<class Vertex, class Weight>
 void Components(Graph<Vertex, Weight>& graph);
 
-
-/*!
- * 最小生成树结点结构体
- * @tparam Vertex
- * @tparam Weight
- */
-template<class Vertex, class Weight>
-struct MSTEdgeNode {
-  /*! @brief 构造函数(空参数) */
-  MSTEdgeNode() {}
-  /*! @brief 构造函数() */
-  MSTEdgeNode(Weight value): weight(value) {}
-  /*! @brief 重载<= */
-  bool operator<=(MSTEdgeNode<Vertex, Weight>& node) { return weight <= node.weight; }
-  /*! @brief 重载> */
-  bool operator>(MSTEdgeNode<Vertex, Weight>& node) { return weight > node.weight; }
-
-  Vertex tail; //!< 尾结点
-  Vertex head; //!< 头结点
-  Weight weight; //!< 边权重
-};
-
-
-/*!
- * @brief 最小生成树模板类
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
- * @note
- * 最小生成树的大多数算法, 利用了MST性质:
- *     假设N = { V(结点), { E(边) } }是一个连通网, U是顶点集V的一个非空子集.
- *     若
- *         (u, v)是一条具有最小权值的边, 其中u ∈ U, v ∈ V - U,
- *     则
- *         必存在一颗包含边(u, v)的最小生成树
- */
-template<class Vertex, class Weight>
-class MinSpanTree {
-public:
-  /*! 构造函数 */
-  MinSpanTree(int size): max_size_(size), cur_size_(0) {
-    array_ = new MSTEdgeNode<Vertex, Weight>[size];
-  }
-
-  /*!
-   * 向MST插入结点
-   * @param mst_edge_node MSTEdgeNode类型结点
-   * @return 当前最小生成树边的数量
-   */
-  int Insert(MSTEdgeNode<Vertex, Weight>& mst_edge_node) {
-    if (cur_size_ >= max_size_) {
-      return -1;
-    }
-
-    array_[cur_size_] = mst_edge_node;
-    cur_size_++;
-
-    return cur_size_ - 1;
-  }
-
-  /*! @brief 显示最小生成树 */
-  void Show() {
-    Weight sum = 0; // 总权值
-    for (int i = 0; i < cur_size_; i++) {
-      sum += array_[i].weight;
-      cout << "head: " << array_[i].head << ", tail: " << array_[i].tail << ", weight: "
-           << array_[i].weight << endl;
-    }
-
-    cout<<"最小生成树边, 总权值: "<<sum<<endl;
-  }
-protected:
-  MSTEdgeNode<Vertex, Weight>* array_; //!< 最小生成树结点数组
-  int max_size_; //!< 最大结点数
-  int cur_size_; //!< 当前生成树的节点数量
-};
 
 
 // Kruskal最小生成树

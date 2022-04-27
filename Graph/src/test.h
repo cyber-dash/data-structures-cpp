@@ -18,7 +18,7 @@
 
 
 /*! 测试矩阵图的矩阵 */
-void TestMatrixGraphMatrix();
+void TestMatrixGraphPrintMatrix();
 
 /*! 测试使用结点索引获取结点 */
 void TestGetVertexByIndex();

@@ -18,7 +18,7 @@ using namespace std;
 
 
 // 测试矩阵图的矩阵
-void TestMatrixGraphMatrix() {
+void TestMatrixGraphPrintMatrix() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test PrintMatrix                     |"<<endl;
