@@ -43,14 +43,11 @@ public:
    */
   bool GetVertexByIndex(Vertex& vertex, int vertex_index);
 
-  /*!
-   * @brief 获取边权值
-   * @param weight 边权值(用于保存结果)
-   * @param v1 边的节点1
-   * @param v2 边的节点2
-   * @return 是否获取成功
-   */
+  // (由边的两个结点)获取边权值
   bool GetWeight(Weight& weight, Vertex v1, Vertex v2);
+
+  // (由边的两个结点索引)获取边权值
+  bool GetWeightByVertexIndex(Weight& weight, int v1_index, int v2_index);
 
   /*!
    * @brief 插入结点
@@ -195,18 +192,30 @@ bool MatrixGraph<Vertex, Weight>::GetWeight(Weight& weight, Vertex v1, Vertex v2
 
   int v1_index = GetVertexIndex(v1);
   int v2_index = GetVertexIndex(v2);
-
-  if (v1_index >= 0 && v2_index >= 0 &&
-    v1_index != v2_index &&
-    adjacency_matrix_[v1_index][v2_index] != MAX_WEIGHT &&
-    adjacency_matrix_[v1_index][v2_index] > 0)
-  {
-    weight = adjacency_matrix_[v1_index][v2_index];
-
-    return true;
+  if (v1_index < 0 || v2_index < 0) {
+      return false;
   }
 
-  return false;
+  bool res = GetWeightByVertexIndex(weight, v1_index, v2_index);
+
+  return res;
+}
+
+
+template<class Vertex, class Weight>
+bool MatrixGraph<Vertex, Weight>::GetWeightByVertexIndex(Weight& weight, int v1_index, int v2_index) {
+
+    if (v1_index >= 0 && v2_index >= 0 &&
+        v1_index != v2_index &&
+        adjacency_matrix_[v1_index][v2_index] != MAX_WEIGHT &&
+        adjacency_matrix_[v1_index][v2_index] > 0)
+    {
+        weight = adjacency_matrix_[v1_index][v2_index];
+
+        return true;
+    }
+
+    return false;
 }
 
 

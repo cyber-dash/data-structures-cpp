@@ -65,13 +65,22 @@ public:
   virtual bool GetVertexByIndex(Vertex& vertex, int vertex_index) = 0;
 
   /*!
-   * @brief 获取边权值
+   * @brief (由边的两个结点)获取边权值
    * @param weight 边权值(用于保存结果)
    * @param v1 边的一个节点
    * @param v2 边的另一个节点
    * @return 是否获取成功
    */
   virtual bool GetWeight(Weight& weight, Vertex v1, Vertex v2) = 0;
+
+  /*!
+   * @brief (由边的两个结点索引)获取边权值
+   * @param weight 边权值(用于保存结果)
+   * @param v1_index 边的一个结点索引
+   * @param v2_index 边的另一个结点索引
+   * @return 是否获取成功
+   */
+  virtual bool GetWeightByVertexIndex(Weight& weight, int v1_index, int v2_index) = 0;
 
   /*!
    * @brief 获取结点的第一个相邻结点

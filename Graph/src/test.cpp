@@ -421,14 +421,14 @@ void TestDijkstra() {
   int from_path_arr_adj[5];
 
   Dijkstra(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
-  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+    PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   double min_dist_arr_matrix[5];
   int from_path_arr_matrix[5];
 
   Dijkstra(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
-  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+    PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -476,21 +476,71 @@ void TestBellmanFord() {
   matrix_graph.InsertEdge(city[0], city[4], 100.003);
   matrix_graph.InsertEdge(city[2], city[4], 9.34);
 
-  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl;
-  double min_dist_arr_adj[5];
-  int from_path_arr_adj[5];
+  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<"**北京到各个城市的最短路径**"<<endl<<endl;
+  double min_dist_arr1[5];
+  int predecessor_arr1[5];
 
-  bool has = BellmanFord(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
-  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+  BellmanFord(adjacency_list_graph, city[0], min_dist_arr1, predecessor_arr1);
+  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr1, predecessor_arr1);
 
-  cout<<endl<<"**矩阵图测试**"<<endl;
-  double min_dist_arr_matrix[5];
-  int from_path_arr_matrix[5];
+  cout<<endl<<"**矩阵图测试**"<<endl<<"**北京到各个城市的最短路径**"<<endl<<endl;
+  double min_dist_arr2[5];
+  int predecessor_arr2[5];
 
-  BellmanFord(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
-  PrintShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+  BellmanFord(adjacency_list_graph, city[0], min_dist_arr2, predecessor_arr2);
+  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr2, predecessor_arr2);
 
   cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
+
+/*! 测试Floyd最短路径 */
+void TestFloyd() {
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                    Test Floyd-Warshall                    |"<<endl;
+    cout<<"|                     测试弗洛伊德最短路径                     |"<<endl;
+
+    string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
+
+    AdjacencyListGraph<string, double> adjacency_list_graph;	// 邻接表图
+    MatrixGraph<string, double> matrix_graph;					// 矩阵图
+
+    // 将5个城市都加入到两个图中
+    for (int i = 0; i < 5; i++) {
+        adjacency_list_graph.InsertVertex(city[i]);
+    }
+    for (int i = 0; i < 5; i++) {
+        matrix_graph.InsertVertex(city[i]);
+    }
+
+    // 北京 --> 上海, 98.63
+    // 上海 --> 广州, 51.52
+    // 广州 --> 深圳, 17
+    // 深圳 --> 杭州, 58.98
+    // 北京 --> 深圳, 29.3
+    // 北京 --> 杭州, 100.003
+    // 广州 --> 杭州, 9.34
+    adjacency_list_graph.InsertEdge(city[0], city[1], 98.63);
+    adjacency_list_graph.InsertEdge(city[1], city[2], 51.52);
+    adjacency_list_graph.InsertEdge(city[2], city[3], 17);
+    adjacency_list_graph.InsertEdge(city[3], city[4], 58.98);
+    adjacency_list_graph.InsertEdge(city[0], city[3], 29.3);
+    adjacency_list_graph.InsertEdge(city[0], city[4], 100.003);
+    adjacency_list_graph.InsertEdge(city[2], city[4], 9.34);
+
+    matrix_graph.InsertEdge(city[0], city[1], 98.63);
+    matrix_graph.InsertEdge(city[1], city[2], 51.52);
+    matrix_graph.InsertEdge(city[2], city[3], 17);
+    matrix_graph.InsertEdge(city[2], city[4], 58.98);
+    matrix_graph.InsertEdge(city[0], city[3], 29.3);
+    matrix_graph.InsertEdge(city[0], city[4], 100.003);
+    matrix_graph.InsertEdge(city[2], city[4], 9.34);
+
+    // todo: 待补充代码
+
+    cout<<"-------------------------------------------------------------"<<endl;
 }
 
 

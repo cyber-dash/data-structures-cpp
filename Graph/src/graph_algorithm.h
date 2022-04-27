@@ -16,6 +16,7 @@
 #include "graph.h"
 #include <set>
 #include <queue>
+#include <vector>
 
 #include "min_heap.h"
 #include "disjoint_set.h"
@@ -66,9 +67,9 @@ struct MSTEdgeNode {
  * @tparam Weight 边权值类型模板参数
  * @note
  * 最小生成树的大多数算法, 利用了MST性质:
- *     假设N = { V(结点), { E(边) } }是一个连通网, U是顶点集V的一个非空子集.
+ *     假设N = { Vertex(结点), { E(边) } }是一个连通网, U是顶点集V的一个非空子集.
  *     若
- *         (u, v)是一条具有最小权值的边, 其中u ∈ U, v ∈ V - U,
+ *         (u, v)是一条具有最小权值的边, 其中u ∈ U, v ∈ Vertex - U,
  *     则
  *         必存在一颗包含边(u, v)的最小生成树
  */
@@ -135,20 +136,19 @@ template<class Vertex, class Weight>
 void Components(Graph<Vertex, Weight>& graph);
 
 
-
-// Kruskal最小生成树
+// Prim算法
 template<class Vertex, class Weight>
-void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
+void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
-// Prim(使用堆实现的优先队列)
+// Prim(优化堆操作)
 template<class Vertex, class Weight>
 void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
-// Prim算法朴素实现
+// Kruskal最小生成树
 template<class Vertex, class Weight>
-void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
+void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
 // 迪杰斯特拉(Dijkstra)最短路径
@@ -156,14 +156,29 @@ template<class Vertex, class Weight>
 void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
 
 
-// 显示迪杰斯特拉(Dijkstra)最短路径
-template<class Vertex, class Weight>
-void PrintShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
-
-
 // 贝尔曼福特(Bellman-Ford)最短路径
 template<class Vertex, class Weight>
 bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
+
+
+// 弗洛伊德(Floyd-Warshall)最短路径
+template<class Vertex, class Weight>
+void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vector<vector<int> >& predecessor);
+
+
+// 打印单源最短路径(迪杰斯特拉Dijkstra, 贝尔曼福特BellmanFord等)
+template<class Vertex, class Weight>
+void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
+                                   Vertex starting_vertex,
+                                   Weight distance[],
+                                   int predecessor[]);
+
+
+// 打印多源最短路径(弗洛伊德Floyd等)
+template<class Vertex, class Weight>
+void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
+                                     vector<vector<Weight> > distance,
+                                     vector<vector<int> > predecessor);
 
 
 #endif // CYBER_DASH_GRAPH_ALGORITHM_H

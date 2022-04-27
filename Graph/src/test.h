@@ -38,11 +38,14 @@ void TestKruskal();
 /*! 测试Prim算法 */
 void TestPrim();
 
-/*! 测试Dijkstra最小生成树 */
+/*! 测试Dijkstra最短路径 */
 void TestDijkstra();
 
-/*! 测试BellmanFord最小生成树 */
+/*! 测试BellmanFord最短路径 */
 void TestBellmanFord();
+
+/*! 测试Floyd最短路径 */
+void TestFloyd();
 
 /*! 关于CyberDash */
 void TestCyberDashShow();

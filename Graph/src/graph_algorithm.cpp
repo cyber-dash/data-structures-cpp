@@ -8,8 +8,9 @@
  *  CyberDash计算机考研
  */
 
-#include "graph_algorithm.h"
 #include <iostream>
+#include <vector>
+#include "graph_algorithm.h"
 
 
 /*!
@@ -157,7 +158,7 @@ void Components(Graph<Vertex, Weight>& graph) {
  * @param min_span_tree 最小生成树
  * @note
  * 
- * 参数graph对应图{ V(结点集合), { E(边集合) } }, 最小生成树的初始状态只有n个顶点, 没有边 MST = { V, { } }
+ * 参数graph对应图{ Vertex(结点集合), { E(边集合) } }, 最小生成树的初始状态只有n个顶点, 没有边 MST = { Vertex, { } }
  * 
  * while MST未完成:
  *     在E中选择代价最小的边
@@ -305,15 +306,15 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
  * @param min_span_tree 最小生成树
  * @note
  *
- * 参数graph对应图{ V(结点集合), { E(边集合) } },
+ * 参数graph对应图{ Vertex(结点集合), { E(边集合) } },
  * min_span_tree为最小生成树边(包括权值)的集合, 假设其对应结点集合为mst_vertex_set.
  *
- * 算法从mst_vertex_set = { vertex }开始(只包含起始结点),
+ * 算法从mst_vertex_set = { starting_vertex }开始(只包含起始结点),
  *
  * 循环以下操作:
- *     在所有u ∈ mst_vertex_set, v ∈ (V - mst_vertex_set)的边(u, v) ∈ E中,
+ *     在所有u ∈ mst_vertex_set, v ∈ (Vertex - mst_vertex_set)的边(u, v) ∈ E中,
  * 
- *    mst_vertex_set    V - mst_vertex_set
+ *    mst_vertex_set    Vertex - mst_vertex_set
  *         ------          ------
  *       /       \       /       \
  *      |   u----|------|---v    |
@@ -340,7 +341,7 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
     // Vertex cur_vertex;                                          // 遍历结点
     MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);   // 小顶堆
 
-    // 将所有u ∈ mst_vertex_set, v ∈ V - mst_vertex_set对应的边(u, v), 插入到min_heap
+    // 将所有u ∈ mst_vertex_set, v ∈ Vertex - mst_vertex_set对应的边(u, v), 插入到min_heap
     // 插入小顶堆后, 堆顶既是权值最小边
     for (typename set<Vertex>::iterator iter = mst_vertex_set.begin(); iter != mst_vertex_set.end(); iter++) {
       Vertex cur_mst_vertex = *iter;
@@ -662,17 +663,52 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 }
 
 
+template<class Vertex, class Weight>
+void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vector<vector<int> >& predecessor) {
+    int vertices_num = graph.NumberOfVertices();    // 结点数量
+
+    for (int i = 0; i < vertices_num; i++) {
+        for (int j = 0; j < vertices_num; j++) {
+            if (i == j) {
+                distance[i][j] = (Weight)0;
+            } else {
+                Weight weight;
+                bool done = graph.GetWeightByVertexIndex(weight, i, j);
+                if (done) {
+                    distance[i][j] = weight;
+                } else {
+                    distance[i][j] = (Weight)MAX_WEIGHT;
+                }
+            }
+
+            predecessor[i][j] = i;
+        }
+    }
+
+    for (int k = 0; k < vertices_num; k++) {
+        for (int i = 0; i < vertices_num; i++) {
+            for (int j = 0; j < vertices_num; j++) {
+                if (distance[i][k] + distance[k][j] < distance[i][j]) {
+                    distance[i][j] = distance[i][k] + distance[k][j];
+                    predecessor[i][j] = predecessor[k][j];
+                }
+            }
+        }
+    }
+}
+
+
 /*!
- * @brief 显示最短路径
+ * @brief 打印单源最短路径
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
- * @param graph 图类型
- * @param starting_vertex 路径起始结点
- * @param distance 最短路径数组, distance[i]表示: 路径起始结点到索引i结点的最短路径的权值
+ * @param graph 图的引用
+ * @param starting_vertex 起始结点
+ * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  */
 template<class Vertex, class Weight>
-void PrintShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
+void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
   cout << "从起始点(" << starting_vertex << ")到其他各顶点的最短路径为: " << endl;
 
   int vertex_count = graph.NumberOfVertices();
@@ -688,13 +724,13 @@ void PrintShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Wei
       continue;
     }
 
-    int pre_vertex_idx = i; // 以索引i结点为终点
+    int pre_vertex_index = i; // 以索引i结点为终点
     int idx = 0;
 
-    while (pre_vertex_idx != starting_vertex_idx) {
-      cur_predecessor[idx] = pre_vertex_idx;
+    while (pre_vertex_index != starting_vertex_idx) {
+      cur_predecessor[idx] = pre_vertex_index;
       idx++;
-      pre_vertex_idx = predecessor[pre_vertex_idx];
+      pre_vertex_index = predecessor[pre_vertex_index];
     }
 
     // 获取索引i的结点
@@ -718,4 +754,27 @@ void PrintShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Wei
   delete[] cur_predecessor;
 }
 
+
+template<class Vertex, class Weight>
+void PrintOneSourceShortestPath(Graph<Vertex, Weight>& graph, vector<vector<int> > predecessor, int i, int j) {
+    if (i != j) {
+        PrintOneSourceShortestPath(graph, predecessor, i, predecessor[i][j]);
+    }
+
+    cout<<j<<" ";
+}
+
+
+// 打印多源最短路径(弗洛伊德Floyd等)
+template<class Vertex, class Weight>
+void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
+                                     vector<vector<Weight> > distance,
+                                     vector<vector<int> > predecessor) {
+    int vertices_num = graph.NumberOfVertices();    // 结点数量
+    for (int i = 0; i < vertices_num; i++) {
+        for (int j = 0; j <vertices_num; j++) {
+            PrintOneSourceShortestPath(graph, predecessor, i, j);
+        }
+    }
+}
 
