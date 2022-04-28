@@ -119,8 +119,11 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
  * @note
  * 1. 使用visited_vertex_set保存已经遍历过的结点
  * 2. 每遍历一个结点vertex
- *   如果在visited_vertex_set中, 则已经在某连通分量中, 不再处理;
- *   如果不在visited_vertex_set中, 使用DFS对vertex进行遍历, 连通分量数量+1
+ *   如果在visited_vertex_set中(则已经在某连通分量中)
+ *       不再处理;
+ *   如果不在visited_vertex_set中:
+ *       使用DFS对vertex进行遍历
+ *       连通分量数量+1
  */
 template<class Vertex, class Weight>
 void Components(Graph<Vertex, Weight>& graph) {
@@ -136,8 +139,8 @@ void Components(Graph<Vertex, Weight>& graph) {
     bool done = graph.GetVertexByIndex(vertex, i); // 获取索引i对应的结点vertex
 
     if (done) {
-      // 如果visited_vertex_set中, 没有查到vertex, 说明vertex在一个新的联通分量中
-      // 对vertex执行DFS遍历(书中的算法, 使用BFS也可以)
+      // 如果visited_vertex_set中, 没有查到vertex(说明vertex在一个新的联通分量中):
+      //     对vertex执行DFS遍历(书中的算法, 使用BFS也可以)
       if (visited_vertex_set.find(vertex) == visited_vertex_set.end()) {
         cout<<"连通分量"<<component_index<<":"<<endl;
         DFSOnVertex(graph, vertex, visited_vertex_set);
@@ -162,9 +165,7 @@ void Components(Graph<Vertex, Weight>& graph) {
  * 
  * while MST未完成:
  *     在E中选择代价最小的边
- *     如果:
- *         此边的两个结点, 分别落在不同的连通分量
- *     则
+ *     如果 此边的两个结点, 分别落在不同的连通分量:
  *         将此边加入到MST
  *         E舍去这条边
  */
@@ -187,7 +188,8 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
       graph.GetVertexByIndex(vertex_u, u_idx);
       graph.GetVertexByIndex(vertex_v, v_idx);
 
-      // 如果边(u, v)存在, 即拿到权重, 则进入小顶堆min_heap
+      // 如果边(u, v)存在, 即拿到权重:
+      //     则插入小顶堆min_heap
       Weight weight;
       bool get_weight_done = graph.GetWeight(weight, vertex_u, vertex_v);
       if (get_weight_done) {
@@ -216,9 +218,7 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
     int cur_tail_root_idx = disjoint_set.Find(cur_tail_idx);
     int cur_head_root_idx = disjoint_set.Find(cur_head_idx);
 
-    // 如果:
-    //     不在一个并查集内
-    // 则:
+    // 如果 不在一个并查集内:
     //     合并两个并查集,
     //     插入min_span_tree
     //     遍历次数+1
@@ -351,8 +351,9 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
       Vertex neighbor_vertex;
       bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, cur_mst_vertex);
       while (has_neighbor) {
-        // 如果neighbor_vertex不在mst_vertex_set, 则将边(cur_mst_vertex, neighbor_vertex)的信息
-        // 构造MSTEdgeNode结点, 插入到小顶堆min_heap
+        // 如果neighbor_vertex不在mst_vertex_set:
+        //     将边(cur_mst_vertex, neighbor_vertex)的信息
+        //     构造MSTEdgeNode结点, 插入到小顶堆min_heap
         if (mst_vertex_set.find(neighbor_vertex) == mst_vertex_set.end()) {
 
           MSTEdgeNode<Vertex, Weight> cur_node;
@@ -597,7 +598,10 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
       distance[i] = (Weight)MAX_WEIGHT; // todo: 其实可以用其他的方式表示没有边:-)
     }
 
-    // 如果边(starting_vertex --> vertex_i)存在, 则predecessor[i]的值, 为索引starting_vertex_idx; 否则为-1
+    // 如果 边(starting_vertex --> vertex_i)存在:
+    //     则predecessor[i]的值, 为索引starting_vertex_idx;
+    // 否则
+    //     为-1
     if (vertex_i != starting_vertex && get_weight_done && get_vertex_done) {
       predecessor[i] = starting_vertex_idx;
     } else {
