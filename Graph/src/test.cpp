@@ -538,7 +538,15 @@ void TestFloyd() {
     matrix_graph.InsertEdge(city[0], city[4], 100.003);
     matrix_graph.InsertEdge(city[2], city[4], 9.34);
 
-    // todo: 待补充代码
+    int matrix_graph_vertices_num = matrix_graph.NumberOfVertices();
+    vector<vector<double> > distance(matrix_graph_vertices_num,
+                                     vector<double>(matrix_graph_vertices_num));
+    vector<vector<int> > predecessor(matrix_graph_vertices_num,
+                                     vector<int>(matrix_graph_vertices_num));
+
+    Floyd(matrix_graph, distance, predecessor);
+
+    PrintMultipleSourceShortestPath(matrix_graph, distance, predecessor);
 
     cout<<"-------------------------------------------------------------"<<endl;
 }
