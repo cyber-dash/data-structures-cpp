@@ -370,14 +370,14 @@ void TestPrim() {
   Prim(matrix_graph, BJ, min_span_tree_matrix); // 朴素版Prim
   min_span_tree_matrix.Show();
 
-  cout<<"-------------------------------------------------------------"<<endl;
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestDijkstra() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                 Test Dijkstra                 |"<<endl;
+  cout<<"|                       Test Dijkstra                       |"<<endl;
   cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
 
   string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
@@ -416,21 +416,21 @@ void TestDijkstra() {
   matrix_graph.InsertEdge(city[0], city[4], 100.003);
   matrix_graph.InsertEdge(city[2], city[4], 9.34);
 
-  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl;
+  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<endl;
   double min_dist_arr_adj[5];
   int from_path_arr_adj[5];
 
   Dijkstra(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
-    PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
 
-  cout<<endl<<"**矩阵图测试**"<<endl;
+  cout<<endl<<"**矩阵图测试**"<<endl<<endl;
   double min_dist_arr_matrix[5];
   int from_path_arr_matrix[5];
 
   Dijkstra(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
-    PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
 
-  cout<<"-------------------------------------------------------------"<<endl;
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
@@ -476,21 +476,21 @@ void TestBellmanFord() {
   matrix_graph.InsertEdge(city[0], city[4], 100.003);
   matrix_graph.InsertEdge(city[2], city[4], 9.34);
 
-  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<"**北京到各个城市的最短路径**"<<endl<<endl;
+  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<endl;
   double min_dist_arr1[5];
   int predecessor_arr1[5];
 
   BellmanFord(adjacency_list_graph, city[0], min_dist_arr1, predecessor_arr1);
   PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr1, predecessor_arr1);
 
-  cout<<endl<<"**矩阵图测试**"<<endl<<"**北京到各个城市的最短路径**"<<endl<<endl;
+  cout<<endl<<"**矩阵图测试**"<<endl<<endl;
   double min_dist_arr2[5];
   int predecessor_arr2[5];
 
   BellmanFord(adjacency_list_graph, city[0], min_dist_arr2, predecessor_arr2);
   PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr2, predecessor_arr2);
 
-  cout<<"-------------------------------------------------------------"<<endl;
+  cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
@@ -548,7 +548,7 @@ void TestFloyd() {
 
     PrintMultipleSourceShortestPath(matrix_graph, distance, predecessor);
 
-    cout<<"-------------------------------------------------------------"<<endl;
+    cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 

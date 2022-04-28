@@ -711,7 +711,7 @@ void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vect
  */
 template<class Vertex, class Weight>
 void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
-  cout << "从起始点(" << starting_vertex << ")到其他各顶点的最短路径为: " << endl;
+  cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
 
   int vertex_count = graph.NumberOfVertices();
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex);
@@ -776,14 +776,16 @@ void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
                                      vector<vector<int> > predecessor) {
     int vertices_num = graph.NumberOfVertices();    // 结点数量
     for (int i = 0; i < vertices_num; i++) {
+        Vertex vertex_i;
+        graph.GetVertexByIndex(vertex_i, i);
+        cout<<"--- 从起始点("<<vertex_i<<")到其他各顶点的最短路径 ---"<<endl;
         for (int j = 0; j <vertices_num; j++) {
             if (i != j) {
-                Vertex vertex_i;
                 Vertex vertex_j;
-                graph.GetVertexByIndex(vertex_i, i);
                 graph.GetVertexByIndex(vertex_j, j);
-                cout<<"从("<<vertex_i<<")到("<<vertex_j<<")的最短路径为: ";
+                cout<<"起始点("<<vertex_i<<")到结点("<<vertex_j<<")的最短路径为: ";
                 PrintOneSourceShortestPath(graph, predecessor, i, j);
+                cout<<", 最短路径长度为: "<<distance[i][j];
                 cout<<endl;
             }
         }
