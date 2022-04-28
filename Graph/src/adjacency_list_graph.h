@@ -123,18 +123,18 @@ private:
 
 /*!
  * @brief 构造函数
- * @tparam V 结点类型模板参数
- * @tparam W 边权值类型模板参数
+ * @tparam Vertex 结点类型模板参数
+ * @tparam Weight 边权值类型模板参数
  * @param size 结点数量
  */
-template<class V, class W>
-AdjacencyListGraph<V, W>::AdjacencyListGraph(int size) {
+template<class Vertex, class Weight>
+AdjacencyListGraph<Vertex, Weight>::AdjacencyListGraph(int size) {
 
   this->max_vertices_num_ = size;
   this->vertices_num_ = 0;
   this->edge_count_ = 0;
 
-  this->vertex_table_ = new AdjListVertex<V, W>[this->max_vertices_num_];
+  this->vertex_table_ = new AdjListVertex<Vertex, Weight>[this->max_vertices_num_];
 
   for (int i = 0; i < this->max_vertices_num_; i++) {
     this->vertex_table_[i].adjacency_list = NULL;

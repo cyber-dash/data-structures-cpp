@@ -476,7 +476,7 @@ void TestBellmanFord() {
   matrix_graph.InsertEdge(city[0], city[4], 100.003);
   matrix_graph.InsertEdge(city[2], city[4], 9.34);
 
-  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<endl;
+  cout<<endl<<"**邻接表图测试**"<<endl<<endl;
   double min_dist_arr1[5];
   int predecessor_arr1[5];
 
@@ -538,15 +538,39 @@ void TestFloyd() {
     matrix_graph.InsertEdge(city[0], city[4], 100.003);
     matrix_graph.InsertEdge(city[2], city[4], 9.34);
 
+    cout<<endl<<"**邻接表图测试**"<<endl<<endl;
+    // 邻接表图结点数量
+    int adj_list_graph_vertices_num = adjacency_list_graph.NumberOfVertices();
+    // 邻接表图distance
+    vector<vector<double> > adj_list_graph_distance(adj_list_graph_vertices_num,
+                                                  vector<double>(adj_list_graph_vertices_num));
+    // 邻接表图predecessor
+    vector<vector<int> > adj_list_graph_predecessor(adj_list_graph_vertices_num,
+                                                  vector<int>(adj_list_graph_vertices_num));
+    // 执行弗洛伊德算法
+    Floyd(matrix_graph, adj_list_graph_distance, adj_list_graph_predecessor);
+
+    // 打印多源(MSSP)最短路径
+    PrintMultipleSourceShortestPath(adjacency_list_graph,
+                                    adj_list_graph_distance,
+                                    adj_list_graph_predecessor);
+
+    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
+    // 矩阵图结点数量
     int matrix_graph_vertices_num = matrix_graph.NumberOfVertices();
-    vector<vector<double> > distance(matrix_graph_vertices_num,
-                                     vector<double>(matrix_graph_vertices_num));
-    vector<vector<int> > predecessor(matrix_graph_vertices_num,
-                                     vector<int>(matrix_graph_vertices_num));
+    // matrix_graph_distance
+    vector<vector<double> > matrix_graph_distance(matrix_graph_vertices_num,
+                                                  vector<double>(matrix_graph_vertices_num));
+    // matrix_graph_predecessor
+    vector<vector<int> > matrix_graph_predecessor(matrix_graph_vertices_num,
+                                                  vector<int>(matrix_graph_vertices_num));
+    // 执行弗洛伊德算法
+    Floyd(matrix_graph, matrix_graph_distance, matrix_graph_predecessor);
 
-    Floyd(matrix_graph, distance, predecessor);
-
-    PrintMultipleSourceShortestPath(matrix_graph, distance, predecessor);
+    // 打印多源最短路径
+    PrintMultipleSourceShortestPath(matrix_graph,
+                                    matrix_graph_distance,
+                                    matrix_graph_predecessor);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
