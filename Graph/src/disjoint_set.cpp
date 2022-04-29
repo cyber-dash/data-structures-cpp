@@ -40,30 +40,30 @@ DisjointSet& DisjointSet::operator=(const DisjointSet& disjoint_set) {
 
 /*!
  * @brief 查找(非递归)
- * @param value 数组索引
+ * @param index 数组索引
  * @return 根节点
  */
-int DisjointSet::FindNonRecursive(int value) {
+int DisjointSet::FindNonRecursive(int index) {
 
-  while (parent_[value] >= 0) {
-    value = parent_[value];
+  while (parent_[index] >= 0) {
+      index = parent_[index];
   }
 
-  return value;
+  return index;
 }
 
 
 /*!
  * @brief 查找
- * @param value 数组索引
+ * @param index 数组索引
  * @return 根节点
  */
-int DisjointSet::Find(int value) {
-  if (parent_[value] < 0) {
-    return value;
-  } else {
-    return Find(parent_[value]);
+int DisjointSet::Find(int index) {
+  if (parent_[index] < 0) {
+    return index;
   }
+
+  return Find(parent_[index]);
 }
 
 

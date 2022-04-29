@@ -15,9 +15,9 @@
 
 /*!
  * @brief 图深度优先遍历
- * @tparam Vertex 结点类型模版参数
- * @tparam Weight 边权值类型模板参数
- * @param graph 图
+ * @tparam Vertex 结点模版参数
+ * @tparam Weight 边权值模板参数
+ * @param graph 图的引用
  * @param vertex 遍历起始结点
  */
 template<class Vertex, class Weight>
@@ -31,8 +31,8 @@ void DFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 
 /*!
  * @brief 图深度优先遍历(递归)
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
+ * @tparam Vertex 结点模板参数
+ * @tparam Weight 边权值模板参数
  * @param graph 图
  * @param vertex 遍历起始结点
  * @param visited_vertex_set 已访问结点集合
@@ -65,9 +65,9 @@ void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visit
 
 /*!
  * @brief 图广度优先遍历
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
- * @param graph 图
+ * @tparam Vertex 结点模板参数
+ * @tparam Weight 边权值模板参数
+ * @param graph 图的引用
  * @param vertex 遍历起始结点
  * @note
  * 使用队列进行广度优先遍历
@@ -113,9 +113,9 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 
 /*!
  * @brief 求图的连通分量
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
- * @param graph 图
+ * @tparam Vertex 结点模板参数
+ * @tparam Weight 边权值模板参数
+ * @param graph 图(引用)
  * @note
  * 1. 使用visited_vertex_set保存已经遍历过的结点
  * 2. 每遍历一个结点vertex
@@ -155,10 +155,10 @@ void Components(Graph<Vertex, Weight>& graph) {
 
 /*!
  * @brief Kruskal算法
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
- * @param graph 图
- * @param min_span_tree 最小生成树
+ * @tparam Vertex 结点模板参数
+ * @tparam Weight 边权值模板参数
+ * @param graph 图(引用)
+ * @param min_span_tree 最小生成树(引用)
  * @note
  * 
  * 参数graph对应图{ Vertex(结点集合), { E(边集合) } }, 最小生成树的初始状态只有n个顶点, 没有边 MST = { Vertex, { } }
@@ -234,11 +234,11 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 
 /*!
  * @brief Prim算法(堆操作优化)
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
- * @param graph 图
- * @param vertex 起始结点(起始可以不用这个参数, 参考教科书, 此处保留)
- * @param min_span_tree 最小生成树
+ * @tparam Vertex 结点模板参数
+ * @tparam Weight 边权值模板参数
+ * @param graph 图(引用)
+ * @param vertex 起始结点(其实可以不用这个参数, 由于教材使用, 此处保留)
+ * @param min_span_tree 最小生成树(引用)
  * @note
  * todo: 变量, 结构有调整优化空间, 参考Prim函数
  */
@@ -299,18 +299,19 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
 
 /*!
  * @brief Prim算法实现
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
- * @param graph 图
+ * @tparam Vertex 结点模板参数
+ * @tparam Weight 边权值模板参数
+ * @param graph 图(引用)
  * @param vertex 起始结点(其实可以不用这个参数, 参照教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
  *
- * 参数graph对应图{ Vertex(结点集合), { E(边集合) } },
- * min_span_tree为最小生成树边(包括权值)的集合, 假设其对应结点集合为mst_vertex_set.
+ * # CyberDash批注
+ * 参数graph对应图{ Vertex(结点集合), { E(边集合) } }.
+ * min_span_tree为最小生成树边(包括权值)的集合, 树中的结点对应结点集合mst_vertex_set.
  *
  * 算法从mst_vertex_set = { starting_vertex }开始(只包含起始结点),
- *
+ * ```
  * 循环以下操作:
  *     在所有u ∈ mst_vertex_set, v ∈ (Vertex - mst_vertex_set)的边(u, v) ∈ E中,
  * 
@@ -325,8 +326,8 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
  *         加入min_span_tree(以MSTEdgeNode的方式)
  *         结点u加入mst_vertex_set,
  *     直到mst_vertex_set = V为止
- *
- * 此时min_span_tree中有n-1条边, 为最小生成树
+ * ```
+ * 此时min_span_tree为最小生成树, 有** n-1条边
  */
 template<class Vertex, class Weight>
 void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
@@ -402,6 +403,7 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  *
  * 迪杰斯特拉算法:
  *
+ *
  *     --- 初始化 ---
  *
  *     // 起始点到每个(原点以外的)结点的distance为无穷大，distance[起始点索引] = 0
@@ -412,7 +414,6 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  *
  *     // 起始点进入优先队列
  *     PriorityQueue(优先队列) <-- 起始点
- *
  *
  *
  *     --- 贪心 ---
@@ -667,12 +668,35 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 }
 
 
+/*!
+ * 弗洛伊德(Floyd-Warshall)最短路径
+ * @tparam Vertex 图结点模板类型
+ * @tparam Weight 图边权值模板类型
+ * @param graph 图的引用
+ * @param distance 最短路径数组, distance[i][j]表示: 索引i结点到索引j结点的最短路径
+ * @param predecessor 前一结点数组, predecessor[i][j]表示: 索引i结点到索引j结点最短路径中, j的前一结点
+ * @note
+ *
+ * 弗洛伊德算法:
+ *     distance[][] is a distance matrix for n vertices.
+ *         distance[i][j] is the distance to move directly from i to j.
+ *         if no direct link from i to j
+ *             then initialize distance[i][j] = INFINITY
+ *         the distance from a node to itself is 0.(Initialize distance[i][i] = 0 for all i)
+ *     predecessor[][] is a predecessor matrix. it enables you to reconstruct the shortest paths.
+ *         predecessor[i][j] should be initialized to i.
+ *
+ * 算法执行结果:
+ *     distance[i][j] contains the total cost along the shortest path from i to j.
+ *     predecessor[i][j] contains the predecessor of j on the shortest path from i to j.
+ */
 template<class Vertex, class Weight>
 void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vector<vector<int> >& predecessor) {
     int vertices_num = graph.NumberOfVertices();    // 结点数量
 
     for (int i = 0; i < vertices_num; i++) {
         for (int j = 0; j < vertices_num; j++) {
+
             if (i == j) {
                 distance[i][j] = (Weight)0;
             } else {
@@ -699,8 +723,6 @@ void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vect
             }
         }
     }
-
-    cout<<endl;
 }
 
 
@@ -773,7 +795,17 @@ void PrintOneSourceShortestPath(Graph<Vertex, Weight>& graph, vector<vector<int>
 }
 
 
-// 打印多源最短路径(弗洛伊德Floyd等)
+/*!
+ * 打印多源最短路径(弗洛伊德Floyd等)
+ * @tparam Vertex 结点模板类型
+ * @tparam Weight 边权值模板类型
+ * @param graph 图(引用)
+ * @param distance 最短路径数组, distance[i][j]表示: 索引i结点到索引j结点的最短路径
+ * @param predecessor 前一结点数组, predecessor[i][j]表示: 索引i结点到索引j结点最短路径中, j的前一结点
+ * @note
+ *
+ * 按照不同起始点, 分类打印
+ */
 template<class Vertex, class Weight>
 void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
                                      vector<vector<Weight> > distance,
@@ -787,10 +819,10 @@ void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
             if (i != j) {
                 Vertex vertex_j;
                 graph.GetVertexByIndex(vertex_j, j);
+
                 cout<<"起始点("<<vertex_i<<")到结点("<<vertex_j<<")的最短路径为: ";
                 PrintOneSourceShortestPath(graph, predecessor, i, j);
-                cout<<", 最短路径长度为: "<<distance[i][j];
-                cout<<endl;
+                cout<<", 最短路径长度为: "<<distance[i][j]<<endl;
             }
         }
         cout<<endl;

@@ -32,13 +32,13 @@ public:
   DisjointSet& operator=(const DisjointSet& disjoint_set);
 
   // 查找
-  int Find(int value);
+  int Find(int index);
 
   // 合并集合(Weighted)
   void WeightedUnion(int node1, int node2);
 
   // 查找(非递归)
-  int FindNonRecursive(int value);
+  int FindNonRecursive(int index);
 private:
   int size_; //!< 大小
   int* parent_; //!< 父节点数组

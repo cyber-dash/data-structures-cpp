@@ -34,15 +34,15 @@ public:
 
   bool Insert(const Weight& item);
   bool RemoveMin(Weight& value);
-  bool IsEmpty() const { return current_size_ == 0 ? true : false; }
-  bool IsFull() const { return current_size_ == max_size_ ? true : false; }
-  void MakeEmpty() { current_size_ = 0; }
+  bool IsEmpty() const { return heap_size_ == 0 ? true : false; }
+  bool IsFull() const { return heap_size_ == max_size_ ? true : false; }
+  void MakeEmpty() { heap_size_ = 0; }
 
   void CyberDashShow();
 
 private:
   Weight* heap_array_;
-  int current_size_;
+  int heap_size_;       // 书中current_size_
   int max_size_;
   void siftDown(int start, int end);
   void siftUp(int start);
@@ -60,7 +60,7 @@ MinHeap<Weight>::MinHeap(int size) {
     exit(1);
   }
 
-  current_size_ = 0;
+  heap_size_ = 0;
 }
 
 
@@ -78,12 +78,12 @@ MinHeap<Weight>::MinHeap(Weight arr[], int arr_size) {
     heap_array_[i] = arr[i];
   }
 
-  current_size_ = arr_size;
+  heap_size_ = arr_size;
 
-  int current_index_ = (current_size_ - 2) / 2;
+  int current_index_ = (heap_size_ - 2) / 2;
 
   while (current_index_ >= 0) {
-    siftDown(current_index_, current_size_ - 1);
+    siftDown(current_index_, heap_size_ - 1);
     current_index_--;
   }
 }
@@ -146,16 +146,16 @@ void MinHeap<Weight>::siftUp(int start) {
 template <class Weight>
 bool MinHeap<Weight>::Insert(const Weight& item) {
 
-  if (current_size_ == max_size_) {
+  if (heap_size_ == max_size_) {
     cerr << "Heap Full." << endl;
     return false;
   }
 
-  heap_array_[current_size_] = item;
+  heap_array_[heap_size_] = item;
 
-  siftUp(current_size_);
+  siftUp(heap_size_);
 
-  current_size_++;
+  heap_size_++;
 
   return true;
 }
@@ -163,16 +163,16 @@ bool MinHeap<Weight>::Insert(const Weight& item) {
 
 template <class Weight>
 bool MinHeap<Weight>::RemoveMin(Weight& x) {
-  if (!current_size_) {
+  if (!heap_size_) {
     cerr << "Heap Empty." << endl;
     return false;
   }
 
   x = heap_array_[0];
-  heap_array_[0] = heap_array_[current_size_ - 1];
-  current_size_--;
+  heap_array_[0] = heap_array_[heap_size_ - 1];
+  heap_size_--;
 
-  siftDown(0, current_size_ - 1);
+  siftDown(0, heap_size_ - 1);
 
   return true;
 }
