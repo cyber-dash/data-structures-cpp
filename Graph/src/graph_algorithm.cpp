@@ -727,7 +727,7 @@ void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vect
 
 
 /*!
- * @brief 打印单源最短路径
+ * @brief 打印单源最短路径(SSSP)
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
  * @param graph 图的引用
@@ -783,10 +783,21 @@ void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph, Vertex starting
 }
 
 
+/*!
+ * 递归打印某一个起始点的最短路径(在多源最短路径中)
+ * @tparam Vertex 结点模板类型
+ * @tparam Weight 边权值模板类型
+ * @param graph 图(引用)
+ * @param predecessor 前一结点数组, predecessor[i][j]表示: 索引i结点到索引j结点最短路径中, j的前一结点
+ * @param i
+ * @param j
+ */
 template<class Vertex, class Weight>
-void PrintOneSourceShortestPath(Graph<Vertex, Weight>& graph, vector<vector<int> > predecessor, int i, int j) {
+void PrintOneSourceShortestPathRecursive(Graph<Vertex, Weight>& graph,
+                                         vector<vector<int> > predecessor,
+                                         int i, int j) {
     if (i != j) {
-        PrintOneSourceShortestPath(graph, predecessor, i, predecessor[i][j]);
+        PrintOneSourceShortestPathRecursive(graph, predecessor, i, predecessor[i][j]);
     }
 
     Vertex vertex_j;
@@ -796,7 +807,7 @@ void PrintOneSourceShortestPath(Graph<Vertex, Weight>& graph, vector<vector<int>
 
 
 /*!
- * 打印多源最短路径(弗洛伊德Floyd等)
+ * 打印多源最短路径(弗洛伊德Floyd等MSSP)
  * @tparam Vertex 结点模板类型
  * @tparam Weight 边权值模板类型
  * @param graph 图(引用)
@@ -821,7 +832,7 @@ void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
                 graph.GetVertexByIndex(vertex_j, j);
 
                 cout<<"起始点("<<vertex_i<<")到结点("<<vertex_j<<")的最短路径为: ";
-                PrintOneSourceShortestPath(graph, predecessor, i, j);
+                PrintOneSourceShortestPathRecursive(graph, predecessor, i, j);
                 cout<<", 最短路径长度为: "<<distance[i][j]<<endl;
             }
         }
