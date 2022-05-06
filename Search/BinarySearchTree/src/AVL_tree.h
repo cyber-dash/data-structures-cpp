@@ -167,10 +167,8 @@ void AVLTree<Value, Key>::RotateLeftRight_(AVLNode<Value, Key>*& node) {
     node->SetLeftChild(sub_left_node); // 左单旋转, node成为新根
 
     if (node->GetBalanceFactor() <= AVLNode<Value, Key>::BALANCED) {
-        // sub_left_node->SetBalanceFactor(0);
         sub_left_node->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
     } else {
-        // sub_left_node->SetBalanceFactor(-1);
         sub_left_node->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
     }
 
@@ -433,7 +431,9 @@ bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLN
             stack_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1) {
             stack_node_child = stack_node;
         } else { // 第3种情况, |bf| = 2
-            int stack_node_rotate_flag = (stack_node->GetBalanceFactor() < 0) ? -1 : 1;
+            int stack_node_rotate_flag = (stack_node->GetBalanceFactor() < 0) ?
+                AVLNode<Value, Key>::LEFT_HIGHER_1 : AVLNode<Value, Key>::RIGHT_HIGHER_1;
+
             if (stack_node_child->GetBalanceFactor() == stack_node_rotate_flag) { // 两个结点的平衡因子同号, 单旋转
                 if (stack_node_rotate_flag == AVLNode<Value, Key>::LEFT_HIGHER_1) {
                     this->RotateRight_(stack_node); // 右单旋转
@@ -606,27 +606,30 @@ bool AVLTree<Value, Key>::RemoveInSubTreeRecursive_(AVLNode<Value, Key>*& sub_tr
                 grand_parent_direction = AVLNode<Value, Key>::LEFT_HIGHER_1;
             }
 
-            if (parent_node->GetBalanceFactor() == 1 || parent_node->GetBalanceFactor() == -1) { // 图7.20
+            // 图7.20
+            if (parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_1 ||
+                parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1)
+            {
                 break;
             }
 
-            if (parent_node->GetBalanceFactor() != 0) { // |bf| = 2
-                if (parent_node->GetBalanceFactor() < 0) {
-                    parent_direction = -1;
+            if (parent_node->GetBalanceFactor() != AVLNode<Value, Key>::BALANCED) { // |bf| = 2
+                if (parent_node->GetBalanceFactor() < AVLNode<Value, Key>::BALANCED) {
+                    parent_direction = AVLNode<Value, Key>::LEFT_HIGHER_1;
                     child_of_delete_node = parent_node->LeftChild();
                 } else {
-                    parent_direction = 1;
+                    parent_direction = AVLNode<Value, Key>::RIGHT_HIGHER_1;
                     child_of_delete_node = parent_node->RightChild();
                 }
 
-                if (child_of_delete_node && child_of_delete_node->GetBalanceFactor() == 0) {
-                    if (parent_direction == -1) {
+                if (child_of_delete_node && child_of_delete_node->GetBalanceFactor() == AVLNode<Value, Key>::BALANCED) {
+                    if (parent_direction == AVLNode<Value, Key>::LEFT_HIGHER_1) {
                         this->RotateRight_(parent_node);
                         parent_node->SetBalanceFactor(1);
-                        parent_node->LeftChild()->SetBalanceFactor(-1);
+                        parent_node->LeftChild()->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
                     } else {
                         this->RotateLeft_(parent_node);
-                        parent_node->SetBalanceFactor(-1);
+                        parent_node->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1 );
                         parent_node->RightChild()->SetBalanceFactor(1);
                     }
 
@@ -634,24 +637,31 @@ bool AVLTree<Value, Key>::RemoveInSubTreeRecursive_(AVLNode<Value, Key>*& sub_tr
                 }
 
                 if (child_of_delete_node && child_of_delete_node->GetBalanceFactor() == parent_direction) { // 图7.23, 两节点平衡因子同号
-                    if (parent_direction == -1) {
+                    if (parent_direction == AVLNode<Value, Key>::LEFT_HIGHER_1) {
                         this->RotateRight_(parent_node);
                     } else {
                         this->RotateLeft_(parent_node);
                     }
                 } else { // 图7.24, 两节点平衡因子反号
-                    if (parent_direction == -1) {
+                    if (parent_direction == AVLNode<Value, Key>::LEFT_HIGHER_1) {
                         this->RotateLeftRight_(parent_node);
                     } else {
                         this->RotateRightLeft_(parent_node);
                     }
                 }
 
+
+                if (grand_parent_node != NULL) { // todo: 新加, 不完全对
+
+
                 // 旋转后, 新根与上层连接
-                if (grand_parent_direction == -1) {
+                if (grand_parent_direction == AVLNode<Value, Key>::LEFT_HIGHER_1) {
                     grand_parent_node->SetLeftChild(parent_node);
                 } else {
                     grand_parent_node->SetRightChild(parent_node);
+                }
+
+
                 }
             }
 
@@ -703,6 +713,7 @@ void AVLTree<Value, Key>::PrintSubTreeRecursive_(
 template<class Value, class Key>
 void AVLTree<Value, Key>::Print(void (*visit)(AVLNode<Value, Key>*)) {
     this->PrintSubTreeRecursive_((AVLNode<Value, Key> *) this->root_node_, visit); cout << endl;
+    cout << endl;
 }
 
 
