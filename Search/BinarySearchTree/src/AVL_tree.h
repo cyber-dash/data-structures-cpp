@@ -72,7 +72,6 @@ public:
         stack<AVLNode<Elem, Key>*>& AVL_node_stack);
 
 protected:
-    // AVLNode<Elem, Key>* SearchInSubTree_(Key key, const AVLNode<Elem, Key>*& sub_tree_root_ptr);
     AVLNode<Elem, Key>* SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr);
     bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
     // 平衡树子树插入(CyberDash实现版本)
@@ -87,7 +86,6 @@ protected:
     void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr);
     // 先右后左双旋转(Rotation Right Left), 图7.18(a)的情形
     void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr);
-
 
     // 子树中关键码最小项
     AVLNode<Elem, Key>* MinInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;

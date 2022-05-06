@@ -1,4 +1,4 @@
-//
+ï»¿//
 // Created by cyberdash@163.com on 2021/6/26.
 //
 
@@ -10,28 +10,28 @@ using namespace std;
 
 int main()
 {
-  /* ²åÈë */
-  TestBSTInsert();
-  TestAVLInsert2();
-  TestAVLInsertByCyberDash();
+	/* æ’å…¥ */
+	TestBSTInsert();
+	TestAVLInsert2();
+	TestAVLInsertByCyberDash();
 
-  /* É¾³ı */
-  TestBSTRemove();
-  TestAVLRemoveByCyberDash();
+	/* åˆ é™¤ */
+	TestBSTRemove();
+	TestAVLRemoveByCyberDash();
 
-  /* ²éÑ¯ */
-  TestBSTSearch();
-  TestAVLSearch();
+	/* æŸ¥è¯¢ */
+	TestBSTSearch();
+	TestAVLSearch();
 
-  /* ¸ß¶È */
-  TestBSTAndAVLHeight();
+	/* é«˜åº¦ */
+	TestBSTAndAVLHeight();
 
-  /* ×î´ó×îĞ¡Öµ */
-  TestBSTMaxAndMin();
-  TestAVLMaxAndMin();
+	/* æœ€å¤§æœ€å°å€¼ */
+	TestBSTMaxAndMin();
+	TestAVLMaxAndMin();
 
-  /* Çå³ıËùÓĞÊı¾İ */
-  TestBSTMakeEmpty();
+	/* æ¸…é™¤æ‰€æœ‰æ•°æ® */
+	TestBSTMakeEmpty();
 
-  return 0;
+	return 0;
 }
