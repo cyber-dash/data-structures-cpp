@@ -12,28 +12,26 @@ using namespace std;
 template <class Value, class Key>
 class BSTNode {
 public:
-    BSTNode() : left_child_ptr_(NULL), right_child_ptr_(NULL) {}
-    BSTNode(Value value, Key key) : value_(value), key_(key), left_child_ptr_(NULL), right_child_ptr_(NULL) {}
+    BSTNode() : left_child_(NULL), right_child_(NULL) {}
+    BSTNode(Value value, Key key) : value_(value), key_(key), left_child_(NULL), right_child_(NULL) {}
     BSTNode(Value value, Key key, BSTNode<Value, Key>* left_child_ptr, BSTNode<Value, Key>* right_child_ptr) :
-        value_(value), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr) {}
+        value_(value), key_(key), left_child_(left_child_ptr), right_child_(right_child_ptr) {}
 
-    BSTNode<Value, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
-    BSTNode<Value, Key>*& RightChildPtr() { return this->right_child_ptr_; };
+    BSTNode<Value, Key>*& LeftChild() { return this->left_child_; };
+    BSTNode<Value, Key>*& RightChild() { return this->right_child_; };
 
-    void SetLeftChildPtr(BSTNode<Value, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
-    void SetRightChildPtr(BSTNode<Value, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
+    void SetLeftChildPtr(BSTNode<Value, Key>* node_ptr) { this->left_child_ = node_ptr; }
+    void SetRightChildPtr(BSTNode<Value, Key>* node_ptr) { this->right_child_ = node_ptr; }
 
     virtual void SetKey(const Key& key) { this->key_ = key; }
     virtual Key GetKey() { return this->key_; }
 
     virtual void SetValue(const Value& value) { this->value_ = value; }
-    virtual Value GetValue() {
-        return this->value_;
-    }
+    virtual Value GetValue() { return this->value_; }
 
 protected:
-    BSTNode<Value, Key>* left_child_ptr_;
-    BSTNode<Value, Key>* right_child_ptr_;
+    BSTNode<Value, Key>* left_child_;
+    BSTNode<Value, Key>* right_child_;
 
     Key key_;
     Value value_;
@@ -112,10 +110,10 @@ BSTNode<Value, Key>* BST<Value, Key>::SearchInSubTree_(Key key, BSTNode<Value, K
     Key cur_key = sub_tree_root_ptr->GetKey();
 
     if (key < cur_key) {
-        return SearchInSubTree_(key, sub_tree_root_ptr->LeftChildPtr());
+        return SearchInSubTree_(key, sub_tree_root_ptr->LeftChild());
     }
     else if (key > cur_key) {
-        return SearchInSubTree_(key, sub_tree_root_ptr->RightChildPtr());
+        return SearchInSubTree_(key, sub_tree_root_ptr->RightChild());
     }
     else {
         return sub_tree_root_ptr;
@@ -162,10 +160,10 @@ bool BST<Value, Key>::InsertInSubTree_(Value value, Key key, BSTNode<Value, Key>
     }
 
     if (key < sub_tree_root_ptr->GetKey()) {
-        return InsertInSubTree_(value, key, sub_tree_root_ptr->LeftChildPtr());
+        return InsertInSubTree_(value, key, sub_tree_root_ptr->LeftChild());
     }
     else if (key > sub_tree_root_ptr->GetKey()) {
-        return InsertInSubTree_(value, key, sub_tree_root_ptr->RightChildPtr());
+        return InsertInSubTree_(value, key, sub_tree_root_ptr->RightChild());
     }
     else {
         return false;
@@ -200,18 +198,18 @@ bool BST<Value, Key>::RemoveInSubTree_(Key key, BSTNode<Value, Key>*& sub_tree_r
     }
 
     if (key < sub_tree_root_ptr->GetKey()) {
-        return RemoveInSubTree_(key, sub_tree_root_ptr->LeftChildPtr());
+        return RemoveInSubTree_(key, sub_tree_root_ptr->LeftChild());
     }
     else if (key > sub_tree_root_ptr->GetKey()) {
-        return RemoveInSubTree_(key, sub_tree_root_ptr->RightChildPtr());
+        return RemoveInSubTree_(key, sub_tree_root_ptr->RightChild());
     }
 
     // 删除sub_tree_root_ptr, 使用中序前驱or后继替换掉该节点, 此处使用后继
-    if (sub_tree_root_ptr->LeftChildPtr() != NULL && sub_tree_root_ptr->RightChildPtr() != NULL) { // 存在左右孩子
+    if (sub_tree_root_ptr->LeftChild() != NULL && sub_tree_root_ptr->RightChild() != NULL) { // 存在左右孩子
 
-        BSTNode<Value, Key>* cur_node_ptr = sub_tree_root_ptr->RightChildPtr();
-        while (cur_node_ptr->LeftChildPtr() != NULL) {
-            cur_node_ptr = cur_node_ptr->LeftChildPtr();
+        BSTNode<Value, Key>* cur_node_ptr = sub_tree_root_ptr->RightChild();
+        while (cur_node_ptr->LeftChild() != NULL) {
+            cur_node_ptr = cur_node_ptr->LeftChild();
         }
 
         // 拿到后继节点的数据, 作为替换数据
@@ -222,16 +220,16 @@ bool BST<Value, Key>::RemoveInSubTree_(Key key, BSTNode<Value, Key>*& sub_tree_r
         sub_tree_root_ptr->SetKey(replace_key);
 
         // 删除替换数据原先所在的节点
-        return RemoveInSubTree_(replace_key, sub_tree_root_ptr->RightChildPtr());
+        return RemoveInSubTree_(replace_key, sub_tree_root_ptr->RightChild());
     }
     else {
         BSTNode<Value, Key>* delete_node_ptr = sub_tree_root_ptr;
 
-        if (sub_tree_root_ptr->LeftChildPtr() == NULL) {
-            sub_tree_root_ptr = sub_tree_root_ptr->RightChildPtr();
+        if (sub_tree_root_ptr->LeftChild() == NULL) {
+            sub_tree_root_ptr = sub_tree_root_ptr->RightChild();
         }
         else {
-            sub_tree_root_ptr = sub_tree_root_ptr->LeftChildPtr();
+            sub_tree_root_ptr = sub_tree_root_ptr->LeftChild();
         }
 
         delete delete_node_ptr;
@@ -259,8 +257,8 @@ void BST<Value, Key>::MakeEmptySubTree_(BSTNode<Value, Key>*& sub_tree_root_ptr)
         return;
     }
 
-    MakeEmptySubTree_(sub_tree_root_ptr->LeftChildPtr());
-    MakeEmptySubTree_(sub_tree_root_ptr->RightChildPtr());
+    MakeEmptySubTree_(sub_tree_root_ptr->LeftChild());
+    MakeEmptySubTree_(sub_tree_root_ptr->RightChild());
 
     delete sub_tree_root_ptr;
     sub_tree_root_ptr = NULL;
@@ -294,11 +292,11 @@ void BST<Value, Key>::PrintSubTree_(BSTNode<Value, Key>* sub_tree_root_ptr, void
 
     cout << "(";
 
-    PrintSubTree_(sub_tree_root_ptr->LeftChildPtr(), visit);
+    PrintSubTree_(sub_tree_root_ptr->LeftChild(), visit);
 
     cout << ",";
 
-    PrintSubTree_(sub_tree_root_ptr->RightChildPtr(), visit);
+    PrintSubTree_(sub_tree_root_ptr->RightChild(), visit);
 
     cout << ")";
 }
@@ -323,8 +321,8 @@ BSTNode<Value, Key>* BST<Value, Key>::Copy_(const BSTNode<Value, Key>* origin_tr
         origin_tree_root_ptr->GetKey());
     /* error handler */
 
-    new_tree_root_ptr->SetLeftChildPtr(Copy_(origin_tree_root_ptr->left_child_ptr_));
-    new_tree_root_ptr->SetRightChildPtr(Copy_(origin_tree_root_ptr->right_child_ptr_));
+    new_tree_root_ptr->SetLeftChildPtr(Copy_(origin_tree_root_ptr->left_child_));
+    new_tree_root_ptr->SetRightChildPtr(Copy_(origin_tree_root_ptr->right_child_));
 
     return new_tree_root_ptr;
 }
@@ -348,8 +346,8 @@ BSTNode<Value, Key>* BST<Value, Key>::MinInSubTree_(BSTNode<Value, Key>* sub_tre
 
     BSTNode<Value, Key>* cur_node_ptr = sub_tree_root_ptr;
 
-    while (cur_node_ptr->LeftChildPtr() != NULL) {
-        cur_node_ptr = cur_node_ptr->LeftChildPtr();
+    while (cur_node_ptr->LeftChild() != NULL) {
+        cur_node_ptr = cur_node_ptr->LeftChild();
     }
 
     return cur_node_ptr;
@@ -373,8 +371,8 @@ BSTNode<Value, Key>* BST<Value, Key>::MaxInSubTree_(BSTNode<Value, Key>* sub_tre
     }
 
     BSTNode<Value, Key>* cur_node_ptr = sub_tree_root_ptr;
-    while (cur_node_ptr->RightChildPtr() != NULL) {
-        cur_node_ptr = cur_node_ptr->RightChildPtr();
+    while (cur_node_ptr->RightChild() != NULL) {
+        cur_node_ptr = cur_node_ptr->RightChild();
     }
 
     return cur_node_ptr;
@@ -404,8 +402,8 @@ int BST<Value, Key>::SubTreeHeight_(BSTNode<Value, Key>* sub_tree_root_ptr) {
         return 0;
     }
 
-    int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->LeftChildPtr());
-    int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->RightChildPtr());
+    int left_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->LeftChild());
+    int right_sub_tree_height = SubTreeHeight_(sub_tree_root_ptr->RightChild());
 
     if (left_sub_tree_height < right_sub_tree_height) {
         return right_sub_tree_height + 1;

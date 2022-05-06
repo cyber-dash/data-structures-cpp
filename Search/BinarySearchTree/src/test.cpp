@@ -272,7 +272,7 @@ void TestAVLSearch() {
     AVL_tree->Insert(answer8, question8);
     AVL_tree->Insert(answer9, question9);
 
-    // AVL_tree->RemoveByCyberDash(question9);
+    // AVL_tree->Remove(question9);
 
     AVLNode<string, string>* the_9th_node = AVL_tree->Search(question9);
     if (the_9th_node == NULL) { // 没有搜索到
@@ -617,7 +617,7 @@ void TestAVLInsertByCyberDash() {
 void TestAVLRemoveByCyberDash() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test AVL RemoveByCyberDash                |" << endl;
+    cout << "|                 Test AVL Remove                |" << endl;
     cout << "|               测试平衡二叉树的删除(CyberDash版本)             |" << endl;
 
     AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
@@ -633,7 +633,7 @@ void TestAVLRemoveByCyberDash() {
 
     AVL_tree->PrintTree(AVLNodeVisit);
 
-    AVL_tree->RemoveByCyberDash("p");
+    AVL_tree->Remove("p");
 
     AVL_tree->PrintTree(AVLNodeVisit);
 
