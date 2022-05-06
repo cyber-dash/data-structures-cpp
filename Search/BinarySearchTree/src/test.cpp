@@ -8,12 +8,12 @@
 
 
 void BSTNodeVisit(BSTNode<string, string>* node_ptr) {
-    cout << "[" << node_ptr->GetKey() << ":" << node_ptr->GetData() << "]";
+    cout << "[" << node_ptr->GetKey() << ":" << node_ptr->GetValue() << "]";
 }
 
 
 void AVLNodeVisit(AVLNode<string, string>* node_ptr) {
-    cout << "[" << node_ptr->GetKey() << ":" << node_ptr->GetData() << "]";
+    cout << "[" << node_ptr->GetKey() << ":" << node_ptr->GetValue() << "]";
 }
 
 
@@ -208,7 +208,7 @@ void TestBSTSearch() {
         cout << "此问题已删除" << endl;
     }
     else { // 搜索到
-        cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetData() << endl;
+        cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetValue() << endl;
     }
 
     cout << endl;
@@ -218,7 +218,7 @@ void TestBSTSearch() {
         cout << "Duck不必" << endl;
     }
     else { // 搜索到
-        cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetData() << endl;
+        cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetValue() << endl;
     }
 
     cout << endl;
@@ -280,7 +280,7 @@ void TestAVLSearch() {
         cout << "此问题已删除" << endl;
     }
     else { // 搜索到
-        cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetData() << endl;
+        cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetValue() << endl;
     }
 
     cout << endl;
@@ -290,7 +290,7 @@ void TestAVLSearch() {
         cout << "Duck不必" << endl;
     }
     else { // 搜索到
-        cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetData() << endl;
+        cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetValue() << endl;
     }
 
     cout << endl;

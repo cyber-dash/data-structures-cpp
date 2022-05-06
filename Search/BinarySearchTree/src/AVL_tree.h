@@ -10,108 +10,108 @@
 #include "stack"
 
 
-template<class Elem, class Key>
-class AVLNode : public BSTNode<Elem, Key> {
+template<class Value, class Key>
+class AVLNode : public BSTNode<Value, Key> {
 public:
     AVLNode() :
         left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
-    AVLNode(const Elem& elem, const Key& key) :
-        elem_(elem), key_(key), left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
-    AVLNode(Elem elem, Key key, AVLNode<Elem, Key>* left_child_ptr, AVLNode<Elem, Key>* right_child_ptr) :
-        elem_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr), balance_factor(0) {}
+    AVLNode(const Value& elem, const Key& key) :
+        value_(elem), key_(key), left_child_ptr_(NULL), right_child_ptr_(NULL), balance_factor(0) {}
+    AVLNode(Value elem, Key key, AVLNode<Value, Key>* left_child_ptr, AVLNode<Value, Key>* right_child_ptr) :
+        value_(elem), key_(key), left_child_ptr_(left_child_ptr), right_child_ptr_(right_child_ptr), balance_factor(0) {}
 
-    void SetLeftChildPtr(AVLNode<Elem, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
-    void SetRightChildPtr(AVLNode<Elem, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
+    void SetLeftChildPtr(AVLNode<Value, Key>* node_ptr) { this->left_child_ptr_ = node_ptr; }
+    void SetRightChildPtr(AVLNode<Value, Key>* node_ptr) { this->right_child_ptr_ = node_ptr; }
 
-    void SetData(const Elem& elem) { this->elem_ = elem; }
-    Elem GetData() { return this->elem_; }
+    void SetValue(const Value& elem) { this->value_ = elem; }
+    Value GetValue() { return this->value_; }
 
     void SetKey(const Key& key) { this->key_ = key; }
     Key GetKey() { return this->key_; }
 
-    AVLNode<Elem, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
-    AVLNode<Elem, Key>*& RightChildPtr() { return this->right_child_ptr_; };
+    AVLNode<Value, Key>*& LeftChildPtr() { return this->left_child_ptr_; };
+    AVLNode<Value, Key>*& RightChildPtr() { return this->right_child_ptr_; };
 
     int balance_factor;
 
 protected:
 
-    AVLNode<Elem, Key>* left_child_ptr_;
-    AVLNode<Elem, Key>* right_child_ptr_;
+    AVLNode<Value, Key>* left_child_ptr_;
+    AVLNode<Value, Key>* right_child_ptr_;
 
-    Elem elem_;
+    Value value_;
     Key key_;
 };
 
 
-template<class Elem, class Key>
-class AVLTree : public BST<Elem, Key> {
+template<class Value, class Key>
+class AVLTree : public BST<Value, Key> {
 public:
     AVLTree() : root_node_ptr_(NULL) {}
-    AVLNode<Elem, Key>*& RootRef() { return (AVLNode<Elem, Key>*&)this->root_node_ptr_; }
-    AVLNode<Elem, Key>* Root() { return (AVLNode<Elem, Key>*)this->root_node_ptr_; }
+    AVLNode<Value, Key>*& RootRef() { return (AVLNode<Value, Key>*&)this->root_node_ptr_; }
+    AVLNode<Value, Key>* Root() { return (AVLNode<Value, Key>*)this->root_node_ptr_; }
 
-    bool Insert(Elem data, Key key);
-    bool InsertByCyberDash(Elem data, Key key);
-    // bool Remove(Key key, Elem& data) { return this->RemoveInSubTreeByCyberDash_(RootRef(), key); }
+    bool Insert(Value data, Key key);
+    bool InsertByCyberDash(Value data, Key key);
+    // bool Remove(Key key, Value& data) { return this->RemoveInSubTreeByCyberDash_(RootRef(), key); }
     bool RemoveByCyberDash(Key key);
-    AVLNode<Elem, Key>* Search(Key key) { return this->SearchInSubTree_(key, this->root_node_ptr_); }
+    AVLNode<Value, Key>* Search(Key key) { return this->SearchInSubTree_(key, this->root_node_ptr_); }
     int Height() { return this->SubTreeHeight_(this->root_node_ptr_); }
 
 
-    Elem Max();
-    Elem Min();
-    void PrintTree(void (*visit)(AVLNode<Elem, Key>*));
+    Value Max();
+    Value Min();
+    void PrintTree(void (*visit)(AVLNode<Value, Key>*));
 
-    static AVLNode<Elem, Key>* GetInsertNodePtrAndInitStack(Key key,
-        AVLNode<Elem, Key>* node_ptr,
-        stack<AVLNode<Elem, Key>*>& AVL_node_stack);
+    static AVLNode<Value, Key>* GetInsertNodePtrAndInitStack(Key key,
+        AVLNode<Value, Key>* node_ptr,
+        stack<AVLNode<Value, Key>*>& AVL_node_stack);
 
-    static AVLNode<Elem, Key>* GetDeleteNodePtrAndInitStack(Key key,
-        AVLNode<Elem, Key>* node_ptr,
-        stack<AVLNode<Elem, Key>*>& AVL_node_stack);
+    static AVLNode<Value, Key>* GetDeleteNodePtrAndInitStack(Key key,
+        AVLNode<Value, Key>* node_ptr,
+        stack<AVLNode<Value, Key>*>& AVL_node_stack);
 
 protected:
-    AVLNode<Elem, Key>* SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr);
-    bool InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
+    AVLNode<Value, Key>* SearchInSubTree_(Key key, AVLNode<Value, Key>* sub_tree_root_ptr);
+    bool InsertInSubTree_(Value elem, Key key, AVLNode<Value, Key>*& sub_tree_root_ptr);
     // 平衡树子树插入(CyberDash实现版本)
-    bool InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr);
-    bool RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key);
+    bool InsertInSubTreeByCyberDash_(Value elem, Key key, AVLNode<Value, Key>*& sub_tree_root_ptr);
+    bool RemoveInSubTreeByCyberDash_(AVLNode<Value, Key>*& sub_tree_root_ptr, Key key);
 
     // 左单旋转(Rotation Left), 图7.15(a)的情形
-    void RotateLeft_(AVLNode<Elem, Key>*& node_ptr);
+    void RotateLeft_(AVLNode<Value, Key>*& node_ptr);
     // 右单旋转(Rotation Right), 图7.16(a)的情形
-    void RotateRight_(AVLNode<Elem, Key>*& node_ptr);
+    void RotateRight_(AVLNode<Value, Key>*& node_ptr);
     // 先左后右双旋转(Rotation Left Right), 图7.17(a)的情形
-    void RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr);
+    void RotateLeftRight_(AVLNode<Value, Key>*& node_ptr);
     // 先右后左双旋转(Rotation Right Left), 图7.18(a)的情形
-    void RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr);
+    void RotateRightLeft_(AVLNode<Value, Key>*& node_ptr);
 
     // 子树中关键码最小项
-    AVLNode<Elem, Key>* MinInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
+    AVLNode<Value, Key>* MinInSubTree_(AVLNode<Value, Key>* sub_tree_root_ptr) const;
 
     // 子树中关键码最大项
-    AVLNode<Elem, Key>* MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const;
+    AVLNode<Value, Key>* MaxInSubTree_(AVLNode<Value, Key>* sub_tree_root_ptr) const;
     // AVL子树的高度
-    int SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr);
+    int SubTreeHeight_(AVLNode<Value, Key>* sub_tree_root_ptr);
 
-    void PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*));
+    void PrintSubTree_(AVLNode<Value, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Value, Key>*));
 
-    AVLNode<Elem, Key>* root_node_ptr_; // 根节点
+    AVLNode<Value, Key>* root_node_ptr_; // 根节点
 };
 
 
 /**
  * 左单旋转(Rotation Left), 图7.15(a)的情形
- * @tparam Elem 搜索结果(数据)模板类型
+ * @tparam Value 搜索结果(数据)模板类型
  * @tparam Key 关键码模板类型
  * @param node_ptr AVL树节点指针的引用
  */
-template<class Elem, class Key>
-void AVLTree<Elem, Key>::RotateLeft_(AVLNode<Elem, Key>*& node_ptr) {
+template<class Value, class Key>
+void AVLTree<Value, Key>::RotateLeft_(AVLNode<Value, Key>*& node_ptr) {
 
     // 图7.15(b)
-    AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
+    AVLNode<Value, Key>* sub_left_node_ptr = node_ptr;
     node_ptr = sub_left_node_ptr->RightChildPtr();
 
     // 图7.15(c)
@@ -126,15 +126,15 @@ void AVLTree<Elem, Key>::RotateLeft_(AVLNode<Elem, Key>*& node_ptr) {
 
 /**
  * 右单旋转(Rotation Right), 图7.16(a)的情形
- * @tparam Elem 搜索结果(数据)模板类型
+ * @tparam Value 搜索结果(数据)模板类型
  * @tparam Key 关键码模板类型
  * @param node_ptr AVL树节点指针的引用
  */
-template<class Elem, class Key>
-void AVLTree<Elem, Key>::RotateRight_(AVLNode<Elem, Key>*& node_ptr) {
+template<class Value, class Key>
+void AVLTree<Value, Key>::RotateRight_(AVLNode<Value, Key>*& node_ptr) {
 
     // 图7.16(b)
-    AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
+    AVLNode<Value, Key>* sub_right_node_ptr = node_ptr;
     node_ptr = sub_right_node_ptr->LeftChildPtr();
 
     // 图7.16(c)
@@ -147,12 +147,12 @@ void AVLTree<Elem, Key>::RotateRight_(AVLNode<Elem, Key>*& node_ptr) {
 }
 
 
-template<class Elem, class Key>
-void AVLTree<Elem, Key>::RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
+template<class Value, class Key>
+void AVLTree<Value, Key>::RotateLeftRight_(AVLNode<Value, Key>*& node_ptr) {
 
     // 图7.17(b)
-    AVLNode<Elem, Key>* sub_right_node_ptr = node_ptr;
-    AVLNode<Elem, Key>* sub_left_node_ptr = sub_right_node_ptr->LeftChildPtr();
+    AVLNode<Value, Key>* sub_right_node_ptr = node_ptr;
+    AVLNode<Value, Key>* sub_left_node_ptr = sub_right_node_ptr->LeftChildPtr();
     node_ptr = sub_left_node_ptr->RightChildPtr();
 
     // 图7.17(c)
@@ -180,12 +180,12 @@ void AVLTree<Elem, Key>::RotateLeftRight_(AVLNode<Elem, Key>*& node_ptr) {
 }
 
 
-template<class Elem, class Key>
-void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
+template<class Value, class Key>
+void AVLTree<Value, Key>::RotateRightLeft_(AVLNode<Value, Key>*& node_ptr) {
 
     // 图7.18(b)
-    AVLNode<Elem, Key>* sub_left_node_ptr = node_ptr;
-    AVLNode<Elem, Key>* sub_right_node_ptr = sub_left_node_ptr->RightChildPtr();
+    AVLNode<Value, Key>* sub_left_node_ptr = node_ptr;
+    AVLNode<Value, Key>* sub_right_node_ptr = sub_left_node_ptr->RightChildPtr();
     node_ptr = sub_right_node_ptr->LeftChildPtr();
 
     // 图7.18(c)
@@ -213,21 +213,21 @@ void AVLTree<Elem, Key>::RotateRightLeft_(AVLNode<Elem, Key>*& node_ptr) {
 }
 
 
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::Insert(Elem data, Key key) {
-    return this->InsertInSubTree_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
+template<class Value, class Key>
+bool AVLTree<Value, Key>::Insert(Value data, Key key) {
+    return this->InsertInSubTree_(data, key, (AVLNode<Value, Key>*&)this->root_node_ptr_);
 }
 
 
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::InsertByCyberDash(Elem data, Key key) {
-    return this->InsertInSubTreeByCyberDash_(data, key, (AVLNode<Elem, Key>*&)this->root_node_ptr_);
+template<class Value, class Key>
+bool AVLTree<Value, Key>::InsertByCyberDash(Value data, Key key) {
+    return this->InsertInSubTreeByCyberDash_(data, key, (AVLNode<Value, Key>*&)this->root_node_ptr_);
 }
 
 
 /**
  * @brief 子树中插入节点(递归)
- * @tparam Elem 数据项模板类型
+ * @tparam Value 数据项模板类型
  * @tparam Key 关键码模板类型
  * @param elem 数据项
  * @param key 关键码
@@ -238,13 +238,13 @@ bool AVLTree<Elem, Key>::InsertByCyberDash(Elem data, Key key) {
  * 判断插入关键码与子树根节点关键码的大小关系, 在左子树or右子树做插入操作(递归)
  * 如果关键码相同, 则返回false
  */
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
+template<class Value, class Key>
+bool AVLTree<Value, Key>::InsertInSubTree_(Value elem, Key key, AVLNode<Value, Key>*& sub_tree_root_ptr) {
 
-    AVLNode<Elem, Key>* cur_stack_node_ptr = NULL;
-    AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    AVLNode<Value, Key>* cur_stack_node_ptr = NULL;
+    AVLNode<Value, Key>* cur_node_ptr = sub_tree_root_ptr;
 
-    stack<AVLNode<Elem, Key>*> AVL_node_stack;
+    stack<AVLNode<Value, Key>*> AVL_node_stack;
 
     // 寻找插入位置
     while (cur_node_ptr != NULL) {
@@ -264,7 +264,7 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
         }
     }
 
-    cur_node_ptr = new AVLNode<Elem, Key>(elem, key);
+    cur_node_ptr = new AVLNode<Value, Key>(elem, key);
     /* error handler */
 
     // 空树, 新结点成为根节点
@@ -328,7 +328,7 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
         sub_tree_root_ptr = cur_stack_node_ptr;
     }
     else {
-        AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
+        AVLNode<Value, Key>* stack_top_node_ptr = AVL_node_stack.top();
         if (stack_top_node_ptr->GetKey() > cur_stack_node_ptr->GetKey()) {
             stack_top_node_ptr->SetLeftChildPtr(cur_stack_node_ptr);
         }
@@ -341,12 +341,12 @@ bool AVLTree<Elem, Key>::InsertInSubTree_(Elem elem, Key key, AVLNode<Elem, Key>
 }
 
 
-template<class Elem, class Key>
-AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetInsertNodePtrAndInitStack(Key key,
-    AVLNode<Elem, Key>* node_ptr,
-    stack<AVLNode<Elem, Key>*>& AVL_node_stack) {
+template<class Value, class Key>
+AVLNode<Value, Key>* AVLTree<Value, Key>::GetInsertNodePtrAndInitStack(Key key,
+    AVLNode<Value, Key>* node_ptr,
+    stack<AVLNode<Value, Key>*>& AVL_node_stack) {
 
-    AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
+    AVLNode<Value, Key>* cur_node_ptr = node_ptr;
 
     // 寻找插入位置
     while (cur_node_ptr != NULL) {
@@ -370,12 +370,12 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetInsertNodePtrAndInitStack(Key key,
 }
 
 
-template<class Elem, class Key>
-AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Key key,
-    AVLNode<Elem, Key>* node_ptr,
-    stack<AVLNode<Elem, Key>*>& AVL_node_stack) {
+template<class Value, class Key>
+AVLNode<Value, Key>* AVLTree<Value, Key>::GetDeleteNodePtrAndInitStack(Key key,
+    AVLNode<Value, Key>* node_ptr,
+    stack<AVLNode<Value, Key>*>& AVL_node_stack) {
 
-    AVLNode<Elem, Key>* cur_node_ptr = node_ptr;
+    AVLNode<Value, Key>* cur_node_ptr = node_ptr;
 
     // 寻找删除位置
     while (cur_node_ptr != NULL) {
@@ -400,7 +400,7 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Key key,
 
 /**
  * @brief 在子树中, 使用关键码进行搜索
- * @tparam Elem 数据项模板类型
+ * @tparam Value 数据项模板类型
  * @tparam Key 关键码模板类型
  * @param key 关键码
  * @param sub_tree_root_ptr 子树根节点
@@ -409,8 +409,8 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::GetDeleteNodePtrAndInitStack(Key key,
  * 1. 如果子树根节点为NULL, 返回NULL
  * 2. 使用当前遍历节点的key, 与参数key作比较, 分别进行递归和返回搜索结果(终止递归)
  */
-template <class Elem, class Key>
-AVLNode<Elem, Key>* AVLTree<Elem, Key>::SearchInSubTree_(Key key, AVLNode<Elem, Key>* sub_tree_root_ptr) {
+template <class Value, class Key>
+AVLNode<Value, Key>* AVLTree<Value, Key>::SearchInSubTree_(Key key, AVLNode<Value, Key>* sub_tree_root_ptr) {
     if (sub_tree_root_ptr == NULL) {
         return NULL;
     }
@@ -431,7 +431,7 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::SearchInSubTree_(Key key, AVLNode<Elem, 
 
 /**
  * @brief 平衡树子树插入(CyberDash实现版本)
- * @tparam Elem 数据项模板类型
+ * @tparam Value 数据项模板类型
  * @tparam Key 关键码模板类型
  * @param elem 数据项
  * @param key 关键码
@@ -442,15 +442,15 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::SearchInSubTree_(Key key, AVLNode<Elem, 
  * 2. 分3种情况, 进行平衡化
  * 3. 平衡化结束后的收尾工作
  */
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode<Elem, Key>*& sub_tree_root_ptr) {
+template<class Value, class Key>
+bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value elem, Key key, AVLNode<Value, Key>*& sub_tree_root_ptr) {
 
-    stack<AVLNode<Elem, Key>* > AVL_node_stack;
+    stack<AVLNode<Value, Key>* > AVL_node_stack;
 
     // 获取插入位置, 初始化栈
-    AVLNode<Elem, Key>* insert_node_ptr = GetInsertNodePtrAndInitStack(key, sub_tree_root_ptr, AVL_node_stack);
+    AVLNode<Value, Key>* insert_node_ptr = GetInsertNodePtrAndInitStack(key, sub_tree_root_ptr, AVL_node_stack);
 
-    insert_node_ptr = new AVLNode<Elem, Key>(elem, key);
+    insert_node_ptr = new AVLNode<Value, Key>(elem, key);
     /* error handler */
 
     // 空树, 新结点成为根节点, 并返回
@@ -459,7 +459,7 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
         return true;
     }
 
-    AVLNode<Elem, Key>* stack_node_ptr = AVL_node_stack.top();
+    AVLNode<Value, Key>* stack_node_ptr = AVL_node_stack.top();
 
     // 原书使用elem做比较, 应该是错了
     if (key < stack_node_ptr->GetKey()) {
@@ -469,7 +469,7 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
         stack_node_ptr->SetRightChildPtr(insert_node_ptr);
     }
 
-    AVLNode<Elem, Key>* stack_node_child_ptr = insert_node_ptr;
+    AVLNode<Value, Key>* stack_node_child_ptr = insert_node_ptr;
 
     // 重新平衡化
     while (AVL_node_stack.empty() == false) {
@@ -523,7 +523,7 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
         sub_tree_root_ptr = stack_node_ptr;
     }
     else {
-        AVLNode<Elem, Key>* stack_top_node_ptr = AVL_node_stack.top();
+        AVLNode<Value, Key>* stack_top_node_ptr = AVL_node_stack.top();
         if (stack_top_node_ptr->GetKey() > stack_node_ptr->GetKey()) {
             stack_top_node_ptr->SetLeftChildPtr(stack_node_ptr);
         }
@@ -538,19 +538,19 @@ bool AVLTree<Elem, Key>::InsertInSubTreeByCyberDash_(Elem elem, Key key, AVLNode
 
 /**
  * @brief 平衡树子树删除节点(CyberDash实现版本)
- * @tparam Elem 数据项模板类型
+ * @tparam Value 数据项模板类型
  * @tparam Key 关键码模板类型
  * @param sub_tree_root_ptr 子树根节点
  * @param key 待删除关键码
  * @return
  */
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tree_root_ptr, Key key) {
-    AVLNode<Elem, Key>* cur_node_pre_ptr = NULL;
+template<class Value, class Key>
+bool AVLTree<Value, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Value, Key>*& sub_tree_root_ptr, Key key) {
+    AVLNode<Value, Key>* cur_node_pre_ptr = NULL;
 
-    stack<AVLNode<Elem, Key>*> AVL_node_stack;
+    stack<AVLNode<Value, Key>*> AVL_node_stack;
 
-    AVLNode<Elem, Key>* delete_node_ptr = GetDeleteNodePtrAndInitStack(key,
+    AVLNode<Value, Key>* delete_node_ptr = GetDeleteNodePtrAndInitStack(key,
         sub_tree_root_ptr,
         AVL_node_stack);
 
@@ -568,12 +568,12 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tr
         }
 
         delete_node_ptr->SetKey(cur_node_pre_ptr->GetKey());
-        delete_node_ptr->SetData(cur_node_pre_ptr->GetData());
+        delete_node_ptr->SetValue(cur_node_pre_ptr->GetValue());
 
         delete_node_ptr = cur_node_pre_ptr;
     }
 
-    AVLNode<Elem, Key>* child_of_delete_node_ptr = NULL; // 被删除节点的孩子节点
+    AVLNode<Value, Key>* child_of_delete_node_ptr = NULL; // 被删除节点的孩子节点
 
     // 找到此时的待删除节点的一个孩子节点, 用作连接
     if (delete_node_ptr->LeftChildPtr() != NULL) {
@@ -588,7 +588,7 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tr
     }
     else {
 
-        AVLNode<Elem, Key>* cur_stack_node_ptr = AVL_node_stack.top();
+        AVLNode<Value, Key>* cur_stack_node_ptr = AVL_node_stack.top();
 
         if (cur_stack_node_ptr->LeftChildPtr() == delete_node_ptr) { // 被删除节点是cur_stack_node_ptr的左孩子
             cur_stack_node_ptr->SetLeftChildPtr(child_of_delete_node_ptr); // 连接
@@ -597,12 +597,12 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tr
             cur_stack_node_ptr->SetRightChildPtr(child_of_delete_node_ptr); // 连接
         }
 
-        AVLNode<Elem, Key>* parent_node_ptr;
+        AVLNode<Value, Key>* parent_node_ptr;
 
         // 重新平衡化
         while (AVL_node_stack.empty() == false) {
 
-            AVLNode<Elem, Key>* grand_parent_node_ptr = NULL;
+            AVLNode<Value, Key>* grand_parent_node_ptr = NULL;
             parent_node_ptr = AVL_node_stack.top();
             AVL_node_stack.pop();
 
@@ -698,13 +698,13 @@ bool AVLTree<Elem, Key>::RemoveInSubTreeByCyberDash_(AVLNode<Elem, Key>*& sub_tr
 
 /**
  * @brief 打印子树(递归)
- * @tparam Elem
+ * @tparam Value
  * @tparam Key
  * @param sub_tree_root_ptr
  * @param visit
  */
-template <class Elem, class Key>
-void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Elem, Key>*)) {
+template <class Value, class Key>
+void AVLTree<Value, Key>::PrintSubTree_(AVLNode<Value, Key>* sub_tree_root_ptr, void (*visit)(AVLNode<Value, Key>*)) {
 
     if (sub_tree_root_ptr == NULL) {
         return;
@@ -724,26 +724,26 @@ void AVLTree<Elem, Key>::PrintSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr, vo
 }
 
 
-template<class Elem, class Key>
-void AVLTree<Elem, Key>::PrintTree(void (*visit)(AVLNode<Elem, Key>*)) {
-    this->PrintSubTree_((AVLNode<Elem, Key>*)this->root_node_ptr_, visit); cout << endl;
+template<class Value, class Key>
+void AVLTree<Value, Key>::PrintTree(void (*visit)(AVLNode<Value, Key>*)) {
+    this->PrintSubTree_((AVLNode<Value, Key>*)this->root_node_ptr_, visit); cout << endl;
 }
 
 
-template<class Elem, class Key>
-bool AVLTree<Elem, Key>::RemoveByCyberDash(Key key) {
+template<class Value, class Key>
+bool AVLTree<Value, Key>::RemoveByCyberDash(Key key) {
     return this->RemoveInSubTreeByCyberDash_(this->RootRef(), key);
 }
 
 
-template <class Elem, class Key>
-AVLNode<Elem, Key>* AVLTree<Elem, Key>::MinInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const {
+template <class Value, class Key>
+AVLNode<Value, Key>* AVLTree<Value, Key>::MinInSubTree_(AVLNode<Value, Key>* sub_tree_root_ptr) const {
 
     if (sub_tree_root_ptr == NULL) {
         return NULL;
     }
 
-    AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    AVLNode<Value, Key>* cur_node_ptr = sub_tree_root_ptr;
 
     while (cur_node_ptr->LeftChildPtr() != NULL) {
         cur_node_ptr = cur_node_ptr->LeftChildPtr();
@@ -753,31 +753,31 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::MinInSubTree_(AVLNode<Elem, Key>* sub_tr
 }
 
 
-template<class Elem, class Key>
-Elem AVLTree<Elem, Key>::Max() {
-    AVLNode<Elem, Key>* root_node_ptr = this->root_node_ptr_;
-    AVLNode<Elem, Key>* max_node = this->MaxInSubTree_(root_node_ptr);
-    return max_node->GetData();
+template<class Value, class Key>
+Value AVLTree<Value, Key>::Max() {
+    AVLNode<Value, Key>* root_node_ptr = this->root_node_ptr_;
+    AVLNode<Value, Key>* max_node = this->MaxInSubTree_(root_node_ptr);
+    return max_node->GetValue();
 }
 
 
 /**
  * @brief 子树中关键码最大项
- * @tparam Elem 数据项模板类型
+ * @tparam Value 数据项模板类型
  * @tparam Key 关键码模板类型
  * @param sub_tree_root_ptr 子树根节点
  * @return 关键码最大项
  * @note
  * 右孩子节点迭代
  */
-template <class Elem, class Key>
-AVLNode<Elem, Key>* AVLTree<Elem, Key>::MaxInSubTree_(AVLNode<Elem, Key>* sub_tree_root_ptr) const {
+template <class Value, class Key>
+AVLNode<Value, Key>* AVLTree<Value, Key>::MaxInSubTree_(AVLNode<Value, Key>* sub_tree_root_ptr) const {
 
     if (sub_tree_root_ptr == NULL) {
         return NULL;
     }
 
-    AVLNode<Elem, Key>* cur_node_ptr = sub_tree_root_ptr;
+    AVLNode<Value, Key>* cur_node_ptr = sub_tree_root_ptr;
     while (cur_node_ptr->RightChildPtr() != NULL) {
         cur_node_ptr = cur_node_ptr->RightChildPtr();
     }
@@ -786,15 +786,15 @@ AVLNode<Elem, Key>* AVLTree<Elem, Key>::MaxInSubTree_(AVLNode<Elem, Key>* sub_tr
 }
 
 
-template<class Elem, class Key>
-Elem AVLTree<Elem, Key>::Min() {
-    AVLNode<Elem, Key>* max_node = this->MinInSubTree_(this->Root());
-    return max_node->GetData();
+template<class Value, class Key>
+Value AVLTree<Value, Key>::Min() {
+    AVLNode<Value, Key>* max_node = this->MinInSubTree_(this->Root());
+    return max_node->GetValue();
 }
 
 
-template<class Elem, class Key>
-int AVLTree<Elem, Key>::SubTreeHeight_(AVLNode<Elem, Key>* sub_tree_root_ptr) {
+template<class Value, class Key>
+int AVLTree<Value, Key>::SubTreeHeight_(AVLNode<Value, Key>* sub_tree_root_ptr) {
     if (sub_tree_root_ptr == NULL) {
         return 0;
     }
