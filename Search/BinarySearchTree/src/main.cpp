@@ -17,7 +17,7 @@ int main()
 
 	/* 删除 */
 	TestBSTRemove();
-	TestAVLRemoveByCyberDash();
+	// TestAVLRemoveByCyberDash();
 
 	/* 查询 */
 	TestBSTSearch();
