@@ -11,27 +11,27 @@ using namespace std;
 int main()
 {
 	/* 插入 */
-	TestBSTInsert();
-	TestAVLInsert2();
-	TestAVLInsertByCyberDash();
+	// TestBSTInsert();
+	// TestAVLInsert2();
+	// TestAVLInsertByCyberDash();
 
 	/* 删除 */
-	TestBSTRemove();
-	// TestAVLRemoveByCyberDash();
+	// TestBSTRemove();
+	TestAVLRemoveByCyberDash();
 
 	/* 查询 */
-	TestBSTSearch();
-	TestAVLSearch();
+	// TestBSTSearch();
+	// TestAVLSearch();
 
 	/* 高度 */
-	TestBSTAndAVLHeight();
+	// TestBSTAndAVLHeight();
 
 	/* 最大最小值 */
-	TestBSTMaxAndMin();
-	TestAVLMaxAndMin();
+	// TestBSTMaxAndMin();
+	// TestAVLMaxAndMin();
 
 	/* 清除所有数据 */
-	TestBSTMakeEmpty();
+	// TestBSTMakeEmpty();
 
 	return 0;
 }

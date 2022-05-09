@@ -68,9 +68,8 @@ public:
     Value Min();
     void Print(void (*visit)(AVLNode<Value, Key>*));
 
-    void AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& cur_node,
-                                      AVLNode<Value, Key>*& cur_parent_node,
-                                      stack<AVLNode<Value, Key>*>& AVL_node_stack);
+    AVLNode<Value, Key>* AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& cur_node,
+                                      stack<AVLNode<Value, Key>*>& AVL_node_stack, int action);
 
     static AVLNode<Value, Key>* LocateInsertPositionAndInitStack(
         Key key,
@@ -435,22 +434,30 @@ bool AVLTree<Value, Key>::InsertInSubTree_(Value value, Key key, AVLNode<Value, 
 
 
 template<class Value, class Key>
-void AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& cur_node,
-             AVLNode<Value, Key>*& cur_parent_node,
-             stack<AVLNode<Value, Key>*>& AVL_node_stack)
+AVLNode<Value, Key>* AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& cur_node,
+             stack<AVLNode<Value, Key>*>& AVL_node_stack, int action)
 {
+    AVLNode<Value, Key>* cur_parent_node = NULL;
 
     while (AVL_node_stack.empty() == false) {
 
-        // 栈顶出栈
+        // 获取双亲结点
         cur_parent_node = AVL_node_stack.top();
         AVL_node_stack.pop();
 
         // 调整平衡因子
-        if (cur_node == cur_parent_node->LeftChild()) {
-            cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() - 1);
-        } else {
-            cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() + 1);
+        if (action == 0) {  // 插入动作调整
+            if (cur_node == cur_parent_node->LeftChild()) {
+                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() - 1);
+            } else {
+                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() + 1);
+            }
+        } else if (action == 1) {   // 删除动作调整
+            if (cur_node == cur_parent_node->LeftChild()) {
+                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() + 1);
+            } else {
+                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() - 1);
+            }
         }
 
         // 第1种情况, 平衡退出
@@ -484,19 +491,7 @@ void AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& cur_node,
         }
     }
 
-    /*
-    // 已经完成平衡化的树, 完成最后处理
-    if (AVL_node_stack.empty() == true) {
-        sub_tree_root = cur_parent_node;
-    } else {
-        AVLNode<Value, Key>* stack_top_node = AVL_node_stack.top();
-        if (stack_top_node->GetKey() > cur_parent_node->GetKey()) {
-            stack_top_node->SetLeftChild(cur_parent_node);
-        } else {
-            stack_top_node->SetRightChild(cur_parent_node);
-        }
-    }
-     */
+    return cur_parent_node;
 }
 
 
@@ -539,17 +534,17 @@ bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLN
         cur_parent_node->SetRightChild(insert_node);
     }
 
-    Balance(insert_node,cur_parent_node,AVL_node_stack);
+    AVLNode<Value, Key>* balance_node = Balance(insert_node, AVL_node_stack, 0);
 
     // 已经完成平衡化的树, 完成最后处理
     if (AVL_node_stack.empty() == true) {
-        sub_tree_root = cur_parent_node;
+        sub_tree_root = balance_node;
     } else {
         AVLNode<Value, Key>* stack_top_node = AVL_node_stack.top();
-        if (stack_top_node->GetKey() > cur_parent_node->GetKey()) {
-            stack_top_node->SetLeftChild(cur_parent_node);
+        if (stack_top_node->GetKey() > balance_node->GetKey()) {
+            stack_top_node->SetLeftChild(balance_node);
         } else {
-            stack_top_node->SetRightChild(cur_parent_node);
+            stack_top_node->SetRightChild(balance_node);
         }
     }
 
@@ -675,6 +670,8 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
         return false; // 未找到删除结点
     }
 
+    // 此时定位到delete_node, delete_node之前的所有祖先结点, 都已经入栈
+
     AVLNode<Value, Key>* delete_node_predecessor = NULL;
     // 结点有两个子女, 在左子树找到delete_node的直接前驱
     if (delete_node->LeftChild() != NULL && delete_node->RightChild() != NULL) {
@@ -692,6 +689,7 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
 
         // 将前驱结点作为待删除结点
         delete_node = delete_node_predecessor;
+
     } else if (delete_node->LeftChild() != NULL) {  // 结点只有左孩子结点, 则左孩子结点为删除结点
         delete_node_predecessor = delete_node->LeftChild();
 
@@ -705,20 +703,38 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
         // delete_node为待删除结点不变
     }
 
+    // 删除根结点
     if (AVL_node_stack.empty()) {
+        delete delete_node;
+        delete_node = NULL;
 
+        return true;
     }
 
-    AVLNode<Value, Key>* cur_node = delete_node;
-    AVLNode<Value, Key>* cur_parent_node = AVL_node_stack.top();
-
-
-    // todo: 确定平衡结点， 调用平衡函数
-
-
+    // 被删除结点的父节点与被删除结点的左孩子相连, 甩掉delete_node
+    AVLNode<Value, Key>* delete_node_parent = AVL_node_stack.top();
+    if (delete_node_parent->GetKey() > delete_node->GetKey()) {
+        delete_node_parent->SetLeftChild(delete_node->LeftChild());
+    } else if (delete_node_parent->GetKey() < delete_node->GetKey()) {
+        delete_node_parent->SetRightChild(delete_node->LeftChild());
+    }
 
     delete delete_node;
     delete_node = NULL;
+
+    AVLNode<Value, Key>* balance_node = Balance(delete_node_parent, AVL_node_stack, 1);
+
+    // 已经完成平衡化的树, 完成最后处理
+    if (AVL_node_stack.empty() == true) {
+        sub_tree_root = balance_node;
+    } else {
+        AVLNode<Value, Key>* stack_top_node = AVL_node_stack.top();
+        if (stack_top_node->GetKey() > balance_node->GetKey()) {
+            stack_top_node->SetLeftChild(balance_node);
+        } else {
+            stack_top_node->SetRightChild(balance_node);
+        }
+    }
 
     return true;
 }

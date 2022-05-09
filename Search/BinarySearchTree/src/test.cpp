@@ -602,7 +602,7 @@ void TestAVLRemoveByCyberDash() {
     string elemArr[19] =
     { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 2; i++) {
         AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
     }
 
