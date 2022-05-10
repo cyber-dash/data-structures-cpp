@@ -598,30 +598,17 @@ void TestAVLRemoveByCyberDash() {
     AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
     string keyArr[19] =
-    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", };
     string elemArr[19] =
-    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s" };
+    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",};
 
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 10; i++) {
         AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
         AVL_tree->Print(AVLNodeVisit);
     }
 
-    /*
-    AVL_tree->Print(AVLNodeVisit);
-    AVL_tree->Remove("a");
-    AVL_tree->Print(AVLNodeVisit);
-     */
-    /*
-    AVL_tree->Remove("b");
-    AVL_tree->Print(AVLNodeVisit);
-    AVL_tree->Remove("c");
-    AVL_tree->Print(AVLNodeVisit);
-    AVL_tree->Remove("d");
-    AVL_tree->Print(AVLNodeVisit);
-     */
-
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 10; i++) {
+        cout<<i<<endl;
         string curKey = keyArr[i];
         AVL_tree->Remove(curKey);
         AVL_tree->Print(AVLNodeVisit);
