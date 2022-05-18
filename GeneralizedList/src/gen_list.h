@@ -525,14 +525,19 @@ string GenList<T>::ToString() {
  * @tparam T
  * @param ref_type_node
  * @param char_vec
+ * @note
+ * Yin书的实现感觉比较追求结构复杂, 本代码是照着它的算法实现的, 我很想改改:-(
  */
 template<class T>
 void GenList<T>::SubGenToStringRecursive_(GenListNode<T>* ref_type_node, vector<T>& char_vec) {
 
+  // 在gen_list_node_vec_中找到ref_type_node, 向char_vec中push字符串: '{gen_list名}'和'('
   for (int i = 0; i < this->gen_list_node_vec_.size(); i++) {
     if (this->gen_list_node_vec_[i] == ref_type_node) {
       char_vec.push_back(this->gen_list_name_vec_[i]);
       char_vec.push_back('(');
+
+      break;
     }
   }
 
