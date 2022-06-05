@@ -90,7 +90,8 @@ void TestMergeSort() {
 	cout << "|                      Test Merge Sort                      |" << endl;
 	cout << "|                         测试归并排序                        |" << endl;
 
-	int array[] = { 1, 4, 2, 8, 5, 7 };
+	// int array[] = { 1, 4, 2, 8, 5, 7 };
+    int array[] = { 4, 2, 8, 5, 7, 1 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;

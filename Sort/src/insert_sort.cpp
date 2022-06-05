@@ -24,10 +24,9 @@ void InsertSort(int* arr, int size) {
 
         for (int j = i - 1; j >= 0; j--) {
             if (arr[j] > arr[cur_idx]) {
-                Swap(arr + i, arr + j);
+                Swap(arr + cur_idx, arr + j);
                 cur_idx = j;
-            }
-            else {
+            } else {
                 break;
             }
         }

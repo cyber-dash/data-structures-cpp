@@ -19,7 +19,7 @@ int main() {
 
 	TestInsertSort();
 
-	TestMergeSort();
+    TestMergeSort();
 
 	TestMergeSortNonRecursive();
 

@@ -339,11 +339,11 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
   mst_vertex_set.insert(vertex);    // 起始结点插入
 
   do {
-    // Vertex cur_vertex;                                          // 遍历结点
+    // Vertex cur_vertex;                                       // 遍历结点
     MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);   // 小顶堆
 
     // 将所有u ∈ mst_vertex_set, v ∈ Vertex - mst_vertex_set对应的边(u, v), 插入到min_heap
-    // 插入小顶堆后, 堆顶既是权值最小边
+    // 插入小顶堆后, 堆顶即是权值最小边
     for (typename set<Vertex>::iterator iter = mst_vertex_set.begin(); iter != mst_vertex_set.end(); iter++) {
       Vertex cur_mst_vertex = *iter;
 
@@ -357,13 +357,13 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
         //     构造MSTEdgeNode结点, 插入到小顶堆min_heap
         if (mst_vertex_set.find(neighbor_vertex) == mst_vertex_set.end()) {
 
-          MSTEdgeNode<Vertex, Weight> cur_node;
-          cur_node.head = cur_mst_vertex;
-          cur_node.tail = neighbor_vertex;
+          MSTEdgeNode<Vertex, Weight> cur_mst_edge_node;
+            cur_mst_edge_node.head = cur_mst_vertex;
+            cur_mst_edge_node.tail = neighbor_vertex;
 
-          graph.GetWeight(cur_node.weight, cur_mst_vertex, neighbor_vertex);
+          graph.GetWeight(cur_mst_edge_node.weight, cur_mst_vertex, neighbor_vertex);
 
-          min_heap.Insert(cur_node);
+          min_heap.Insert(cur_mst_edge_node);
         }
 
         // 定位到下一个邻接结点
@@ -544,7 +544,6 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  * @return 是否有负环
  * @note
- *
  *
  * BellmanFord算法:
  *
@@ -736,39 +735,43 @@ void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vect
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  */
 template<class Vertex, class Weight>
-void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
+void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
+                                   Vertex starting_vertex,
+                                   Weight distance[],
+                                   int predecessor[])
+{
   cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
 
-  int vertex_count = graph.NumberOfVertices();
+  int vertex_cnt = graph.NumberOfVertices();
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex);
 
   // 用于存放以某个结点为终点的最短路径经过的结点
-  int* cur_predecessor = new int[vertex_count];
+  int* cur_predecessor = new int[vertex_cnt];
   /* error handler */
 
   // 分别显示origin_vertex到各个结点的最短路径
-  for (int i = 0; i < vertex_count; i++) {
+  for (int i = 0; i < vertex_cnt; i++) {
     if (i == starting_vertex_idx) {
       continue;
     }
 
-    int pre_vertex_index = i; // 以索引i结点为终点
+    // 构造"以索引starting_vertex_idx结点(staring_vertex)为起点, 索引i结点为终点"的最短路径
+    int pre_vertex_index = i;
     int idx = 0;
-
     while (pre_vertex_index != starting_vertex_idx) {
       cur_predecessor[idx] = pre_vertex_index;
-      idx++;
       pre_vertex_index = predecessor[pre_vertex_index];
+      idx++;
     }
 
-    // 获取索引i的结点
+    // 获取索引i对应的结点
     Vertex vertex_i;
     graph.GetVertexByIndex(vertex_i, i);
 
     cout << "起始点(" << starting_vertex << ")到结点(" << vertex_i << ")的最短路径为:";
     cout << starting_vertex << " ";
 
-    // 使用cur_predecessor数组打印出路径
+    // 使用cur_predecessor数组打印出路径, 对cur_predecessor数组从后向前, 依次打印
     while (idx > 0) {
       idx--;
       graph.GetVertexByIndex(vertex_i, cur_predecessor[idx]);

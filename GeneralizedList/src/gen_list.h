@@ -526,7 +526,8 @@ string GenList<T>::ToString() {
  * @param ref_type_node
  * @param char_vec
  * @note
- * Yin书的实现感觉比较追求结构复杂, 本代码是照着它的算法实现的, 我很想改改:-(
+ * Yin书的实现感觉比较追求结构复杂但又没实现全, 缺点两头有, 优点很难体会, 纯属费力不讨好:-(
+ * 本代码是照着它的算法实现的, 我很想改改:-(
  */
 template<class T>
 void GenList<T>::SubGenToStringRecursive_(GenListNode<T>* ref_type_node, vector<T>& char_vec) {
