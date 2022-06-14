@@ -323,7 +323,7 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
  *       -------         ------
  * 
  *     找一条权值最小的边(head, tail), 权值weight,
- *         加入min_span_tree(以MSTEdgeNode的方式)
+ *         加入min_span_tree(以MSTEdgeNode的方式)
  *         结点u加入mst_vertex_set,
  *     直到mst_vertex_set = V为止
  * ```

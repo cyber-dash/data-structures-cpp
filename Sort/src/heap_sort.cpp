@@ -11,62 +11,53 @@
 #include "util.h"
 
 
+/*!
+ * 大顶堆SiftDown
+ * @param arr 数组
+ * @param index 开始执行SiftDown的数组索引
+ * @param heap_size 堆size
+ */
+void MaxHeapSiftDown(int* arr, int index, int heap_size)
+{
+    for (int child_idx = 2 * index + 1; child_idx < heap_size; child_idx *= 2) {
+
+        //! index的孩子结点中, 权重较大的结点索引, 赋给child_idx
+        if (child_idx < heap_size && arr[child_idx] < arr[child_idx + 1]) {
+            child_idx++;
+        }
+
+        //! 如果父节点 >= 子节点, sift down结束
+        if (arr[index] >= arr[child_idx]) {
+            break;
+        }
+
+        //! 交换父子结点
+        Swap(arr + index, arr + child_idx);
+    }
+}
+
 void BuildHeap(int* arr, int size) {
 
     int pivot = (size - 2) / 2;
 
     for (int i = pivot; i >= 0; i--) {
-
-        for (int j = i; j <= pivot; ) {
-
-            int left_child = 2 * j + 1;
-            int right_child = 2 * j + 2;
-
-            int min_child;
-
-            if (left_child >= size) {
-                break;
-            }
-            else if (right_child >= size) {
-                min_child = left_child;
-            }
-            else {
-                if (arr[left_child] >= arr[right_child]) {
-                    min_child = right_child;
-                }
-                else {
-                    min_child = left_child;
-                }
-            }
-
-            if (arr[j] > arr[min_child]) {
-                Swap(arr + j, arr + min_child);
-            }
-
-            j = min_child; // next step
-        }
+        MaxHeapSiftDown(arr, i, size);
     }
 }
 
 
-void HeapSort(int* arr, int size) {
 
-    int* tmp = new int[size]();
-    for (int i = 0; i < size; i++) {
-        tmp[i] = arr[i];
+/*!
+ * 堆排序
+ * @param arr 数组
+ * @param length 数组长度
+ */
+void HeapSort(int* arr, int length) {
+
+    BuildHeap(arr, length);
+
+    for (int i = length - 1; i > 0; i--) {
+        Swap(arr, arr + i);
+        MaxHeapSiftDown(arr, 0, i - 1);
     }
-
-    for (int i = 0; i < size; i++) {
-
-        int cur_heap_size = size - i;
-        int heap_end_idx = size - 1 - i;
-
-        BuildHeap(tmp, cur_heap_size);
-
-        arr[i] = tmp[0];
-
-        Swap(tmp, tmp + heap_end_idx);
-    }
-
-    delete[] tmp;
 }

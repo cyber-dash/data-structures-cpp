@@ -24,7 +24,7 @@ void MergeSort(int* array, int size);
 
 void MergeSortNonRecursive(int* array, int size);
 
-void HeapSort(int* array, int size);
+void HeapSort(int* array, int length);
 
 
 #endif //CYBER_DASH_SORT_H
