@@ -129,20 +129,20 @@ private:
 template<class Vertex, class Weight>
 MatrixGraph<Vertex, Weight>::MatrixGraph(int size) {
 
-  this->max_vertices_num_ = size;
-  this->vertices_num_ = 0;
-  this->edge_count_ = 0;
+  this->max_vertex_cnt_ = size;
+  this->vertex_cnt_ = 0;
+  this->edge_cnt_ = 0;
 
   // 所有节点
-  this->vertices_list_ = new Vertex[this->max_vertices_num_];
+  this->vertices_list_ = new Vertex[this->max_vertex_cnt_];
   /* error handler */
 
-  this->adjacency_matrix_ = (Weight**)new Weight*[this->max_vertices_num_];
+  this->adjacency_matrix_ = (Weight**)new Weight*[this->max_vertex_cnt_];
   /* error handler */
 
-  for (int i = 0; i < this->max_vertices_num_; i++) {
-    this->adjacency_matrix_[i] = new Weight[this->max_vertices_num_]; // 节点i对应的所有边
-    for (int j = 0; j < this->max_vertices_num_; j++) {
+  for (int i = 0; i < this->max_vertex_cnt_; i++) {
+    this->adjacency_matrix_[i] = new Weight[this->max_vertex_cnt_]; // 节点i对应的所有边
+    for (int j = 0; j < this->max_vertex_cnt_; j++) {
       this->adjacency_matrix_[i][j] = (i == j) ? 0 : MAX_WEIGHT;
     }
   }
@@ -169,7 +169,7 @@ MatrixGraph<Vertex, Weight>::~MatrixGraph() {
  */
 template<class Vertex, class Weight>
 bool MatrixGraph<Vertex, Weight>::GetVertexByIndex(Vertex& vertex, int vertex_index) {
-  if (vertex_index >= 0 && vertex_index <= this->vertices_num_) {
+  if (vertex_index >= 0 && vertex_index <= this->vertex_cnt_) {
     vertex = this->vertices_list_[vertex_index];
     return true;
   } else {
@@ -228,7 +228,7 @@ bool MatrixGraph<Vertex, Weight>::GetFirstNeighborVertex(Vertex& first_neighbor,
     return false;
   }
 
-  for (int cur_index = 0; cur_index < this->vertices_num_; cur_index++) {
+  for (int cur_index = 0; cur_index < this->vertex_cnt_; cur_index++) {
     Weight weight;
     Vertex cur_vertex;
 
@@ -258,7 +258,7 @@ bool MatrixGraph<Vertex, Weight>::GetNextNeighborVertex(Vertex& next_neighbor_ve
     return false;
   }
 
-  for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertices_num_; cur_index ++) {
+  for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertex_cnt_; cur_index ++) {
     Weight weight;
     Vertex cur_vertex;
 
@@ -280,12 +280,12 @@ bool MatrixGraph<Vertex, Weight>::GetNextNeighborVertex(Vertex& next_neighbor_ve
 
 template<class Vertex, class Weight>
 bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
-  if (this->vertices_num_ >= this->max_vertices_num_) {
+  if (this->vertex_cnt_ >= this->max_vertex_cnt_) {
     return false;
   }
 
-  this->vertices_list_[this->vertices_num_] = vertex;
-  this->vertices_num_++;
+  this->vertices_list_[this->vertex_cnt_] = vertex;
+  this->vertex_cnt_++;
 
   return true;
 }
@@ -305,7 +305,7 @@ bool MatrixGraph<Vertex, Weight>::InsertEdge(Vertex vertex1, Vertex vertex2, Wei
   this->adjacency_matrix_[v1_index][v2_index] = weight;
   this->adjacency_matrix_[v2_index][v1_index] = weight;
 
-  this->edge_count_++;
+  this->edge_cnt_++;
 
   pair<Vertex, Vertex> edge1(vertex1, vertex2);
   pair<Vertex, Vertex> edge2(vertex2, vertex1);
@@ -322,32 +322,32 @@ bool MatrixGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
 
-  if (vertex_index < 0 || vertex_index >= this->vertices_num_) {
+  if (vertex_index < 0 || vertex_index >= this->vertex_cnt_) {
     return false;
   }
 
   // 只剩1个顶点 todo: 实际上可以删除
-  if (this->vertices_num_ == 1) {
+  if (this->vertex_cnt_ == 1) {
     return false;
   }
 
-  this->vertices_list_[vertex_index] = this->vertices_list_[this->vertices_num_ - 1];
+  this->vertices_list_[vertex_index] = this->vertices_list_[this->vertex_cnt_ - 1];
 
-  for (int i = 0; i < this->vertices_num_; i++) {
+  for (int i = 0; i < this->vertex_cnt_; i++) {
     if (this->adjacency_matrix_[i][vertex_index] > 0 && this->adjacency_matrix_[i][vertex_index] < MAX_WEIGHT) {
-      this->edge_count_--;
+      this->edge_cnt_--;
     }
   }
 
-  for (int row = 0; row < this->vertices_num_; row++) {
-    this->adjacency_matrix_[row][vertex_index] = this->adjacency_matrix_[row][this->vertices_num_ - 1];
+  for (int row = 0; row < this->vertex_cnt_; row++) {
+    this->adjacency_matrix_[row][vertex_index] = this->adjacency_matrix_[row][this->vertex_cnt_ - 1];
   }
 
-  for (int col = 0; col < this->vertices_num_; col++) {
-    this->adjacency_matrix_[vertex_index][col] = this->adjacency_matrix_[this->vertices_num_ - 1][col];
+  for (int col = 0; col < this->vertex_cnt_; col++) {
+    this->adjacency_matrix_[vertex_index][col] = this->adjacency_matrix_[this->vertex_cnt_ - 1][col];
   }
 
-  this->vertices_num_--;
+  this->vertex_cnt_--;
 
   return true;
 }
@@ -365,7 +365,7 @@ bool MatrixGraph<Vertex, Weight>::RemoveEdge(Vertex vertex1, Vertex vertex2) {
     this->adjacency_matrix_[v1_index][v2_index] = MAX_WEIGHT;
     this->adjacency_matrix_[v2_index][v1_index] = MAX_WEIGHT;
 
-    this->edge_count_--;
+    this->edge_cnt_--;
 
     return true;
   }
@@ -450,7 +450,7 @@ int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) {
 
   int vertex_index = -1;
 
-  for (int i = 0; i < this->vertices_num_; i++) {
+  for (int i = 0; i < this->vertex_cnt_; i++) {
     if (this->vertices_list_[i] == vertex) {
       vertex_index = i;
       break;
@@ -468,8 +468,8 @@ int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) {
  */
 template<class Vertex, class Weight>
 void MatrixGraph<Vertex, Weight>::PrintMatrix() {
-  for (int i = 0; i < this->vertices_num_; i++) {
-    for (int j = 0; j < this->vertices_num_; j++) {
+  for (int i = 0; i < this->vertex_cnt_; i++) {
+    for (int j = 0; j < this->vertex_cnt_; j++) {
       cout << this->adjacency_matrix_[i][j] << "  ";
     }
     cout<<endl;
@@ -486,7 +486,7 @@ void MatrixGraph<Vertex, Weight>::CyberDashShow() {
       <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
       <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
       <<"L_Dash(lyu2586@163.com), "<<"北京邮电大学(计算机在读研究生)"<<endl<<endl
-      <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"数据结构开源代码(C++版本): https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 

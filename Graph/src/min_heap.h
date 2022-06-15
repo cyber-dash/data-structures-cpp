@@ -23,137 +23,129 @@ using namespace std;
 
 /*!
  * @brief 最小堆模板类
- * @tparam Weight 类型模板参数
+ * @tparam T 类型模板参数
  */
-template <class Weight>
+template <class T>
 class MinHeap {
 public:
   MinHeap(int size = DEFAULT_SIZE);
-  MinHeap(Weight arr[], int arr_size);
-  ~MinHeap() {delete[] heap_array_;}
+  MinHeap(T arr[], int arr_size);
+  ~MinHeap() { delete[] heap_item_array_; }
 
-  bool Insert(const Weight& item);
-  bool RemoveMin(Weight& value);
-  bool IsEmpty() const { return heap_size_ == 0 ? true : false; }
-  bool IsFull() const { return heap_size_ == max_size_ ? true : false; }
-  void MakeEmpty() { heap_size_ = 0; }
+  bool Insert(const T& item);
+  bool HeapTopPop(T& item);
+  bool IsEmpty() const { return heap_size_ == 0; }
+  bool IsFull() const { return heap_size_ == max_size_; }
+  void MakeEmpty() { heap_size_ = 0; }  // todo: 其余操作
 
   void CyberDashShow();
 
 private:
-  Weight* heap_array_;
-  int heap_size_;       // 书中current_size_
-  int max_size_;
-  void siftDown(int start, int end);
-  void siftUp(int start);
+  T* heap_item_array_; //!< 堆元素数组
+  int heap_size_;      //!< 当前堆size
+  int max_size_;       //!< 最大size
+  void SiftDown_(int idx, int end);
+  void SiftUp_(int start);
+  void Swap(T& item1, T& item2);
 };
 
 
-template <class Weight>
-MinHeap<Weight>::MinHeap(int size) {
-
+template <class T>
+MinHeap<T>::MinHeap(int size) {
   max_size_ = (size > DEFAULT_SIZE) ? size : DEFAULT_SIZE;
-
-  heap_array_ = new Weight[max_size_];
-  if (heap_array_ == NULL) {
-    cerr << "堆存储分配失败！" << endl;
-    exit(1);
-  }
-
+  heap_item_array_ = new T[max_size_];
   heap_size_ = 0;
 }
 
 
-template <class Weight>
-MinHeap<Weight>::MinHeap(Weight arr[], int arr_size) {
+template <class T>
+MinHeap<T>::MinHeap(T arr[], int arr_size) {
   max_size_ = (arr_size > DEFAULT_SIZE) ? arr_size : DEFAULT_SIZE;
-  heap_array_ = new Weight[max_size_];
-
-  if (heap_array_ == NULL) {
-    cerr << "堆存储分配失败！" << endl;
-    exit(1);
-  }
-
+  heap_item_array_ = new T[max_size_];
   for (int i = 0; i < arr_size; i++) {
-    heap_array_[i] = arr[i];
+      heap_item_array_[i] = arr[i];
   }
 
   heap_size_ = arr_size;
 
-  int current_index_ = (heap_size_ - 2) / 2;
-
-  while (current_index_ >= 0) {
-    siftDown(current_index_, heap_size_ - 1);
-    current_index_--;
+  for (int cur_idx = (heap_size_ - 2) / 2; cur_idx >= 0; cur_idx--) {
+      SiftDown_(cur_idx, heap_size_ - 1);
   }
 }
 
 
-template <class Weight>
-void MinHeap<Weight>::siftDown(int start, int end) {
+template <class T>
+void MinHeap<T>::SiftDown_(int idx, int end) {
 
-  int cur = start;
+  int cur = idx;
 
   int left_child = 2 * cur + 1;
   int right_child = left_child + 1;
 
   int min_child = left_child;
 
-  Weight cur_value = heap_array_[cur];
+  T cur_value = heap_item_array_[cur];
 
   while (left_child <= end) {
 
     // find the min child
-    if (left_child < end && heap_array_[left_child] > heap_array_[right_child]) {
+    if (left_child < end && heap_item_array_[left_child] > heap_item_array_[right_child]) {
       min_child = right_child;
     }
 
-    if (cur_value <= heap_array_[min_child]) {
+    if (cur_value <= heap_item_array_[min_child]) {
       break;
-    } else {
-      heap_array_[cur] =  heap_array_[min_child];
-      cur = min_child;
-
-      left_child = 2 * min_child + 1;
-      right_child = left_child + 1;
-      min_child = left_child;
     }
+    heap_item_array_[cur] =  heap_item_array_[min_child];
+    cur = min_child;
+
+    left_child = 2 * min_child + 1;
+    right_child = left_child + 1;
+    min_child = left_child;
   }
 
-  heap_array_[cur] = cur_value;
+  heap_item_array_[cur] = cur_value;
 }
 
 
-template <class Weight>
-void MinHeap<Weight>::siftUp(int start) {
-  int j = start, i = (j - 1) / 2;
-  Weight temp = heap_array_[j];
+template <class T>
+void MinHeap<T>::SiftUp_(int start) {
+  int idx = start, i = (idx - 1) / 2;
+  T temp = heap_item_array_[idx];
 
-  while (j > 0) {
-    if (heap_array_[i] <= temp) {
+  while (idx > 0) {
+    if (heap_item_array_[i] <= temp) {
       break;
     } else {
-      heap_array_[j] = heap_array_[i];
-      j = i;
+        heap_item_array_[idx] = heap_item_array_[i];
+        idx = i;
       i = (i - 1) / 2;
     }
   }
 
-  heap_array_[j] = temp;
+  heap_item_array_[idx] = temp;
 }
 
 
-template <class Weight>
-bool MinHeap<Weight>::Insert(const Weight& item) {
+template <class T>
+void MinHeap<T>::Swap(T& item1, T& item2) {
+    T tmp = item1;
+    item1 = item2;
+    item2 = tmp;
+}
+
+
+template <class T>
+bool MinHeap<T>::Insert(const T& item) {
 
   if (heap_size_ == max_size_) {
     cerr << "Heap Full." << endl;
     return false;
   }
 
-  heap_array_[heap_size_] = item;
+  heap_item_array_[heap_size_] = item;
 
-  siftUp(heap_size_);
+  SiftUp_(heap_size_);
 
   heap_size_++;
 
@@ -161,18 +153,18 @@ bool MinHeap<Weight>::Insert(const Weight& item) {
 }
 
 
-template <class Weight>
-bool MinHeap<Weight>::RemoveMin(Weight& x) {
+template <class T>
+bool MinHeap<T>::HeapTopPop(T& item) {
   if (!heap_size_) {
     cerr << "Heap Empty." << endl;
     return false;
   }
 
-  x = heap_array_[0];
-  heap_array_[0] = heap_array_[heap_size_ - 1];
+    item = heap_item_array_[0];
+  heap_item_array_[0] = heap_item_array_[heap_size_ - 1];
   heap_size_--;
 
-  siftDown(0, heap_size_ - 1);
+  SiftDown_(0, heap_size_ - 1);
 
   return true;
 }

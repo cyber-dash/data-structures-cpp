@@ -17,6 +17,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+    /*
   // 测试矩阵图打印矩阵
   TestMatrixGraphPrintMatrix();
 
@@ -31,6 +32,7 @@ int main(int argc, char** argv) {
 
   // 测试连通图
   TestComponents();
+     */
 
   // 测试普利姆(Prim)最小生成树
   TestPrim();

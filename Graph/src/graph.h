@@ -19,16 +19,16 @@ const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
 
 /*
 // 通用边类, 可用于优化, todo:
-// template<class AdjListVertex, class Weight>
-template<class Vertex, class Weight>
+// template<class AdjListVertex, class T>
+template<class Vertex, class T>
 class GeneralEdge {
 public:
-  GeneralEdge(Vertex head, Vertex tail, Weight weight) {
+  GeneralEdge(Vertex head, Vertex tail, T weight) {
     this->head = head;
     this->tail = tail;
     this->weight = weight;
   }
-  Weight weight;
+  T weight;
   Vertex head;
   Vertex tail;
 };
@@ -48,13 +48,13 @@ public:
    * @brief 获取图结点数量
    * @return 图结点数量
    */
-  int NumberOfVertices() { return this->vertices_num_; }
+  int NumberOfVertices() { return this->vertex_cnt_; }
 
   /*!
    * @brief 获取边数量
    * @return 边数量
    */
-  int NumberOfEdges() { return this->edge_count_; }
+  int NumberOfEdges() { return this->edge_cnt_; }
 
   /*!
    * @brief 获取结点(由结点索引)
@@ -138,9 +138,9 @@ public:
   virtual int GetVertexIndex(Vertex vertex) = 0;
 
 protected:
-  int max_vertices_num_; //!< 图节点数量最大限制
-  int edge_count_; //!< 边数量
-  int vertices_num_; //!< 节点数量
+  int max_vertex_cnt_; //!< 图节点数量最大限制
+  int edge_cnt_; //!< 边数量
+  int vertex_cnt_; //!< 节点数量
 };
 
 

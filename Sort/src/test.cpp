@@ -156,7 +156,7 @@ void TestHeapSort() {
 	cout << "|                       Test Heap Sort                      |" << endl;
 	cout << "|                         测试堆排序                         |" << endl;
 
-	int array[] = { 1, 4, 2, 8, 5, 7 };
+	int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;

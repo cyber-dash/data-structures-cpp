@@ -14,12 +14,12 @@
 /*!
  * 大顶堆SiftDown
  * @param arr 数组
- * @param index 开始执行SiftDown的数组索引
+ * @param idx 开始执行SiftDown的数组索引
  * @param heap_size 堆size
  */
-void MaxHeapSiftDown(int* arr, int index, int heap_size)
+void MaxHeapSiftDown(int* arr, int idx, int heap_size)
 {
-    for (int child_idx = 2 * index + 1; child_idx < heap_size; child_idx *= 2) {
+    for (int child_idx = 2 * idx + 1; child_idx < heap_size; idx = child_idx, child_idx = child_idx * 2 + 1) {
 
         //! index的孩子结点中, 权重较大的结点索引, 赋给child_idx
         if (child_idx < heap_size && arr[child_idx] < arr[child_idx + 1]) {
@@ -27,24 +27,23 @@ void MaxHeapSiftDown(int* arr, int index, int heap_size)
         }
 
         //! 如果父节点 >= 子节点, sift down结束
-        if (arr[index] >= arr[child_idx]) {
+        if (arr[idx] >= arr[child_idx]) {
             break;
         }
 
         //! 交换父子结点
-        Swap(arr + index, arr + child_idx);
+        Swap(arr + idx, arr + child_idx);
     }
 }
 
-void BuildHeap(int* arr, int size) {
 
+void BuildHeap(int* arr, int size) {
     int pivot = (size - 2) / 2;
 
     for (int i = pivot; i >= 0; i--) {
         MaxHeapSiftDown(arr, i, size);
     }
 }
-
 
 
 /*!

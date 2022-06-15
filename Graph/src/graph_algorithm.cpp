@@ -208,7 +208,7 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
   int count = 1;
   while (count < vertex_num) {      // 执行vertex_num - 1 次
     MSTEdgeNode<Vertex, Weight> mst_edge_node;
-    min_heap.RemoveMin(mst_edge_node);
+    min_heap.HeapTopPop(mst_edge_node);
 
     // 当前边的头结点索引, 尾结点索引
     int cur_tail_idx = graph.GetVertexIndex(mst_edge_node.tail);
@@ -376,7 +376,7 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
     }
 
     MSTEdgeNode<Vertex, Weight> mst_edge_node;  // 最短边
-    min_heap.RemoveMin(mst_edge_node);       // 小顶堆删除存在堆顶的最短边
+    min_heap.HeapTopPop(mst_edge_node);       // 小顶堆删除存在堆顶的最短边
     min_span_tree.Insert(mst_edge_node);     // 最短边进入min_span_tree
 
     mst_vertex_set.insert(mst_edge_node.tail);

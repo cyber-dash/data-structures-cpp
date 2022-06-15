@@ -130,13 +130,13 @@ private:
 template<class Vertex, class Weight>
 AdjacencyListGraph<Vertex, Weight>::AdjacencyListGraph(int size) {
 
-  this->max_vertices_num_ = size;
-  this->vertices_num_ = 0;
-  this->edge_count_ = 0;
+  this->max_vertex_cnt_ = size;
+  this->vertex_cnt_ = 0;
+  this->edge_cnt_ = 0;
 
-  this->vertex_table_ = new AdjListVertex<Vertex, Weight>[this->max_vertices_num_];
+  this->vertex_table_ = new AdjListVertex<Vertex, Weight>[this->max_vertex_cnt_];
 
-  for (int i = 0; i < this->max_vertices_num_; i++) {
+  for (int i = 0; i < this->max_vertex_cnt_; i++) {
     this->vertex_table_[i].adjacency_list = NULL;
   }
 }
@@ -145,7 +145,7 @@ AdjacencyListGraph<Vertex, Weight>::AdjacencyListGraph(int size) {
 template<class Vertex, class Weight>
 AdjacencyListGraph<Vertex, Weight>::~AdjacencyListGraph() {
 
-  for (int i = 0; i < this->vertices_num_; i++) {
+  for (int i = 0; i < this->vertex_cnt_; i++) {
 
     Edge<Vertex, Weight>* cur_edge = this->vertex_table_[i].adjacency_list;
 
@@ -168,7 +168,7 @@ AdjacencyListGraph<Vertex, Weight>::~AdjacencyListGraph() {
  */
 template<class Vertex, class Weight>
 bool AdjacencyListGraph<Vertex, Weight>::GetVertexByIndex(Vertex& vertex, int vertex_index) {
-  if (vertex_index >= 0 && vertex_index < this->vertices_num_) {
+  if (vertex_index >= 0 && vertex_index < this->vertex_cnt_) {
     vertex = this->vertex_table_[vertex_index].starting_vertex;
 
     return true;
@@ -238,12 +238,12 @@ template<class V, class W>
 bool AdjacencyListGraph<V, W>::InsertVertex(const V& vertex) {
 
   // 如果已有节点数大于限制, 则不执行插入, 返回失败
-  if (this->vertices_num_ == this->max_vertices_num_) {
+  if (this->vertex_cnt_ == this->max_vertex_cnt_) {
     return false;
   }
 
-  this->vertex_table_[this->vertices_num_].starting_vertex = vertex; // vertex_table_增加结点数据
-  this->vertices_num_++; // 结点数增加
+  this->vertex_table_[this->vertex_cnt_].starting_vertex = vertex; // vertex_table_增加结点数据
+  this->vertex_cnt_++; // 结点数增加
 
   return true;
 }
@@ -259,7 +259,7 @@ bool AdjacencyListGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
 
   int vertex_index = this->GetVertexIndex(vertex);
 
-  if (this->vertices_num_ == 1 || vertex_index < 0 || vertex_index >= this->vertices_num_) {
+  if (this->vertex_cnt_ == 1 || vertex_index < 0 || vertex_index >= this->vertex_cnt_) {
     return false;
   }
 
@@ -290,21 +290,21 @@ bool AdjacencyListGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
 
     delete cur;
 
-    this->edge_count_--;
+    this->edge_cnt_--;
   }
 
-  this->vertices_num_--;
+  this->vertex_cnt_--;
 
-  this->vertex_table_[vertex_index].starting_vertex = this->vertex_table_[this->vertices_num_].starting_vertex;
-  this->vertex_table_[vertex_index].adjacency_list = this->vertex_table_[this->vertices_num_].adjacency_list;
+  this->vertex_table_[vertex_index].starting_vertex = this->vertex_table_[this->vertex_cnt_].starting_vertex;
+  this->vertex_table_[vertex_index].adjacency_list = this->vertex_table_[this->vertex_cnt_].adjacency_list;
 
-  Edge<Vertex, Weight>* cur = this->vertex_table_[this->vertices_num_].adjacency_list;
+  Edge<Vertex, Weight>* cur = this->vertex_table_[this->vertex_cnt_].adjacency_list;
   while (cur != NULL) {
 
     Edge<Vertex, Weight>* modify_edge = this->vertex_table_[cur->ending_vertex_index].adjacency_list;
 
     while (modify_edge != NULL) {
-      if (modify_edge->ending_vertex_index == this->vertices_num_) {
+      if (modify_edge->ending_vertex_index == this->vertex_cnt_) {
         modify_edge->ending_vertex_index = vertex_index;
         break;
       } else {
@@ -315,7 +315,7 @@ bool AdjacencyListGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
     cur = cur->next;
   }
 
-  this->vertex_table_[this->vertices_num_].adjacency_list = NULL;
+  this->vertex_table_[this->vertex_cnt_].adjacency_list = NULL;
 
   return true;
 }
@@ -335,7 +335,7 @@ bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
   int vertex2_index = this->GetVertexIndex(vertex2);
 
   // 检查vertex1和vertex2合法性, 是否在图中
-  if (vertex1_index < 0 || vertex1_index >= this->vertices_num_ || vertex2_index < 0 || vertex2_index >= this->vertices_num_) {
+  if (vertex1_index < 0 || vertex1_index >= this->vertex_cnt_ || vertex2_index < 0 || vertex2_index >= this->vertex_cnt_) {
     return false;
   }
 
@@ -364,7 +364,7 @@ bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
   v1_dest_edge->next = this->vertex_table_[vertex2_index].adjacency_list;
   this->vertex_table_[vertex2_index].adjacency_list = v1_dest_edge;
 
-  this->edge_count_++; // 边的数量+1
+  this->edge_cnt_++; // 边的数量+1
 
   return true;
 }
@@ -437,7 +437,7 @@ bool AdjacencyListGraph<V, W>::RemoveEdge(V vertex1, V vertex2) {
   }
 
   // 边的总数减1
-  this->edge_count_--;
+  this->edge_cnt_--;
 
   return true;
 }
@@ -620,7 +620,7 @@ int AdjacencyListGraph<V, W>::GetVertexIndex(V vertex) {
   int vertex_index = -1; // 如果图中没有该结点, 则返回-1
 
   // 在vertex_table_中查哪个的value_为vertex
-  for (int i = 0; i < this->vertices_num_; i++) {
+  for (int i = 0; i < this->vertex_cnt_; i++) {
     if (this->vertex_table_[i].starting_vertex == vertex) {
       vertex_index = i;
       break;
