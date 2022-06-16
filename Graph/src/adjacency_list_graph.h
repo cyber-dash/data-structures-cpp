@@ -574,7 +574,7 @@ istream& operator>>(istream& in, AdjacencyListGraph<V, W>& graph_adjacency_list)
 template<class V, class W>
 ostream& operator<<(ostream& out, AdjacencyListGraph<V, W>& graph_adjacency_list) {
 
-  int vertex_num = graph_adjacency_list.NumberOfVertices();
+  int vertex_num = graph_adjacency_list.VertexCount();
   int edge_num = graph_adjacency_list.NumberOfEdges();
 
   cout<<"vertex_num: "<<vertex_num<<", edge_num: "<<edge_num<<endl;

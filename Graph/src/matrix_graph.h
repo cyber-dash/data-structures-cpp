@@ -416,7 +416,7 @@ istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 template<class Vertex, class Weight>
 ostream& operator<<(ostream& out, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
-  int vertex_num = graph_matrix.NumberOfVertices();
+  int vertex_num = graph_matrix.VertexCount();
   int edge_num = graph_matrix.NumberOfEdges();
 
   cout<<"vertex_num: "<<vertex_num<<", edge_num: "<<edge_num<<endl;

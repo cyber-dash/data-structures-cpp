@@ -18,9 +18,6 @@
 #include <queue>
 #include <vector>
 
-#include "min_heap.h"
-#include "disjoint_set.h"
-
 
 using namespace std;
 
@@ -152,7 +149,7 @@ void Components(Graph<Vertex, Weight>& graph);
 
 // Prim算法
 template<class Vertex, class Weight>
-void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
+bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
 // Prim(优化堆操作)

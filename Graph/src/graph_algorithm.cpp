@@ -11,6 +11,9 @@
 #include <iostream>
 #include <vector>
 #include "graph_algorithm.h"
+#include "min_heap.h"
+#include "priority_queue.h"
+#include "disjoint_set.h"
 
 
 /*!
@@ -128,7 +131,7 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 template<class Vertex, class Weight>
 void Components(Graph<Vertex, Weight>& graph) {
 
-  int vertices_num = graph.NumberOfVertices(); // 图内结点的数量
+  int vertices_num = graph.VertexCount(); // 图内结点的数量
   set<Vertex> visited_vertex_set; // 使用set保存已经遍历过的结点
 
   int component_index = 1; // 初始连通分量为1
@@ -172,7 +175,7 @@ void Components(Graph<Vertex, Weight>& graph) {
 template<class Vertex, class Weight>
 void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
-  int vertex_num = graph.NumberOfVertices();    // 结点数量
+  int vertex_num = graph.VertexCount();    // 结点数量
   int edge_num = graph.NumberOfEdges();         // 边数量
 
   MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num); // 小顶堆用来筛选最短边
@@ -248,7 +251,7 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
   MSTEdgeNode<Vertex, Weight> mst_edge_node;
 
   int count = 1; // 起始vertex进入mst结点集合, count=1
-  int vertex_num = graph.NumberOfVertices();
+  int vertex_num = graph.VertexCount();
   int edge_num = graph.NumberOfEdges();
 
   MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);
@@ -281,7 +284,7 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
 
     while (min_heap.IsEmpty() == false && count < vertex_num) {
 
-      min_heap.RemoveMin(mst_edge_node);
+      min_heap.HeapTopPop(mst_edge_node);
 
       if (mst_vertex_set.find(mst_edge_node.head) == mst_vertex_set.end()) {
         min_span_tree.Insert(mst_edge_node);
@@ -330,58 +333,68 @@ void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, W
  * 此时min_span_tree为最小生成树, 有** n-1条边
  */
 template<class Vertex, class Weight>
-void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree) {
+bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
-  int vertex_num = graph.NumberOfVertices();    // 结点数量
-  int edge_num = graph.NumberOfEdges();         // 边的数量
+  int vertex_cnt = graph.VertexCount();    // 结点数量
 
-  set<Vertex> mst_vertex_set;       // 原书中的Vmst, 已经在MST中的结点集合
-  mst_vertex_set.insert(vertex);    // 起始结点插入
+  // 获取索引0对应的结点start_vertex, 作为Prim算法的起始结点
+  Vertex start_vertex;
+  bool get_vertex_done = graph.GetVertexByIndex(start_vertex, 0);
+  if (!get_vertex_done) {
+      return get_vertex_done;
+  }
 
-  do {
-    // Vertex cur_vertex;                                       // 遍历结点
-    MinHeap<MSTEdgeNode<Vertex, Weight> > min_heap(edge_num);   // 小顶堆
+  // 最小生成树中的结点集合, 进行初始化, 插入结点start_vertex
+  set<Vertex> mst_vertex_set;
+  mst_vertex_set.insert(start_vertex);
 
-    // 将所有u ∈ mst_vertex_set, v ∈ Vertex - mst_vertex_set对应的边(u, v), 插入到min_heap
-    // 插入小顶堆后, 堆顶即是权值最小边
+  while (mst_vertex_set.size() < vertex_cnt) {
+    MinPriorityQueue<MSTEdgeNode<Vertex, Weight> > min_priority_queue;   // 最小优先队列
+
+    // 将所有u ∈ mst_vertex_set, v ∈ Vertex - mst_vertex_set对应的边(u, v),
+    // 入队到最小优先队列min_priority_queue
     for (typename set<Vertex>::iterator iter = mst_vertex_set.begin(); iter != mst_vertex_set.end(); iter++) {
       Vertex cur_mst_vertex = *iter;
 
-      // 当前结点cur_vertex的所有不在mst_vertex_set的邻接结点, 对应的边
-      // 插入到min_heap
-      Vertex neighbor_vertex;
-      bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, cur_mst_vertex);
+      // 结点cur_mst_vertex, 与它的所有不在mst_vertex_set的邻接结点, 所构成的边, 入队到min_priority_queue
+      Vertex cur_neighbor_vertex;
+      bool has_neighbor = graph.GetFirstNeighborVertex(cur_neighbor_vertex, cur_mst_vertex);
       while (has_neighbor) {
-        // 如果neighbor_vertex不在mst_vertex_set:
-        //     将边(cur_mst_vertex, neighbor_vertex)的信息
-        //     构造MSTEdgeNode结点, 插入到小顶堆min_heap
-        if (mst_vertex_set.find(neighbor_vertex) == mst_vertex_set.end()) {
+        // 如果cur_neighbor_vertex不在mst_vertex_set:
+        //     用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTEdgeNode结点
+        //     将其入队到最小优先队列min_priority_queue
+        if (mst_vertex_set.find(cur_neighbor_vertex) == mst_vertex_set.end()) {
 
           MSTEdgeNode<Vertex, Weight> cur_mst_edge_node;
-            cur_mst_edge_node.head = cur_mst_vertex;
-            cur_mst_edge_node.tail = neighbor_vertex;
+          cur_mst_edge_node.head = cur_mst_vertex;
+          cur_mst_edge_node.tail = cur_neighbor_vertex;
 
-          graph.GetWeight(cur_mst_edge_node.weight, cur_mst_vertex, neighbor_vertex);
+          graph.GetWeight(cur_mst_edge_node.weight, cur_mst_vertex, cur_neighbor_vertex);
 
-          min_heap.Insert(cur_mst_edge_node);
+          min_priority_queue.Enqueue(cur_mst_edge_node);
         }
 
-        // 定位到下一个邻接结点
+        // 遍历至下一个邻接结点
         Vertex next_neighbor_vertex;
-        has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, cur_mst_vertex, neighbor_vertex);
+        has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, cur_mst_vertex, cur_neighbor_vertex);
         if (has_neighbor) {
-          neighbor_vertex = next_neighbor_vertex;
+            cur_neighbor_vertex = next_neighbor_vertex;
         }
       }
     }
 
-    MSTEdgeNode<Vertex, Weight> mst_edge_node;  // 最短边
-    min_heap.HeapTopPop(mst_edge_node);       // 小顶堆删除存在堆顶的最短边
-    min_span_tree.Insert(mst_edge_node);     // 最短边进入min_span_tree
+    // 最小优先队列Dequeue出最短边, 赋给mst_edge_node
+    MSTEdgeNode<Vertex, Weight> mst_edge_node;
+    min_priority_queue.Dequeue(mst_edge_node);
 
+    // 最短边进入min_span_tree
+    min_span_tree.Insert(mst_edge_node);
+
+    // mst_edge_node.tail进入最小生成树结点集合mst_vertex_set
     mst_vertex_set.insert(mst_edge_node.tail);
+  }
 
-  } while (mst_vertex_set.size() < vertex_num); // 循环n-1次, 插入n-1条边
+  return true;
 }
 
 
@@ -430,7 +443,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
                           Weight distance[],
                           int predecessor[])
 {
-  int vertex_num = graph.NumberOfVertices();
+  int vertex_num = graph.VertexCount();
   set<Vertex> vertex_set;
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
 
@@ -580,7 +593,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph,
 template<class Vertex, class Weight>
 bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
 
-  int vertex_num = graph.NumberOfVertices();
+  int vertex_num = graph.VertexCount();
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
 
   // --- 初始化 ---
@@ -691,7 +704,7 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
  */
 template<class Vertex, class Weight>
 void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vector<vector<int> >& predecessor) {
-    int vertices_num = graph.NumberOfVertices();    // 结点数量
+    int vertices_num = graph.VertexCount();    // 结点数量
 
     for (int i = 0; i < vertices_num; i++) {
         for (int j = 0; j < vertices_num; j++) {
@@ -742,7 +755,7 @@ void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
 {
   cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
 
-  int vertex_cnt = graph.NumberOfVertices();
+  int vertex_cnt = graph.VertexCount();
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex);
 
   // 用于存放以某个结点为终点的最短路径经过的结点
@@ -824,7 +837,7 @@ template<class Vertex, class Weight>
 void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
                                      vector<vector<Weight> > distance,
                                      vector<vector<int> > predecessor) {
-    int vertices_num = graph.NumberOfVertices();    // 结点数量
+    int vertices_num = graph.VertexCount();    // 结点数量
     for (int i = 0; i < vertices_num; i++) {
         Vertex vertex_i;
         graph.GetVertexByIndex(vertex_i, i);

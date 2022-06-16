@@ -48,7 +48,7 @@ public:
    * @brief 获取图结点数量
    * @return 图结点数量
    */
-  int NumberOfVertices() { return this->vertex_cnt_; }
+  int VertexCount() { return this->vertex_cnt_; }
 
   /*!
    * @brief 获取边数量

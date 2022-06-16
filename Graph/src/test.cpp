@@ -401,12 +401,12 @@ void TestPrim() {
 
   cout<<endl<<"**邻接表图测试**"<<endl;
   MinSpanTree<string, double> min_span_tree_adj(100);
-  Prim(adjacency_list_graph, BJ, min_span_tree_adj); // 殷书原版堆优化
+  Prim(adjacency_list_graph, min_span_tree_adj);
   min_span_tree_adj.Show();
 
   cout<<endl<<"**矩阵图测试**"<<endl;
   MinSpanTree<string, double> min_span_tree_matrix(100);
-  Prim(matrix_graph, BJ, min_span_tree_matrix); // 朴素版Prim
+  Prim(matrix_graph, min_span_tree_matrix);
   min_span_tree_matrix.Show();
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -579,7 +579,7 @@ void TestFloyd() {
 
     cout<<endl<<"**邻接表图测试**"<<endl<<endl;
     // 邻接表图结点数量
-    int adj_list_graph_vertices_num = adjacency_list_graph.NumberOfVertices();
+    int adj_list_graph_vertices_num = adjacency_list_graph.VertexCount();
     // 邻接表图distance
     vector<vector<double> > adj_list_graph_distance(adj_list_graph_vertices_num,
                                                   vector<double>(adj_list_graph_vertices_num));
@@ -596,7 +596,7 @@ void TestFloyd() {
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
     // 矩阵图结点数量
-    int matrix_graph_vertices_num = matrix_graph.NumberOfVertices();
+    int matrix_graph_vertices_num = matrix_graph.VertexCount();
     // matrix_graph_distance
     vector<vector<double> > matrix_graph_distance(matrix_graph_vertices_num,
                                                   vector<double>(matrix_graph_vertices_num));

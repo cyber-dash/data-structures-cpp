@@ -18,7 +18,7 @@
 using namespace std;
 
 
-#define DEFAULT_SIZE 10
+#define DEFAULT_SIZE 200
 
 
 /*!
