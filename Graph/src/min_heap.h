@@ -36,6 +36,7 @@ public:
   bool HeapTopPop(T& item);
   bool IsEmpty() const { return heap_size_ == 0; }
   bool IsFull() const { return heap_size_ == max_size_; }
+  int Size() { return heap_size_; }
   void MakeEmpty() { heap_size_ = 0; }  // todo: 其余操作
 
   void CyberDashShow();
@@ -79,12 +80,12 @@ void MinHeap<T>::SiftDown_(int idx) {
   for (int child_idx = 2 * idx + 1; child_idx < heap_size_; idx = child_idx, child_idx = child_idx * 2 + 1) {
 
     //! index的孩子结点中, 权重较大的结点索引, 赋给child_idx
-    if (child_idx < heap_size_ && item_array_[child_idx] < item_array_[child_idx + 1]) {
+    if (child_idx < heap_size_ && item_array_[child_idx] > item_array_[child_idx + 1]) {
         child_idx++;
     }
 
     //! 如果父节点 >= 子节点, sift down结束
-    if ((T)item_array_[idx] >= (T)item_array_[child_idx]) {
+    if (item_array_[idx] <= item_array_[child_idx]) {
       break;
     }
 
@@ -97,7 +98,7 @@ void MinHeap<T>::SiftDown_(int idx) {
 template <class T>
 void MinHeap<T>::SiftUp_(int idx) {
   for (int parent_idx = (idx - 1) / 2; parent_idx >= 0; idx = parent_idx, parent_idx = (idx - 1) / 2) {
-    if (item_array_[parent_idx] >= item_array_[idx]) {
+    if (item_array_[parent_idx] <= item_array_[idx]) {
       break;
     }
 

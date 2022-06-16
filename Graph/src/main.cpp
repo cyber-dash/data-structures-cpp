@@ -17,6 +17,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+  TestMinPriorityQueue();
+
     /*
   // 测试矩阵图打印矩阵
   TestMatrixGraphPrintMatrix();

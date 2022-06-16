@@ -10,11 +10,50 @@
  */
 
 #include "test.h"
+#include "priority_queue.h"
 #include "graph_algorithm.h"
 #include "graph_algorithm.cpp"
 
 
 using namespace std;
+
+
+void TestMinPriorityQueue() {
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                   Test MinPriorityQueue                   |"<<endl;
+    cout<<"|                       测试最小优先队列                      |"<<endl;
+
+    int arr[5] = { 3, 1, 4, 1, 5 };
+
+    MinPriorityQueue<int> min_priority_queue(arr, 5);
+
+    int item;
+
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+
+    min_priority_queue.Enqueue(9);
+    min_priority_queue.Enqueue(2);
+    min_priority_queue.Enqueue(6);
+
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+    min_priority_queue.Dequeue(item);
+    cout<<item<<endl;
+
+    cout<<"-------------------------------------------------------------"<<endl;
+}
 
 
 // 测试矩阵图的矩阵

@@ -398,7 +398,7 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  * Dijkstra算法伪代码
  *
  * vertex_set: 保存所有已知实际(起始点 --> 该结点)最短路径值的结点的集合
- * PriorityQueue: 结点的一个优先队列，以结点的最短路径估计(起始点 --> 该节点的路径值), 进行排序
+ * MinPriorityQueue: 结点的一个优先队列，以结点的最短路径估计(起始点 --> 该节点的路径值), 进行排序
  *
  *
  * 迪杰斯特拉算法:
@@ -413,13 +413,13 @@ void Prim(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weigh
  *     vertex_set(结点集合) <-- 空
  *
  *     // 起始点进入优先队列
- *     PriorityQueue(优先队列) <-- 起始点
+ *     MinPriorityQueue(优先队列) <-- 起始点
  *
  *
  *     --- 贪心 ---
  *
  *     while (PriorityQueue中有元素)
- *         do u <-- EXTRACT_MIN(PriorityQueue)  // 选取u为PriorityQueue中, 最短路径估计最小(起始点到该节点的路径最短)的结点
+ *         do u <-- EXTRACT_MIN(MinPriorityQueue)  // 选取u为PriorityQueue中, 最短路径估计最小(起始点到该节点的路径最短)的结点
  *         vertex_set <-- vertex_set and u      // u加入集合vertex_set
  *         for u的每个邻接结点v:
  *             松弛(u, v, 边集合)                 // 松弛成功的结点, 会被加入到vertex_set
