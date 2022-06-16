@@ -30,7 +30,7 @@ class MinHeap {
 public:
   MinHeap(int size = DEFAULT_SIZE);
   MinHeap(T arr[], int arr_size);
-  ~MinHeap() { delete[] heap_item_array_; }
+  ~MinHeap() { delete[] item_array_; }
 
   bool Insert(const T& item);
   bool HeapTopPop(T& item);
@@ -41,19 +41,19 @@ public:
   void CyberDashShow();
 
 private:
-  T* heap_item_array_; //!< 堆元素数组
-  int heap_size_;      //!< 当前堆size
-  int max_size_;       //!< 最大size
-  void SiftDown_(int idx, int end);
-  void SiftUp_(int start);
-  void Swap(T& item1, T& item2);
+  T* item_array_;    //!< 堆元素数组
+  int heap_size_;    //!< 当前堆size
+  int max_size_;     //!< 最大size
+  void SiftDown_(int idx);
+  void SiftUp_(int idx);
+  void Swap_(T& item1, T& item2);
 };
 
 
 template <class T>
 MinHeap<T>::MinHeap(int size) {
   max_size_ = (size > DEFAULT_SIZE) ? size : DEFAULT_SIZE;
-  heap_item_array_ = new T[max_size_];
+  item_array_ = new T[max_size_];
   heap_size_ = 0;
 }
 
@@ -61,77 +61,56 @@ MinHeap<T>::MinHeap(int size) {
 template <class T>
 MinHeap<T>::MinHeap(T arr[], int arr_size) {
   max_size_ = (arr_size > DEFAULT_SIZE) ? arr_size : DEFAULT_SIZE;
-  heap_item_array_ = new T[max_size_];
+  item_array_ = new T[max_size_];
   for (int i = 0; i < arr_size; i++) {
-      heap_item_array_[i] = arr[i];
+    item_array_[i] = arr[i];
   }
 
   heap_size_ = arr_size;
 
   for (int cur_idx = (heap_size_ - 2) / 2; cur_idx >= 0; cur_idx--) {
-      SiftDown_(cur_idx, heap_size_ - 1);
+    SiftDown_(cur_idx);
   }
 }
 
 
 template <class T>
-void MinHeap<T>::SiftDown_(int idx, int end) {
+void MinHeap<T>::SiftDown_(int idx) {
+  for (int child_idx = 2 * idx + 1; child_idx < heap_size_; idx = child_idx, child_idx = child_idx * 2 + 1) {
 
-  int cur = idx;
-
-  int left_child = 2 * cur + 1;
-  int right_child = left_child + 1;
-
-  int min_child = left_child;
-
-  T cur_value = heap_item_array_[cur];
-
-  while (left_child <= end) {
-
-    // find the min child
-    if (left_child < end && heap_item_array_[left_child] > heap_item_array_[right_child]) {
-      min_child = right_child;
+    //! index的孩子结点中, 权重较大的结点索引, 赋给child_idx
+    if (child_idx < heap_size_ && item_array_[child_idx] < item_array_[child_idx + 1]) {
+        child_idx++;
     }
 
-    if (cur_value <= heap_item_array_[min_child]) {
+    //! 如果父节点 >= 子节点, sift down结束
+    if ((T)item_array_[idx] >= (T)item_array_[child_idx]) {
       break;
     }
-    heap_item_array_[cur] =  heap_item_array_[min_child];
-    cur = min_child;
 
-    left_child = 2 * min_child + 1;
-    right_child = left_child + 1;
-    min_child = left_child;
+    //! 交换父子结点
+    Swap_(item_array_[idx], item_array_[child_idx]);
   }
-
-  heap_item_array_[cur] = cur_value;
 }
 
 
 template <class T>
-void MinHeap<T>::SiftUp_(int start) {
-  int idx = start, i = (idx - 1) / 2;
-  T temp = heap_item_array_[idx];
-
-  while (idx > 0) {
-    if (heap_item_array_[i] <= temp) {
+void MinHeap<T>::SiftUp_(int idx) {
+  for (int parent_idx = (idx - 1) / 2; parent_idx >= 0; idx = parent_idx, parent_idx = (idx - 1) / 2) {
+    if (item_array_[parent_idx] >= item_array_[idx]) {
       break;
-    } else {
-        heap_item_array_[idx] = heap_item_array_[i];
-        idx = i;
-      i = (i - 1) / 2;
     }
-  }
 
-  heap_item_array_[idx] = temp;
+    Swap_(item_array_[parent_idx], item_array_[idx]);
+  }
 }
 
 
 template <class T>
-void MinHeap<T>::Swap(T& item1, T& item2) {
-    T tmp = item1;
-    item1 = item2;
-    item2 = tmp;
+void MinHeap<T>::Swap_(T& item1, T& item2) {
+  T tmp = item1;
+  item1 = item2;
+  item2 = tmp;
 }
 
 
@@ -143,7 +122,7 @@ bool MinHeap<T>::Insert(const T& item) {
     return false;
   }
 
-  heap_item_array_[heap_size_] = item;
+  item_array_[heap_size_] = item;
 
   SiftUp_(heap_size_);
 
@@ -160,11 +139,11 @@ bool MinHeap<T>::HeapTopPop(T& item) {
     return false;
   }
 
-    item = heap_item_array_[0];
-  heap_item_array_[0] = heap_item_array_[heap_size_ - 1];
+  item = item_array_[0];
+  item_array_[0] = item_array_[heap_size_ - 1];
   heap_size_--;
 
-  SiftDown_(0, heap_size_ - 1);
+  SiftDown_(0);
 
   return true;
 }
@@ -178,9 +157,9 @@ void MinHeap<Vertex>::CyberDashShow() {
       <<"CyberDash成员:"<<endl
       <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
       <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
-      <<"数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp"<<endl
+      <<"数据结构开源代码(C++版本): https://gitee.com/cyberdash/data-structure-cpp"<<endl
       <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
 }
 
 
-#endif //CYBER_DASH_MIN_HEAP_H
+#endif // CYBER_DASH_MIN_HEAP_H

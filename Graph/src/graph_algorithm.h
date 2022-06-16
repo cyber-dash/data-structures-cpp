@@ -49,11 +49,25 @@ struct MSTEdgeNode {
     bool operator<=(MSTEdgeNode<Vertex, Weight>& node) { return weight <= node.weight; }
 
     /*!
+     * 重载 >=
+     * @param node MST结点
+     * @return 比较结果
+     */
+    bool operator>=(MSTEdgeNode<Vertex, Weight>& node) { return weight >= node.weight; }
+
+    /*!
      * 重载 >
      * @param node MST结点
      * @return 比较结果
      */
     bool operator>(MSTEdgeNode<Vertex, Weight>& node) { return weight > node.weight; }
+
+    /*!
+     * 重载 <
+     * @param node MST结点
+     * @return 比较结果
+     */
+    bool operator<(MSTEdgeNode<Vertex, Weight>& node) { return weight < node.weight; }
 
     Vertex tail; //!< 尾结点
     Vertex head; //!< 头结点
