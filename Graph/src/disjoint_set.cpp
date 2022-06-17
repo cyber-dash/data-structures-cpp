@@ -54,7 +54,7 @@ int DisjointSet::FindNonRecursive(int index) {
 
 
 /*!
- * @brief 查找
+ * @brief 查找根节点
  * @param index 数组索引
  * @return 根节点
  */

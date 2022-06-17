@@ -23,14 +23,14 @@ const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
 template<class Vertex, class T>
 class GeneralEdge {
 public:
-  GeneralEdge(Vertex head, Vertex tail, T weight) {
-    this->head = head;
-    this->tail = tail;
+  GeneralEdge(Vertex starting_vertex, Vertex ending_vertex, T weight) {
+    this->starting_vertex = starting_vertex;
+    this->ending_vertex = ending_vertex;
     this->weight = weight;
   }
   T weight;
-  Vertex head;
-  Vertex tail;
+  Vertex starting_vertex;
+  Vertex ending_vertex;
 };
 */
 
@@ -54,7 +54,7 @@ public:
    * @brief 获取边数量
    * @return 边数量
    */
-  int NumberOfEdges() { return this->edge_cnt_; }
+  int EdgeCount() { return this->edge_cnt_; }
 
   /*!
    * @brief 获取结点(由结点索引)

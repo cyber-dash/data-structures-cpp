@@ -28,47 +28,54 @@ using namespace std;
  * @tparam Weight 边权值类型模板参数
  */
 template<class Vertex, class Weight>
-struct MSTEdgeNode {
+struct MSTNode {
     /*! @brief 构造函数(空参数) */
-    MSTEdgeNode() {}
+    MSTNode() = default;
 
     /*!
      * 构造函数(边权值)
      * @param weight 边权值
      */
-    MSTEdgeNode(Weight weight): weight(weight) {}
+    explicit MSTNode(Weight weight): weight(weight) {}
+
+    /*!
+     * 构造函数(边权值)
+     * @param weight 边权值
+     */
+    MSTNode(Weight weight, Vertex starting_vertex, Vertex ending_vertex):
+      weight(weight), starting_vertex(starting_vertex), ending_vertex(ending_vertex) {}
 
     /*!
      * 重载 <=
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator<=(MSTEdgeNode<Vertex, Weight>& node) { return weight <= node.weight; }
+    bool operator<=(MSTNode<Vertex, Weight>& node) { return weight <= node.weight; }
 
     /*!
      * 重载 >=
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator>=(MSTEdgeNode<Vertex, Weight>& node) { return weight >= node.weight; }
+    bool operator>=(MSTNode<Vertex, Weight>& node) { return weight >= node.weight; }
 
     /*!
      * 重载 >
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator>(MSTEdgeNode<Vertex, Weight>& node) { return weight > node.weight; }
+    bool operator>(MSTNode<Vertex, Weight>& node) { return weight > node.weight; }
 
     /*!
      * 重载 <
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator<(MSTEdgeNode<Vertex, Weight>& node) { return weight < node.weight; }
+    bool operator<(MSTNode<Vertex, Weight>& node) { return weight < node.weight; }
 
-    Vertex tail; //!< 尾结点
-    Vertex head; //!< 头结点
-    Weight weight; //!< 边权重
+    Vertex ending_vertex;    //!< 尾结点
+    Vertex starting_vertex;  //!< 头结点
+    Weight weight;           //!< 边权重
 };
 
 
@@ -89,7 +96,7 @@ class MinSpanTree {
 public:
     /*! 构造函数 */
     MinSpanTree(int size): max_size_(size), cur_size_(0) {
-        array_ = new MSTEdgeNode<Vertex, Weight>[size];
+        array_ = new MSTNode<Vertex, Weight>[size];
     }
 
     /*!
@@ -97,7 +104,7 @@ public:
      * @param mst_edge_node MSTEdgeNode类型结点
      * @return 当前最小生成树边的数量
      */
-    int Insert(MSTEdgeNode<Vertex, Weight>& mst_edge_node) {
+    int Insert(MSTNode<Vertex, Weight>& mst_edge_node) {
         if (cur_size_ >= max_size_) {
             return -1;
         }
@@ -113,7 +120,7 @@ public:
         Weight sum = 0; // 总权值
         for (int i = 0; i < cur_size_; i++) {
             sum += array_[i].weight;
-            cout << "head: " << array_[i].head << ", tail: " << array_[i].tail << ", weight: "
+            cout << "starting_vertex: " << array_[i].starting_vertex << ", ending_vertex: " << array_[i].ending_vertex << ", weight: "
                  << array_[i].weight << endl;
         }
 
@@ -121,7 +128,7 @@ public:
     }
 
 protected:
-    MSTEdgeNode<Vertex, Weight>* array_; //!< 最小生成树结点数组
+    MSTNode<Vertex, Weight>* array_; //!< 最小生成树结点数组
     int max_size_; //!< 最大结点数
     int cur_size_; //!< 当前生成树的节点数量
 };
@@ -150,11 +157,6 @@ void Components(Graph<Vertex, Weight>& graph);
 // Prim算法
 template<class Vertex, class Weight>
 bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
-
-
-// Prim(优化堆操作)
-template<class Vertex, class Weight>
-void PrimPlus(Graph<Vertex, Weight>& graph, Vertex vertex, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
 // Kruskal最小生成树
