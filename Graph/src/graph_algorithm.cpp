@@ -263,7 +263,7 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
 
   int vertex_cnt = graph.VertexCount();    // 结点数量
 
-  // 获取索引0对应的结点start_vertex, 作为Prim算法的起始结点
+  // 获取索引0对应的结点starting_vertex, 作为Prim算法的起始结点
   Vertex starting_vertex;
   bool get_vertex_done = graph.GetVertexByIndex(starting_vertex, 0);
   if (!get_vertex_done) {
@@ -373,7 +373,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
 
   vertex_set.insert(starting_vertex);   // 起始点starting_vertex加入到集合vertex_set
   distance[starting_vertex_idx] = 0;    // 起始点到自身的最短路径值为0
-  // MinPriorityQueue<Edge<Vertex, Weight> > min_priority_queue;    // 边的最小优先队列
+  // MinPriorityQueue<Path<Vertex, Weight> > min_priority_queue;    // 边的最小优先队列
 
   for (int i = 0; i < vertex_cnt; i++) {
 
@@ -467,6 +467,142 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
   }
 }
 
+
+/*!
+ * @brief 迪杰斯特拉(Dijkstra)最短路径(优先队列)
+ * @tparam Vertex 图结点模板类型
+ * @tparam Weight 图边权值模板类型
+ * @param graph 图的引用
+ * @param starting_vertex 起始结点
+ * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
+ * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点的索引
+ * @note
+ *
+ * Dijkstra算法伪代码
+ *
+ * vertex_set: 保存所有已知实际(起始点 --> 该结点)最短路径值的结点的集合
+ * MinPriorityQueue: 结点的一个优先队列，以结点的最短路径估计(起始点 --> 该节点的路径值), 进行排序
+ *
+ *
+ * 迪杰斯特拉算法:
+ *
+ *     --- 初始化 ---
+ *
+ *     // 起始点到每个(原点以外的)结点的distance为无穷大，distance[起始点索引] = 0
+ *     INITIALIZE-SINGLE-SOURCE(graph(图), starting_vertex(起始点))
+ *
+ *     // vertex_set初始化为空
+ *     vertex_set(结点集合) <-- 空
+ *
+ *     // 起始点进入优先队列
+ *     MinPriorityQueue(优先队列) <-- 起始点
+ *
+ *     --- 贪心 ---
+ *
+ *     while (PriorityQueue中有元素)
+ *         do u <-- EXTRACT_MIN(MinPriorityQueue)  // 选取u为PriorityQueue中, 最短路径估计最小(起始点到该节点的路径最短)的结点
+ *         MinPriorityQueue clear
+ *
+ *         vertex_set <-- vertex_set and u      // u加入集合vertex_set
+ *         for u的每个邻接结点v:
+ *             松弛(u, v, 边集合)                 // 松弛成功的结点, 会被加入到vertex_set, u进入MinPriorityQueue
+ */
+template<class Vertex, class Weight>
+void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
+                             Vertex starting_vertex,
+                             Weight distance[],
+                             int predecessor[]) {
+    int vertex_cnt = graph.VertexCount(); // 结点数量
+
+    set<Vertex> vertex_set;
+    int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
+
+    // --- 初始化 ---
+
+    vertex_set.insert(starting_vertex);   // 起始点starting_vertex加入到集合vertex_set
+    distance[starting_vertex_idx] = 0;    // 起始点到自身的最短路径值为0
+    MinPriorityQueue<Path<Vertex, Weight> > min_priority_queue;    // 边的最小优先队列
+
+    for (int i = 0; i < vertex_cnt; i++) {
+
+        // 获取索引i对应的结点vertex_i
+        Vertex vertex_i;
+        graph.GetVertexByIndex(vertex_i, i);
+
+        // 将边(starting_vertex --> vertex_i)的值, 保存到distance[i], 如果不存在, 则distance[i]为MAX_WEIGHT
+        bool get_weight_done = graph.GetWeight(distance[i], starting_vertex, vertex_i);
+        if (!get_weight_done) {
+            distance[i] = (Weight)MAX_WEIGHT; // todo: 其实可以用其他的方式表示没有边:-)
+        }
+
+        // 如果边(starting_vertex --> vertex_i)存在, 则predecessor[i]的值, 为索引starting_vertex_idx; 否则为-1
+        if (vertex_i != starting_vertex && get_weight_done) {
+            predecessor[i] = starting_vertex_idx;
+
+            Path<Vertex, Weight> curEdge(starting_vertex, vertex_i, distance[i]);
+            min_priority_queue.Enqueue(curEdge);
+
+        } else {
+            predecessor[i] = -1;
+        }
+    }
+
+    for (int i = 0; i < vertex_cnt - 1; i++) {
+        // 找到起始点到(不在vertex_set的)各结点中的最短路径,
+        // 和该路径对应的终点结点cur_min_dist_ending_vertex与终点结点索引cur_min_dist_ending_vertex_idx
+        Path<Vertex, Weight> min_distance_path;
+        min_priority_queue.Dequeue(min_distance_path);
+        min_priority_queue.Clear();
+
+        Vertex cur_min_distance_ending_vertex;          // 当前最短路径对应的的终点结点
+        cur_min_distance_ending_vertex = min_distance_path.ending_vertex;
+        int cur_min_distance_ending_vertex_idx = graph.GetVertexIndex(cur_min_distance_ending_vertex);
+
+        // 将cur_min_dist_ending_vertex插入到vertex_set
+        vertex_set.insert(cur_min_distance_ending_vertex);
+
+        // --- 贪心 ---
+        // 对cur_min_dist_ending_vertex的每个(未进入vertex_set的)相邻节点执行松弛
+        for (int j = 0; j < vertex_cnt; j++) {
+
+            // 拿到索引j对应的结点vertex_j
+            Vertex vertex_j;
+            graph.GetVertexByIndex(vertex_j, j);
+
+            // 如果vertex_j已经在vertex_set中, continue
+            if (vertex_set.find(vertex_j) != vertex_set.end()) {
+                continue;
+            }
+
+            // 边(cur_min_distance_ending_vertex --> vertex_j)的值, 赋给weight
+            Weight weight;
+            bool get_weight_done = graph.GetWeight(weight, cur_min_distance_ending_vertex, vertex_j);
+            if (!get_weight_done) { // 如果没有边, continue
+                continue;
+            }
+
+            // 松弛操作:
+            // 如果
+            //   边 (starting_vertex  --> cur_min_distance_ending_vertex)                的weight
+            //    +
+            //   边                      (cur_min_distance_ending_vertex  -->  vertex_j) 的weight
+            //    <
+            //   边 (starting_vertex  ---------------------------------->  vertex_j) 的weight
+            // 则
+            //   更新distance[j]和predecessor[j]
+            //   生成new_min_distance_path, 进入最小优先队列
+            if (distance[cur_min_distance_ending_vertex_idx] + weight < distance[j])
+            {
+                distance[j] = distance[cur_min_distance_ending_vertex_idx] + weight;
+                predecessor[j] = cur_min_distance_ending_vertex_idx;
+
+                Path<Vertex, Weight> new_min_distance_path(starting_vertex, vertex_j, distance[j]);
+                min_priority_queue.Enqueue(new_min_distance_path);
+            }
+        }
+
+    }
+}
 
 /*!
  * 贝尔曼福特(Bellman-Ford)最短路径

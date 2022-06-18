@@ -159,7 +159,7 @@ template<class Vertex, class Weight>
 bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
 
 
-// Kruskal最小生成树
+// Kruskal最小生成树(优先队列)
 template<class Vertex, class Weight>
 void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
 
@@ -167,6 +167,14 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 // 迪杰斯特拉(Dijkstra)最短路径
 template<class Vertex, class Weight>
 void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
+
+
+// 迪杰斯特拉(Dijkstra)最短路径(优先队列)
+template<class Vertex, class Weight>
+void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
+                             Vertex starting_vertex,
+                             Weight distance[],
+                             int predecessor[]);
 
 
 // 贝尔曼福特(Bellman-Ford)最短路径

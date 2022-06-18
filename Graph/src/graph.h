@@ -18,10 +18,10 @@ const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
 
 
 template<class Vertex, class Weight>
-class Edge {
+class Path {
 public:
-  Edge() = default;
-  Edge(Vertex starting_vertex, Vertex ending_vertex, Weight weight):
+  Path() = default;
+  Path(Vertex starting_vertex, Vertex ending_vertex, Weight weight):
     starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
   Weight weight;
   Vertex starting_vertex;
@@ -32,28 +32,28 @@ public:
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<=(Edge<Vertex, Weight>& edge) { return weight <= edge.weight; }
+  bool operator<=(Path<Vertex, Weight>& edge) { return weight <= edge.weight; }
 
   /*!
    * 重载 >=
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>=(Edge<Vertex, Weight>& edge) { return weight >= edge.weight; }
+  bool operator>=(Path<Vertex, Weight>& edge) { return weight >= edge.weight; }
 
   /*!
    * 重载 >
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>(Edge<Vertex, Weight>& edge) { return weight > edge.weight; }
+  bool operator>(Path<Vertex, Weight>& edge) { return weight > edge.weight; }
 
   /*!
    * 重载 <
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<(Edge<Vertex, Weight>& edge) { return weight < edge.weight; }
+  bool operator<(Path<Vertex, Weight>& edge) { return weight < edge.weight; }
 };
 
 
@@ -70,13 +70,13 @@ public:
    * @brief 获取图结点数量
    * @return 图结点数量
    */
-  int VertexCount() { return this->vertex_cnt_; }
+  unsigned int VertexCount() { return this->vertex_cnt_; }
 
   /*!
    * @brief 获取边数量
    * @return 边数量
    */
-  int EdgeCount() { return this->edge_cnt_; }
+  unsigned int EdgeCount() { return this->edge_cnt_; }
 
   /*!
    * @brief 获取结点(由结点索引)

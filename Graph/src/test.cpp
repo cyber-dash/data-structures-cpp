@@ -459,7 +459,7 @@ void TestDijkstra() {
   double min_dist_arr_adj[5];
   int from_path_arr_adj[5];
 
-  Dijkstra(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+  DijkstraByPriorityQueue(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
   PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
 
   cout<<endl<<"**矩阵图测试**"<<endl<<endl;
