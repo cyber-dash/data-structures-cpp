@@ -23,37 +23,37 @@ using namespace std;
 
 /*!
  * @brief 邻接表图边结构体模板
- * @tparam Vertex
- * @tparam Weight
+ * @tparam Vertex 结点
+ * @tparam Weight 边权值
  */
 template <class Vertex, class Weight>
-struct Edge {
+struct AdjListEdge {
   /*! @brief 构造函数(无参数) */
-  Edge() {}
+  AdjListEdge() {}
 
   /*! @brief 构造函数(边终点的结点索引and边权重) */
-  Edge(int ending_vertex_index, Weight weight): ending_vertex_index(ending_vertex_index), weight(weight), next(NULL) {}
+  AdjListEdge(int ending_vertex_index, Weight weight): ending_vertex_index(ending_vertex_index), weight(weight), next(NULL) {}
 
   /*! @brief 重载!= */
-  bool operator != (Edge<Vertex, Weight>& edge) const {
+  bool operator != (AdjListEdge<Vertex, Weight>& edge) const {
     return (ending_vertex_index != edge.ending_vertex_index);
   }
 
   int ending_vertex_index; //!< 边终点的结点索引
   Weight weight; //!< 边权重
-  Edge<Vertex, Weight>* next; //!< 下一邻接表图边的指针
+  AdjListEdge<Vertex, Weight>* next; //!< 下一邻接表图边的指针
 };
 
 
 /*!
  * @brief 邻接表图节点结构体
- * @tparam V 结点参数模板类型
- * @tparam W 边权值参数模板类型
+ * @tparam Vertex 结点参数模板类型
+ * @tparam Weight 边权值参数模板类型
  */
-template<class V, class W>
+template<class Vertex, class Weight>
 struct AdjListVertex {
-  V starting_vertex; //!< 起始结点
-  Edge<V, W>* adjacency_list; //!< 邻接表
+  Vertex starting_vertex; //!< 起始结点
+  AdjListEdge<Vertex, Weight>* adjacency_list; //!< 邻接表
 };
 
 
@@ -72,12 +72,7 @@ public:
   // 析构函数
   ~AdjacencyListGraph();
 
-  /**
-   * @brief 使用结点索引获取结点
-   * @param vertex 结点(保存结果的节点)
-   * @param vertex_index 结点索引
-   * @return 是否获取成功
-   */
+  // 使用结点索引获取结点
   bool GetVertexByIndex(Vertex& vertex, int vertex_index);
 
   // (由边的两个结点)获取边权值
@@ -147,7 +142,7 @@ AdjacencyListGraph<Vertex, Weight>::~AdjacencyListGraph() {
 
   for (int i = 0; i < this->vertex_cnt_; i++) {
 
-    Edge<Vertex, Weight>* cur_edge = this->vertex_table_[i].adjacency_list;
+    AdjListEdge<Vertex, Weight>* cur_edge = this->vertex_table_[i].adjacency_list;
 
     while (cur_edge != NULL) {
       this->vertex_table_[i].adjacency_list = cur_edge->next;
@@ -160,7 +155,7 @@ AdjacencyListGraph<Vertex, Weight>::~AdjacencyListGraph() {
 }
 
 
-/**
+/*!
  * @brief 使用结点索引获取结点
  * @param vertex 结点(保存结果的节点)
  * @param vertex_index 结点索引
@@ -214,7 +209,7 @@ bool AdjacencyListGraph<Vertex, Weight>::GetWeightByVertexIndex(Weight& weight, 
         return false;
     }
 
-    Edge<Vertex, Weight>* edge = this->vertex_table_[v1_index].adjacency_list;
+    AdjListEdge<Vertex, Weight>* edge = this->vertex_table_[v1_index].adjacency_list;
 
     while (edge != NULL && edge->ending_vertex_index != v2_index) {
         edge = edge->next;
@@ -265,11 +260,11 @@ bool AdjacencyListGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
 
   while (this->vertex_table_[vertex_index].adjacency_list != NULL) {
 
-    Edge<Vertex, Weight>* prior = NULL;
-    Edge<Vertex, Weight>* cur = this->vertex_table_[vertex_index].adjacency_list;
+    AdjListEdge<Vertex, Weight>* prior = NULL;
+    AdjListEdge<Vertex, Weight>* cur = this->vertex_table_[vertex_index].adjacency_list;
     int cur_vertex_index = cur->ending_vertex_index;
 
-    Edge<Vertex, Weight>* delete_edge = this->vertex_table_[cur_vertex_index].adjacency_list;
+    AdjListEdge<Vertex, Weight>* delete_edge = this->vertex_table_[cur_vertex_index].adjacency_list;
 
     while (delete_edge != NULL && delete_edge->ending_vertex_index != vertex_index) {
       prior = delete_edge;
@@ -298,10 +293,10 @@ bool AdjacencyListGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
   this->vertex_table_[vertex_index].starting_vertex = this->vertex_table_[this->vertex_cnt_].starting_vertex;
   this->vertex_table_[vertex_index].adjacency_list = this->vertex_table_[this->vertex_cnt_].adjacency_list;
 
-  Edge<Vertex, Weight>* cur = this->vertex_table_[this->vertex_cnt_].adjacency_list;
+  AdjListEdge<Vertex, Weight>* cur = this->vertex_table_[this->vertex_cnt_].adjacency_list;
   while (cur != NULL) {
 
-    Edge<Vertex, Weight>* modify_edge = this->vertex_table_[cur->ending_vertex_index].adjacency_list;
+    AdjListEdge<Vertex, Weight>* modify_edge = this->vertex_table_[cur->ending_vertex_index].adjacency_list;
 
     while (modify_edge != NULL) {
       if (modify_edge->ending_vertex_index == this->vertex_cnt_) {
@@ -340,7 +335,7 @@ bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
   }
 
   // 在邻接表中找 vertex1_index --> vertex2_index 是否存在, 如果存在说明边已经存在, 不能插入
-  Edge<V, W>* cur_edge = this->vertex_table_[vertex1_index].adjacency_list;
+  AdjListEdge<V, W>* cur_edge = this->vertex_table_[vertex1_index].adjacency_list;
   while (cur_edge != NULL && cur_edge->ending_vertex_index != vertex2_index) {
     cur_edge = cur_edge->next;
   }
@@ -349,8 +344,8 @@ bool AdjacencyListGraph<V, W>::InsertEdge(V vertex1, V vertex2, W weight) {
     return false;
   }
 
-  Edge<V, W>* v2_dest_edge = new Edge<V, W>(); // vertex1 --> vertex2
-  Edge<V, W>* v1_dest_edge = new Edge<V, W>(); // vertex2 --> vertex1
+  AdjListEdge<V, W>* v2_dest_edge = new AdjListEdge<V, W>(); // vertex1 --> vertex2
+  AdjListEdge<V, W>* v1_dest_edge = new AdjListEdge<V, W>(); // vertex2 --> vertex1
   /* error handler */
 
   // 更新邻接表内对应的数据
@@ -387,9 +382,9 @@ bool AdjacencyListGraph<V, W>::RemoveEdge(V vertex1, V vertex2) {
     return false;
   }
 
-  Edge<V, W>* delete_edge; // 待删除结点
-  Edge<V, W>* prior_edge; // 待删除结点的前一节点
-  Edge<V, W>* first_edge; // 第一个邻接结点就是待删除结点
+  AdjListEdge<V, W>* delete_edge; // 待删除结点
+  AdjListEdge<V, W>* prior_edge; // 待删除结点的前一节点
+  AdjListEdge<V, W>* first_edge; // 第一个邻接结点就是待删除结点
 
   // vertex1 --> vertex2做删除
   delete_edge = this->vertex_table_[vertex1_index].adjacency_list;
@@ -455,7 +450,7 @@ bool AdjacencyListGraph<V, W>::GetFirstNeighborVertex(V& first_neighbor, const V
   int vertex_index = this->GetVertexIndex(vertex); // 获取结点在vertex_table_的数组索引
 
   if (vertex_index >= 0) {
-    Edge<V, W>* edge = this->vertex_table_[vertex_index].adjacency_list;
+    AdjListEdge<V, W>* edge = this->vertex_table_[vertex_index].adjacency_list;
     if (edge != NULL) {
 
       int neighbor_index = edge->ending_vertex_index; // 第一个邻接结点的dest_index_
@@ -487,7 +482,7 @@ bool AdjacencyListGraph<V, W>::GetNextNeighborVertex(V& next_neighbor, const V& 
   if (vertex_index >= 0) {
 
     // 邻接表中, 找到neighbor_vertex的位置
-    Edge<V, W>* edge_ptr = this->vertex_table_[vertex_index].adjacency_list;
+    AdjListEdge<V, W>* edge_ptr = this->vertex_table_[vertex_index].adjacency_list;
 
     while (edge_ptr->next != NULL && edge_ptr->ending_vertex_index != neighbor_index) {
       edge_ptr = edge_ptr->next;
@@ -546,7 +541,7 @@ istream& operator>>(istream& in, AdjacencyListGraph<V, W>& graph_adjacency_list)
     V dest_vertex;
     W weight;
 
-    cout<<"Edge "<<i<<":"<<endl;
+    cout<<"AdjListEdge "<<i<<":"<<endl;
     in >> src_vertex >> dest_vertex >> weight;
 
     int src_vertex_index = graph_adjacency_list.GetVertexIndex(src_vertex);

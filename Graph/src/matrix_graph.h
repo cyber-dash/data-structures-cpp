@@ -397,7 +397,7 @@ istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
   for (int i = 0; i < edge_num; i++) {
 
-    cout<<"Edge "<<i<<":"<<endl;
+    cout<<"AdjListEdge "<<i<<":"<<endl;
     in >> src_vertex >> dest_vertex >> weight;
 
     int src_vertex_index = graph_matrix.GetVertexIndex(src_vertex);

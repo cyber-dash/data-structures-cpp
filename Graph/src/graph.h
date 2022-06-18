@@ -17,22 +17,44 @@ const int DEFAULT_VERTICES = 20; //<! 默认图结点个数
 const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
 
 
-/*
-// 通用边类, 可用于优化, todo:
-// template<class AdjListVertex, class T>
-template<class Vertex, class T>
-class GeneralEdge {
+template<class Vertex, class Weight>
+class Edge {
 public:
-  GeneralEdge(Vertex starting_vertex, Vertex ending_vertex, T weight) {
-    this->starting_vertex = starting_vertex;
-    this->ending_vertex = ending_vertex;
-    this->weight = weight;
-  }
-  T weight;
+  Edge() = default;
+  Edge(Vertex starting_vertex, Vertex ending_vertex, Weight weight):
+    starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
+  Weight weight;
   Vertex starting_vertex;
   Vertex ending_vertex;
+
+  /*!
+   * 重载 <=
+   * @param edge 边
+   * @return 比较结果
+   */
+  bool operator<=(Edge<Vertex, Weight>& edge) { return weight <= edge.weight; }
+
+  /*!
+   * 重载 >=
+   * @param edge 边
+   * @return 比较结果
+   */
+  bool operator>=(Edge<Vertex, Weight>& edge) { return weight >= edge.weight; }
+
+  /*!
+   * 重载 >
+   * @param edge 边
+   * @return 比较结果
+   */
+  bool operator>(Edge<Vertex, Weight>& edge) { return weight > edge.weight; }
+
+  /*!
+   * 重载 <
+   * @param edge 边
+   * @return 比较结果
+   */
+  bool operator<(Edge<Vertex, Weight>& edge) { return weight < edge.weight; }
 };
-*/
 
 
 /*!
