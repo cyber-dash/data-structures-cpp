@@ -379,7 +379,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
 
   /// --- 贪心 ---
 
-  for (int i = 0; i < vertex_cnt - 1; i++) {
+  for (int i = 0; i < vertex_cnt; i++) {
     Weight cur_min_distance = (Weight)MAX_WEIGHT;   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
     Vertex cur_min_distance_ending_vertex;          // 当前最短路径对应的的终点结点
 
@@ -635,8 +635,8 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 
   // --- 动态规划 ---
 
-  // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历 todo:-)
-  for (int i = 0; i < vertex_cnt; i++) {
+  for (int i = 0; i < vertex_cnt - 1; i++) {
+    // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历 todo:-)
     for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < vertex_cnt; cur_starting_vertex_idx++) {
       for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {
         Vertex cur_starting_vertex;
