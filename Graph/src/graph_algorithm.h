@@ -192,7 +192,7 @@ template<class Vertex, class Weight>
 void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
                                    Vertex starting_vertex,
                                    Weight distance[],
-                                   int predecessor[]);
+                                   const int predecessor[]);
 
 
 // 打印多源最短路径(弗洛伊德Floyd等)
