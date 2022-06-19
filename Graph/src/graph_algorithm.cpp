@@ -516,7 +516,9 @@ void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
 
   /// --- 贪心 ---
 
-  for (int i = 0; i < vertex_cnt; i++) {
+  // for (int i = 0; i < vertex_cnt; i++) {  // 这种循环方式也可以, 表示多少个结点插入到vertex_set
+  while (min_priority_queue.Size() != 0) {   // 当所有结点插入到vertex_set时, 由于内层循环continue所有结点, 优先队列将为空
+
     // 优先队列出队元素到min_distance_path, 得到:
     //   起始点到(vertex_set的)各结点中的最短路径cur_min_distance_path
     //   该路径对应的终点cur_min_dist_ending_vertex
@@ -635,7 +637,9 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 
   // --- 动态规划 ---
 
+  // BellmanFord执行|V| - 1次"松弛所有边"
   for (int i = 0; i < vertex_cnt - 1; i++) {
+
     // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历 todo:-)
     for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < vertex_cnt; cur_starting_vertex_idx++) {
       for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {

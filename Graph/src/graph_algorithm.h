@@ -176,6 +176,20 @@ void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
                              Weight distance[],
                              int predecessor[]);
 
+// 迪杰斯特拉(Dijkstra)最短路径2(优先队列, 优先队列控制循环)
+template<class Vertex, class Weight>
+void DijkstraByPriorityQueue2(Graph<Vertex, Weight>& graph,
+                             Vertex starting_vertex,
+                             Weight distance[],
+                             int predecessor[]);
+
+// 迪杰斯特拉(Dijkstra)最短路径2(stl优先队列)
+template<class Vertex, class Weight>
+void DijkstraByStlPriorityQueue(Graph<Vertex, Weight>& graph,
+                              Vertex starting_vertex,
+                              Weight distance[],
+                              int predecessor[]);
+
 
 // 贝尔曼福特(Bellman-Ford)最短路径
 template<class Vertex, class Weight>
