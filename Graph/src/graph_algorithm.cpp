@@ -261,7 +261,7 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
 template<class Vertex, class Weight>
 bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree) {
 
-  int vertex_cnt = graph.VertexCount();    // 结点数量
+  unsigned int vertex_cnt = graph.VertexCount();    // 结点数量
 
   // 获取索引0对应的结点starting_vertex, 作为Prim算法的起始结点
   Vertex starting_vertex;
@@ -360,7 +360,7 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
  */
 template<class Vertex, class Weight>
 void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]) {
-  int vertex_cnt = graph.VertexCount(); // 结点数量
+  unsigned int vertex_cnt = graph.VertexCount(); // 结点数量
 
   /// --- 初始化 ---
 
@@ -369,7 +369,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
 
   // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为MAX_WEIGHT
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
-  for (int i = 0; i < vertex_cnt; i++) {
+  for (unsigned int i = 0; i < vertex_cnt; i++) {
     distance[i] = (Weight)MAX_WEIGHT;
   }
   distance[starting_vertex_idx] = 0;
@@ -379,7 +379,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
 
   /// --- 贪心 ---
 
-  for (int i = 0; i < vertex_cnt; i++) {
+  for (unsigned int i = 0; i < vertex_cnt; i++) {
     Weight cur_min_distance = (Weight)MAX_WEIGHT;   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
     Vertex cur_min_distance_ending_vertex;          // 当前最短路径对应的的终点结点
 
@@ -388,7 +388,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
     //   该路径对应的终点cur_min_dist_ending_vertex
     //   终点索引cur_min_dist_ending_vertex_idx
 
-    for (int j = 0; j < vertex_cnt; j++) {
+    for (unsigned int j = 0; j < vertex_cnt; j++) {
 
       // 拿到索引j对应的结点vertex_j
       Vertex vertex_j;
@@ -412,7 +412,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
     vertex_set.insert(cur_min_distance_ending_vertex);
 
     // 对cur_min_dist_ending_vertex的每个(未进入vertex_set的)相邻节点执行松弛
-    for (int j = 0; j < vertex_cnt; j++) {
+    for (unsigned int j = 0; j < vertex_cnt; j++) {
 
       // 拿到索引j对应的结点vertex_j
       Vertex vertex_j;
