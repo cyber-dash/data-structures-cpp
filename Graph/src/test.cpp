@@ -368,6 +368,8 @@ void TestPrim() {
   cout<<"|    \"北京\"-\"广州\"权值: 11.3                                  |"<<endl<<endl;
   cout<<"|    \"上海\"-\"深圳\"权值: 0.3                                   |"<<endl<<endl;
 
+  // todo: 测试样例增加城市和路径
+
   string BJ = "北京";
   string SH = "上海";
   string GZ = "广州";

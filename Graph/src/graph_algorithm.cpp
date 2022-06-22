@@ -274,9 +274,8 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
   set<Vertex> mst_vertex_set;
   mst_vertex_set.insert(starting_vertex);
 
-  MinPriorityQueue<MSTNode<Vertex, Weight> > min_priority_queue;   // 最小优先队列
-
   while (mst_vertex_set.size() < vertex_cnt) {
+    MinPriorityQueue<MSTNode<Vertex, Weight> > min_priority_queue;   // 最小优先队列
 
     // 将所有u ∈ mst_vertex_set, v ∈ Vertex - mst_vertex_set对应的边(u, v),
     // 入队到最小优先队列min_priority_queue
@@ -288,15 +287,13 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
       bool has_neighbor = graph.GetFirstNeighborVertex(cur_neighbor_vertex, cur_mst_vertex);
       while (has_neighbor) {
         // 如果cur_neighbor_vertex不在mst_vertex_set:
-        //     用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTEdgeNode结点
+        //     用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTNode结点
         //     将其入队到最小优先队列min_priority_queue
         if (mst_vertex_set.find(cur_neighbor_vertex) == mst_vertex_set.end()) {
+          Weight cur_weight;
+          graph.GetWeight(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
 
-          MSTNode<Vertex, Weight> cur_mst_edge_node;
-          cur_mst_edge_node.starting_vertex = cur_mst_vertex;
-          cur_mst_edge_node.ending_vertex = cur_neighbor_vertex;
-
-          graph.GetWeight(cur_mst_edge_node.weight, cur_mst_vertex, cur_neighbor_vertex);
+          MSTNode<Vertex, Weight> cur_mst_edge_node(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
 
           min_priority_queue.Enqueue(cur_mst_edge_node);
         }

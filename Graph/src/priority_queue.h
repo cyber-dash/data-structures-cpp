@@ -17,7 +17,7 @@ public:
     MinPriorityQueue(T arr[], int size): min_heap_(arr, size) { }
 
     bool Enqueue(const T& item) { return min_heap_.Insert(item); }
-    bool Dequeue(T& item) { return min_heap_.HeapTopPop(item); }
+    bool Dequeue(T& item) { return min_heap_.Pop(item); }
     int Size() { return min_heap_.Size(); }
     void Clear() { min_heap_.MakeEmpty(); }
 

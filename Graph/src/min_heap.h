@@ -33,7 +33,7 @@ public:
   ~MinHeap() { delete[] item_array_; }
 
   bool Insert(const T& item);
-  bool HeapTopPop(T& item);
+  bool Pop(T& item);
   bool IsEmpty() const { return heap_size_ == 0; }
   bool IsFull() const { return heap_size_ == max_size_; }
   int Size() { return heap_size_; }
@@ -134,7 +134,7 @@ bool MinHeap<T>::Insert(const T& item) {
 
 
 template <class T>
-bool MinHeap<T>::HeapTopPop(T& item) {
+bool MinHeap<T>::Pop(T& item) {
   if (!heap_size_) {
     cerr << "Heap Empty." << endl;
     return false;
