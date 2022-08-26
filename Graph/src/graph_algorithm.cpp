@@ -230,7 +230,6 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
  * @tparam Vertex 结点模板参数
  * @tparam Weight 边权值模板参数
  * @param graph 图(引用)
- * @param vertex 起始结点(其实可以不用这个参数, 参照教科书, 此处保留)
  * @param min_span_tree 最小生成树
  * @note
  *

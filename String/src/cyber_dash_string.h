@@ -445,9 +445,7 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
         }
     }
 
-    // delete[] next; // 删除next数组
-
-  int match_pos;
+    int match_pos;
 
     if (pattern_str_i < pattern_len) {
         match_pos = -1; // 不匹配
@@ -491,8 +489,6 @@ int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) cons
             pattern_index = next[pattern_index];
         }
     }
-
-    // delete[] next;
 
     if (pattern_index < pattern_len) {
         match_pos = -1;

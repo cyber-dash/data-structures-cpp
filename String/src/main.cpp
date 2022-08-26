@@ -8,12 +8,7 @@
  *  CyberDash计算机考研
  */
 
-#include <iostream>
-// #include "cyber_dash_string.h"
 #include "test.h"
-
-
-using namespace std;
 
 
 int main() {
