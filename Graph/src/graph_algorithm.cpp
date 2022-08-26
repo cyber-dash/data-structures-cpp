@@ -273,8 +273,37 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
   set<Vertex> mst_vertex_set;
   mst_vertex_set.insert(starting_vertex);
 
+  MinPriorityQueue<MSTNode<Vertex, Weight> > min_priority_queue;   // 最小优先队列
+
+  Vertex neighbor_vertex;
+  bool has_neighbor = graph.GetFirstNeighborVertex(starting_vertex, neighbor_vertex);
+  while (has_neighbor) {
+      Weight cur_weight;
+      graph.GetWeight(cur_weight, starting_vertex, neighbor_vertex);
+
+      MSTNode<Vertex, Weight> cur_mst_edge_node(cur_weight, starting_vertex, neighbor_vertex);
+
+      min_priority_queue.Enqueue(cur_mst_edge_node);
+      // 遍历至下一个邻接结点
+      Vertex next_neighbor_vertex;
+      has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, starting_vertex, neighbor_vertex);
+      if (has_neighbor) {
+          neighbor_vertex = next_neighbor_vertex;
+      }
+  }
+
+
   while (mst_vertex_set.size() < vertex_cnt) {
-    MinPriorityQueue<MSTNode<Vertex, Weight> > min_priority_queue;   // 最小优先队列
+
+    // 最小优先队列Dequeue出最短边, 赋给mst_edge_node
+    MSTNode<Vertex, Weight> mst_edge_node;
+    min_priority_queue.Dequeue(mst_edge_node);
+
+    // 最短边进入min_span_tree
+    min_span_tree.Insert(mst_edge_node);
+
+    // mst_edge_node.tail进入最小生成树结点集合mst_vertex_set
+    mst_vertex_set.insert(mst_edge_node.ending_vertex);
 
     // 将所有u ∈ mst_vertex_set, v ∈ Vertex - mst_vertex_set对应的边(u, v),
     // 入队到最小优先队列min_priority_queue
@@ -283,7 +312,7 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
 
       // 结点cur_mst_vertex, 与它的所有不在mst_vertex_set的邻接结点, 所构成的边, 入队到min_priority_queue
       Vertex cur_neighbor_vertex;
-      bool has_neighbor = graph.GetFirstNeighborVertex(cur_neighbor_vertex, cur_mst_vertex);
+      has_neighbor = graph.GetFirstNeighborVertex(cur_neighbor_vertex, cur_mst_vertex);
       while (has_neighbor) {
         // 如果cur_neighbor_vertex不在mst_vertex_set:
         //     用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTNode结点
@@ -305,16 +334,6 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
         }
       }
     }
-
-    // 最小优先队列Dequeue出最短边, 赋给mst_edge_node
-    MSTNode<Vertex, Weight> mst_edge_node;
-    min_priority_queue.Dequeue(mst_edge_node);
-
-    // 最短边进入min_span_tree
-    min_span_tree.Insert(mst_edge_node);
-
-    // mst_edge_node.tail进入最小生成树结点集合mst_vertex_set
-    mst_vertex_set.insert(mst_edge_node.ending_vertex);
   }
 
   return true;
