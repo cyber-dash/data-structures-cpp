@@ -276,14 +276,14 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
   MinPriorityQueue<MSTNode<Vertex, Weight> > min_priority_queue;   // 最小优先队列
 
   Vertex neighbor_vertex;
-  bool has_neighbor = graph.GetFirstNeighborVertex(starting_vertex, neighbor_vertex);
+  bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, starting_vertex);
   while (has_neighbor) {
       Weight cur_weight;
       graph.GetWeight(cur_weight, starting_vertex, neighbor_vertex);
 
       MSTNode<Vertex, Weight> cur_mst_edge_node(cur_weight, starting_vertex, neighbor_vertex);
-
       min_priority_queue.Enqueue(cur_mst_edge_node);
+
       // 遍历至下一个邻接结点
       Vertex next_neighbor_vertex;
       has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, starting_vertex, neighbor_vertex);

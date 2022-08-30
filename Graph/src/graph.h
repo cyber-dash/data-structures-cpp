@@ -82,7 +82,9 @@ public:
    * @brief 获取结点(由结点索引)
    * @param vertex 结点(用于保存结果)
    * @param vertex_index 结点索引
-   * @return 是否获取成功
+   * @return 执行结果
+   * @note
+   * todo: (优化)第一个参数放在最后
    */
   virtual bool GetVertexByIndex(Vertex& vertex, int vertex_index) = 0;
 
@@ -91,7 +93,9 @@ public:
    * @param weight 边权值(用于保存结果)
    * @param v1 边的一个节点
    * @param v2 边的另一个节点
-   * @return 是否获取成功
+   * @return 执行结果
+   * @note
+   * todo: (优化)第一个参数放在最后
    */
   virtual bool GetWeight(Weight& weight, Vertex v1, Vertex v2) = 0;
 
@@ -100,7 +104,9 @@ public:
    * @param weight 边权值(用于保存结果)
    * @param v1_index 边的一个结点索引
    * @param v2_index 边的另一个结点索引
-   * @return 是否获取成功
+   * @return 执行结果
+   * @note
+   * todo: (优化)第一个参数放在最后
    */
   virtual bool GetWeightByVertexIndex(Weight& weight, int v1_index, int v2_index) = 0;
 
@@ -108,7 +114,9 @@ public:
    * @brief 获取结点的第一个相邻结点
    * @param first_neighbor 结点(用于保存第一个相邻结点)
    * @param vertex 结点
-   * @return 是否获取成功
+   * @return 执行结果
+   * @note
+   * todo: (优化)第一个参数放在最后
    */
   virtual bool GetFirstNeighborVertex(Vertex& first_neighbor, const Vertex& vertex) = 0;
 
@@ -117,7 +125,9 @@ public:
    * @param next_neighbor 结点(用于保存下一个相邻结点)
    * @param vertex 结点
    * @param neighbor_vertex 结点的一个相邻节点
-   * @return 是否获取成功
+   * @return 执行结果
+   * @note
+   * todo: (优化)第一个参数放在最后
    */
   virtual bool GetNextNeighborVertex(Vertex& next_neighbor, const Vertex& vertex, const Vertex& neighbor_vertex) = 0;
 
