@@ -7,13 +7,21 @@
 #include "vector"
 
 
-void BSTNodeVisit(BSTNode<string, string>* node) {
+template<class Value, class Key>
+void BSTNodeVisit(BSTNode<Value, Key>* node) {
     cout << "[" << node->GetKey() << ":" << node->GetValue() << "]";
 }
 
 
-void AVLNodeVisit(AVLNode<string, string>* node) {
+template<class Value, class Key>
+void AVLNodeVisit(AVLNode<Value, Key>* node) {
     cout << "[" << node->GetKey() << ":" << node->GetValue() << "|" << node->GetBalanceFactor() << "]";
+}
+
+
+template<class Value, class Key>
+void VisitKey(AVLNode<Value, Key>* node) {
+    cout << node->GetKey() ;
 }
 
 
@@ -595,23 +603,32 @@ void TestAVLRemoveByCyberDash() {
     cout << "|                 Test AVL Remove                |" << endl;
     cout << "|               测试平衡二叉树的删除(CyberDash版本)             |" << endl;
 
-    AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+    AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
 
-    string keyArr[19] =
-    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", };
-    string elemArr[19] =
-    { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",};
+    int keyArr[26] =
+        { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+         //  "l", "j", "z", "n", "o", "p", "q", "r", "s",
+          // "t", "u", "v", "w", "x", "y", "m"};
+    int elemArr[26] =
+        { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+        // { "a", "d", "b", "c", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q" };
+          // "l", "j", "z", "n", "o", "p", "q", "r", "s",
+          // "t", "u", "v", "w", "x", "y", "m"};
+    int count = 26;
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < count; i++) {
         AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
-        AVL_tree->Print(AVLNodeVisit);
+        // AVL_tree->Print(AVLNodeVisit);
     }
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < count; i++) {
+        if (i == 10) {
+            cout << endl;
+        }
         cout<<i<<endl;
-        string curKey = keyArr[i];
-        AVL_tree->Remove(curKey);
-        AVL_tree->Print(AVLNodeVisit);
+        int key = keyArr[i];
+        AVL_tree->Remove(key);
+        AVL_tree->Print(VisitKey);
     }
 
     cout << endl;
@@ -626,13 +643,16 @@ void TestBSTAndAVLHeight() {
     cout << "|                   Test BST & AVL Height                   |" << endl;
     cout << "|                  测试搜索二叉树/AVL树的高度                  |" << endl;
 
-    string keyArr[19] =
-    { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "m", "n", "r", "p", "q", "o", "s" };
-    string elemArr[19] =
-    { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "m", "n", "r", "p", "q", "o", "s" };
+    string keyArr[26] =
+    { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "z", "n", "o", "p", "q", "r", "s",
+      "t", "u", "v", "w", "x", "y", "m"};
+    string elemArr[26] =
+    { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "z", "n", "o", "p", "q", "r", "s",
+      "t", "u", "v", "w", "x", "y", "m"};
+    int count = 26;
 
     cout << "分别向BST和AVL树插入:" << endl;
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < count; i++) {
         cout << "\"key:" << keyArr[i] << "/elem:" << elemArr[i] << "\"  ";
         // 四个一行
         if (i % 4 == 3 && i != 0) {
@@ -643,11 +663,11 @@ void TestBSTAndAVLHeight() {
     BST<string, string>* bst_tree = new BST<string, string>();
     AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < count; i++) {
         bst_tree->Insert(keyArr[i], elemArr[i]);
     }
 
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < count; i++) {
         AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
     }
 
