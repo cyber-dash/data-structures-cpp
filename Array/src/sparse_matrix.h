@@ -19,7 +19,9 @@
 using namespace std;
 
 
-//! 稀疏矩阵三元组结构体
+/*!
+ * @brief **稀疏矩阵三元组结构体**
+ */
 template<class T>
 struct TriTuple {
   int row; //!< 行索引
@@ -27,9 +29,13 @@ struct TriTuple {
   T value; //!< 值
 
   /*!
-   * @brief 赋值运算符重载函数
+   * @brief **赋值运算符重载函数**
    * @param tri_tuple 稀疏函数三元组数据
-   * @return 当前对象本身
+   * @return 当前对象的引用
+   * @note
+   * 赋值运算符重载函数
+   * ---------------
+   * ---------------
    */
   TriTuple<T>& operator=(TriTuple<T>& tri_tuple) {
     row = tri_tuple.row;
@@ -347,38 +353,45 @@ istream& operator>>(istream& in, SparseMatrix<T>& sparse_matrix) {
 
 
 /*!
- * @brief 稀疏矩阵转置
+ * @brief **稀疏矩阵转置**
  * @tparam T 类型模板参数
  * @return 转置矩阵的地址
  * @note
+ * 稀疏矩阵转置
+ * ----------
+ * ----------
+ *
  *   两个for循环 \n
  *   时间复杂度O(col^2*row)
+ *
+ * ----------
+ *
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::Transpose() {
-  SparseMatrix<T>* trans_sparse_matrix_ptr = new SparseMatrix<T>(this->MaxTerms());
+  SparseMatrix<T>* trans_sparse_matrix = new SparseMatrix<T>(this->MaxTerms());
 
-  trans_sparse_matrix_ptr->SetRows(this->Cols());
-  trans_sparse_matrix_ptr->SetCols(this->Rows());
-  trans_sparse_matrix_ptr->SetTerms(this->Terms());
+  trans_sparse_matrix->SetRows(this->Cols());
+  trans_sparse_matrix->SetCols(this->Rows());
+  trans_sparse_matrix->SetTerms(this->Terms());
 
   if (this->Terms() == 0) {
-    return trans_sparse_matrix_ptr;
+    return trans_sparse_matrix;
   }
 
-  int cur = 0;
+  int cur_index = 0;
   for (int i = 0; i < this->Cols(); i++) { // 用列号做扫描, 做Cols趟
     for (int j = 0; j < this->Terms(); j++) { // 在数组sparse_matrix_array_中找到列号为i的三元组
       if (this->SparseMatrixArray()[j].col == i) {
-        trans_sparse_matrix_ptr->SparseMatrixArray()[cur].row = i; // row等于col
-        trans_sparse_matrix_ptr->SparseMatrixArray()[cur].col = this->SparseMatrixArray()[j].row; // col等于row
-        trans_sparse_matrix_ptr->SparseMatrixArray()[cur].value = this->SparseMatrixArray()[j].value; // value
-        cur++;
+          trans_sparse_matrix->SparseMatrixArray()[cur_index].row = i; // row等于col
+        trans_sparse_matrix->SparseMatrixArray()[cur_index].col = this->SparseMatrixArray()[j].row; // col等于row
+        trans_sparse_matrix->SparseMatrixArray()[cur_index].value = this->SparseMatrixArray()[j].value; // value
+        cur_index++;
       }
     }
   }
 
-  return trans_sparse_matrix_ptr;
+  return trans_sparse_matrix;
 }
 
 

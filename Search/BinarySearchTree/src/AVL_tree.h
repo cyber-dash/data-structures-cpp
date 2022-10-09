@@ -168,6 +168,7 @@ protected:
  */
 template<class Value, class Key>
 int AVLTree<Value, Key>::LeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
+    cout<<"LeftRotate_"<<endl;
 
     //! --- 左旋转 ---
 
@@ -185,14 +186,6 @@ int AVLTree<Value, Key>::LeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
         new_balance_factor = -1;
     }
 
-    if (pivot->LeftChild()) {
-        new_left_child->SetHeight(new_left_child->GetHeight() - 1);
-        pivot->SetHeight(pivot->GetHeight() + 1);
-    } else {
-        new_left_child->SetHeight(new_left_child->GetHeight() - 2);
-        // pivot->SetHeight(pivot->GetHeight() + 1);
-    }
-
     //! new_left_child/pivot 执行右旋
     new_left_child->SetRightChild(pivot->LeftChild());
     pivot->SetLeftChild(new_left_child);
@@ -200,6 +193,9 @@ int AVLTree<Value, Key>::LeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
     // new_left_child/pivot 调整平衡因子
     pivot->SetBalanceFactor(new_balance_factor);
 
+    // 更新height
+    sub_tree_root->UpdateHeight();
+    pivot->UpdateHeight();
 
     // --- 子树根节点指向pivot指向的结点 ---
 
@@ -235,6 +231,7 @@ int AVLTree<Value, Key>::LeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  */
 template<class Value, class Key>
 int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
+    cout<<"RightRotate_"<<endl;
 
     //! --- 右旋转 ---
 
@@ -252,14 +249,6 @@ int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
         new_balance_factor = 1;
     }
 
-    if (pivot->RightChild()) {
-        new_right_child->SetHeight(new_right_child->GetHeight() - 1);
-        pivot->SetHeight(pivot->GetHeight() + 1);
-    } else {
-        new_right_child->SetHeight(new_right_child->GetHeight() - 2);
-        // pivot->SetHeight(pivot->GetHeight() + 1);
-    }
-
     //! new_right_child/pivot 执行右旋
     new_right_child->SetLeftChild(pivot->RightChild());
     pivot->SetRightChild(new_right_child);
@@ -269,6 +258,10 @@ int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
 
     new_right_child->SetHeight(new_right_child->GetHeight() - 1);
     pivot->SetHeight(pivot->GetHeight() + 1);
+
+    // 更新height
+    sub_tree_root->UpdateHeight();
+    pivot->UpdateHeight();
 
     // --- 子树根节点指向pivot指向的结点 ---
 
@@ -291,11 +284,11 @@ int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  *             /     \                               /     \                                     /     \
  *            /       \                             /       \                                   /       \
  *           /         \                           /         \                                 /         \
- *  left_rotate_node  node2                     pivot       node2                 left_rotate_node    sub_tree_root
- *         / \                                   / \                                         /\          / \
- *        /   \                                 /   \                                       /  \        /   \
- *       /     \                               /     \                                     /    \      /     \
- *    node3  pivot                left_rotate_node  node5                               node3  node4 node5  node2
+ *  left_rotate_pivot  node2                     pivot       node2                 left_rotate_pivot   sub_tree_root
+ *         / \                                   / \                                         / \         / \
+ *        /   \                                 /   \                                       /   \       /   \
+ *       /     \                               /     \                                     /     \     /     \
+ *    node3  pivot                left_rotate_pivot  node5                              node3  node4 node5  node2
  *            / \                            / \
  *           /   \                          /   \
  *          /     \                        /     \
@@ -303,43 +296,29 @@ int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  *
  *
  *
- *          sub_tree_root                         sub_tree_root                                   pivot
- *               / \                                   / \                                         / \
- *              /   \                                 /   \                                       /   \
- *             /     \                               /     \                                     /     \
- *            /       \                             /       \                                   /       \
- *           /         \                           /         \                                 /         \
- *  left_rotate_node  node2                     pivot       node2                 left_rotate_node    sub_tree_root
- *         / \                                   /                                           / \           \
- *        /   \                                 /                                           /   \           \
- *       /     \                               /                                           /     \           \
- *    node3  pivot               left_rotate_node                                       node3   node4       node2
- *            /                              / \
- *           /                              /   \
- *          /                              /     \
- *       node4                         node3    node4
  *
  * ```
  */
 template<class Value, class Key>
 int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
+    cout<<"LeftRightRotate_"<<endl;
 
     AVLNode<Value, Key>* new_right_child = sub_tree_root;
 
     // --- 左子树左旋 ---
 
-    AVLNode<Value, Key>* left_rotate_node = new_right_child->LeftChild();
-    AVLNode<Value, Key>* pivot = left_rotate_node->RightChild();
+    AVLNode<Value, Key>* left_rotate_pivot = new_right_child->LeftChild();
+    AVLNode<Value, Key>* pivot = left_rotate_pivot->RightChild();
 
     // cur_root/pivot 执行左旋
-    left_rotate_node->SetRightChild(pivot->LeftChild());
-    pivot->SetLeftChild(left_rotate_node);
+    left_rotate_pivot->SetRightChild(pivot->LeftChild());
+    pivot->SetLeftChild(left_rotate_pivot);
 
     // cur_root/pivot 调整平衡因子
     if (pivot->GetBalanceFactor() <= AVLNode<Value, Key>::BALANCED) {
-        left_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
+        left_rotate_pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
     } else {
-        left_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
+        left_rotate_pivot->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
     }
 
     // --- 根节点右旋 ---
@@ -357,12 +336,8 @@ int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
 
     pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
 
-    /*
-    pivot->SetHeight(pivot->GetHeight() + 1);
-    new_right_child->SetHeight(new_right_child->GetHeight() - 2);
-    left_rotate_node->SetHeight(left_rotate_node->GetHeight() - 1);
-     */
-    left_rotate_node->UpdateHeight();
+    // 更新height
+    left_rotate_pivot->UpdateHeight();
     new_right_child->UpdateHeight();
     pivot->UpdateHeight();
 
@@ -382,6 +357,7 @@ int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  */
 template<class Value, class Key>
 int AVLTree<Value, Key>::RightLeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
+    cout<<"RightLeftRotate_"<<endl;
 
     AVLNode<Value, Key>* new_left_child = sub_tree_root;
 
@@ -417,13 +393,7 @@ int AVLTree<Value, Key>::RightLeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
 
     pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
 
-    /*
-    pivot->SetHeight(pivot->GetHeight() + 1);
-    new_left_child->SetHeight(new_left_child->GetHeight() - 2);
-    // new_left_child->SetHeight(new_left_child->LeftChild()->GetHeight() + 1);
-    cur_root->SetHeight(cur_root->GetHeight() - 1);
-     */
-
+    // 更新height
     right_rotate_node->UpdateHeight();
     new_left_child->UpdateHeight();
     pivot->UpdateHeight();
@@ -745,6 +715,7 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::RemoveBalance(stack<AVLNode<Value, Key
  */
 template<class Value, class Key>
 bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLNode<Value, Key>*& sub_tree_root) {
+    cout<<"Insert "<<key<<endl;
 
     stack<AVLNode<Value, Key>*> AVL_node_stack;
 
