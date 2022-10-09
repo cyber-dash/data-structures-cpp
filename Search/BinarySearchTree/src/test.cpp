@@ -606,17 +606,20 @@ void TestAVLRemoveByCyberDash() {
     AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
 
     int keyArr[26] =
+    //     { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
         { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
          //  "l", "j", "z", "n", "o", "p", "q", "r", "s",
           // "t", "u", "v", "w", "x", "y", "m"};
     int elemArr[26] =
+        // { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
         { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
         // { "a", "d", "b", "c", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q" };
           // "l", "j", "z", "n", "o", "p", "q", "r", "s",
           // "t", "u", "v", "w", "x", "y", "m"};
     int count = 26;
 
-    for (int i = 0; i < count; i++) {
+    // for (int i = 0; i < count; i++) {
+    for (int i = 0; i < 6; i++) {
         AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
         // AVL_tree->Print(AVLNodeVisit);
     }

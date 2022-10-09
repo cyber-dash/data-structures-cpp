@@ -285,39 +285,39 @@ int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  * @param sub_tree_root 旋转前的子树根结点
  * @note
  * ```
- *          sub_tree_root                      sub_tree_root                                   pivot
- *               / \                                / \                                         / \
- *              /   \                              /   \                                       /   \
- *             /     \                            /     \                                     /     \
- *            /       \                          /       \                                   /       \
- *           /         \                        /         \                                 /         \
- *  left_rotate_root  node2                  pivot       node2                 left_rotate_root    sub_tree_root
- *         / \                                / \                                         / \           \
- *        /   \                              /   \                                       /   \           \
- *       /     \                            /     \                                     /     \           \
- *    node3  pivot            left_rotate_root   node5                               node3   node5       node2
- *              \                         /
- *               \                       /
- *                \                     /
- *               node5               node3
+ *          sub_tree_root                         sub_tree_root                                   pivot
+ *               / \                                   / \                                         / \
+ *              /   \                                 /   \                                       /   \
+ *             /     \                               /     \                                     /     \
+ *            /       \                             /       \                                   /       \
+ *           /         \                           /         \                                 /         \
+ *  left_rotate_node  node2                     pivot       node2                 left_rotate_node    sub_tree_root
+ *         / \                                   / \                                         /\          / \
+ *        /   \                                 /   \                                       /  \        /   \
+ *       /     \                               /     \                                     /    \      /     \
+ *    node3  pivot                left_rotate_node  node5                               node3  node4 node5  node2
+ *            / \                            / \
+ *           /   \                          /   \
+ *          /     \                        /     \
+ *        node4  node5                  node3   node4
  *
  *
  *
- *          Sub_Tree_Root                pivot
- *               / \                      / \
- *              /   \                    /   \
- *             /     \                  /     \
- *            /       \                /       \
- *           /         \              /         \
- *        node1      node2       node1      Sub_Tree_Root
- *         / \                      / \           \
- *        /   \                    /   \           \
- *       /     \                  /     \           \
- *    node3  pivot             node3  node4        node2
- *            /
- *           /
- *          /
- *       node4
+ *          sub_tree_root                         sub_tree_root                                   pivot
+ *               / \                                   / \                                         / \
+ *              /   \                                 /   \                                       /   \
+ *             /     \                               /     \                                     /     \
+ *            /       \                             /       \                                   /       \
+ *           /         \                           /         \                                 /         \
+ *  left_rotate_node  node2                     pivot       node2                 left_rotate_node    sub_tree_root
+ *         / \                                   /                                           / \           \
+ *        /   \                                 /                                           /   \           \
+ *       /     \                               /                                           /     \           \
+ *    node3  pivot               left_rotate_node                                       node3   node4       node2
+ *            /                              / \
+ *           /                              /   \
+ *          /                              /     \
+ *       node4                         node3    node4
  *
  * ```
  */
@@ -328,18 +328,18 @@ int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
 
     // --- 左子树左旋 ---
 
-    AVLNode<Value, Key>* left_rotate_root = new_right_child->LeftChild();
-    AVLNode<Value, Key>* pivot = left_rotate_root->RightChild();
+    AVLNode<Value, Key>* left_rotate_node = new_right_child->LeftChild();
+    AVLNode<Value, Key>* pivot = left_rotate_node->RightChild();
 
     // cur_root/pivot 执行左旋
-    left_rotate_root->SetRightChild(pivot->LeftChild());
-    pivot->SetLeftChild(left_rotate_root);
+    left_rotate_node->SetRightChild(pivot->LeftChild());
+    pivot->SetLeftChild(left_rotate_node);
 
     // cur_root/pivot 调整平衡因子
     if (pivot->GetBalanceFactor() <= AVLNode<Value, Key>::BALANCED) {
-        left_rotate_root->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
+        left_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
     } else {
-        left_rotate_root->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
+        left_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
     }
 
     // --- 根节点右旋 ---
@@ -357,10 +357,14 @@ int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
 
     pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
 
+    /*
     pivot->SetHeight(pivot->GetHeight() + 1);
-    // new_right_child->SetHeight(new_right_child->GetHeight() - 2);
-    new_right_child->SetHeight(new_right_child->RightChild()->GetHeight() + 1);
-    left_rotate_root->SetHeight(left_rotate_root->GetHeight() - 1);
+    new_right_child->SetHeight(new_right_child->GetHeight() - 2);
+    left_rotate_node->SetHeight(left_rotate_node->GetHeight() - 1);
+     */
+    left_rotate_node->UpdateHeight();
+    new_right_child->UpdateHeight();
+    pivot->UpdateHeight();
 
     // --- 子树根节点指向pivot指向的结点 ---
 
@@ -383,19 +387,19 @@ int AVLTree<Value, Key>::RightLeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
 
     // --- 右子树右旋 ---
 
-    AVLNode<Value, Key>* cur_root = new_left_child->RightChild();
-    AVLNode<Value, Key>* pivot = cur_root->LeftChild();
+    AVLNode<Value, Key>* right_rotate_node = new_left_child->RightChild();
+    AVLNode<Value, Key>* pivot = right_rotate_node->LeftChild();
     sub_tree_root = pivot;
 
     // cur_root/pivot 执行右旋
-    cur_root->SetLeftChild(pivot->RightChild());
-    pivot->SetRightChild(cur_root);
+    right_rotate_node->SetLeftChild(pivot->RightChild());
+    pivot->SetRightChild(right_rotate_node);
 
     // cur_root/pivot 调整平衡因子
     if (pivot->GetBalanceFactor() >= AVLNode<Value, Key>::BALANCED) {
-        cur_root->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
+        right_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
     } else {
-        cur_root->SetBalanceFactor(AVLNode<Value, Key>::RIGHT_HIGHER_1);
+        right_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::RIGHT_HIGHER_1);
     }
 
     // --- 根节点左旋 ---
@@ -413,10 +417,16 @@ int AVLTree<Value, Key>::RightLeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
 
     pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
 
+    /*
     pivot->SetHeight(pivot->GetHeight() + 1);
-    // new_left_child->SetHeight(new_left_child->GetHeight() - 2);
-    new_left_child->SetHeight(new_left_child->LeftChild()->GetHeight() + 1);
+    new_left_child->SetHeight(new_left_child->GetHeight() - 2);
+    // new_left_child->SetHeight(new_left_child->LeftChild()->GetHeight() + 1);
     cur_root->SetHeight(cur_root->GetHeight() - 1);
+     */
+
+    right_rotate_node->UpdateHeight();
+    new_left_child->UpdateHeight();
+    pivot->UpdateHeight();
 
     // --- 子树根节点指向pivot指向的结点 ---
 
