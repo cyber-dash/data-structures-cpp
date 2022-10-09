@@ -617,19 +617,18 @@ void TestAVLRemoveByCyberDash() {
             { 9, 15, 5, 23, 3, 22, 7, 17, 8, 10, 25, 12, 13,
               14, 2, 26, 1, 18, 16, 20, 21, 6, 4, 24,
               11, 19};
-    int count = 26;
+    int count = 16;
 
-    // for (int i = 0; i < count; i++) {
-    for (int i = 0; i < 26; i++) {
+    for (int i = 0; i < count; i++) {
+    // for (int i = 0; i < 26; i++) {
         AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
         // AVL_tree->Print(AVLNodeVisit);
     }
 
     for (int i = 0; i < count; i++) {
-        if (i == 10) {
-            cout << endl;
+        if (i == 2) {
+            cout<<i<<endl;
         }
-        cout<<i<<endl;
         int key = keyArr[i];
         AVL_tree->Remove(key);
         AVL_tree->Print(VisitKey);
