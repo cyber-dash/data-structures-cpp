@@ -88,10 +88,9 @@ class AVLTree : public BST<Value, Key> {
 public:
     AVLTree() : root_node_(NULL) {}
     AVLNode<Value, Key>*& RootRef() { return (AVLNode<Value, Key>*&)this->root_node_; }
-    AVLNode<Value, Key>* Root() { return (AVLNode<Value, Key>*)this->root_node_; }
+    AVLNode<Value, Key>* Root() { return this->root_node_; }
 
     bool Insert(Value data, Key key);
-    bool InsertByCyberDash(Value data, Key key);
     bool Remove(Key key);
     AVLNode<Value, Key>* Search(Key key) { return this->SearchInSubTreeRecursive_(key, this->root_node_); }
     int Height() { return this->SubTreeHeight_(this->root_node_); }
@@ -101,10 +100,8 @@ public:
     Value Min();
     void Print(void (*visit)(AVLNode<Value, Key>*));
 
-    AVLNode<Value, Key>* AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& node,
-                                      stack<AVLNode<Value, Key>*>& AVL_node_stack, int action);
-    // AVLNode<Value, Key>* AVLTree<Value, Key>::RemoveBalance(stack<AVLNode<Value, Key>*>& AVL_node_stack, int direction);
-    AVLNode<Value, Key>* AVLTree<Value, Key>::RemoveBalance(stack<AVLNode<Value, Key>*>& AVL_node_stack);
+    AVLNode<Value, Key>* InsertBalance(AVLNode<Value, Key>*& node, stack<AVLNode<Value, Key>*>& AVL_node_stack);
+    AVLNode<Value, Key>* RemoveBalance(stack<AVLNode<Value, Key>*>& AVL_node_stack);
 
     static AVLNode<Value, Key>* LocateInsertPositionAndInitStack(
         Key key,
@@ -118,18 +115,18 @@ public:
 
 protected:
     AVLNode<Value, Key>* SearchInSubTreeRecursive_(Key key, AVLNode<Value, Key>* sub_tree_root);
-    bool InsertInSubTree_(Value value, Key key, AVLNode<Value, Key>*& sub_tree_root);
+    // bool InsertInSubTree_(Value value, Key key, AVLNode<Value, Key>*& sub_tree_root);
     // 平衡树子树插入(CyberDash实现版本)
     bool InsertInSubTreeByCyberDash_(Value value, Key key, AVLNode<Value, Key>*& sub_tree_root);
     bool RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, Key key);
 
-    // 左单旋转(Rotation Left), 图7.15(a)的情形
+    // 左单旋转(Rotation Left)
     int LeftRotate_(AVLNode<Value, Key>*& sub_tree_root);
-    // 右单旋转(Rotation Right), 图7.16(a)的情形
-    int RightRotate_(AVLNode<Value, Key>*& sub_tree_root);
-    // 先左后右双旋转(Rotation Left Right), 图7.17(a)的情形
-    int LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root);
-    // 先右后左双旋转(Rotation Right Left), 图7.18(a)的情形
+    // 右单旋转(Rotation Right)
+    int RightRotate_(AVLNode<Value, Key>*& node);
+    // 先左后右双旋转(Rotation Left Right)
+    int LeftRightRotate_(AVLNode<Value, Key>*& node);
+    // 先右后左双旋转(Rotation Right Left)
     int RightLeftRotate_(AVLNode<Value, Key>*& sub_tree_root);
 
     // 子树中关键码最小项
@@ -173,34 +170,21 @@ protected:
  */
 template<class Value, class Key>
 int AVLTree<Value, Key>::LeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
-    cout<<"LeftRotate_"<<endl;
-
-    //! --- 左旋转 ---
 
     //! new_left_child为左旋后新子树根结点的左孩子
     AVLNode<Value, Key>* new_left_child = sub_tree_root;
     AVLNode<Value, Key>* pivot = new_left_child->RightChild();
 
-    int new_balance_factor;
-
-    if (pivot->GetBalanceFactor() == 1) {
-        new_left_child->SetBalanceFactor(new_left_child->GetBalanceFactor() - 2);
-        new_balance_factor = 0;
-    } else {
-        new_left_child->SetBalanceFactor(new_left_child->GetBalanceFactor() - 1);
-        new_balance_factor = -1;
-    }
-
     //! new_left_child/pivot 执行右旋
     new_left_child->SetRightChild(pivot->LeftChild());
     pivot->SetLeftChild(new_left_child);
 
-    // new_left_child/pivot 调整平衡因子
-    pivot->SetBalanceFactor(new_balance_factor);
-
     // 更新height
     sub_tree_root->UpdateHeight();
     pivot->UpdateHeight();
+
+    sub_tree_root->UpdateBalanceFactor();
+    pivot->UpdateBalanceFactor();
 
     // --- 子树根节点指向pivot指向的结点 ---
 
@@ -214,7 +198,7 @@ int AVLTree<Value, Key>::LeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  * 右单旋转(Rotation Right), 图7.16(a)的情形
  * @tparam Value 搜索结果(数据)模板类型
  * @tparam Key 关键码模板类型
- * @param sub_tree_root 旋转前的子树根节点
+ * @param node 旋转前的子树根节点
  * @note
  * ```
  *          Sub_Tree_Root      pivot
@@ -235,44 +219,28 @@ int AVLTree<Value, Key>::LeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  * ```
  */
 template<class Value, class Key>
-int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
-    cout<<"RightRotate_"<<endl;
+int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& node) {
 
-    //! --- 右旋转 ---
-
-    //! new_right_child为右旋后新子树根结点的右孩子
-    AVLNode<Value, Key>* new_right_child = sub_tree_root;
     //! pivot指向调整后的(子树根)结点
-    AVLNode<Value, Key>* pivot = new_right_child->LeftChild();
+    AVLNode<Value, Key>* pivot = node->LeftChild();
 
-    int new_balance_factor;
-    if (pivot->GetBalanceFactor() == -1) {
-        new_right_child->SetBalanceFactor(new_right_child->GetBalanceFactor() + 2);
-        new_balance_factor = 0;
-    } else {
-        new_right_child->SetBalanceFactor(new_right_child->GetBalanceFactor() + 1);
-        new_balance_factor = 1;
-    }
-
-    //! new_right_child/pivot 执行右旋
-    new_right_child->SetLeftChild(pivot->RightChild());
-    pivot->SetRightChild(new_right_child);
-
-    //! new_right_child/pivot 调整平衡因子
-    pivot->SetBalanceFactor(new_balance_factor);
-
-    new_right_child->SetHeight(new_right_child->GetHeight() - 1);
-    pivot->SetHeight(pivot->GetHeight() + 1);
+    //! node以pivot为轴, 执行右旋
+    node->SetLeftChild(pivot->RightChild());
+    pivot->SetRightChild(node);
 
     // 更新height
-    sub_tree_root->UpdateHeight();
+    node->UpdateHeight();
     pivot->UpdateHeight();
+
+    // 更新平衡因子
+    node->UpdateBalanceFactor();
+    pivot->UpdateBalanceFactor();
 
     // --- 子树根节点指向pivot指向的结点 ---
 
-    sub_tree_root = pivot;
+    node = pivot;
 
-    return sub_tree_root->GetBalanceFactor();
+    return node->GetBalanceFactor();
 }
 
 
@@ -280,7 +248,7 @@ int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  * 左右旋
  * @tparam Value 数据项模板参数
  * @tparam Key 键值模板参数
- * @param sub_tree_root 旋转前的子树根结点
+ * @param node 旋转前的子树根结点
  * @note
  * ```
  *          sub_tree_root                         sub_tree_root                                   pivot
@@ -305,52 +273,30 @@ int AVLTree<Value, Key>::RightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  * ```
  */
 template<class Value, class Key>
-int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
-    cout<<"LeftRightRotate_"<<endl;
+int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& node) {
+    AVLNode<Value, Key>* left_rotate_pivot = node->LeftChild();
+    AVLNode<Value, Key>* right_rotate_pivot = left_rotate_pivot->RightChild();
 
-    AVLNode<Value, Key>* new_right_child = sub_tree_root;
+    // 执行左旋
+    left_rotate_pivot->SetRightChild(right_rotate_pivot->LeftChild());
+    right_rotate_pivot->SetLeftChild(left_rotate_pivot);
 
-    // --- 左子树左旋 ---
+    // 执行右旋
+    node->SetLeftChild(right_rotate_pivot->RightChild());
+    right_rotate_pivot->SetRightChild(node);
 
-    AVLNode<Value, Key>* left_rotate_pivot = new_right_child->LeftChild();
-    AVLNode<Value, Key>* pivot = left_rotate_pivot->RightChild();
-
-    // cur_root/pivot 执行左旋
-    left_rotate_pivot->SetRightChild(pivot->LeftChild());
-    pivot->SetLeftChild(left_rotate_pivot);
-
-    // cur_root/pivot 调整平衡因子
-    if (pivot->GetBalanceFactor() <= AVLNode<Value, Key>::BALANCED) {
-        left_rotate_pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
-    } else {
-        left_rotate_pivot->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
-    }
-
-    // --- 根节点右旋 ---
-
-    // new_right_child/pivot 执行右旋
-    new_right_child->SetLeftChild(pivot->RightChild());
-    pivot->SetRightChild(new_right_child);
-
-    // new_right_child/pivot 调整平衡因子
-    if (pivot->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1) {
-        new_right_child->SetBalanceFactor(AVLNode<Value, Key>::RIGHT_HIGHER_1);
-    } else {
-        new_right_child->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
-    }
-
-    pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
-
-    // 更新height
     left_rotate_pivot->UpdateHeight();
-    new_right_child->UpdateHeight();
-    pivot->UpdateHeight();
+    left_rotate_pivot->UpdateBalanceFactor();
 
-    // --- 子树根节点指向pivot指向的结点 ---
+    node->UpdateHeight();
+    node->UpdateBalanceFactor();
 
-    sub_tree_root = pivot;
+    right_rotate_pivot->UpdateHeight();
+    right_rotate_pivot->UpdateBalanceFactor();
 
-    return sub_tree_root->GetBalanceFactor();
+    node = right_rotate_pivot;  // --- 子树根节点指向pivot指向的结点 ---
+
+    return node->GetBalanceFactor();
 }
 
 
@@ -361,190 +307,47 @@ int AVLTree<Value, Key>::LeftRightRotate_(AVLNode<Value, Key>*& sub_tree_root) {
  * @param sub_tree_root 旋转前的子树根结点
  */
 template<class Value, class Key>
-int AVLTree<Value, Key>::RightLeftRotate_(AVLNode<Value, Key>*& sub_tree_root) {
-    cout<<"RightLeftRotate_"<<endl;
+int AVLTree<Value, Key>::RightLeftRotate_(AVLNode<Value, Key>*& node) {
 
-    AVLNode<Value, Key>* new_left_child = sub_tree_root;
-
-    // --- 右子树右旋 ---
-
-    AVLNode<Value, Key>* right_rotate_node = new_left_child->RightChild();
-    AVLNode<Value, Key>* pivot = right_rotate_node->LeftChild();
-    sub_tree_root = pivot;
+    AVLNode<Value, Key>* right_rotate_pivot = node->RightChild();
+    AVLNode<Value, Key>* left_rotate_pivot = right_rotate_pivot->LeftChild();
 
     // cur_root/pivot 执行右旋
-    right_rotate_node->SetLeftChild(pivot->RightChild());
-    pivot->SetRightChild(right_rotate_node);
-
-    // cur_root/pivot 调整平衡因子
-    if (pivot->GetBalanceFactor() >= AVLNode<Value, Key>::BALANCED) {
-        right_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
-    } else {
-        right_rotate_node->SetBalanceFactor(AVLNode<Value, Key>::RIGHT_HIGHER_1);
-    }
-
-    // --- 根节点左旋 ---
+    right_rotate_pivot->SetLeftChild(left_rotate_pivot->RightChild());
+    left_rotate_pivot->SetRightChild(right_rotate_pivot);
 
     // new_left_child/pivot 执行左旋
-    new_left_child->SetRightChild(pivot->LeftChild());
-    pivot->SetLeftChild(new_left_child);
-
-    // new_left_child/pivot 调整平衡因子
-    if (pivot->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_1) {
-        new_left_child->SetBalanceFactor(AVLNode<Value, Key>::LEFT_HIGHER_1);
-    } else {
-        new_left_child->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
-    }
-
-    pivot->SetBalanceFactor(AVLNode<Value, Key>::BALANCED);
+    node->SetRightChild(left_rotate_pivot->LeftChild());
+    left_rotate_pivot->SetLeftChild(node);
 
     // 更新height
-    right_rotate_node->UpdateHeight();
-    new_left_child->UpdateHeight();
-    pivot->UpdateHeight();
+    right_rotate_pivot->UpdateHeight();
+    right_rotate_pivot->UpdateBalanceFactor();
 
-    // --- 子树根节点指向pivot指向的结点 ---
+    node->UpdateHeight();
+    node->UpdateBalanceFactor();
 
-    sub_tree_root = pivot;
+    left_rotate_pivot->UpdateHeight();
+    left_rotate_pivot->UpdateBalanceFactor();
 
-    return sub_tree_root->GetBalanceFactor();
-}
+    node = left_rotate_pivot;   // --- 子树根节点指向pivot指向的结点 ---
 
-
-/*!
- * 插入
- * @tparam Value
- * @tparam Key
- * @param data
- * @param key
- * @return
- */
-template<class Value, class Key>
-bool AVLTree<Value, Key>::Insert(Value data, Key key) {
-    return this->InsertInSubTree_(data, key, this->RootRef());
+    return node->GetBalanceFactor();
 }
 
 
 // todo: Value和Key的参数位置应该互换
 template<class Value, class Key>
-bool AVLTree<Value, Key>::InsertByCyberDash(Value data, Key key) {
+bool AVLTree<Value, Key>::Insert(Value data, Key key) {
     return this->InsertInSubTreeByCyberDash_(data, key, this->RootRef());
 }
 
 
-/**
- * @brief 子树中插入节点
- * @tparam Value 数据项模板类型
- * @tparam Key 关键码模板类型
- * @param value 数据项
- * @param key 关键码
- * @param sub_tree_root 子树根节点指针
- * @return 是否插入成功
- * @note
- * 如果根节点指针为NULL, 则创建节点
- * 判断插入关键码与子树根节点关键码的大小关系, 在左子树or右子树做插入操作
- * 如果关键码相同, 则返回false
- */
 template<class Value, class Key>
-bool AVLTree<Value, Key>::InsertInSubTree_(Value value, Key key, AVLNode<Value, Key>*& sub_tree_root) {
-
-    AVLNode<Value, Key>* cur_node = sub_tree_root;
-    stack<AVLNode<Value, Key>*> AVL_node_stack;
-
-    // 寻找插入位置
-    while (cur_node != NULL) {
-        // 找到等于key的结点, 无法插入, (原书使用value)
-        if (key == cur_node->GetKey()) {
-            return false;
-        }
-
-        AVL_node_stack.push(cur_node);
-        if (key < cur_node->GetKey()) {
-            cur_node = cur_node->LeftChild();
-        } else {
-            cur_node = cur_node->RightChild();
-        }
-    }
-
-    cur_node = new AVLNode<Value, Key>(value, key);
-    /* error handler */
-
-    // 空树, 新结点成为根节点
-    if (AVL_node_stack.empty() == true) {
-        sub_tree_root = cur_node;
-        return true;
-    }
-
-    AVLNode<Value, Key>* cur_node_predecessor = AVL_node_stack.top();
-    if (key < cur_node_predecessor->GetKey()) {
-        cur_node_predecessor->SetLeftChild(cur_node);
-    } else {
-        cur_node_predecessor->SetRightChild(cur_node);
-    }
-
-    // 重新平衡化
-    while (AVL_node_stack.empty() == false) {
-        cur_node_predecessor = AVL_node_stack.top();
-        AVL_node_stack.pop();
-
-        if (cur_node == cur_node_predecessor->LeftChild()) {
-            cur_node_predecessor->SetBalanceFactor(cur_node_predecessor->GetBalanceFactor() - 1);
-        } else {
-            cur_node_predecessor->SetBalanceFactor(cur_node_predecessor->GetBalanceFactor() + 1);
-        }
-
-        // 第1种情况, 平衡退出
-        if (cur_node_predecessor->GetBalanceFactor() == AVLNode<Value, Key>::BALANCED) {
-            break;
-        }
-
-        // 第2种情况, |平衡因子| = 1
-        if (cur_node_predecessor->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_1 ||
-            cur_node_predecessor->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1)
-        {
-            cur_node = cur_node_predecessor;
-        } else { // 第3种情况, |平衡因子| = 2
-            int stack_node_rotate_flag = (cur_node_predecessor->GetBalanceFactor() < AVLNode<Value, Key>::BALANCED) ?
-                                            AVLNode<Value, Key>::LEFT_HIGHER_1 : AVLNode<Value, Key>::RIGHT_HIGHER_1;
-            if (cur_node->GetBalanceFactor() == stack_node_rotate_flag) { // 两个结点的平衡因子同号, 单旋转
-                if (stack_node_rotate_flag == AVLNode<Value, Key>::LEFT_HIGHER_1) {
-                    this->RightRotate_(cur_node_predecessor); // 右单旋转
-                } else {
-                    this->LeftRotate_(cur_node_predecessor); // 左单旋转
-                }
-            } else { // 两个结点的平衡因子反号, 双旋转
-                if (stack_node_rotate_flag == AVLNode<Value, Key>::LEFT_HIGHER_1) {
-                    this->LeftRightRotate_(cur_node_predecessor);
-                } else {
-                    this->RightLeftRotate_(cur_node_predecessor);
-                }
-            }
-
-            break; // 不再向上调整
-        }
-    }
-
-    if (AVL_node_stack.empty() == true) {
-        sub_tree_root = cur_node_predecessor;
-    } else {
-        AVLNode<Value, Key>* stack_top_node = AVL_node_stack.top();
-        if (stack_top_node->GetKey() > cur_node_predecessor->GetKey()) {
-            stack_top_node->SetLeftChild(cur_node_predecessor);
-        } else {
-            stack_top_node->SetRightChild(cur_node_predecessor);
-        }
-    }
-
-    return true;
-}
-
-
-template<class Value, class Key>
-AVLNode<Value, Key>* AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& node,
-             stack<AVLNode<Value, Key>*>& AVL_node_stack, int action)
+AVLNode<Value, Key>* AVLTree<Value, Key>::InsertBalance(AVLNode<Value, Key>*& node,
+                                                        stack<AVLNode<Value, Key>*>& AVL_node_stack)
 {
     AVLNode<Value, Key>* cur_parent_node = NULL;
-    AVLNode<Value, Key>* cur_grand_node = NULL;
 
     while (AVL_node_stack.empty() == false) {
 
@@ -552,23 +355,10 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& node,
         cur_parent_node = AVL_node_stack.top();
         AVL_node_stack.pop();
 
-        cur_parent_node->UpdateHeight();
+        // cur_parent_node->UpdateHeight();
+        cur_parent_node->UpdateBalanceFactor();
 
-        // 调整平衡因子
-        if (action == 0) {  // 插入动作调整
-            if (node == cur_parent_node->LeftChild()) {
-                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() - 1);
-            } else {
-                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() + 1);
-            }
-        }
-        else if (action == 1) {   // 删除动作调整
-            if (node == cur_parent_node->RightChild()) {
-                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() - 1);
-            } else {
-                cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() + 1);
-            }
-        }
+        int old_height = cur_parent_node->GetHeight();
 
         // 第1种情况, 平衡退出
         if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::BALANCED) {
@@ -579,33 +369,26 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& node,
         if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_1 ||
             cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1) {
             node = cur_parent_node;
-            // node->SetHeight(node->GetHeight() + 1);
-        }
-        else { // 第3种情况, |bf| = 2
-
-            if ((node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_1
-                    &&
-                 cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_2)
-                 ||
-                (node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1
-                    &&
-                 cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_2)
-               )
+        } else { // 第3种情况, |平衡因子| = 2
+            if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_2 &&
+                node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1)
             {
-                if (cur_parent_node->GetBalanceFactor() < AVLNode<Value, Key>::BALANCED) {
-                    this->RightRotate_(cur_parent_node); // 右单旋转
-                } else {
-                    this->LeftRotate_(cur_parent_node); // 左单旋转
-                }
-            } else {
-                if (cur_parent_node->GetBalanceFactor() < AVLNode<Value, Key>::BALANCED) {
-                    this->LeftRightRotate_(cur_parent_node);
-                } else {
-                    this->RightLeftRotate_(cur_parent_node);
-                }
+                this->RightRotate_(cur_parent_node); // 右单旋转
+            } else if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_2 &&
+                node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_1)
+            {
+                this->LeftRotate_(cur_parent_node); // 左单旋转
+            } else if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_2) {
+                this->LeftRightRotate_(cur_parent_node);
+            } else if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_2) {
+                this->RightLeftRotate_(cur_parent_node);
             }
 
-            break; // 不再向上调整
+            if (old_height == cur_parent_node->GetHeight()) {
+                break; // 不再向上调整
+            } else {
+                cout << endl;// 这种情况不应该出现
+            }
         }
     }
 
@@ -614,7 +397,6 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::Balance(AVLNode<Value, Key>*& node,
 
 
 template<class Value, class Key>
-// AVLNode<Value, Key>* AVLTree<Value, Key>::RemoveBalance(stack<AVLNode<Value, Key>*>& AVL_node_stack, int direction) {
 AVLNode<Value, Key>* AVLTree<Value, Key>::RemoveBalance(stack<AVLNode<Value, Key>*>& AVL_node_stack) {
     AVLNode<Value, Key>* cur_parent_node = NULL;
 
@@ -628,96 +410,37 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::RemoveBalance(stack<AVLNode<Value, Key
         if (!AVL_node_stack.empty()) {
             AVLNode<Value, Key>* cur_grand_node = AVL_node_stack.top();
             if (cur_grand_node->LeftChild() == cur_parent_node) {
-                grand_parent_relation = -1;
+                grand_parent_relation = -1; // 左
             } else if (cur_grand_node->RightChild() == cur_parent_node) {
-                grand_parent_relation = 1;
+                grand_parent_relation = 1;  // 右
             }
         }
 
         cur_parent_node->UpdateHeight();
         cur_parent_node->UpdateBalanceFactor();
 
-        /*
-        if (cur_parent_node->GetHeight() > 1) {
-            cur_parent_node->SetBalanceFactor(cur_parent_node->RightChild()->GetBalanceFactor()
-                - cur_parent_node->LeftChild()->GetBalanceFactor());
-        }
-         */
-
-        // 调整平衡因子
-        // cur_parent_node->SetBalanceFactor(cur_parent_node->GetBalanceFactor() + direction);
-
-        // 第1种情况, 平衡, 求cur_grand_parent_node的direction
-        /*
-        if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::BALANCED) {
-            // break;
-
-            if (!AVL_node_stack.empty()) {
-                AVLNode<Value, Key>* cur_grand_parent_node = AVL_node_stack.top();
-                if (cur_grand_parent_node->LeftChild() == cur_parent_node) {
-                    direction = 1;
-                } else {
-                    direction = -1;
-                }
+        if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_2) { // 两个结点的平衡因子同号, 单旋转
+            if (cur_parent_node->RightChild()->GetBalanceFactor() != AVLNode<Value, Key>::LEFT_HIGHER_1) {
+                this->LeftRotate_(cur_parent_node); // 左单旋转
             } else {
-                break;
+                this->RightLeftRotate_(cur_parent_node); // 右左旋转
+            }
+        } else if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_2) {
+            if (cur_parent_node->LeftChild()->GetBalanceFactor() != AVLNode<Value, Key>::RIGHT_HIGHER_1) {
+                this->RightRotate_(cur_parent_node);
+            } else {
+                this->LeftRightRotate_(cur_parent_node);
             }
         }
-         */
 
-        // 第2种情况, |平衡因子| = 1
-        /*
-        else if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_1 ||
-            cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_1) {
-            cout<<"";
-            direction = 0;
-        } else { // 第3种情况, |bf| = 2
-         */
-            // int old_balance_factor = cur_parent_node->GetBalanceFactor();
-            int new_balance_factor = 0;
-            // int child_balance_change = 0;
-            if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::RIGHT_HIGHER_2)
-            { // 两个结点的平衡因子同号, 单旋转
-                AVLNode<Value, Key>* right_node = cur_parent_node->RightChild();
-                if (right_node->GetBalanceFactor() != AVLNode<Value, Key>::LEFT_HIGHER_1) {
-                    new_balance_factor = this->LeftRotate_(cur_parent_node); // 左单旋转
-                } else {
-                    new_balance_factor = this->RightLeftRotate_(cur_parent_node); // 右左旋转
-                }
-            } else if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::LEFT_HIGHER_2) {
-                AVLNode<Value, Key>* left_node = cur_parent_node->LeftChild();
-                if (left_node->GetBalanceFactor() != AVLNode<Value, Key>::RIGHT_HIGHER_1) {
-                    new_balance_factor = this->RightRotate_(cur_parent_node);
-                } else {
-                    new_balance_factor = this->LeftRightRotate_(cur_parent_node);
-                }
+        if (!AVL_node_stack.empty()) {
+            AVLNode<Value, Key>* cur_grand_parent_node = AVL_node_stack.top();  // grand结点需要更新孩子结点
+            if (grand_parent_relation == -1) {
+                cur_grand_parent_node->SetLeftChild(cur_parent_node);
+            } else {
+                cur_grand_parent_node->SetRightChild(cur_parent_node);
             }
-
-            // child_balance_change = abs(new_balance_factor) - abs(old_balance_factor);
-
-            if (!AVL_node_stack.empty()) {
-                AVLNode<Value, Key> *cur_grand_parent_node = AVL_node_stack.top();  // grand结点需要更新孩子结点
-                if (grand_parent_relation == -1) {
-                    cur_grand_parent_node->SetLeftChild(cur_parent_node);
-                    /*
-                    if (new_balance_factor != 0) {
-                        direction = 0;
-                    } else {
-                        direction = 1;
-                    }
-                     */
-                } else {
-                    cur_grand_parent_node->SetRightChild(cur_parent_node);
-                    /*
-                    if (new_balance_factor != 0) {
-                        direction = 0;
-                    } else {
-                        direction = -1;
-                    }
-                     */
-                }
-            }
-        //}
+        }
     }
 
     return cur_parent_node;
@@ -739,7 +462,6 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::RemoveBalance(stack<AVLNode<Value, Key
  */
 template<class Value, class Key>
 bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLNode<Value, Key>*& sub_tree_root) {
-    cout<<"Insert "<<key<<endl;
 
     stack<AVLNode<Value, Key>*> AVL_node_stack;
 
@@ -764,7 +486,7 @@ bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLN
     }
     cur_parent_node->UpdateHeight();
 
-    AVLNode<Value, Key>* balance_node = Balance(insert_node, AVL_node_stack, 0);
+    AVLNode<Value, Key>* balance_node = InsertBalance(insert_node, AVL_node_stack);
 
     // 已经完成平衡化的树, 完成最后处理
     if (AVL_node_stack.empty() == true) {
@@ -920,9 +642,7 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
         // 将前驱结点作为待删除结点
         delete_node = delete_node_predecessor;
 
-    }
-
-    else if (delete_node->LeftChild() != NULL) {  // 结点只有左孩子结点, 则左孩子结点为删除结点
+    } else if (delete_node->LeftChild() != NULL) {  // 结点只有左孩子结点(由于平衡特性, 此时此左孩子必为叶子), 则左孩子结点为删除结点
         delete_node_predecessor = delete_node->LeftChild();
 
         // 将被删除结点的前驱结点的值赋给被删除结点
@@ -933,7 +653,7 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
         // 将前驱结点作为待删除结点
         delete_node = delete_node_predecessor;
     }
-    else if (delete_node->RightChild() != NULL) {  // 结点只有右孩子结点, 则右孩子结点为删除结点
+    else if (delete_node->RightChild() != NULL) {  // 结点只有右孩子结点(由于平衡特性, 此时此右孩子必为叶子), 则右孩子结点为删除结点
         delete_node_predecessor = delete_node->RightChild();
 
         // 将被删除结点的前驱结点的值赋给被删除结点
@@ -945,8 +665,6 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
         delete_node = delete_node_predecessor;
     }
     else {    // 结点为叶子结点
-        // delete_node为待删除结点不变
-        cout<<"";
     }
 
     if (AVL_node_stack.empty()) {   // 删除根结点
@@ -957,7 +675,6 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
 
         return true;
     } else {
-        int direction;
 
         // 被删除结点的父节点与被删除结点的左孩子相连, 甩掉delete_node
         AVLNode<Value, Key>* delete_node_parent = AVL_node_stack.top();
@@ -968,21 +685,17 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
             } else {
                 delete_node_parent->SetLeftChild(delete_node->LeftChild());
             }
-            // direction = 1;
         } else if (delete_node_parent->RightChild() == delete_node) {      // 右孩子删除
             if (delete_node->RightChild() != NULL) {
                 delete_node_parent->SetRightChild(delete_node->RightChild());
             } else {
                 delete_node_parent->SetRightChild(delete_node->LeftChild());
             }
-            // direction = -1;
         }
-
 
         delete delete_node;
         delete_node = NULL;
 
-        // AVLNode<Value, Key>* balance_node = RemoveBalance(AVL_node_stack, direction);
         AVLNode<Value, Key>* balance_node = RemoveBalance(AVL_node_stack);
 
         // 已经完成平衡化的树, 完成最后处理
@@ -996,7 +709,6 @@ bool AVLTree<Value, Key>::RemoveInSubTree_(AVLNode<Value, Key>*& sub_tree_root, 
                 stack_top_node->SetRightChild(balance_node);
             }
         }
-
     }
 
     return true;
@@ -1040,7 +752,6 @@ void AVLTree<Value, Key>::PrintSubTreeRecursive_(
 template<class Value, class Key>
 void AVLTree<Value, Key>::Print(void (*visit)(AVLNode<Value, Key>*)) {
     this->PrintSubTreeRecursive_((AVLNode<Value, Key> *) this->root_node_, visit); cout << endl;
-    cout << endl;
 }
 
 

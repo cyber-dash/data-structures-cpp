@@ -551,10 +551,10 @@ void TestAVLInsert2() {
     string question4 = "b";
     string answer4 = "b";
 
-    AVL_tree->InsertByCyberDash(answer1, question1);
-    AVL_tree->InsertByCyberDash(answer2, question2);
-    AVL_tree->InsertByCyberDash(answer3, question3);
-    AVL_tree->InsertByCyberDash(answer4, question4);
+    AVL_tree->Insert(answer1, question1);
+    AVL_tree->Insert(answer2, question2);
+    AVL_tree->Insert(answer3, question3);
+    AVL_tree->Insert(answer4, question4);
 
     AVL_tree->Print(AVLNodeVisit);
 
@@ -567,8 +567,8 @@ void TestAVLInsert2() {
 void TestAVLInsertByCyberDash() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test AVL InsertByCyberDash                |" << endl;
-    cout << "|               测试平衡二叉树的插入(CyberDash版本)            |" << endl;
+    cout << "|                      Test AVL Insert                      |" << endl;
+    cout << "|                     测试平衡二叉树的插入                     |" << endl;
 
     AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
@@ -584,10 +584,10 @@ void TestAVLInsertByCyberDash() {
     string question4 = "最爱的运动";
     string answer4 = "足球";
 
-    AVL_tree->InsertByCyberDash(answer1, question1);
-    AVL_tree->InsertByCyberDash(answer2, question2);
-    AVL_tree->InsertByCyberDash(answer3, question3);
-    AVL_tree->InsertByCyberDash(answer4, question4);
+    AVL_tree->Insert(answer1, question1);
+    AVL_tree->Insert(answer2, question2);
+    AVL_tree->Insert(answer3, question3);
+    AVL_tree->Insert(answer4, question4);
 
     AVL_tree->Print(AVLNodeVisit);
 
@@ -600,37 +600,27 @@ void TestAVLInsertByCyberDash() {
 void TestAVLRemoveByCyberDash() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test AVL Remove                |" << endl;
-    cout << "|               测试平衡二叉树的删除(CyberDash版本)             |" << endl;
+    cout << "|                      Test AVL Remove                      |" << endl;
+    cout << "|                     测试平衡二叉树的删除                    |" << endl;
 
     AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
 
     int keyArr[30] =
-        // { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
-        // { 26, 25, 24, 23, 22, 21, 20};
-            { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28, 25, 12, 13,
-              14, 2, 26, 1, 18, 16, 20, 21, 6, 4, 24,
-              11, 19, 3, 30, 29, 10};
+        { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
+          25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
+          21, 6, 4, 24, 11, 19, 3, 1, 29, 10 };
     int elemArr[30] =
-        // { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
-        // { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
-        // { 26, 25, 24, 23, 22, 21, 20};
-        { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28, 25, 12, 13,
-          14, 2, 26, 1, 18, 16, 20, 21, 6, 4, 24,
-          11, 19, 3, 30, 29, 10};
+        { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
+          25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
+          21, 6, 4, 24, 11, 19, 3, 1, 29, 10 };
     int count = 30;
 
     for (int i = 0; i < count; i++) {
-    // for (int i = 0; i < 26; i++) {
-        AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
-        // AVL_tree->Print(AVLNodeVisit);
+        AVL_tree->Insert(keyArr[i], elemArr[i]);
+        AVL_tree->Print(VisitKey);
     }
 
     for (int i = 0; i < count; i++) {
-        cout<<"第"<<i<<"次"<<endl;
-        if (i == 8) {
-            cout<<endl;
-        }
         int key = keyArr[i];
         AVL_tree->Remove(key);
         AVL_tree->Print(VisitKey);
@@ -673,7 +663,7 @@ void TestBSTAndAVLHeight() {
     }
 
     for (int i = 0; i < count; i++) {
-        AVL_tree->InsertByCyberDash(keyArr[i], elemArr[i]);
+        AVL_tree->Insert(keyArr[i], elemArr[i]);
     }
 
     cout << endl << endl;

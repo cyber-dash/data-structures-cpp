@@ -48,7 +48,8 @@ public:
 
     virtual bool Insert(Value value, Key key);
     virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_); }
-    BSTNode<Value, Key>* Search(Key key) { return SearchInSubTree_(key, this->root_node_); }
+
+    virtual BSTNode<Value, Key>* Search(Key key) { return SearchInSubTree_(key, this->root_node_); }
     virtual int Height() { return this->SubTreeHeight_(this->root_node_); }
 
     virtual Value Min();
