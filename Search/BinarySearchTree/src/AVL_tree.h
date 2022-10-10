@@ -103,7 +103,8 @@ public:
     AVLNode<Value, Key>* InsertBalance(AVLNode<Value, Key>*& node, stack<AVLNode<Value, Key>*>& AVL_node_stack);
     AVLNode<Value, Key>* RemoveBalance(stack<AVLNode<Value, Key>*>& AVL_node_stack);
 
-    static AVLNode<Value, Key>* LocateInsertPositionAndInitStack(
+    // static AVLNode<Value, Key>* LocateInsertPositionAndInitStack(
+    static bool LocateInsertPositionAndInitStack(
         Key key,
         AVLNode<Value, Key>* sub_tree_root,
         stack<AVLNode<Value, Key>*>& AVL_node_stack);
@@ -466,9 +467,13 @@ bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLN
     stack<AVLNode<Value, Key>*> AVL_node_stack;
 
     //! 获取插入位置, 调整栈
-    AVLNode<Value, Key>* insert_node = LocateInsertPositionAndInitStack(key, sub_tree_root, AVL_node_stack);
+    // AVLNode<Value, Key>* insert_node = LocateInsertPositionAndInitStack(key, sub_tree_root, AVL_node_stack);
+    bool res = LocateInsertPositionAndInitStack(key, sub_tree_root, AVL_node_stack);
+    if (!res) {
+        return res;
+    }
 
-    insert_node = new AVLNode<Value, Key>(value, key);
+    AVLNode<Value, Key>* insert_node = new AVLNode<Value, Key>(value, key);
     /* error handler */
 
     // 空树, 新结点成为根节点, 并返回
@@ -548,7 +553,8 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::LocateDeleteNodeAndInitStack(Key key,
 
 
 template<class Value, class Key>
-AVLNode<Value, Key>* AVLTree<Value, Key>::LocateInsertPositionAndInitStack(
+// AVLNode<Value, Key>* AVLTree<Value, Key>::LocateInsertPositionAndInitStack(
+bool AVLTree<Value, Key>::LocateInsertPositionAndInitStack(
     Key key,
     AVLNode<Value, Key>* sub_tree_root,
     stack<AVLNode<Value, Key>*>& AVL_node_stack)
@@ -559,7 +565,8 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::LocateInsertPositionAndInitStack(
     while (cur_node != NULL) {
         // 找到等于key的结点, 无法插入
         if (key == cur_node->GetKey()) {
-            return NULL;
+            // return NULL;
+            return false;
         }
 
         AVL_node_stack.push(cur_node);
@@ -571,7 +578,7 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::LocateInsertPositionAndInitStack(
         }
     }
 
-    return cur_node;
+    return true;
 }
 
 
