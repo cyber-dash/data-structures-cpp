@@ -25,37 +25,37 @@ const int DEFAULT_SIZE = 128;
 /*!
  * @brief CyberDash字符串类
  */
-class CyberDashString {
+class String {
 
 public:
     // 构造函数(字符串长度)
-    CyberDashString(int size = DEFAULT_SIZE);
+    explicit String(int size = DEFAULT_SIZE);
     /*! 构造函数 */
-    CyberDashString(const char* char_ptr);
+    explicit String(const char* char_ptr);
     /*! 析构函数 */
-    ~CyberDashString() { delete[] char_array_; };
+    ~String() { delete[] mem_data_; };
 
     int Length() const { return this->length_; };
-    CyberDashString operator() (int index, int len) const;
-    bool operator == (const CyberDashString& cyber_dash_str) const;
-    bool operator != (CyberDashString& cyber_dash_str) const;
+    String operator() (int index, int len) const;
+    bool operator == (const String& cyber_dash_str) const;
+    bool operator != (String& cyber_dash_str) const;
     bool operator ! () const;
-    CyberDashString& operator = (const CyberDashString& cyber_dash_str);
-    CyberDashString& operator += (CyberDashString& cyber_dash_str);
+    String& operator = (const String& cyber_dash_str);
+    String& operator += (String& cyber_dash_str);
     char& operator[] (int index);
 
     // BF字符串匹配
-    int BruteForceFind(CyberDashString& pattern, int offset) const;
+    int BruteForceMatch(String& pattern, int offset) const;
 
     // KMP字符串匹配查找
-    int KMPFind(CyberDashString& pattern, int offset) const;
+    int KMPMatch(String& pattern, int offset) const;
 
     // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
-    int KMPFindCyberDash(CyberDashString& pattern, int offset) const;
+    int KMPMatchByCyberDash(String& pattern, int offset) const;
 
     // 重载<<
-    friend ostream& operator<<(ostream& os, CyberDashString& cyber_dash_str) {
-        os << cyber_dash_str.char_array_;
+    friend ostream& operator<<(ostream& os, String& str) {
+        os << str.mem_data_;
         return os;
     }
 
@@ -66,29 +66,29 @@ public:
     static void PrintNextArray(const int* next_arr, int next_arr_len);
 
 private:
-    char* char_array_; //!< 字符串数组
-    int length_; //!< 当前字符串长度
-    int max_size_; //!< 最大长度
+    char* mem_data_; //!< 字符串数组
+    int length_;     //!< 当前字符串长度
+    int size_;         //!< 最大长度
 };
 
 
 /*!
- * @brief 构造函数(字符串长度)
+ * @brief **构造函数**
  * @param size 字符串最大长度
  */
-CyberDashString::CyberDashString(int size) {
+String::String(int size) {
 
-    max_size_ = size;
-
-    char_array_ = new char[max_size_ + 1];
-    if (char_array_ == NULL) {
+    this->mem_data_ = new char[this->size_ + 1];
+    if (this->mem_data_ == NULL) {
         cerr << "Allocation Error" << endl;
         exit(1);
     }
 
-    length_ = 0;
+    this->size_ = size;
+    this->length_ = 0;
+
     // 先全部置0
-    memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
+    memset(this->mem_data_, 0, sizeof(char) * (this->size_ + 1));
 }
 
 
@@ -96,18 +96,18 @@ CyberDashString::CyberDashString(int size) {
  * @brief 构造函数(字符串)
  * @param char_ptr 字符串
  */
-CyberDashString::CyberDashString(const char* char_ptr) {
+String::String(const char* char_ptr) {
     int char_len = strlen(char_ptr);
 
     if (char_len > DEFAULT_SIZE) {
-        max_size_ = char_len;
+        size_ = char_len;
     }
     else {
-        max_size_ = DEFAULT_SIZE;
+        size_ = DEFAULT_SIZE;
     }
 
-    char_array_ = new char[max_size_ + 1];
-    if (char_array_ == NULL) {
+    mem_data_ = new char[size_ + 1];
+    if (mem_data_ == NULL) {
         cerr << "Allocation Error" << endl;
         exit(1);
     }
@@ -115,9 +115,9 @@ CyberDashString::CyberDashString(const char* char_ptr) {
     length_ = char_len;
 
     // 先全部置0
-    memset(char_array_, 0, sizeof(char) * (max_size_ + 1));
+    memset(mem_data_, 0, sizeof(char) * (size_ + 1));
     // 再复制字符串内容
-    memcpy(char_array_, char_ptr, sizeof(char) * char_len);
+    memcpy(mem_data_, char_ptr, sizeof(char) * char_len);
 }
 
 
@@ -127,30 +127,31 @@ CyberDashString::CyberDashString(const char* char_ptr) {
  * @param offset 偏移量
  * @return 字符串
  */
-CyberDashString CyberDashString::operator () (int index, int offset) const {
+ /*
+String String::operator () (int index, int offset) const {
 
-    CyberDashString ret_str(offset + 1);
+    String new_str(offset + 1);
 
-    if (index < 0 || index + offset > max_size_ || offset <= 0 || index + 1 > length_) {
+    if (index < 0 || index + offset > this->size_ || offset <= 0 || index + 1 > this->length_) {
+        new_str.length_ = 0;
+        new_str.mem_data_[0] = '\0';
 
-        ret_str.length_ = 0;
-        ret_str.char_array_[0] = '\0';
-    }
-    else {
-
-        if (index + offset > length_) {
-            offset = length_ - index;
-        }
-
-        ret_str.length_ = offset;
-
-        memcpy(ret_str.char_array_, char_array_ + index, sizeof(char) * offset);
-
-        ret_str.char_array_[offset] = '\0';
+        return new_str;
     }
 
-    return ret_str;
+    if (index + offset > this->length_) {
+        offset = this->length_ - index;
+    }
+
+    new_str.length_ = offset;
+
+    memcpy(new_str.mem_data_, this->mem_data_ + index, sizeof(char) * offset);
+
+    new_str.mem_data_[offset] = '\0';
+
+    return new_str;
 }
+  */
 
 
 /*!
@@ -158,8 +159,8 @@ CyberDashString CyberDashString::operator () (int index, int offset) const {
  * @param cyber_dash_str 字符串
  * @return 是否相同
  */
-bool CyberDashString::operator == (const CyberDashString& cyber_dash_str) const {
-    int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
+bool String::operator == (const String& cyber_dash_str) const {
+    int cmp_res = strcmp(mem_data_, cyber_dash_str.mem_data_);
     if (cmp_res == 0) {
         return true;
     }
@@ -174,8 +175,8 @@ bool CyberDashString::operator == (const CyberDashString& cyber_dash_str) const 
  * @param cyber_dash_str 字符串
  * @return 是否不同
  */
-bool CyberDashString::operator != (CyberDashString& cyber_dash_str) const {
-    int cmp_res = strcmp(char_array_, cyber_dash_str.char_array_);
+bool String::operator != (String& cyber_dash_str) const {
+    int cmp_res = strcmp(mem_data_, cyber_dash_str.mem_data_);
     if (cmp_res != 0) {
         return true;
     }
@@ -186,7 +187,7 @@ bool CyberDashString::operator != (CyberDashString& cyber_dash_str) const {
 
 
 // todo
-bool CyberDashString::operator ! () const {
+bool String::operator ! () const {
     return true;
 }
 
@@ -196,19 +197,19 @@ bool CyberDashString::operator ! () const {
  * @param src_str 源字符串
  * @return 自身字符串
  */
-CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
+String& String::operator = (const String& src_str) {
 
     if (&src_str != this) {
 
-        delete[] char_array_;
+        delete[] mem_data_;
 
-        char_array_ = new char[src_str.max_size_ + 1];
-        if (char_array_ == NULL) {
+        mem_data_ = new char[src_str.size_ + 1];
+        if (mem_data_ == NULL) {
             cerr << "存储分配失败!" << endl;
             exit(1);
         }
 
-        memcpy(char_array_, src_str.char_array_, sizeof(char) * src_str.length_);
+        memcpy(mem_data_, src_str.mem_data_, sizeof(char) * src_str.length_);
 
         length_ = src_str.length_;
 
@@ -222,7 +223,7 @@ CyberDashString& CyberDashString::operator = (const CyberDashString& src_str) {
 
 
 // todo
-CyberDashString& CyberDashString::operator += (CyberDashString& cyber_dash_str) {
+String& String::operator += (String& cyber_dash_str) {
     return *this;
 }
 
@@ -232,13 +233,13 @@ CyberDashString& CyberDashString::operator += (CyberDashString& cyber_dash_str) 
  * @param index
  * @return
  */
-char& CyberDashString::operator[] (int index) {
+char& String::operator[] (int index) {
     if (index < 0 || index >= Length()) {
         cerr << "Out of Range." << endl;
         exit(1);
     }
 
-    return char_array_[index];
+    return mem_data_[index];
 }
 
 
@@ -248,14 +249,14 @@ char& CyberDashString::operator[] (int index) {
  * @param offset 目标串的起始偏移量
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
  */
-int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const {
+int String::BruteForceMatch(String& pattern, int offset) const {
 
     int match_offset = -1;
     int pattern_idx;
 
     for (int i = offset; i <= length_ - pattern.length_; i++) {
         for (pattern_idx = 0; pattern_idx < pattern.length_; pattern_idx++) {
-            if (char_array_[i + pattern_idx] != pattern[pattern_idx]) {
+            if (mem_data_[i + pattern_idx] != pattern[pattern_idx]) {
                 break;
             }
         }
@@ -276,7 +277,7 @@ int CyberDashString::BruteForceFind(CyberDashString& pattern, int offset) const 
  * @param pattern_len 模式串长度
  * @return next数组起始地址
  */
-int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
+int* String::KMPNext(const char* pattern, int pattern_len) {
 
     // 分配next数组内存
     int* next = new int[pattern_len];
@@ -351,7 +352,7 @@ int* CyberDashString::KMPNext(const char* pattern, int pattern_len) {
  * @param pattern_len 模式串长度
  * @return next数组起始地址
  */
-int* CyberDashString::KMPNextByCyberDash(const char* pattern, int pattern_len) {
+int* String::KMPNextByCyberDash(const char* pattern, int pattern_len) {
 
     int* next = new int[pattern_len];
     if (next == NULL) {
@@ -391,7 +392,7 @@ int* CyberDashString::KMPNextByCyberDash(const char* pattern, int pattern_len) {
  * @param next_arr next数组
  * @param next_arr_len
  */
-void CyberDashString::PrintNextArray(const int* next_arr, int next_arr_len) {
+void String::PrintNextArray(const int* next_arr, int next_arr_len) {
     /// 示例
     /// 模式字符串:  a b c d 5 6 a b c d 7
     /// next数组:  -1 0 0 0 0 0 0 1 2 3 4
@@ -409,10 +410,10 @@ void CyberDashString::PrintNextArray(const int* next_arr, int next_arr_len) {
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
  * @note
  */
-int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
+int String::KMPMatch(String& pattern, int offset) const {
 
     int pattern_len = pattern.Length();
-    int* next = KMPNext(pattern.char_array_, pattern_len);
+    int* next = KMPNext(pattern.mem_data_, pattern_len);
     if (next == NULL) {
         cerr << "next array allocation error" << endl;
         return -2; //
@@ -426,7 +427,7 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
 
     while (pattern_str_i < pattern_len && target_str_i < this->length_) {
         /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)相同, 则向后移位
-        if (pattern[pattern_str_i] == this->char_array_[target_str_i]) {
+        if (pattern[pattern_str_i] == this->mem_data_[target_str_i]) {
             pattern_str_i++;
             target_str_i++;
         }
@@ -465,12 +466,12 @@ int CyberDashString::KMPFind(CyberDashString& pattern, int offset) const {
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
  * @note
  */
-int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) const {
+int String::KMPMatchByCyberDash(String& pattern, int offset) const {
 
     int match_pos;
 
     int pattern_len = pattern.Length();
-    int* next = KMPNextByCyberDash(pattern.char_array_, pattern_len);
+    int* next = KMPNextByCyberDash(pattern.mem_data_, pattern_len);
     // PrintNextArray(next, pattern_len);
     if (!next) {
         cerr << "next array allocation error" << endl;
@@ -481,7 +482,7 @@ int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) cons
     int target_str_index = offset;
 
     while (pattern_index < pattern_len && target_str_index < length_) {
-        if (pattern_index == -1 || pattern[pattern_index] == char_array_[target_str_index]) {
+        if (pattern_index == -1 || pattern[pattern_index] == mem_data_[target_str_index]) {
             pattern_index++;
             target_str_index++;
         }
@@ -504,7 +505,7 @@ int CyberDashString::KMPFindCyberDash(CyberDashString& pattern, int offset) cons
 /*!
  * @brief 我们是CyberDash:-)
  */
-void CyberDashString::CyberDashShow() {
+void String::CyberDashShow() {
     cout << endl
         << "*************************************** CyberDash ***************************************" << endl << endl
         << "抖音号\"CyberDash计算机考研\", id: cyberdash_yuan" << endl << endl
