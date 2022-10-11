@@ -13,11 +13,11 @@
 
 int main() {
 
-  TestBFFind();
+    TestBruteForceMatch();
 
-  TestKMPFind();
+    TestKmpMatch();
 
-  TestKMPFindCyberDash();
+    TestKmpMatchCyberDash();
 
   return 0;
 }

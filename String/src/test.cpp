@@ -13,12 +13,12 @@
 
 
  /*! 测试BF算法 */
-void TestBFFind() {
+void TestBruteForceMatch() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                    Test BruteForceMatch                    |" << endl;
-	cout << "|                          测试BF算法                        |" << endl << endl << endl;
+	cout << "|                    Test BruteForceMatch                   |" << endl;
+	cout << "|                         测试BF算法                         |" << endl << endl << endl;
 
 	String target_str("hand in hand we can, start to understand");
 	String pattern_str_1("hand");
@@ -33,11 +33,11 @@ void TestBFFind() {
 
 
 /*! 测试KMP算法 */
-void TestKMPFind() {
+void TestKmpMatch() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                        Test KMPMatch                       |" << endl;
+	cout << "|                       Test KmpMatch                       |" << endl;
 	cout << "|                         测试KMP算法                        |" << endl << endl << endl;
 
 	String target_str("aaaabcd56****abcd56abcd7777");
@@ -46,20 +46,20 @@ void TestKMPFind() {
 	String pattern_str_3("bcd56abc");
 
 	cout << "目标串: " << target_str << endl << endl;
-	cout << "模式串\"" << pattern_str_1 << "\"的匹配位置: " << target_str.KMPMatch(pattern_str_1, 0) << endl << endl;
-	cout << "模式串\"" << pattern_str_2 << "\"的匹配位置: " << target_str.KMPMatch(pattern_str_2, 0) << endl << endl;
-	cout << "模式串\"" << pattern_str_3 << "\"的匹配位置: " << target_str.KMPMatch(pattern_str_3, 0) << endl << endl;
+	cout << "模式串\"" << pattern_str_1 << "\"的匹配位置: " << target_str.KmpMatch(pattern_str_1, 0) << endl << endl;
+	cout << "模式串\"" << pattern_str_2 << "\"的匹配位置: " << target_str.KmpMatch(pattern_str_2, 0) << endl << endl;
+	cout << "模式串\"" << pattern_str_3 << "\"的匹配位置: " << target_str.KmpMatch(pattern_str_3, 0) << endl << endl;
 
 	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 /*! 测试KMP(CyberDash版本)算法 */
-void TestKMPFindCyberDash() {
+void TestKmpMatchCyberDash() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                    Test KMPMatchByCyberDash                  |" << endl;
+	cout << "|                   Test KmpMatchByCyberDash                |" << endl;
 	cout << "|                         测试KMP算法                        |" << endl << endl << endl;
 
 	String target_str("aaaabcd56****abcd56abcd7777");
@@ -68,9 +68,9 @@ void TestKMPFindCyberDash() {
 	String pattern_str_3("bcd56abc");
 
 	cout << "目标串: " << target_str << endl << endl;
-	cout << "模式串" << pattern_str_1 << "的匹配位置: " << target_str.KMPMatchByCyberDash(pattern_str_1, 0) << endl;
-	cout << "模式串" << pattern_str_2 << "的匹配位置: " << target_str.KMPMatchByCyberDash(pattern_str_2, 0) << endl;
-	cout << "模式串" << pattern_str_3 << "的匹配位置: " << target_str.KMPMatchByCyberDash(pattern_str_3, 0) << endl;
+	cout << "模式串" << pattern_str_1 << "的匹配位置: " << target_str.KmpMatchByCyberDash(pattern_str_1, 0) << endl;
+	cout << "模式串" << pattern_str_2 << "的匹配位置: " << target_str.KmpMatchByCyberDash(pattern_str_2, 0) << endl;
+	cout << "模式串" << pattern_str_3 << "的匹配位置: " << target_str.KmpMatchByCyberDash(pattern_str_3, 0) << endl;
 
 	cout << "-------------------------------------------------------------" << endl << endl;
 }

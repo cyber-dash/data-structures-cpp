@@ -13,8 +13,8 @@
 
 
 #include <iostream>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <string>
 
 using namespace std;
 
@@ -40,7 +40,7 @@ public:
     bool operator == (const String& cyber_dash_str) const;
     bool operator != (String& cyber_dash_str) const;
     bool operator ! () const;
-    String& operator = (const String& cyber_dash_str);
+    String& operator = (const String& src_str);
     String& operator += (String& cyber_dash_str);
     char& operator[] (int index);
 
@@ -48,10 +48,10 @@ public:
     int BruteForceMatch(String& pattern, int offset) const;
 
     // KMP字符串匹配查找
-    int KMPMatch(String& pattern, int offset) const;
+    int KmpMatch(String& pattern, int offset) const;
 
     // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
-    int KMPMatchByCyberDash(String& pattern, int offset) const;
+    int KmpMatchByCyberDash(String& pattern, int offset) const;
 
     // 重载<<
     friend ostream& operator<<(ostream& os, String& str) {
@@ -61,8 +61,8 @@ public:
 
     static void CyberDashShow();
 
-    static int* KMPNext(const char* pattern, int pattern_len);
-    static int* KMPNextByCyberDash(const char* pattern, int pattern_len);
+    static int* KmpNext(const char* pattern, int pattern_len);
+    static int* KmpNextByCyberDash(const char* pattern, int pattern_len);
     static void PrintNextArray(const int* next_arr, int next_arr_len);
 
 private:
@@ -277,7 +277,7 @@ int String::BruteForceMatch(String& pattern, int offset) const {
  * @param pattern_len 模式串长度
  * @return next数组起始地址
  */
-int* String::KMPNext(const char* pattern, int pattern_len) {
+int* String::KmpNext(const char* pattern, int pattern_len) {
 
     // 分配next数组内存
     int* next = new int[pattern_len];
@@ -352,7 +352,7 @@ int* String::KMPNext(const char* pattern, int pattern_len) {
  * @param pattern_len 模式串长度
  * @return next数组起始地址
  */
-int* String::KMPNextByCyberDash(const char* pattern, int pattern_len) {
+int* String::KmpNextByCyberDash(const char* pattern, int pattern_len) {
 
     int* next = new int[pattern_len];
     if (next == NULL) {
@@ -410,10 +410,10 @@ void String::PrintNextArray(const int* next_arr, int next_arr_len) {
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
  * @note
  */
-int String::KMPMatch(String& pattern, int offset) const {
+int String::KmpMatch(String& pattern, int offset) const {
 
     int pattern_len = pattern.Length();
-    int* next = KMPNext(pattern.mem_data_, pattern_len);
+    int* next = KmpNext(pattern.mem_data_, pattern_len);
     if (next == NULL) {
         cerr << "next array allocation error" << endl;
         return -2; //
@@ -466,12 +466,12 @@ int String::KMPMatch(String& pattern, int offset) const {
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
  * @note
  */
-int String::KMPMatchByCyberDash(String& pattern, int offset) const {
+int String::KmpMatchByCyberDash(String& pattern, int offset) const {
 
     int match_pos;
 
     int pattern_len = pattern.Length();
-    int* next = KMPNextByCyberDash(pattern.mem_data_, pattern_len);
+    int* next = KmpNextByCyberDash(pattern.mem_data_, pattern_len);
     // PrintNextArray(next, pattern_len);
     if (!next) {
         cerr << "next array allocation error" << endl;

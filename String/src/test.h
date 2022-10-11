@@ -12,11 +12,11 @@
 #define CYBER_DASH_STRING_TEST_H
 
 
-void TestBFFind();
+void TestBruteForceMatch();
 
-void TestKMPFind();
+void TestKmpMatch();
 
-void TestKMPFindCyberDash();
+void TestKmpMatchCyberDash();
 
 
 #endif // CYBER_DASH_STRING_TEST_H
