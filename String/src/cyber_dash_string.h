@@ -34,6 +34,9 @@ public:
     explicit String(int size = DEFAULT_SIZE);
     /*! 构造函数 */
     explicit String(const char* char_ptr);
+    /*! 复制构造函数 */
+    String(const String& src_str);
+    /*! 复制构造函数 */
     /*! 析构函数 */
     ~String() { delete[] mem_data_; };
 
@@ -42,8 +45,8 @@ public:
     //bool operator== (const String& str) const;
     //bool operator!= (String& str) const;
     bool operator! () const;
-    String& operator = (const String& src_str);
-    String& operator += (String& cyber_dash_str);
+    String& operator=(const String& src_str);
+    String& operator+=(String& cyber_dash_str);
     const char& operator[] (size_t index) const;
     char& operator[] (size_t index);
 
@@ -138,6 +141,24 @@ String::String(const char* char_ptr) {
     memcpy(mem_data_, char_ptr, sizeof(char) * char_len);
 }
 
+String::String(const String& src_str) {
+
+    if (&src_str == this) {
+        return;
+    }
+
+    this->length_ = src_str.Length();
+
+    this->mem_data_ = new char[src_str.Length() + 1];
+    if (mem_data_ == NULL) {
+        throw exception("存储分配失败!");
+    }
+
+    for (int i = 0; i < src_str.Length(); i++) {
+        this->mem_data_[i] = src_str[i];
+    }
+    this->mem_data_[this->Length()] = '\0';
+}
 
 /*
 * @brief 重载()
@@ -216,30 +237,36 @@ bool String::operator! () const {
 
 
 /*!
- * @brief 重载=
+ * @brief **重载=**
  * @param src_str 源字符串
  * @return 自身字符串
+ * @note
+ * **重载=**
+ * --------
+ * --------
+ *
  */
-String& String::operator = (const String& src_str) {
+String& String::operator=(const String& src_str) {
 
-    if (&src_str != this) {
-
-        delete[] mem_data_;
-
-        mem_data_ = new char[src_str.size_ + 1];
-        if (mem_data_ == NULL) {
-            cerr << "存储分配失败!" << endl;
-            exit(1);
-        }
-
-        memcpy(mem_data_, src_str.mem_data_, sizeof(char) * src_str.length_);
-
-        length_ = src_str.length_;
-
+    if (&src_str == this) {
+        return *this;
     }
-    else {
-        cout << "字符串自身赋值出错" << endl;
+
+    if (this->mem_data_ != NULL) {
+        delete[] this->mem_data_;
     }
+
+    this->length_ = src_str.Length();
+
+    this->mem_data_ = new char[src_str.Length() + 1];
+    if (mem_data_ == NULL) {
+        throw exception("存储分配失败!");
+    }
+
+    for (int i = 0; i < src_str.Length(); i++) {
+        this->mem_data_[i] = src_str[i];
+    }
+    this->mem_data_[this->Length()] = '\0';
 
     return *this;
 }

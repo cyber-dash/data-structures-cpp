@@ -23,10 +23,13 @@ void TestStringBaseFunctions() {
     String str2("dash");
 
     bool is_same = str1 == str2;
-    cout << is_same;
-    // cout << str1 == str2;
+    cout << is_same << endl;
+
     bool is_not_same = str1 != str2;
-    cout << is_not_same;
+    cout << is_not_same << endl;
+
+    String str3 = str1;
+    cout << str3 << endl;
 }
 
  /*! 测试BF算法 */
