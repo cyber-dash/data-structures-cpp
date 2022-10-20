@@ -22,12 +22,15 @@ void TestStringBaseFunctions() {
     String str1("cyber");
     String str2("dash");
 
+    /// - 测试重载==
     bool is_same = str1 == str2;
     cout << is_same << endl;
 
+    /// - 测试重载!=
     bool is_not_same = str1 != str2;
     cout << is_not_same << endl;
 
+    /// - 测试复制构造和桉树
     String str3 = str1;
     cout << str3 << endl;
 }

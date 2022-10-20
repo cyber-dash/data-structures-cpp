@@ -46,7 +46,7 @@ public:
     //bool operator!= (String& str) const;
     bool operator! () const;
     String& operator=(const String& src_str);
-    String& operator+=(String& cyber_dash_str);
+    String& operator+=(String& str);
     const char& operator[] (size_t index) const;
     char& operator[] (size_t index);
 
@@ -272,9 +272,12 @@ String& String::operator=(const String& src_str) {
 }
 
 
-// todo
-String& String::operator += (String& cyber_dash_str) {
-    return *this;
+String& String::operator += (String& str) {
+    if (str.Length() == 0) {
+        return *this;
+    }
+
+
 }
 
 
