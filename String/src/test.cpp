@@ -12,6 +12,23 @@
 #include "cyber_dash_string.h"
 
 
+void TestStringBaseFunctions() {
+
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                  Test String base functions               |" << endl;
+    cout << "|                       测试字符串基本函数                     |" << endl << endl << endl;
+
+    String str1("cyber");
+    String str2("dash");
+
+    bool is_same = str1 == str2;
+    cout << is_same;
+    // cout << str1 == str2;
+    bool is_not_same = str1 != str2;
+    cout << is_not_same;
+}
+
  /*! 测试BF算法 */
 void TestBruteForceMatch() {
 

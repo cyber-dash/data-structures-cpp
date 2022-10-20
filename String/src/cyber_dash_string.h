@@ -13,6 +13,8 @@
 
 
 #include <iostream>
+#include <ostream>
+#include <istream>
 #include <cstdlib>
 #include <string>
 
@@ -36,13 +38,14 @@ public:
     ~String() { delete[] mem_data_; };
 
     int Length() const { return this->length_; };
-    String operator() (int index, int len) const;
-    bool operator == (const String& cyber_dash_str) const;
-    bool operator != (String& cyber_dash_str) const;
-    bool operator ! () const;
+    // String operator() (int index, int len) const;
+    //bool operator== (const String& str) const;
+    //bool operator!= (String& str) const;
+    bool operator! () const;
     String& operator = (const String& src_str);
     String& operator += (String& cyber_dash_str);
-    char& operator[] (int index);
+    const char& operator[] (size_t index) const;
+    char& operator[] (size_t index);
 
     // BF字符串匹配
     int BruteForceMatch(String& pattern, int offset) const;
@@ -54,9 +57,25 @@ public:
     int KmpMatchByCyberDash(String& pattern, int offset) const;
 
     // 重载<<
-    friend ostream& operator<<(ostream& os, String& str) {
+    friend ostream& operator<<(ostream& os, const String& str) {
         os << str.mem_data_;
         return os;
+    }
+    friend bool operator== (const String& str1, const String& str2) {
+        if (str1.Length() != str2.Length()) {
+            return false;
+        }
+
+        for (int i = 0; i < str1.Length(); i++) {
+            if (str1[i] != str2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    friend bool operator!= (const String& str1, const String& str2) {
+        return !(str1 == str2);
     }
 
     static void CyberDashShow();
@@ -68,7 +87,7 @@ public:
 private:
     char* mem_data_; //!< 字符串数组
     int length_;     //!< 当前字符串长度
-    int size_;         //!< 最大长度
+    size_t size_;         //!< 最大长度
 };
 
 
@@ -97,7 +116,7 @@ String::String(int size) {
  * @param char_ptr 字符串
  */
 String::String(const char* char_ptr) {
-    int char_len = strlen(char_ptr);
+    size_t char_len = strlen(char_ptr);
 
     if (char_len > DEFAULT_SIZE) {
         size_ = char_len;
@@ -108,8 +127,7 @@ String::String(const char* char_ptr) {
 
     mem_data_ = new char[size_ + 1];
     if (mem_data_ == NULL) {
-        cerr << "Allocation Error" << endl;
-        exit(1);
+        throw exception("allocate error");
     }
 
     length_ = char_len;
@@ -121,13 +139,11 @@ String::String(const char* char_ptr) {
 }
 
 
-/*!
- * @brief 重载()
- * @param index 起始index
- * @param offset 偏移量
- * @return 字符串
- */
- /*
+/*
+* @brief 重载()
+* @param index 起始index
+* @param offset 偏移量
+* @return 字符串
 String String::operator () (int index, int offset) const {
 
     String new_str(offset + 1);
@@ -155,39 +171,46 @@ String String::operator () (int index, int offset) const {
 
 
 /*!
- * @brief 重载==
- * @param cyber_dash_str 字符串
+ * @brief **重载==**
+ * @param str 字符串
  * @return 是否相同
+ * @note
+ * 重载==
+ * ------
+ * ------
+ * 使用strcmp
  */
-bool String::operator == (const String& cyber_dash_str) const {
-    int cmp_res = strcmp(mem_data_, cyber_dash_str.mem_data_);
-    if (cmp_res == 0) {
-        return true;
-    }
-    else {
+ /*
+bool String::operator== (const String& str) const {
+    if (this->Length() != str.Length()) {
         return false;
     }
+
+    for (int i = 0; i < this->Length(); i++) {
+        if (this->mem_data_[i] != str[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
+  */
 
 
 /*!
  * @brief 重载!=
- * @param cyber_dash_str 字符串
+ * @param str 字符串
  * @return 是否不同
  */
-bool String::operator != (String& cyber_dash_str) const {
-    int cmp_res = strcmp(mem_data_, cyber_dash_str.mem_data_);
-    if (cmp_res != 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
+ /*
+bool String::operator!= (String& str) const {
+    return !this->operator==(str);
 }
+  */
 
 
 // todo
-bool String::operator ! () const {
+bool String::operator! () const {
     return true;
 }
 
@@ -233,13 +256,20 @@ String& String::operator += (String& cyber_dash_str) {
  * @param index
  * @return
  */
-char& String::operator[] (int index) {
-    if (index < 0 || index >= Length()) {
-        cerr << "Out of Range." << endl;
-        exit(1);
+char& String::operator[] (size_t index) {
+    if (index >= Length()) {
+        throw exception("Out of Range");
     }
 
-    return mem_data_[index];
+    return this->mem_data_[index];
+}
+
+const char& String::operator[] (size_t index) const {
+    if (index >= Length()) {
+        throw exception("Out of Range");
+    }
+
+    return this->mem_data_[index];
 }
 
 
@@ -282,7 +312,6 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
     // 分配next数组内存
     int* next = new int[pattern_len];
     if (next == NULL) {
-        cerr << "next array allocate error" << endl;
         return NULL;
     }
 

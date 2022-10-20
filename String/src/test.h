@@ -12,6 +12,8 @@
 #define CYBER_DASH_STRING_TEST_H
 
 
+void TestStringBaseFunctions();
+
 void TestBruteForceMatch();
 
 void TestKmpMatch();

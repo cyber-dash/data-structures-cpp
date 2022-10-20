@@ -13,6 +13,8 @@
 
 int main() {
 
+    TestStringBaseFunctions();
+
     TestBruteForceMatch();
 
     TestKmpMatch();
