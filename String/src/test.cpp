@@ -33,6 +33,10 @@ void TestStringBaseFunctions() {
     /// - 测试复制构造和桉树
     String str3 = str1;
     cout << str3 << endl;
+
+    /// - 测试重载+=
+    str1 += str2;
+    cout << str1 <<endl;
 }
 
  /*! 测试BF算法 */

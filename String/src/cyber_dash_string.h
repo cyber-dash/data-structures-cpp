@@ -38,17 +38,15 @@ public:
     String(const String& src_str);
     /*! 复制构造函数 */
     /*! 析构函数 */
-    ~String() { delete[] mem_data_; };
+    ~String() { delete[] mem_data_; }
 
-    int Length() const { return this->length_; };
-    // String operator() (int index, int len) const;
-    //bool operator== (const String& str) const;
-    //bool operator!= (String& str) const;
-    bool operator! () const;
-    String& operator=(const String& src_str);
-    String& operator+=(String& str);
+    int Length() const { return this->length_; }
+    size_t Size() const { return this->size_; }
+
     const char& operator[] (size_t index) const;
     char& operator[] (size_t index);
+    String& operator=(const String& src_str);
+    String& operator+=(String& str);
 
     // BF字符串匹配
     int BruteForceMatch(String& pattern, int offset) const;
@@ -64,7 +62,8 @@ public:
         os << str.mem_data_;
         return os;
     }
-    friend bool operator== (const String& str1, const String& str2) {
+
+    friend bool operator==(const String& str1, const String& str2) {
         if (str1.Length() != str2.Length()) {
             return false;
         }
@@ -77,7 +76,8 @@ public:
 
         return true;
     }
-    friend bool operator!= (const String& str1, const String& str2) {
+
+    friend bool operator!=(const String& str1, const String& str2) {
         return !(str1 == str2);
     }
 
@@ -100,7 +100,7 @@ private:
  */
 String::String(int size) {
 
-    this->mem_data_ = new char[this->size_ + 1];
+    this->mem_data_ = new char[size + 1];
     if (this->mem_data_ == NULL) {
         cerr << "Allocation Error" << endl;
         exit(1);
@@ -122,18 +122,18 @@ String::String(const char* char_ptr) {
     size_t char_len = strlen(char_ptr);
 
     if (char_len > DEFAULT_SIZE) {
-        size_ = char_len;
+        this->size_ = char_len;
     }
     else {
-        size_ = DEFAULT_SIZE;
+        this->size_ = DEFAULT_SIZE;
     }
 
-    mem_data_ = new char[size_ + 1];
+    this->mem_data_ = new char[this->size_ + 1];
     if (mem_data_ == NULL) {
         throw exception("allocate error");
     }
 
-    length_ = char_len;
+    this->length_ = (int)char_len;
 
     // 先全部置0
     memset(mem_data_, 0, sizeof(char) * (size_ + 1));
@@ -230,11 +230,6 @@ bool String::operator!= (String& str) const {
   */
 
 
-// todo
-bool String::operator! () const {
-    return true;
-}
-
 
 /*!
  * @brief **重载=**
@@ -272,12 +267,32 @@ String& String::operator=(const String& src_str) {
 }
 
 
-String& String::operator += (String& str) {
+String& String::operator+=(String& str) {
     if (str.Length() == 0) {
         return *this;
     }
 
+    int new_length = this->Length() + str.Length();
+    if ((int)this->Size() >= new_length) {
+        for (int i = 0; i < str.Length(); i++) {
+            this->mem_data_[i + this->Length()] = str[i];
+        }
+        this->mem_data_[new_length] = '\0';
+    } else {
+        char* new_mem_data = new char[new_length + 1];
+        for (int i = 0; i < this->Length(); i++) {
+            new_mem_data[i] = this->operator[](i);
+        }
+        for (int i = 0; i < str.Length(); i++) {
+            new_mem_data[this->Length() + i] = str[i];
+        }
+        new_mem_data[new_length] = '\0';
+    }
 
+    this->length_ = new_length;
+    this->size_ = new_length;
+
+    return *this;
 }
 
 
@@ -287,7 +302,7 @@ String& String::operator += (String& str) {
  * @return
  */
 char& String::operator[] (size_t index) {
-    if (index >= Length()) {
+    if ((int)index >= Length()) {
         throw exception("Out of Range");
     }
 
@@ -295,7 +310,7 @@ char& String::operator[] (size_t index) {
 }
 
 const char& String::operator[] (size_t index) const {
-    if (index >= Length()) {
+    if ((int)index >= Length()) {
         throw exception("Out of Range");
     }
 
