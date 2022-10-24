@@ -30,56 +30,25 @@ const int DEFAULT_SIZE = 128;
 class String {
 
 public:
-    // 构造函数(字符串长度)
-    explicit String(int size = DEFAULT_SIZE);
-    /*! 构造函数 */
-    explicit String(const char* char_ptr);
-    /*! 复制构造函数 */
-    String(const String& src_str);
-    /*! 复制构造函数 */
-    /*! 析构函数 */
-    ~String() { delete[] mem_data_; }
+    explicit String(int size = DEFAULT_SIZE);   // 构造函数(字符串长度)
+    explicit String(const char* char_ptr);      // 构造函数
+    String(const String& src_str);              // 复制构造函数
+    ~String() { delete[] mem_data_; }           // 析构函数
 
     int Length() const { return this->length_; }
     size_t Size() const { return this->size_; }
 
-    const char& operator[] (size_t index) const;
-    char& operator[] (size_t index);
-    String& operator=(const String& src_str);
-    String& operator+=(String& str);
+    const char& operator[](size_t index) const;                     // 重载[]
+    char& operator[](size_t index);                                 // 重载[]
+    String& operator=(const String& src_str);                       // 重载=
+    String& operator+=(String& str);                                // 重载+=
+    friend ostream& operator<<(ostream& os, const String& str);     // 重载<<
+    friend bool operator==(const String& str1, const String& str2); // 重载==
+    friend bool operator!=(const String& str1, const String& str2); // 重载!=
 
-    // BF字符串匹配
-    int BruteForceMatch(String& pattern, int offset) const;
-
-    // KMP字符串匹配查找
-    int KmpMatch(String& pattern, int offset) const;
-
-    // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
-    int KmpMatchByCyberDash(String& pattern, int offset) const;
-
-    // 重载<<
-    friend ostream& operator<<(ostream& os, const String& str) {
-        os << str.mem_data_;
-        return os;
-    }
-
-    friend bool operator==(const String& str1, const String& str2) {
-        if (str1.Length() != str2.Length()) {
-            return false;
-        }
-
-        for (int i = 0; i < str1.Length(); i++) {
-            if (str1[i] != str2[i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    friend bool operator!=(const String& str1, const String& str2) {
-        return !(str1 == str2);
-    }
+    int BruteForceMatch(String& pattern, int offset) const;     // BF字符串匹配
+    int KmpMatch(String& pattern, int offset) const;            // KMP字符串匹配查找
+    int KmpMatchByCyberDash(String& pattern, int offset) const; // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
 
     static void CyberDashShow();
 
@@ -90,7 +59,7 @@ public:
 private:
     char* mem_data_; //!< 字符串数组
     int length_;     //!< 当前字符串长度
-    size_t size_;         //!< 最大长度
+    size_t size_;    //!< 最大长度
 };
 
 
@@ -115,8 +84,13 @@ String::String(int size) {
 
 
 /*!
- * @brief 构造函数(字符串)
+ * @brief **构造函数(字符串) **
  * @param char_ptr 字符串
+ * @note
+ * 构造函数(字符串)
+ * --------------
+ * --------------
+ *
  */
 String::String(const char* char_ptr) {
     size_t char_len = strlen(char_ptr);
@@ -129,16 +103,16 @@ String::String(const char* char_ptr) {
     }
 
     this->mem_data_ = new char[this->size_ + 1];
-    if (mem_data_ == NULL) {
+    if (this->mem_data_ == NULL) {
         throw exception("allocate error");
     }
 
     this->length_ = (int)char_len;
 
     // 先全部置0
-    memset(mem_data_, 0, sizeof(char) * (size_ + 1));
+    memset(this->mem_data_, 0, sizeof(char) * (this->size_ + 1));
     // 再复制字符串内容
-    memcpy(mem_data_, char_ptr, sizeof(char) * char_len);
+    memcpy(this->mem_data_, char_ptr, sizeof(char) * char_len);
 }
 
 String::String(const String& src_str) {
@@ -148,9 +122,10 @@ String::String(const String& src_str) {
     }
 
     this->length_ = src_str.Length();
+    this->size_ = src_str.Size();
 
     this->mem_data_ = new char[src_str.Length() + 1];
-    if (mem_data_ == NULL) {
+    if (this->mem_data_ == NULL) {
         throw exception("存储分配失败!");
     }
 
@@ -159,76 +134,6 @@ String::String(const String& src_str) {
     }
     this->mem_data_[this->Length()] = '\0';
 }
-
-/*
-* @brief 重载()
-* @param index 起始index
-* @param offset 偏移量
-* @return 字符串
-String String::operator () (int index, int offset) const {
-
-    String new_str(offset + 1);
-
-    if (index < 0 || index + offset > this->size_ || offset <= 0 || index + 1 > this->length_) {
-        new_str.length_ = 0;
-        new_str.mem_data_[0] = '\0';
-
-        return new_str;
-    }
-
-    if (index + offset > this->length_) {
-        offset = this->length_ - index;
-    }
-
-    new_str.length_ = offset;
-
-    memcpy(new_str.mem_data_, this->mem_data_ + index, sizeof(char) * offset);
-
-    new_str.mem_data_[offset] = '\0';
-
-    return new_str;
-}
-  */
-
-
-/*!
- * @brief **重载==**
- * @param str 字符串
- * @return 是否相同
- * @note
- * 重载==
- * ------
- * ------
- * 使用strcmp
- */
- /*
-bool String::operator== (const String& str) const {
-    if (this->Length() != str.Length()) {
-        return false;
-    }
-
-    for (int i = 0; i < this->Length(); i++) {
-        if (this->mem_data_[i] != str[i]) {
-            return false;
-        }
-    }
-
-    return true;
-}
-  */
-
-
-/*!
- * @brief 重载!=
- * @param str 字符串
- * @return 是否不同
- */
- /*
-bool String::operator!= (String& str) const {
-    return !this->operator==(str);
-}
-  */
-
 
 
 /*!
@@ -287,6 +192,9 @@ String& String::operator+=(String& str) {
             new_mem_data[this->Length() + i] = str[i];
         }
         new_mem_data[new_length] = '\0';
+
+        delete[] this->mem_data_;
+        this->mem_data_ = new_mem_data;
     }
 
     this->length_ = new_length;
@@ -315,6 +223,30 @@ const char& String::operator[] (size_t index) const {
     }
 
     return this->mem_data_[index];
+}
+
+
+ostream& operator<<(ostream& os, const String& str) {
+    os << str.mem_data_;
+    return os;
+}
+
+bool operator==(const String& str1, const String& str2) {
+    if (str1.Length() != str2.Length()) {
+        return false;
+    }
+
+    for (int i = 0; i < str1.Length(); i++) {
+        if (str1[i] != str2[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool operator!=(const String& str1, const String& str2) {
+    return !(str1 == str2);
 }
 
 
