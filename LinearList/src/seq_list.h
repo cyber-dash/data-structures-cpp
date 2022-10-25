@@ -29,16 +29,16 @@ class SeqList : public LinearList<T> {
 
 public:
     // 构造函数(无参数)
-    SeqList() : data_array_(NULL), size_(0), last_idx_(-1) {}
+    SeqList() : mem_data_(NULL), size_(0), last_index_(-1) {}
 
     // 构造函数(参数:顺序表总长度)
-    SeqList(int size);
+    explicit SeqList(int size);
 
     // 复制构造函数(参数:顺序表)
     SeqList(SeqList<T>& seq_list);
 
     // 析构函数
-    ~SeqList() { delete[] data_array_; }
+    ~SeqList() { delete[] mem_data_; }
 
     // 获取总长度
     int Size() const;
@@ -89,64 +89,75 @@ public:
     void CyberDashShow();
 
 private:
-    T* data_array_; //!< 数据项数组
-    int size_; //!< 顺序表总长度
-    int last_idx_; //!< 最后一项的数组索引
+    T* mem_data_; //!< 数据项数组
+    int size_{}; //!< 顺序表总长度
+    int last_index_{}; //!< 最后一项的数组索引
 };
 
 
-/**
- * @brief 构造函数
- * @tparam T 类型模板参数
+/*!
+ * @brief **构造函数(参数size) **
+ * @tparam T 数据项类型模板参数
  * @param size 顺序表size
  */
 template<class T>
 SeqList<T>::SeqList(int size) {
-
-    if (size > 0) {
-        this->size_ = size;
-        this->last_idx_ = -1;
-        this->data_array_ = new T[size];
+    if (size < 0) {
+        throw exception("size error");  // todo: use size_t type
     }
 
-    if (this->data_array_ == NULL) {
-        cerr << "new error" << endl;
-        exit(1);
+    this->size_ = size;
+    this->last_index_ = -1;
+    this->mem_data_ = new T[size];
+    if (!this->mem_data_) {
+        throw exception("mem allocation error");
     }
 }
 
 
 /*!
- * @brief 复制构造函数
- * @tparam T 类型模板参数
+ * @brief **复制构造函数**
+ * @tparam T 数据项类型模板参数
  * @param seq_list 顺序表
+ * @note
+ * 复制构造函数
+ * ----------
+ * ----------
+ *
+ * ----------
+ * ### 1. 初始化 ###
+ * ### 2. mem_data_分配内存 ###
+ * ### 3. mem_data_内存赋值 ###
  */
 template<class T>
 SeqList<T>::SeqList(SeqList<T>& seq_list) {
 
+    // ----- 1. 初始化size_和last_index_
     this->size_ = seq_list.Size();
-    this->last_idx_ = seq_list.Length() - 1;
+    this->last_index_ = seq_list.Length() - 1;
 
     if (this->size_ == 0) {
         return;
     }
 
-    this->data_array_ = new T[this->Size()];
-    if (this->data_array_ == NULL) {
-        cerr << "存储分配错误!" << endl;
-        exit(1);
+    // ----- 2. this->mem_data_分配内存 -----
+    this->mem_data_ = new T[this->Size()];
+    if (!this->mem_data_) {
+        throw exception("mem allocation error");
     }
 
-    for (int i = 1; i <= this->last_idx_ + 1; i++) {
-        T cur_value;
-        seq_list.GetData(i, cur_value);
-        this->data_array_[i - 1] = cur_value;
+    // ----- 3. this->mem_data_内存赋值 -----
+    for (int i = 1; i <= this->last_index_ + 1; i++) {
+        T cur_data;
+        seq_list.GetData(i, cur_data);
+
+        this->mem_data_[i - 1] = cur_data;
     }
 }
 
 
 /*!
- * @brief 调整顺序表的长度
+ * @brief **调整顺序表的长度**
  * @tparam T 类型模板参数
  * @param new_size 新的总长度
  * @return 新的总长度
@@ -175,15 +186,15 @@ int SeqList<T>::Resize(int new_size) {
         return -2;
     }
 
-    T* src_ptr = data_array_;
+    T* src_ptr = mem_data_;
     T* dest_ptr = new_data_array;
 
     for (int i = 0; i < this->Length(); i++) {
         *(dest_ptr + i) = *(src_ptr + i);
     }
 
-    delete[] data_array_;
-    data_array_ = new_data_array;
+    delete[] mem_data_;
+    mem_data_ = new_data_array;
 
     size_ = new_size;
 
@@ -202,8 +213,8 @@ int SeqList<T>::Search(T& data) const {
 
     int pos = 0; // 从1开始, 返回0表示没有查到
 
-    for (int i = 0; i <= last_idx_; i++) {
-        if (data_array_[i] == data) {
+    for (int i = 0; i <= last_index_; i++) {
+        if (mem_data_[i] == data) {
             pos = i + 1;
             break;
         }
@@ -223,7 +234,7 @@ int SeqList<T>::Search(T& data) const {
  */
 template<class T>
 int SeqList<T>::Locate(int pos) const {
-    if (pos >= 1 && pos <= last_idx_ + 1) {
+    if (pos >= 1 && pos <= last_index_ + 1) {
         return pos;
     }
     else {
@@ -241,8 +252,8 @@ int SeqList<T>::Locate(int pos) const {
  */
 template<class T>
 bool SeqList<T>::GetData(int pos, T& data) const {
-    if (pos > 0 && pos <= last_idx_ + 1) {
-        data = data_array_[pos - 1];
+    if (pos > 0 && pos <= last_index_ + 1) {
+        data = mem_data_[pos - 1];
         return true;
     }
     else {
@@ -260,8 +271,8 @@ bool SeqList<T>::GetData(int pos, T& data) const {
  */
 template<class T>
 bool SeqList<T>::SetData(int pos, const T& data) {
-    if (pos > 0 && pos <= last_idx_ + 1) {
-        data_array_[pos - 1] = data;
+    if (pos > 0 && pos <= last_index_ + 1) {
+        mem_data_[pos - 1] = data;
         return true;
     }
     else {
@@ -282,21 +293,21 @@ bool SeqList<T>::SetData(int pos, const T& data) {
 template<class T>
 bool SeqList<T>::Insert(int pos, const T& data) {
 
-    if (last_idx_ == size_ - 1) {
+    if (last_index_ == size_ - 1) {
         return false;
     }
 
-    if (pos < 0 || pos > last_idx_ + 1) {
+    if (pos < 0 || pos > last_index_ + 1) {
         return false;
     }
 
-    for (int i = last_idx_; i >= pos; i--) {
-        data_array_[i + 1] = data_array_[i];
+    for (int i = last_index_; i >= pos; i--) {
+        mem_data_[i + 1] = mem_data_[i];
     }
 
-    data_array_[pos] = data;
+    mem_data_[pos] = data;
 
-    last_idx_++;
+    last_index_++;
 
     return true;
 }
@@ -312,21 +323,21 @@ bool SeqList<T>::Insert(int pos, const T& data) {
 template<class T>
 bool SeqList<T>::Remove(int pos, T& remove_data) {
 
-    if (last_idx_ == -1) {
+    if (last_index_ == -1) {
         return false;
     }
 
-    if (pos < 1 || pos > last_idx_ + 1) {
+    if (pos < 1 || pos > last_index_ + 1) {
         return false;
     }
 
-    remove_data = data_array_[pos - 1];
+    remove_data = mem_data_[pos - 1];
 
-    for (int i = pos; i <= last_idx_; i++) {
-        data_array_[i - 1] = data_array_[i];
+    for (int i = pos; i <= last_index_; i++) {
+        mem_data_[i - 1] = mem_data_[i];
     }
 
-    last_idx_--;
+    last_index_--;
 
     return true;
 }
@@ -339,7 +350,7 @@ bool SeqList<T>::Remove(int pos, T& remove_data) {
  */
 template<class T>
 bool SeqList<T>::IsEmpty() const {
-    if (last_idx_ == -1) {
+    if (last_index_ == -1) {
         return true;
     }
     else {
@@ -355,7 +366,7 @@ bool SeqList<T>::IsEmpty() const {
  */
 template<class T>
 bool SeqList<T>::IsFull() const {
-    if (last_idx_ == size_ - 1) {
+    if (last_index_ == size_ - 1) {
         return true;
     }
     else {
@@ -405,7 +416,7 @@ int SeqList<T>::Size() const {
  */
 template<class T>
 int SeqList<T>::Length() const {
-    return last_idx_ + 1;
+    return last_index_ + 1;
 }
 
 
@@ -416,12 +427,12 @@ int SeqList<T>::Length() const {
 template<class T>
 void SeqList<T>::Output() {
 
-    if (last_idx_ == -1) {
+    if (last_index_ == -1) {
         cout << "顺序表为空表:" << endl;
     }
     else {
-        for (int i = 0; i <= last_idx_; i++) {
-            cout << "#" << i + 1 << ":" << data_array_[i] << endl;
+        for (int i = 0; i <= last_index_; i++) {
+            cout << "#" << i + 1 << ":" << mem_data_[i] << endl;
         }
     }
 
