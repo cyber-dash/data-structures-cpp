@@ -5,7 +5,7 @@
 #ifndef CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
 #define CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
 
-#include "double_link_list.h"
+#include "doubly_linked_list.h"
 
 
 using namespace std;
@@ -39,11 +39,11 @@ void DoubleLinkListTest::TestInsertByDirection() {
     cout << "|              Test DoubleList InsertByDirection            |" << endl;
     cout << "|                     测试双向链表按方向插入                    |" << endl << endl << endl;
 
-    DoubleLinkList<string>* band_list = new DoubleLinkList<string>();
+    DoublyLinkedList<string>* band_list = new DoublyLinkedList<string>();
 
-    band_list->InsertByDirection(0, "The Script", DoubleLinkList<string>::NEXT_DIRECTION);
-    band_list->InsertByDirection(1, "Linkin Park", DoubleLinkList<string>::NEXT_DIRECTION);
-    band_list->InsertByDirection(2, "Starship", DoubleLinkList<string>::NEXT_DIRECTION);
+    band_list->InsertByDirection(0, "The Script", DoublyLinkedList<string>::NEXT_DIRECTION);
+    band_list->InsertByDirection(1, "Linkin Park", DoublyLinkedList<string>::NEXT_DIRECTION);
+    band_list->InsertByDirection(2, "Starship", DoublyLinkedList<string>::NEXT_DIRECTION);
 
     band_list->Output();
 
@@ -58,7 +58,7 @@ void DoubleLinkListTest::TestRemoveByDirection() {
     cout << "|              Test DoubleList RemoveByDirection            |" << endl;
     cout << "|                     测试双向链表按方向删除                   |" << endl << endl << endl;
 
-    DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
+    DoublyLinkedList<string>* city_list = new DoublyLinkedList<string>();
 
     city_list->Insert(0, "Beijing");
     city_list->Insert(1, "Shanghai");
@@ -69,13 +69,13 @@ void DoubleLinkListTest::TestRemoveByDirection() {
     string delete_item;
 
     int delete_pos = 3;
-    city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
+    city_list->RemoveByDirection(delete_pos, delete_item, DoublyLinkedList<int>::NEXT_DIRECTION);
 
     cout << "向后删除城市" << delete_pos << "之后: " << endl;
     city_list->Output();
 
     delete_pos = 1;
-    city_list->RemoveByDirection(delete_pos, delete_item, DoubleLinkList<int>::NEXT_DIRECTION);
+    city_list->RemoveByDirection(delete_pos, delete_item, DoublyLinkedList<int>::NEXT_DIRECTION);
 
     cout << "向后删除城市" << delete_pos << "之后: " << endl;
     city_list->Output();
@@ -91,8 +91,8 @@ void DoubleLinkListTest::TestLength() {
     cout << "|                   Test DoubleList Length                  |" << endl;
     cout << "|                       测试双向链表长度                      |" << endl << endl << endl;
 
-    DoubleLinkList<int>* double_list;
-    double_list = new DoubleLinkList<int>();
+    DoublyLinkedList<int>* double_list;
+    double_list = new DoublyLinkedList<int>();
 
     double_list->Insert(0, 1);
     double_list->Insert(1, 2);
@@ -111,8 +111,8 @@ void DoubleLinkListTest::TestEmpty() {
     cout << "|                   Test DoubleList Empty                   |" << endl;
     cout << "|                        测试双向链表是否为空                  |" << endl << endl << endl;
 
-    DoubleLinkList<string>* double_link;
-    double_link = new DoubleLinkList<string>();
+    DoublyLinkedList<string>* double_link;
+    double_link = new DoublyLinkedList<string>();
 
     cout << "Before insert any string:" << endl;
 
@@ -148,15 +148,15 @@ void DoubleLinkListTest::TestSearch() {
     cout << "|                   Test DoubleList Search                  |" << endl;
     cout << "|                       测试双向链表查找                      |" << endl << endl << endl;
 
-    DoubleLinkList<int>* double_list;
-    double_list = new DoubleLinkList<int>();
+    DoublyLinkedList<int>* double_list;
+    double_list = new DoublyLinkedList<int>();
 
     double_list->Insert(0, 1);
     double_list->Insert(1, 2);
     double_list->Insert(2, 3);
 
-    DoubleLinkNode<int>* node_1 = double_list->Search(1);
-    DoubleLinkNode<int>* node_3 = double_list->Search(3);
+    DoublyLinkedNode<int>* node_1 = double_list->Search(1);
+    DoublyLinkedNode<int>* node_3 = double_list->Search(3);
 
     cout << "The pos of " << 1 << " is " << node_1 << endl;
     cout << "The pos of " << 3 << " is " << node_3 << endl;
@@ -172,13 +172,13 @@ void DoubleLinkListTest::TestLocate() {
     cout << "|                  Test DoubleList Locate                   |" << endl;
     cout << "|                       测试双向链表定位                       |" << endl << endl << endl;
 
-    DoubleLinkList<int>* double_list = new DoubleLinkList<int>();
+    DoublyLinkedList<int>* double_list = new DoublyLinkedList<int>();
 
     double_list->Insert(0, 1);
     double_list->Insert(1, 2);
     double_list->Insert(2, 3);
 
-    DoubleLinkNode<int>* node_ptr = double_list->Locate(3);
+    DoublyLinkedNode<int>* node_ptr = double_list->Locate(3);
 
     cout << "The node_ptr is: " << node_ptr << endl;
 
@@ -193,7 +193,7 @@ void DoubleLinkListTest::TestGetDataAndSetData() {
     cout << "|              Test DoubleList GetData And SetData          |" << endl;
     cout << "|                   测试双向链表获取/设置数据项                 |" << endl << endl << endl;
 
-    DoubleLinkList<string>* city_list = new DoubleLinkList<string>();
+    DoublyLinkedList<string>* city_list = new DoublyLinkedList<string>();
 
     city_list->Insert(0, "Beijing");
     city_list->Insert(1, "Shanghai");

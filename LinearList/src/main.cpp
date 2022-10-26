@@ -2,9 +2,9 @@
 // Created by cyberdash@163.com(: cyberdash_yuan) on 2020/7/15.
 //
 
-#include "link_list_test.h"
+#include "linked_list_test.h"
 #include "seq_list_test.h"
-#include "double_link_list_test.h"
+#include "doubly_linked_list_test.h"
 
 
 using namespace std;

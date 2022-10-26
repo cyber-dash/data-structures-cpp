@@ -1,5 +1,5 @@
 ﻿/*!
- * @file double_link_list.h
+ * @file doubly_linked_list.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 双向链表(循环)
  * @version 0.2.1
@@ -8,8 +8,8 @@
  * **CyberDash计算机考研**
  */
 
-#ifndef CYBER_DASH_DOUBLE_LINK_LIST_H
-#define CYBER_DASH_DOUBLE_LINK_LIST_H
+#ifndef CYBER_DASH_DOUBLY_LINKED_LIST_H
+#define CYBER_DASH_DOUBLY_LINKED_LIST_H
 
 
 #include "linear_list.h"
@@ -22,13 +22,13 @@
   * @tparam T 类型模板参数
   */
 template <class T>
-struct DoubleLinkNode {
+struct DoublyLinkedNode {
     /*!
      * @brief 构造函数(下一结点与上一结点指针)
      * @param next 下一结点指针
      * @param prev 上一结点指针
      */
-    explicit DoubleLinkNode(DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL) : prev(prev), next(next) {}
+    explicit DoublyLinkedNode(DoublyLinkedNode<T>* next = NULL, DoublyLinkedNode<T>* prev = NULL) : prev(prev), next(next) {}
 
     /*!
      * @brief 构造函数(数据项, 上一结点和下一结点指针)
@@ -36,12 +36,12 @@ struct DoubleLinkNode {
      * @param next 下一结点指针
      * @param prev 上一结点指针
      */
-    explicit DoubleLinkNode(const T& data, DoubleLinkNode<T>* next = NULL, DoubleLinkNode<T>* prev = NULL) :
+    explicit DoublyLinkedNode(const T& data, DoublyLinkedNode<T>* next = NULL, DoublyLinkedNode<T>* prev = NULL) :
         data(data), prev(prev), next(next) {}
 
     T data; //!< 链表数据项
-    DoubleLinkNode<T>* next; //!< 下一结点
-    DoubleLinkNode<T>* prev; //!< 上一结点
+    DoublyLinkedNode<T>* next; //!< 下一结点
+    DoublyLinkedNode<T>* prev; //!< 上一结点
 };
 
 
@@ -50,13 +50,13 @@ struct DoubleLinkNode {
  * @tparam T 类型模板参数
  */
 template<class T>
-class DoubleLinkList : public LinearList<T> {
+class DoublyLinkedList : public LinearList<T> {
 public:
     /*! @brief 构造函数(无参数) */
-    DoubleLinkList();
+    DoublyLinkedList();
 
     /*! @brief 析构函数 */
-    ~DoubleLinkList();
+    ~DoublyLinkedList();
 
     /*! @brief 长度 */
     int Length() const { return this->length_; }
@@ -65,16 +65,16 @@ public:
     bool IsEmpty() const { return this->head_->next == this->head_; }
 
     /*! @brief 获取链表头结点 */
-    DoubleLinkNode<T>* Head() const { return this->head_; }
+    DoublyLinkedNode<T>* Head() const { return this->head_; }
 
     // 搜索
-    DoubleLinkNode<T>* Search(const T& data);
+    DoublyLinkedNode<T>* Search(const T& data);
 
     // 按方向定位
-    DoubleLinkNode<T>* LocateByDirection(int pos, int direction);
+    DoublyLinkedNode<T>* LocateByDirection(int pos, int direction);
 
     // 定位
-    DoubleLinkNode<T>* Locate(int pos);
+    DoublyLinkedNode<T>* Locate(int pos);
 
     // 按方向插入
     bool InsertByDirection(int pos, const T& data, int direction);
@@ -95,7 +95,7 @@ public:
     bool SetData(int pos, const T& data);
 
     //约瑟夫环
-    int LastRemaining(DoubleLinkNode<T>* head, int m);
+    int LastRemaining(DoublyLinkedNode<T>* head, int m);
 
     // 打印双向链表
     void Output();
@@ -107,7 +107,7 @@ public:
     static const int NEXT_DIRECTION = 1;
 
 private:
-    DoubleLinkNode<T>* head_;
+    DoublyLinkedNode<T>* head_;
     int length_;
 };
 
@@ -116,8 +116,8 @@ private:
  * @brief 构造函数(无参数)
  */
 template<class T>
-DoubleLinkList<T>::DoubleLinkList() {
-    this->head_ = new DoubleLinkNode<T>();
+DoublyLinkedList<T>::DoublyLinkedList() {
+    this->head_ = new DoublyLinkedNode<T>();
     /* error handler */
 
     this->head_->next = this->head_;
@@ -131,10 +131,10 @@ DoubleLinkList<T>::DoubleLinkList() {
  * @brief 析构函数
  */
 template<class T>
-DoubleLinkList<T>::~DoubleLinkList() {
+DoublyLinkedList<T>::~DoublyLinkedList() {
 
     while (this->head_->next != this->head_) {
-        DoubleLinkNode<T>* delete_node = this->head_->next;
+        DoublyLinkedNode<T>* delete_node = this->head_->next;
         this->head_->next = delete_node->next;
 
         delete delete_node;
@@ -154,8 +154,8 @@ DoubleLinkList<T>::~DoubleLinkList() {
  * 若没有, 则返回NULL
  */
 template<class T>
-DoubleLinkNode<T>* DoubleLinkList<T>::Search(const T& data) {
-    DoubleLinkNode<T>* cur = this->head_->next;
+DoublyLinkedNode<T>* DoublyLinkedList<T>::Search(const T& data) {
+    DoublyLinkedNode<T>* cur = this->head_->next;
     while (cur != this->head_ && cur->data != data) {
         cur = cur->next;
     }
@@ -181,14 +181,14 @@ DoubleLinkNode<T>* DoubleLinkList<T>::Search(const T& data) {
  *  定位不到, 返回NULL
  */
 template<class T>
-DoubleLinkNode<T>* DoubleLinkList<T>::LocateByDirection(int pos, int direction) {
+DoublyLinkedNode<T>* DoublyLinkedList<T>::LocateByDirection(int pos, int direction) {
 
     if (this->head_->next == head_ || pos == 0) {
         return this->head_;
     }
 
-    DoubleLinkNode<T>* cur;
-    if (direction == DoubleLinkList::PREV_DIRECTION) {
+    DoublyLinkedNode<T>* cur;
+    if (direction == DoublyLinkedList::PREV_DIRECTION) {
         cur = head_->prev;
     }
     else {
@@ -200,7 +200,7 @@ DoubleLinkNode<T>* DoubleLinkList<T>::LocateByDirection(int pos, int direction) 
             return NULL;
         }
 
-        if (direction == DoubleLinkList::PREV_DIRECTION) {
+        if (direction == DoublyLinkedList::PREV_DIRECTION) {
             cur = cur->prev;
         }
         else {
@@ -223,8 +223,8 @@ DoubleLinkNode<T>* DoubleLinkList<T>::LocateByDirection(int pos, int direction) 
  * @return 结点指针
  */
 template<class T>
-DoubleLinkNode<T>* DoubleLinkList<T>::Locate(int pos) {
-    return this->LocateByDirection(pos, DoubleLinkList::NEXT_DIRECTION);
+DoublyLinkedNode<T>* DoublyLinkedList<T>::Locate(int pos) {
+    return this->LocateByDirection(pos, DoublyLinkedList::NEXT_DIRECTION);
 }
 
 
@@ -237,19 +237,19 @@ DoubleLinkNode<T>* DoubleLinkList<T>::Locate(int pos) {
  * @return 是否插入成功
  */
 template<class T>
-bool DoubleLinkList<T>::InsertByDirection(int pos, const T& data, int direction) {
+bool DoublyLinkedList<T>::InsertByDirection(int pos, const T& data, int direction) {
 
-    DoubleLinkNode<T>* cur = LocateByDirection(pos, direction);
+    DoublyLinkedNode<T>* cur = LocateByDirection(pos, direction);
     if (cur == NULL) {
         return false;
     }
 
-    DoubleLinkNode<T>* new_node = new DoubleLinkNode<T>(data);
+    DoublyLinkedNode<T>* new_node = new DoublyLinkedNode<T>(data);
     if (new_node == NULL) {
         return false;
     }
 
-    if (direction == DoubleLinkList::PREV_DIRECTION) {
+    if (direction == DoublyLinkedList::PREV_DIRECTION) {
         new_node->prev = cur->prev;
         cur->prev = new_node;
         new_node->prev->next = new_node;
@@ -276,8 +276,8 @@ bool DoubleLinkList<T>::InsertByDirection(int pos, const T& data, int direction)
  * @return 是否插入成功
  */
 template<class T>
-bool DoubleLinkList<T>::Insert(int pos, const T& data) {
-    return this->InsertByDirection(pos, data, DoubleLinkList::NEXT_DIRECTION);
+bool DoublyLinkedList<T>::Insert(int pos, const T& data) {
+    return this->InsertByDirection(pos, data, DoublyLinkedList::NEXT_DIRECTION);
 }
 
 
@@ -290,8 +290,8 @@ bool DoubleLinkList<T>::Insert(int pos, const T& data) {
  * @return 是否删除成功
  */
 template<class T>
-bool DoubleLinkList<T>::RemoveByDirection(int pos, T& data, int direction) {
-    DoubleLinkNode<T>* cur = LocateByDirection(pos, direction);
+bool DoublyLinkedList<T>::RemoveByDirection(int pos, T& data, int direction) {
+    DoublyLinkedNode<T>* cur = LocateByDirection(pos, direction);
     if (cur == NULL) {
         return false;
     }
@@ -315,8 +315,8 @@ bool DoubleLinkList<T>::RemoveByDirection(int pos, T& data, int direction) {
  * @return 是否删除成功
  */
 template<class T>
-bool DoubleLinkList<T>::Remove(int pos, T& data) {
-    return this->RemoveByDirection(pos, data, DoubleLinkList::NEXT_DIRECTION);
+bool DoublyLinkedList<T>::Remove(int pos, T& data) {
+    return this->RemoveByDirection(pos, data, DoublyLinkedList::NEXT_DIRECTION);
 }
 
 
@@ -328,12 +328,12 @@ bool DoubleLinkList<T>::Remove(int pos, T& data) {
  * @return 是否获取成功
  */
 template<class T>
-bool DoubleLinkList<T>::GetData(int pos, T& data) const {
+bool DoublyLinkedList<T>::GetData(int pos, T& data) const {
     if (pos < 1 || pos > Length()) {
         return false;
     }
 
-    DoubleLinkNode<T>* cur = this->head_;
+    DoublyLinkedNode<T>* cur = this->head_;
 
     while (pos > 0) {
         cur = cur->next;
@@ -354,13 +354,13 @@ bool DoubleLinkList<T>::GetData(int pos, T& data) const {
  * @return 是否设置成功
  */
 template<class T>
-bool DoubleLinkList<T>::SetData(int pos, const T& data) {
+bool DoublyLinkedList<T>::SetData(int pos, const T& data) {
 
     if (pos < 1 || pos > Length()) {
         return false;
     }
 
-    DoubleLinkNode<T>* cur = this->head_;
+    DoublyLinkedNode<T>* cur = this->head_;
 
     while (pos > 0) {
         cur = cur->next;
@@ -379,7 +379,7 @@ bool DoubleLinkList<T>::SetData(int pos, const T& data) {
  * @return 剩余的结点值
  */
 template<class T>
-int DoubleLinkList<T>::LastRemaining(DoubleLinkNode<T>* head, int m) {
+int DoublyLinkedList<T>::LastRemaining(DoublyLinkedNode<T>* head, int m) {
     return -1; // todo: 
 }
 
@@ -389,14 +389,14 @@ int DoubleLinkList<T>::LastRemaining(DoubleLinkNode<T>* head, int m) {
  * @tparam T 类型模板参数
  */
 template<class T>
-void DoubleLinkList<T>::Output() {
+void DoublyLinkedList<T>::Output() {
     if (this->head_ == NULL) {
         cout << "Empty list" << endl;
         return;
     }
 
     cout << "向后遍历输出：" << endl;
-    DoubleLinkNode<T>* cur = this->Head()->next;
+    DoublyLinkedNode<T>* cur = this->Head()->next;
     while (cur != this->head_) {
         cout << cur->data << "; ";
         cur = cur->next;
@@ -418,7 +418,7 @@ void DoubleLinkList<T>::Output() {
 
 
 template<class T>
-void DoubleLinkList<T>::CyberDashShow() {
+void DoublyLinkedList<T>::CyberDashShow() {
     cout << endl
         << "*************************************** CyberDash ***************************************" << endl << endl
         << "抖音号\"CyberDash计算机考研\", id: cyberdash_yuan" << endl << endl
@@ -432,4 +432,4 @@ void DoubleLinkList<T>::CyberDashShow() {
 
 
 
-#endif // CYBER_DASH_DOUBLE_LINK_LIST_H
+#endif // CYBER_DASH_DOUBLY_LINKED_LIST_H

@@ -12,7 +12,7 @@
 #define CYBER_DASH_LINK_LIST_TEST_H
 
 
-#include "link_list.h"
+#include "linked_list.h"
 
 
  /*!
@@ -52,7 +52,7 @@ void LinkListTest::TestCopyConstructor() {
 	cout << "|                Test LinkList CopyConstructor              |" << endl;
 	cout << "|                       测试链表复制构造                       |" << endl << endl << endl;
 
-	LinkList<string> link_list;
+	LinkedList<string> link_list;
 
 	link_list.Insert(0, "Beijing");
 	link_list.Insert(1, "Shanghai");
@@ -61,7 +61,7 @@ void LinkListTest::TestCopyConstructor() {
 	link_list.Output();
 
 	// LinkList<string>* link_list_2 = new LinkList<string>(link_list);
-	LinkList<string> link_list_2(link_list);
+	LinkedList<string> link_list_2(link_list);
 
 	link_list_2.Output();
 
@@ -75,7 +75,7 @@ void LinkListTest::TestInsert() {
 	cout << "|                    Test LinkList Insert                   |" << endl;
 	cout << "|                         测试链表插入                        |" << endl << endl << endl;
 
-	LinkList<int>* link_list = new LinkList<int>();
+	LinkedList<int>* link_list = new LinkedList<int>();
 
 	link_list->Insert(0, 1);
 	link_list->Insert(1, 2);
@@ -93,7 +93,7 @@ void LinkListTest::TestLength() {
 	cout << "|                    Test LinkList Length                   |" << endl;
 	cout << "|                         测试链表长度                        |" << endl << endl << endl;
 
-	LinkList<int>* link_list = new LinkList<int>();
+	LinkedList<int>* link_list = new LinkedList<int>();
 
 	link_list->Insert(0, 1);
 	link_list->Insert(1, 2);
@@ -111,7 +111,7 @@ void LinkListTest::TestRemove() {
 	cout << "|                    Test LinkList Remove                   |" << endl;
 	cout << "|                         测试链表删除                        |" << endl << endl << endl;
 
-	LinkList<string>* link_list = new LinkList<string>();
+	LinkedList<string>* link_list = new LinkedList<string>();
 
 	link_list->Insert(0, "Beijing");
 	link_list->Insert(1, "Shanghai");
@@ -142,7 +142,7 @@ void LinkListTest::TestMakeEmpty() {
 	cout << "|                  Test LinkList MakeEmpty                  |" << endl;
 	cout << "|                         测试清除链表                        |" << endl << endl << endl;
 
-	LinkList<double>* link_list = new LinkList<double>();
+	LinkedList<double>* link_list = new LinkedList<double>();
 
 	link_list->Insert(0, 135.34);
 	link_list->Insert(1, 305.43);
@@ -167,7 +167,7 @@ void LinkListTest::TestSearch() {
 	cout << "|                   Test LinkList Search                    |" << endl;
 	cout << "|                         测试链表搜索                        |" << endl << endl << endl;
 
-	LinkList<string>* link_list = new LinkList<string>();
+	LinkedList<string>* link_list = new LinkedList<string>();
 
 	link_list->Insert(0, "Beijing");
 	link_list->Insert(1, "Shanghai");
@@ -175,8 +175,8 @@ void LinkListTest::TestSearch() {
 	link_list->Insert(3, "Shenzhen");
 	link_list->Insert(4, "Caoxian");
 
-	LinkNode<string>* bj_node_ptr = link_list->Search("Beijing");
-	LinkNode<string>* cx_node_ptr = link_list->Search("Caoxian");
+	LinkedNode<string>* bj_node_ptr = link_list->Search("Beijing");
+	LinkedNode<string>* cx_node_ptr = link_list->Search("Caoxian");
 
 	cout << "bj_node_ptr->data: " << bj_node_ptr->data << endl;
 	cout << "cx_node_ptr->data: " << cx_node_ptr->data << endl;
@@ -192,7 +192,7 @@ void LinkListTest::TestLocate() {
 	cout << "|                   Test LinkList LocateByDirection                    |" << endl;
 	cout << "|                         测试链表定位                        |" << endl << endl << endl;
 
-	LinkList<string>* link_list = new LinkList<string>();
+	LinkedList<string>* link_list = new LinkedList<string>();
 
 	link_list->Insert(0, "Beijing");
 	link_list->Insert(1, "Shanghai");
@@ -200,8 +200,8 @@ void LinkListTest::TestLocate() {
 	link_list->Insert(3, "Shenzhen");
 	link_list->Insert(4, "Caoxian");
 
-	LinkNode<string>* pos_1_node_ptr = link_list->Locate(1);
-	LinkNode<string>* pos_2_node_ptr = link_list->Locate(2);
+	LinkedNode<string>* pos_1_node_ptr = link_list->Locate(1);
+	LinkedNode<string>* pos_2_node_ptr = link_list->Locate(2);
 
 	cout << "pos_1_node_ptr->data: " << pos_1_node_ptr->data << endl;
 	cout << "pos_2_node_ptr->data: " << pos_2_node_ptr->data << endl;
@@ -216,7 +216,7 @@ void LinkListTest::TestGetDataAndSetData() {
 	cout << "|              Test LinkList GetDataAndSetData              |" << endl;
 	cout << "|                     测试链表设置和获取数据                   |" << endl << endl << endl;
 
-	LinkList<string>* link_list = new LinkList<string>();
+	LinkedList<string>* link_list = new LinkedList<string>();
 
 	link_list->Insert(0, "Beijing");
 	link_list->Insert(1, "Shanghai");

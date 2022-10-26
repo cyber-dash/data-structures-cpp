@@ -1,5 +1,5 @@
 ﻿/*!
- * @file link_list.h
+ * @file linked_list.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 单向链表模板类
  * @version 0.2.1
@@ -8,8 +8,8 @@
  * **CyberDash计算机考研**
  */
 
-#ifndef CYBER_DASH_LINK_LIST_H
-#define CYBER_DASH_LINK_LIST_H
+#ifndef CYBER_DASH_LINKED_LIST_H
+#define CYBER_DASH_LINKED_LIST_H
 
 
 #include <iostream>
@@ -25,22 +25,22 @@ using namespace std;
  * @tparam T 类型模板参数
  */
 template <class T>
-struct LinkNode {
+struct LinkedNode {
     /*! @brief 构造函数(下一结点地址) */
-    explicit LinkNode(LinkNode<T>* node = NULL) { this->next = node; }
+    explicit LinkedNode(LinkedNode<T>* node = NULL) { this->next = node; }
 
     /*!
      * @brief 构造函数(数据项和下一结点地址)
      * @param data 数据项
      * @param ptr 下一节点地址
      */
-    explicit LinkNode(const T& data, LinkNode<T>* node = NULL) {
+    explicit LinkedNode(const T& data, LinkedNode<T>* node = NULL) {
         this->data = data;
         this->next = node;
     }
 
     T data; //!< 链表数据项
-    LinkNode<T>* next; //!< 下一结点
+    LinkedNode<T>* next; //!< 下一结点
 };
 
 
@@ -49,24 +49,24 @@ struct LinkNode {
  * @tparam T 类型模板参数
  */
 template<class T>
-class LinkList : public LinearList<T> {
+class LinkedList : public LinearList<T> {
 public:
     // 构造函数(无参数)
-    LinkList();
+    LinkedList();
     // 复制构造函数
-    LinkList(const LinkList<T>& link_list);
+    LinkedList(const LinkedList<T>& link_list);
     // 析构函数
-    ~LinkList();
+    ~LinkedList();
     // 清除链表
     void MakeEmpty();
     /*! @brief 链表长度 */
     int Length() const { return this->length_; }
     /*! @brief 链表头结点 */
-    LinkNode<T>* Head() const { return this->head_; }
+    LinkedNode<T>* Head() const { return this->head_; }
     // 搜索数据项为data的元素
-    LinkNode<T>* Search(T data);
+    LinkedNode<T>* Search(T data);
     // 位置pos的结点地址
-    LinkNode<T>* Locate(int pos);
+    LinkedNode<T>* Locate(int pos);
     // 获取第pos个结点的数据
     bool GetData(int pos, T& data) const;
     // 设置第pos个结点的数据
@@ -74,7 +74,7 @@ public:
     // 在第pos个元素(数组索引pos - 1)之后, 插入数据
     bool Insert(int pos, const T& data);
     // 在第pos个元素(数组索引pos - 1)之后, 插入结点
-    bool Insert(int pos, LinkNode<T>* node_ptr);
+    bool Insert(int pos, LinkedNode<T>* node_ptr);
     // 删除第pos个结点
     bool Remove(int pos, T& data);
     // 是否为空链表
@@ -85,7 +85,7 @@ public:
     void CyberDashShow();
 
 private:
-    LinkNode<T>* head_; //!< 链表头结点
+    LinkedNode<T>* head_; //!< 链表头结点
     int length_; //!< 链表长度
 };
 
@@ -95,8 +95,8 @@ private:
  * @tparam T 类型参数模板
  */
 template<class T>
-LinkList<T>::LinkList() {
-    this->head_ = new LinkNode<T>();
+LinkedList<T>::LinkedList() {
+    this->head_ = new LinkedNode<T>();
     /* error handler */
     this->length_ = 0;
 };
@@ -108,17 +108,17 @@ LinkList<T>::LinkList() {
  * @param link_list 链表引用
  */
 template<class T>
-LinkList<T>::LinkList(const LinkList<T>& link_list) {
+LinkedList<T>::LinkedList(const LinkedList<T>& link_list) {
 
-    this->head_ = new LinkNode<T>();
-    LinkNode<T>* dest_ptr = this->Head();
+    this->head_ = new LinkedNode<T>();
+    LinkedNode<T>* dest_ptr = this->Head();
 
-    LinkNode<T>* src_ptr = link_list.Head();
+    LinkedNode<T>* src_ptr = link_list.Head();
 
     while (src_ptr->next != NULL) {
 
         T data = src_ptr->next->data;
-        dest_ptr->next = new LinkNode<T>(data);
+        dest_ptr->next = new LinkedNode<T>(data);
 
         dest_ptr = dest_ptr->next;
         src_ptr = src_ptr->next;
@@ -131,7 +131,7 @@ LinkList<T>::LinkList(const LinkList<T>& link_list) {
 
 
 template<class T>
-LinkList<T>::~LinkList() {
+LinkedList<T>::~LinkedList() {
     this->MakeEmpty();
 
     delete this->head_;
@@ -147,13 +147,13 @@ LinkList<T>::~LinkList() {
  * @return 是否获取成功
  */
 template<class T>
-bool LinkList<T>::GetData(int pos, T& data) const {
+bool LinkedList<T>::GetData(int pos, T& data) const {
 
     if (pos < 1 || pos > this->Length()) {
         return false;
     }
 
-    LinkNode<T>* cur = this->head_;
+    LinkedNode<T>* cur = this->head_;
 
     while (pos > 0) {
         cur = cur->next;
@@ -174,13 +174,13 @@ bool LinkList<T>::GetData(int pos, T& data) const {
  * @return 是否设置成功
  */
 template<class T>
-bool LinkList<T>::SetData(int pos, const T& data) {
+bool LinkedList<T>::SetData(int pos, const T& data) {
 
     if (pos < 1 || pos > Length()) {
         return false;
     }
 
-    LinkNode<T>* cur = this->head_;
+    LinkedNode<T>* cur = this->head_;
 
     while (pos > 0) {
         cur = cur->next;
@@ -198,11 +198,11 @@ bool LinkList<T>::SetData(int pos, const T& data) {
  * @tparam T 类型模板参数
  */
 template<class T>
-void LinkList<T>::MakeEmpty() {
+void LinkedList<T>::MakeEmpty() {
 
     while (this->head_->next != NULL) {
 
-        LinkNode<T>* delete_node_ptr = this->head_->next;
+        LinkedNode<T>* delete_node_ptr = this->head_->next;
         this->head_->next = this->head_->next->next;
 
         delete delete_node_ptr;
@@ -216,14 +216,14 @@ void LinkList<T>::MakeEmpty() {
  * @tparam T 类型模板参数
  */
 template<class T>
-void LinkList<T>::Output() {
+void LinkedList<T>::Output() {
 
     if (this->head_->next == NULL) {
         cout << "Empty list" << endl;
         return;
     }
 
-    LinkNode<T>* cur = Head()->next;
+    LinkedNode<T>* cur = Head()->next;
     while (cur != NULL) {
         cout << cur->data << " ";
         cur = cur->next;
@@ -243,15 +243,15 @@ void LinkList<T>::Output() {
  * 当pos为0时, 表示插入位置1
  */
 template<class T>
-bool LinkList<T>::Insert(int pos, const T& data) {
+bool LinkedList<T>::Insert(int pos, const T& data) {
 
     if (pos < 0 || pos > Length()) {
         return false;
     }
 
-    LinkNode<T>* node_ptr = new LinkNode<T>(data);
+    LinkedNode<T>* node_ptr = new LinkedNode<T>(data);
 
-    LinkNode<T>* cur = this->head_;
+    LinkedNode<T>* cur = this->head_;
     while (pos > 0) {
         cur = cur->next;
         pos--;
@@ -276,7 +276,7 @@ bool LinkList<T>::Insert(int pos, const T& data) {
  * 当pos为0时, 表示插入位置1
  */
 template<class T>
-bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
+bool LinkedList<T>::Insert(int pos, LinkedNode<T>* node_ptr) {
 
     if (pos < 0 || pos > Length()) {
         return false;
@@ -286,7 +286,7 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
         return false;
     }
 
-    LinkNode<T>* cur = head_;
+    LinkedNode<T>* cur = head_;
     while (pos > 0) {
         cur = cur->next;
         pos--;
@@ -307,7 +307,7 @@ bool LinkList<T>::Insert(int pos, LinkNode<T>* node_ptr) {
  * @return 是否为空链表
  */
 template<class T>
-bool LinkList<T>::IsEmpty() const {
+bool LinkedList<T>::IsEmpty() const {
     if (this->head_->next == NULL) {
         return true;
     }
@@ -322,7 +322,7 @@ bool LinkList<T>::IsEmpty() const {
  * @tparam T
  */
 template<class T>
-void LinkList<T>::CyberDashShow() {
+void LinkedList<T>::CyberDashShow() {
     cout << endl
         << "*************************************** CyberDash ***************************************" << endl << endl
         << "抖音号\"CyberDash计算机考研\", id: cyberdash_yuan" << endl << endl
@@ -341,9 +341,9 @@ void LinkList<T>::CyberDashShow() {
  * @return 对应的结点指针
  */
 template<class T>
-LinkNode<T>* LinkList<T>::Search(T data) {
+LinkedNode<T>* LinkedList<T>::Search(T data) {
 
-    LinkNode<T>* cur = this->head_->next;
+    LinkedNode<T>* cur = this->head_->next;
     if (cur == NULL) { // 空链表
         return NULL;
     }
@@ -367,12 +367,12 @@ LinkNode<T>* LinkList<T>::Search(T data) {
  * @return 结点指针
  */
 template<class T>
-LinkNode<T>* LinkList<T>::Locate(int pos) {
+LinkedNode<T>* LinkedList<T>::Locate(int pos) {
     if (pos < 1 || pos > this->Length()) {
         return NULL;
     }
 
-    LinkNode<T>* cur = this->Head()->next;
+    LinkedNode<T>* cur = this->Head()->next;
     for (int i = 1; i < pos; i++) {
         cur = cur->next;
     }
@@ -391,19 +391,19 @@ LinkNode<T>* LinkList<T>::Locate(int pos) {
  * 从1开始计数
  */
 template<class T>
-bool LinkList<T>::Remove(int pos, T& data) {
+bool LinkedList<T>::Remove(int pos, T& data) {
 
     if (this->Length() == 0 || pos < 1 || pos > this->Length()) {
         return false;
     }
 
-    LinkNode<T>* cur = this->head_;
+    LinkedNode<T>* cur = this->head_;
 
     for (int i = 1; i < pos; i++) {
         cur = cur->next;
     }
 
-    LinkNode<T>* delete_node_ptr = cur->next;
+    LinkedNode<T>* delete_node_ptr = cur->next;
     cur->next = delete_node_ptr->next;
 
     data = delete_node_ptr->data;
@@ -417,4 +417,4 @@ bool LinkList<T>::Remove(int pos, T& data) {
 }
 
 
-#endif // CYBER_DASH_LINK_LIST_H
+#endif // CYBER_DASH_LINKED_LIST_H
