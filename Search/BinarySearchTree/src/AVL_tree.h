@@ -352,10 +352,9 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::InsertBalance(AVLNode<Value, Key>*& no
         cur_parent_node = AVL_node_stack.top();
         AVL_node_stack.pop();
 
-        // cur_parent_node->UpdateHeight();
         cur_parent_node->UpdateBalanceFactor();
 
-        int old_height = cur_parent_node->GetHeight();
+        int cur_parent_node_former_height = cur_parent_node->GetHeight();
 
         // 第1种情况, 平衡退出
         if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::BALANCED) {
@@ -381,12 +380,14 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::InsertBalance(AVLNode<Value, Key>*& no
                 this->RightLeftRotate_(cur_parent_node);
             }
 
-            if (old_height == cur_parent_node->GetHeight()) {
+            if (cur_parent_node_former_height == cur_parent_node->GetHeight()) {
                 break; // 不再向上调整
             } else {
                 cout << endl;// 这种情况不应该出现
             }
         }
+
+        cur_parent_node->UpdateHeight();
     }
 
     return cur_parent_node;
@@ -487,6 +488,7 @@ bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLN
         cur_parent_node->SetRightChild(insert_node);
     }
     cur_parent_node->UpdateHeight();
+    cur_parent_node->UpdateBalanceFactor();
 
     AVLNode<Value, Key>* balance_node = InsertBalance(insert_node, AVL_node_stack);
 
