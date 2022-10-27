@@ -354,8 +354,6 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::InsertBalance(AVLNode<Value, Key>*& no
 
         cur_parent_node->UpdateBalanceFactor();
 
-        int cur_parent_node_former_height = cur_parent_node->GetHeight();
-
         // 第1种情况, 平衡退出
         if (cur_parent_node->GetBalanceFactor() == AVLNode<Value, Key>::BALANCED) {
             break;
@@ -380,11 +378,7 @@ AVLNode<Value, Key>* AVLTree<Value, Key>::InsertBalance(AVLNode<Value, Key>*& no
                 this->RightLeftRotate_(cur_parent_node);
             }
 
-            if (cur_parent_node_former_height == cur_parent_node->GetHeight()) {
-                break; // 不再向上调整
-            } else {
-                cout << endl;// 这种情况不应该出现
-            }
+            break; // cur_parent_node调整后height没有变化, 因此无需再向上遍历执行操作
         }
 
         cur_parent_node->UpdateHeight();
@@ -465,7 +459,6 @@ bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLN
     stack<AVLNode<Value, Key>*> AVL_node_stack;
 
     //! 获取插入位置, 调整栈
-    // AVLNode<Value, Key>* insert_node = LocateInsertPositionAndInitStack(key, sub_tree_root, AVL_node_stack);
     bool res = LocateInsertPositionAndInitStack(key, sub_tree_root, AVL_node_stack);
     if (!res) {
         return res;
@@ -487,20 +480,18 @@ bool AVLTree<Value, Key>::InsertInSubTreeByCyberDash_(Value value, Key key, AVLN
     } else {
         cur_parent_node->SetRightChild(insert_node);
     }
-    cur_parent_node->UpdateHeight();
-    cur_parent_node->UpdateBalanceFactor();
 
-    AVLNode<Value, Key>* balance_node = InsertBalance(insert_node, AVL_node_stack);
+    AVLNode<Value, Key>* balanced_node = InsertBalance(insert_node, AVL_node_stack);
 
     // 已经完成平衡化的树, 完成最后处理
     if (AVL_node_stack.empty() == true) {
-        sub_tree_root = balance_node;
+        sub_tree_root = balanced_node;
     } else {
         AVLNode<Value, Key>* stack_top_node = AVL_node_stack.top();
-        if (stack_top_node->GetKey() > balance_node->GetKey()) {
-            stack_top_node->SetLeftChild(balance_node);
+        if (stack_top_node->GetKey() > balanced_node->GetKey()) {
+            stack_top_node->SetLeftChild(balanced_node);
         } else {
-            stack_top_node->SetRightChild(balance_node);
+            stack_top_node->SetRightChild(balanced_node);
         }
     }
 
