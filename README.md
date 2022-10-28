@@ -27,7 +27,7 @@
 
 ### 1.3 代码规范与风格
 **代码规范**  
-Google编码规范，参考文档连接:  
+标准编码规范，参考文档连接:  
 https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
 
 **使用STL**  
@@ -37,7 +37,7 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 考虑很多读者是学生和初学者, 使用C++98
 
 ## 2 使用方式
-为了方便分类学习, 项目主目录下, 每个目录对应一个独立的项目
+为了方便分类, 项目主目录下, 每个目录对应一个独立的项目
 ### 2.1 编译与运行
     git clone https://gitee.com/cyberdash/data-structure-cpp.git
     # 进入目录
