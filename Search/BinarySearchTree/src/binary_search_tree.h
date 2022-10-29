@@ -20,8 +20,8 @@ public:
     BSTNode<Value, Key>*& LeftChild() { return this->left_child_; };
     BSTNode<Value, Key>*& RightChild() { return this->right_child_; };
 
-    void SetLeftChildPtr(BSTNode<Value, Key>* node) { this->left_child_ = node; }
-    void SetRightChildPtr(BSTNode<Value, Key>* node) { this->right_child_ = node; }
+    void SetLeftChild(BSTNode<Value, Key>* node) { this->left_child_ = node; }
+    void SetRightChild(BSTNode<Value, Key>* node) { this->right_child_ = node; }
 
     virtual void SetKey(const Key& key) { this->key_ = key; }
     virtual Key GetKey() { return this->key_; }
@@ -315,8 +315,8 @@ BSTNode<Value, Key>* BST<Value, Key>::CopySubTreeRecursive_(const BSTNode<Value,
         origin_tree_root->GetKey());
     /* error handler */
 
-    new_tree_root->SetLeftChildPtr(CopySubTreeRecursive_(origin_tree_root->left_child_));
-    new_tree_root->SetRightChildPtr(CopySubTreeRecursive_(origin_tree_root->right_child_));
+    new_tree_root->SetLeftChild(CopySubTreeRecursive_(origin_tree_root->left_child_));
+    new_tree_root->SetRightChild(CopySubTreeRecursive_(origin_tree_root->right_child_));
 
     return new_tree_root;
 }
