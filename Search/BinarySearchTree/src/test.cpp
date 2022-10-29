@@ -25,35 +25,6 @@ void VisitKey(AVLNode<Value, Key>* node) {
 }
 
 
-void TestOperatorEqual() {
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                       Test Operator=                      |" << endl;
-    cout << "|                     测试搜索二叉树=操作                     |" << endl;
-
-    BST<string, string> origin_search_tree;
-
-    string question1 = "我最爱的乐队";
-    string answer1 = "林肯公园";
-
-    string question2 = "我最爱的游戏";
-    string answer2 = "Dota2";
-
-    string question3 = "我最爱的电影";
-    string answer3 = "《黑客帝国》";
-
-    origin_search_tree.Insert(answer1, question1);
-    origin_search_tree.Insert(answer2, question2);
-    origin_search_tree.Insert(answer3, question3);
-
-    BST<string, string> new_BST = origin_search_tree;
-
-    new_BST.PrintTree(BSTNodeVisit);
-
-    cout << endl << "-------------------------------------------------------------" << endl;
-}
-
-
 void TestBSTInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -71,9 +42,9 @@ void TestBSTInsert() {
     string question3 = "我最爱的电影";
     string answer3 = "《黑客帝国》";
 
-    binary_search_tree->Insert(answer1, question1);
-    binary_search_tree->Insert(answer2, question2);
-    binary_search_tree->Insert(answer3, question3);
+    binary_search_tree->Insert(question1, answer1);
+    binary_search_tree->Insert(question2, answer2);
+    binary_search_tree->Insert(question3, answer3);
 
     binary_search_tree->PrintTree(BSTNodeVisit);
 
@@ -115,14 +86,14 @@ void TestBSTRemove() {
     string question8 = "最后随便说句话";
     string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
 
-    binary_search_tree->Insert(answer1, question1);
-    binary_search_tree->Insert(answer2, question2);
-    binary_search_tree->Insert(answer3, question3);
-    binary_search_tree->Insert(answer4, question4);
-    binary_search_tree->Insert(answer5, question5);
-    binary_search_tree->Insert(answer6, question6);
-    binary_search_tree->Insert(answer7, question7);
-    binary_search_tree->Insert(answer8, question8);
+    binary_search_tree->Insert(question1, answer1);
+    binary_search_tree->Insert(question2, answer2);
+    binary_search_tree->Insert(question3, answer3);
+    binary_search_tree->Insert(question4, answer4);
+    binary_search_tree->Insert(question5, answer5);
+    binary_search_tree->Insert(question6, answer6);
+    binary_search_tree->Insert(question7, answer7);
+    binary_search_tree->Insert(question8, answer8);
 
     binary_search_tree->PrintTree(BSTNodeVisit);
 
@@ -173,24 +144,22 @@ void TestBSTSearch() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "烂到肚子里也不会说的";
 
-    binary_search_tree->Insert(answer1, question1);
-    binary_search_tree->Insert(answer2, question2);
-    binary_search_tree->Insert(answer3, question3);
-    binary_search_tree->Insert(answer4, question4);
-    binary_search_tree->Insert(answer5, question5);
-    binary_search_tree->Insert(answer6, question6);
-    binary_search_tree->Insert(answer7, question7);
-    binary_search_tree->Insert(answer8, question8);
-    binary_search_tree->Insert(answer9, question9);
+    binary_search_tree->Insert(question1, answer1);
+    binary_search_tree->Insert(question2, answer2);
+    binary_search_tree->Insert(question3, answer3);
+    binary_search_tree->Insert(question4, answer4);
+    binary_search_tree->Insert(question5, answer5);
+    binary_search_tree->Insert(question6, answer6);
+    binary_search_tree->Insert(question7, answer7);
+    binary_search_tree->Insert(question8, answer8);
+    binary_search_tree->Insert(question9, answer9);
 
     binary_search_tree->Remove(question9);
 
     BSTNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
     if (the_9th_node == NULL) { // 没有搜索到
-      // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duck不必"<<endl;
         cout << "此问题已删除" << endl;
-    }
-    else { // 搜索到
+    } else { // 搜索到
         cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetValue() << endl;
     }
 
@@ -199,8 +168,7 @@ void TestBSTSearch() {
     BSTNode<string, string>* the_8th_node = binary_search_tree->Search(question8);
     if (the_8th_node == NULL) { // 没有搜索到
         cout << "Duck不必" << endl;
-    }
-    else { // 搜索到
+    } else { // 搜索到
         cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetValue() << endl;
     }
 
@@ -245,34 +213,31 @@ void TestAVLSearch() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "烂到肚子里也不会说的";
 
-    AVL_tree->Insert(answer1, question1);
-    AVL_tree->Insert(answer2, question2);
-    AVL_tree->Insert(answer3, question3);
-    AVL_tree->Insert(answer4, question4);
-    AVL_tree->Insert(answer5, question5);
-    AVL_tree->Insert(answer6, question6);
-    AVL_tree->Insert(answer7, question7);
-    AVL_tree->Insert(answer8, question8);
-    AVL_tree->Insert(answer9, question9);
+    AVL_tree->Insert(question1, answer1);
+    AVL_tree->Insert(question2, answer2);
+    AVL_tree->Insert(question3, answer3);
+    AVL_tree->Insert(question4, answer4);
+    AVL_tree->Insert(question5, answer5);
+    AVL_tree->Insert(question6, answer6);
+    AVL_tree->Insert(question7, answer7);
+    AVL_tree->Insert(question8, answer8);
+    AVL_tree->Insert(question9, answer9);
 
-    // AVL_tree->Remove(question9);
+    AVL_tree->Remove(question9);
 
     AVLNode<string, string>* the_9th_node = AVL_tree->Search(question9);
-    if (the_9th_node == NULL) { // 没有搜索到
-      // cout<<"question9: "<<question9<<endl<<"answer9: "<<"Duck不必"<<endl;
+    if (!the_9th_node) { // 没有搜索到
         cout << "此问题已删除" << endl;
-    }
-    else { // 搜索到
+    } else { // 搜索到
         cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetValue() << endl;
     }
 
     cout << endl;
 
     AVLNode<string, string>* the_8th_node = AVL_tree->Search(question8);
-    if (the_8th_node == NULL) { // 没有搜索到
+    if (!the_8th_node) { // 没有搜索到
         cout << "Duck不必" << endl;
-    }
-    else { // 搜索到
+    } else { // 搜索到
         cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetValue() << endl;
     }
 
@@ -317,15 +282,15 @@ void TestBSTMaxAndMin() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "那些无法形容的痛, 见不得光";
 
-    binary_search_tree->Insert(answer1, question1);
-    binary_search_tree->Insert(answer2, question2);
-    binary_search_tree->Insert(answer3, question3);
-    binary_search_tree->Insert(answer4, question4);
-    binary_search_tree->Insert(answer5, question5);
-    binary_search_tree->Insert(answer6, question6);
-    binary_search_tree->Insert(answer7, question7);
-    binary_search_tree->Insert(answer8, question8);
-    binary_search_tree->Insert(answer9, question9);
+    binary_search_tree->Insert(question1, answer1);
+    binary_search_tree->Insert(question2, answer2);
+    binary_search_tree->Insert(question3, answer3);
+    binary_search_tree->Insert(question4, answer4);
+    binary_search_tree->Insert(question5, answer5);
+    binary_search_tree->Insert(question6, answer6);
+    binary_search_tree->Insert(question7, answer7);
+    binary_search_tree->Insert(question8, answer8);
+    binary_search_tree->Insert(question9, answer9);
 
     string max_data = binary_search_tree->Max();
     cout << "max_data: " << max_data << endl;
@@ -372,15 +337,15 @@ void TestAVLMaxAndMin() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "那些无法形容的痛, 见不得光";
 
-    AVL_tree->Insert(answer1, question1);
-    AVL_tree->Insert(answer2, question2);
-    AVL_tree->Insert(answer3, question3);
-    AVL_tree->Insert(answer4, question4);
-    AVL_tree->Insert(answer5, question5);
-    AVL_tree->Insert(answer6, question6);
-    AVL_tree->Insert(answer7, question7);
-    AVL_tree->Insert(answer8, question8);
-    AVL_tree->Insert(answer9, question9);
+    AVL_tree->Insert(question1, answer1);
+    AVL_tree->Insert(question2, answer2);
+    AVL_tree->Insert(question3, answer3);
+    AVL_tree->Insert(question4, answer4);
+    AVL_tree->Insert(question5, answer5);
+    AVL_tree->Insert(question6, answer6);
+    AVL_tree->Insert(question7, answer7);
+    AVL_tree->Insert(question8, answer8);
+    AVL_tree->Insert(question9, answer9);
 
     string max_data = AVL_tree->Max();
     cout << "max_data: " << max_data << endl;
@@ -427,15 +392,15 @@ void TestBSTMin() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "那些无法形容的痛, 见不得光";
 
-    binary_search_tree->Insert(answer1, question1);
-    binary_search_tree->Insert(answer2, question2);
-    binary_search_tree->Insert(answer3, question3);
-    binary_search_tree->Insert(answer4, question4);
-    binary_search_tree->Insert(answer5, question5);
-    binary_search_tree->Insert(answer6, question6);
-    binary_search_tree->Insert(answer7, question7);
-    binary_search_tree->Insert(answer8, question8);
-    binary_search_tree->Insert(answer9, question9);
+    binary_search_tree->Insert(question1, answer1);
+    binary_search_tree->Insert(question2, answer2);
+    binary_search_tree->Insert(question3, answer3);
+    binary_search_tree->Insert(question4, answer4);
+    binary_search_tree->Insert(question5, answer5);
+    binary_search_tree->Insert(question6, answer6);
+    binary_search_tree->Insert(question7, answer7);
+    binary_search_tree->Insert(question8, answer8);
+    binary_search_tree->Insert(question9, answer9);
 
     string minData = binary_search_tree->Min();
 
@@ -480,15 +445,15 @@ void TestBSTMakeEmpty() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "烂到肚子里也不会说的";
 
-    binary_search_tree->Insert(answer1, question1);
-    binary_search_tree->Insert(answer2, question2);
-    binary_search_tree->Insert(answer3, question3);
-    binary_search_tree->Insert(answer4, question4);
-    binary_search_tree->Insert(answer5, question5);
-    binary_search_tree->Insert(answer6, question6);
-    binary_search_tree->Insert(answer7, question7);
-    binary_search_tree->Insert(answer8, question8);
-    binary_search_tree->Insert(answer9, question9);
+    binary_search_tree->Insert(question1, answer1);
+    binary_search_tree->Insert(question2, answer2);
+    binary_search_tree->Insert(question3, answer3);
+    binary_search_tree->Insert(question4, answer4);
+    binary_search_tree->Insert(question5, answer5);
+    binary_search_tree->Insert(question6, answer6);
+    binary_search_tree->Insert(question7, answer7);
+    binary_search_tree->Insert(question8, answer8);
+    binary_search_tree->Insert(question9, answer9);
 
     binary_search_tree->MakeEmpty();
 
@@ -518,10 +483,10 @@ void TestAVLInsert() {
     string question4 = "最爱的运动";
     string answer4 = "足球";
 
-    AVL_tree->Insert(answer1, question1);
-    AVL_tree->Insert(answer2, question2);
-    AVL_tree->Insert(answer3, question3);
-    AVL_tree->Insert(answer4, question4);
+    AVL_tree->Insert(question1, answer1);
+    AVL_tree->Insert(question2, answer2);
+    AVL_tree->Insert(question3, answer3);
+    AVL_tree->Insert(question4, answer4);
 
     AVL_tree->Print(AVLNodeVisit);
 
@@ -551,10 +516,10 @@ void TestAVLInsert2() {
     string question4 = "b";
     string answer4 = "b";
 
-    AVL_tree->Insert(answer1, question1);
-    AVL_tree->Insert(answer2, question2);
-    AVL_tree->Insert(answer3, question3);
-    AVL_tree->Insert(answer4, question4);
+    AVL_tree->Insert(question1, answer1);
+    AVL_tree->Insert(question2, answer2);
+    AVL_tree->Insert(question3, answer3);
+    AVL_tree->Insert(question4, answer4);
 
     AVL_tree->Print(AVLNodeVisit);
 
@@ -584,10 +549,10 @@ void TestAVLInsertByCyberDash() {
     string question4 = "最爱的运动";
     string answer4 = "足球";
 
-    AVL_tree->Insert(answer1, question1);
-    AVL_tree->Insert(answer2, question2);
-    AVL_tree->Insert(answer3, question3);
-    AVL_tree->Insert(answer4, question4);
+    AVL_tree->Insert(question1, answer1);
+    AVL_tree->Insert(question2, answer2);
+    AVL_tree->Insert(question3, answer3);
+    AVL_tree->Insert(question4, answer4);
 
     AVL_tree->Print(AVLNodeVisit);
 
@@ -601,7 +566,7 @@ void TestAVLRemoveByCyberDash() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test AVL Remove                      |" << endl;
-    cout << "|                     测试平衡二叉树的删除                    |" << endl;
+    cout << "|                     测试平衡二叉树的删除                     |" << endl;
 
     AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
 
@@ -638,17 +603,17 @@ void TestBSTAndAVLHeight() {
     cout << "|                   Test BST & AVL Height                   |" << endl;
     cout << "|                  测试搜索二叉树/AVL树的高度                  |" << endl;
 
-    string keyArr[26] =
+    string keys[26] =
     { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "z", "n", "o", "p", "q", "r", "s",
       "t", "u", "v", "w", "x", "y", "m"};
-    string elemArr[26] =
+    string elements[26] =
     { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "z", "n", "o", "p", "q", "r", "s",
       "t", "u", "v", "w", "x", "y", "m"};
     int count = 26;
 
     cout << "分别向BST和AVL树插入:" << endl;
     for (int i = 0; i < count; i++) {
-        cout << "\"key:" << keyArr[i] << "/elem:" << elemArr[i] << "\"  ";
+        cout << "\"key:" << keys[i] << "/elem:" << elements[i] << "\"  ";
         // 四个一行
         if (i % 4 == 3 && i != 0) {
             cout << endl;
@@ -659,11 +624,11 @@ void TestBSTAndAVLHeight() {
     AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
     for (int i = 0; i < count; i++) {
-        bst_tree->Insert(keyArr[i], elemArr[i]);
+        bst_tree->Insert(keys[i], elements[i]);
     }
 
     for (int i = 0; i < count; i++) {
-        AVL_tree->Insert(keyArr[i], elemArr[i]);
+        AVL_tree->Insert(keys[i], elements[i]);
     }
 
     cout << endl << endl;

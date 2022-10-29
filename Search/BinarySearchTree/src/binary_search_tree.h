@@ -9,19 +9,19 @@
 using namespace std;
 
 
-template <class Value, class Key>
+template <class Key, class Value>
 class BSTNode {
 public:
     BSTNode() : left_child_(NULL), right_child_(NULL) {}
-    BSTNode(Value value, Key key) : value_(value), key_(key), left_child_(NULL), right_child_(NULL) {}
-    BSTNode(Value value, Key key, BSTNode<Value, Key>* left_child, BSTNode<Value, Key>* right_child) :
+    BSTNode(Key key, Value value) : value_(value), key_(key), left_child_(NULL), right_child_(NULL) {}
+    BSTNode(Key key, Value value, BSTNode<Key, Value>* left_child, BSTNode<Key, Value>* right_child) :
         value_(value), key_(key), left_child_(left_child), right_child_(right_child) {}
 
-    BSTNode<Value, Key>*& LeftChild() { return this->left_child_; };
-    BSTNode<Value, Key>*& RightChild() { return this->right_child_; };
+    BSTNode<Key, Value>*& LeftChild() { return this->left_child_; };
+    BSTNode<Key, Value>*& RightChild() { return this->right_child_; };
 
-    void SetLeftChild(BSTNode<Value, Key>* node) { this->left_child_ = node; }
-    void SetRightChild(BSTNode<Value, Key>* node) { this->right_child_ = node; }
+    void SetLeftChild(BSTNode<Key, Value>* node) { this->left_child_ = node; }
+    void SetRightChild(BSTNode<Key, Value>* node) { this->right_child_ = node; }
 
     virtual void SetKey(const Key& key) { this->key_ = key; }
     virtual Key GetKey() { return this->key_; }
@@ -30,15 +30,15 @@ public:
     virtual Value GetValue() { return this->value_; }
 
 protected:
-    BSTNode<Value, Key>* left_child_;
-    BSTNode<Value, Key>* right_child_;
+    BSTNode<Key, Value>* left_child_;
+    BSTNode<Key, Value>* right_child_;
 
     Key key_;
     Value value_;
 };
 
 
-template <class Value, class Key>
+template <class Key, class Value>
 class BST {
 public:
     BST() : root_node_(NULL) {}
@@ -46,48 +46,48 @@ public:
 
     virtual ~BST() { delete this->root_node_; };
 
-    virtual bool Insert(Value value, Key key);
+    virtual bool Insert(Key key, Value value);
     virtual bool Remove(const Key& key) { return RemoveInSubTree_(key, root_node_); }
 
-    virtual BSTNode<Value, Key>* Search(Key key) { return SearchInSubTree_(key, this->root_node_); }
+    virtual BSTNode<Key, Value>* Search(Key key) { return SearchInSubTree_(key, this->root_node_); }
     virtual int Height() { return this->SubTreeHeight_(this->root_node_); }
 
     virtual Value Min();
     virtual Value Max();
 
     virtual void MakeEmpty() { MakeEmptySubTree_(root_node_); root_node_ = NULL; }
-    void PrintTree(void (*visit)(BSTNode<Value, Key>*)) { this->PrintSubTree_(this->root_node_, visit); }
+    void PrintTree(void (*visit)(BSTNode<Key, Value>*)) { this->PrintSubTree_(this->root_node_, visit); }
 
-    BST<Value, Key>& operator=(const BST<Value, Key>& origin_BST);
+    BST<Key, Value>& operator=(const BST<Key, Value>& origin_BST);
 
 protected:
-    BSTNode<Value, Key>* root_node_; // 根节点
+    BSTNode<Key, Value>* root_node_; // 根节点
 
     // 子树中插入节点(递归)
-    bool InsertInSubTree_(Value value, Key key, BSTNode<Value, Key>*& sub_tree_root);
+    bool InsertInSubTree_(Key key, Value value, BSTNode<Key, Value>*& sub_tree_root);
 
     // 子树中删除节点(递归)
-    bool RemoveInSubTree_(Key key, BSTNode<Value, Key>*& sub_tree_root);
+    bool RemoveInSubTree_(Key key, BSTNode<Key, Value>*& sub_tree_root);
 
     // 在子树中, 使用关键码进行搜索
-    BSTNode<Value, Key>* SearchInSubTree_(Key key, BSTNode<Value, Key>* sub_tree_root);
+    BSTNode<Key, Value>* SearchInSubTree_(Key key, BSTNode<Key, Value>* sub_tree_root);
 
-    int SubTreeHeight_(BSTNode<Value, Key>* sub_tree_root);
+    int SubTreeHeight_(BSTNode<Key, Value>* sub_tree_root);
 
     // 清除子树(递归)
-    void MakeEmptySubTree_(BSTNode<Value, Key>*& sub_tree_root);
+    void MakeEmptySubTree_(BSTNode<Key, Value>*& sub_tree_root);
 
     // 打印子树(递归/中序)
-    void PrintSubTree_(BSTNode<Value, Key>* sub_tree_root, void (*visit)(BSTNode<Value, Key>*)) const;
+    void PrintSubTree_(BSTNode<Key, Value>* sub_tree_root, void (*visit)(BSTNode<Key, Value>*)) const;
 
     // 复制一颗树
-    BSTNode<Value, Key>* CopySubTreeRecursive_(const BSTNode<Value, Key>* origin_tree_root);
+    BSTNode<Key, Value>* CopySubTreeRecursive_(const BSTNode<Key, Value>* origin_tree_root);
 
     // 子树中关键码最小项
-    BSTNode<Value, Key>* MinInSubTree_(BSTNode<Value, Key>* sub_tree_root) const;
+    BSTNode<Key, Value>* MinInSubTree_(BSTNode<Key, Value>* sub_tree_root) const;
 
     // 子树中关键码最大项
-    BSTNode<Value, Key>* MaxInSubTree_(BSTNode<Value, Key>* sub_tree_root) const;
+    BSTNode<Key, Value>* MaxInSubTree_(BSTNode<Key, Value>* sub_tree_root) const;
 };
 
 
@@ -102,8 +102,8 @@ protected:
  * 1. 如果子树根节点为NULL, 返回NULL
  * 2. 使用当前遍历节点的key, 与参数key作比较, 分别进行递归和返回搜索结果(终止递归)
  */
-template <class Value, class Key>
-BSTNode<Value, Key>* BST<Value, Key>::SearchInSubTree_(Key key, BSTNode<Value, Key>* sub_tree_root) {
+template <class Key, class Value>
+BSTNode<Key, Value>* BST<Key, Value>::SearchInSubTree_(Key key, BSTNode<Key, Value>* sub_tree_root) {
     if (sub_tree_root == NULL) {
         return NULL;
     }
@@ -120,18 +120,18 @@ BSTNode<Value, Key>* BST<Value, Key>::SearchInSubTree_(Key key, BSTNode<Value, K
 }
 
 
-template<class Value, class Key>
-bool BST<Value, Key>::Insert(Value value, Key key) {
+template<class Key, class Value>
+bool BST<Key, Value>::Insert(Key key, Value value) {
     if (this->Search(key) != NULL) {
         return true;
     }
 
-    return this->InsertInSubTree_(value, key, this->root_node_);
+    return this->InsertInSubTree_(key, value, this->root_node_);
 }
 
 
-template<class Value, class Key>
-Value BST<Value, Key>::Min() {
+template<class Key, class Value>
+Value BST<Key, Value>::Min() {
     return MinInSubTree_(root_node_)->GetValue();
 }
 
@@ -149,28 +149,28 @@ Value BST<Value, Key>::Min() {
  * 判断插入关键码与子树根节点关键码的大小关系, 在左子树or右子树做插入操作(递归)
  * 如果关键码相同, 则返回false
  */
-template <class Value, class Key>
-bool BST<Value, Key>::InsertInSubTree_(Value value, Key key, BSTNode<Value, Key>*& sub_tree_root) {
+template <class Key, class Value>
+bool BST<Key, Value>::InsertInSubTree_(Key key, Value value, BSTNode<Key, Value>*& sub_tree_root) {
     if (sub_tree_root == NULL) {
-        sub_tree_root = new BSTNode<Value, Key>(value, key);
+        sub_tree_root = new BSTNode<Key, Value>(key, value);
         /* error handler */
 
         return true;
     }
 
     if (key < sub_tree_root->GetKey()) {
-        return InsertInSubTree_(value, key, sub_tree_root->LeftChild());
+        return InsertInSubTree_(key, value, sub_tree_root->LeftChild());
     } else if (key > sub_tree_root->GetKey()) {
-        return InsertInSubTree_(value, key, sub_tree_root->RightChild());
+        return InsertInSubTree_(key, value, sub_tree_root->RightChild());
     }
 
     return false;
 }
 
 
-template <class Value, class Key>
-BST<Value, Key>::BST(Key key, Value value) {
-    this->Insert(value, key);
+template <class Key, class Value>
+BST<Key, Value>::BST(Key key, Value value) {
+    this->Insert(key, value);
 }
 
 
@@ -187,8 +187,8 @@ BST<Value, Key>::BST(Key key, Value value) {
  * 3. 如果有两个孩子节点, 使用中序前驱or后继, 替换掉待删除节点
  * 4. 如果只有一个孩子节点, 则将该孩子提升至待删除节点
  */
-template <class Value, class Key>
-bool BST<Value, Key>::RemoveInSubTree_(Key key, BSTNode<Value, Key>*& sub_tree_root) {
+template <class Key, class Value>
+bool BST<Key, Value>::RemoveInSubTree_(Key key, BSTNode<Key, Value>*& sub_tree_root) {
 
     if (sub_tree_root == NULL) {
         return false;
@@ -203,7 +203,7 @@ bool BST<Value, Key>::RemoveInSubTree_(Key key, BSTNode<Value, Key>*& sub_tree_r
     // 删除sub_tree_root, 使用中序前驱or后继替换掉该节点, 此处使用后继
     if (sub_tree_root->LeftChild() != NULL && sub_tree_root->RightChild() != NULL) { // 存在左右孩子
 
-        BSTNode<Value, Key>* cur_node = sub_tree_root->RightChild();
+        BSTNode<Key, Value>* cur_node = sub_tree_root->RightChild();
         while (cur_node->LeftChild() != NULL) {
             cur_node = cur_node->LeftChild();
         }
@@ -218,7 +218,7 @@ bool BST<Value, Key>::RemoveInSubTree_(Key key, BSTNode<Value, Key>*& sub_tree_r
         // 删除替换数据原先所在的节点
         return RemoveInSubTree_(replace_key, sub_tree_root->RightChild());
     } else {
-        BSTNode<Value, Key>* delete_node = sub_tree_root;
+        BSTNode<Key, Value>* delete_node = sub_tree_root;
 
         if (sub_tree_root->LeftChild() == NULL) {
             sub_tree_root = sub_tree_root->RightChild();
@@ -244,8 +244,8 @@ bool BST<Value, Key>::RemoveInSubTree_(Key key, BSTNode<Value, Key>*& sub_tree_r
  * 对左右子树, 递归执行函数
  * 对子树节点执行delete和置NULL操作
  */
-template <class Value, class Key>
-void BST<Value, Key>::MakeEmptySubTree_(BSTNode<Value, Key>*& sub_tree_root) {
+template <class Key, class Value>
+void BST<Key, Value>::MakeEmptySubTree_(BSTNode<Key, Value>*& sub_tree_root) {
 
     if (sub_tree_root == NULL) {
         return;
@@ -275,8 +275,8 @@ void BST<Value, Key>::MakeEmptySubTree_(BSTNode<Value, Key>*& sub_tree_root) {
  * 5. 访问/打印子树根节点的右子树
  * 6. 打印“)”
  */
-template <class Value, class Key>
-void BST<Value, Key>::PrintSubTree_(BSTNode<Value, Key>* sub_tree_root, void (*visit)(BSTNode<Value, Key>*)) const {
+template <class Key, class Value>
+void BST<Key, Value>::PrintSubTree_(BSTNode<Key, Value>* sub_tree_root, void (*visit)(BSTNode<Key, Value>*)) const {
 
     if (sub_tree_root == NULL) {
         return;
@@ -303,14 +303,14 @@ void BST<Value, Key>::PrintSubTree_(BSTNode<Value, Key>* sub_tree_root, void (*v
  * @param origin_tree_root 源子树
  * @return 新树的根节点
  */
-template <class Value, class Key>
-BSTNode<Value, Key>* BST<Value, Key>::CopySubTreeRecursive_(const BSTNode<Value, Key>* origin_tree_root) {
+template <class Key, class Value>
+BSTNode<Key, Value>* BST<Key, Value>::CopySubTreeRecursive_(const BSTNode<Key, Value>* origin_tree_root) {
 
     if (origin_tree_root == NULL) {
         return NULL;
     }
 
-    BSTNode<Value, Key>* new_tree_root = new BSTNode<Value, Key>(
+    BSTNode<Key, Value>* new_tree_root = new BSTNode<Key, Value>(
         origin_tree_root->GetValue(),
         origin_tree_root->GetKey());
     /* error handler */
@@ -331,14 +331,14 @@ BSTNode<Value, Key>* BST<Value, Key>::CopySubTreeRecursive_(const BSTNode<Value,
  * @note
  * 左孩子节点迭代
  */
-template <class Value, class Key>
-BSTNode<Value, Key>* BST<Value, Key>::MinInSubTree_(BSTNode<Value, Key>* sub_tree_root) const {
+template <class Key, class Value>
+BSTNode<Key, Value>* BST<Key, Value>::MinInSubTree_(BSTNode<Key, Value>* sub_tree_root) const {
 
     if (sub_tree_root == NULL) {
         return NULL;
     }
 
-    BSTNode<Value, Key>* cur_node = sub_tree_root;
+    BSTNode<Key, Value>* cur_node = sub_tree_root;
 
     while (cur_node->LeftChild() != NULL) {
         cur_node = cur_node->LeftChild();
@@ -357,14 +357,14 @@ BSTNode<Value, Key>* BST<Value, Key>::MinInSubTree_(BSTNode<Value, Key>* sub_tre
  * @note
  * 右孩子节点迭代
  */
-template <class Value, class Key>
-BSTNode<Value, Key>* BST<Value, Key>::MaxInSubTree_(BSTNode<Value, Key>* sub_tree_root) const {
+template <class Key, class Value>
+BSTNode<Key, Value>* BST<Key, Value>::MaxInSubTree_(BSTNode<Key, Value>* sub_tree_root) const {
 
     if (sub_tree_root == NULL) {
         return NULL;
     }
 
-    BSTNode<Value, Key>* cur_node = sub_tree_root;
+    BSTNode<Key, Value>* cur_node = sub_tree_root;
     while (cur_node->RightChild() != NULL) {
         cur_node = cur_node->RightChild();
     }
@@ -373,8 +373,8 @@ BSTNode<Value, Key>* BST<Value, Key>::MaxInSubTree_(BSTNode<Value, Key>* sub_tre
 }
 
 
-template<class Value, class Key>
-BST<Value, Key>& BST<Value, Key>::operator=(const BST<Value, Key>& origin_BST) {
+template<class Key, class Value>
+BST<Key, Value>& BST<Key, Value>::operator=(const BST<Key, Value>& origin_BST) {
 
     this->root_node_ = this->CopySubTreeRecursive_(origin_BST.root_node_);
 
@@ -382,16 +382,16 @@ BST<Value, Key>& BST<Value, Key>::operator=(const BST<Value, Key>& origin_BST) {
 }
 
 
-template<class Value, class Key>
-Value BST<Value, Key>::Max() {
-    BSTNode<Value, Key>* root_node = this->root_node_;
-    BSTNode<Value, Key>* max_node = this->BST::MaxInSubTree_(root_node);
+template<class Key, class Value>
+Value BST<Key, Value>::Max() {
+    BSTNode<Key, Value>* root_node = this->root_node_;
+    BSTNode<Key, Value>* max_node = this->BST::MaxInSubTree_(root_node);
     return max_node->GetValue();
 }
 
 
-template<class Value, class Key>
-int BST<Value, Key>::SubTreeHeight_(BSTNode<Value, Key>* sub_tree_root) {
+template<class Key, class Value>
+int BST<Key, Value>::SubTreeHeight_(BSTNode<Key, Value>* sub_tree_root) {
     if (sub_tree_root == NULL) {
         return 0;
     }
