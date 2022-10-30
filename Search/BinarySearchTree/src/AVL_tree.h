@@ -10,16 +10,6 @@
 #include "stack"
 
 
-/*
-int max(int a, int b) {
-    if (a > b) {
-        return a;
-    }
-
-    return b;
-}
- */
-
 template<class Key, class Value>
 class AVLNode : public BSTNode<Key, Value> {
 public:
@@ -85,17 +75,21 @@ protected:
 
 
 template<class Key, class Value>
-class AVLTree : public BST<Key, Value> {
+class AVLTree : public BinarySearchTree<Key, Value> {
 public:
-    AVLTree() : root_node_(NULL) {}
-    AVLNode<Key, Value>*& RootRef() { return (AVLNode<Key, Value>*&)this->root_node_; }
-    AVLNode<Key, Value>* Root() { return this->root_node_; }
+    AVLTree() : root_(NULL) {}
+    AVLNode<Key, Value>*& Root() { return this->root_; }
+    void SetRoot(AVLNode<Key, Value>* node) { this->root_ = node; }
 
-    bool Insert(Key key, Value data);
+    bool Insert(Key key, Value value);
     bool Remove(Key key);
-    AVLNode<Key, Value>* Search(Key key) { return this->SearchInSubTree_(key, this->root_node_); }
-    int Height() { return this->SubTreeHeight_(this->root_node_); }
-    int Height2() { return this->root_node_->GetHeight(); }
+    bool InsertRecursive(Key key, Value value);
+    bool InsertInSubTreeRecursive_(AVLNode<Key, Value>*& sub_tree_root, Key key, Value value);
+    bool RemoveRecursive(Key key);
+    bool RemoveInSubTreeRecursive_(AVLNode<Key, Value>*& sub_tree_root, Key key);
+    AVLNode<Key, Value>* Search(Key key) { return this->SearchInSubTree_(key, this->root_); }
+    int Height() { return this->SubTreeHeight_(this->root_); }
+    int Height2() { return this->root_->GetHeight(); }
     //
     Value Max();
     Value Min();
@@ -140,7 +134,7 @@ protected:
 
     void PrintSubTreeRecursive_(AVLNode<Key, Value>* sub_tree_root, void (*visit)(AVLNode<Key, Value>*));
 
-    AVLNode<Key, Value>* root_node_; // 根节点
+    AVLNode<Key, Value>* root_; // 根节点
     // int height_;    // 高度
 };
 
@@ -338,11 +332,22 @@ int AVLTree<Key, Value>::RightLeftRotate_(AVLNode<Key, Value>*& node) {
 }
 
 
-// todo: Value和Key的参数位置应该互换
 template<class Key, class Value>
-bool AVLTree<Key, Value>::Insert(Key key, Value data) {
-    return this->InsertInSubTree_(key, data, this->RootRef());
+bool AVLTree<Key, Value>::Insert(Key key, Value value) {
+    return this->InsertInSubTree_(key, value, this->Root());
 }
+
+
+template<class Key, class Value>
+bool AVLTree<Key, Value>::InsertRecursive(Key key, Value value) {
+    return this->InsertInSubTreeRecursive_(this->Root(), key, value);
+}
+
+template<class Key, class Value>
+bool AVLTree<Key, Value>::RemoveRecursive(Key key) {
+    return this->RemoveInSubTreeRecursive_(this->Root(), key);
+}
+
 
 
 template<class Key, class Value>
@@ -434,6 +439,82 @@ void AVLTree<Key, Value>::Balance_(AVLNode<Key, Value>*& node) {
             this->LeftRightRotate_(node);
         }
     }
+}
+
+
+template<class Key, class Value>
+bool AVLTree<Key, Value>::InsertInSubTreeRecursive_(AVLNode<Key, Value>*& sub_tree_root, Key key, Value value) {
+    if (!sub_tree_root) {
+        sub_tree_root = new AVLNode<Key, Value>(key, value);
+        if (!sub_tree_root) {
+            return false;
+        }
+
+        return true;
+    }
+
+    if (key < sub_tree_root->GetKey()) {
+        InsertInSubTreeRecursive_(sub_tree_root->LeftChild(), key, value);
+    } else if (key > sub_tree_root->GetKey()) {
+        InsertInSubTreeRecursive_(sub_tree_root->RightChild(), key, value);
+    } else {
+        return true;
+    }
+
+    sub_tree_root->UpdateHeight();
+    sub_tree_root->UpdateBalanceFactor();
+
+    Balance_(sub_tree_root);
+
+    return true;
+}
+
+
+template<class Key, class Value>
+bool AVLTree<Key, Value>::RemoveInSubTreeRecursive_(AVLNode<Key, Value>*& sub_tree_root, Key key) {
+    if (!sub_tree_root) {
+        return true;
+    }
+
+    if (key < sub_tree_root->GetKey()) {
+        RemoveInSubTreeRecursive_(sub_tree_root->LeftChild(), key);
+    } else if (key > sub_tree_root->GetKey()) {
+        RemoveInSubTreeRecursive_(sub_tree_root->RightChild(), key);
+    } else {
+        if (!sub_tree_root->LeftChild() && !sub_tree_root->RightChild()) {
+            delete sub_tree_root;
+            sub_tree_root = NULL;
+        } else if (!sub_tree_root->LeftChild()) {
+            AVLNode<Key, Value>* temp = sub_tree_root;
+            sub_tree_root = sub_tree_root->RightChild();
+            delete temp;
+        } else if (!sub_tree_root->RightChild()) {
+            AVLNode<Key, Value>* temp = sub_tree_root;
+            sub_tree_root = sub_tree_root->LeftChild();
+            delete temp;
+        } else {
+            AVLNode<Key, Value>* cur = sub_tree_root->LeftChild();
+            while (cur->RightChild()) {
+                cur = cur->RightChild();
+            }
+
+            sub_tree_root->SetKey(cur->GetKey());
+            sub_tree_root->SetValue(cur->GetValue());
+            RemoveInSubTreeRecursive_(sub_tree_root->LeftChild(), cur->GetKey());
+        }
+    }
+
+    if (!sub_tree_root) {
+        return true;
+    }
+
+    sub_tree_root->UpdateHeight();
+    sub_tree_root->UpdateBalanceFactor();
+
+    Balance_(sub_tree_root);
+
+    return true;
+
 }
 
 
@@ -745,13 +826,13 @@ void AVLTree<Key, Value>::PrintSubTreeRecursive_(
 
 template<class Key, class Value>
 void AVLTree<Key, Value>::Print(void (*visit)(AVLNode<Key, Value>*)) {
-    this->PrintSubTreeRecursive_((AVLNode<Key, Value> *) this->root_node_, visit); cout << endl;
+    this->PrintSubTreeRecursive_((AVLNode<Key, Value> *) this->root_, visit); cout << endl;
 }
 
 
 template<class Key, class Value>
 bool AVLTree<Key, Value>::Remove(Key key) {
-    return this->RemoveInSubTree_(this->RootRef(), key);
+    return this->RemoveInSubTree_(this->Root(), key);
 }
 
 
@@ -774,7 +855,6 @@ AVLNode<Key, Value>* AVLTree<Key, Value>::MinInSubTree_(AVLNode<Key, Value>* sub
 
 template<class Key, class Value>
 Value AVLTree<Key, Value>::Max() {
-    AVLNode<Key, Value>* root_node = this->root_node_;
     AVLNode<Key, Value>* max_node = this->MaxInSubTreeRecursive_(this->Root());
     return max_node->GetValue();
 }

@@ -34,7 +34,9 @@ void TestAVLInsert2();
 
 void TestAVLInsertByCyberDash();
 
-void TestAVLRemoveByCyberDash();
+void TestAvlInsertAndRemove();
+
+void TestAvlInsertAndRemoveRecursive();
 
 void TestBSTAndAVLHeight();
 

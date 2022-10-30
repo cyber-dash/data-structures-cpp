@@ -10,27 +10,28 @@ using namespace std;
 
 int main()
 {
-	/* 插入 */
+	// 插入
 	TestBSTInsert();
 	TestAVLInsert2();
 	TestAVLInsertByCyberDash();
 
-	/* 删除 */
+	// 删除
 	TestBSTRemove();
-	TestAVLRemoveByCyberDash();
+    TestAvlInsertAndRemove();
+    TestAvlInsertAndRemoveRecursive();
 
-	/* 查询 */
+	// 查询
 	TestBSTSearch();
 	TestAVLSearch();
 
-	/* 高度 */
+	// 高度
 	TestBSTAndAVLHeight();
 
-	/* 最大最小值 */
+	// 最大最小值
 	TestBSTMaxAndMin();
 	TestAVLMaxAndMin();
 
-	/* 清除所有数据 */
+	// 清除所有数据
 	TestBSTMakeEmpty();
 
 	return 0;
