@@ -28,10 +28,10 @@ void VisitKey(AVLNode<Value, Key>* node) {
 void TestBSTInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test BST Insert                      |" << endl;
+    cout << "|                Test BinarySearchTree Insert               |" << endl;
     cout << "|                     测试搜索二叉树的插入                     |" << endl;
 
-    BST<string, string>* binary_search_tree = new BST<string, string>();
+    BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
 
     string question1 = "我最爱的乐队";
     string answer1 = "林肯公园";
@@ -57,10 +57,10 @@ void TestBSTInsert() {
 void TestBSTRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test BST Remove                      |" << endl;
+    cout << "|                Test BinarySearchTree Remove               |" << endl;
     cout << "|                     测试搜索二叉树的删除                     |" << endl;
 
-    BST<string, string>* binary_search_tree = new BST<string, string>();
+    BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
 
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
@@ -112,10 +112,10 @@ void TestBSTRemove() {
 void TestBSTSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test BST Search                      |" << endl;
+    cout << "|                Test BinarySearchTree Search               |" << endl;
     cout << "|                     测试搜索二叉树的搜索                     |" << endl;
 
-    BST<string, string>* binary_search_tree = new BST<string, string>();
+    BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
 
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
@@ -250,10 +250,10 @@ void TestAVLSearch() {
 void TestBSTMaxAndMin() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                    Test BST Max and Min                   |" << endl;
+    cout << "|              Test BinarySearchTree Max and Min            |" << endl;
     cout << "|                  测试搜索二叉树的最大值/最小值                 |" << endl;
 
-    BST<string, string>* binary_search_tree = new BST<string, string>();
+    BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
 
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
@@ -360,10 +360,10 @@ void TestAVLMaxAndMin() {
 void TestBSTMin() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                        Test BST Min                       |" << endl;
+    cout << "|                 Test BinarySearchTree Min                 |" << endl;
     cout << "|                     测试搜索二叉树的最小值                    |" << endl;
 
-    BST<string, string>* binary_search_tree = new BST<string, string>();
+    BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
 
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
@@ -413,10 +413,10 @@ void TestBSTMin() {
 void TestBSTMakeEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                     Test BST MakeEmpty                    |" << endl;
+    cout << "|                Test BinarySearchTree MakeEmpty            |" << endl;
     cout << "|                      测试搜索二叉树的清除                    |" << endl;
 
-    BST<string, string>* binary_search_tree = new BST<string, string>();
+    BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
 
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
@@ -562,11 +562,11 @@ void TestAVLInsertByCyberDash() {
 }
 
 
-void TestAVLRemoveByCyberDash() {
+void TestAvlInsertAndRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test AVL Remove                      |" << endl;
-    cout << "|                     测试平衡二叉树的删除                     |" << endl;
+    cout << "|                   Test AVL Insert/Remove                  |" << endl;
+    cout << "|                    测试平衡二叉树的插入/删除                  |" << endl;
 
     AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
 
@@ -597,11 +597,46 @@ void TestAVLRemoveByCyberDash() {
 }
 
 
+void TestAvlInsertAndRemoveRecursive() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|              Test AVL Insert/Remove recursive             |" << endl;
+    cout << "|                 测试平衡二叉树的插入/删除(递归)                |" << endl;
+
+    AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
+
+    int keyArr[31] =
+        { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
+          25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
+          21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
+    int elemArr[31] =
+        { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
+          25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
+          21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
+    int count = 30;
+
+    for (int i = 0; i < count; i++) {
+        AVL_tree->InsertRecursive(keyArr[i], elemArr[i]);
+        AVL_tree->Print(VisitKey);
+    }
+
+    for (int i = 0; i < count; i++) {
+        int key = keyArr[i];
+        AVL_tree->RemoveRecursive(key);
+        AVL_tree->Print(VisitKey);
+    }
+
+    cout << endl;
+
+    cout << "-------------------------------------------------------------" << endl;
+}
+
+
 void TestBSTAndAVLHeight() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test BST & AVL Height                   |" << endl;
-    cout << "|                  测试搜索二叉树/AVL树的高度                  |" << endl;
+    cout << "|              Test BinarySearchTree & AVL Height           |" << endl;
+    cout << "|                    测试搜索二叉树/AVL树的高度                 |" << endl;
 
     string keys[26] =
     { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "z", "n", "o", "p", "q", "r", "s",
@@ -620,7 +655,7 @@ void TestBSTAndAVLHeight() {
         }
     }
 
-    BST<string, string>* bst_tree = new BST<string, string>();
+    BinarySearchTree<string, string>* bst_tree = new BinarySearchTree<string, string>();
     AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
 
     for (int i = 0; i < count; i++) {
