@@ -11,5 +11,5 @@ add_executable(
     src/main.cpp
     src/test.cpp
     src/test.h
-    src/AVL_tree.h
+        src/avl_tree.h
 )

@@ -9,19 +9,19 @@
 
 template<class Value, class Key>
 void BSTNodeVisit(BSTNode<Value, Key>* node) {
-    cout << "[" << node->GetKey() << ":" << node->GetValue() << "]";
+    cout << "[" << node->Key() << ":" << node->Value() << "]";
 }
 
 
 template<class Value, class Key>
-void AVLNodeVisit(AVLNode<Value, Key>* node) {
-    cout << "[" << node->GetKey() << ":" << node->GetValue() << "|" << node->GetBalanceFactor() << "]";
+void AVLNodeVisit(AvlNode<Value, Key>* node) {
+    cout << "[" << node->Key() << ":" << node->Value() << "|" << node->BalanceFactor() << "]";
 }
 
 
 template<class Value, class Key>
-void VisitKey(AVLNode<Value, Key>* node) {
-    cout << node->GetKey() ;
+void VisitKey(AvlNode<Value, Key>* node) {
+    cout << node->Key() ;
 }
 
 
@@ -160,7 +160,7 @@ void TestBSTSearch() {
     if (the_9th_node == NULL) { // 没有搜索到
         cout << "此问题已删除" << endl;
     } else { // 搜索到
-        cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetValue() << endl;
+        cout << "question9: " << the_9th_node->Key() << endl << "answer9: " << the_9th_node->Value() << endl;
     }
 
     cout << endl;
@@ -169,7 +169,7 @@ void TestBSTSearch() {
     if (the_8th_node == NULL) { // 没有搜索到
         cout << "Duck不必" << endl;
     } else { // 搜索到
-        cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetValue() << endl;
+        cout << "question8: " << the_8th_node->Key() << endl << "answer8: " << the_8th_node->Value() << endl;
     }
 
     cout << endl;
@@ -184,7 +184,7 @@ void TestAVLSearch() {
     cout << "|                      Test AVL Search                      |" << endl;
     cout << "|                       测试AVL树的搜索                       |" << endl;
 
-    AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
@@ -225,20 +225,20 @@ void TestAVLSearch() {
 
     AVL_tree->Remove(question9);
 
-    AVLNode<string, string>* the_9th_node = AVL_tree->Search(question9);
+    AvlNode<string, string>* the_9th_node = AVL_tree->Search(question9);
     if (!the_9th_node) { // 没有搜索到
         cout << "此问题已删除" << endl;
     } else { // 搜索到
-        cout << "question9: " << the_9th_node->GetKey() << endl << "answer9: " << the_9th_node->GetValue() << endl;
+        cout << "question9: " << the_9th_node->Key() << endl << "answer9: " << the_9th_node->Value() << endl;
     }
 
     cout << endl;
 
-    AVLNode<string, string>* the_8th_node = AVL_tree->Search(question8);
+    AvlNode<string, string>* the_8th_node = AVL_tree->Search(question8);
     if (!the_8th_node) { // 没有搜索到
         cout << "Duck不必" << endl;
     } else { // 搜索到
-        cout << "question8: " << the_8th_node->GetKey() << endl << "answer8: " << the_8th_node->GetValue() << endl;
+        cout << "question8: " << the_8th_node->Key() << endl << "answer8: " << the_8th_node->Value() << endl;
     }
 
     cout << endl;
@@ -308,7 +308,7 @@ void TestAVLMaxAndMin() {
     cout << "|                     Test AVL Max & Min                    |" << endl;
     cout << "|                    测试AVL树的最大值/最小值                  |" << endl;
 
-    AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
@@ -469,7 +469,7 @@ void TestAVLInsert() {
     cout << "|                      Test AVL Insert                      |" << endl;
     cout << "|                     测试平衡二叉树的插入                     |" << endl;
 
-    AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
     string question1 = "我最爱的乐队";
     string answer1 = "林肯公园";
@@ -502,7 +502,7 @@ void TestAVLInsert2() {
     cout << "|                     Test AVL Insert2                      |" << endl;
     cout << "|                    测试平衡二叉树的插入2                     |" << endl;
 
-    AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
     string question1 = "a";
     string answer1 = "a";
@@ -535,7 +535,7 @@ void TestAVLInsertByCyberDash() {
     cout << "|                      Test AVL Insert                      |" << endl;
     cout << "|                     测试平衡二叉树的插入                     |" << endl;
 
-    AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
     string question1 = "我最爱的乐队";
     string answer1 = "林肯公园";
@@ -568,7 +568,7 @@ void TestAvlInsertAndRemove() {
     cout << "|                   Test AVL Insert/Remove                  |" << endl;
     cout << "|                    测试平衡二叉树的插入/删除                  |" << endl;
 
-    AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
+    AvlTree<int, int>* AVL_tree = new AvlTree<int, int>();
 
     int keyArr[31] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
@@ -603,7 +603,7 @@ void TestAvlInsertAndRemoveRecursive() {
     cout << "|              Test AVL Insert/Remove recursive             |" << endl;
     cout << "|                 测试平衡二叉树的插入/删除(递归)                |" << endl;
 
-    AVLTree<int, int>* AVL_tree = new AVLTree<int, int>();
+    AvlTree<int, int>* AVL_tree = new AvlTree<int, int>();
 
     int keyArr[31] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
@@ -656,7 +656,7 @@ void TestBSTAndAVLHeight() {
     }
 
     BinarySearchTree<string, string>* bst_tree = new BinarySearchTree<string, string>();
-    AVLTree<string, string>* AVL_tree = new AVLTree<string, string>();
+    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
     for (int i = 0; i < count; i++) {
         bst_tree->Insert(keys[i], elements[i]);

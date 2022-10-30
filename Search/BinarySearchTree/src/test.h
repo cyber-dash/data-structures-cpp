@@ -7,7 +7,7 @@
 
 
 #include "binary_search_tree.h"
-#include "AVL_tree.h"
+#include "avl_tree.h"
 
 
 void TestOperatorEqual();
