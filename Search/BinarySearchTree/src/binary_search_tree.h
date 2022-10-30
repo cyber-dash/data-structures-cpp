@@ -18,7 +18,6 @@ public:
         value_(value), key_(key), left_child_(left_child), right_child_(right_child) {}
 
     BSTNode<Key, Value>*& LeftChild() { return this->left_child_; };
-
     BSTNode<Key, Value>*& RightChild() { return this->right_child_; };
 
     void SetLeftChild(BSTNode<Key, Value>* node) { this->left_child_ = node; }
