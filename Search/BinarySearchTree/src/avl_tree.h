@@ -39,17 +39,15 @@ public:
     void SetBalanceFactor(int balance_factor) { this->balance_factor_ = balance_factor; }
 
     void UpdateHeight() {
-        int left_height = this->left_child_ ? this->left_child_->Height() : 0;
-        int right_height = this->right_child_ ? this->right_child_->Height() : 0;
-        this->height_ = max(left_height, right_height) + 1;
+        int left_height = LeftChild() ? LeftChild()->Height() : 0;
+        int right_height = RightChild() ? RightChild()->Height() : 0;
+        this->height_ = left_height > right_height ? left_height : right_height + 1;
     }
     void UpdateBalanceFactor() {
-        int left_height = this->left_child_ ? this->left_child_->Height() : 0;
-        int right_height = this->right_child_ ? this->right_child_->Height() : 0;
+        int left_height = LeftChild() ? LeftChild()->Height() : 0;
+        int right_height = RightChild() ? RightChild()->Height() : 0;
         this->balance_factor_ = right_height - left_height;
     }
-
-    static int max(int a, int b) { return a > b ? a : b; }
 
     static const int RIGHT_HIGHER_2 = 2;    //!< 左子树比右子树矮2
     static const int RIGHT_HIGHER_1 = 1;    //!< 左子树比右子树矮1
@@ -58,14 +56,13 @@ public:
     static const int LEFT_HIGHER_2 = -2;    //!< 左子树比右子树高2
 
 protected:
-    AvlNode<TKey, TValue>* left_child_;
-    AvlNode<TKey, TValue>* right_child_;
-
     TKey key_;
     TValue value_;
     int height_;
-
     int balance_factor_;
+
+    AvlNode<TKey, TValue>* left_child_;
+    AvlNode<TKey, TValue>* right_child_;
 };
 
 
@@ -82,26 +79,26 @@ public:
     bool Remove(TKey key);
     bool RemoveRecursive(TKey key);
 
-    AvlNode<TKey, TValue>* Search(TKey key) { return this->SearchInSubTree_(key, this->root_); }
-    int HeightRecursive() { return this->SubTreeHeight_(this->root_); }
     int Height() { return this->root_->Height(); }
-    //
+    int HeightRecursive() { return this->SubTreeHeight_(this->root_); }
+
     TValue Max();
     TValue Min();
+
+    AvlNode<TKey, TValue>* Search(TKey key) { return this->SearchInSubTree_(key, this->root_); }
 
     void Print(void (*visit)(AvlNode<TKey, TValue>*));
 
 protected:
+    bool InsertInSubTree_(TKey key, TValue value, AvlNode<TKey, TValue>*& sub_tree_root);   // 平衡树子树插入
     bool InsertInSubTreeRecursive_(AvlNode<TKey, TValue>*& sub_tree_root, TKey key, TValue value);
+
+    bool RemoveInSubTree_(AvlNode<TKey, TValue>*& sub_tree_root, TKey key);                // 平衡树子树删除
     bool RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& sub_tree_root, TKey key);
 
-    AvlNode<TKey, TValue>* InsertBalance_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack);
-    AvlNode<TKey, TValue>* RemoveBalance_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack);
+    AvlNode<TKey, TValue>* InsertBalanceByStack_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack);
+    AvlNode<TKey, TValue>* RemoveBalanceByStack_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack);
     void Balance_(AvlNode<TKey, TValue>*& node);
-
-    AvlNode<TKey, TValue>* SearchInSubTree_(TKey key, AvlNode<TKey, TValue>* sub_tree_root);
-    bool InsertInSubTree_(TKey key, TValue value, AvlNode<TKey, TValue>*& sub_tree_root);   // 平衡树子树插入
-    bool RemoveInSubTree_(AvlNode<TKey, TValue>*& sub_tree_root, TKey key);                // 平衡树子树删除
 
     // 左单旋转(Rotation Left)
     int LeftRotate_(AvlNode<TKey, TValue>*& node);
@@ -112,10 +109,15 @@ protected:
     // 先右后左双旋转(Rotation Right Left)
     int RightLeftRotate_(AvlNode<TKey, TValue>*& node);
 
+    AvlNode<TKey, TValue>* SearchInSubTree_(TKey key, AvlNode<TKey, TValue>* sub_tree_root);
+
     // 子树中关键码最小项
     AvlNode<TKey, TValue>* MinInSubTree_(AvlNode<TKey, TValue>* sub_tree_root) const;
     // 子树中关键码最大项
     AvlNode<TKey, TValue>* MaxInSubTreeRecursive_(AvlNode<TKey, TValue>* sub_tree_root) const;
+
+    // 前一结点
+    AvlNode<TKey, TValue>* PreviousNode(AvlNode<TKey, TValue>* node);
 
     // AVL子树的高度
     int SubTreeHeight_(AvlNode<TKey, TValue>* sub_tree_root);
@@ -133,7 +135,6 @@ protected:
             stack<AvlNode<TKey, TValue>*>& AVL_node_stack);
 
     AvlNode<TKey, TValue>* root_; // 根节点
-    // int height_;    // 高度
 };
 
 
@@ -349,7 +350,7 @@ bool AvlTree<TKey, TValue>::RemoveRecursive(TKey key) {
 
 
 template<class TKey, class TValue>
-AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::InsertBalance_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack) {
+AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::InsertBalanceByStack_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack) {
     AvlNode<TKey, TValue>* cur_parent_node = NULL;
 
     while (AVL_node_stack.empty() == false) {
@@ -383,7 +384,7 @@ AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::InsertBalance_(stack<AvlNode<TKey,
 
 
 template<class TKey, class TValue>
-AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::RemoveBalance_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack) {
+AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::RemoveBalanceByStack_(stack<AvlNode<TKey, TValue>*>& AVL_node_stack) {
 
     AvlNode<TKey, TValue>* cur_parent_node = NULL;
 
@@ -424,7 +425,7 @@ AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::RemoveBalance_(stack<AvlNode<TKey,
 
 template<class TKey, class TValue>
 void AvlTree<TKey, TValue>::Balance_(AvlNode<TKey, TValue>*& node) {
-    if (node->BalanceFactor() == AvlNode<TKey, TValue>::RIGHT_HIGHER_2) { // 两个结点的平衡因子同号, 单旋转
+    if (node->BalanceFactor() == AvlNode<TKey, TValue>::RIGHT_HIGHER_2) {
         if (node->RightChild()->BalanceFactor() != AvlNode<TKey, TValue>::LEFT_HIGHER_1) {
             this->LeftRotate_(node);        // 左单旋转
         } else {
@@ -471,13 +472,19 @@ bool AvlTree<TKey, TValue>::InsertInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
 template<class TKey, class TValue>
 bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& sub_tree_root, TKey key) {
     if (!sub_tree_root) {
-        return true;
+        return false;
     }
 
     if (key < sub_tree_root->Key()) {
-        RemoveInSubTreeRecursive_(sub_tree_root->LeftChild(), key);
+        bool res = RemoveInSubTreeRecursive_(sub_tree_root->LeftChild(), key);
+        if (!res) {
+            return res;
+        }
     } else if (key > sub_tree_root->Key()) {
-        RemoveInSubTreeRecursive_(sub_tree_root->RightChild(), key);
+        bool res = RemoveInSubTreeRecursive_(sub_tree_root->RightChild(), key);
+        if (!res) {
+            return res;
+        }
     } else {
         if (!sub_tree_root->LeftChild() && !sub_tree_root->RightChild()) {
             delete sub_tree_root;
@@ -491,14 +498,15 @@ bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
             sub_tree_root = sub_tree_root->LeftChild();
             delete temp;
         } else {
-            AvlNode<TKey, TValue>* cur = sub_tree_root->LeftChild();
-            while (cur->RightChild()) {
-                cur = cur->RightChild();
-            }
+            AvlNode<TKey, TValue>* prev_node = this->PreviousNode(sub_tree_root);
 
-            sub_tree_root->SetKey(cur->Key());
-            sub_tree_root->SetValue(cur->Value());
-            RemoveInSubTreeRecursive_(sub_tree_root->LeftChild(), cur->Key());
+            sub_tree_root->SetKey(prev_node->Key());
+            sub_tree_root->SetValue(prev_node->Value());
+
+            bool res = RemoveInSubTreeRecursive_(sub_tree_root->LeftChild(), prev_node->Key());
+            if (!res) {
+                return res;
+            }
         }
     }
 
@@ -512,7 +520,6 @@ bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
     Balance_(sub_tree_root);
 
     return true;
-
 }
 
 
@@ -532,7 +539,7 @@ bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
 template<class TKey, class TValue>
 bool AvlTree<TKey, TValue>::InsertInSubTree_(TKey key, TValue value, AvlNode<TKey, TValue>*& sub_tree_root) {
 
-    stack < AvlNode<TKey, TValue> * > AVL_node_stack;
+    stack<AvlNode<TKey, TValue>*> AVL_node_stack;
 
     //! 获取插入位置, 调整栈
     bool res = LocateInsertPositionAndInitStack_(key, sub_tree_root, AVL_node_stack);
@@ -557,7 +564,7 @@ bool AvlTree<TKey, TValue>::InsertInSubTree_(TKey key, TValue value, AvlNode<TKe
         cur_parent_node->SetRightChild(insert_node);
     }
 
-    AvlNode<TKey, TValue>* balanced_node = this->InsertBalance_(AVL_node_stack);
+    AvlNode<TKey, TValue>* balanced_node = this->InsertBalanceByStack_(AVL_node_stack);
 
     // 已经完成平衡化的树, 完成最后处理
     if (AVL_node_stack.empty() == true) {
@@ -768,7 +775,7 @@ bool AvlTree<TKey, TValue>::RemoveInSubTree_(AvlNode<TKey, TValue>*& sub_tree_ro
         delete delete_node;
         delete_node = NULL;
 
-        AvlNode<TKey, TValue>* balance_node = RemoveBalance_(AVL_node_stack);
+        AvlNode<TKey, TValue>* balance_node = RemoveBalanceByStack_(AVL_node_stack);
 
         // 已经完成平衡化的树, 完成最后处理
         if (AVL_node_stack.empty() == true) {
@@ -886,6 +893,17 @@ template<class TKey, class TValue>
 TValue AvlTree<TKey, TValue>::Min() {
     AvlNode<TKey, TValue>* max_node = this->MinInSubTree_(this->Root());
     return max_node->Value();
+}
+
+
+template<class TKey, class TValue>
+AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::PreviousNode(AvlNode<TKey, TValue>* node) {
+    AvlNode<TKey, TValue>* cur = node->LeftChild();
+    while (cur->RightChild()) {
+        cur = cur->RightChild();
+    }
+
+    return cur;
 }
 
 
