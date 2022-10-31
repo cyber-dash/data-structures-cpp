@@ -8,7 +8,7 @@
 
 
 template<class Value, class Key>
-void BSTNodeVisit(BSTNode<Value, Key>* node) {
+void BSTNodeVisit(BinarySearchTreeNode<Value, Key>* node) {
     cout << "[" << node->Key() << ":" << node->Value() << "]";
 }
 
@@ -156,7 +156,7 @@ void TestBSTSearch() {
 
     binary_search_tree->Remove(question9);
 
-    BSTNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
+    BinarySearchTreeNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
     if (the_9th_node == NULL) { // 没有搜索到
         cout << "此问题已删除" << endl;
     } else { // 搜索到
@@ -165,7 +165,7 @@ void TestBSTSearch() {
 
     cout << endl;
 
-    BSTNode<string, string>* the_8th_node = binary_search_tree->Search(question8);
+    BinarySearchTreeNode<string, string>* the_8th_node = binary_search_tree->Search(question8);
     if (the_8th_node == NULL) { // 没有搜索到
         cout << "Duck不必" << endl;
     } else { // 搜索到
@@ -570,23 +570,23 @@ void TestAvlInsertAndRemove() {
 
     AvlTree<int, int>* AVL_tree = new AvlTree<int, int>();
 
-    int keyArr[31] =
+    int keys[31] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
           21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
-    int elemArr[31] =
+    int values[31] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
           21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
     int count = 30;
 
     for (int i = 0; i < count; i++) {
-        AVL_tree->Insert(keyArr[i], elemArr[i]);
+        AVL_tree->Insert(keys[i], values[i]);
         AVL_tree->Print(VisitKey);
     }
 
     for (int i = 0; i < count; i++) {
-        int key = keyArr[i];
+        int key = keys[i];
         AVL_tree->Remove(key);
         AVL_tree->Print(VisitKey);
     }
@@ -605,23 +605,23 @@ void TestAvlInsertAndRemoveRecursive() {
 
     AvlTree<int, int>* AVL_tree = new AvlTree<int, int>();
 
-    int keyArr[31] =
+    int keys[31] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
           21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
-    int elemArr[31] =
+    int values[31] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
           21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
     int count = 30;
 
     for (int i = 0; i < count; i++) {
-        AVL_tree->InsertRecursive(keyArr[i], elemArr[i]);
+        AVL_tree->InsertRecursive(keys[i], values[i]);
         AVL_tree->Print(VisitKey);
     }
 
     for (int i = 0; i < count; i++) {
-        int key = keyArr[i];
+        int key = keys[i];
         AVL_tree->RemoveRecursive(key);
         AVL_tree->Print(VisitKey);
     }

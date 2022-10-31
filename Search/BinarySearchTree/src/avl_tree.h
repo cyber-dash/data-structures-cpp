@@ -10,12 +10,49 @@
 #include "binary_search_tree.h"
 
 
+/*!
+ * @brief **AVL树结点模板类**
+ * @tparam TKey 关键码类型模板参数
+ * @tparam TValue 数据项类型模板参数
+ */
 template<class TKey, class TValue>
-class AvlNode: public BSTNode<TKey, TValue> {
+class AvlNode: public BinarySearchTreeNode<TKey, TValue> {
 public:
+    /*!
+     * @brief **构造函数(默认)**
+     * @note
+     * 构造函数(默认)
+     * ------------
+     * ------------
+     * 左右孩子为NULL, 高度设为1, 平衡因子设为0
+     */
     AvlNode(): left_child_(NULL), right_child_(NULL), height_(1), balance_factor_(BALANCED) {}
+
+    /*!
+     * @brief **构造函数(无左右孩子)**
+     * @param key 关键码
+     * @param value 数据项
+     * @note
+     * 构造函数(无左右孩子)
+     * ------------
+     * ------------
+     * 设置key/value, 左右孩子为NULL, 高度设为1, 平衡因子设为0
+     */
     AvlNode(const TKey& key, const TValue& value) :
         value_(value), key_(key), left_child_(NULL), right_child_(NULL), height_(1), balance_factor_(BALANCED) {}
+
+    /*!
+     * @brief **构造函数(有左右孩子)**
+     * @param key 关键码
+     * @param value 数据项
+     * @param left_child 左孩子
+     * @param right_child 右孩子
+     * @note
+     * 构造函数(有左右孩子)
+     * ------------
+     * ------------
+     * 设置key/value/左右孩子, 高度设为1, 平衡因子设为0
+     */
     AvlNode(TKey key, TValue value, AvlNode<TKey, TValue>* left_child, AvlNode<TKey, TValue>* right_child) :
         value_(value), key_(key), left_child_(left_child), right_child_(right_child),
         height_(1), balance_factor_(BALANCED) {}
@@ -49,11 +86,11 @@ public:
         this->balance_factor_ = right_height - left_height;
     }
 
-    static const int RIGHT_HIGHER_2 = 2;    //!< 左子树比右子树矮2
-    static const int RIGHT_HIGHER_1 = 1;    //!< 左子树比右子树矮1
-    static const int BALANCED = 0;          //!< 左右平衡
-    static const int LEFT_HIGHER_1 = -1;    //!< 左子树比右子树高1
-    static const int LEFT_HIGHER_2 = -2;    //!< 左子树比右子树高2
+    static const int RIGHT_HIGHER_2 = 2;    //!< **左子树比右子树矮2**
+    static const int RIGHT_HIGHER_1 = 1;    //!< **左子树比右子树矮1**
+    static const int BALANCED = 0;          //!< **左右平衡**
+    static const int LEFT_HIGHER_1 = -1;    //!< **左子树比右子树高1**
+    static const int LEFT_HIGHER_2 = -2;    //!< **左子树比右子树高2**
 
 protected:
     TKey key_;
@@ -138,8 +175,8 @@ protected:
 };
 
 
-/**
- * 左单旋转(Rotation Left)
+/*!
+ * @brief 左单旋转(Rotation Left)
  * @tparam TValue 搜索结果(数据)模板类型
  * @tparam TKey 关键码模板类型
  * @param node AVL树节点指针的引用

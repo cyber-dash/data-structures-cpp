@@ -10,18 +10,18 @@ using namespace std;
 
 
 template <class TKey, class TValue>
-class BSTNode {
+class BinarySearchTreeNode {
 public:
-    BSTNode(): left_child_(NULL), right_child_(NULL) {}
-    BSTNode(TKey key, TValue value): value_(value), key_(key), left_child_(NULL), right_child_(NULL) {}
-    BSTNode(TKey key, TValue value, BSTNode<TKey, TValue>* left_child, BSTNode<TKey, TValue>* right_child):
+    BinarySearchTreeNode(): left_child_(NULL), right_child_(NULL) {}
+    BinarySearchTreeNode(TKey key, TValue value): value_(value), key_(key), left_child_(NULL), right_child_(NULL) {}
+    BinarySearchTreeNode(TKey key, TValue value, BinarySearchTreeNode<TKey, TValue>* left_child, BinarySearchTreeNode<TKey, TValue>* right_child):
         value_(value), key_(key), left_child_(left_child), right_child_(right_child) {}
 
-    BSTNode<TKey, TValue>*& LeftChild() { return this->left_child_; };
-    void SetLeftChild(BSTNode<TKey, TValue>* node) { this->left_child_ = node; }
+    BinarySearchTreeNode<TKey, TValue>*& LeftChild() { return this->left_child_; };
+    void SetLeftChild(BinarySearchTreeNode<TKey, TValue>* node) { this->left_child_ = node; }
 
-    BSTNode<TKey, TValue>*& RightChild() { return this->right_child_; };
-    void SetRightChild(BSTNode<TKey, TValue>* node) { this->right_child_ = node; }
+    BinarySearchTreeNode<TKey, TValue>*& RightChild() { return this->right_child_; };
+    void SetRightChild(BinarySearchTreeNode<TKey, TValue>* node) { this->right_child_ = node; }
 
     virtual TKey Key() { return this->key_; }
     virtual void SetKey(const TKey& key) { this->key_ = key; }
@@ -30,8 +30,8 @@ public:
     virtual void SetValue(const TValue& value) { this->value_ = value; }
 
 protected:
-    BSTNode<TKey, TValue>* left_child_;
-    BSTNode<TKey, TValue>* right_child_;
+    BinarySearchTreeNode<TKey, TValue>* left_child_;
+    BinarySearchTreeNode<TKey, TValue>* right_child_;
 
     TKey key_;
     TValue value_;
@@ -49,47 +49,47 @@ public:
     virtual bool Insert(TKey key, TValue value);
     virtual bool Remove(const TKey& key) { return RemoveInSubTree_(key, root_node_); }
 
-    virtual BSTNode<TKey, TValue>* Search(TKey key) { return SearchInSubTree_(key, this->root_node_); }
+    virtual BinarySearchTreeNode<TKey, TValue>* Search(TKey key) { return SearchInSubTree_(key, this->root_node_); }
     virtual int Height() { return this->SubTreeHeight_(this->root_node_); }
 
     virtual TValue Min();
     virtual TValue Max();
 
-    BSTNode<TKey, TValue>*& Root() { return this->root_node_; }
+    BinarySearchTreeNode<TKey, TValue>*& Root() { return this->root_node_; }
 
     virtual void MakeEmpty() { MakeEmptySubTree_(root_node_); root_node_ = NULL; }
-    void PrintTree(void (*visit)(BSTNode<TKey, TValue>*)) { this->PrintSubTree_(this->root_node_, visit); }
+    void PrintTree(void (*visit)(BinarySearchTreeNode<TKey, TValue>*)) { this->PrintSubTree_(this->root_node_, visit); }
 
     BinarySearchTree<TKey, TValue>& operator=(const BinarySearchTree<TKey, TValue>& origin_BST);
 
 protected:
-    BSTNode<TKey, TValue>* root_node_; // 根节点
+    BinarySearchTreeNode<TKey, TValue>* root_node_; // 根节点
 
     // 子树中插入节点(递归)
-    bool InsertInSubTree_(TKey key, TValue value, BSTNode<TKey, TValue>*& sub_tree_root);
+    bool InsertInSubTree_(TKey key, TValue value, BinarySearchTreeNode<TKey, TValue>*& sub_tree_root);
 
     // 子树中删除节点(递归)
-    bool RemoveInSubTree_(TKey key, BSTNode<TKey, TValue>*& sub_tree_root);
+    bool RemoveInSubTree_(TKey key, BinarySearchTreeNode<TKey, TValue>*& sub_tree_root);
 
     // 在子树中, 使用关键码进行搜索
-    BSTNode<TKey, TValue>* SearchInSubTree_(TKey key, BSTNode<TKey, TValue>* sub_tree_root);
+    BinarySearchTreeNode<TKey, TValue>* SearchInSubTree_(TKey key, BinarySearchTreeNode<TKey, TValue>* sub_tree_root);
 
-    int SubTreeHeight_(BSTNode<TKey, TValue>* sub_tree_root);
+    int SubTreeHeight_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root);
 
     // 清除子树(递归)
-    void MakeEmptySubTree_(BSTNode<TKey, TValue>*& sub_tree_root);
+    void MakeEmptySubTree_(BinarySearchTreeNode<TKey, TValue>*& sub_tree_root);
 
     // 打印子树(递归/中序)
-    void PrintSubTree_(BSTNode<TKey, TValue>* sub_tree_root, void (*visit)(BSTNode<TKey, TValue>*)) const;
+    void PrintSubTree_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root, void (*visit)(BinarySearchTreeNode<TKey, TValue>*)) const;
 
     // 复制一颗树
-    BSTNode<TKey, TValue>* CopySubTreeRecursive_(const BSTNode<TKey, TValue>* origin_tree_root);
+    BinarySearchTreeNode<TKey, TValue>* CopySubTreeRecursive_(const BinarySearchTreeNode<TKey, TValue>* origin_tree_root);
 
     // 子树中关键码最小项
-    BSTNode<TKey, TValue>* MinInSubTree_(BSTNode<TKey, TValue>* sub_tree_root) const;
+    BinarySearchTreeNode<TKey, TValue>* MinInSubTree_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root) const;
 
     // 子树中关键码最大项
-    BSTNode<TKey, TValue>* MaxInSubTree_(BSTNode<TKey, TValue>* sub_tree_root) const;
+    BinarySearchTreeNode<TKey, TValue>* MaxInSubTree_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root) const;
 };
 
 
@@ -105,7 +105,7 @@ protected:
  * 2. 使用当前遍历节点的key, 与参数key作比较, 分别进行递归和返回搜索结果(终止递归)
  */
 template <class TKey, class TValue>
-BSTNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::SearchInSubTree_(TKey key, BSTNode<TKey, TValue>* sub_tree_root) {
+BinarySearchTreeNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::SearchInSubTree_(TKey key, BinarySearchTreeNode<TKey, TValue>* sub_tree_root) {
     if (sub_tree_root == NULL) {
         return NULL;
     }
@@ -152,9 +152,9 @@ TValue BinarySearchTree<TKey, TValue>::Min() {
  * 如果关键码相同, 则返回false
  */
 template <class TKey, class TValue>
-bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key, TValue value, BSTNode<TKey, TValue>*& sub_tree_root) {
+bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key, TValue value, BinarySearchTreeNode<TKey, TValue>*& sub_tree_root) {
     if (sub_tree_root == NULL) {
-        sub_tree_root = new BSTNode<TKey, TValue>(key, value);
+        sub_tree_root = new BinarySearchTreeNode<TKey, TValue>(key, value);
         /* error handler */
 
         return true;
@@ -190,7 +190,7 @@ BinarySearchTree<TKey, TValue>::BinarySearchTree(TKey key, TValue value) {
  * 4. 如果只有一个孩子节点, 则将该孩子提升至待删除节点
  */
 template <class TKey, class TValue>
-bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BSTNode<TKey, TValue>*& sub_tree_root) {
+bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BinarySearchTreeNode<TKey, TValue>*& sub_tree_root) {
 
     if (sub_tree_root == NULL) {
         return false;
@@ -205,7 +205,7 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BSTNode<TKey, TV
     // 删除sub_tree_root, 使用中序前驱or后继替换掉该节点, 此处使用后继
     if (sub_tree_root->LeftChild() != NULL && sub_tree_root->RightChild() != NULL) { // 存在左右孩子
 
-        BSTNode<TKey, TValue>* cur_node = sub_tree_root->RightChild();
+        BinarySearchTreeNode<TKey, TValue>* cur_node = sub_tree_root->RightChild();
         while (cur_node->LeftChild() != NULL) {
             cur_node = cur_node->LeftChild();
         }
@@ -220,7 +220,7 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BSTNode<TKey, TV
         // 删除替换数据原先所在的节点
         return RemoveInSubTree_(replace_key, sub_tree_root->RightChild());
     } else {
-        BSTNode<TKey, TValue>* delete_node = sub_tree_root;
+        BinarySearchTreeNode<TKey, TValue>* delete_node = sub_tree_root;
 
         if (sub_tree_root->LeftChild() == NULL) {
             sub_tree_root = sub_tree_root->RightChild();
@@ -247,7 +247,7 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BSTNode<TKey, TV
  * 对子树节点执行delete和置NULL操作
  */
 template <class TKey, class TValue>
-void BinarySearchTree<TKey, TValue>::MakeEmptySubTree_(BSTNode<TKey, TValue>*& sub_tree_root) {
+void BinarySearchTree<TKey, TValue>::MakeEmptySubTree_(BinarySearchTreeNode<TKey, TValue>*& sub_tree_root) {
 
     if (sub_tree_root == NULL) {
         return;
@@ -278,7 +278,7 @@ void BinarySearchTree<TKey, TValue>::MakeEmptySubTree_(BSTNode<TKey, TValue>*& s
  * 6. 打印“)”
  */
 template <class TKey, class TValue>
-void BinarySearchTree<TKey, TValue>::PrintSubTree_(BSTNode<TKey, TValue>* sub_tree_root, void (*visit)(BSTNode<TKey, TValue>*)) const {
+void BinarySearchTree<TKey, TValue>::PrintSubTree_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root, void (*visit)(BinarySearchTreeNode<TKey, TValue>*)) const {
 
     if (sub_tree_root == NULL) {
         return;
@@ -306,13 +306,13 @@ void BinarySearchTree<TKey, TValue>::PrintSubTree_(BSTNode<TKey, TValue>* sub_tr
  * @return 新树的根节点
  */
 template <class TKey, class TValue>
-BSTNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(const BSTNode<TKey, TValue>* origin_tree_root) {
+BinarySearchTreeNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(const BinarySearchTreeNode<TKey, TValue>* origin_tree_root) {
 
     if (origin_tree_root == NULL) {
         return NULL;
     }
 
-    BSTNode<TKey, TValue>* new_tree_root = new BSTNode<TKey, TValue>(
+    BinarySearchTreeNode<TKey, TValue>* new_tree_root = new BinarySearchTreeNode<TKey, TValue>(
             origin_tree_root->Value(),
         origin_tree_root->Key());
     /* error handler */
@@ -334,13 +334,13 @@ BSTNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(con
  * 左孩子节点迭代
  */
 template <class TKey, class TValue>
-BSTNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MinInSubTree_(BSTNode<TKey, TValue>* sub_tree_root) const {
+BinarySearchTreeNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MinInSubTree_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root) const {
 
     if (sub_tree_root == NULL) {
         return NULL;
     }
 
-    BSTNode<TKey, TValue>* cur_node = sub_tree_root;
+    BinarySearchTreeNode<TKey, TValue>* cur_node = sub_tree_root;
 
     while (cur_node->LeftChild() != NULL) {
         cur_node = cur_node->LeftChild();
@@ -360,13 +360,13 @@ BSTNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MinInSubTree_(BSTNode<TKe
  * 右孩子节点迭代
  */
 template <class TKey, class TValue>
-BSTNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MaxInSubTree_(BSTNode<TKey, TValue>* sub_tree_root) const {
+BinarySearchTreeNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MaxInSubTree_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root) const {
 
     if (sub_tree_root == NULL) {
         return NULL;
     }
 
-    BSTNode<TKey, TValue>* cur_node = sub_tree_root;
+    BinarySearchTreeNode<TKey, TValue>* cur_node = sub_tree_root;
     while (cur_node->RightChild() != NULL) {
         cur_node = cur_node->RightChild();
     }
@@ -386,14 +386,14 @@ BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const 
 
 template<class TKey, class TValue>
 TValue BinarySearchTree<TKey, TValue>::Max() {
-    BSTNode<TKey, TValue>* root_node = this->root_node_;
-    BSTNode<TKey, TValue>* max_node = this->BinarySearchTree::MaxInSubTree_(root_node);
+    BinarySearchTreeNode<TKey, TValue>* root_node = this->root_node_;
+    BinarySearchTreeNode<TKey, TValue>* max_node = this->BinarySearchTree::MaxInSubTree_(root_node);
     return max_node->Value();
 }
 
 
 template<class TKey, class TValue>
-int BinarySearchTree<TKey, TValue>::SubTreeHeight_(BSTNode<TKey, TValue>* sub_tree_root) {
+int BinarySearchTree<TKey, TValue>::SubTreeHeight_(BinarySearchTreeNode<TKey, TValue>* sub_tree_root) {
     if (sub_tree_root == NULL) {
         return 0;
     }
