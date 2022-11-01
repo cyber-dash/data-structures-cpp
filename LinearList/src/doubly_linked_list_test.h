@@ -14,7 +14,7 @@ using namespace std;
 /*!
  * @brief 双向链表测试类
  */
-class DoubleLinkListTest {
+class DoublyLinkedListTest {
 public:
     /*! @brief 测试按方向插入 */
     static void TestInsertByDirection();
@@ -33,10 +33,10 @@ public:
 };
 
 
-void DoubleLinkListTest::TestInsertByDirection() {
+void DoublyLinkedListTest::TestInsertByDirection() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|              Test DoubleList InsertByDirection            |" << endl;
+    cout << "|              Test DoublyLinkedList InsertByDirection            |" << endl;
     cout << "|                     测试双向链表按方向插入                    |" << endl << endl << endl;
 
     DoublyLinkedList<string>* band_list = new DoublyLinkedList<string>();
@@ -51,11 +51,11 @@ void DoubleLinkListTest::TestInsertByDirection() {
 }
 
 
-void DoubleLinkListTest::TestRemoveByDirection() {
+void DoublyLinkedListTest::TestRemoveByDirection() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|              Test DoubleList RemoveByDirection            |" << endl;
+    cout << "|              Test DoublyLinkedList RemoveByDirection            |" << endl;
     cout << "|                     测试双向链表按方向删除                   |" << endl << endl << endl;
 
     DoublyLinkedList<string>* city_list = new DoublyLinkedList<string>();
@@ -84,11 +84,11 @@ void DoubleLinkListTest::TestRemoveByDirection() {
 }
 
 
-void DoubleLinkListTest::TestLength() {
+void DoublyLinkedListTest::TestLength() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test DoubleList Length                  |" << endl;
+    cout << "|                   Test DoublyLinkedList Length                  |" << endl;
     cout << "|                       测试双向链表长度                      |" << endl << endl << endl;
 
     DoublyLinkedList<int>* double_list;
@@ -104,12 +104,12 @@ void DoubleLinkListTest::TestLength() {
 }
 
 
-void DoubleLinkListTest::TestEmpty() {
+void DoublyLinkedListTest::TestEmpty() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test DoubleList Empty                   |" << endl;
-    cout << "|                        测试双向链表是否为空                  |" << endl << endl << endl;
+    cout << "|                 Test DoublyLinkedList Empty               |" << endl;
+    cout << "|                      测试双向链表是否为空                   |" << endl << endl << endl;
 
     DoublyLinkedList<string>* double_link;
     double_link = new DoublyLinkedList<string>();
@@ -141,11 +141,11 @@ void DoubleLinkListTest::TestEmpty() {
 }
 
 
-void DoubleLinkListTest::TestSearch() {
+void DoublyLinkedListTest::TestSearch() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test DoubleList Search                  |" << endl;
+    cout << "|                   Test DoublyLinkedList Search                  |" << endl;
     cout << "|                       测试双向链表查找                      |" << endl << endl << endl;
 
     DoublyLinkedList<int>* double_list;
@@ -165,11 +165,11 @@ void DoubleLinkListTest::TestSearch() {
 }
 
 
-void DoubleLinkListTest::TestLocate() {
+void DoublyLinkedListTest::TestLocate() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                  Test DoubleList Locate                   |" << endl;
+    cout << "|                  Test DoublyLinkedList Locate                   |" << endl;
     cout << "|                       测试双向链表定位                       |" << endl << endl << endl;
 
     DoublyLinkedList<int>* double_list = new DoublyLinkedList<int>();
@@ -186,11 +186,11 @@ void DoubleLinkListTest::TestLocate() {
 }
 
 
-void DoubleLinkListTest::TestGetDataAndSetData() {
+void DoublyLinkedListTest::TestGetDataAndSetData() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|              Test DoubleList GetData And SetData          |" << endl;
+    cout << "|              Test DoublyLinkedList GetData And SetData          |" << endl;
     cout << "|                   测试双向链表获取/设置数据项                 |" << endl << endl << endl;
 
     DoublyLinkedList<string>* city_list = new DoublyLinkedList<string>();

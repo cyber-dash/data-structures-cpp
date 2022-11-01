@@ -95,7 +95,7 @@ public:
     bool SetData(int pos, const T& data);
 
     //约瑟夫环
-    int LastRemaining(DoublyLinkedNode<T>* head, int m);
+    int JosephProblem(DoublyLinkedNode<T>* head, int m);
 
     // 打印双向链表
     void Output();
@@ -379,7 +379,7 @@ bool DoublyLinkedList<T>::SetData(int pos, const T& data) {
  * @return 剩余的结点值
  */
 template<class T>
-int DoublyLinkedList<T>::LastRemaining(DoublyLinkedNode<T>* head, int m) {
+int DoublyLinkedList<T>::JosephProblem(DoublyLinkedNode<T>* head, int m) {
     return -1; // todo: 
 }
 

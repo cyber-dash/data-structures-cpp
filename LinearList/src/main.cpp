@@ -12,7 +12,6 @@ using namespace std;
 
 int main() {
 
-	/*
 	SeqListTest::TestInsert();
 
 	SeqListTest::TestSize();
@@ -34,21 +33,20 @@ int main() {
 	SeqListTest::TestUnion();
 
 	SeqListTest::TestIntersection();
-	*/
 
-	DoubleLinkListTest::TestInsertByDirection();
+	DoublyLinkedListTest::TestInsertByDirection();
 
-	DoubleLinkListTest::TestRemoveByDirection();
+	DoublyLinkedListTest::TestRemoveByDirection();
 
-	DoubleLinkListTest::TestLength();
+	DoublyLinkedListTest::TestLength();
 
-	DoubleLinkListTest::TestLocate();
+	DoublyLinkedListTest::TestLocate();
 
-	DoubleLinkListTest::TestEmpty();
+	DoublyLinkedListTest::TestEmpty();
 
-	DoubleLinkListTest::TestSearch();
+	DoublyLinkedListTest::TestSearch();
 
-	DoubleLinkListTest::TestGetDataAndSetData();
+	DoublyLinkedListTest::TestGetDataAndSetData();
 
 
 	LinkListTest::TestCopyConstructor();
