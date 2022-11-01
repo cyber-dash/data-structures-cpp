@@ -57,10 +57,26 @@ public:
         value_(value), key_(key), left_child_(left_child), right_child_(right_child),
         height_(1), balance_factor_(BALANCED) {}
 
+    /*!
+     * @brief **获取左孩子结点**
+     * @return 左孩子结点
+     */
     AvlNode<TKey, TValue>*& LeftChild() { return this->left_child_; };
+    /*!
+     * @brief **设置左孩子结点**
+     * @param node avl树结点
+     */
     void SetLeftChild(AvlNode<TKey, TValue>* node) { this->left_child_ = node; }
 
+    /*!
+     * @brief **获取右孩子结点**
+     * @return 右孩子结点
+     */
     AvlNode<TKey, TValue>*& RightChild() { return this->right_child_; };
+    /*!
+     * @brief **设置右孩子结点**
+     * @param node avl树结点
+     */
     void SetRightChild(AvlNode<TKey, TValue>* node) { this->right_child_ = node; }
 
     TKey Key() { return this->key_; }
@@ -75,11 +91,19 @@ public:
     int BalanceFactor() { return this->balance_factor_; }
     void SetBalanceFactor(int balance_factor) { this->balance_factor_ = balance_factor; }
 
+    /*!
+     * @brief **更新高度**
+     * @note
+     * 作为子树根节点时具有意义
+     */
     void UpdateHeight() {
         int left_height = LeftChild() ? LeftChild()->Height() : 0;
         int right_height = RightChild() ? RightChild()->Height() : 0;
         this->height_ = left_height > right_height ? left_height : right_height + 1;
     }
+    /*!
+     * @brief **更新平衡因子**
+     */
     void UpdateBalanceFactor() {
         int left_height = LeftChild() ? LeftChild()->Height() : 0;
         int right_height = RightChild() ? RightChild()->Height() : 0;
@@ -93,13 +117,13 @@ public:
     static const int LEFT_HIGHER_2 = -2;    //!< **左子树比右子树高2**
 
 protected:
-    TKey key_;
-    TValue value_;
-    int height_;
-    int balance_factor_;
+    TKey key_;              //!< **关键码(用于比较)**
+    TValue value_;          //!< **数据项**
+    int height_;            //!< **高度(作为子树根节点时具有意义)**
+    int balance_factor_;    //!< **平衡因子**
 
-    AvlNode<TKey, TValue>* left_child_;
-    AvlNode<TKey, TValue>* right_child_;
+    AvlNode<TKey, TValue>* left_child_;     //!< **左孩子**
+    AvlNode<TKey, TValue>* right_child_;    //!< **右孩子**
 };
 
 
@@ -478,6 +502,21 @@ void AvlTree<TKey, TValue>::Balance_(AvlNode<TKey, TValue>*& node) {
 }
 
 
+/*!
+ * @brief **红黑树(子树)插入结点(递归)**
+ * @tparam TKey 结点关键码类型模板参数
+ * @tparam TValue 结点数据项类型模板参数
+ * @param sub_tree_root 子树根节点
+ * @param key 结点关键码
+ * @param value 结点数据项
+ * @return 执行结果
+ * @note
+ * 红黑树(子树)插入结点(递归)
+ * -----------------------
+ * -----------------------
+ *
+ * -----------------------
+ */
 template<class TKey, class TValue>
 bool AvlTree<TKey, TValue>::InsertInSubTreeRecursive_(AvlNode<TKey, TValue>*& sub_tree_root, TKey key, TValue value) {
     if (!sub_tree_root) {
@@ -490,9 +529,15 @@ bool AvlTree<TKey, TValue>::InsertInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
     }
 
     if (key < sub_tree_root->Key()) {
-        InsertInSubTreeRecursive_(sub_tree_root->LeftChild(), key, value);
+        bool res = InsertInSubTreeRecursive_(sub_tree_root->LeftChild(), key, value);
+        if (!res) {
+            return res;
+        }
     } else if (key > sub_tree_root->Key()) {
-        InsertInSubTreeRecursive_(sub_tree_root->RightChild(), key, value);
+        bool res = InsertInSubTreeRecursive_(sub_tree_root->RightChild(), key, value);
+        if (!res) {
+            return res;
+        }
     } else {
         return true;
     }
