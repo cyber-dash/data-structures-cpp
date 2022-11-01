@@ -99,7 +99,8 @@ public:
     void UpdateHeight() {
         int left_height = LeftChild() ? LeftChild()->Height() : 0;
         int right_height = RightChild() ? RightChild()->Height() : 0;
-        this->height_ = left_height > right_height ? left_height : right_height + 1;
+        this->height_ = (left_height > right_height ? left_height : right_height) + 1;  // 注意使用括号
+        // this->height_ = max(left_height, right_height) + 1;
     }
     /*!
      * @brief **更新平衡因子**
