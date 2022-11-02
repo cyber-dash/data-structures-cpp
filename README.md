@@ -38,11 +38,11 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 ## 2 使用方式
 为了方便分类, 项目主目录下, 每个目录对应一个独立的项目
-### 2.1 编译与运行
+### 2.1 构建与运行
     git clone https://gitee.com/cyberdash/data-structure-cpp.git
     # 进入目录
     cd data-structure-cpp/<dir>
-    # 编译
+    # 构建
     cmake3 .
     make
     # 执行程序
