@@ -23,6 +23,17 @@ void visit(ChildSiblingNode<int>* node) {
 
 /*!
  * @brief 测试使用字符串创建子女孩子树
+ * @note
+ *       0                                        0
+ *      /                                        /|\
+ *     /                                        / | \
+ *    /--- 1 --- 3 --- 6                       1  3  6
+ *        /                                   /
+ *       /                                   /
+ *      /--- 2                              2
+ *          /                              / \
+ *         /                              /   \
+ *        /--- 4 --- 5                   4     5
  */
 void TestChildSiblingTreeCreateTreeByStr() {
 	cout << endl;
@@ -30,7 +41,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
 	cout << "|              Test ChildSiblingTree CreateByStr            |" << endl;
 	cout << "|                   测试使用字符串创建子女孩子树                  |" << endl << endl;
 
-	char* str = (char*)"(0(1(2))(2))";
+	char* str = (char*)"(0(1(2(4)(5)))(3)(6))";
 	cout << "字符串: " << str << endl << endl;
 
 	ChildSiblingTree<int> child_sibling_tree;
