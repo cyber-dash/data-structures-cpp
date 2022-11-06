@@ -58,30 +58,30 @@ template <class TData>
 class ChildSiblingTree {
 public:
     /*! @brief 构造函数 */
-    // ChildSiblingTree() : root_(NULL), current_(NULL) {}
     ChildSiblingTree() : root_(NULL) {}
-    bool SetRootToCurrent();
+
+    void CreateByPreOrderStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
+
+    ChildSiblingNode<TData>* FirstChild();
+    ChildSiblingNode<TData>* NextSibling();
 
     /*!
      * @brief **是否为空树**
      * @return 是/否
      */
     bool IsEmpty() { return this->root_ == NULL; }
-    ChildSiblingNode<TData>* FirstChild();
-    ChildSiblingNode<TData>* NextSibling();
-    bool FindParentAndSetCurrent(); // todo: 书上设计有缺陷, 同上
+    int NodeCount() { return this->SubTreeNodeCountRecursive_(this->root_); }
+    int Depth() { return this->SubTreeDepthRecursive_(this->root_); }
+    // bool FindParentAndSetCurrent();
     // bool FindAndSetCurrent(TData data);
-    void Insert(TData& item) { return this->InsertInSubTree_(this->root_, item); } // todo: 有问题
-    ChildSiblingNode<TData>* AddSibling(ChildSiblingNode<TData>* node, TData data);
+    // void Insert(TData& item) { return this->InsertInSubTree_(this->root_, item); }
+    // ChildSiblingNode<TData>* AddSibling(ChildSiblingNode<TData>* node, TData data);
     ChildSiblingNode<TData>* Root() { return this->root_; }
     void PreOrder(ostream& out) { PreOrderByOstream(out, this->root_); }
     void PostOrder(ostream& out) { PostOrderByOstream(out, this->root_); }
     void PreOrder(void (*visit)(ChildSiblingNode<TData>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
     void PostOrder(void (*visit)(ChildSiblingNode<TData>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
-    void LevelOrder(ostream& out) { LevelOrderInSubTree_(out, root_); }
-    int NodeCount() { return this->SubTreeNodeCountRecursive_(this->root_); }
-    int Depth() { return this->SubTreeDepthRecursive_(this->root_); }
-    void CreateTreeByStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
+    void LevelOrder(void (*visit)(ChildSiblingNode<TData>*)) { LevelOrderInSubTree_(root_, visit); }
     void ShowTree() { this->ShowSubTreeRecursive_(this->root_); }
     void CyberDashShow();
 private:
@@ -95,15 +95,15 @@ private:
     // 在子树中寻找父结点, 并设置当前结点current_
     // bool FindParentAndSetCurrentInSubTree_(ChildSiblingNode<TData>* sub_tree_root, ChildSiblingNode<TData>* node);
 
-    void InsertInSubTree_(ChildSiblingNode<TData>*& sub_tree_root, TData& data);
-    void PreOrderByOstream(ostream& out, ChildSiblingNode<TData>* p);
-    void PostOrderByOstream(ostream& out, ChildSiblingNode<TData>* p);
+    // void InsertInSubTree_(ChildSiblingNode<TData>*& sub_tree_root, TData& data);
+    void PreOrderByOstream(ostream& out, ChildSiblingNode<TData>* sub_tree_root);
+    void PostOrderByOstream(ostream& out, ChildSiblingNode<TData>* sub_tree_root);
     // 在子树中进行先根遍历(递归)
     void PreOrderInSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 在子树中进行后根遍历(递归)
     void PostOrderInSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 在子树中层序遍历
-    void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<TData>* sub_tree_root);
+    void LevelOrderInSubTree_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 使用字符串创建子女兄弟树
     void CreateTreeByStrRecursive_(ChildSiblingNode<TData>*&, char*& str);
     // 子树节点数量(递归)
@@ -221,6 +221,7 @@ bool ChildSiblingTree<T>::FindAndSetCurrent(T data) {
  */
 
 
+/*
 template <class T>
 ChildSiblingNode<T>* AddSibling(ChildSiblingNode<T>* node, T data) {
     if (node == NULL) {
@@ -231,6 +232,7 @@ ChildSiblingNode<T>* AddSibling(ChildSiblingNode<T>* node, T data) {
 
     }
 }
+ */
 
 
 /*
@@ -264,14 +266,14 @@ bool ChildSiblingTree<T>::FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_t
  */
 
 
+/*
 template <class T>
 void ChildSiblingTree<T>::InsertInSubTree_(ChildSiblingNode<T>*& sub_tree_root, T& data) {
 
     if (sub_tree_root == NULL) {
         sub_tree_root = new ChildSiblingNode<T>(data);
         // error handling
-    }
-    else {
+    } else {
         InsertInSubTree_(sub_tree_root->first_child, data);
         if (sub_tree_root == Root()) {
             return;
@@ -279,15 +281,16 @@ void ChildSiblingTree<T>::InsertInSubTree_(ChildSiblingNode<T>*& sub_tree_root, 
         InsertInSubTree_(sub_tree_root->next_sibling, data);
     }
 }
+ */
 
 
 template <class T>
-void ChildSiblingTree<T>::PreOrderByOstream(ostream& out, ChildSiblingNode<T>* p) {
-    if (p != NULL) {
-        out << p->data;
+void ChildSiblingTree<T>::PreOrderByOstream(ostream& out, ChildSiblingNode<T>* sub_tree_root) {
+    if (sub_tree_root != NULL) {
+        out << sub_tree_root->data;
 
-        for (p = p->first_child; p != NULL; p = p->next_sibling) {
-            PreOrderByOstream(out, p);
+        for (sub_tree_root = sub_tree_root->first_child; sub_tree_root != NULL; sub_tree_root = sub_tree_root->next_sibling) {
+            PreOrderByOstream(out, sub_tree_root);
         }
     }
 }
@@ -353,8 +356,8 @@ void ChildSiblingTree<T>::PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_
  * @param sub_tree_root 子树根节点
  */
 template <class T>
-void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>* sub_tree_root)
-{
+// void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>* sub_tree_root) {
+void ChildSiblingTree<T>::LevelOrderInSubTree_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*)) {
     queue<ChildSiblingNode<T>*> node_queue;
 
     if (sub_tree_root == NULL) {
@@ -370,7 +373,7 @@ void ChildSiblingTree<T>::LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>
         node_queue.pop();
 
         // 输出流输出
-        out << front_node->data;
+        visit(front_node);
 
         // 队头节点的所有孩子节点入队
         for (ChildSiblingNode<T>* cur = front_node->first_child; cur != NULL; cur = cur->next_sibling) {
