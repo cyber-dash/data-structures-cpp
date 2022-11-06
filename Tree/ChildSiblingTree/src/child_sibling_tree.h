@@ -1,5 +1,5 @@
 ﻿/*!
- * @file ChildSiblingTree.h
+ * @file child_sibling_tree.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 子女兄弟树模板类
  * @version 0.2.1
@@ -21,48 +21,63 @@ using namespace std;
 
 
 /*!
- * @brief 子女兄弟树结点模板结构体
- * @tparam T 类型模板参数
+ * @brief **子女兄弟树结点模板结构体**
+ * @tparam TData 类型模板参数
  */
-template <class T>
+template <class TData>
 struct ChildSiblingNode {
     /*!
-     * @brief 结构体构造函数
+     * @brief **结构体构造函数**
      * @param data 数据项
-     * @param first_child 长子结点指针
-     * @param next_sibling 下一兄弟结点指针
+     * @param first_child 长子结点
+     * @param next_sibling 下一兄弟结点
+     * @note
+     * 结构体构造函数
+     * ------------
+     * ------------
+     *
+     * ------------
+     * 设置data, first_child和next_sibling
      */
-    explicit ChildSiblingNode(T data, ChildSiblingNode<T>* first_child = NULL, ChildSiblingNode<T>* next_sibling = NULL) :
+    explicit ChildSiblingNode(TData data,
+                              ChildSiblingNode<TData>* first_child = NULL,
+                              ChildSiblingNode<TData>* next_sibling = NULL) :
         data(data), first_child(first_child), next_sibling(next_sibling) {}
 
-    T data; //!< 数据项
-    ChildSiblingNode<T>* first_child; //!< 长子结点指针
-    ChildSiblingNode<T>* next_sibling; //!< 兄弟结点指针
+    TData data;                             //!< 数据项
+    ChildSiblingNode<TData>* first_child;    //!< 长子结点
+    ChildSiblingNode<TData>* next_sibling;  //!< 兄弟结点
 };
 
 
 /*!
- * @brief 子女兄弟树模板类
- * @tparam T 类型模板参数
+ * @brief **子女兄弟树模板类**
+ * @tparam TData 数据项类型模板参数
  */
-template <class T>
+template <class TData>
 class ChildSiblingTree {
 public:
     /*! @brief 构造函数 */
-    ChildSiblingTree() : root_(NULL), current_(NULL) {}
+    // ChildSiblingTree() : root_(NULL), current_(NULL) {}
+    ChildSiblingTree() : root_(NULL) {}
     bool SetRootToCurrent();
+
+    /*!
+     * @brief **是否为空树**
+     * @return 是/否
+     */
     bool IsEmpty() { return this->root_ == NULL; }
-    bool FirstChild(); // todo: 书上设计有缺陷, 应返回指针类型
-    bool NextSibling(); // todo: 书上设计有缺陷, 同上
+    ChildSiblingNode<TData>* FirstChild();
+    ChildSiblingNode<TData>* NextSibling();
     bool FindParentAndSetCurrent(); // todo: 书上设计有缺陷, 同上
-    bool FindAndSetCurrent(T data); // todo: 书上设计有缺陷, 同上
-    void Insert(T& item) { return this->InsertInSubTree_(this->root_, item); } // todo: 有问题
-    ChildSiblingNode<T>* AddSibling(ChildSiblingNode<T>* node, T data);
-    ChildSiblingNode<T>* Root() { return this->root_; }
+    // bool FindAndSetCurrent(TData data);
+    void Insert(TData& item) { return this->InsertInSubTree_(this->root_, item); } // todo: 有问题
+    ChildSiblingNode<TData>* AddSibling(ChildSiblingNode<TData>* node, TData data);
+    ChildSiblingNode<TData>* Root() { return this->root_; }
     void PreOrder(ostream& out) { PreOrderByOstream(out, this->root_); }
     void PostOrder(ostream& out) { PostOrderByOstream(out, this->root_); }
-    void PreOrder(void (*visit)(ChildSiblingNode<T>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
-    void PostOrder(void (*visit)(ChildSiblingNode<T>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
+    void PreOrder(void (*visit)(ChildSiblingNode<TData>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
+    void PostOrder(void (*visit)(ChildSiblingNode<TData>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
     void LevelOrder(ostream& out) { LevelOrderInSubTree_(out, root_); }
     int NodeCount() { return this->SubTreeNodeCountRecursive_(this->root_); }
     int Depth() { return this->SubTreeDepthRecursive_(this->root_); }
@@ -70,41 +85,40 @@ public:
     void ShowTree() { this->ShowSubTreeRecursive_(this->root_); }
     void CyberDashShow();
 private:
-    ChildSiblingNode<T>* root_; //!< 根结点
-    ChildSiblingNode<T>* current_; //!< 当前指针, 为了方便链表操作
+    ChildSiblingNode<TData>* root_; //!< 根结点
+    // ChildSiblingNode<TData>* current_; //!< 当前指针, 为了方便链表操作
 
     // 在子树中使用数据项查找, 并将节点赋给current_
-    bool FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, T data);
+    // bool FindAndSetCurrentInSubTree_(ChildSiblingNode<TData>* sub_tree_root, TData data);
     // 删除子树
-    void RemoveSubTree_(ChildSiblingNode<T>* sub_tree_root);
+    void RemoveSubTree_(ChildSiblingNode<TData>* sub_tree_root);
     // 在子树中寻找父结点, 并设置当前结点current_
-    bool FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, ChildSiblingNode<T>* node);
+    // bool FindParentAndSetCurrentInSubTree_(ChildSiblingNode<TData>* sub_tree_root, ChildSiblingNode<TData>* node);
 
-    void InsertInSubTree_(ChildSiblingNode<T>*& sub_tree_root, T& data);
-    void PreOrderByOstream(ostream& out, ChildSiblingNode<T>* p);
-    void PostOrderByOstream(ostream& out, ChildSiblingNode<T>* p);
+    void InsertInSubTree_(ChildSiblingNode<TData>*& sub_tree_root, TData& data);
+    void PreOrderByOstream(ostream& out, ChildSiblingNode<TData>* p);
+    void PostOrderByOstream(ostream& out, ChildSiblingNode<TData>* p);
     // 在子树中进行先根遍历(递归)
-    void PreOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
+    void PreOrderInSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 在子树中进行后根遍历(递归)
-    void PostOrderInSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root, void (*visit)(ChildSiblingNode<T>*));
+    void PostOrderInSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 在子树中层序遍历
-    void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<T>* sub_tree_root);
+    void LevelOrderInSubTree_(ostream& out, ChildSiblingNode<TData>* sub_tree_root);
     // 使用字符串创建子女兄弟树
-    void CreateTreeByStrRecursive_(ChildSiblingNode<T>*&, char*& str);
+    void CreateTreeByStrRecursive_(ChildSiblingNode<TData>*&, char*& str);
     // 子树节点数量(递归)
-    int SubTreeNodeCountRecursive_(ChildSiblingNode<T>* sub_tree_root);
+    int SubTreeNodeCountRecursive_(ChildSiblingNode<TData>* sub_tree_root);
     // 子树深度(递归)
-    int SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_root);
+    int SubTreeDepthRecursive_(ChildSiblingNode<TData>* sub_tree_root);
     // 打印子树(递归)
-    void ShowSubTreeRecursive_(ChildSiblingNode<T>* sub_tree_root);
+    void ShowSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root);
 };
 
 
-/*!
+/*
  * @brief 让树的根结点成为树的当前结点
  * @tparam T 类型模板参数
  * @return 是否设置成功
- */
 template <class T>
 bool ChildSiblingTree<T>::SetRootToCurrent() {
     if (this->root_ == NULL) {
@@ -116,6 +130,7 @@ bool ChildSiblingTree<T>::SetRootToCurrent() {
 
     return true;
 }
+ */
 
 
 /*!
@@ -133,11 +148,10 @@ void ChildSiblingTree<T>::RemoveSubTree_(ChildSiblingNode<T>* sub_tree_root) {
 }
 
 
-/*!
+/*
  * @brief 寻找父结点, 并设置当前结点current_
  * @tparam T 类型模板参数
  * @return 是否成功
- */
 template <class T>
 bool ChildSiblingTree<T>::FindParentAndSetCurrent() {
     ChildSiblingNode<T>* node = this->current_;
@@ -149,37 +163,17 @@ bool ChildSiblingTree<T>::FindParentAndSetCurrent() {
 
     return FindParentAndSetCurrentInSubTree_(this->root_, node);
 }
+ */
 
 
-/*!
+/*
  * @brief 在子树中寻找父结点, 并设置当前结点current_
  * @tparam T 类型模板参数
  * @param sub_tree_root 子树根结点
  * @param node 待寻找父结点的结点
  * @return 是否成功
- */
 template <class T>
 bool ChildSiblingTree<T>::FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, ChildSiblingNode<T>* node) {
-
-    /*
-    ChildSiblingNode<T>* cur = sub_tree_root->first_child;
-    bool succ;
-
-    while (cur != NULL && cur != node) {
-      if ((succ = FindParentInSubTree_(cur, node)) == true) {
-        return succ;
-      }
-      cur = cur->next_sibling;
-    }
-
-    if (cur != NULL && cur == node) {
-      current_ = sub_tree_root;
-      return true;
-    } else {
-      current_ = NULL;
-      return false;
-    }
-     */
 
     ChildSiblingNode<T>* cur = sub_tree_root->first_child;
 
@@ -200,34 +194,22 @@ bool ChildSiblingTree<T>::FindParentAndSetCurrentInSubTree_(ChildSiblingNode<T>*
     this->current_ = NULL;
     return false;
 }
+ */
 
 
-template <class T>
-bool ChildSiblingTree<T>::FirstChild() {
-    if (this->current_ != NULL && this->current_->first_child != NULL) {
-        current_ = current_->first_child;
-        return true;
-    }
-
-    current_ = NULL;
-
-    return false;
+template <class TData>
+ChildSiblingNode<TData>* ChildSiblingTree<TData>::FirstChild() {
+    return this->root_->first_child;
 }
 
 
-template <class T>
-bool ChildSiblingTree<T>::NextSibling() {
-    if (current_ != NULL && current_->next_sibling != NULL) {
-        current_ = current_->next_sibling;
-        return true;
-    }
-
-    current_ = NULL;
-
-    return false;
+template <class TData>
+ChildSiblingNode<TData>* ChildSiblingTree<TData>::NextSibling() {
+    return this->root_->next_sibling;
 }
 
 
+/*
 template <class T>
 bool ChildSiblingTree<T>::FindAndSetCurrent(T data) {
     if (this->IsEmpty()) {
@@ -236,6 +218,7 @@ bool ChildSiblingTree<T>::FindAndSetCurrent(T data) {
 
     return FindAndSetCurrentInSubTree_(this->root_, data);
 }
+ */
 
 
 template <class T>
@@ -249,13 +232,13 @@ ChildSiblingNode<T>* AddSibling(ChildSiblingNode<T>* node, T data) {
     }
 }
 
-/*!
+
+/*
  * @brief 在子树中使用数据项查找, 并将节点赋给current_
  * @tparam T 类型模板参数
  * @param sub_tree_root 子树根结点
  * @param data 数据项
  * @return 是否成功
- */
 template <class T>
 bool ChildSiblingTree<T>::FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_tree_root, T data) {
     bool isFound = false;
@@ -266,11 +249,6 @@ bool ChildSiblingTree<T>::FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_t
     }
     else {
         ChildSiblingNode<T>* cur = sub_tree_root->first_child;
-        /*
-        while (cur != NULL && !(isFound = FindAndSetCurrentInSubTree_(cur, data))) {
-          cur = cur->next_sibling;
-        }
-         */
         while (cur != NULL) {
             isFound = FindAndSetCurrentInSubTree_(cur, data);
             if (isFound) {
@@ -283,6 +261,7 @@ bool ChildSiblingTree<T>::FindAndSetCurrentInSubTree_(ChildSiblingNode<T>* sub_t
 
     return isFound;
 }
+ */
 
 
 template <class T>
@@ -444,13 +423,19 @@ int ChildSiblingTree<T>::SubTreeDepthRecursive_(ChildSiblingNode<T>* sub_tree_ro
 
 
 /*!
- * @brief 使用字符串创建子女兄弟树
- * @tparam T 类型模板参数
+ * @brief **创建子女兄弟树(使用字符串)(递归)**
+ * @tparam TData 类型模板参数
  * @param sub_tree_root 子树根节点
  * @param str 字符串
+ * 创建子女兄弟树(使用字符串)(递归)
+ * ---------------------------
+ * ---------------------------
+ *
+ * ---------------------------
  */
-template <class T>
-void ChildSiblingTree<T>::CreateTreeByStrRecursive_(ChildSiblingNode<T>*& sub_tree_root, char*& str) {
+template <class TData>
+void ChildSiblingTree<TData>::CreateTreeByStrRecursive_(ChildSiblingNode<TData>*& sub_tree_root, char*& str) {
+    /// -
     if (*str == '\0') {
         return;
     }
@@ -464,7 +449,15 @@ void ChildSiblingTree<T>::CreateTreeByStrRecursive_(ChildSiblingNode<T>*& sub_tr
         str++;
     }
 
-    sub_tree_root = new ChildSiblingNode<T>(*(str++) - '0');
+    TData cur_data;
+    if (is_same<TData, int>::value) {
+        cur_data = (TData)(*str - '0');
+    } else if (is_same<TData, char>::value) {
+        cur_data = *str;
+    }
+    str++;
+
+    sub_tree_root = new ChildSiblingNode<TData>(cur_data);
     /* error handler */
 
     CreateTreeByStrRecursive_(sub_tree_root->first_child, str);
