@@ -69,7 +69,7 @@ public:
 	/*!
 	 * @brief 打印线性表
 	 */
-	virtual void Output() = 0;
+	virtual void Print() = 0;
 };
 
 

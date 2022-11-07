@@ -45,7 +45,7 @@ void DoublyLinkedListTest::TestInsertByDirection() {
     band_list->InsertByDirection(1, "Linkin Park", DoublyLinkedList<string>::NEXT_DIRECTION);
     band_list->InsertByDirection(2, "Starship", DoublyLinkedList<string>::NEXT_DIRECTION);
 
-    band_list->Output();
+    band_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -64,7 +64,7 @@ void DoublyLinkedListTest::TestRemoveByDirection() {
     city_list->Insert(1, "Shanghai");
     city_list->Insert(2, "Shenzhen");
 
-    city_list->Output();
+    city_list->Print();
 
     string delete_item;
 
@@ -72,13 +72,13 @@ void DoublyLinkedListTest::TestRemoveByDirection() {
     city_list->RemoveByDirection(delete_pos, delete_item, DoublyLinkedList<int>::NEXT_DIRECTION);
 
     cout << "向后删除城市" << delete_pos << "之后: " << endl;
-    city_list->Output();
+    city_list->Print();
 
     delete_pos = 1;
     city_list->RemoveByDirection(delete_pos, delete_item, DoublyLinkedList<int>::NEXT_DIRECTION);
 
     cout << "向后删除城市" << delete_pos << "之后: " << endl;
-    city_list->Output();
+    city_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -169,7 +169,7 @@ void DoublyLinkedListTest::TestLocate() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                  Test DoublyLinkedList Locate                   |" << endl;
+    cout << "|                  Test DoublyLinkedList Find                   |" << endl;
     cout << "|                       测试双向链表定位                       |" << endl << endl << endl;
 
     DoublyLinkedList<int>* double_list = new DoublyLinkedList<int>();

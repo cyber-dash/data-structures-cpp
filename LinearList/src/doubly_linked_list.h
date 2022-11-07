@@ -98,7 +98,7 @@ public:
     int JosephProblem(DoublyLinkedNode<T>* head, int m);
 
     // 打印双向链表
-    void Output();
+    void Print();
 
     // 我们是CyberDash
     void CyberDashShow();
@@ -389,7 +389,7 @@ int DoublyLinkedList<T>::JosephProblem(DoublyLinkedNode<T>* head, int m) {
  * @tparam T 类型模板参数
  */
 template<class T>
-void DoublyLinkedList<T>::Output() {
+void DoublyLinkedList<T>::Print() {
     if (this->head_ == NULL) {
         cout << "Empty list" << endl;
         return;

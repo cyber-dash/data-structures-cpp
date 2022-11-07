@@ -66,7 +66,7 @@ void SeqListTest::TestInsert() {
     seq_list.Insert(1, num2);
     seq_list.Insert(2, num3);
 
-    seq_list.Output();
+    seq_list.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -92,7 +92,7 @@ void SeqListTest::TestRemove() {
     int delete_num;
     seq_list.Remove(3, delete_num);
 
-    seq_list.Output();
+    seq_list.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -256,7 +256,7 @@ void SeqListTest::TestSetData() {
     seq_list.Insert(1, 2.2);
     seq_list.Insert(2, 3.3);
 
-    seq_list.Output();
+    seq_list.Print();
 
     cout << endl;
 
@@ -264,7 +264,7 @@ void SeqListTest::TestSetData() {
 
     seq_list.SetData(2, 4.4);
 
-    seq_list.Output();
+    seq_list.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -287,7 +287,7 @@ void SeqListTest::TestSort() {
 
     seq_list.Sort();
 
-    seq_list.Output();
+    seq_list.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -313,7 +313,7 @@ void SeqListTest::TestUnion() {
 
     SeqListUnion(seq_list_a, seq_list_b);
 
-    seq_list_a.Output();
+    seq_list_a.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -339,7 +339,7 @@ void SeqListTest::TestIntersection() {
 
     SeqListIntersection(seq_list_a, seq_list_b);
 
-    seq_list_a.Output();
+    seq_list_a.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }

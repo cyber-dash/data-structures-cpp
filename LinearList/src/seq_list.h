@@ -80,7 +80,7 @@ public:
     void Sort();
 
     // 打印顺序表
-    void Output();
+    void Print();
 
     // 赋值运算符重载函数
     SeqList<T>& operator= (const SeqList<T>& seq_list);
@@ -425,7 +425,7 @@ int SeqList<T>::Length() const {
  * @tparam T 类型模板参数
  */
 template<class T>
-void SeqList<T>::Output() {
+void SeqList<T>::Print() {
 
     if (last_index_ == -1) {
         cout << "顺序表为空表:" << endl;
