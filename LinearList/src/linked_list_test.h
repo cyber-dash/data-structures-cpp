@@ -199,8 +199,8 @@ void LinkListTest::TestLocate() {
 	link_list->Insert(3, "Shenzhen");
 	link_list->Insert(4, "Caoxian");
 
-	LinkedNode<string>* pos_1_node = link_list->Find(1);
-	LinkedNode<string>* pos_2_node = link_list->Find(2);
+	LinkedNode<string>* pos_1_node = link_list->GetNode(1);
+	LinkedNode<string>* pos_2_node = link_list->GetNode(2);
 
 	cout << "pos_1_node->data: " << pos_1_node->data << endl;
 	cout << "pos_2_node->data: " << pos_2_node->data << endl;

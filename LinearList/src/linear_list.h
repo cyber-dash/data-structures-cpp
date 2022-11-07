@@ -53,10 +53,10 @@ public:
 	virtual bool Insert(int pos, const T& data) = 0;
 
 	/*!
-	 * @brief 删除第pos个元素
-	 * @param pos 位置pos
-	 * @param data 数据项值(保存被删除的元素数据项)
-	 * @return 是否成功
+	 * @brief **删除元素**
+	 * @param pos 位置
+	 * @param data 数据保存变量
+	 * @return 执行结果
 	 */
 	virtual bool Remove(int pos, T& data) = 0;
 

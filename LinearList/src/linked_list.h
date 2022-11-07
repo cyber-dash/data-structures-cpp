@@ -68,8 +68,8 @@ public:
     LinkedNode<TData>* Head() const { return this->head_; }
     // 搜索
     LinkedNode<TData>* Search(TData data);
-    // 查找
-    LinkedNode<TData>* Find(int pos);
+    // 获取位置pos的结点
+    LinkedNode<TData>* GetNode(int pos);
     // 获取结点数据
     bool GetData(int pos, TData& data) const;
     // 设置结点数据
@@ -454,63 +454,103 @@ LinkedNode<TData>* LinkedList<TData>::Search(TData data) {
 
 
 /*!
- * @brief **查找位置pos的结点**
+ * @brief **获取结点**
  * @tparam TData 数据项类型模板结点
  * @param pos 位置
- * @return 结点指针
+ * @return 结点
  * @note
- * 寻找位置pos的结点
- * ---------------
- * ---------------
+ * 获取结点
+ * -------
+ * -------
+ *
+ * <span style="color:#FF8100">
+ * 时间复杂度O(1)
+ * </span>
  *
  * ---------------
+ * **I&nbsp;&nbsp; 非法位置处理**\n
+ * &emsp; **if** pos < 1 或者 pos > Length():\n
+ * &emsp;&emsp; 返回NULL(范围[1, Length()])\n
+ * **II&nbsp; 遍历至pos位置的结点**\n
+ * &emsp; 声明遍历指针cur, 并初始化指向Head()\n
+ * &emsp; **for loop** 循环pos次:\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * **III 返回cur**\n
  */
 template<typename TData>
-LinkedNode<TData>* LinkedList<TData>::Find(int pos) {
-    if (pos < 1 || pos > this->Length()) {
-        return NULL;
+LinkedNode<TData>* LinkedList<TData>::GetNode(int pos) {
+    // ----- I 非法位置处理 -----
+    if (pos < 1 || pos > this->Length()) {  // if pos < 1 或者 pos > Length():
+        return NULL;                        // 返回NULL(范围[1, Length()])
     }
 
-    LinkedNode<TData>* cur = this->Head();
-    for (int i = 1; i <= pos; i++) {
-        cur = cur->next;
+    // ----- II 遍历至pos位置的结点 -----
+    LinkedNode<TData>* cur = this->Head();  // 声明遍历指针cur, 并初始化指向Head()
+    for (int i = 1; i <= pos; i++) {        // for loop 循环pos次:
+        cur = cur->next;                    // cur指向cur->next
     }
 
+    // ----- III 返回cur -----
     return cur;
 }
 
 
 /*!
- * @brief 删除第pos个结点
- * @tparam TData 类型模板参数
- * @param pos 第pos个
- * @param data 数据(用于保存被删除结点数据项)
- * @return 是否删除成功
+ * @brief **删除结点**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
+ * @param data 数据保存变量
+ * @return 执行结果
  * @note
- * 从1开始计数
+ * 删除结点
+ * -------
+ * -------
+ *
+ * 删除位置pos的结点, 该结点数据保存在参数data
+ *
+ * -------
+ * **I&nbsp;&nbsp; 非法条件处理**\n
+ * &emsp; **if** 空链表 或者 pos < 1 或者 pos > Length():\n
+ * &emsp;&emsp; 返回false\n
+ * **II&nbsp; 遍历至pos位置的前驱结点(pos - 1位置)**\n
+ * &emsp; 声明遍历指针cur, 并初始化指向Head()\n
+ * &emsp; **for loop** 循环pos - 1次:\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * **III 执行删除**\n
+ * &emsp; 声明指针temp, 指向pos位置的待删除结点cur->next\n
+ * &emsp; 待删除结点的前驱cur, 将其next指向待删除结点的后继\n
+ * &emsp; 待删除结点的数据项保存到参数data\n
+ * &emsp; 删除待删除结点\n
+ * **IV 调整链表长度**\n
+ * &emsp; 链表长度减1\n
  */
 template<typename TData>
 bool LinkedList<TData>::Remove(int pos, TData& data) {
 
+    // ----- I 非法条件处理 -----
+    // if 空链表 或者 pos < 1 或者 pos > Length():
     if (this->Length() == 0 || pos < 1 || pos > this->Length()) {
-        return false;
+        return false;   // 返回false
     }
 
-    LinkedNode<TData>* cur = this->head_;
-
-    for (int i = 1; i < pos; i++) {
-        cur = cur->next;
+    // ----- II 遍历至pos位置的前驱结点(pos - 1位置) -----
+    LinkedNode<TData>* cur = this->head_;   // 声明遍历指针cur, 并初始化指向Head()
+    for (int i = 1; i < pos; i++) {         // for loop 循环pos - 1次:
+        cur = cur->next;                    // cur指向cur->next
     }
 
-    LinkedNode<TData>* delete_node_ptr = cur->next;
-    cur->next = delete_node_ptr->next;
+    // ----- III 执行删除 -----
+    LinkedNode<TData>* temp = cur->next;    // 声明指针temp, 指向pos位置的待删除结点cur->next
+    cur->next = temp->next;                 // 待删除结点的前驱cur, 将其next指向待删除结点的后继
 
-    data = delete_node_ptr->data;
-    this->length_--;
+    data = temp->data;                      // 待删除结点的数据项保存到参数data
 
-    if (delete_node_ptr != NULL) {
-        delete delete_node_ptr;
-    }
+    // 删除待删除结点
+    delete temp;
+    temp = NULL;
+
+    // ----- IV 调整链表长度 -----
+    this->length_--;                        // 链表长度减1
 
     return true;
 }

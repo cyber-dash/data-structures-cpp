@@ -169,7 +169,7 @@ void DoublyLinkedListTest::TestLocate() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                  Test DoublyLinkedList Find                   |" << endl;
+    cout << "|                  Test DoublyLinkedList GetNode                   |" << endl;
     cout << "|                       测试双向链表定位                       |" << endl << endl << endl;
 
     DoublyLinkedList<int>* double_list = new DoublyLinkedList<int>();
