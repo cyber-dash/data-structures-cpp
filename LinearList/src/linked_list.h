@@ -320,10 +320,23 @@ void LinkedList<TData>::Print() {
  *
  * ---------
  * **I&nbsp;&nbsp; 非法位置处理**\n
+ * &emsp; **if** pos < 0 或者 pos > Length():\n
+ * &emsp;&emsp; 返回false\n
  * **II&nbsp; 构造插入结点**\n
+ * &emsp; 使用插入数据初始化结点\n
+ * &emsp; **if** 结点为NULL(结点分配内存失败):\n
+ * &emsp;&emsp; 返回false\n
  * **III 遍历至插入位置**\n
+ * &emsp; 声明指针cur, 指向head_->next\n
+ * &emsp; **while** pos > 0 (遍历pos次):\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * &emsp;&emsp; pos减1\n
  * **IV 执行插入**\n
+ * &emsp; 待插入结点的next指向cur->next\n
+ * &emsp; cur->next指向待插入结点\n
+ * &emsp; (此时待插入结点插入到cur后边)\n
  * **V&nbsp; 调整链表长度**\n
+ * &emsp; 链表长度加1\n
  */
 template<typename T>
 bool LinkedList<T>::Insert(int pos, const T& data) {
@@ -335,6 +348,9 @@ bool LinkedList<T>::Insert(int pos, const T& data) {
 
     // ----- II 构造插入结点 -----
     LinkedNode<T>* node = new LinkedNode<T>(data);
+    if (node == NULL) {
+        return false;
+    }
 
     // ----- III 遍历至插入位置 -----
     LinkedNode<T>* cur = this->head_;
@@ -373,10 +389,22 @@ bool LinkedList<T>::Insert(int pos, const T& data) {
  *
  * ---------
  * **I&nbsp;&nbsp; 非法位置处理**\n
+ * &emsp; **if** pos < 0 或者 pos > Length():\n
+ * &emsp;&emsp; 返回false\n
  * **II&nbsp; 插入空节点处理**\n
+ * &emsp; **if** 结点为NULL:\n
+ * &emsp;&emsp; 返回false\n
  * **III 遍历至插入位置**\n
+ * &emsp; 声明指针cur, 指向head_->next\n
+ * &emsp; **while** pos > 0 (遍历pos次):\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * &emsp;&emsp; pos减1\n
  * **IV 执行插入**\n
+ * &emsp; 待插入结点的next指向cur->next\n
+ * &emsp; cur->next指向待插入结点\n
+ * &emsp; (此时待插入结点插入到cur后边)\n
  * **V&nbsp; 调整链表长度**\n
+ * &emsp; 链表长度加1\n
  */
 template<typename TData>
 bool LinkedList<TData>::Insert(int pos, LinkedNode<TData>* node) {

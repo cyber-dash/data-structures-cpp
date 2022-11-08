@@ -42,13 +42,10 @@ public:
 	virtual bool SetData(int pos, const T& data) = 0;
 
 	/*!
-	 * @brief 在第pos个元素之后, 插入数据
-	 * @param pos 位置pos
+	 * @brief 插入(数据)
+	 * @param pos 位置
 	 * @param data 数据项值
-	 * @return 是否成功
-	 * @note
-	 * 区别于数组, 以1开始\n
-	 * 当pos为0时, 表示插入位置1
+	 * @return 执行结果
 	 */
 	virtual bool Insert(int pos, const T& data) = 0;
 
