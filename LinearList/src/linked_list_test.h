@@ -188,19 +188,19 @@ void LinkListTest::TestSearch() {
 void LinkListTest::TestLocate() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                   Test LinkedList Locate                  |" << endl;
-	cout << "|                        测试链表定位                         |" << endl << endl << endl;
+	cout << "|                   Test LinkedList GetNode                 |" << endl;
+	cout << "|                       测试链表获取结点                      |" << endl << endl << endl;
 
-	LinkedList<string>* link_list = new LinkedList<string>();
+	LinkedList<string>* city_linked_list = new LinkedList<string>();    // 城市链表city_linked_list
 
-	link_list->Insert(0, "Beijing");
-	link_list->Insert(1, "Shanghai");
-	link_list->Insert(2, "Guangzhou");
-	link_list->Insert(3, "Shenzhen");
-	link_list->Insert(4, "Caoxian");
+	city_linked_list->Insert(0, "Beijing");     // 位置1插入北京
+	city_linked_list->Insert(1, "Shanghai");    // 位置2插入上海
+	city_linked_list->Insert(2, "Guangzhou");   // 位置3插入广州
+	city_linked_list->Insert(3, "Shenzhen");    // 位置4插入深圳
+	city_linked_list->Insert(4, "Caoxian");     // 位置5插入曹县
 
-	LinkedNode<string>* pos_1_node = link_list->GetNode(1);
-	LinkedNode<string>* pos_2_node = link_list->GetNode(2);
+	LinkedNode<string>* pos_1_node = city_linked_list->GetNode(1);
+	LinkedNode<string>* pos_2_node = city_linked_list->GetNode(2);
 
 	cout << "pos_1_node->data: " << pos_1_node->data << endl;
 	cout << "pos_2_node->data: " << pos_2_node->data << endl;

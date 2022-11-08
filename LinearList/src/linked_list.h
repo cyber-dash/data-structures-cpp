@@ -54,7 +54,7 @@ struct LinkedNode {
 template<typename TData>
 class LinkedList : public LinearList<TData> {
 public:
-    // 构造函数(无参数)
+    // 默认构造函数
     LinkedList();
     // 复制构造函数
     LinkedList(const LinkedList<TData>& link_list);
@@ -74,11 +74,11 @@ public:
     bool GetData(int pos, TData& data) const;
     // 设置结点数据
     bool SetData(int pos, const TData& data);
-    // 在第pos个元素(数组索引pos - 1)之后, 插入数据
+    // 插入(数据)
     bool Insert(int pos, const TData& data);
-    // 在第pos个元素(数组索引pos - 1)之后, 插入结点
+    // 插入(结点)
     bool Insert(int pos, LinkedNode<TData>* node);
-    // 删除结点
+    // 删除(结点)元素
     bool Remove(int pos, TData& data);
     // 是否为空链表
     bool IsEmpty() const;
@@ -94,8 +94,15 @@ private:
 
 
 /*!
- * @brief 构造函数(无参数)
- * @tparam TData 类型参数模板
+ * @brief **默认构造函数**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 默认构造函数
+ * ----------
+ * ----------
+ *
+ * ----------
+ * head_分配内存, length_设置为0\n
  */
 template<typename TData>
 LinkedList<TData>::LinkedList() {
@@ -106,9 +113,16 @@ LinkedList<TData>::LinkedList() {
 
 
 /*!
- * @brief 复制构造函数
- * @tparam TData 类型模板参数
- * @param link_list 链表引用
+ * @brief **复制构造函数**
+ * @tparam TData 数据项类型模板参数
+ * @param link_list 被复制链表
+ * @note
+ * 复制构造函数
+ * ----------
+ * ----------
+ *
+ * ----------
+ *
  */
 template<typename TData>
 LinkedList<TData>::LinkedList(const LinkedList<TData>& link_list) {
@@ -134,8 +148,15 @@ LinkedList<TData>::LinkedList(const LinkedList<TData>& link_list) {
 
 
 /*!
- * @brief 析构函数
- * @tparam TData
+ * @brief **析构函数**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 析构函数
+ * -------
+ * -------
+ *
+ * -------
+ * 调用Clear()清楚链表除head_以外的所有结点, 删除head_结点
  */
 template<typename TData>
 LinkedList<TData>::~LinkedList() {
@@ -237,14 +258,17 @@ bool LinkedList<TData>::SetData(int pos, const TData& data) {
 template<typename TData>
 void LinkedList<TData>::Clear() {
 
-    while (this->head_->next != NULL) {
+    while (this->head_->next != NULL) {     // while head_->next存在 :
 
-        LinkedNode<TData>* cur = this->head_->next;
-        this->head_->next = cur->next;
+        // ----- I head_->next指向head_->next->next -----
+        LinkedNode<TData>* cur = this->head_->next; // 声明指针cur, 指向head_->next
+        this->head_->next = cur->next;              // head_->next指向cur->next
 
-        delete cur;
+        // ----- II 删除head_->next -----
+        delete cur;         //释放cur指向的结点
 
-        this->length_--;
+        // ----- III 调整链表长度 -----
+        this->length_--;    // 链表长度减1
     }
 }
 
@@ -296,7 +320,7 @@ void LinkedList<TData>::Print() {
  *
  * ---------
  * **I&nbsp;&nbsp; 非法位置处理**\n
- * **II&nbsp; 插入空节点处理**\n
+ * **II&nbsp; 构造插入结点**\n
  * **III 遍历至插入位置**\n
  * **IV 执行插入**\n
  * **V&nbsp; 调整链表长度**\n
@@ -304,21 +328,26 @@ void LinkedList<TData>::Print() {
 template<typename T>
 bool LinkedList<T>::Insert(int pos, const T& data) {
 
+    // ----- I 非法位置处理 -----
     if (pos < 0 || pos > Length()) {
         return false;
     }
 
+    // ----- II 构造插入结点 -----
     LinkedNode<T>* node = new LinkedNode<T>(data);
 
+    // ----- III 遍历至插入位置 -----
     LinkedNode<T>* cur = this->head_;
     while (pos > 0) {
         cur = cur->next;
         pos--;
     }
 
+    // ----- IV 执行插入 -----
     node->next = cur->next;
     cur->next = node;
 
+    // ----- V 调整链表长度 -----
     this->length_++;
 
     return true;
@@ -352,23 +381,28 @@ bool LinkedList<T>::Insert(int pos, const T& data) {
 template<typename TData>
 bool LinkedList<TData>::Insert(int pos, LinkedNode<TData>* node) {
 
+    // ----- I 非法位置处理 -----
     if (pos < 0 || pos > this->Length()) {
         return false;
     }
 
+    // ----- II 插入空结点处理 -----
     if (node == NULL) {
         return false;
     }
 
+    // ----- III 遍历至插入位置 -----
     LinkedNode<TData>* cur = this->head_;
     while (pos > 0) {
         cur = cur->next;
         pos--;
     }
 
+    // ----- IV 执行插入 -----
     node->next = cur->next;
     cur->next = node;
 
+    // ----- V 调整链表长度 -----
     this->length_++;
 
     return true;
@@ -481,13 +515,13 @@ template<typename TData>
 LinkedNode<TData>* LinkedList<TData>::GetNode(int pos) {
     // ----- I 非法位置处理 -----
     if (pos < 1 || pos > this->Length()) {  // if pos < 1 或者 pos > Length():
-        return NULL;                        // 返回NULL(范围[1, Length()])
+        return NULL;                        //     返回NULL(范围[1, Length()])
     }
 
     // ----- II 遍历至pos位置的结点 -----
     LinkedNode<TData>* cur = this->Head();  // 声明遍历指针cur, 并初始化指向Head()
     for (int i = 1; i <= pos; i++) {        // for loop 循环pos次:
-        cur = cur->next;                    // cur指向cur->next
+        cur = cur->next;                    //     cur指向cur->next
     }
 
     // ----- III 返回cur -----
@@ -496,13 +530,13 @@ LinkedNode<TData>* LinkedList<TData>::GetNode(int pos) {
 
 
 /*!
- * @brief **删除结点**
+ * @brief **删除(结点)元素**
  * @tparam TData 数据项类型模板参数
  * @param pos 位置
  * @param data 数据保存变量
  * @return 执行结果
  * @note
- * 删除结点
+ * 删除(结点)元素
  * -------
  * -------
  *

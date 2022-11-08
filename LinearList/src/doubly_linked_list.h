@@ -12,9 +12,9 @@
 #define CYBER_DASH_DOUBLY_LINKED_LIST_H
 
 
-#include "linear_list.h"
 #include <iostream>
 #include <cstddef>
+#include "linear_list.h"
 
 
  /*!
@@ -202,8 +202,7 @@ DoublyLinkedNode<T>* DoublyLinkedList<T>::LocateByDirection(int pos, int directi
 
         if (direction == DoublyLinkedList::PREV_DIRECTION) {
             cur = cur->prev;
-        }
-        else {
+        } else {
             cur = cur->next;
         }
     }
@@ -254,8 +253,7 @@ bool DoublyLinkedList<T>::InsertByDirection(int pos, const T& data, int directio
         cur->prev = new_node;
         new_node->prev->next = new_node;
         new_node->next = cur;
-    }
-    else {
+    } else {
         new_node->next = cur->next;
         cur->next = new_node;
         new_node->next->prev = new_node;
