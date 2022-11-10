@@ -14,9 +14,9 @@
 
  /*!
   * @brief 线性表抽象基类
-  * @tparam T 类型模板参数
+  * @tparam TData 数据项类型模板参数
   */
-template <class T>
+template <typename TData>
 class LinearList {
 public:
 	/*!
@@ -26,12 +26,12 @@ public:
 	virtual int Length() const = 0;
 
 	/*!
-	 * @brief 获取第pos个结点的数据项
-	 * @param pos 第pos个
-	 * @param data 数据项(用于保存结果)
-	 * @return 是否获取成功
+	 * @brief 获取元素数据
+	 * @param pos 位置
+	 * @param data 数据保存变量
+	 * @return 执行结果
 	 */
-	virtual bool GetData(int pos, T& data) const = 0;
+	virtual bool GetData(int pos, TData& data) const = 0;
 
 	/*!
 	 * @brief 设置第pos个结点的数据项
@@ -39,23 +39,31 @@ public:
 	 * @param data 数据项
 	 * @return
 	 */
-	virtual bool SetData(int pos, const T& data) = 0;
+	virtual bool SetData(int pos, const TData& data) = 0;
 
 	/*!
-	 * @brief 插入(数据)
+	 * @brief **插入(数据)**
+     * @tparam TData 数据项类型模板参数
 	 * @param pos 位置
 	 * @param data 数据项值
 	 * @return 执行结果
+	 * @note
+	 * 插入(数据)
+	 * ---------
+	 * ---------
+	 *
+	 * ---------
 	 */
-	virtual bool Insert(int pos, const T& data) = 0;
+	virtual bool Insert(int pos, const TData& data) = 0;
 
 	/*!
 	 * @brief **删除元素**
+     * @tparam TData 数据项类型模板参数
 	 * @param pos 位置
 	 * @param data 数据保存变量
 	 * @return 执行结果
 	 */
-	virtual bool Remove(int pos, T& data) = 0;
+	virtual bool Remove(int pos, TData& data) = 0;
 
 	/*!
 	 * @brief 判断是否为空

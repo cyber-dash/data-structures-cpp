@@ -1,7 +1,7 @@
 ﻿/*!
  * @file doubly_linked_list.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 双向链表(循环)
+ * @brief 双向循环链表
  * @version 0.2.1
  * @date 2020-07-28
  * @copyright Copyright (c) 2021
@@ -21,7 +21,7 @@
   * @brief 双向链表结点模板类
   * @tparam T 类型模板参数
   */
-template <class T>
+template <typename T>
 struct DoublyLinkedNode {
     /*!
      * @brief 构造函数(下一结点与上一结点指针)
@@ -49,7 +49,7 @@ struct DoublyLinkedNode {
  * @brief 双向链表模板类
  * @tparam T 类型模板参数
  */
-template<class T>
+template<typename T>
 class DoublyLinkedList : public LinearList<T> {
 public:
     /*! @brief 构造函数(无参数) */
@@ -115,7 +115,7 @@ private:
 /*!
  * @brief 构造函数(无参数)
  */
-template<class T>
+template<typename T>
 DoublyLinkedList<T>::DoublyLinkedList() {
     this->head_ = new DoublyLinkedNode<T>();
     /* error handler */
@@ -130,7 +130,7 @@ DoublyLinkedList<T>::DoublyLinkedList() {
 /*!
  * @brief 析构函数
  */
-template<class T>
+template<typename T>
 DoublyLinkedList<T>::~DoublyLinkedList() {
 
     while (this->head_->next != this->head_) {
@@ -153,7 +153,7 @@ DoublyLinkedList<T>::~DoublyLinkedList() {
  * 返回数据项等于数据的结点,
  * 若没有, 则返回NULL
  */
-template<class T>
+template<typename T>
 DoublyLinkedNode<T>* DoublyLinkedList<T>::Search(const T& data) {
     DoublyLinkedNode<T>* cur = this->head_->next;
     while (cur != this->head_ && cur->data != data) {
@@ -180,7 +180,7 @@ DoublyLinkedNode<T>* DoublyLinkedList<T>::Search(const T& data) {
  *  定位到, 则返回地址
  *  定位不到, 返回NULL
  */
-template<class T>
+template<typename T>
 DoublyLinkedNode<T>* DoublyLinkedList<T>::LocateByDirection(int pos, int direction) {
 
     if (this->head_->next == head_ || pos == 0) {
@@ -221,7 +221,7 @@ DoublyLinkedNode<T>* DoublyLinkedList<T>::LocateByDirection(int pos, int directi
  * @param pos 位置
  * @return 结点指针
  */
-template<class T>
+template<typename T>
 DoublyLinkedNode<T>* DoublyLinkedList<T>::Locate(int pos) {
     return this->LocateByDirection(pos, DoublyLinkedList::NEXT_DIRECTION);
 }
@@ -235,7 +235,7 @@ DoublyLinkedNode<T>* DoublyLinkedList<T>::Locate(int pos) {
  * @param direction 方向
  * @return 是否插入成功
  */
-template<class T>
+template<typename T>
 bool DoublyLinkedList<T>::InsertByDirection(int pos, const T& data, int direction) {
 
     DoublyLinkedNode<T>* cur = LocateByDirection(pos, direction);
@@ -273,7 +273,7 @@ bool DoublyLinkedList<T>::InsertByDirection(int pos, const T& data, int directio
  * @param data 数据
  * @return 是否插入成功
  */
-template<class T>
+template<typename T>
 bool DoublyLinkedList<T>::Insert(int pos, const T& data) {
     return this->InsertByDirection(pos, data, DoublyLinkedList::NEXT_DIRECTION);
 }
@@ -287,7 +287,7 @@ bool DoublyLinkedList<T>::Insert(int pos, const T& data) {
  * @param direction 方向
  * @return 是否删除成功
  */
-template<class T>
+template<typename T>
 bool DoublyLinkedList<T>::RemoveByDirection(int pos, T& data, int direction) {
     DoublyLinkedNode<T>* cur = LocateByDirection(pos, direction);
     if (cur == NULL) {
@@ -312,7 +312,7 @@ bool DoublyLinkedList<T>::RemoveByDirection(int pos, T& data, int direction) {
  * @param data 数据(保存被删除结点数据项)
  * @return 是否删除成功
  */
-template<class T>
+template<typename T>
 bool DoublyLinkedList<T>::Remove(int pos, T& data) {
     return this->RemoveByDirection(pos, data, DoublyLinkedList::NEXT_DIRECTION);
 }
@@ -325,7 +325,7 @@ bool DoublyLinkedList<T>::Remove(int pos, T& data) {
  * @param data 数据
  * @return 是否获取成功
  */
-template<class T>
+template<typename T>
 bool DoublyLinkedList<T>::GetData(int pos, T& data) const {
     if (pos < 1 || pos > Length()) {
         return false;
@@ -351,7 +351,7 @@ bool DoublyLinkedList<T>::GetData(int pos, T& data) const {
  * @param data 数据
  * @return 是否设置成功
  */
-template<class T>
+template<typename T>
 bool DoublyLinkedList<T>::SetData(int pos, const T& data) {
 
     if (pos < 1 || pos > Length()) {
@@ -376,7 +376,7 @@ bool DoublyLinkedList<T>::SetData(int pos, const T& data) {
  * @param m 数到m就出列
  * @return 剩余的结点值
  */
-template<class T>
+template<typename T>
 int DoublyLinkedList<T>::JosephProblem(DoublyLinkedNode<T>* head, int m) {
     return -1; // todo: 
 }
@@ -386,7 +386,7 @@ int DoublyLinkedList<T>::JosephProblem(DoublyLinkedNode<T>* head, int m) {
  * @brief 打印双向链表
  * @tparam T 类型模板参数
  */
-template<class T>
+template<typename T>
 void DoublyLinkedList<T>::Print() {
     if (this->head_ == NULL) {
         cout << "Empty list" << endl;
@@ -415,7 +415,7 @@ void DoublyLinkedList<T>::Print() {
 
 
 
-template<class T>
+template<typename T>
 void DoublyLinkedList<T>::CyberDashShow() {
     cout << endl
         << "*************************************** CyberDash ***************************************" << endl << endl

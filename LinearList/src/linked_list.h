@@ -35,7 +35,7 @@ struct LinkedNode {
     /*!
      * @brief **构造函数(数据项和下一结点地址)**
      * @param data 数据项
-     * @param ptr 下一结点
+     * @param node 下一结点
      */
     explicit LinkedNode(const TData& data, LinkedNode<TData>* node = NULL) {
         this->data = data;
@@ -302,7 +302,7 @@ void LinkedList<TData>::Print() {
 
 
 /*!
- * @brief 插入(数据)
+ * @brief **插入(数据)**
  * @tparam TData 数据项类型模板参数
  * @param pos 位置
  * @param data 数据项值
@@ -338,8 +338,8 @@ void LinkedList<TData>::Print() {
  * **V&nbsp; 调整链表长度**\n
  * &emsp; 链表长度加1\n
  */
-template<typename T>
-bool LinkedList<T>::Insert(int pos, const T& data) {
+template<typename TData>
+bool LinkedList<TData>::Insert(int pos, const TData& data) {
 
     // ----- I 非法位置处理 -----
     if (pos < 0 || pos > Length()) {
@@ -347,13 +347,13 @@ bool LinkedList<T>::Insert(int pos, const T& data) {
     }
 
     // ----- II 构造插入结点 -----
-    LinkedNode<T>* node = new LinkedNode<T>(data);
+    LinkedNode<TData>* node = new LinkedNode<TData>(data);
     if (node == NULL) {
         return false;
     }
 
     // ----- III 遍历至插入位置 -----
-    LinkedNode<T>* cur = this->head_;
+    LinkedNode<TData>* cur = this->head_;
     while (pos > 0) {
         cur = cur->next;
         pos--;

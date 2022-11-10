@@ -1,6 +1,12 @@
-﻿//
-// Created by Zhongyuan.Li on 9/29/2021.
-//
+﻿/*!
+ * @file doubly_linked_list_test.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 双向循环单链表测试类
+ * @version 0.2.1
+ * @date 2022-11-10
+ * @copyright Copyright (c) 2021
+ * **CyberDash计算机考研**
+ */
 
 #ifndef CYBER_DASH_DOUBLE_LINK_LIST_TEST_H
 #define CYBER_DASH_DOUBLE_LINK_LIST_TEST_H

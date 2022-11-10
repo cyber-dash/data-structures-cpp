@@ -22,10 +22,10 @@ using namespace std;
 
 /*!
  * @brief 顺序表模板类
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  */
-template<class T>
-class SeqList : public LinearList<T> {
+template<class TData>
+class SeqList : public LinearList<TData> {
 
 public:
     // 构造函数(无参数)
@@ -35,7 +35,7 @@ public:
     explicit SeqList(int size);
 
     // 复制构造函数(参数:顺序表)
-    SeqList(SeqList<T>& seq_list);
+    SeqList(SeqList<TData>& seq_list);
 
     // 析构函数
     ~SeqList() { delete[] mem_data_; }
@@ -47,22 +47,22 @@ public:
     int Length() const;
 
     // 搜索
-    int Search(T& data) const;
+    int Search(TData& data) const;
 
     // 定位
     int Locate(int pos) const;
 
     // 获取位置pos的数据
-    bool GetData(int pos, T& data) const;
+    bool GetData(int pos, TData& data) const;
 
     // 设置位置pos的数据
-    bool SetData(int pos, const T& data);
+    bool SetData(int pos, const TData& data);
 
     // 位置pos插入数据data
-    bool Insert(int pos, const T& data);
+    bool Insert(int pos, const TData& data);
 
     // 删除位置pos的数据
-    bool Remove(int pos, T& data);
+    bool Remove(int pos, TData& data);
 
     // 是否为空
     bool IsEmpty() const;
@@ -83,13 +83,13 @@ public:
     void Print();
 
     // 赋值运算符重载函数
-    SeqList<T>& operator= (const SeqList<T>& seq_list);
+    SeqList<TData>& operator= (const SeqList<TData>& seq_list);
 
     // 我们是CyberDash
     void CyberDashShow();
 
 private:
-    T* mem_data_; //!< 数据项数组
+    TData* mem_data_; //!< 数据项数组
     int size_{}; //!< 顺序表总长度
     int last_index_{}; //!< 最后一项的数组索引
 };
@@ -97,18 +97,18 @@ private:
 
 /*!
  * @brief **构造函数(参数size) **
- * @tparam T 数据项类型模板参数
+ * @tparam TData 数据项类型模板参数
  * @param size 顺序表size
  */
-template<class T>
-SeqList<T>::SeqList(int size) {
+template<class TData>
+SeqList<TData>::SeqList(int size) {
     if (size < 0) {
         throw exception("size error");  // todo: use size_t type
     }
 
     this->size_ = size;
     this->last_index_ = -1;
-    this->mem_data_ = new T[size];
+    this->mem_data_ = new TData[size];
     if (!this->mem_data_) {
         throw exception("mem allocation error");
     }
@@ -117,7 +117,7 @@ SeqList<T>::SeqList(int size) {
 
 /*!
  * @brief **复制构造函数**
- * @tparam T 数据项类型模板参数
+ * @tparam TData 数据项类型模板参数
  * @param seq_list 顺序表
  * @note
  * 复制构造函数
@@ -129,8 +129,8 @@ SeqList<T>::SeqList(int size) {
  * ### 2. mem_data_分配内存 ###
  * ### 3. mem_data_内存赋值 ###
  */
-template<class T>
-SeqList<T>::SeqList(SeqList<T>& seq_list) {
+template<class TData>
+SeqList<TData>::SeqList(SeqList<TData>& seq_list) {
 
     // ----- 1. 初始化size_和last_index_
     this->size_ = seq_list.Size();
@@ -141,14 +141,14 @@ SeqList<T>::SeqList(SeqList<T>& seq_list) {
     }
 
     // ----- 2. this->mem_data_分配内存 -----
-    this->mem_data_ = new T[this->Size()];
+    this->mem_data_ = new TData[this->Size()];
     if (!this->mem_data_) {
         throw exception("mem allocation error");
     }
 
     // ----- 3. this->mem_data_内存赋值 -----
     for (int i = 1; i <= this->last_index_ + 1; i++) {
-        T cur_data;
+        TData cur_data;
         seq_list.GetData(i, cur_data);
 
         this->mem_data_[i - 1] = cur_data;
@@ -158,7 +158,7 @@ SeqList<T>::SeqList(SeqList<T>& seq_list) {
 
 /*!
  * @brief **调整顺序表的长度**
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param new_size 新的总长度
  * @return 新的总长度
  * @note
@@ -167,8 +167,8 @@ SeqList<T>::SeqList(SeqList<T>& seq_list) {
  * -1: 无效参数
  * 0: 新的总长度与原来的相同
  */
-template<class T>
-int SeqList<T>::Resize(int new_size) {
+template<class TData>
+int SeqList<TData>::Resize(int new_size) {
 
     if (new_size <= 0) {
         cerr << "无效的数组大小" << endl;
@@ -180,14 +180,14 @@ int SeqList<T>::Resize(int new_size) {
         return 0;
     }
 
-    T* new_data_array = new T[this->Size()];
+    TData* new_data_array = new TData[this->Size()];
     if (new_data_array == NULL) {
         cerr << "存储分配错误" << endl;
         return -2;
     }
 
-    T* src_ptr = mem_data_;
-    T* dest_ptr = new_data_array;
+    TData* src_ptr = mem_data_;
+    TData* dest_ptr = new_data_array;
 
     for (int i = 0; i < this->Length(); i++) {
         *(dest_ptr + i) = *(src_ptr + i);
@@ -204,12 +204,12 @@ int SeqList<T>::Resize(int new_size) {
 
 /*!
  * @brief 查找数据
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param data 数据
  * @return 在顺序表中的位置
  */
-template<class T>
-int SeqList<T>::Search(T& data) const {
+template<class TData>
+int SeqList<TData>::Search(TData& data) const {
 
     int pos = 0; // 从1开始, 返回0表示没有查到
 
@@ -226,14 +226,14 @@ int SeqList<T>::Search(T& data) const {
 
 /*!
  * @brief 定位
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param pos 第pos个
  * @return 位置pos
  * @note
  * pos是以1为起始, 不同于数组以0开始
  */
-template<class T>
-int SeqList<T>::Locate(int pos) const {
+template<class TData>
+int SeqList<TData>::Locate(int pos) const {
     if (pos >= 1 && pos <= last_index_ + 1) {
         return pos;
     }
@@ -245,13 +245,13 @@ int SeqList<T>::Locate(int pos) const {
 
 /*!
  * @brief 获取位置pos的数据
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param pos 位置pos
  * @param data 数据(用于保存数据项)
  * @return 是否获取成功
  */
-template<class T>
-bool SeqList<T>::GetData(int pos, T& data) const {
+template<class TData>
+bool SeqList<TData>::GetData(int pos, TData& data) const {
     if (pos > 0 && pos <= last_index_ + 1) {
         data = mem_data_[pos - 1];
         return true;
@@ -264,13 +264,13 @@ bool SeqList<T>::GetData(int pos, T& data) const {
 
 /*!
  * @brief 设置位置pos的数据
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param pos 位置pos
  * @param data 数据
  * @return 是否设置成功
  */
-template<class T>
-bool SeqList<T>::SetData(int pos, const T& data) {
+template<class TData>
+bool SeqList<TData>::SetData(int pos, const TData& data) {
     if (pos > 0 && pos <= last_index_ + 1) {
         mem_data_[pos - 1] = data;
         return true;
@@ -290,8 +290,8 @@ bool SeqList<T>::SetData(int pos, const T& data) {
  * 区别于数组, 以1开始\n
  * 当pos为0时, 表示插入位置1
  */
-template<class T>
-bool SeqList<T>::Insert(int pos, const T& data) {
+template<class TData>
+bool SeqList<TData>::Insert(int pos, const TData& data) {
 
     if (last_index_ == size_ - 1) {
         return false;
@@ -315,13 +315,13 @@ bool SeqList<T>::Insert(int pos, const T& data) {
 
 /*!
  * @brief 删除位置pos的数据
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param pos 位置pos
  * @param remove_data 被删除的数据项
  * @return 是否删除成功
  */
-template<class T>
-bool SeqList<T>::Remove(int pos, T& remove_data) {
+template<class TData>
+bool SeqList<TData>::Remove(int pos, TData& remove_data) {
 
     if (last_index_ == -1) {
         return false;
@@ -345,11 +345,11 @@ bool SeqList<T>::Remove(int pos, T& remove_data) {
 
 /*!
  * @brief 是否为空表
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @return 是否为空
  */
-template<class T>
-bool SeqList<T>::IsEmpty() const {
+template<class TData>
+bool SeqList<TData>::IsEmpty() const {
     if (last_index_ == -1) {
         return true;
     }
@@ -361,11 +361,11 @@ bool SeqList<T>::IsEmpty() const {
 
 /*!
  * @brief 顺序表是否满
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @return 是否满
  */
-template<class T>
-bool SeqList<T>::IsFull() const {
+template<class TData>
+bool SeqList<TData>::IsFull() const {
     if (last_index_ == size_ - 1) {
         return true;
     }
@@ -377,12 +377,12 @@ bool SeqList<T>::IsFull() const {
 
 /*!
  * @brief 赋值运算符重载函数
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param seq_list 顺序表
  * @return 顺序表引用
  */
-template<class T>
-SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
+template<class TData>
+SeqList<TData>& SeqList<TData>::operator=(const SeqList<TData>& seq_list) {
 
     this->size_ = seq_list.Size();
     int p_length = seq_list.Length();
@@ -400,32 +400,32 @@ SeqList<T>& SeqList<T>::operator=(const SeqList<T>& seq_list) {
 
 /*!
  * @brief 获取总长度
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @return 总长度
  */
-template<class T>
-int SeqList<T>::Size() const {
+template<class TData>
+int SeqList<TData>::Size() const {
     return size_;
 }
 
 
 /*!
  * @brief 获取当前长度
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @return 当前长度
  */
-template<class T>
-int SeqList<T>::Length() const {
+template<class TData>
+int SeqList<TData>::Length() const {
     return last_index_ + 1;
 }
 
 
 /*!
  * @brief 打印顺序表
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  */
-template<class T>
-void SeqList<T>::Print() {
+template<class TData>
+void SeqList<TData>::Print() {
 
     if (last_index_ == -1) {
         cout << "顺序表为空表:" << endl;
@@ -441,19 +441,19 @@ void SeqList<T>::Print() {
 
 /*!
  * @brief 排序
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  */
-template<class T>
-void SeqList<T>::Sort() {
+template<class TData>
+void SeqList<TData>::Sort() {
 
     int length = this->Length();
     for (int i = 1; i < length; i++) {
         for (int j = 1; j <= length - i; j++) {
 
-            T j_data;
+            TData j_data;
             this->GetData(j, j_data);
 
-            T j_next_data;
+            TData j_next_data;
             this->GetData(j + 1, j_next_data);
 
             if (j_data > j_next_data) {
@@ -465,20 +465,4 @@ void SeqList<T>::Sort() {
 }
 
 
-/*!
- * @brief 我们是CyberDash
- */
-template<class T>
-void SeqList<T>::CyberDashShow() {
-    cout << endl
-        << "*************************************** CyberDash ***************************************" << endl << endl
-        << "抖音号\"CyberDash计算机考研\", id: cyberdash_yuan" << endl << endl
-        << "CyberDash成员:" << endl
-        << "元哥(cyberdash@163.com), " << "北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)" << endl
-        << "磊哥(alei_go@163.com), " << "山东理工大学(数学本科)/北京邮电大学(计算机研究生)" << endl << endl
-        << "L_Dash(lyu2586@163.com), " << "北京邮电大学(计算机在读研究生)" << endl << endl
-        << "数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp" << endl
-        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
-}
-
-#endif //CYBER_DASH_YUAN_SEQ_LIST_H
+#endif // CYBER_DASH_SEQ_LIST_H
