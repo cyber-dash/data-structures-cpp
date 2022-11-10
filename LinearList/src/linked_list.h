@@ -52,7 +52,7 @@ struct LinkedNode {
  * @tparam TData 数据项类型模板参数
  */
 template<typename TData>
-class LinkedList : public LinearList<TData> {
+class LinkedList: public LinearList<TData> {
 public:
     // 默认构造函数
     LinkedList();
@@ -342,29 +342,30 @@ template<typename TData>
 bool LinkedList<TData>::Insert(int pos, const TData& data) {
 
     // ----- I 非法位置处理 -----
-    if (pos < 0 || pos > Length()) {
-        return false;
+    if (pos < 0 || pos > Length()) {                        // if pos < 0 或者 pos > Length():
+        return false;                                       // 返回false
     }
 
     // ----- II 构造插入结点 -----
-    LinkedNode<TData>* node = new LinkedNode<TData>(data);
-    if (node == NULL) {
-        return false;
+    LinkedNode<TData>* node = new LinkedNode<TData>(data);  // 使用插入数据初始化结点
+    if (node == NULL) {                                     // if 结点为NULL(结点分配内存失败):
+        return false;                                       // 返回false
     }
 
     // ----- III 遍历至插入位置 -----
-    LinkedNode<TData>* cur = this->head_;
-    while (pos > 0) {
-        cur = cur->next;
-        pos--;
+    LinkedNode<TData>* cur = this->head_;                   // 声明指针cur, 指向head_->next
+    while (pos > 0) {                                       // while pos > 0 (遍历pos次):
+        cur = cur->next;                                    // cur指向cur->next
+        pos--;                                              // pos减1
     }
 
     // ----- IV 执行插入 -----
-    node->next = cur->next;
-    cur->next = node;
+    node->next = cur->next;                                 // 待插入结点的next指向cur->next
+    cur->next = node;                                       // cur->next指向待插入结点
+    // (此时待插入结点插入到cur后边)
 
     // ----- V 调整链表长度 -----
-    this->length_++;
+    this->length_++;                                        // 链表长度加1
 
     return true;
 }
@@ -410,28 +411,29 @@ template<typename TData>
 bool LinkedList<TData>::Insert(int pos, LinkedNode<TData>* node) {
 
     // ----- I 非法位置处理 -----
-    if (pos < 0 || pos > this->Length()) {
-        return false;
+    if (pos < 0 || pos > this->Length()) {  // if pos < 0 或者 pos > Length():
+        return false;                       // 返回false
     }
 
     // ----- II 插入空结点处理 -----
-    if (node == NULL) {
-        return false;
+    if (node == NULL) {                     // if 结点为NULL:
+        return false;                       // 返回false
     }
 
     // ----- III 遍历至插入位置 -----
-    LinkedNode<TData>* cur = this->head_;
-    while (pos > 0) {
-        cur = cur->next;
-        pos--;
+    LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_->next
+    while (pos > 0) {                       // while pos > 0 (遍历pos次):
+        cur = cur->next;                    // cur指向cur->next
+        pos--;                              // pos减1
     }
 
     // ----- IV 执行插入 -----
-    node->next = cur->next;
-    cur->next = node;
+    node->next = cur->next;                 // 待插入结点的next指向cur->next
+    cur->next = node;                       // cur->next指向待插入结点
+    // (此时待插入结点插入到cur后边)
 
     // ----- V 调整链表长度 -----
-    this->length_++;
+    this->length_++;                        // 链表长度加1
 
     return true;
 }
