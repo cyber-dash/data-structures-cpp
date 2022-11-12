@@ -28,14 +28,14 @@ template <typename TData>
 struct LinkedNode {
     /*!
      * @brief **构造函数(下一结点地址)**
-     * @param node 下一结点
+     * @param node 下一结点(指针)
      */
     explicit LinkedNode(LinkedNode<TData>* node = NULL) { this->next = node; }
 
     /*!
      * @brief **构造函数(数据项和下一结点地址)**
-     * @param data 数据项
-     * @param node 下一结点
+     * @param data 数据项数据
+     * @param node 下一结点(指针)
      */
     explicit LinkedNode(const TData& data, LinkedNode<TData>* node = NULL) {
         this->data = data;
@@ -57,18 +57,18 @@ public:
     // 默认构造函数
     LinkedList();
     // 复制构造函数
-    LinkedList(const LinkedList<TData>& link_list);
+    LinkedList(const LinkedList<TData>& linked_list);
     // 析构函数
     ~LinkedList();
-    // 清除链表
+    // 清空链表
     void Clear();
-    /*! @brief 链表长度 */
+    /*! @brief **链表长度** */
     int Length() const { return this->length_; }
-    /*! @brief 链表头结点 */
+    /*! @brief **获取链表头结点** */
     LinkedNode<TData>* Head() const { return this->head_; }
     // 搜索
     LinkedNode<TData>* Search(TData data);
-    // 获取位置pos的结点
+    // 获取结点
     LinkedNode<TData>* GetNode(int pos);
     // 获取结点数据
     bool GetData(int pos, TData& data) const;
@@ -80,16 +80,14 @@ public:
     bool Insert(int pos, LinkedNode<TData>* node);
     // 删除(结点)元素
     bool Remove(int pos, TData& data);
-    // 是否为空链表
+    // 判断是否为空链表
     bool IsEmpty() const;
     // 打印链表
     void Print();
-    // 我们是CyberDash
-    void CyberDashShow();
 
 private:
     LinkedNode<TData>* head_; //!< 链表头结点
-    int length_; //!< 链表长度
+    int length_;              //!< 链表长度
 };
 
 
@@ -115,35 +113,48 @@ LinkedList<TData>::LinkedList() {
 /*!
  * @brief **复制构造函数**
  * @tparam TData 数据项类型模板参数
- * @param link_list 被复制链表
+ * @param linked_list 被复制链表
  * @note
  * 复制构造函数
  * ----------
  * ----------
  *
  * ----------
- *
+ * **I&nbsp;&nbsp; 分配head_结点内存**\n
+ * **II&nbsp; 声明并初始化两个头结点指针**\n
+ * &emsp; origin_obj_cur指向源链表head_\n
+ * &emsp; cur指向自身链表head_\n
+ * **III 循环复制结点**\n
+ * &emsp; **while** origin_obj_cur->next不为NULL:\n
+ * &emsp;&emsp; 使用origin_cur->next的数据项构造新结点, 赋给cur->next指向的内存\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * &emsp;&emsp; origin_cur指向origin_cur->next\n
+ * &emsp;&emsp; 链表长度加1\n
+ * &emsp; cur->next置为NULL\n
  */
 template<typename TData>
-LinkedList<TData>::LinkedList(const LinkedList<TData>& link_list) {
+LinkedList<TData>::LinkedList(const LinkedList<TData>& linked_list) {
 
+    // ----- I 分配head_结点内存 -----
     this->head_ = new LinkedNode<TData>();
-    LinkedNode<TData>* dest_list_cur = this->Head();
 
-    LinkedNode<TData>* src_list_cur = link_list.Head();
+    // ----- II 声明并初始化两个头结点指针 -----
+    LinkedNode<TData>* origin_cur = linked_list.Head();     // origin_obj_cur指向源链表head_
+    LinkedNode<TData>* cur = this->Head();                  // cur指向自身链表head_
 
-    while (src_list_cur->next != NULL) {
+    // ----- III 循环复制结点 -----
+    while (origin_cur->next != NULL) {              // while origin_obj_cur->next不为NULL:
 
-        TData data = src_list_cur->next->data;
-        dest_list_cur->next = new LinkedNode<TData>(data);
+        TData data = origin_cur->next->data;
+        cur->next = new LinkedNode<TData>(data);    // 使用origin_cur->next的数据项构造新结点, 赋给cur->next指向的内存
 
-        dest_list_cur = dest_list_cur->next;
-        src_list_cur = src_list_cur->next;
+        cur = cur->next;                            // cur指向cur->next
+        origin_cur = origin_cur->next;              // origin_cur指向origin_cur->next
 
-        length_++;
+        this->length_++;                            // 链表长度加1
     }
 
-    dest_list_cur->next = NULL;
+    cur->next = NULL;   // cur->next置为NULL
 }
 
 
@@ -156,19 +167,22 @@ LinkedList<TData>::LinkedList(const LinkedList<TData>& link_list) {
  * -------
  *
  * -------
- * 调用Clear()清楚链表除head_以外的所有结点, 删除head_结点
+ * **I&nbsp;&nbsp; 清空链表**\n
+ * **II&nbsp; 释放head_指针并置NULL**\n
  */
 template<typename TData>
 LinkedList<TData>::~LinkedList() {
+    // ----- I 清空链表 -----
     this->Clear();
 
+    // ----- II 释放head_指针并置NULL -----
     delete this->head_;
     this->head_ = NULL;
 }
 
 
 /*!
- * @brief **获取结点数据**
+ * @brief **获取结点据**
  * @tparam TData 数据项类型模板参数
  * @param pos 结点位置
  * @param data 数据保存变量
@@ -179,21 +193,33 @@ LinkedList<TData>::~LinkedList() {
  * -----------
  *
  * -----------
+ * **I&nbsp;&nbsp; 非法位置处理**\n
+ * &emsp; **if** pos < 1 或者 pos > Length():\n
+ * &emsp;&emsp; 返回false\n
+ * **II&nbsp; 遍历至pos位置**\n
+ * &emsp; 声明指针cur, 指向head_\n
+ * &emsp; **while** pos > 0 (遍历pos次):\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * &emsp;&emsp; pos减1\n
+ * **III 获取数据项**\n
  */
 template<typename TData>
 bool LinkedList<TData>::GetData(int pos, TData& data) const {
 
-    if (pos < 1 || pos > this->Length()) {
-        return false;
+    // ----- I 非法位置处理 -----
+    if (pos < 1 || pos > this->Length()) {  // if pos < 1 或者 pos > Length():
+        return false;                       // 返回false
     }
 
-    LinkedNode<TData>* cur = this->head_;
+    // ----- II 遍历至pos位置 -----
+    LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_
 
-    while (pos > 0) {
-        cur = cur->next;
-        pos--;
+    while (pos > 0) {                       // while pos > 0 (遍历pos次):
+        cur = cur->next;                    // cur指向cur->next
+        pos--;                              // pos减1
     }
 
+    // ----- III 获取数据项 -----
     data = cur->data;
 
     return true;
@@ -203,7 +229,7 @@ bool LinkedList<TData>::GetData(int pos, TData& data) const {
 /*!
  * @brief **设置结点数据**
  * @tparam TData 数据项类型模板参数
- * @param pos 结点位置
+ * @param pos 位置
  * @param data 数据
  * @return 执行结果
  * @note
@@ -212,21 +238,33 @@ bool LinkedList<TData>::GetData(int pos, TData& data) const {
  * -----------
  *
  * -----------
+ * **I&nbsp;&nbsp; 非法位置处理**\n
+ * &emsp; **if** pos < 1 或者 pos > Length():\n
+ * &emsp;&emsp; 返回false\n
+ * **II&nbsp; 遍历至pos位置**\n
+ * &emsp; 声明指针cur, 指向head_\n
+ * &emsp; **while** pos > 0 (遍历pos次):\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * &emsp;&emsp; pos减1\n
+ * **III 设置数据项**\n
  */
 template<typename TData>
 bool LinkedList<TData>::SetData(int pos, const TData& data) {
 
-    if (pos < 1 || pos > Length()) {
-        return false;
+    // ----- I 非法位置处理 -----
+    if (pos < 1 || pos > Length()) {        // if pos < 1 或者 pos > Length():
+        return false;                       // 返回false
     }
 
-    LinkedNode<TData>* cur = this->head_;
+    // ----- II 遍历至插入位置 ------
+    LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_
 
-    while (pos > 0) {
-        cur = cur->next;
-        pos--;
+    while (pos > 0) {                       // while pos > 0 (遍历pos次):
+        cur = cur->next;                    // cur指向cur->next
+        pos--;                              // pos减1
     }
 
+    // ----- III 设置数据项 -----
     cur->data = data;
 
     return true;
@@ -258,17 +296,17 @@ bool LinkedList<TData>::SetData(int pos, const TData& data) {
 template<typename TData>
 void LinkedList<TData>::Clear() {
 
-    while (this->head_->next != NULL) {     // while head_->next存在 :
+    while (this->head_->next != NULL) {             // while head_->next存在 :
 
         // ----- I head_->next指向head_->next->next -----
         LinkedNode<TData>* cur = this->head_->next; // 声明指针cur, 指向head_->next
         this->head_->next = cur->next;              // head_->next指向cur->next
 
         // ----- II 删除head_->next -----
-        delete cur;         //释放cur指向的结点
+        delete cur;                                 // 释放cur指向的结点
 
         // ----- III 调整链表长度 -----
-        this->length_--;    // 链表长度减1
+        this->length_--;                            // 链表长度减1
     }
 }
 
@@ -282,19 +320,30 @@ void LinkedList<TData>::Clear() {
  * -------
  *
  * -------
+ * **I&nbsp;&nbsp; 空链表打印**\n
+ * &emsp; **if** head_->next为NULL:\n
+ * &emsp;&emsp; 打印"Empty list"\n
+ * &emsp;&emsp; return\n
+ * **II&nbsp; 非空链表打印**\n
+ * &emsp; 声明遍历指针cur, 并初始化指向head_->next\n
+ * &emsp; **while** cur不为NULL:\n
+ * &emsp;&emsp; 屏幕打印cur指向结点的数据项\n
+ * &emsp;&emsp; cur指向下一结点cur->next\n
  */
 template<typename TData>
 void LinkedList<TData>::Print() {
 
-    if (this->head_->next == NULL) {
-        cout << "Empty list" << endl;
+    // ----- I 空链表打印 -----
+    if (this->head_->next == NULL) {        // if head_->next为NULL:
+        cout<<"Empty list"<<endl;           // 打印Empty list
         return;
     }
 
-    LinkedNode<TData>* cur = Head()->next;
-    while (cur != NULL) {
-        cout << cur->data << " ";
-        cur = cur->next;
+    // ----- II 非空链表打印 -----
+    LinkedNode<TData>* cur = Head()->next;  // 声明遍历指针cur, 并初始化指向head_->next
+    while (cur != NULL) {                   // while cur不为NULL:
+        cout << cur->data << " ";           // 屏幕打印cur指向结点的数据项
+        cur = cur->next;                    // cur指向下一结点cur->next
     }
 
     cout << endl;
@@ -440,11 +489,11 @@ bool LinkedList<TData>::Insert(int pos, LinkedNode<TData>* node) {
 
 
 /*!
- * @brief **是否为空链表**
+ * @brief **判断是否为空链表**
  * @tparam TData 数据项类型模板参数
  * @return 结果
  * @note
- * 是否为空链表
+ * 判断是否为空链表
  * -----------
  * -----------
  *
@@ -499,8 +548,8 @@ LinkedNode<TData>* LinkedList<TData>::Search(TData data) {
 
     // ----- I 初始化遍历指针 -----
     LinkedNode<TData>* cur = this->head_->next; // 声明遍历指针cur, 并初始化指向head_->next
-    if (cur == NULL) {  // if cur为NULL:
-        return NULL;    // 返回NULL
+    if (cur == NULL) {                          // if cur为NULL:
+        return NULL;                            // 返回NULL
     }
 
     // ----- II 遍历链表进行搜索 -----
@@ -509,7 +558,7 @@ LinkedNode<TData>* LinkedList<TData>::Search(TData data) {
             break;                  // 搜索到相应数据, 跳出循环
         }
 
-        cur = cur->next;    // cur指向cur->next
+        cur = cur->next;            // cur指向cur->next
     }
 
     // ----- III 返回搜索结果 -----
@@ -592,9 +641,8 @@ template<typename TData>
 bool LinkedList<TData>::Remove(int pos, TData& data) {
 
     // ----- I 非法条件处理 -----
-    // if 空链表 或者 pos < 1 或者 pos > Length():
-    if (this->Length() == 0 || pos < 1 || pos > this->Length()) {
-        return false;   // 返回false
+    if (this->Length() == 0 || pos < 1 || pos > this->Length()) {   // if 空链表 或者 pos < 1 或者 pos > Length():
+        return false;                                               // 返回false
     }
 
     // ----- II 遍历至pos位置的前驱结点(pos - 1位置) -----
