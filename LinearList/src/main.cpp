@@ -2,9 +2,9 @@
 // Created by cyberdash@163.com(: cyberdash_yuan) on 2020/7/15.
 //
 
-#include "linked_list_test.h"
+#include "singly_linked_list_test.h"
 #include "seq_list_test.h"
-#include "doubly_linked_list_test.h"
+#include "circular_doubly_linked_list_test.h"
 
 
 using namespace std;
@@ -12,6 +12,7 @@ using namespace std;
 
 int main() {
 
+    /*
 	SeqListTest::TestInsert();
 
 	SeqListTest::TestSize();
@@ -22,7 +23,7 @@ int main() {
 
 	SeqListTest::TestSearch();
 
-	SeqListTest::TestLocate();
+	SeqListTest::TestGetNode();
 
 	SeqListTest::TestGetData();
 
@@ -33,22 +34,26 @@ int main() {
 	SeqListTest::TestUnion();
 
 	SeqListTest::TestIntersection();
+     */
 
 	DoublyLinkedListTest::TestInsertByDirection();
 
 	DoublyLinkedListTest::TestRemoveByDirection();
 
+    /*
 	DoublyLinkedListTest::TestLength();
 
-	DoublyLinkedListTest::TestLocate();
+    DoublyLinkedListTest::TestGetNode();
 
 	DoublyLinkedListTest::TestEmpty();
 
 	DoublyLinkedListTest::TestSearch();
 
 	DoublyLinkedListTest::TestGetDataAndSetData();
+     */
 
 
+    /*
 	LinkListTest::TestCopyConstructor();
 
 	LinkListTest::TestRemove();
@@ -58,6 +63,7 @@ int main() {
 	LinkListTest::TestLocate();
 
 	LinkListTest::TestGetDataAndSetData();
+     */
 
 	return 0;
 }
