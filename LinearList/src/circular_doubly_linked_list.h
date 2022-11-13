@@ -267,7 +267,7 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNode(int po
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::InsertByDirection(int pos, const TData& data, int direction) {
 
-    if (Length() < pos) {
+    if (Length() < pos || pos < 0) {
         return false;
     }
 

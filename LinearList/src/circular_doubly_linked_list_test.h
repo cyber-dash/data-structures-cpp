@@ -1,5 +1,5 @@
 ﻿/*!
- * @file doubly_linked_list_test.h
+ * @file circular_doubly_linked_list_test.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 双向循环单链表测试类
  * @version 0.2.1
@@ -20,7 +20,7 @@ using namespace std;
 /*!
  * @brief 双向链表测试类
  */
-class DoublyLinkedListTest {
+class CircularDoublyLinkedListTest {
 public:
     /*! @brief 测试按方向插入 */
     static void TestInsertByDirection();
@@ -39,7 +39,7 @@ public:
 };
 
 
-void DoublyLinkedListTest::TestInsertByDirection() {
+void CircularDoublyLinkedListTest::TestInsertByDirection() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test CircularDoublyLinkedList InsertByDirection            |" << endl;
@@ -65,7 +65,7 @@ void DoublyLinkedListTest::TestInsertByDirection() {
 }
 
 
-void DoublyLinkedListTest::TestRemoveByDirection() {
+void CircularDoublyLinkedListTest::TestRemoveByDirection() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -101,7 +101,7 @@ void DoublyLinkedListTest::TestRemoveByDirection() {
 }
 
 
-void DoublyLinkedListTest::TestLength() {
+void CircularDoublyLinkedListTest::TestLength() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -121,7 +121,7 @@ void DoublyLinkedListTest::TestLength() {
 }
 
 
-void DoublyLinkedListTest::TestEmpty() {
+void CircularDoublyLinkedListTest::TestEmpty() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -158,7 +158,7 @@ void DoublyLinkedListTest::TestEmpty() {
 }
 
 
-void DoublyLinkedListTest::TestSearch() {
+void CircularDoublyLinkedListTest::TestSearch() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -182,7 +182,7 @@ void DoublyLinkedListTest::TestSearch() {
 }
 
 
-void DoublyLinkedListTest::TestGetNode() {
+void CircularDoublyLinkedListTest::TestGetNode() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -211,7 +211,7 @@ void DoublyLinkedListTest::TestGetNode() {
 }
 
 
-void DoublyLinkedListTest::TestGetDataAndSetData() {
+void CircularDoublyLinkedListTest::TestGetDataAndSetData() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;

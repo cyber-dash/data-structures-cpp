@@ -9,4 +9,4 @@ set(CMAKE_CXX_STANDARD 98)
 
 add_executable(main src/circular_doubly_linked_list.h src/circular_doubly_linked_list_test.h src/linear_list.h
         src/singly_linked_list.h src/singly_linked_list_test.h src/main.cpp src/seq_list.h src/seq_list_algorithm.h
-        src/seq_list_test.h)
+        src/seq_list_test.h src/doubly_linked_list.h src/doubly_linked_list_test.h)
