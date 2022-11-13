@@ -40,7 +40,6 @@ int main() {
 
 	DoublyLinkedListTest::TestRemoveByDirection();
 
-    /*
 	DoublyLinkedListTest::TestLength();
 
     DoublyLinkedListTest::TestGetNode();
@@ -50,7 +49,6 @@ int main() {
 	DoublyLinkedListTest::TestSearch();
 
 	DoublyLinkedListTest::TestGetDataAndSetData();
-     */
 
 
     /*
