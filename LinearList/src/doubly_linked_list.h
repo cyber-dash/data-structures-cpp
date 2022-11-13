@@ -6,8 +6,8 @@
  * @date 2022-11-13
  */
 
-#ifndef CYBER_DASH_CIRCULAR_DOUBLY_LINKED_LIST_H
-#define CYBER_DASH_CIRCULAR DOUBLY_LINKED_LIST_H
+#ifndef CYBER_DASH_DOUBLY_LINKED_LIST_H
+#define CYBER_DASH_DOUBLY_LINKED_LIST_H
 
 
 #include <cstddef>
@@ -152,4 +152,4 @@ void DoublyLinkedList<TData>::Print() {
 }
 
 
-#endif // CYBER_DASH_CIRCULAR_DOUBLY_LINKED_LIST_H
+#endif // CYBER_DASH_DOUBLY_LINKED_LIST_H
