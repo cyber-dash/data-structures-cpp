@@ -5,6 +5,7 @@
 #include "seq_list_test.h"
 #include "singly_linked_list_test.h"
 #include "doubly_linked_list_test.h"
+#include "circular_singly_linked_list_test.h"
 #include "circular_doubly_linked_list_test.h"
 
 
@@ -37,9 +38,15 @@ int main() {
 	SeqListTest::TestIntersection();
      */
 
+    /*
     DoublyLinkedListTest::TestInsert();
 
     DoublyLinkedListTest::TestRemove();
+     */
+
+    CircularSinglyLinkedListTest::TestInsert();
+
+    CircularSinglyLinkedListTest::TestRemove();
 
     /*
 	CircularDoublyLinkedListTest::TestInsert();

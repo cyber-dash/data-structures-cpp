@@ -207,11 +207,7 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirection(int pos, int direction) {
 
-    if (pos == 0) {
-        return NULL;
-    }
-
-    if (this->Length() < pos) {
+    if (pos <= 0 || length_ < pos) {
         return NULL;
     }
 
@@ -354,6 +350,8 @@ bool CircularDoublyLinkedList<TData>::RemoveByDirection(int pos, TData &data, in
 
         delete cur;
         this->head_ = NULL;
+
+        length_ = 0;
 
         return true;
     }

@@ -23,9 +23,9 @@ using namespace std;
 class CircularDoublyLinkedListTest {
 public:
     /*! @brief 测试按方向插入 */
-    static void TestInsertByDirection();
+    static void TestInsert();
     /*! @brief 测试删除 */
-    static void TestRemoveByDirection();
+    static void TestRemove();
     /*! @brief 测试长度 */
     static void TestLength();
     /*! @brief 测试链表是否为空 */
@@ -39,7 +39,7 @@ public:
 };
 
 
-void CircularDoublyLinkedListTest::TestInsertByDirection() {
+void CircularDoublyLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test CircularDoublyLinkedList InsertByDirection            |" << endl;
@@ -65,7 +65,7 @@ void CircularDoublyLinkedListTest::TestInsertByDirection() {
 }
 
 
-void CircularDoublyLinkedListTest::TestRemoveByDirection() {
+void CircularDoublyLinkedListTest::TestRemove() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
