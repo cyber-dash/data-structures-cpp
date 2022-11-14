@@ -131,6 +131,7 @@ CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::Search(const T
 }
 
 
+/*
 template<typename TData>
 CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int pos) {
 
@@ -145,6 +146,7 @@ CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int po
 
     return cur;
 }
+ */
 
 
 template<typename TData>
