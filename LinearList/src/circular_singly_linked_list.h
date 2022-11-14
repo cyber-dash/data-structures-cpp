@@ -59,7 +59,7 @@ public:
     void Clear();
 
     // 搜索
-    CircularSinglyLinkedNode<TData>* Search(const TData& data) { return NULL; } // todo:
+    CircularSinglyLinkedNode<TData>* Search(const TData& data);
 
     // 定位
     CircularSinglyLinkedNode<TData>* GetNode(int pos);
@@ -71,10 +71,10 @@ public:
     bool Remove(int pos, TData& data);
 
     // 获取结点数据
-    bool GetData(int pos, TData& data) const { return true; }   // todo:
+    bool GetData(int pos, TData& data) const;
 
     // 设置结点数据
-    bool SetData(int pos, const TData& data) { return true; }   // todo:
+    bool SetData(int pos, const TData& data);
 
     // 打印双向链表
     void Print();
@@ -113,6 +113,37 @@ void CircularSinglyLinkedList<TData>::Clear() {
     this->tail_ = NULL;
 
     this->length_ = 0;
+}
+
+
+template<typename TData>
+CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::Search(const TData& data) {
+
+    CircularSinglyLinkedNode<TData>* cur = head_;
+    for (int i = 1; i < length_; i++) {
+        cur = cur->next;
+        if (cur->data == data) {
+            return cur;
+        }
+    }
+
+    return NULL;
+}
+
+
+template<typename TData>
+CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int pos) {
+
+    if (pos < 0 || pos > Length()) {
+        return NULL;
+    }
+
+    CircularSinglyLinkedNode<TData>* cur = head_;
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
+
+    return cur;
 }
 
 
@@ -251,6 +282,42 @@ void CircularSinglyLinkedList<TData>::Print() {
         cur = cur->next;
     }
     cout << endl;
+}
+
+
+template<typename TData>
+bool CircularSinglyLinkedList<TData>::GetData(int pos, TData& data) const {
+
+    if (pos < 1 || pos > Length()) {
+        return false;
+    }
+
+    CircularSinglyLinkedNode<TData>* cur = head_;
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
+
+    data = cur->data;
+
+    return true;
+}
+
+
+template<typename TData>
+bool CircularSinglyLinkedList<TData>::SetData(int pos, const TData& data) {
+
+    if (pos < 1 || pos > Length()) {
+        return false;
+    }
+
+    CircularSinglyLinkedNode<TData>* cur = head_;
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
+
+    cur->data = data;
+
+    return true;
 }
 
 
