@@ -42,8 +42,8 @@ public:
 void CircularDoublyLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|              Test CircularDoublyLinkedList InsertByDirection            |" << endl;
-    cout << "|                     测试双向链表按方向插入                    |" << endl << endl << endl;
+    cout << "|       Test CircularDoublyLinkedList InsertByDirection     |" << endl;
+    cout << "|                     测试双向链表按方向插入                   |" << endl << endl << endl;
 
     CircularDoublyLinkedList<string>* band_list = new CircularDoublyLinkedList<string>();
 

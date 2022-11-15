@@ -48,6 +48,12 @@ int main() {
 
     CircularSinglyLinkedListTest::TestRemove();
 
+    CircularSinglyLinkedListTest::TestClear();
+
+    CircularSinglyLinkedListTest::TestLength();
+
+    CircularSinglyLinkedListTest::TestSearch();
+
     /*
 	CircularDoublyLinkedListTest::TestInsert();
 

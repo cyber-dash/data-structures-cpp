@@ -44,7 +44,7 @@ template<typename TData>
 class CircularSinglyLinkedList : public LinearList<TData> {
 public:
     // 默认构造函数
-    CircularSinglyLinkedList();
+    CircularSinglyLinkedList(): length_(0), head_(NULL), tail_(NULL) {}
 
     // 析构函数
     ~CircularSinglyLinkedList();
@@ -86,32 +86,41 @@ private:
 };
 
 
-template<typename TData>
-CircularSinglyLinkedList<TData>::CircularSinglyLinkedList() {
-    this->head_ = NULL;
-    this->tail_ = NULL;
-    this->length_ = 0;
-}
-
-
+/*!
+ * @brief **清空链表**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 清空链表
+ * -------
+ * -------
+ *
+ * -------
+ * **I&nbsp;&nbsp; 空链表处理 **\n
+ * **II&nbsp; 遍历并删除各个结点**\n
+ * **III head_和tail_置空 **\n
+ * **IV 长度调整 **\n
+ */
 template<typename TData>
 void CircularSinglyLinkedList<TData>::Clear() {
+    // ----- I 空链表处理 -----
     if (this->head_ == NULL) {
         return;
     }
 
-    for (int i = 1; i < length_ - 1; i++) {
-        CircularSinglyLinkedNode<TData>* cur = this->head_;
-        this->head_ = cur->next;
+    // ----- II 遍历并删除各个结点 -----
+    for (int i = 1; i <= length_; i++) {
+        CircularSinglyLinkedNode<TData>* temp = this->head_;
+        this->head_ = temp->next;
 
-        delete cur;
-        cur = NULL;
+        delete temp;
+        temp = NULL;
     }
 
-    delete this->head_;
+    // ----- III head_和tail_置空 -----
     this->head_ = NULL;
     this->tail_ = NULL;
 
+    // ----- IV 长度调整 -----
     this->length_ = 0;
 }
 
@@ -186,7 +195,7 @@ bool CircularSinglyLinkedList<TData>::Insert(int pos, const TData& data) {
     if (pos == 0) {
         head_ = node;
         head_->next = head_;
-        tail_ = node;
+        tail_ = NULL;
         length_ = 1;
         return true;
     }
@@ -210,12 +219,32 @@ bool CircularSinglyLinkedList<TData>::Insert(int pos, const TData& data) {
 }
 
 
+/*!
+ * @brief **删除(结点)元素**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 删除(结点)元素
+ * ------------
+ * ------------
+ *
+ * ------------
+ * **I&nbsp;&nbsp; 错误位置处理**
+ * **II&nbsp; 只有一个结点的情况**
+ * **III 删除head_结点的情况**
+ * **IV 其他情况**
+ * **V&nbsp; 长度调整**
+ */
 template<typename TData>
 bool CircularSinglyLinkedList<TData>::Remove(int pos, TData& data) {
+    // ----- I 错误位置处理 -----
     if (pos < 0 || pos > length_) {
         return false;
     }
 
+    // ----- II 只有一个结点的情况 -----
     if (Length() == 1) {
         data = head_->data;
 
@@ -228,23 +257,27 @@ bool CircularSinglyLinkedList<TData>::Remove(int pos, TData& data) {
         return true;
     }
 
-    // 删除head_
+    // ----- III 删除head_结点的情况 -----
     if (pos == 1) {
         data = head_->data;
 
+        length_--;
+
         CircularSinglyLinkedNode<TData>* temp = head_;
-        tail_->next = head_->next;
+        if (length_ == 1) {
+            tail_ = NULL;
+        } else {
+            tail_->next = head_->next;
+        }
         head_ = head_->next;
 
         delete temp;
         temp = NULL;
 
-        length_--;
-
         return true;
     }
 
-    // cur遍历到被删除结点的前驱
+    // ----- IV 其他情况 -----
     CircularSinglyLinkedNode<TData>* cur = head_;
     for (int i = 1; i < pos - 1; i++) {
         cur = cur->next;
@@ -263,6 +296,7 @@ bool CircularSinglyLinkedList<TData>::Remove(int pos, TData& data) {
     delete temp;
     temp = NULL;
 
+    // ----- V 长度调整 -----
     length_--;
 
     return true;
@@ -277,13 +311,16 @@ void CircularSinglyLinkedList<TData>::Print() {
         return;
     }
 
-    cout << "向next方向(forward)遍历输出：" << endl;
+    cout << "打印循环单链表: { ";
     CircularSinglyLinkedNode<TData>* cur = this->head_;
     for (int pos = 1; pos <= Length(); pos++) {
-        cout << cur->data << "; ";
+        cout << cur->data;
+        if (pos != Length()) {
+            cout << ", ";
+        }
         cur = cur->next;
     }
-    cout << endl;
+    cout << " }" << endl;
 }
 
 
