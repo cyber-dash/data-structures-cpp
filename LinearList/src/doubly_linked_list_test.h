@@ -21,15 +21,28 @@ using namespace std;
  */
 class DoublyLinkedListTest {
 public:
-    /*! @brief 测试按方向插入 */
+    // 测试双向链表插入结点
     static void TestInsert();
 
-    /*! @brief 测试删除 */
+    // 测试双向链表删除结点
     static void TestRemove();
+
+    // 测试双向链表搜索
+    static void TestSearch();
+
+    // 测试双向链表长度
+    static void TestLength();
+
+    // 测试双向链表清空链表
+    static void TestClear();
 };
 
 
 void DoublyLinkedListTest::TestInsert() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                Test DoublyLinkedList Insert               |" << endl;
+    cout << "|                        测试双链表插入                       |" << endl << endl << endl;
 
     DoublyLinkedList<string>* band_list = new DoublyLinkedList<string>();
 
@@ -46,10 +59,16 @@ void DoublyLinkedListTest::TestInsert() {
     band_list->Insert(4, band5);
 
     band_list->Print();
+
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 void DoublyLinkedListTest::TestRemove() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                Test DoublyLinkedList Remove               |" << endl;
+    cout << "|                      测试双链表删除结点                     |" << endl << endl << endl;
 
     DoublyLinkedList<string>* band_list = new DoublyLinkedList<string>();
 
@@ -69,6 +88,53 @@ void DoublyLinkedListTest::TestRemove() {
     band_list->Remove(4, data);
 
     band_list->Print();
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+// 测试双向链表搜索
+void DoublyLinkedListTest::TestSearch() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                Test DoublyLinkedList Search               |" << endl;
+    cout << "|                        测试双链表搜索                       |" << endl << endl << endl;
+
+    DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();
+
+    for (int i = 1; i <= 5; i++) {
+        int pos = i - 1;
+        int data = i;
+        number_list->Insert(pos, data);
+    }
+
+    DoublyLinkedNode<int>* addr = number_list->Search(3);
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+// 测试双向链表长度
+void DoublyLinkedListTest::TestLength() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                Test DoublyLinkedList Length               |" << endl;
+    cout << "|                        测试双链表长度                       |" << endl << endl << endl;
+
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+// 测试双向链表清空链表
+void DoublyLinkedListTest::TestClear() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                 Test DoublyLinkedList Clear               |" << endl;
+    cout << "|                      测试双链表清空链表                      |" << endl << endl << endl;
+
+
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 

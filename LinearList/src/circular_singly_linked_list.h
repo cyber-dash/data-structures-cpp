@@ -140,24 +140,6 @@ CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::Search(const T
 }
 
 
-/*
-template<typename TData>
-CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int pos) {
-
-    if (pos < 0 || pos > Length()) {
-        return NULL;
-    }
-
-    CircularSinglyLinkedNode<TData>* cur = head_;
-    for (int i = 1; i < pos; i++) {
-        cur = cur->next;
-    }
-
-    return cur;
-}
- */
-
-
 template<typename TData>
 CircularSinglyLinkedList<TData>::~CircularSinglyLinkedList() {
     this->Clear();
@@ -229,11 +211,20 @@ bool CircularSinglyLinkedList<TData>::Insert(int pos, const TData& data) {
  * 删除(结点)元素
  * ------------
  * ------------
- *
+ * 如果删除head_结点, 则新的head_结点为原head_结点的next(如果原head_->next不为自身)
  * ------------
  * **I&nbsp;&nbsp; 错误位置处理**
- * **II&nbsp; 只有一个结点的情况**
+ * &emsp; **if** pos < 0 或者 pos > 链表长度:\n
+ * &emsp;&emsp; 返回false\n
+ * **II&nbsp; 只有一个结点的情况**\n
+ * &emsp; **if** 链表长度为1\n
+ * &emsp;&emsp; (此时, head_指向唯一结点, tail_为NULL)\n
+ * &emsp;&emsp; head_->data赋给参数data\n
+ * &emsp;&emsp; 释放head_并置NULL\n
+ * &emsp;&emsp; tail_置NULL\n
+ * &emsp;&emsp; 长度置0\n
  * **III 删除head_结点的情况**
+ * &emsp; **if** pos等于1(删除head_结点):\n
  * **IV 其他情况**
  * **V&nbsp; 长度调整**
  */

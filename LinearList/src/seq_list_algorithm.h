@@ -43,7 +43,7 @@ void SeqListUnion(SeqList<TData>& seq_list_a, SeqList<TData>& seq_list_b) {
 
 
 /*!
- * @brief 顺序表求交集
+ * @brief 顺序表求交集, todo: 换个实现方法, 返回新的集合
  * @tparam TData 类型模板参数
  * @param seq_list_a 顺序表a(交运算后的表)
  * @param seq_list_b 顺序表b

@@ -58,6 +58,10 @@ public:
 
     DoublyLinkedNode<TData>* GetNode(int pos) { return NULL; }  // todo:
 
+    DoublyLinkedNode<TData>* Search(const TData& data) const;
+
+    DoublyLinkedNode<TData>* SearchRecursive(const TData& data) const;
+
     bool GetData(int pos, TData& data) const { return true; }   // todo:
 
     bool SetData(int pos, const TData& data) { return true; }   // todo:
@@ -69,6 +73,8 @@ public:
     /*! @brief **长度** */
     int Length() const { return this->length_; }
 private:
+    DoublyLinkedNode<TData>* SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_head, const TData& data) const;
+
     DoublyLinkedNode<TData>* head_;
     int length_;
 };
@@ -81,6 +87,43 @@ DoublyLinkedList<TData>::DoublyLinkedList() {
     head_->prev = head_;
 
     length_ = 0;
+}
+
+
+template<typename TData>
+DoublyLinkedNode<TData>* DoublyLinkedList<TData>::Search(const TData& data) const {
+    for (DoublyLinkedNode<TData>* cur = head_->next; cur != NULL; cur = cur->next) {
+        if (cur->data == data) {
+            return cur;
+        }
+    }
+
+    return NULL;
+}
+
+
+template<typename TData>
+DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchRecursive(const TData &data) const {
+
+    DoublyLinkedNode<TData>* node = SearchInSubListRecursive_(head_, data);
+
+    return node;
+}
+
+
+template<typename TData>
+DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_head,
+                                                                            const TData& data) const
+{
+    if (sub_list_head == NULL) {
+        return NULL;
+    }
+
+    if (sub_list_head->data == data) {
+        return sub_list_head;
+    }
+
+    return SearchInSubListRecursive_(sub_list_head->next, data);
 }
 
 
