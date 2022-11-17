@@ -56,17 +56,19 @@ public:
 
     bool Insert(int pos, const TData& data);
 
-    DoublyLinkedNode<TData>* GetNode(int pos) { return NULL; }  // todo:
+    DoublyLinkedNode<TData>* GetNode(int pos) const;
 
     DoublyLinkedNode<TData>* Search(const TData& data) const;
 
     DoublyLinkedNode<TData>* SearchRecursive(const TData& data) const;
 
-    bool GetData(int pos, TData& data) const { return true; }   // todo:
+    bool GetData(int pos, TData& data) const;
 
-    bool SetData(int pos, const TData& data) { return true; }   // todo:
+    bool SetData(int pos, const TData& data);
 
     bool Remove(int pos, TData& data);
+
+    void Clear();
 
     void Print();
 
@@ -83,8 +85,8 @@ private:
 template<typename TData>
 DoublyLinkedList<TData>::DoublyLinkedList() {
     head_ = new DoublyLinkedNode<TData>();
-    head_->next = head_;
-    head_->prev = head_;
+    head_->next = NULL;
+    head_->prev = NULL;
 
     length_ = 0;
 }
@@ -146,10 +148,61 @@ bool DoublyLinkedList<TData>::Insert(int pos, const TData& data) {
 
     node->next = cur->next;     // node->next指向cur->next
     cur->next = node;           // cur->next指向node
-    node->next->prev = node;    // node->next->prev指向node
+    if (node->next) {
+        node->next->prev = node;    // node->next->prev指向node
+    }
     node->prev = cur;           // node->prev指向cur
 
     length_++;
+
+    return true;
+}
+
+
+template<typename TData>
+DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
+    if (pos < 1 || pos > Length()) {
+        return NULL;
+    }
+
+    DoublyLinkedNode<TData>* cur = head_;
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
+
+    return cur;
+}
+
+
+template<typename TData>
+bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
+    if (pos < 1 || pos > Length()) {
+        return NULL;
+    }
+
+    DoublyLinkedNode<TData>* cur = head_;
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
+
+    data = cur->data;
+
+    return true;
+}
+
+
+template<typename TData>
+bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
+    if (pos < 1 || pos > Length()) {
+        return NULL;
+    }
+
+    DoublyLinkedNode<TData>* cur = head_;
+    for (int i = 1; i < pos; i++) {
+        cur = cur->next;
+    }
+
+    cur->data = data;
 
     return true;
 }
@@ -168,7 +221,9 @@ bool DoublyLinkedList<TData>::Remove(int pos, TData& data) {
         pos--;
     }
 
-    cur->next->prev = cur->prev;
+    if (cur->next) {
+        cur->next->prev = cur->prev;
+    }
     cur->prev->next = cur->next;
     data = cur->data;
 
@@ -178,6 +233,22 @@ bool DoublyLinkedList<TData>::Remove(int pos, TData& data) {
     return true;
 }
 
+
+template<typename TData>
+void DoublyLinkedList<TData>::Clear() {
+    for (int pos = 1; pos <= length_; pos++) {
+        DoublyLinkedNode<TData>* cur = this->head_->next;
+        head_->next = cur->next;
+
+        delete cur;                                         // 释放cur指向的结点
+        cur = NULL;
+    }
+
+    head_->next = NULL;
+    this->length_ = 0;
+}
+
+
 template<typename TData>
 void DoublyLinkedList<TData>::Print() {
     if (this->length_ == 0) {
@@ -186,7 +257,7 @@ void DoublyLinkedList<TData>::Print() {
     }
 
     DoublyLinkedNode<TData>* cur = head_->next;
-    while (cur != head_) {
+    while (cur != NULL) {
         cout<<cur->data<<"; ";
         cur = cur->next;
     }

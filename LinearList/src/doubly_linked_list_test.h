@@ -52,11 +52,11 @@ void DoublyLinkedListTest::TestInsert() {
     string band4("Coldplay");
     string band5("黑豹");
 
-    band_list->Insert(0, band1);
-    band_list->Insert(1, band2);
-    band_list->Insert(2, band3);
-    band_list->Insert(3, band4);
-    band_list->Insert(4, band5);
+    string bands[5] = { band1, band2, band3, band4, band5 };
+
+    for (int i = 0; i < 5; i++) {
+        band_list->Insert(i, bands[i]);
+    }
 
     band_list->Print();
 
@@ -68,7 +68,7 @@ void DoublyLinkedListTest::TestRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test DoublyLinkedList Remove               |" << endl;
-    cout << "|                      测试双链表删除结点                     |" << endl << endl << endl;
+    cout << "|                      测试双链表删除结点                      |" << endl << endl << endl;
 
     DoublyLinkedList<string>* band_list = new DoublyLinkedList<string>();
 
@@ -78,16 +78,30 @@ void DoublyLinkedListTest::TestRemove() {
     string band4("Coldplay");
     string band5("黑豹");
 
-    band_list->Insert(0, band1);
-    band_list->Insert(1, band2);
-    band_list->Insert(2, band3);
-    band_list->Insert(3, band4);
-    band_list->Insert(4, band5);
+    string bands[5] = { band1, band2, band3, band4, band5 };
 
-    string data;
-    band_list->Remove(4, data);
+    for (int i = 0; i < 5; i++) {
+        band_list->Insert(i, bands[i]);
+    }
 
+    string band;
     band_list->Print();
+
+    cout << endl;
+
+    band_list->Remove(1, band);
+    cout << "删除当前第1个乐队后:" << endl;
+    band_list->Print();
+    band_list->Remove(4, band);
+    cout << "删除当前第4个乐队后:" << endl;
+    band_list->Print();
+    band_list->Remove(2, band);
+    cout << "删除当前第2个乐队后:" << endl;
+    band_list->Print();
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+
+
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -108,7 +122,13 @@ void DoublyLinkedListTest::TestSearch() {
         number_list->Insert(pos, data);
     }
 
-    DoublyLinkedNode<int>* addr = number_list->Search(3);
+    for (int i = 1; i <= 5; i++) {
+        DoublyLinkedNode<int>* addr_by_search = number_list->Search(i);
+        DoublyLinkedNode<int>* addr_by_search_recursive = number_list->SearchRecursive(i);
+
+        cout << "Search返回的" << i << "对应的结点地址: " << addr_by_search << endl;
+        cout << "SearchRecursive返回的" << i << "对应的结点地址: " << addr_by_search_recursive << endl;
+    }
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -121,6 +141,15 @@ void DoublyLinkedListTest::TestLength() {
     cout << "|                Test DoublyLinkedList Length               |" << endl;
     cout << "|                        测试双链表长度                       |" << endl << endl << endl;
 
+    DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();
+
+    for (int i = 1; i <= 5; i++) {
+        int pos = i - 1;
+        int data = i;
+        number_list->Insert(pos, data);
+    }
+
+    cout << "链表长度: " << number_list->Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -133,6 +162,19 @@ void DoublyLinkedListTest::TestClear() {
     cout << "|                 Test DoublyLinkedList Clear               |" << endl;
     cout << "|                      测试双链表清空链表                      |" << endl << endl << endl;
 
+    DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();
+
+    for (int i = 1; i <= 5; i++) {
+        int pos = i - 1;
+        int data = i;
+        number_list->Insert(pos, data);
+    }
+
+    cout << "清空前链表长度: " << number_list->Length() << endl;
+
+    number_list->Clear();
+
+    cout << "清空后链表长度: " << number_list->Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
