@@ -220,7 +220,7 @@ void SeqListTest::TestLocate() {
 void SeqListTest::TestGetData() {
     cout << endl;
     cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList GetNode                    " << endl;
+    cout << "                     Test SeqList Search                    " << endl;
     cout << "                       测试顺序表GetData                       " << endl << endl << endl;
 
     SeqList<double> seq_list(3);

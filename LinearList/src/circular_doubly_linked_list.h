@@ -455,7 +455,7 @@ void CircularDoublyLinkedList<TData>::Print() {
     }
     cout << endl;
 
-    cout << "向prev方向(FORWARD)遍历输出：" << endl;
+    cout << "向prev方向(backward)遍历输出：" << endl;
     for (int pos = 1; pos <= Length(); pos++) {
         cout << cur->data << "; ";
         cur = cur->prev;

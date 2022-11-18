@@ -188,7 +188,7 @@ void LinkListTest::TestSearch() {
 void LinkListTest::TestLocate() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                   Test LinkedList GetNode                 |" << endl;
+	cout << "|                   Test LinkedList Search                 |" << endl;
 	cout << "|                       测试链表获取结点                      |" << endl << endl << endl;
 
 	LinkedList<string>* city_linked_list = new LinkedList<string>();    // 城市链表city_linked_list

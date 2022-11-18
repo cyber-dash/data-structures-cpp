@@ -186,7 +186,7 @@ void CircularDoublyLinkedListTest::TestGetNode() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|               Test CircularDoublyLinkedList GetNode               |"<<endl;
+    cout<<"|               Test CircularDoublyLinkedList Search               |"<<endl;
     cout<<"|              测试双向循环链表获取结点(向next方向)              |"<<endl<<endl<<endl;
 
     CircularDoublyLinkedList<int>* circular_doubly_linked_list = new CircularDoublyLinkedList<int>();
@@ -215,7 +215,7 @@ void CircularDoublyLinkedListTest::TestGetDataAndSetData() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|          Test CircularDoublyLinkedList GetNode And SetData        |" << endl;
+    cout << "|          Test CircularDoublyLinkedList Search And SetData        |" << endl;
     cout << "|                 测试双向循环链表获取/设置数据项                |" << endl << endl << endl;
 
     CircularDoublyLinkedList<string>* city_list = new CircularDoublyLinkedList<string>();
