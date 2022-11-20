@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <exception>
 #include "linear_list.h"
 
 
@@ -32,7 +33,7 @@ public:
     SeqList() : mem_data_(NULL), size_(0), last_index_(-1) {}
 
     // 构造函数(参数:顺序表总长度)
-    explicit SeqList(int size);
+    explicit SeqList(int size = 100);
 
     // 复制构造函数(参数:顺序表)
     SeqList(SeqList<TData>& seq_list);
@@ -90,8 +91,8 @@ public:
 
 private:
     TData* mem_data_; //!< 数据项数组
-    int size_{}; //!< 顺序表总长度
-    int last_index_{}; //!< 最后一项的数组索引
+    int size_; //!< 顺序表总长度
+    int last_index_; //!< 最后一项的数组索引
 };
 
 
@@ -103,14 +104,14 @@ private:
 template<class TData>
 SeqList<TData>::SeqList(int size) {
     if (size < 0) {
-        throw exception("size error");  // todo: use size_t type
+        throw out_of_range("size < 0");
     }
 
     this->size_ = size;
     this->last_index_ = -1;
     this->mem_data_ = new TData[size];
     if (!this->mem_data_) {
-        throw exception("mem allocation error");
+        throw bad_alloc();
     }
 }
 
@@ -143,7 +144,7 @@ SeqList<TData>::SeqList(SeqList<TData>& seq_list) {
     // ----- 2. this->mem_data_分配内存 -----
     this->mem_data_ = new TData[this->Size()];
     if (!this->mem_data_) {
-        throw exception("mem allocation error");
+        throw bad_alloc();
     }
 
     // ----- 3. this->mem_data_内存赋值 -----

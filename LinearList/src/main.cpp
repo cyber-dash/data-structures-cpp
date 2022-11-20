@@ -7,6 +7,7 @@
 #include "doubly_linked_list_test.h"
 #include "circular_singly_linked_list_test.h"
 #include "circular_doubly_linked_list_test.h"
+#include "static_linked_list_test.h"
 
 
 using namespace std;
@@ -14,6 +15,7 @@ using namespace std;
 
 int main() {
 
+    /*
 	SeqListTest::TestInsert();
 
 	SeqListTest::TestSize();
@@ -79,6 +81,9 @@ int main() {
 	LinkListTest::TestLocate();
 
 	LinkListTest::TestGetDataAndSetData();
+     */
+
+    StaticLinkedListTest::TestInsert();
 
 	return 0;
 }

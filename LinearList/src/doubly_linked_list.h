@@ -181,7 +181,7 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
 template<typename TData>
 bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
     if (pos < 1 || pos > Length()) {
-        return NULL;
+        return false;
     }
 
     DoublyLinkedNode<TData>* cur = head_;
@@ -198,7 +198,7 @@ bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
 template<typename TData>
 bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
     if (pos < 1 || pos > Length()) {
-        return NULL;
+        return false;
     }
 
     DoublyLinkedNode<TData>* cur = head_;
