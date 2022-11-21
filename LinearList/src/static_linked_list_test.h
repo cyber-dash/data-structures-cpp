@@ -1,6 +1,10 @@
-//
-// Created by svenlee on 2022/11/19.
-//
+﻿/*!
+ * @file static_linked_list_test.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 静态链表测试类
+ * @version 0.2.1
+ * @date 2022-11-18
+ */
 
 #ifndef CYBER_DASH_STATIC_LINKED_LIST_TEST_H
 #define CYBER_DASH_STATIC_LINKED_LIST_TEST_H

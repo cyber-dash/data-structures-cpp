@@ -59,7 +59,7 @@ template <typename TData>
 StaticLinkedList<TData>::StaticLinkedList(int capacity) {
     capacity_ = capacity;
     length_ = 0;
-    mem_data_ = new StaticLinkedListNode<TData>(capacity + 1);
+    mem_data_ = new StaticLinkedListNode<TData>[capacity + 1];
 
     mem_data_[HEAD].next = HEAD;
     for (int i = 1; i <= capacity; i++) {

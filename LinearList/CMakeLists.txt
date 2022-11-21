@@ -4,8 +4,13 @@ project(main)
 
 set(CMAKE_CXX_STANDARD 98)
 
-#file(GLOB SOURCES src/*.cpp src/*.h)
-#add_executable(main ${SOURCES})
+if (MSVC)
+    # warning level 4 and all warnings as errors
+    add_compile_options(/W4 /WX)
+else()
+    # lots of warnings and all warnings as errors
+    add_compile_options(-Wall -Wextra -pedantic -Werror)
+endif()
 
 add_executable(main src/circular_doubly_linked_list.h src/circular_doubly_linked_list_test.h src/linear_list.h
         src/singly_linked_list.h src/singly_linked_list_test.h src/main.cpp src/seq_list.h src/seq_list_algorithm.h
