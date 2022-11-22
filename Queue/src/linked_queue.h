@@ -76,7 +76,7 @@ private:
  * @brief 链表队列模板类
  * @tparam TData 类型模板参数
  */
-template <class TData>
+template <typename TData>
 class LinkedQueue : public Queue<TData> {
 
 public:
@@ -111,22 +111,23 @@ public:
     void Clear();
 
     // 重载<<(打印队列)
-    template<class U>
-    friend ostream& operator<<(ostream& os, LinkedQueue<TData>& link_queue);
+    template<typename TData>
+    friend ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue);
+
+private:
 
     /*!
      * @brief 获取队头结点指针
      * @return 队头结点指针
      */
-    LinkedNode<TData>* FrontNode() { return this->front_; }
+    LinkedNode<TData>* FrontNode_() const { return this->front_; }
 
     /*!
      * @brief 获取队尾结点指针
      * @return LinkedNode<TData>* 队尾结点指针
      */
-    LinkedNode<TData>* RearNode() { return this->rear_; }
+    LinkedNode<TData>* RearNode_() const { return this->rear_; }
 
-private:
     LinkedNode<TData>* front_; //!< 队头指针
     LinkedNode<TData>* rear_; //!< 队尾指针
 };
@@ -293,17 +294,17 @@ void LinkedQueue<TData>::Clear() {
 
 /*!
  * @brief 重载<<(打印队列)
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param os 输出流
  * @param linked_queue 链表队列
  * @return 输出流
  */
-template<typename T>
-ostream& operator<<(ostream& os, LinkedQueue<T>& linked_queue) {
+template<typename TData>
+ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue) {
 
     os << "The size of link queue: " << linked_queue.Length() << endl;
 
-    LinkedNode<T>* cur = linked_queue.FrontNode();
+    LinkedNode<TData>* cur = linked_queue.FrontNode_();
 
     for (int i = 1; cur != NULL; i++) {
         os << i << ":" << cur->GetData() << endl;

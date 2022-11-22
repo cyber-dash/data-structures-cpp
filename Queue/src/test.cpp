@@ -9,7 +9,7 @@
  */
 
 #include "test.h"
-#include "link_queue.h"
+#include "linked_queue.h"
 
 
 void TestGetSize() {

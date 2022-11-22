@@ -1,11 +1,9 @@
-﻿/* !
- *@file link_stack.h
+﻿/*!
+ * @file link_stack.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 链式栈模板类
  * @version 0.2.1
- * @date 2020 - 07 - 28
- * @copyright Copyright(c) 2021
- * CyberDash计算机考研
+ * @date 2020-07-28
  */
 
 #ifndef CYBER_DASH_LINK_STACK_H
@@ -52,19 +50,16 @@ public:
     // 出栈(不保存数据)
     bool Pop();
     // 获取栈顶数据
-    bool GetTop(T& data) const;
+    bool Top(T& data) const;
     // 判断栈是否为空
     bool IsEmpty() const;
     // 获取栈大小
-    int GetSize() const;
+    int Length() const;
     // 清空
     void MakeEmpty();
 
     // 获取栈顶结点指针
-    LinkNode<T>* GetTopPtr();
-
-    //迷宫问题
-    // int SeekPath(int x,int y);
+    LinkNode<T>* TopNode();
 
     // 重载<<(打印栈)
     template<class U>
@@ -94,7 +89,7 @@ LinkStack<T>::~LinkStack<T>() {
  * @return 栈顶结点指针
  */
 template<class T>
-LinkNode<T>* LinkStack<T>::GetTopPtr() {
+LinkNode<T>* LinkStack<T>::TopNode() {
     return top_;
 }
 
@@ -169,7 +164,7 @@ bool LinkStack<T>::Pop()
  * 仅仅获取栈顶元素，不需要将栈顶元素删除
  */
 template <class T>
-bool LinkStack<T>::GetTop(T& data) const
+bool LinkStack<T>::Top(T& data) const
 {
     if (IsEmpty()) {
         return false;
@@ -186,7 +181,7 @@ bool LinkStack<T>::GetTop(T& data) const
  * @return 栈的大小
  */
 template<class T>
-int LinkStack<T>::GetSize() const {
+int LinkStack<T>::Length() const {
 
     int count = 0;
     LinkNode<T>* cur = this->top_;
@@ -234,8 +229,8 @@ void LinkStack<T>::MakeEmpty() {
 
 
 /*
-template<class T>
-int LinkStack<T>::SeekPath(int x,int y){
+template<class TData>
+int LinkStack<TData>::SeekPath(int x,int y){
 
 }
  */
@@ -251,9 +246,9 @@ int LinkStack<T>::SeekPath(int x,int y){
 template<class T>
 ostream& operator<<(ostream& os, LinkStack<T>& stack) {
 
-    os << "栈中元素个数: " << stack.GetSize() << endl;
+    os << "栈中元素个数: " << stack.Length() << endl;
 
-    LinkNode<T>* cur = stack.GetTopPtr();
+    LinkNode<T>* cur = stack.TopNode();
 
     for (int i = 1; cur != NULL; i++) {
         os << i << ":" << cur->data << endl;

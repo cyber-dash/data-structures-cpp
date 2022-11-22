@@ -14,30 +14,30 @@
 
  /*!
   * @brief 栈虚基类
-  * @tparam T 类型模板参数
+  * @tparam TData 类型模板参数
   */
-template<class T>
+template<typename TData>
 class Stack {
 public:
 	/*!
 	 * @brief 入栈
 	 * @param data 数据
 	 */
-	virtual void Push(const T& data) = 0;
+	virtual void Push(const TData& data) = 0;
 
 	/*!
 	 * @brief 出栈(保存数据)
 	 * @param data 数据(保存数据项)
 	 * @return 是否成功
 	 */
-	virtual bool Pop(T& data) = 0;
+	virtual bool Pop(TData& data) = 0;
 
 	/*!
 	 * @brief 获取栈顶数据
 	 * @param data 数据(保存数据项)
 	 * @return 是否成功
 	 */
-	virtual bool GetTop(T& data) const = 0;
+	virtual bool Top(TData& data) const = 0;
 
 	/*!
 	 * @brief 是否为空
@@ -49,7 +49,7 @@ public:
 	 * @brief 获取大小
 	 * @return 大小
 	 */
-	virtual int GetSize() const = 0;
+	virtual int Length() const = 0;
 };
 
 

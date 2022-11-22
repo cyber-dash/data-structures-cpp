@@ -25,9 +25,9 @@ int main() {
 	test_stack.Push(3);
 	test_stack.Push(4);
 
-	// test GetTop
+	// test Top
 	int top_data;
-	test_stack.GetTop(top_data);
+    test_stack.Top(top_data);
 	cout << "top_data: " << top_data << endl;
 
 	// test operator<<

@@ -4,4 +4,4 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main src/link_queue.h src/main.cpp src/test.cpp src/test.h)
+add_executable(main src/linked_queue.h src/main.cpp src/test.cpp src/test.h)
