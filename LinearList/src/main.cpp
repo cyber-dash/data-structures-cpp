@@ -85,5 +85,9 @@ int main() {
 
     StaticLinkedListTest::TestInsert();
 
+    StaticLinkedListTest::TestSearch();
+
+    StaticLinkedListTest::TestRemove();
+
 	return 0;
 }
