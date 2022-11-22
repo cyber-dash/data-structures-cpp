@@ -34,9 +34,11 @@ class StaticLinkedList {
 public:
     explicit StaticLinkedList(int capacity = 100);
 
-    int Length() { return length_; }
+    int Length() const { return length_; }
 
-    bool IsEmpty() { return length_ == 0; }
+    int Capacity() const { return capacity_; }
+
+    bool IsEmpty() const { return length_ == 0; }
 
     bool Search(const TData& data, int& pos) const;
 
@@ -44,15 +46,15 @@ public:
 
     bool Remove(int pos, TData& data);
 
-    void Print();
+    void Print() const;
 
     static const int NOT_IN_USE = -1;
     static const int HEAD = 0;
 
 private:
-    int GetInsertIndex_() const;
+    bool GetInsertIndex_(int& index) const;
     bool Extend_(int capacity);
-    int GetNodeIndex_(int pos) const;
+    bool GetNodeIndexByPos_(int pos, int& index) const;
 
     StaticLinkedListNode<TData>* mem_data_;    //!< 静态链表, mem_data_[0]为头结点(不保存元素)
     int length_;    //!< 静态链表长度
@@ -74,21 +76,28 @@ StaticLinkedList<TData>::StaticLinkedList(int capacity) {
 
 
 template<typename TData>
-int StaticLinkedList<TData>::GetNodeIndex_(int pos) const {
-    if (pos < 1 || pos > length_) {
-        return 0;
+bool StaticLinkedList<TData>::GetNodeIndexByPos_(int pos, int& index) const {
+    if (pos == HEAD) {
+        index = HEAD;
+        return true;
     }
 
-    int index = mem_data_[HEAD].next;
+    if (pos < 0|| pos > this->length_) {
+        return false;
+    }
+
+    int cur_index = this->mem_data_[HEAD].next;
     for (int i = 1; i < pos; i++) {
-        index = mem_data_[index].next;
+        cur_index = this->mem_data_[cur_index].next;
     }
 
-    return index;
+    index = cur_index;
+
+    return true;
 }
 
+
 template<typename TData>
-// int StaticLinkedList<TData>::Search(const TData& data) const {
  bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
 
     if (length_ == 0) {
@@ -96,8 +105,8 @@ template<typename TData>
     }
 
     int cur_pos = 1;
-    for (int i = mem_data_[0].next; i <= length_; i = mem_data_[i].next) {
-        if (i == 0) {
+    for (int i = mem_data_[HEAD].next; i <= length_; i = mem_data_[i].next) {
+        if (i == HEAD) {
             break;
         }
 
@@ -123,14 +132,20 @@ bool StaticLinkedList<TData>::Insert(int pos, const TData& data) {
         this->Extend_(capacity_);
     }
 
-    int index = GetNodeIndex_(pos);
-    int insert_index = GetInsertIndex_();
-    if (insert_index == HEAD) {
+    int prev_index;
+    bool res = GetNodeIndexByPos_(pos, prev_index);
+    if (!res) {
         return false;
     }
 
-    mem_data_[insert_index].next = mem_data_[index].next;
-    mem_data_[index].next = insert_index;
+    int insert_index;
+    res = GetInsertIndex_(insert_index);
+    if (!res) {
+        return false;
+    }
+
+    mem_data_[insert_index].next = mem_data_[prev_index].next;
+    mem_data_[prev_index].next = insert_index;
     mem_data_[insert_index].data = data;
 
     length_++;
@@ -166,12 +181,12 @@ bool StaticLinkedList<TData>::Remove(int pos, TData& data) {
 
 
 template<typename TData>
-void StaticLinkedList<TData>::Print() {
+void StaticLinkedList<TData>::Print() const {
     if (length_ == 0) {
         cout << "Empty list" << endl;
     }
 
-    for (int cur = mem_data_[0].next; cur != 0; cur = mem_data_[cur].next) {
+    for (int cur = mem_data_[HEAD].next; cur != HEAD; cur = mem_data_[cur].next) {
         cout << mem_data_[cur].data;
         if (mem_data_[cur].next != HEAD) {
             cout << "-->";
@@ -190,8 +205,12 @@ bool StaticLinkedList<TData>::Extend_(int capacity) {
         return false;
     }
 
-    for (int i = 0; i <= length_ + 1; i++) {
+    for (int i = HEAD; i <= length_; i++) {
         new_mem_data[i] = mem_data_[i];
+    }
+
+    for (int i = length_ + 1; i <= capacity_; i++) {
+        new_mem_data[i].next = NOT_IN_USE;
     }
 
     delete[] mem_data_;
@@ -203,18 +222,20 @@ bool StaticLinkedList<TData>::Extend_(int capacity) {
 
 
 template <typename TData>
-int StaticLinkedList<TData>::GetInsertIndex_() const {
+// int StaticLinkedList<TData>::GetInsertIndex_() const {
+bool StaticLinkedList<TData>::GetInsertIndex_(int& index) const {
     if (length_ == capacity_) {
-        return 0;
+        return false;
     }
 
-    for (int pos = 1; pos <= length_ + 1; pos++) {
-        if (mem_data_[pos].next == StaticLinkedList<TData>::NOT_IN_USE) {
-            return pos;
+    for (int i = 1; i <= length_ + 1; i++) {
+        if (mem_data_[i].next == StaticLinkedList<TData>::NOT_IN_USE) {
+            index = i;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 

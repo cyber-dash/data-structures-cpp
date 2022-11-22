@@ -35,7 +35,7 @@ void StaticLinkedListTest::TestInsert() {
     cout << "|                Test StaticLinkedList Insert               |" << endl;
     cout << "|                       测试静态链表插入                      |" << endl << endl << endl;
 
-    StaticLinkedList<int>* static_link_list = new StaticLinkedList<int>();
+    StaticLinkedList<int>* static_link_list = new StaticLinkedList<int>(1);
 
     static_link_list->Insert(0, 2);
     static_link_list->Insert(1, 8);
@@ -56,7 +56,7 @@ void StaticLinkedListTest::TestSearch() {
     cout << "|                Test StaticLinkedList Search               |" << endl;
     cout << "|                       测试静态链表搜索                      |" << endl << endl << endl;
 
-    StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>();
+    StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>(1);
 
     string str1("Cyber");
     string str2("Dash");
@@ -118,7 +118,7 @@ void StaticLinkedListTest::TestRemove() {
     cout << "|                Test StaticLinkedList Remove               |" << endl;
     cout << "|                       测试静态链表删除                      |" << endl << endl << endl;
 
-    StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>();
+    StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>(1);
 
     string str1("Cyber");
     string str2("Dash");
