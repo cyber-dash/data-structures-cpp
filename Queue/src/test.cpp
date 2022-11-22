@@ -16,10 +16,10 @@ void TestGetSize() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                    Test Queue GetSize                     |" << endl;
+    cout << "|                    Test Queue Length                     |" << endl;
     cout << "|                        测试队列Size                        |" << endl << endl << endl;
 
-    LinkQueue<string> old_memory_queue;
+    LinkedQueue<string> old_memory_queue;
 
     string old_memory[12] = {
         "反反复复月光太迷惑", "却还挂在天一边嘲笑我",
@@ -37,7 +37,7 @@ void TestGetSize() {
         old_memory_queue.EnQueue(old_memory[i]);
     }
 
-    cout << endl << "Old memory queue size: " << old_memory_queue.GetSize() << endl;
+    cout << endl << "Old memory queue size: " << old_memory_queue.Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -49,7 +49,7 @@ void TestEnQueue() {
     cout << "|                    Test Queue Enqueue                     |" << endl;
     cout << "|                        测试队列入队                         |" << endl << endl << endl;
 
-    LinkQueue<int> int_queue;
+    LinkedQueue<int> int_queue;
 
     cout << "Enqueue 4 integers." << endl << endl;
 
@@ -70,7 +70,7 @@ void TestDeQueue() {
     cout << "|                    Test Queue Dequeue                     |" << endl;
     cout << "|                        测试队列出队                         |" << endl << endl << endl;
 
-    LinkQueue<double> double_queue;
+    LinkedQueue<double> double_queue;
 
     cout << "double_queue enqueue 4 numbers." << endl;
 
@@ -95,10 +95,10 @@ void TestDeQueue() {
 void TestGetFrontAndGetRear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                Test Queue GetFront & GetRear              |" << endl;
+    cout << "|                Test Queue Front & Rear              |" << endl;
     cout << "|                   测试队列获取队头/获取队尾                   |" << endl << endl << endl;
 
-    LinkQueue<string> string_queue;
+    LinkedQueue<string> string_queue;
 
     string_queue.EnQueue("听我的");
     string_queue.EnQueue("买买买");
@@ -111,8 +111,8 @@ void TestGetFrontAndGetRear() {
     string front_data;
     string rear_data;
 
-    string_queue.GetFront(front_data);
-    string_queue.GetRear(rear_data);
+    string_queue.Front(front_data);
+    string_queue.Rear(rear_data);
     cout << "The front of the queue: " << front_data << endl;
     cout << "The rear of the queue: " << rear_data << endl;
 
@@ -123,9 +123,9 @@ void TestGetFrontAndGetRear() {
 void TestIsEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test Queue MakeEmpty                    |" << endl;
+    cout << "|                   Test Queue Clear                    |" << endl;
     cout << "|                        测试清空队列                         |" << endl << endl << endl;
-    LinkQueue<string> LinkinPark_song_queue;
+    LinkedQueue<string> LinkinPark_song_queue;
 
     LinkinPark_song_queue.EnQueue("<In the end>");
     LinkinPark_song_queue.EnQueue("<Crawling>");
@@ -139,9 +139,9 @@ void TestIsEmpty() {
         cout << "LinkinPark_song_queue isn't empty." << endl;
     }
 
-    cout << endl << "call function MakeEmpty." << endl << endl;
+    cout << endl << "call function Clear." << endl << endl;
 
-    LinkinPark_song_queue.MakeEmpty();
+    LinkinPark_song_queue.Clear();
 
     is_empty = LinkinPark_song_queue.IsEmpty();
     if (is_empty) {
@@ -161,7 +161,7 @@ void TestOperatorCout() {
     cout << "|                      Test Operator <<                     |" << endl;
     cout << "|                      测试队列operator<<                    |" << endl << endl << endl;
 
-    LinkQueue<string> string_queue;
+    LinkedQueue<string> string_queue;
 
     string_queue.EnQueue("听我的");
     string_queue.EnQueue("买买买");
