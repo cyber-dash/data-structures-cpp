@@ -19,115 +19,118 @@ using namespace std;
 
 /*!
  * @brief 结点模板结构体
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  */
-template <class T>
-struct LinkNode {
-    explicit LinkNode(LinkNode<T>* node = NULL) : link(node) {}
-    explicit LinkNode(const T& data, LinkNode<T>* node = NULL) : data(data), link(node) {}
+template <class TData>
+struct LinkedNode {
+    explicit LinkedNode(LinkedNode<TData>* node = NULL) : next(node) {}
+    explicit LinkedNode(const TData& data, LinkedNode<TData>* node = NULL) : data(data), next(node) {}
 
-    T data; //!< 数据项
-    LinkNode<T>* link; //!< 下一结点
+    TData data; //!< 数据项
+    LinkedNode<TData>* next; //!< 下一结点
 };
 
 
 /*!
  * @brief 链式栈模板类
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  */
-template <class T>
-class LinkStack : public Stack<T> {
+template <class TData>
+class LinkedStack : public Stack<TData> {
 
 public:
     /*! @brief 构造函数 */
-    LinkStack() : top_(NULL) {}
+    LinkedStack() : top_(NULL) {}
     // 析构函数
-    ~LinkStack();
+    ~LinkedStack();
     // 入栈
-    void Push(const T& data);
+    bool Push(const TData& data);
     // 出栈(保存数据)
-    bool Pop(T& data);
+    bool Pop(TData& data);
     // 出栈(不保存数据)
     bool Pop();
     // 获取栈顶数据
-    bool Top(T& data) const;
+    bool Top(TData& data) const;
     // 判断栈是否为空
     bool IsEmpty() const;
     // 获取栈大小
     int Length() const;
     // 清空
-    void MakeEmpty();
-
-    // 获取栈顶结点指针
-    LinkNode<T>* TopNode();
+    void Clear();
 
     // 重载<<(打印栈)
-    template<class U>
-    friend ostream& operator<<(ostream& os, LinkStack<T>& stack);
-
-    void CyberDashShow();
+    template<class TData>
+    friend ostream& operator<<(ostream& os, LinkedStack<TData>& stack);
 
 private:
-    LinkNode<T>* top_;     //!< 栈顶结点指针
+
+    // 获取栈顶结点指针
+    LinkedNode<TData>* TopNode_();
+    LinkedNode<TData>* top_;     //!< 栈顶结点指针
 };
 
 
 /*!
  * @brief 析构函数
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @note 显式销毁时调用
  */
-template<class T>
-LinkStack<T>::~LinkStack<T>() {
-    MakeEmpty();
+template<class TData>
+LinkedStack<TData>::~LinkedStack<TData>() {
+    Clear();
 }
 
 
 /*!
  * @brief 获取栈顶结点指针
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @return 栈顶结点指针
  */
-template<class T>
-LinkNode<T>* LinkStack<T>::TopNode() {
+template<class TData>
+LinkedNode<TData>* LinkedStack<TData>::TopNode_() {
     return top_;
 }
 
 
 /*!
  * @brief 入栈
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  */
-template <class T>
-void LinkStack<T>::Push(const T& data)
+template <class TData>
+bool LinkedStack<TData>::Push(const TData& data)
 {
-    LinkNode<T>* node = new LinkNode<T>(data);
+    LinkedNode<TData>* node = new LinkedNode<TData>(data);
+    if (!node) {
+        return false;
+    }
 
-    node->link = this->top_;
+    node->next = this->top_;
     this->top_ = node;
+
+    return true;
 }
 
 
 /**
  * @brief 出栈(保存数据项)
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param data 数据(保存数据项)
  * @return 是否成功
  */
-template <class T>
-bool LinkStack<T>::Pop(T& data)
+template <class TData>
+bool LinkedStack<TData>::Pop(TData& data)
 {
     if (IsEmpty()) {
         return false;
     }
 
-    LinkNode<T>* delete_node = this->top_;
-    this->top_ = this->top_->link;
+    LinkedNode<TData>* temp = this->top_;
+    this->top_ = this->top_->next;
 
-    data = delete_node->data;
+    data = temp->data;
 
-    delete delete_node;
-    delete_node = NULL;
+    delete temp;
+    temp = NULL;
 
     return true;
 }
@@ -135,22 +138,22 @@ bool LinkStack<T>::Pop(T& data)
 
 /**
  * @brief 出栈(不保存数据项)
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  * @param data 数据(保存数据项)
  * @return 是否成功
  */
-template <class T>
-bool LinkStack<T>::Pop()
+template <class TData>
+bool LinkedStack<TData>::Pop()
 {
     if (IsEmpty()) {
         return false;
     }
 
-    LinkNode<T>* delete_node = this->top_;
-    this->top_ = this->top_->link;
+    LinkedNode<TData>* temp = this->top_;
+    this->top_ = this->top_->next;
 
-    delete delete_node;
-    delete_node = NULL;
+    delete temp;
+    temp = NULL;
 
     return true;
 }
@@ -158,14 +161,13 @@ bool LinkStack<T>::Pop()
 
 /*!
  * @brief 获取栈顶元素
- * @tparam T 栈元素类型
+ * @tparam TData 栈元素类型
  * @return 返回操作是否执行成功
  * @note
  * 仅仅获取栈顶元素，不需要将栈顶元素删除
  */
-template <class T>
-bool LinkStack<T>::Top(T& data) const
-{
+template <class TData>
+bool LinkedStack<TData>::Top(TData& data) const {
     if (IsEmpty()) {
         return false;
     }
@@ -180,15 +182,15 @@ bool LinkStack<T>::Top(T& data) const
  * @brief 获取栈的大小
  * @return 栈的大小
  */
-template<class T>
-int LinkStack<T>::Length() const {
+template<class TData>
+int LinkedStack<TData>::Length() const {
 
     int count = 0;
-    LinkNode<T>* cur = this->top_;
+    LinkedNode<TData>* cur = this->top_;
 
     while (cur != NULL) {
         count++;
-        cur = cur->link;
+        cur = cur->next;
     }
 
     return count;
@@ -199,8 +201,8 @@ int LinkStack<T>::Length() const {
  * @brief 判断栈是否为空
  * @return 是否为空
  */
-template<class T>
-bool LinkStack<T>::IsEmpty() const {
+template<class TData>
+bool LinkedStack<TData>::IsEmpty() const {
     if (this->top_ == NULL) {
         return true;
     }
@@ -212,15 +214,15 @@ bool LinkStack<T>::IsEmpty() const {
 
 /**
  * @brief 清空栈
- * @tparam T 栈元素类型
+ * @tparam TData 栈元素类型
  * @note
  * 需要释放栈中每个元素
  */
-template<class T>
-void LinkStack<T>::MakeEmpty() {
+template<class TData>
+void LinkedStack<TData>::Clear() {
     while (this->top_ != NULL) {
-        LinkNode<T>* cur = this->top_;
-        top_ = top_->link;
+        LinkedNode<TData>* cur = this->top_;
+        top_ = top_->next;
 
         delete cur;
         cur = NULL;
@@ -230,7 +232,7 @@ void LinkStack<T>::MakeEmpty() {
 
 /*
 template<class TData>
-int LinkStack<TData>::SeekPath(int x,int y){
+int LinkedStack<TData>::SeekPath(int x,int y){
 
 }
  */
@@ -238,38 +240,24 @@ int LinkStack<TData>::SeekPath(int x,int y){
 
  /**
   * @brief 重载<<(打印栈)
-  * @tparam T 类型模板参数
+  * @tparam TData 类型模板参数
   * @param os 输出流
   * @param link_stack 栈
   * @return 输出流
   */
-template<class T>
-ostream& operator<<(ostream& os, LinkStack<T>& stack) {
+template<class TData>
+ostream& operator<<(ostream& os, LinkedStack<TData>& stack) {
 
     os << "栈中元素个数: " << stack.Length() << endl;
 
-    LinkNode<T>* cur = stack.TopNode();
+    LinkedNode<TData>* cur = stack.TopNode_();
 
     for (int i = 1; cur != NULL; i++) {
         os << i << ":" << cur->data << endl;
-        cur = cur->link;
+        cur = cur->next;
     }
 
     return os;
-}
-
-
-template<class T>
-void LinkStack<T>::CyberDashShow() {
-    cout << endl
-        << "*************************************** CyberDash ***************************************" << endl << endl
-        << "抖音号\"CyberDash计算机考研\", id: cyberdash_yuan" << endl << endl
-        << "CyberDash成员:" << endl
-        << "元哥(cyberdash@163.com), " << "北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)" << endl
-        << "磊哥(alei_go@163.com), " << "山东理工大学(数学本科)/北京邮电大学(计算机研究生)" << endl << endl
-        << "L_Dash(lyu2586@163.com), " << "北京邮电大学(计算机在读研究生)" << endl << endl
-        << "数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp" << endl
-        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 

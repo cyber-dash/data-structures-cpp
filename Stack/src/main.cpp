@@ -17,7 +17,7 @@ using namespace std;
 
 int main() {
 
-	LinkStack<int> test_stack;
+	LinkedStack<int> test_stack;
 
 	// 操作 int 类型的栈
 	test_stack.Push(1);
@@ -42,9 +42,6 @@ int main() {
 
 	test_stack.Pop(pop_data);
 	cout << test_stack << endl;
-
-	// test CyberDashShow
-	test_stack.CyberDashShow();
 
 	return 0;
 }

@@ -23,7 +23,7 @@ public:
 	 * @brief 入栈
 	 * @param data 数据
 	 */
-	virtual void Push(const TData& data) = 0;
+	virtual bool Push(const TData& data) = 0;
 
 	/*!
 	 * @brief 出栈(保存数据)
