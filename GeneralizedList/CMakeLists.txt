@@ -9,4 +9,4 @@ add_executable(main
     src/main.cpp
     src/test.cpp
     src/test.h
-)
+        src/simple_gen_list.h)

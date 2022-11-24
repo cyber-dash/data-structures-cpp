@@ -36,8 +36,7 @@ public:
   /*!
    * @brief 构造函数
    */
-  Item() {
-    this->type = GenListNode<T>::REF_TYPE;
+  Item(): type(GenListNode<T>::REF_TYPE) {
     this->union_info.ref_count = 0;
   }
 
@@ -45,8 +44,7 @@ public:
    * @brief 复制构造函数
    * @param item 节点数据
    */
-  Item(Item<T>& item) {
-    this->type = item.union_type_;
+  Item(Item<T>& item): type(item.union_type_) {
     this->union_info = item.union_info;
   }
 

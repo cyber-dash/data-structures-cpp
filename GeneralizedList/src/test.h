@@ -25,5 +25,11 @@ void TestDepth();
 /*! 测试广义表的长度 */
 void TestLength();
 
+/*! 测试(简单)广义表的深度 */
+void TestSimpleGenListDepth();
+
+/*! 测试广义表的长度 */
+void TestSimpleGenListLength();
+
 
 #endif // CYBER_DASH_GEN_LIST_TEST_H
