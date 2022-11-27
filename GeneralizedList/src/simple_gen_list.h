@@ -44,29 +44,32 @@ public:
 
     int type; //!< 类型
     char data; //!< 数据
-    SimpleGenListNode* head; //!< 下一个表的地址
-    SimpleGenListNode* next; //!< 下一节点指针
+    SimpleGenListNode* head; //!< 广义表首元素地址
+    SimpleGenListNode* next; //!< 下一元素节点指针
 
-    static const int ATOM = 1; //!< 数据节点类型
-    static const int LIST_HEAD = 2; //!< 表头类型
+    static const int ATOM = 1; //!< 元素节点类型
+    static const int LIST = 2; //!< 表类型
 };
 
 
 class SimpleGenList {
-
 public:
 
     // 构造函数
     SimpleGenList(): head_(nullptr) {};
 
-    // 使用char队列创建广义表(递归)
-    void CreateByQueueRecursive(queue<char>& char_queue, SimpleGenListNode*& node);
-
     // 使用字符串创建广义表
     void CreateByString(const string& gen_list_string);
-    void ToCharQueueRecursive(queue<char>& char_queue, SimpleGenListNode* node);
+
+    // 字符串格式化
     string ToString();
+
 private:
+    // 使用char队列创建广义表(递归)
+    void CreateByQueueRecursive_(queue<char>& char_queue, SimpleGenListNode*& node);
+
+    bool ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* cur);
+
     SimpleGenListNode* head_;
 };
 

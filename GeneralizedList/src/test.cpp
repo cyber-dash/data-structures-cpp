@@ -108,7 +108,7 @@ void TestSimpleGenListDepth() {
     cout<<"|                Test SimpleGenList ToString                |"<<endl;
     cout<<"|                  测试(简单)广义表格式化字符串                 |"<<endl<<endl<<endl;
 
-    string str("(A,(),(B,(C)))");
+    string str("(A,(),(B,(C)),())");
 
     SimpleGenList simple_gen_list;
 
