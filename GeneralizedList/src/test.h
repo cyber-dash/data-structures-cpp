@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * @file test.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 广义表测试头文件
@@ -14,6 +14,7 @@
 
 
 #include "gen_list.h"
+#include "simple_gen_list.h"
 
 
 /*! 测试使用字符串创建广义表 */
