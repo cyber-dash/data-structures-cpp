@@ -48,10 +48,10 @@ struct BinaryTreeNode {
 template <class TData>
 struct PostOrderStackNode {
     /*! @brief 构造函数 */
-    explicit PostOrderStackNode(BinaryTreeNode<TData>* node = NULL) : node(node), tag(LEFT) {}
+    explicit PostOrderStackNode(BinaryTreeNode<TData>* node = NULL) : node(node), tag(LEFT_BACK_TRACKING) {}
 
     BinaryTreeNode<TData>* node;    //!< 二叉树结点指针
-    enum { LEFT, RIGHT } tag;       //!< 标签
+    enum { LEFT_BACK_TRACKING, RIGHT_BACK_TRACKING } tag;       //!< 标签
 };
 
 
@@ -251,7 +251,7 @@ protected:
     void PostOrderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* sub_tree_root,
                                                void (*visit)(BinaryTreeNode<TData>* node));
     // 子树后序遍历(非递归)
-    void PostOrderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* sub_tree_root,
+    void PostOrderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                   void (*visit)(BinaryTreeNode<TData>* node));
     // 子树层序遍历
     void LevelOrderTraversalOfSubtree_(BinaryTreeNode<TData>* sub_tree_root,
@@ -624,48 +624,46 @@ void BinaryTree<T>::PostOrderTraversalOfSubtreeRecursive_(BinaryTreeNode<T>* sub
 
 /**
  * @brief 子树后序遍历(非递归)
- * @tparam T 节点数据模板类型
- * @param sub_tree_root 子树根节点指针
+ * @tparam TData 节点数据模板类型
+ * @param subtree_root 子树根节点指针
  * @param visit 访问函数
  */
-template <class T>
-void BinaryTree<T>::PostOrderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<T>* sub_tree_root, void (*visit)(BinaryTreeNode<T>*)) {
+template <class TData>
+void BinaryTree<TData>::PostOrderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
+                                                                 void (*visit)(BinaryTreeNode<TData>*))
+{
+    stack<PostOrderStackNode<TData> > postorder_traversal_stack;
 
-    stack<PostOrderStackNode<T> > post_traverse_stack;
-
-    BinaryTreeNode<T>* cur_node = sub_tree_root;
+    BinaryTreeNode<TData>* cur_node = subtree_root;
 
     do {
+        // 一直向左子树方向试探(等于在做深度优先)
         while (cur_node != NULL) {
-            PostOrderStackNode<T> traverse_node(cur_node);
-            post_traverse_stack.push(traverse_node);
+            PostOrderStackNode<TData> stack_node(cur_node);
+            postorder_traversal_stack.push(stack_node);
             cur_node = cur_node->left_child;
         }
 
-        bool left_unfinished = true;
-        while (left_unfinished && !post_traverse_stack.empty()) {
+        bool cur_node_left_backtracking_unfinished = true;
+        while (cur_node_left_backtracking_unfinished && !postorder_traversal_stack.empty()) {
 
-            PostOrderStackNode<T> cur_traverse_node = post_traverse_stack.top();
-            post_traverse_stack.pop();
+            PostOrderStackNode<TData> cur_backtracking_node = postorder_traversal_stack.top();
+            postorder_traversal_stack.pop();
 
-            cur_node = cur_traverse_node.node;
+            cur_node = cur_backtracking_node.node;
 
-            switch (cur_traverse_node.tag) {
-            case PostOrderStackNode<T>::LEFT:
-                cur_traverse_node.tag = PostOrderStackNode<T>::RIGHT;
-                post_traverse_stack.push(cur_traverse_node);
+            if (cur_backtracking_node.tag == PostOrderStackNode<TData>::LEFT_BACK_TRACKING) {
+                cur_backtracking_node.tag = PostOrderStackNode<TData>::RIGHT_BACK_TRACKING;
+                postorder_traversal_stack.push(cur_backtracking_node);
                 cur_node = cur_node->right_child;
 
-                left_unfinished = false;
+                cur_node_left_backtracking_unfinished = false;
 
-                break;
-            case PostOrderStackNode<T>::RIGHT:
+            } else if (cur_backtracking_node.tag == PostOrderStackNode<TData>::RIGHT_BACK_TRACKING) {
                 visit(cur_node);
-
-                break;
             }
         }
-    } while (!post_traverse_stack.empty());
+    } while (!postorder_traversal_stack.empty());
 }
 
 
