@@ -28,22 +28,22 @@ int main() {
 	BinaryTreeTest::TestParent();
 
 	// 测试前序遍历
-	BinaryTreeTest::TestPreOrder();
+    BinaryTreeTest::TestPreorderTraversal();
 
 	// 测试中序遍历
-	BinaryTreeTest::TestInOrder();
+    BinaryTreeTest::TestInorderTraversal();
 
 	// 测试后序遍历
-	BinaryTreeTest::TestPostOrder();
+    BinaryTreeTest::TestPostorderTraversal();
 
 	// 测试层序遍历
 	BinaryTreeTest::TestLevelOrder();
 
 	// 测试查找是否在二叉树
-	BinaryTreeTest::TestFind();
+    BinaryTreeTest::TestExist();
 
 	// 测试使用前序遍历和后序遍历结果创建二叉树
-	BinaryTreeTest::TestCreateBinTreeByPreAndInOrderString();
+    BinaryTreeTest::TestCreateByPreorderAndInorderList();
 
 	return 0;
 }
