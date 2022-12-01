@@ -24,7 +24,7 @@ public:
     static void TestHeight();
 
     /*! @brief 测试LeftChild和RightChild */
-    static void TestChild();
+    // static void TestChild();
 
     /*! @brief 测试父节点函数Parent */
     static void TestParent();
@@ -39,7 +39,7 @@ public:
     static void TestPostorderTraversal();
 
     /*! @brief 测试层序遍历 */
-    static void TestLevelOrder();
+    static void TestLevelOrderTraversal();
 
     /*! @brief 测试查找是否在二叉树 */
     static void TestExist();
@@ -75,9 +75,9 @@ void BinaryTreeTest::TestCopyConstructor() {
         binary_tree.Insert(i);
     }
 
-    BinaryTree<int> bin_tree_2(binary_tree);
+    BinaryTree<int> binary_tree_2(binary_tree);
 
-    bin_tree_2.Print();
+    binary_tree_2.Print();
 
     cout << endl << "------------------------- CyberDash -------------------------" << endl;
 }
@@ -120,6 +120,7 @@ void BinaryTreeTest::TestIsEmpty() {
 }
 
 
+/*
 void BinaryTreeTest::TestChild() {
 
     cout << endl;
@@ -143,17 +144,18 @@ void BinaryTreeTest::TestChild() {
         binary_tree.Insert(i);
     }
 
-    BinaryTreeNode<int>* root = binary_tree.Root();
-    BinaryTreeNode<int>* root_left_child = binary_tree.LeftChild(root);
-    BinaryTreeNode<int>* root_right_child = binary_tree.RightChild(root);
+    BinaryTreeNode<int>* node = binary_tree.Root();
+    BinaryTreeNode<int>* left_child = binary_tree.LeftChild(node);
+    BinaryTreeNode<int>* right_child = binary_tree.RightChild(node);
 
-    cout << "根节点: " << root->data << endl;
-    cout << "根节点左孩子: " << root_left_child->data << endl;
-    cout << "根节点右孩子: " << root_right_child->data << endl;
+    cout << "根节点: " << node->data << endl;
+    cout << "根节点左孩子: " << left_child->data << endl;
+    cout << "根节点右孩子: " << right_child->data << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
     cout << endl;
 }
+*/
 
 
 void BinaryTreeTest::TestParent() {
@@ -182,7 +184,8 @@ void BinaryTreeTest::TestParent() {
     BinaryTreeNode<int>* root = binary_tree.Root();
     BinaryTreeNode<int>* root_parent = binary_tree.Parent(root);
 
-    BinaryTreeNode<int>* target = binary_tree.LeftChild(binary_tree.LeftChild(root));
+    // BinaryTreeNode<int>* target = binary_tree.LeftChild(binary_tree.LeftChild(root));
+    BinaryTreeNode<int>* target = root->left_child->left_child;
     BinaryTreeNode<int>* target_parent = binary_tree.Parent(target);
 
     if (root_parent == NULL) {
@@ -202,8 +205,8 @@ void BinaryTreeTest::TestPreorderTraversal() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                  Test BinaryTree PreOrderTraversal                 |" << endl;
-    cout << "|                      测试二叉树前序遍历                      |" << endl;
+    cout << "|              Test BinaryTree PreOrderTraversal            |" << endl;
+    cout << "|                      测试二叉树前序遍历                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -215,18 +218,18 @@ void BinaryTreeTest::TestPreorderTraversal() {
     cout << "|                      6                                    |" << endl << endl;
 
     int num = 7;
-    BinaryTree<int> bin_tree;
+    BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        bin_tree.Insert(i);
+        binary_tree.Insert(i);
     }
 
     cout << "前序遍历(递归):" << endl;
-    bin_tree.PreOrderTraversal(visit);
+    binary_tree.PreOrderTraversal(visit);
     cout << endl;
 
     cout << "前序遍历(非递归):" << endl;
-    bin_tree.PreOrderTraversalNonRecursive(visit);
+    binary_tree.PreOrderTraversalNonRecursive(visit);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -238,8 +241,8 @@ void BinaryTreeTest::TestInorderTraversal() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test BinaryTree InorderTraversalOfSubTreeRecursive_                 |" << endl;
-    cout << "|                      测试二叉树中序遍历                      |" << endl;
+    cout << "|               Test BinaryTree InorderTraversal            |" << endl;
+    cout << "|                      测试二叉树中序遍历                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -274,8 +277,8 @@ void BinaryTreeTest::TestPostorderTraversal() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test BinaryTree PostorderTraversal                 |" << endl;
-    cout << "|                      测试二叉树后序遍历                      |" << endl;
+    cout << "|              Test BinaryTree PostorderTraversal           |" << endl;
+    cout << "|                      测试二叉树后序遍历                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -287,18 +290,18 @@ void BinaryTreeTest::TestPostorderTraversal() {
     cout << "|                      6                                    |" << endl << endl;
 
     int num = 7;
-    BinaryTree<int> bin_tree;
+    BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        bin_tree.Insert(i);
+        binary_tree.Insert(i);
     }
 
     cout << "后序遍历(递归):" << endl;
-    bin_tree.PostorderTraversal(visit);
+    binary_tree.PostorderTraversal(visit);
     cout << endl;
 
     cout << "后序遍历(非递归):" << endl;
-    bin_tree.PostorderTraversalNonRecursive(visit);
+    binary_tree.PostorderTraversalNonRecursive(visit);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -307,12 +310,12 @@ void BinaryTreeTest::TestPostorderTraversal() {
 
 
 // 测试层序遍历
-void BinaryTreeTest::TestLevelOrder() {
+void BinaryTreeTest::TestLevelOrderTraversal() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test BinaryTree LevelOrderTraversal                |" << endl;
-    cout << "|                      测试二叉树层序遍历                      |" << endl;
+    cout << "|              Test BinaryTree LevelOrderTraversal          |" << endl;
+    cout << "|                      测试二叉树层序遍历                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -324,13 +327,13 @@ void BinaryTreeTest::TestLevelOrder() {
     cout << "|                      6                                    |" << endl << endl;
 
     int num = 7;
-    BinaryTree<int> bin_tree;
+    BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        bin_tree.Insert(i);
+        binary_tree.Insert(i);
     }
 
-    bin_tree.LevelOrderTraversal(visit);
+    binary_tree.LevelOrderTraversal(visit);
 
     cout << endl;
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -342,8 +345,8 @@ void BinaryTreeTest::TestExist() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                    Test BinaryTree Exist                   |" << endl;
-    cout << "|                        测试二叉树查找                       |" << endl;
+    cout << "|                    Test BinaryTree Exist                  |" << endl;
+    cout << "|                     测试二叉树结点是否存在                   |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -355,13 +358,13 @@ void BinaryTreeTest::TestExist() {
     cout << "|                      6                                    |" << endl << endl;
 
     int num = 7;
-    BinaryTree<int> bin_tree;
+    BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        bin_tree.Insert(i);
+        binary_tree.Insert(i);
     }
 
-    bool in_tree = bin_tree.Exist(5);
+    bool in_tree = binary_tree.Exist(5);
 
     if (in_tree) {
         cout << "5 is in the tree" << endl;
@@ -370,7 +373,7 @@ void BinaryTreeTest::TestExist() {
         cout << "5 isn't in the tree" << endl;
     }
 
-    in_tree = bin_tree.Exist(7);
+    in_tree = binary_tree.Exist(7);
 
     if (in_tree) {
         cout << "7 is in the tree" << endl;
@@ -387,22 +390,36 @@ void BinaryTreeTest::TestExist() {
 void BinaryTreeTest::TestCreateByPreorderAndInorderList() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|  Test BinaryTree TestCreateByPreorderAndInorderList   |" << endl;
-    cout << "|                测试前序遍历与中序遍历生成二叉树                |" << endl;
+    cout << "|     Test BinaryTree TestCreateByPreorderAndInorderList    |" << endl;
+    cout << "|                 测试前序遍历与中序遍历生成二叉树              |" << endl << endl << endl;
 
-    BinaryTree<int> bin_tree;
+    BinaryTree<int> binary_tree;
 
-    int preorder_list[] = {0, 1, 3, 6, 5, 9, 2, 4, 8, 7 };  // 前序遍历结果
-    int inorder_list[] = {6, 3, 1, 9, 5, 0, 8, 4, 2, 7 };   // 中序遍历结果
-    bool res = bin_tree.CreateByPreorderAndInorderList(preorder_list, inorder_list, 10);
+    int list_length = 10;
+    int preorder_list[] = { 0, 1, 3, 6, 5, 9, 2, 4, 8, 7 };  // 前序遍历结果
+    int inorder_list[] = { 6, 3, 1, 9, 5, 0, 8, 4, 2, 7 };   // 中序遍历结果
+
+    cout << "前序遍历序列: ";
+    for (int i = 0; i < list_length; i++) {
+        cout << preorder_list[i] << " ";
+    }
+    cout << endl << endl;
+
+    cout << "中序遍历序列: ";
+    for (int i = 0; i < list_length; i++) {
+        cout << inorder_list[i] << " ";
+    }
+    cout << endl << endl;
+
+    bool res = binary_tree.CreateByPreorderAndInorderList(preorder_list, inorder_list, list_length);
     if (!res) {
         cout << "生成二叉树失败:" << endl;
     }
 
     cout << "打印二叉树:" << endl;
-    bin_tree.Print();
+    binary_tree.Print();
 
-    cout << endl;
+    cout << endl << endl;
     cout << "------------------------- CyberDash -------------------------" << endl;
     cout << endl;
 }

@@ -22,7 +22,7 @@ int main() {
 	BinaryTreeTest::TestHeight();
 
 	// 测试LeftChild和RightChild
-	BinaryTreeTest::TestChild();
+	// BinaryTreeTest::TestChild();
 
 	// 测试父节点函数Parent
 	BinaryTreeTest::TestParent();
@@ -37,7 +37,7 @@ int main() {
     BinaryTreeTest::TestPostorderTraversal();
 
 	// 测试层序遍历
-	BinaryTreeTest::TestLevelOrder();
+    BinaryTreeTest::TestLevelOrderTraversal();
 
 	// 测试查找是否在二叉树
     BinaryTreeTest::TestExist();

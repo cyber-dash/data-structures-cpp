@@ -46,9 +46,9 @@ struct BinaryTreeNode {
  * @tparam TData 数据项类型模板参数
  */
 template <class TData>
-struct BacktrackingStackNode {
+struct PostorderBacktrackStackNode {
     /*! @brief 构造函数 */
-    explicit BacktrackingStackNode(BinaryTreeNode<TData>* node = NULL) : node(node), tag(LEFT_BACK_TRACKING) {}
+    explicit PostorderBacktrackStackNode(BinaryTreeNode<TData>* node = NULL) : node(node), tag(LEFT_BACK_TRACKING) {}
 
     BinaryTreeNode<TData>* node;    //!< 二叉树结点指针
     enum { LEFT_BACK_TRACKING, RIGHT_BACK_TRACKING } tag;       //!< 标签
@@ -69,7 +69,7 @@ public:
     /*! @brief 复制构造函数 */
     BinaryTree(const BinaryTree<TData>& binary_tree);
     /*! @brief 析构函数 */
-    ~BinaryTree() { this->DestroySubTreeRecursive_(root_); }
+    ~BinaryTree() { this->DestroySubtreeRecursive_(root_); }
 
     /* 基础函数 */
     /*!
@@ -102,13 +102,13 @@ public:
      * @brief 左孩子
      * @return 左孩子指针
      */
-    BinaryTreeNode<TData>* LeftChild(BinaryTreeNode<TData>* node) { return (node != NULL) ? node->left_child : NULL; }
+    // BinaryTreeNode<TData>* LeftChild(BinaryTreeNode<TData>* node) { return (node != NULL) ? node->left_child : NULL; }
 
     /*!
      * @brief 左孩子
      * @return 左孩子指针
      */
-    BinaryTreeNode<TData>* RightChild(BinaryTreeNode<TData>* node) { return (node != NULL) ? node->right_child : NULL; }
+    // BinaryTreeNode<TData>* RightChild(BinaryTreeNode<TData>* node) { return (node != NULL) ? node->right_child : NULL; }
 
     /*!
      * @brief 获取树的高度
@@ -150,7 +150,7 @@ public:
      * @param visit 结点遍历函数
      */
     void PreOrderTraversalNonRecursive(void (*visit)(BinaryTreeNode<TData>* node)) {
-        this->PreOrderTraversalOfSubTreeNonRecursive_(this->root_, visit);
+        this->PreorderTraversalOfSubtreeNonRecursive_(this->root_, visit);
     }
 
     /*!
@@ -158,7 +158,7 @@ public:
      * @param visit 结点遍历函数
      */
     void InorderTraversal(void (*visit)(BinaryTreeNode<TData>* node)) {
-        this->InorderTraversalOfSubTreeRecursive_(this->root_, visit);
+        this->InorderTraversalOfSubtreeRecursive_(this->root_, visit);
     }
 
     /*!
@@ -166,7 +166,7 @@ public:
      * @param visit 结点遍历函数
      */
     void InorderTraversalNonRecursive(void (*visit)(BinaryTreeNode<TData>* node)) {
-        this->InorderTraversalOfSubTreeNonRecursive_(this->root_, visit);
+        this->InorderTraversalOfSubtreeNonRecursive_(this->root_, visit);
     }
 
     /*!
@@ -222,9 +222,9 @@ protected:
     // void CreateBinTree_(istream& in, BinaryTreeNode<TData>*& subTree);
 
     // 子树插入数据
-    bool InsertInSubTreeRecursive_(BinaryTreeNode<TData>*& sub_tree_root, TData data);
+    bool InsertInSubTreeRecursive_(BinaryTreeNode<TData>*& subtree_root, TData data);
     // 删除子树
-    void DestroySubTreeRecursive_(BinaryTreeNode<TData>*& sub_tree_root);
+    void DestroySubtreeRecursive_(BinaryTreeNode<TData>*& subtree_root);
     // 查找数据是否在(子)树中(递归)
     bool ExistInSubTree_(BinaryTreeNode<TData>* subtree_root, TData data) const;
     // 复制二叉树
@@ -240,16 +240,16 @@ protected:
     void PreOrderTraversalOfSubTreeRecursive_(BinaryTreeNode<TData>* subtree_root,
                                               void (*visit)(BinaryTreeNode<TData>* node));
     // 子树前序遍历(非递归)
-    void PreOrderTraversalOfSubTreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
+    void PreorderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                  void (*visit)(BinaryTreeNode<TData>* node));
     // 子树中序遍历(递归)
-    void InorderTraversalOfSubTreeRecursive_(BinaryTreeNode<TData>* sub_tree_root,
+    void InorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
                                              void (*visit)(BinaryTreeNode<TData>* node));
     // 子树中序遍历(非递归)
-    void InorderTraversalOfSubTreeNonRecursive_(BinaryTreeNode<TData>* sub_tree_root,
+    void InorderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                 void (*visit)(BinaryTreeNode<TData>* node));
     // 子树后序遍历(递归)
-    void PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* sub_tree_root,
+    void PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                void (*visit)(BinaryTreeNode<TData>* node));
     // 子树后序遍历(非递归)
     void PostorderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
@@ -291,16 +291,16 @@ BinaryTree<TData>::BinaryTree(const BinaryTree<TData>& binary_tree) {
 /*!
  * @brief 子树插入数据
  * @tparam TData 类型模板参数
- * @param sub_tree_root 子树根结点
+ * @param subtree_root 子树根结点
  * @param data 结点数据项
  * @return 是否插入成功
  */
 template<class TData>
-bool BinaryTree<TData>::InsertInSubTreeRecursive_(BinaryTreeNode<TData>*& sub_tree_root, TData data) {
+bool BinaryTree<TData>::InsertInSubTreeRecursive_(BinaryTreeNode<TData>*& subtree_root, TData data) {
 
-    if (sub_tree_root == NULL) {
-        sub_tree_root = new BinaryTreeNode<TData>(data);
-        if (sub_tree_root == NULL) {
+    if (subtree_root == NULL) {
+        subtree_root = new BinaryTreeNode<TData>(data);
+        if (subtree_root == NULL) {
             cerr << "存储分配错误!" << endl;
             return false;
         }
@@ -310,16 +310,16 @@ bool BinaryTree<TData>::InsertInSubTreeRecursive_(BinaryTreeNode<TData>*& sub_tr
 
     bool res = false;
 
-    int left_sub_tree_height = HeightOfSubTreeRecursive_(sub_tree_root->left_child);
-    int right_sub_tree_height = HeightOfSubTreeRecursive_(sub_tree_root->right_child);
+    int left_subtree_height = HeightOfSubTreeRecursive_(subtree_root->left_child);
+    int right_subtree_height = HeightOfSubTreeRecursive_(subtree_root->right_child);
 
-    if (left_sub_tree_height > right_sub_tree_height) {
-        res = InsertInSubTreeRecursive_(sub_tree_root->right_child, data);
+    if (left_subtree_height > right_subtree_height) {
+        res = InsertInSubTreeRecursive_(subtree_root->right_child, data);
         if (!res) {
             return false;
         }
     } else {
-        res = InsertInSubTreeRecursive_(sub_tree_root->left_child, data);
+        res = InsertInSubTreeRecursive_(subtree_root->left_child, data);
         if (!res) {
             return false;
         }
@@ -331,19 +331,19 @@ bool BinaryTree<TData>::InsertInSubTreeRecursive_(BinaryTreeNode<TData>*& sub_tr
 
 /*!
  * @brief 删除子树
- * @param sub_tree_root 子树根节点
+ * @param subtree_root 子树根节点
  */
-template <class T>
-void BinaryTree<T>::DestroySubTreeRecursive_(BinaryTreeNode<T>*& sub_tree_root) {
-    if (sub_tree_root == NULL) {
+template <class TData>
+void BinaryTree<TData>::DestroySubtreeRecursive_(BinaryTreeNode<TData>*& subtree_root) {
+    if (subtree_root == NULL) {
         return;
     }
 
-    this->DestroySubTreeRecursive_(sub_tree_root->left_child);
-    this->DestroySubTreeRecursive_(sub_tree_root->right_child);
+    this->DestroySubtreeRecursive_(subtree_root->left_child);
+    this->DestroySubtreeRecursive_(subtree_root->right_child);
 
-    delete sub_tree_root;
-    sub_tree_root = NULL;
+    delete subtree_root;
+    subtree_root = NULL;
 }
 
 
@@ -493,11 +493,11 @@ BinaryTreeNode<TData>* BinaryTree<TData>::Parent_(BinaryTreeNode<TData>* subtree
 
 /*
 template<class TData>
-void BinaryTree<TData>::Traverse(BinaryTreeNode<TData> *sub_tree_root, ostream& out) {
-  if (sub_tree_root != NULL) {
-    out << sub_tree_root->data << ' ';
-    Traverse(sub_tree_root->left_child, out);
-    Traverse(sub_tree_root->right_child, out);
+void BinaryTree<TData>::Traverse(BinaryTreeNode<TData> *subtree_root, ostream& out) {
+  if (subtree_root != NULL) {
+    out << subtree_root->data << ' ';
+    Traverse(subtree_root->left_child, out);
+    Traverse(subtree_root->right_child, out);
   }
 }
  */
@@ -531,30 +531,30 @@ void BinaryTree<TData>::PreOrderTraversalOfSubTreeRecursive_(BinaryTreeNode<TDat
  * @param visit 访问函数
  */
 template<class TData>
-void BinaryTree<TData>::PreOrderTraversalOfSubTreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
+void BinaryTree<TData>::PreorderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                                 void (*visit)(BinaryTreeNode<TData>*))
 {
 
     // (栈初始化)声明前序遍历栈, 子树根节点指针入栈
-    stack<BinaryTreeNode<TData>*> pre_traverse_stack;
-    pre_traverse_stack.push(subtree_root);
+    stack<BinaryTreeNode<TData>*> backtrack_stack;
+    backtrack_stack.push(subtree_root);
 
-    while (!pre_traverse_stack.empty()) {
+    while (!backtrack_stack.empty()) {
 
         // 出栈
-        BinaryTreeNode<TData>* cur_node_ptr = pre_traverse_stack.top();
-        pre_traverse_stack.pop();
+        BinaryTreeNode<TData>* cur_tree_node = backtrack_stack.top();
+        backtrack_stack.pop();
 
         // 访问
-        visit(cur_node_ptr);
+        visit(cur_tree_node);
 
         // 孩子节点入栈
-        if (cur_node_ptr->right_child != NULL) {
-            pre_traverse_stack.push(cur_node_ptr->right_child);
+        if (cur_tree_node->right_child != NULL) {
+            backtrack_stack.push(cur_tree_node->right_child);
         }
 
-        if (cur_node_ptr->left_child != NULL) {
-            pre_traverse_stack.push(cur_node_ptr->left_child);
+        if (cur_tree_node->left_child != NULL) {
+            backtrack_stack.push(cur_tree_node->left_child);
         }
     }
 }
@@ -562,53 +562,55 @@ void BinaryTree<TData>::PreOrderTraversalOfSubTreeNonRecursive_(BinaryTreeNode<T
 
 /*!
  * @brief 子树中序遍历(递归)
- * @tparam T 节点数据模板类型
- * @param sub_tree_root 子树根节点指针
+ * @tparam TData 节点数据模板类型
+ * @param subtree_root 子树根节点指针
  * @param visit 访问函数
  */
-template<class T>
-void BinaryTree<T>::InorderTraversalOfSubTreeRecursive_(BinaryTreeNode<T>* sub_tree_root,
-                                                        void (*visit)(BinaryTreeNode<T>*))
+template<class TData>
+void BinaryTree<TData>::InorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
+                                                            void (*visit)(BinaryTreeNode<TData>* node))
 {
-    if (sub_tree_root == NULL) {
+    if (subtree_root == NULL) {
         return;
     }
 
-    InorderTraversalOfSubTreeRecursive_(sub_tree_root->left_child, visit);
+    InorderTraversalOfSubtreeRecursive_(subtree_root->left_child, visit);
 
-    visit(sub_tree_root);
+    visit(subtree_root);
 
-    InorderTraversalOfSubTreeRecursive_(sub_tree_root->right_child, visit);
+    InorderTraversalOfSubtreeRecursive_(subtree_root->right_child, visit);
 }
 
 
 /**
  * @brief 子树中序遍历(非递归)
- * @tparam T 节点数据模板类型
- * @param sub_tree_root 子树根节点指针
+ * @tparam TData 节点数据模板类型
+ * @param subtree_root 子树根节点指针
  * @param visit 访问函数
  */
-template<class T>
-void BinaryTree<T>::InorderTraversalOfSubTreeNonRecursive_(BinaryTreeNode<T>* sub_tree_root, void (*visit)(BinaryTreeNode<T>* node)) {
+template<class TData>
+void BinaryTree<TData>::InorderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
+                                                               void (*visit)(BinaryTreeNode<TData>* node))
+{
+    stack<BinaryTreeNode<TData>*> backtrack_stack;
+    BinaryTreeNode<TData>* cur_tree_node = subtree_root;
 
-    stack<BinaryTreeNode<T>*> in_traverse_stack;
-    BinaryTreeNode<T>* cur_node = sub_tree_root;
+    while (cur_tree_node != NULL || !backtrack_stack.empty()) {
 
-    while (cur_node != NULL || !in_traverse_stack.empty()) {
-
-        while (cur_node != NULL) {
-            in_traverse_stack.push(cur_node);
-            cur_node = cur_node->left_child;
+        // 一直向左子树方向搜索(等于在做深度优先搜索DFS)
+        while (cur_tree_node != NULL) {
+            backtrack_stack.push(cur_tree_node);
+            cur_tree_node = cur_tree_node->left_child;
         }
 
-        if (!in_traverse_stack.empty()) {
+        if (!backtrack_stack.empty()) {
 
-            cur_node = in_traverse_stack.top();
-            in_traverse_stack.pop();
+            cur_tree_node = backtrack_stack.top();
+            backtrack_stack.pop();
 
-            visit(cur_node);
+            visit(cur_tree_node);
 
-            cur_node = cur_node->right_child;
+            cur_tree_node = cur_tree_node->right_child;
         }
     }
 }
@@ -616,22 +618,22 @@ void BinaryTree<T>::InorderTraversalOfSubTreeNonRecursive_(BinaryTreeNode<T>* su
 
 /*!
  * @brief 子树后序遍历(递归)
- * @tparam T 节点数据模板类型
- * @param sub_tree_root 子树根节点指针
+ * @tparam TData 节点数据模板类型
+ * @param subtree_root 子树根节点指针
  * @param visit 访问函数
  */
-template<class T>
-void BinaryTree<T>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<T>* sub_tree_root,
-                                                          void (*visit)(BinaryTreeNode<T>*))
+template<class TData>
+void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
+                                                              void (*visit)(BinaryTreeNode<TData>* node))
 {
-    if (sub_tree_root == NULL) {
+    if (subtree_root == NULL) {
         return;
     }
 
-    PostorderTraversalOfSubtreeRecursive_(sub_tree_root->left_child, visit);
-    PostorderTraversalOfSubtreeRecursive_(sub_tree_root->right_child, visit);
+    PostorderTraversalOfSubtreeRecursive_(subtree_root->left_child, visit);
+    PostorderTraversalOfSubtreeRecursive_(subtree_root->right_child, visit);
 
-    visit(sub_tree_root);
+    visit(subtree_root);
 }
 
 
@@ -645,38 +647,38 @@ template <class TData>
 void BinaryTree<TData>::PostorderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                                  void (*visit)(BinaryTreeNode<TData>*))
 {
-    stack<BacktrackingStackNode<TData> > backtracking_stack;
+    stack<PostorderBacktrackStackNode<TData> > backtrack_stack;
 
     BinaryTreeNode<TData>* cur_tree_node = subtree_root;
 
     do {
-        // 一直向左子树方向试探(等于在做深度优先)
+        // 一直向左子树方向搜索(等于在做深度优先搜索DFS)
         while (cur_tree_node != NULL) {
-            BacktrackingStackNode<TData> node(cur_tree_node);
-            backtracking_stack.push(node);
+            PostorderBacktrackStackNode<TData> node(cur_tree_node);
+            backtrack_stack.push(node);
             cur_tree_node = cur_tree_node->left_child;
         }
 
-        bool cur_tree_node_left_backtracking_unfinished = true;
-        while (cur_tree_node_left_backtracking_unfinished && !backtracking_stack.empty()) {
+        bool cur_tree_node_left_backtrack_unfinished = true;
+        while (cur_tree_node_left_backtrack_unfinished && !backtrack_stack.empty()) {
 
-            BacktrackingStackNode<TData> cur_backtracking_node = backtracking_stack.top();
-            backtracking_stack.pop();
+            PostorderBacktrackStackNode<TData> cur_backtrack_node = backtrack_stack.top();
+            backtrack_stack.pop();
 
-            cur_tree_node = cur_backtracking_node.node;
+            cur_tree_node = cur_backtrack_node.node;
 
-            if (cur_backtracking_node.tag == BacktrackingStackNode<TData>::LEFT_BACK_TRACKING) {
-                cur_backtracking_node.tag = BacktrackingStackNode<TData>::RIGHT_BACK_TRACKING;
-                backtracking_stack.push(cur_backtracking_node);
+            if (cur_backtrack_node.tag == PostorderBacktrackStackNode<TData>::LEFT_BACK_TRACKING) {
+                cur_backtrack_node.tag = PostorderBacktrackStackNode<TData>::RIGHT_BACK_TRACKING;
+                backtrack_stack.push(cur_backtrack_node);
                 cur_tree_node = cur_tree_node->right_child;
 
-                cur_tree_node_left_backtracking_unfinished = false;
+                cur_tree_node_left_backtrack_unfinished = false;
 
-            } else if (cur_backtracking_node.tag == BacktrackingStackNode<TData>::RIGHT_BACK_TRACKING) {
+            } else if (cur_backtrack_node.tag == PostorderBacktrackStackNode<TData>::RIGHT_BACK_TRACKING) {
                 visit(cur_tree_node);
             }
         }
-    } while (!backtracking_stack.empty());
+    } while (!backtrack_stack.empty());
 }
 
 
@@ -852,18 +854,18 @@ bool operator == (const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData
 
 
 /*
-template<class T>
-istream& operator >> (istream& in, BinaryTree<T>& Tree) {
-    Tree.CreateByInStream(in);
+template<class TData>
+istream& operator >> (istream& in, BinaryTree<TData>& binary_tree) {
+    binary_tree.CreateByInStream(in);
     return in;
 }
  */
 
 
-template<class T>
-ostream& operator << (ostream& out, BinaryTree<T>& Tree) {
+template<class TData>
+ostream& operator << (ostream& out, BinaryTree<TData>& binary_tree) {
     out << "二叉树的前序遍历\n";
-    Tree.Traverse(Tree.Root(), out);
+    binary_tree.Traverse(binary_tree.Root(), out);
     out << endl;
     return out;
 }
