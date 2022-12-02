@@ -22,11 +22,11 @@ using namespace std;
 /*!
  * @brief **稀疏矩阵三元组结构体**
  */
-template<typename TData>
+template<typename TValue>
 struct TriTuple {
   int row; //!< 行索引
   int col; //!< 列索引
-  TData value; //!< 值
+  TValue value; //!< 值
 
   /*!
    * @brief **赋值运算符重载函数**
@@ -37,7 +37,7 @@ struct TriTuple {
    * ---------------
    * ---------------
    */
-  TriTuple<TData>& operator=(const TriTuple<TData>& tri_tuple) {
+  TriTuple<TValue>& operator=(const TriTuple<TValue>& tri_tuple) {
     row = tri_tuple.row;
     col = tri_tuple.col;
     value = tri_tuple.value;
@@ -50,7 +50,7 @@ struct TriTuple {
 /*!
  * @brief **稀疏矩阵模板类**
  */
-template<class TData>
+template<class TValue>
 class SparseMatrix {
 public:
 
@@ -58,67 +58,67 @@ public:
   explicit SparseMatrix(int max_size = 100);
 
   // 复制构造函数
-  SparseMatrix(const SparseMatrix<TData>& sparse_matrix);
+  SparseMatrix(const SparseMatrix<TValue>& sparse_matrix);
 
   /*! @brief 析构函数 */
-  virtual ~SparseMatrix() { delete[] sparse_matrix_array_; }
+  virtual ~SparseMatrix() { delete[] elements_; }
 
   /*! @brief 获取行数 */
-  int Rows() { return this->rows_; }
+  int Rows() const { return this->rows_; }
   /*! @brief 设置行数 */
   void SetRows(int rows) { this->rows_ = rows; }
 
   /*! @brief 获取列数 */
-  int Cols() { return this->cols_; };
+  int Cols() const { return this->cols_; };
   /*! @brief 设置行数 */
   void SetCols(int cols) { this->cols_ = cols; };
 
   /*! @brief 获取元素数 */
-  int Terms() { return this->terms_; }
+  int Size() const { return this->size_; }
   /*! @brief 设置元素数 */
-  void SetTerms(int terms) { this->terms_ = terms; }
+  void SetSize(int size) { this->size_ = size; }
 
   /*! @brief 获取最大元素数 */
-  int MaxTerms() { return this->max_terms_; }
+  int MaxSize() const { return this->max_size_; }
   /*! @brief 设置最大元素数 */
-  int SetMaxTerms(int max_terms) { this->max_terms_ = max_terms; }
+  int SetMaxSize(int max_terms) { this->max_size_ = max_terms; }
 
   // 获取元素
-  bool GetElement(int row, int col, TData& value);
+  bool GetElement(int row, int col, TValue& value);
   // 添加(替换)元素
-  bool AddAndReplaceElement(int row, int col, TData value);
+  bool AddAndReplaceElement(int row, int col, TValue value);
 
   /*! @brief 获取元素数组起始地址 */
-  TriTuple<TData>* SparseMatrixArray() { return this->sparse_matrix_array_; }
+  TriTuple<TValue>* Elements() const { return this->elements_; }
 
   // 赋值运算符重载函数
-  SparseMatrix<TData>& operator = (SparseMatrix<TData>& sparse_matrix);
+  SparseMatrix<TValue>& operator = (SparseMatrix<TValue>& sparse_matrix);
 
   // 转置运算
-  SparseMatrix<TData>* Transpose();
+  SparseMatrix<TValue>* Transpose();
 
   // 快速转置运算
-  SparseMatrix<TData>* FastTranspose();
+  SparseMatrix<TValue>* FastTranspose();
 
   // 当前矩阵与sparse_matrix相加 todo: 未实现
-  SparseMatrix<TData> Add(SparseMatrix<TData>& sparse_matrix);
+  SparseMatrix<TValue> Add(SparseMatrix<TValue>& sparse_matrix);
 
   // 当前矩阵与矩阵sparse_matrix相乘 todo: 未实现
-  SparseMatrix<TData> Multiply(SparseMatrix<TData>& sparse_matrix);
+  SparseMatrix<TValue> Multiply(SparseMatrix<TValue>& sparse_matrix);
 
   // 打印稀疏矩阵
-  template <class U>
-  friend ostream& operator << (ostream& out, SparseMatrix<TData>& sparse_matrix);
+  template <class TValue>
+  friend ostream& operator << (ostream& out, SparseMatrix<TValue>& sparse_matrix);
   // 输入稀疏矩阵
-  template <class U>
-  friend istream& operator >> (istream& in, SparseMatrix<TData>& sparse_matrix);
+  template <class TValue>
+  friend istream& operator >> (istream& in, SparseMatrix<TValue>& sparse_matrix);
 
 private:
   int rows_; //!< 行数
   int cols_; //!< 列数
-  int terms_; //!< 当前元素数
-  int max_terms_; //!< 最大元素数
-  TriTuple<TData>* sparse_matrix_array_; //!< 元素数组
+  int size_; //!< 当前元素数
+  int max_size_; //!< 最大元素数
+  TriTuple<TValue>* elements_; //!< 元素数组
 };
 
 
@@ -128,19 +128,19 @@ private:
  * @param max_size 最大元素个数
  */
 template<class T>
-SparseMatrix<T>::SparseMatrix(int max_size): max_terms_(max_size) {
+SparseMatrix<T>::SparseMatrix(int max_size): max_size_(max_size) {
   if (max_size < 1) {
     cerr<<"初始化max_size错误"<<endl;
     return;
   }
 
-  this->sparse_matrix_array_ = new TriTuple<T>[max_size];
+  this->elements_ = new TriTuple<T>[max_size];
   /* error handler */
 
-  this->max_terms_ = max_size;
+  this->max_size_ = max_size;
   this->rows_ = 0;
   this->cols_ = 0;
-  this->terms_ = 0;
+  this->size_ = 0;
 }
 
 
@@ -152,13 +152,13 @@ SparseMatrix<T>::SparseMatrix(int max_size): max_terms_(max_size) {
 template<class T>
 SparseMatrix<T>::SparseMatrix(const SparseMatrix<T>& sparse_matrix) :
   rows_(sparse_matrix.Rows()), cols_(sparse_matrix.Cols()),
-  terms_(sparse_matrix.Terms()), max_terms_(sparse_matrix.MaxTerms())
+  size_(sparse_matrix.Size()), max_size_(sparse_matrix.MaxSize())
 {
-  this->sparse_matrix_array_ = new TriTuple<T>[this->MaxTerms()];
+  this->elements_ = new TriTuple<T>[this->MaxSize()];
   /* error handler */
 
-  for (int i = 0; i < this->terms_; i++) {
-    this->sparse_matrix_array_[i] = sparse_matrix.SparseMatrixArray()[i];
+  for (int i = 0; i < this->size_; i++) {
+    this->elements_[i] = sparse_matrix.Elements()[i];
   }
 }
 
@@ -173,9 +173,9 @@ SparseMatrix<T>::SparseMatrix(const SparseMatrix<T>& sparse_matrix) :
  */
 template<class T>
 bool SparseMatrix<T>::GetElement(int row, int col, T& value) {
-  for (int i = 0; i < this->Terms(); i++) {
-    if (this->sparse_matrix_array_[i].row == row && this->sparse_matrix_array_[i].col == col) {
-      value = this->sparse_matrix_array_[i].value;
+  for (int i = 0; i < this->Size(); i++) {
+    if (this->elements_[i].row == row && this->elements_[i].col == col) {
+      value = this->elements_[i].value;
       return true;
     }
   }
@@ -203,48 +203,48 @@ bool SparseMatrix<T>::AddAndReplaceElement(int row, int col, T value) {
     }
 
     int insert_pos = -1;
-    for (int i = 0; i < this->Terms(); i++) {
+    for (int i = 0; i < this->Size(); i++) {
         // 如果索引i的元素的row于插入位置相同
-        if (this->sparse_matrix_array_[i].row == row) {
+        if (this->elements_[i].row == row) {
             // 若果索引i的元素的col大于等于插入位置
-            if (this->sparse_matrix_array_[i].col >= col) {
+            if (this->elements_[i].col >= col) {
                 insert_pos = i;
                 break;
             }
-        } else if (this->sparse_matrix_array_[i].row > row) {
+        } else if (this->elements_[i].row > row) {
             insert_pos = i;
             break;
         }
     }
 
     if (insert_pos != -1 &&
-        this->sparse_matrix_array_[insert_pos].row == row &&
-        this->sparse_matrix_array_[insert_pos].col == col)
+        this->elements_[insert_pos].row == row &&
+        this->elements_[insert_pos].col == col)
     {
-        this->sparse_matrix_array_[insert_pos].value = value;
+        this->elements_[insert_pos].value = value;
         return true;
     }
 
-    if (this->Terms() == this->MaxTerms() || this->Terms() == this->Rows()  * this->Cols()) { // 不能再插入
+    if (this->Size() == this->MaxSize() || this->Size() == this->Rows() * this->Cols()) { // 不能再插入
         return false;
     }
 
     // sparse_matrix_array_中没有找到插入位置, 因此在最后一位插入
     if (insert_pos == -1) {
-        insert_pos = this->Terms();
+        insert_pos = this->Size();
     }
 
     // 先插入到最后一个位置
-    this->sparse_matrix_array_[this->terms_].row =  row;
-    this->sparse_matrix_array_[this->terms_].col =  col;
-    this->sparse_matrix_array_[this->terms_].value = value;
+    this->elements_[this->size_].row =  row;
+    this->elements_[this->size_].col =  col;
+    this->elements_[this->size_].value = value;
 
     // 从后向前, 依次相邻交换, 完成插入
-    for (int i = this->Terms(); i > insert_pos; i--) {
-        swap(&this->sparse_matrix_array_[i], &this->sparse_matrix_array_[i - 1]);
+    for (int i = this->Size(); i > insert_pos; i--) {
+        swap(&this->elements_[i], &this->elements_[i - 1]);
     }
 
-    this->terms_++; // 插入后, 数量+1
+    this->size_++; // 插入后, 数量+1
 
     return true;
 }
@@ -269,14 +269,14 @@ SparseMatrix<T>& SparseMatrix<T>::operator = (SparseMatrix<T>& sparse_matrix) {
 
   this->SetRows(sparse_matrix.Rows());
   this->SetCols(sparse_matrix.Cols());
-  this->SetTerms(sparse_matrix.Terms());
-  this->SetMaxTerms(sparse_matrix.MaxTerms());
+    this->SetSize(sparse_matrix.Size());
+    this->SetMaxSize(sparse_matrix.MaxSize());
 
-  this->sparse_matrix_array_ = new TriTuple<T>[this->MaxTerms()];
+  this->elements_ = new TriTuple<T>[this->MaxSize()];
   /* error handler */
 
-  for (int i = 0; i < this->terms_; i++) {
-    this->sparse_matrix_array_[i] = sparse_matrix.SparseMatrixArray()[i];
+  for (int i = 0; i < this->size_; i++) {
+    this->elements_[i] = sparse_matrix.Elements()[i];
   }
 
   return *this;
@@ -298,12 +298,12 @@ template<class T>
 ostream& operator<<(ostream& out, SparseMatrix<T>& sparse_matrix) {
   out<<"rows = "<<sparse_matrix.Rows()<<endl;
   out<<"cols = "<<sparse_matrix.Cols()<<endl;
-  out<<"NonZero terms: "<<sparse_matrix.Terms()<<endl;
+  out << "NonZero terms: " << sparse_matrix.Size() << endl;
 
-  for (int i = 0; i < sparse_matrix.Terms(); i++) {
-    out<<"M["<<sparse_matrix.SparseMatrixArray()[i].row<<"]["<<
-      sparse_matrix.SparseMatrixArray()[i].col<<"] = "<<
-      sparse_matrix.SparseMatrixArray()[i].value<<endl;
+  for (int i = 0; i < sparse_matrix.Size(); i++) {
+    out << "M[" << sparse_matrix.Elements()[i].row << "][" <<
+        sparse_matrix.Elements()[i].col << "] = " <<
+        sparse_matrix.Elements()[i].value << endl;
   }
 
   return out;
@@ -332,20 +332,20 @@ istream& operator>>(istream& in, SparseMatrix<T>& sparse_matrix) {
 
   in >> rows >> cols >> terms;
 
-  if (terms > sparse_matrix.MaxTerms()) {
+  if (terms > sparse_matrix.MaxSize()) {
     /* error handler */
     exit(1);
   }
 
   sparse_matrix.SetRows(rows);
   sparse_matrix.SetCols(cols);
-  sparse_matrix.SetTerms(terms);
+    sparse_matrix.SetSize(terms);
 
-  for (int i = 0; i < sparse_matrix.Terms(); i++) {
+  for (int i = 0; i < sparse_matrix.Size(); i++) {
     cout << "输入第" << i << "个row, column和term的值" << endl;
-    in >> sparse_matrix.SparseMatrixArray()[i].row
-      >> sparse_matrix.SparseMatrixArray()[i].col
-      >> sparse_matrix.SparseMatrixArray()[i].value;
+    in >> sparse_matrix.Elements()[i].row
+      >> sparse_matrix.Elements()[i].col
+      >> sparse_matrix.Elements()[i].value;
   }
 
   cout << sparse_matrix << endl;
@@ -371,23 +371,23 @@ istream& operator>>(istream& in, SparseMatrix<T>& sparse_matrix) {
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::Transpose() {
-  SparseMatrix<T>* trans_sparse_matrix = new SparseMatrix<T>(this->MaxTerms());
+  SparseMatrix<T>* trans_sparse_matrix = new SparseMatrix<T>(this->MaxSize());
 
   trans_sparse_matrix->SetRows(this->Cols());
   trans_sparse_matrix->SetCols(this->Rows());
-  trans_sparse_matrix->SetTerms(this->Terms());
+    trans_sparse_matrix->SetSize(this->Size());
 
-  if (this->Terms() == 0) {
+  if (this->Size() == 0) {
     return trans_sparse_matrix;
   }
 
   int cur_index = 0;
   for (int i = 0; i < this->Cols(); i++) { // 用列号做扫描, 做Cols趟
-    for (int j = 0; j < this->Terms(); j++) { // 在数组sparse_matrix_array_中找到列号为i的三元组
-      if (this->SparseMatrixArray()[j].col == i) {
-          trans_sparse_matrix->SparseMatrixArray()[cur_index].row = i; // row等于col
-        trans_sparse_matrix->SparseMatrixArray()[cur_index].col = this->SparseMatrixArray()[j].row; // col等于row
-        trans_sparse_matrix->SparseMatrixArray()[cur_index].value = this->SparseMatrixArray()[j].value; // value
+    for (int j = 0; j < this->Size(); j++) { // 在数组sparse_matrix_array_中找到列号为i的三元组
+      if (this->Elements()[j].col == i) {
+          trans_sparse_matrix->Elements()[cur_index].row = i; // row等于col
+          trans_sparse_matrix->Elements()[cur_index].col = this->Elements()[j].row; // col等于row
+          trans_sparse_matrix->Elements()[cur_index].value = this->Elements()[j].value; // value
         cur_index++;
       }
     }
@@ -410,20 +410,20 @@ SparseMatrix<T>* SparseMatrix<T>::Transpose() {
  *  \n先初始化以上两个数组 \n\n
  *  遍历sparse_matrix_array_ \n
  *  对原矩阵三元组第i个元素, 进行转置矩阵三元组对应位置的赋值 \n
- *  赋值结束后, 更新trans_pos_at_each_row_arr[this->SparseMatrixArray()[i].col]的值(下一次转置矩阵数组执行的位置, 向后挪一位) \n
+ *  赋值结束后, 更新trans_pos_at_each_row_arr[this->Elements()[i].col]的值(下一次转置矩阵数组执行的位置, 向后挪一位) \n
  */
 template<class T>
 SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
   int* row_item_count_arr = new int[this->Cols()];
   int* iter_pos_arr = new int[this->Cols()];
 
-  SparseMatrix<T>* trans_sparse_matrix = new SparseMatrix<T>(this->MaxTerms());
+  SparseMatrix<T>* trans_sparse_matrix = new SparseMatrix<T>(this->MaxSize());
 
   trans_sparse_matrix->SetRows(this->Cols());
   trans_sparse_matrix->SetCols(this->Rows());
-  trans_sparse_matrix->SetTerms(this->Terms());
+    trans_sparse_matrix->SetSize(this->Size());
 
-  if (this->Terms() == 0) {
+  if (this->Size() == 0) {
     return trans_sparse_matrix;
   }
 
@@ -432,8 +432,8 @@ SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
   }
 
   // 将转置数组每行有多少个元素, 保存到row_item_count_arr
-  for (int i = 0; i < this->Terms(); i++) {
-    int curRow = this->SparseMatrixArray()[i].col;  // 转置后的行索引
+  for (int i = 0; i < this->Size(); i++) {
+    int curRow = this->Elements()[i].col;  // 转置后的行索引
     row_item_count_arr[curRow]++;
   }
 
@@ -452,16 +452,16 @@ SparseMatrix<T>* SparseMatrix<T>::FastTranspose() {
     iter_pos_arr[i] = iter_pos_arr[i - 1] + row_item_count_arr[i - 1];
   }
 
-  for (int i = 0; i < this->Terms(); i++) {
+  for (int i = 0; i < this->Size(); i++) {
     // 转制后矩阵的当前行索引(等于原数组的列索引)
-    int cur_row = this->SparseMatrixArray()[i].col;
+    int cur_row = this->Elements()[i].col;
     // 当前稀疏矩阵的三元组数组的数组索引, 取iter_pos_arr[cur_row];
     int cur_sparse_matrix_index = iter_pos_arr[cur_row];
 
     // 转置矩阵的三元组数组(首地址)
-    TriTuple<T>* trans_sparse_matrix_array = trans_sparse_matrix->SparseMatrixArray();
+    TriTuple<T>* trans_sparse_matrix_array = trans_sparse_matrix->Elements();
     // 原矩阵的三元组数组(首地址)
-    TriTuple<T>* src_spase_matrix_array = this->SparseMatrixArray();
+    TriTuple<T>* src_spase_matrix_array = this->Elements();
 
     // 转置矩阵元素的row/col于原数组互换, value相同
     trans_sparse_matrix_array[cur_sparse_matrix_index].row = src_spase_matrix_array[i].col;
