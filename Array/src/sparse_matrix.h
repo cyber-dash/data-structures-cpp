@@ -47,6 +47,11 @@ struct TriTuple {
 };
 
 
+template<class TValue> class SparseMatrix;
+template<class TValue> ostream& operator << (ostream& out, SparseMatrix<TValue>& sparse_matrix);
+template<class TValue> istream& operator >> (istream& in, SparseMatrix<TValue>& sparse_matrix);
+
+
 /*!
  * @brief **稀疏矩阵模板类**
  */
@@ -92,7 +97,7 @@ public:
   TriTuple<TValue>* Elements() const { return this->elements_; }
 
   // 赋值运算符重载函数
-  SparseMatrix<TValue>& operator = (SparseMatrix<TValue>& sparse_matrix);
+  SparseMatrix<TValue>& operator=(const SparseMatrix<TValue>& sparse_matrix);
 
   // 转置运算
   SparseMatrix<TValue>* Transpose();
@@ -107,11 +112,9 @@ public:
   SparseMatrix<TValue> Multiply(SparseMatrix<TValue>& sparse_matrix);
 
   // 打印稀疏矩阵
-  template <class TValue>
-  friend ostream& operator << (ostream& out, SparseMatrix<TValue>& sparse_matrix);
+  friend ostream& operator<< <>(ostream& out, SparseMatrix<TValue>& sparse_matrix);
   // 输入稀疏矩阵
-  template <class TValue>
-  friend istream& operator >> (istream& in, SparseMatrix<TValue>& sparse_matrix);
+  friend istream& operator>> <>(istream& in, SparseMatrix<TValue>& sparse_matrix);
 
 private:
   int rows_; //!< 行数
@@ -260,26 +263,29 @@ void swap(TriTuple<T>* a, TriTuple<T>* b) {
 
 /*!
  * @brief 赋值运算符重载函数
- * @tparam T 类型模板参数
+ * @tparam TValue 类型模板参数
  * @param sparse_matrix 稀疏矩阵(的引用)
  * @return 当前数组本身
  */
-template<class T>
-SparseMatrix<T>& SparseMatrix<T>::operator = (SparseMatrix<T>& sparse_matrix) {
+template<class TValue>
+SparseMatrix<TValue>& SparseMatrix<TValue>::operator=(const SparseMatrix<TValue>& sparse_matrix) {
+    if (&sparse_matrix == this) {
+        return *this;
+    }
 
-  this->SetRows(sparse_matrix.Rows());
-  this->SetCols(sparse_matrix.Cols());
+    this->SetRows(sparse_matrix.Rows());
+    this->SetCols(sparse_matrix.Cols());
     this->SetSize(sparse_matrix.Size());
     this->SetMaxSize(sparse_matrix.MaxSize());
 
-  this->elements_ = new TriTuple<T>[this->MaxSize()];
-  /* error handler */
+    this->elements_ = new TriTuple<TValue>[this->MaxSize()];
+    /* error handler */
 
-  for (int i = 0; i < this->size_; i++) {
-    this->elements_[i] = sparse_matrix.Elements()[i];
-  }
+    for (int i = 0; i < this->size_; i++) {
+        this->elements_[i] = sparse_matrix.Elements()[i];
+    }
 
-  return *this;
+    return *this;
 }
 
 
