@@ -17,7 +17,8 @@
  * @param idx 执行SiftDown的数组索引
  * @param heap_size 堆size
  */
-void MaxHeapSiftDown(int* arr, int idx, int heap_size) {
+template<typename TValue>
+void MaxHeapSiftDown(TValue* arr, int idx, int heap_size) {
   for (int child_idx = 2 * idx + 1; child_idx < heap_size; idx = child_idx, child_idx = child_idx * 2 + 1) {
 
     //! index的孩子结点中, 权重较大的结点索引, 赋给child_idx
@@ -41,7 +42,8 @@ void MaxHeapSiftDown(int* arr, int idx, int heap_size) {
  * @param arr 数组
  * @param idx 执行SiftUp的数组索引
  */
-void MaxHeapSiftUp(int* arr, int idx) {
+template<typename TValue>
+void MaxHeapSiftUp(TValue* arr, int idx) {
   for (int parent_idx = (idx - 1) / 2; parent_idx >= 0; idx = parent_idx, parent_idx = (idx - 1) / 2) {
     if (arr[parent_idx] >= arr[idx]) {
       break;
@@ -57,7 +59,8 @@ void MaxHeapSiftUp(int* arr, int idx) {
  * @param arr 数组
  * @param size 数组长度
  */
-void BuildHeapBySiftDown(int* arr, int size) {
+template<typename TValue>
+void BuildHeapBySiftDown(TValue* arr, int size) {
     int pivot = (size - 2) / 2;
     for (int i = pivot; i >= 0; i--) {
         MaxHeapSiftDown(arr, i, size);
@@ -70,7 +73,8 @@ void BuildHeapBySiftDown(int* arr, int size) {
  * @param arr 数组
  * @param size 数组长度
  */
-void BuildHeapBySiftUp(int* arr, int size) {
+template<typename TValue>
+void BuildHeapBySiftUp(TValue* arr, int size) {
     int pivot = (size - 2) / 2;
     for (int i = size - 1; i > pivot; i--) {
         MaxHeapSiftUp(arr, i);
@@ -83,7 +87,8 @@ void BuildHeapBySiftUp(int* arr, int size) {
  * @param arr 数组
  * @param length 数组长度
  */
-void HeapSort(int* arr, int length) {
+template<typename TValue>
+void HeapSort(TValue* arr, int length) {
 
     BuildHeapBySiftDown(arr, length);
 

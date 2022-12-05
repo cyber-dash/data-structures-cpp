@@ -4,8 +4,6 @@
  * @brief 插入排序
  * @version 0.2.1
  * @date 2021-09-19
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include "util.h"
@@ -16,8 +14,8 @@
   * @param arr 数组
   * @param size 数组长度
   */
-void InsertSort(int* arr, int size) {
-
+template<typename TValue>
+void InsertSort(TValue* arr, int size) {
     for (int i = 1; i < size; i++) {
 
         int cur_idx = i;

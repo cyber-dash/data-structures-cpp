@@ -4,5 +4,5 @@ project(main)
 
 include_directories("./*")
 
-add_executable(main src/sort.h src/bubble_sort.cpp src/heap_sort.cpp src/insert_sort.cpp src/merge_sort.cpp
-        src/quick_sort.cpp src/select_sort.cpp src/util.h src/util.cpp src/main.cpp src/test.cpp src/test.h)
+add_executable(main src/bubble_sort.h src/heap_sort.h src/insert_sort.h src/merge_sort.h
+        src/quick_sort.h src/select_sort.h src/util.h src/main.cpp src/test.cpp src/test.h)

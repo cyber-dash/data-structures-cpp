@@ -12,13 +12,37 @@
 #define CYBER_DASH_SORT_UTIL_H
 
 
- /* 交换 */
-void Swap(int* a, int* b);
+#include <iostream>
+
+
+using namespace std;
+
+
+// 交换
+template<typename TValue>
+// void Swap(TValue* a, TValue* b);
+void Swap(TValue* a, TValue* b) {
+
+    if (*a == *b) {
+        return;
+    }
+
+    TValue tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
 
 /* 打印数组 */
-void PrintArray(int* arr, int array_size);
+template<typename TValue>
+// void PrintArray(TValue* arr, int array_size);
+void PrintArray(TValue* arr, int array_size) {
 
-/* 我们是CyberDash */
-void CyberDashShow();
+    for (int i = 0; i < array_size; i++) {
+        cout << arr[i] << " ";
+    }
+
+    cout << endl;
+}
+
 
 #endif //CYBER_DASH_SORT_UTIL_H

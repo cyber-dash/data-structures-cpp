@@ -18,7 +18,8 @@
   * @param right 右边界
   * @return 轴
   */
-int Split(int* arr, int left, int right) {
+template<typename TValue>
+int Split(TValue* arr, int left, int right) {
 
     int pivot = left;
 
@@ -53,7 +54,8 @@ int Split(int* arr, int left, int right) {
  * @param left 左边界
  * @param right 右边界
  */
-void QuickSort(int* arr, int left, int right) {
+template<typename TValue>
+void QuickSort(TValue* arr, int left, int right) {
 
     if (left >= right) {
         return;

@@ -27,7 +27,5 @@ int main() {
 
 	TestHeapSort();
 
-	CyberDashShow();
-
 	return 0;
 }

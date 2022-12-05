@@ -19,7 +19,8 @@
   * @note
   * array内的两个有序数组(左子数组和右子数组,以left/mid/right划分), 合并成为一个有序数组
   */
-void Merge(int* array, int* cache_array, int left, int mid, int right) {
+template<typename TValue>
+void Merge(TValue* array, TValue* cache_array, int left, int mid, int right) {
 
     for (int i = left; i <= right; i++) {
         cache_array[i] = array[i];
@@ -35,8 +36,7 @@ void Merge(int* array, int* cache_array, int left, int mid, int right) {
         if (cache_array[left_cache_index] <= cache_array[right_cache_index]) {
             array[array_index] = cache_array[left_cache_index];
             left_cache_index++;
-        }
-        else {
+        } else {
             array[array_index] = cache_array[right_cache_index];
             right_cache_index++;
         }
@@ -68,7 +68,8 @@ void Merge(int* array, int* cache_array, int left, int mid, int right) {
  * 使用待排序数组的左右边界, 和缓存数组.
  * 使用二分分治法, 分别对左右两个子数组(sub array)执行递归, 将递归后的两个已排序数组执行merge
  */
-void SubArrayMergeSortRecursive(int* array, int* cache_array, int left, int right) {
+template<typename TValue>
+void SubArrayMergeSortRecursive(TValue* array, TValue* cache_array, int left, int right) {
 
     if (left >= right) {
         return;
@@ -90,9 +91,10 @@ void SubArrayMergeSortRecursive(int* array, int* cache_array, int left, int righ
  * @note
  * 调用sub_array_merge_sort_recursive实现归并排序
  */
-void MergeSort(int* array, int size) {
+template<typename TValue>
+void MergeSort(TValue* array, int size) {
 
-    int* cache_array = new int[size];
+    TValue* cache_array = new int[size];
 
     int left = 0;
     int right = size - 1;
@@ -108,8 +110,7 @@ int GetNextTurnArrayCount(int array_count) {
 
     if (rem == 0) {
         next_turn_array_count = array_count / 2;
-    }
-    else {
+    } else {
         next_turn_array_count = array_count / 2 + 1;
     }
 
@@ -122,9 +123,10 @@ int GetNextTurnArrayCount(int array_count) {
  * @param array 数组
  * @param size 数组长度
  */
-void MergeSortNonRecursive(int* array, int size) {
+template<typename TValue>
+void MergeSortNonRecursive(TValue* array, int size) {
 
-    int* cache_array = new int[size];
+    TValue* cache_array = new int[size];
 
     int merge_array_length = 1;
     int sub_array_count = size;

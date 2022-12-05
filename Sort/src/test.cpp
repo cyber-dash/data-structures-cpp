@@ -9,7 +9,12 @@
  */
 
 #include "test.h"
-#include "sort.h"
+#include "heap_sort.h"
+#include "bubble_sort.h"
+#include "select_sort.h"
+#include "insert_sort.h"
+#include "merge_sort.h"
+#include "quick_sort.h"
 #include "util.h"
 #include <iostream>
 
@@ -28,9 +33,9 @@ void TestBubbleSort() {
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序后:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
-	BubbleSort(array, array_size);
+	BubbleSort<int>(array, array_size);
 
 	cout << "排序前:" << endl;
 	PrintArray(array, array_size);
@@ -50,12 +55,12 @@ void TestSelectSort() {
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序后:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
-	SelectSort(array, array_size);
+	SelectSort<int>(array, array_size);
 
 	cout << "排序前:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
 	cout << "------------------------- CyberDash -------------------------" << endl;
 }
@@ -72,12 +77,12 @@ void TestInsertSort() {
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
-	InsertSort(array, array_size);
+	InsertSort<int>(array, array_size);
 
 	cout << "排序后:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
 	cout << "------------------------- CyberDash -------------------------" << endl;
 }
@@ -95,12 +100,12 @@ void TestMergeSort() {
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
-	MergeSort(array, array_size);
+	MergeSort<int>(array, array_size);
 
 	cout << "排序后:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
 	cout << "------------------------- CyberDash -------------------------" << endl;
 }
@@ -117,12 +122,12 @@ void TestMergeSortNonRecursive() {
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
-	MergeSortNonRecursive(array, array_size);
+	MergeSortNonRecursive<int>(array, array_size);
 
 	cout << "排序后:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
 	cout << "-------------------------------------------------------------" << endl;
 }
@@ -138,16 +143,15 @@ void TestQuickSort() {
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
-	QuickSort(array, 0, array_size - 1);
+	QuickSort<int>(array, 0, array_size - 1);
 
 	cout << "排序后:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
 	cout << "-------------------------------------------------------------" << endl;
 }
-
 
 
 void TestHeapSort() {
@@ -160,12 +164,12 @@ void TestHeapSort() {
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
-	HeapSort(array, array_size);
+	HeapSort<int>(array, array_size);
 
 	cout << "排序后:" << endl;
-	PrintArray(array, array_size);
+	PrintArray<int>(array, array_size);
 
 	cout << "------------------------- CyberDash -------------------------" << endl;
 }
