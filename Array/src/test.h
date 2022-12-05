@@ -4,9 +4,6 @@
  * @brief 稀疏矩阵测试头文件
  * @version 0.2.1
  * @date 2021-05-13
- *
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_SPARSE_MATRIX_TEST_H
