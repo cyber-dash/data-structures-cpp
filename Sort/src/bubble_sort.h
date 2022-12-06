@@ -4,19 +4,17 @@
  * @brief 冒泡排序
  * @version 0.2.1
  * @date 2021-09-19
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include "util.h"
 
 
 template<typename TValue>
-void BubbleSort(TValue* arr, int size) {
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                Swap(arr + j, arr + j + 1);
+void BubbleSort(TValue* array, int size) {
+    for (int counter = 0; counter < size; counter++) {
+        for (int i = 0; i < size - counter - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                Swap(array + i, array + i + 1);
             }
         }
     }

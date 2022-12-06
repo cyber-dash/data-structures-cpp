@@ -11,19 +11,24 @@
 
  /*!
   * @brief 插入排序
-  * @param arr 数组
+  * @param array 数组
   * @param size 数组长度
   */
 template<typename TValue>
-void InsertSort(TValue* arr, int size) {
-    for (int i = 1; i < size; i++) {
+void InsertSort(TValue* array, int size) {
+    for (int cur_unsorted_region_first_index = 1;
+         cur_unsorted_region_first_index < size;
+         cur_unsorted_region_first_index++)
+    {
+        int cur_insert_element_index = cur_unsorted_region_first_index;
 
-        int cur_idx = i;
-
-        for (int j = i - 1; j >= 0; j--) {
-            if (arr[j] > arr[cur_idx]) {
-                Swap(arr + cur_idx, arr + j);
-                cur_idx = j;
+        for (int cur_sorted_region_index = cur_unsorted_region_first_index - 1;
+             cur_sorted_region_index >= 0;
+             cur_sorted_region_index--)
+        {
+            if (array[cur_sorted_region_index] > array[cur_insert_element_index]) {
+                Swap(array + cur_insert_element_index, array + cur_sorted_region_index);
+                cur_insert_element_index = cur_sorted_region_index;
             } else {
                 break;
             }

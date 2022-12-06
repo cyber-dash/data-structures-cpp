@@ -20,7 +20,6 @@ using namespace std;
 
 // 交换
 template<typename TValue>
-// void Swap(TValue* a, TValue* b);
 void Swap(TValue* a, TValue* b) {
 
     if (*a == *b) {
@@ -34,11 +33,10 @@ void Swap(TValue* a, TValue* b) {
 
 /* 打印数组 */
 template<typename TValue>
-// void PrintArray(TValue* arr, int array_size);
-void PrintArray(TValue* arr, int array_size) {
+void PrintArray(TValue* array, int array_size) {
 
     for (int i = 0; i < array_size; i++) {
-        cout << arr[i] << " ";
+        cout << array[i] << " ";
     }
 
     cout << endl;

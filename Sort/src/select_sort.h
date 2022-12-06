@@ -13,24 +13,24 @@
 
  /*!
   * @brief 选择排序
-  * @param arr 数组
+  * @param array 数组
   * @param size 数组长度
   */
 template<typename TValue>
-void SelectSort(TValue* arr, int size) {
+void SelectSort(TValue* array, int size) {
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size - 1; i++) {
 
-        int select_idx = i;
-        TValue select_value = arr[select_idx];
+        int select_index = i;
+        TValue select_value = array[select_index];
 
         for (int j = i + 1; j < size; j++) {
-            if (arr[j] < select_value) {
-                select_idx = j;
-                select_value = arr[j];
+            if (array[j] < select_value) {
+                select_index = j;
+                select_value = array[j];
             }
         }
 
-        Swap(arr + i, arr + select_idx);
+        Swap(array + i, array + select_index);
     }
 }

@@ -11,23 +11,31 @@
 #include "util.h"
 
 
+template<typename TValue>
+void QuickSort(TValue* array, int size) {
+    int left = 0;
+    int right = size - 1;
+
+    SubarrayQuickSort(array, left, right);
+}
+
  /*!
   * @brief 划分函数
-  * @param arr 数组
+  * @param array 数组
   * @param left 左边界
   * @param right 右边界
   * @return 轴
   */
 template<typename TValue>
-int Split(TValue* arr, int left, int right) {
+int Split(TValue* array, int left, int right) {
 
     int pivot = left;
 
     while (left <= right) {
 
         for (; right >= pivot; right--) {
-            if (arr[pivot] > arr[right]) {
-                Swap(arr + pivot, arr + right);
+            if (array[pivot] > array[right]) {
+                Swap(array + pivot, array + right);
                 left = pivot + 1;
                 pivot = right;
                 break;
@@ -35,8 +43,8 @@ int Split(TValue* arr, int left, int right) {
         }
 
         for (; left <= pivot; left++) {
-            if (arr[pivot] < arr[left]) {
-                Swap(arr + left, arr + pivot);
+            if (array[pivot] < array[left]) {
+                Swap(array + left, array + pivot);
                 right = pivot - 1;
                 pivot = left;
                 break;
@@ -55,7 +63,7 @@ int Split(TValue* arr, int left, int right) {
  * @param right 右边界
  */
 template<typename TValue>
-void QuickSort(TValue* arr, int left, int right) {
+void SubarrayQuickSort(TValue* arr, int left, int right) {
 
     if (left >= right) {
         return;
@@ -63,7 +71,7 @@ void QuickSort(TValue* arr, int left, int right) {
 
     int pivot = Split(arr, left, right);
 
-    QuickSort(arr, left, pivot - 1);
-    QuickSort(arr, pivot + 1, right);
+    SubarrayQuickSort(arr, left, pivot - 1);
+    SubarrayQuickSort(arr, pivot + 1, right);
 }
 

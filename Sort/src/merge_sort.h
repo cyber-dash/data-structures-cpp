@@ -4,21 +4,19 @@
  * @brief 归并排序
  * @version 0.2.1
  * @date 2021-09-19
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 
- /*!
-  * @brief 合并函数
-  * @param array 待合并数组(包含两个子数组)
-  * @param cache_array 缓存数组
-  * @param left 左子数组左侧
-  * @param mid 左子数组右侧
-  * @param right 右子数组右侧
-  * @note
-  * array内的两个有序数组(左子数组和右子数组,以left/mid/right划分), 合并成为一个有序数组
-  */
+/*!
+ * @brief 合并函数
+ * @param array 待合并数组(包含两个子数组)
+ * @param cache_array 缓存数组
+ * @param left 左子数组左侧
+ * @param mid 左子数组右侧
+ * @param right 右子数组右侧
+ * @note
+ * array内的两个有序数组(左子数组和右子数组,以left/mid/right划分), 合并成为一个有序数组
+ */
 template<typename TValue>
 void Merge(TValue* array, TValue* cache_array, int left, int mid, int right) {
 
@@ -69,7 +67,7 @@ void Merge(TValue* array, TValue* cache_array, int left, int mid, int right) {
  * 使用二分分治法, 分别对左右两个子数组(sub array)执行递归, 将递归后的两个已排序数组执行merge
  */
 template<typename TValue>
-void SubArrayMergeSortRecursive(TValue* array, TValue* cache_array, int left, int right) {
+void SubarrayMergeSortRecursive(TValue* array, TValue* cache_array, int left, int right) {
 
     if (left >= right) {
         return;
@@ -77,8 +75,8 @@ void SubArrayMergeSortRecursive(TValue* array, TValue* cache_array, int left, in
 
     int mid = (left + right) / 2; // 使用mid划分左右子数组
 
-    SubArrayMergeSortRecursive(array, cache_array, left, mid); // 左侧子数组递归
-    SubArrayMergeSortRecursive(array, cache_array, mid + 1, right); // 右侧子数组递归
+    SubarrayMergeSortRecursive(array, cache_array, left, mid); // 左侧子数组递归
+    SubarrayMergeSortRecursive(array, cache_array, mid + 1, right); // 右侧子数组递归
 
     Merge(array, cache_array, left, mid, right);
 }
@@ -99,22 +97,22 @@ void MergeSort(TValue* array, int size) {
     int left = 0;
     int right = size - 1;
 
-    SubArrayMergeSortRecursive(array, cache_array, left, right);
+    SubarrayMergeSortRecursive(array, cache_array, left, right);
 }
 
 
-int GetNextTurnArrayCount(int array_count) {
+int GetNextTurnSubarrayNumber(int subarray_number) {
 
-    int rem = array_count % 2;
-    int next_turn_array_count;
+    int rem = subarray_number % 2;
+    int next_turn_subarray_number;
 
     if (rem == 0) {
-        next_turn_array_count = array_count / 2;
+        next_turn_subarray_number = subarray_number / 2;
     } else {
-        next_turn_array_count = array_count / 2 + 1;
+        next_turn_subarray_number = subarray_number / 2 + 1;
     }
 
-    return next_turn_array_count;
+    return next_turn_subarray_number;
 }
 
 
@@ -129,29 +127,27 @@ void MergeSortNonRecursive(TValue* array, int size) {
     TValue* cache_array = new int[size];
 
     int merge_array_length = 1;
-    int sub_array_count = size;
+    int subarray_number = size;
 
-    do {
-        int merge_count = sub_array_count / 2;
+    while (subarray_number != 1) {
+        int merge_times = subarray_number / 2;
 
-        for (int i = 0; i < merge_count; i++) {
+        for (int i = 0; i < merge_times; i++) {
             int left = 2 * i * merge_array_length;
             int mid = (2 * i + 1) * merge_array_length - 1;
             int right;
 
             if ((2 * i + 2) * merge_array_length - 1 > size - 1) {
                 right = size - 1;
-            }
-            else {
+            } else {
                 right = (2 * i + 2) * merge_array_length - 1;
             }
 
             Merge(array, cache_array, left, mid, right);
         }
 
-        sub_array_count = GetNextTurnArrayCount(sub_array_count);
+        subarray_number = GetNextTurnSubarrayNumber(subarray_number);
 
         merge_array_length = merge_array_length * 2;
-
-    } while (sub_array_count != 1);
+    }
 }

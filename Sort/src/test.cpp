@@ -29,7 +29,7 @@ void TestBubbleSort() {
 	cout << "|                      Test Bubble Sort                     |" << endl;
 	cout << "|                        测试冒泡排序                         |" << endl;
 
-	int array[] = { 1, 4, 2, 8, 5, 7 };
+    int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序后:" << endl;
@@ -51,7 +51,7 @@ void TestSelectSort() {
 	cout << "|                      Test Select Sort                     |" << endl;
 	cout << "|                        测试选择排序                         |" << endl;
 
-	int array[] = { 1, 4, 2, 8, 5, 7 };
+    int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序后:" << endl;
@@ -73,7 +73,7 @@ void TestInsertSort() {
 	cout << "|                      Test Insert Sort                     |" << endl;
 	cout << "|                         测试插入排序                        |" << endl;
 
-	int array[] = { 1, 4, 2, 8, 5, 7 };
+    int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
@@ -95,8 +95,7 @@ void TestMergeSort() {
 	cout << "|                      Test Merge Sort                      |" << endl;
 	cout << "|                         测试归并排序                        |" << endl;
 
-	// int array[] = { 1, 4, 2, 8, 5, 7 };
-    int array[] = { 4, 2, 8, 5, 7, 1 };
+    int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
@@ -118,7 +117,7 @@ void TestMergeSortNonRecursive() {
 	cout << "|               Test Merge Sort(NonRecursive)               |" << endl;
 	cout << "|                     测试快速排序(非递归)                     |" << endl;
 
-	int array[] = { 1, 4, 2, 8, 5, 7 };
+    int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
@@ -139,13 +138,13 @@ void TestQuickSort() {
 	cout << "|                      Test Quick Sort                      |" << endl;
 	cout << "|                        测试快速排序                         |" << endl;
 
-	int array[] = { 1, 4, 2, 8, 5, 7 };
+    int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
-	QuickSort<int>(array, 0, array_size - 1);
+    QuickSort<int>(array, array_size);
 
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
@@ -158,7 +157,7 @@ void TestHeapSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                       Test Heap Sort                      |" << endl;
-	cout << "|                         测试堆排序                         |" << endl;
+	cout << "|                         测试堆排序                          |" << endl;
 
 	int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
