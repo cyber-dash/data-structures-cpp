@@ -4,8 +4,6 @@
  * @brief 字符串匹配测试.cpp文件
  * @version 0.2.1
  * @date 2021-08-23
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include "test.h"
@@ -30,13 +28,16 @@ void TestStringBaseFunctions() {
     bool is_not_same = str1 != str2;
     cout << is_not_same << endl;
 
-    /// - 测试复制构造和桉树
+    /// - 测试复制构造函数
     String str3 = str1;
     cout << str3 << endl;
 
     /// - 测试重载+=
     str1 += str2;
     cout << str1 <<endl;
+
+    /// - 测试重载[]
+    cout << str1[0] << endl;
 }
 
  /*! 测试BF算法 */

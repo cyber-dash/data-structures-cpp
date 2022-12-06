@@ -4,8 +4,6 @@
  * @brief 字符串匹配模板类
  * @version 0.2.1
  * @date 2021-07-29
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_YUAN_STRING_H
@@ -50,10 +48,8 @@ public:
     int KmpMatch(String& pattern, int offset) const;            // KMP字符串匹配查找
     int KmpMatchByCyberDash(String& pattern, int offset) const; // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
 
-    static void CyberDashShow();
-
-    static int* KmpNext(const char* pattern, int pattern_len);
-    static int* KmpNextByCyberDash(const char* pattern, int pattern_len);
+    static int* KmpNext(const char* pattern, int pattern_len);              // 求next数组
+    static int* KmpNextByCyberDash(const char* pattern, int pattern_len);   // 求next数组()
     static void PrintNextArray(const int* next_arr, int next_arr_len);
 
 private:
@@ -377,13 +373,11 @@ int* String::KmpNextByCyberDash(const char* pattern, int pattern_len) {
             i++;
             starting_index++;
             next[i] = starting_index;
-        }
-        else {
+        } else {
             if (starting_index == 0) {
                 i++;
                 next[i] = starting_index;
-            }
-            else {
+            } else {
                 starting_index = next[starting_index];
             }
         }
@@ -505,22 +499,6 @@ int String::KmpMatchByCyberDash(String& pattern, int offset) const {
     }
 
     return match_pos;
-}
-
-
-/*!
- * @brief 我们是CyberDash:-)
- */
-void String::CyberDashShow() {
-    cout << endl
-        << "*************************************** CyberDash ***************************************" << endl << endl
-        << "抖音号\"CyberDash计算机考研\", id: cyberdash_yuan" << endl << endl
-        << "CyberDash成员:" << endl
-        << "元哥(cyberdash@163.com), " << "北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)" << endl
-        << "磊哥(alei_go@163.com), " << "山东理工大学(数学本科)/北京邮电大学(计算机研究生)" << endl << endl
-        << "L_Dash(lyu2586@163.com), " << "北京邮电大学(计算机在读研究生)" << endl << endl
-        << "数据结构开源代码(C++清华大学殷人昆)魔改升级版本: https://gitee.com/cyberdash/data-structure-cpp" << endl
-        << endl << "*************************************** CyberDash ***************************************" << endl << endl;
 }
 
 
