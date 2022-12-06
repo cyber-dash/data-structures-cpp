@@ -1,5 +1,5 @@
 ﻿/**
- * @file link_queue.h
+ * @file linked_queue.h
  * @author cyberdash@163.com(抖音: cyberdash_yuan)
  * @brief 链表实现队列
  * @version 0.2.1
@@ -27,6 +27,7 @@ class LinkedNode {
 
 public:
     LinkedNode() : next_(NULL) {}
+
     /*!
      * @brief 构造函数(下一结点指针)
      * @param node 下一结点指针
@@ -67,17 +68,20 @@ public:
     void SetNext(LinkedNode<TData>* const& node) { next_ = node; }
 
 private:
-    TData data_; //!< 结点数据项
-    LinkedNode<TData>* next_; //!< 下一结点
+    TData data_;                 //!< 结点数据项
+    LinkedNode<TData>* next_;    //!< 下一结点
 };
 
+
+template<class TData> class LinkedQueue;
+template<class TData> ostream& operator<< (ostream& os, const LinkedQueue<TData>& linked_queue);
 
 /**
  * @brief 链表队列模板类
  * @tparam TData 类型模板参数
  */
-template <typename TData>
-class LinkedQueue : public Queue<TData> {
+template<typename TData>
+class LinkedQueue: public Queue<TData> {
 
 public:
     /*! @brief 默认构造函数 */
@@ -111,8 +115,7 @@ public:
     void Clear();
 
     // 重载<<(打印队列)
-    template<typename TData>
-    friend ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue);
+    friend ostream& operator<< <>(ostream& os, const LinkedQueue<TData>& linked_queue);
 
 private:
 
@@ -128,8 +131,8 @@ private:
      */
     LinkedNode<TData>* RearNode_() const { return this->rear_; }
 
-    LinkedNode<TData>* front_; //!< 队头指针
-    LinkedNode<TData>* rear_; //!< 队尾指针
+    LinkedNode<TData>* front_;    //!< 队头指针
+    LinkedNode<TData>* rear_;     //!< 队尾指针
 };
 
 

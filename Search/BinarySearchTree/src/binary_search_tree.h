@@ -152,17 +152,24 @@ TValue BinarySearchTree<TKey, TValue>::Min() {
  * 如果关键码相同, 则返回false
  */
 template <class TKey, class TValue>
-bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key, TValue value, BinarySearchTreeNode<TKey, TValue>*& subtree_root) {
+bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key,
+                                                      TValue value,
+                                                      BinarySearchTreeNode<TKey, TValue>*& subtree_root)
+{
     if (subtree_root == NULL) {
         subtree_root = new BinarySearchTreeNode<TKey, TValue>(key, value);
-        /* error handler */
+        if (!subtree_root) {
+            throw bad_alloc();
+        }
 
         return true;
     }
 
     if (key < subtree_root->Key()) {
         return InsertInSubTree_(key, value, subtree_root->LeftChild());
-    } else if (key > subtree_root->Key()) {
+    }
+
+    if (key > subtree_root->Key()) {
         return InsertInSubTree_(key, value, subtree_root->RightChild());
     }
 
@@ -198,7 +205,9 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BinarySearchTree
 
     if (key < subtree_root->Key()) {
         return RemoveInSubTree_(key, subtree_root->LeftChild());
-    } else if (key > subtree_root->Key()) {
+    }
+
+    if (key > subtree_root->Key()) {
         return RemoveInSubTree_(key, subtree_root->RightChild());
     }
 
@@ -278,8 +287,9 @@ void BinarySearchTree<TKey, TValue>::MakeEmptySubTree_(BinarySearchTreeNode<TKey
  * 6. 打印“)”
  */
 template <class TKey, class TValue>
-void BinarySearchTree<TKey, TValue>::PrintSubTree_(BinarySearchTreeNode<TKey, TValue>* subtree_root, void (*visit)(BinarySearchTreeNode<TKey, TValue>*)) const {
-
+void BinarySearchTree<TKey, TValue>::PrintSubTree_(BinarySearchTreeNode<TKey, TValue>* subtree_root,
+                                                   void (*visit)(BinarySearchTreeNode<TKey, TValue>*)) const
+{
     if (subtree_root == NULL) {
         return;
     }

@@ -38,6 +38,8 @@ void TestStringBaseFunctions() {
 
     /// - 测试重载[]
     cout << str1[0] << endl;
+    str1[0] = 'C';
+    cout << str1 << endl;
 }
 
  /*! 测试BF算法 */

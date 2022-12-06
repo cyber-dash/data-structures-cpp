@@ -251,7 +251,7 @@ void TestBSTMaxAndMin() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinarySearchTree Max and Min            |" << endl;
-    cout << "|                  测试搜索二叉树的最大值/最小值                 |" << endl;
+    cout << "|                  测试搜索二叉树的最大值/最小值                |" << endl;
 
     BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
 
@@ -601,7 +601,7 @@ void TestAvlInsertAndRemoveRecursive() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test AVL Insert/Remove recursive             |" << endl;
-    cout << "|                 测试平衡二叉树的插入/删除(递归)                |" << endl;
+    cout << "|                 测试平衡二叉树的插入/删除(递归)               |" << endl;
 
     AvlTree<int, int>* AVL_tree = new AvlTree<int, int>();
 
@@ -636,7 +636,7 @@ void TestBSTAndAVLHeight() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinarySearchTree & AVL Height           |" << endl;
-    cout << "|                    测试搜索二叉树/AVL树的高度                 |" << endl;
+    cout << "|                   测试搜索二叉树/AVL树的高度                 |" << endl;
 
     string keys[26] =
     { "a", "d", "b", "c", "e", "f", "g", "h", "i", "k", "l", "j", "z", "n", "o", "p", "q", "r", "s",

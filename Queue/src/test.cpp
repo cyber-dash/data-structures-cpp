@@ -16,7 +16,7 @@ void TestGetSize() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                    Test Queue Length                     |" << endl;
+    cout << "|                     Test Queue Length                     |" << endl;
     cout << "|                        测试队列Size                        |" << endl << endl << endl;
 
     LinkedQueue<string> old_memory_queue;
@@ -172,4 +172,6 @@ void TestOperatorCout() {
     string_queue.EnQueue("我要我觉得");
 
     cout << string_queue;
+
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
