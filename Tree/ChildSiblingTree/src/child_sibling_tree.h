@@ -4,8 +4,6 @@
  * @brief 子女兄弟树模板类
  * @version 0.2.1
  * @date 2020-11-01
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_CHILD_SIBLING_TREE_H
@@ -70,7 +68,7 @@ public:
      *
      * ---------------------------
      */
-    void CreateByPreOrderStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
+    void CreateByPreorderStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
 
     ChildSiblingNode<TData>* FirstChild();
     ChildSiblingNode<TData>* NextSibling();

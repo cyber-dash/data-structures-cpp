@@ -4,8 +4,6 @@
  * @brief 队列测试.cpp文件
  * @version 0.2.1
  * @date 2021-10-9
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include "test.h"
@@ -47,7 +45,7 @@ void TestEnQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test Queue Enqueue                     |" << endl;
-    cout << "|                        测试队列入队                         |" << endl << endl << endl;
+    cout << "|                        测试队列入队                        |" << endl << endl << endl;
 
     LinkedQueue<int> int_queue;
 
@@ -68,7 +66,7 @@ void TestDeQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test Queue Dequeue                     |" << endl;
-    cout << "|                        测试队列出队                         |" << endl << endl << endl;
+    cout << "|                        测试队列出队                        |" << endl << endl << endl;
 
     LinkedQueue<double> double_queue;
 
@@ -95,8 +93,8 @@ void TestDeQueue() {
 void TestGetFrontAndGetRear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                Test Queue Front & Rear              |" << endl;
-    cout << "|                   测试队列获取队头/获取队尾                   |" << endl << endl << endl;
+    cout << "|                  Test Queue Front & Rear                  |" << endl;
+    cout << "|                   测试队列获取队头/获取队尾                  |" << endl << endl << endl;
 
     LinkedQueue<string> string_queue;
 
@@ -113,6 +111,7 @@ void TestGetFrontAndGetRear() {
 
     string_queue.Front(front_data);
     string_queue.Rear(rear_data);
+
     cout << "The front of the queue: " << front_data << endl;
     cout << "The rear of the queue: " << rear_data << endl;
 
@@ -123,8 +122,8 @@ void TestGetFrontAndGetRear() {
 void TestIsEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test Queue Clear                    |" << endl;
-    cout << "|                        测试清空队列                         |" << endl << endl << endl;
+    cout << "|                     Test Queue Clear                      |" << endl;
+    cout << "|                        测试清空队列                        |" << endl << endl << endl;
     LinkedQueue<string> LinkinPark_song_queue;
 
     LinkinPark_song_queue.EnQueue("<In the end>");
@@ -134,8 +133,7 @@ void TestIsEmpty() {
     bool is_empty = LinkinPark_song_queue.IsEmpty();
     if (is_empty) {
         cout << "LinkinPark_song_queue is empty." << endl;
-    }
-    else {
+    } else {
         cout << "LinkinPark_song_queue isn't empty." << endl;
     }
 
@@ -146,8 +144,7 @@ void TestIsEmpty() {
     is_empty = LinkinPark_song_queue.IsEmpty();
     if (is_empty) {
         cout << "LinkinPark_song_queue is empty." << endl;
-    }
-    else {
+    } else {
         cout << "LinkinPark_song_queue isn't empty." << endl;
     }
 

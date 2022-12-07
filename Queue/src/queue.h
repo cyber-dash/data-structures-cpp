@@ -11,17 +11,31 @@
 
 
  /*!
-  * @brief 队列虚基类
-  * @tparam TData 类型模板参数
+  * @brief **队列虚基类**
+  * @tparam TData 数据项类型模板参数
+  * @note
+  * 队列虚基类
+  * ---------
+  * ---------
+  *
+  * ---------
+  *
   */
 template<class TData>
 class Queue {
 public:
 	/*!
-	* @brief 入队
-	* @param data 入队节点的值
-	* @return 是否获取成功
-	*/
+	 * @brief **入队**
+	 * @param data 数据项值
+	 * @return 执行结果
+	 * @note 入队
+	 * ---------
+	 * ---------
+	 *
+	 * 入队虚函数
+	 *
+	 * ---------
+	 */
 	virtual bool EnQueue(const TData& data) = 0;
 
 	/*!
