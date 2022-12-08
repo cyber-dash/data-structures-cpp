@@ -18,29 +18,74 @@ using namespace std;
 
 
 /*!
- * @brief 结点模板结构体
- * @tparam TData 类型模板参数
+ * @brief **结点模板结构体**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 结点模板结构体
+ * ------------
+ * ------------
+ *
+ * ------------
  */
 template <class TData>
 struct LinkedNode {
-    explicit LinkedNode(LinkedNode<TData>* node = NULL) : next(node) {}
-    explicit LinkedNode(const TData& data, LinkedNode<TData>* node = NULL) : data(data), next(node) {}
+    /*!
+     * @brief **构造函数(下一结点)**
+     * @param next 下一结点
+     * @note
+     * 构造函数(next结点)
+     * ----------------
+     * ----------------
+     *
+     * ----------------
+     */
+    explicit LinkedNode(LinkedNode<TData>* next = NULL) : next(next) {}
 
-    TData data; //!< 数据项
-    LinkedNode<TData>* next; //!< 下一结点
+    /*!
+     * @brief **构造函数(数据项, next结点)**
+     * @param data 数据项值
+     * @param next next结点
+     * @note
+     * 构造函数(数据项值, next结点)
+     * ----------------
+     * ----------------
+     *
+     * ----------------
+     */
+    explicit LinkedNode(const TData& data, LinkedNode<TData>* next = NULL) : data(data), next(next) {}
+
+    TData data;                 //!< 数据项
+    LinkedNode<TData>* next;    //!< 下一结点
 };
 
 
+template <class TData> class LinkedStack;
+template<class TData> ostream& operator<<(ostream& os, LinkedStack<TData>& stack);
+
 /*!
- * @brief 链式栈模板类
- * @tparam TData 类型模板参数
+ * @brief **链式栈模板类**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 链式栈模板类
+ * ----------
+ * ----------
+ *
+ * ----------
  */
 template <class TData>
-class LinkedStack : public Stack<TData> {
+class LinkedStack: public Stack<TData> {
 
 public:
-    /*! @brief 构造函数 */
-    LinkedStack() : top_(NULL) {}
+    /*!
+     * @brief **默认构造函数**
+     * @note
+     * 默认构造函数
+     * -----------
+     * -----------
+     *
+     * -----------
+     */
+    LinkedStack(): top_(NULL) {}
     // 析构函数
     ~LinkedStack();
     // 入栈
@@ -59,21 +104,28 @@ public:
     void Clear();
 
     // 重载<<(打印栈)
-    template<class TData>
-    friend ostream& operator<<(ostream& os, LinkedStack<TData>& stack);
+    friend ostream& operator<< <>(ostream& os, LinkedStack<TData>& stack);
 
 private:
 
     // 获取栈顶结点指针
-    LinkedNode<TData>* TopNode_();
+    LinkedNode<TData>* TopNode_() const;
     LinkedNode<TData>* top_;     //!< 栈顶结点指针
 };
 
 
 /*!
- * @brief 析构函数
- * @tparam TData 类型模板参数
- * @note 显式销毁时调用
+ * @brief **析构函数**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 析构函数
+ * -------
+ * -------
+ *
+ * 要不你还是把我删了吧
+ *
+ * -------
+ * 调用Clear()函数
  */
 template<class TData>
 LinkedStack<TData>::~LinkedStack<TData>() {
@@ -82,23 +134,35 @@ LinkedStack<TData>::~LinkedStack<TData>() {
 
 
 /*!
- * @brief 获取栈顶结点指针
- * @tparam TData 类型模板参数
+ * @brief **获取栈顶结点指针**
+ * @tparam TData 数据项类型模板参数
  * @return 栈顶结点指针
+ * @note
+ * 获取栈顶结点指针
+ * --------------
+ * --------------
+ *
+ * --------------
  */
 template<class TData>
-LinkedNode<TData>* LinkedStack<TData>::TopNode_() {
+LinkedNode<TData>* LinkedStack<TData>::TopNode_() const {
     return top_;
 }
 
 
 /*!
- * @brief 入栈
- * @tparam TData 类型模板参数
+ * @brief **入栈**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项值
+ * @note
+ * 入栈
+ * ----
+ * ----
+ *
+ * ----
  */
 template <class TData>
-bool LinkedStack<TData>::Push(const TData& data)
-{
+bool LinkedStack<TData>::Push(const TData& data) {
     LinkedNode<TData>* node = new LinkedNode<TData>(data);
     if (!node) {
         return false;
@@ -112,14 +176,19 @@ bool LinkedStack<TData>::Push(const TData& data)
 
 
 /**
- * @brief 出栈(保存数据项)
- * @tparam TData 类型模板参数
- * @param data 数据(保存数据项)
- * @return 是否成功
+ * @brief **出栈(保存数据项)**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 出栈(保存数据项)
+ * --------------
+ * --------------
+ *
+ * --------------
  */
 template <class TData>
-bool LinkedStack<TData>::Pop(TData& data)
-{
+bool LinkedStack<TData>::Pop(TData& data) {
     if (IsEmpty()) {
         return false;
     }
@@ -137,14 +206,19 @@ bool LinkedStack<TData>::Pop(TData& data)
 
 
 /**
- * @brief 出栈(不保存数据项)
- * @tparam TData 类型模板参数
- * @param data 数据(保存数据项)
- * @return 是否成功
+ * @brief **出栈(不保存数据项)**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 出栈(不保存数据项)
+ * ----------------
+ * ----------------
+ *
+ * ----------------
  */
 template <class TData>
-bool LinkedStack<TData>::Pop()
-{
+bool LinkedStack<TData>::Pop() {
     if (IsEmpty()) {
         return false;
     }
@@ -160,11 +234,15 @@ bool LinkedStack<TData>::Pop()
 
 
 /*!
- * @brief 获取栈顶元素
- * @tparam TData 栈元素类型
- * @return 返回操作是否执行成功
+ * @brief **获取栈顶数据项**
+ * @tparam TData 数据项类型模板参数
+ * @return 执行结果
  * @note
- * 仅仅获取栈顶元素，不需要将栈顶元素删除
+ * 获取栈顶数据项
+ * ------------
+ * ------------
+ *
+ * ------------
  */
 template <class TData>
 bool LinkedStack<TData>::Top(TData& data) const {
@@ -179,44 +257,61 @@ bool LinkedStack<TData>::Top(TData& data) const {
 
 
 /*!
- * @brief 获取栈的大小
- * @return 栈的大小
+ * @brief **获取栈长度**
+ * @tparam TData 数据项类型模板参数
+ * @return 栈长度
+ * @note
+ * 获取栈长度
+ * ---------
+ * ---------
+ *
+ * ---------
  */
 template<class TData>
 int LinkedStack<TData>::Length() const {
 
-    int count = 0;
+    int length = 0;
     LinkedNode<TData>* cur = this->top_;
 
     while (cur != NULL) {
-        count++;
+        length++;
         cur = cur->next;
     }
 
-    return count;
+    return length;
 }
 
 
 /*!
- * @brief 判断栈是否为空
- * @return 是否为空
+ * @brief **栈是否为空**
+ * @tparam TData 数据项类型模板参数
+ * @return 结果
+ * @note
+ * 栈是否为空
+ * ---------
+ * ---------
+ *
+ * ---------
  */
 template<class TData>
 bool LinkedStack<TData>::IsEmpty() const {
     if (this->top_ == NULL) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
 
 /**
- * @brief 清空栈
- * @tparam TData 栈元素类型
+ * @brief **栈清空**
+ * @tparam TData 数据项类型模板参数
  * @note
- * 需要释放栈中每个元素
+ * 栈清空
+ * -----
+ * -----
+ *
+ * -----
  */
 template<class TData>
 void LinkedStack<TData>::Clear() {
@@ -230,20 +325,17 @@ void LinkedStack<TData>::Clear() {
 }
 
 
-/*
-template<class TData>
-int LinkedStack<TData>::SeekPath(int x,int y){
-
-}
- */
-
-
  /**
-  * @brief 重载<<(打印栈)
-  * @tparam TData 类型模板参数
+  * @brief **重载<<**
+  * @tparam TData 数据项类型模板参数
   * @param os 输出流
-  * @param link_stack 栈
+  * @param stack 栈
   * @return 输出流
+  * 重载<<
+  * ------
+  * ------
+  *
+  * ------
   */
 template<class TData>
 ostream& operator<<(ostream& os, LinkedStack<TData>& stack) {

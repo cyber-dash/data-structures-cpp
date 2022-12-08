@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <string>
 
+
 using namespace std;
 
 
@@ -29,7 +30,7 @@ class String {
 
 public:
     explicit String(int size = DEFAULT_SIZE);   // 构造函数(字符串长度)
-    explicit String(const char* char_ptr);      // 构造函数
+    explicit String(const char* mem_data);      // 构造函数
     String(const String& src_str);              // 复制构造函数
     ~String() { delete[] mem_data_; }           // 析构函数
 
@@ -43,6 +44,10 @@ public:
     friend ostream& operator<<(ostream& os, const String& str);     // 重载<<
     friend bool operator==(const String& str1, const String& str2); // 重载==
     friend bool operator!=(const String& str1, const String& str2); // 重载!=
+    friend bool operator<(const String& str1, const String& str2);  // 重载<
+    friend bool operator<=(const String& str1, const String& str2); // 重载<=
+    friend bool operator>(const String& str1, const String& str2);  // 重载>
+    friend bool operator>=(const String& str1, const String& str2); // 重载>=
 
     int BruteForceMatch(String& pattern, int offset) const;     // BF字符串匹配
     int KmpMatch(String& pattern, int offset) const;            // KMP字符串匹配查找
@@ -66,9 +71,8 @@ private:
 String::String(int size) {
 
     this->mem_data_ = new char[size + 1];
-    if (this->mem_data_ == NULL) {
-        cerr << "Allocation Error" << endl;
-        exit(1);
+    if (!this->mem_data_) {
+        throw bad_alloc();
     }
 
     this->size_ = size;
@@ -81,34 +85,33 @@ String::String(int size) {
 
 /*!
  * @brief **构造函数(字符串) **
- * @param char_ptr 字符串
+ * @param mem_data 字符串
  * @note
  * 构造函数(字符串)
  * --------------
  * --------------
  *
  */
-String::String(const char* char_ptr) {
-    size_t char_len = strlen(char_ptr);
+String::String(const char* mem_data) {
+    size_t str_len = strlen(mem_data);
 
-    if (char_len > DEFAULT_SIZE) {
-        this->size_ = char_len;
-    }
-    else {
+    if (str_len > DEFAULT_SIZE) {
+        this->size_ = str_len;
+    } else {
         this->size_ = DEFAULT_SIZE;
     }
 
     this->mem_data_ = new char[this->size_ + 1];
-    if (this->mem_data_ == NULL) {
-        throw exception("allocate error");
+    if (!this->mem_data_) {
+        throw bad_alloc();
     }
 
-    this->length_ = (int)char_len;
+    this->length_ = (int)str_len;
 
     // 先全部置0
     memset(this->mem_data_, 0, sizeof(char) * (this->size_ + 1));
     // 再复制字符串内容
-    memcpy(this->mem_data_, char_ptr, sizeof(char) * char_len);
+    memcpy(this->mem_data_, mem_data, sizeof(char) * str_len);
 }
 
 String::String(const String& src_str) {
@@ -121,8 +124,8 @@ String::String(const String& src_str) {
     this->size_ = src_str.Size();
 
     this->mem_data_ = new char[src_str.Length() + 1];
-    if (this->mem_data_ == NULL) {
-        throw exception("存储分配失败!");
+    if (!this->mem_data_) {
+        throw bad_alloc();
     }
 
     for (int i = 0; i < src_str.Length(); i++) {
@@ -148,15 +151,15 @@ String& String::operator=(const String& src_str) {
         return *this;
     }
 
-    if (this->mem_data_ != NULL) {
+    if (!this->mem_data_) {
         delete[] this->mem_data_;
     }
 
     this->length_ = src_str.Length();
 
     this->mem_data_ = new char[src_str.Length() + 1];
-    if (mem_data_ == NULL) {
-        throw exception("存储分配失败!");
+    if (!mem_data_) {
+        throw bad_alloc();
     }
 
     for (int i = 0; i < src_str.Length(); i++) {
@@ -227,6 +230,7 @@ ostream& operator<<(ostream& os, const String& str) {
     return os;
 }
 
+
 bool operator==(const String& str1, const String& str2) {
     if (str1.Length() != str2.Length()) {
         return false;
@@ -241,8 +245,47 @@ bool operator==(const String& str1, const String& str2) {
     return true;
 }
 
+
 bool operator!=(const String& str1, const String& str2) {
     return !(str1 == str2);
+}
+
+
+bool operator>(const String& str1, const String& str2) {
+    size_t size = str1.Size() >= str2.Size() ? str1.Size() : str2.Size();
+    if(strncmp(str1.mem_data_, str2.mem_data_, size) > 0) {
+        return true;
+    }
+
+    return false;
+}
+
+
+bool operator>=(const String& str1, const String& str2) {
+    size_t size = str1.Size() >= str2.Size() ? str1.Size() : str2.Size();
+    if(strncmp(str1.mem_data_, str2.mem_data_, size) >= 0) {
+        return true;
+    }
+
+    return false;
+}
+
+
+bool operator<(const String& str1, const String& str2) {
+    if (str1 >= str2) {
+        return false;
+    }
+
+    return true;
+}
+
+
+bool operator<=(const String& str1, const String& str2) {
+    if (str1 > str2) {
+        return false;
+    }
+
+    return true;
 }
 
 

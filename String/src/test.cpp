@@ -40,6 +40,25 @@ void TestStringBaseFunctions() {
     cout << str1[0] << endl;
     str1[0] = 'C';
     cout << str1 << endl;
+
+    String str4("elements");
+    String str5("element");
+    cout << (str4 > str5) << endl;
+    cout << (str4 >= str5) << endl;
+    cout << (str4 < str5) << endl;
+    cout << (str4 <= str5) << endl;
+
+    String str6("table");
+    String str7("tables");
+    cout << (str6 > str7) << endl;
+    cout << (str6 >= str7) << endl;
+    cout << (str6 < str7) << endl;
+    cout << (str6 <= str7) << endl;
+
+    String str8;
+    cout << str8 << endl;
+
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
  /*! 测试BF算法 */
