@@ -24,14 +24,20 @@ const int DEFAULT_SIZE = 128;
 
 
 /*!
- * @brief CyberDash字符串类
+ * @brief **字符串类**
+ * @note
+ * 字符串类
+ * -------
+ * -------
+ *
+ * -------
  */
 class String {
 
 public:
     explicit String(int size = DEFAULT_SIZE);   // 构造函数(字符串长度)
     explicit String(const char* mem_data);      // 构造函数
-    String(const String& src_str);              // 复制构造函数
+    String(const String& str);              // 复制构造函数
     ~String() { delete[] mem_data_; }           // 析构函数
 
     int Length() const { return this->length_; }
@@ -53,11 +59,11 @@ public:
     int KmpMatch(String& pattern, int offset) const;            // KMP字符串匹配查找
     int KmpMatchByCyberDash(String& pattern, int offset) const; // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
 
+private:
     static int* KmpNext(const char* pattern, int pattern_len);              // 求next数组
     static int* KmpNextByCyberDash(const char* pattern, int pattern_len);   // 求next数组()
     static void PrintNextArray(const int* next_arr, int next_arr_len);
 
-private:
     char* mem_data_; //!< 字符串数组
     int length_;     //!< 当前字符串长度
     size_t size_;    //!< 最大长度
@@ -114,22 +120,23 @@ String::String(const char* mem_data) {
     memcpy(this->mem_data_, mem_data, sizeof(char) * str_len);
 }
 
-String::String(const String& src_str) {
 
-    if (&src_str == this) {
+String::String(const String& str) {
+
+    if (&str == this) {
         return;
     }
 
-    this->length_ = src_str.Length();
-    this->size_ = src_str.Size();
+    this->length_ = str.Length();
+    this->size_ = str.Size();
 
-    this->mem_data_ = new char[src_str.Length() + 1];
+    this->mem_data_ = new char[str.Length() + 1];
     if (!this->mem_data_) {
         throw bad_alloc();
     }
 
-    for (int i = 0; i < src_str.Length(); i++) {
-        this->mem_data_[i] = src_str[i];
+    for (int i = 0; i < str.Length(); i++) {
+        this->mem_data_[i] = str[i];
     }
     this->mem_data_[this->Length()] = '\0';
 }
@@ -327,8 +334,8 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
 
     // 分配next数组内存
     int* next = new int[pattern_len];
-    if (next == NULL) {
-        return NULL;
+    if (!next) {
+        throw bad_alloc();
     }
 
     /// 设置next[0] = -1
@@ -348,10 +355,7 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
             i++;
             starting_index++;
             next[i] = starting_index;
-        }
-        /// 使用next[i]求next[i + 1]
-        else
-        {
+        } else {    /// 使用next[i]求next[i + 1]
             /// 如果pattern[i]和pattern[starting_index]相同, 则左右两侧的相同字符串区域扩展
             /// 示例
             ///  a b c d 5 6 a b c d 7
@@ -378,10 +382,7 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
                 i++;
                 starting_index++;
                 next[i] = starting_index;
-            }
-            /// 如果pattern[i]和pattern[starting_index]不同, 则使用next数组进行递归, 逐步验证
-            else
-            {
+            } else {    /// 如果pattern[i]和pattern[starting_index]不同, 则使用next数组进行递归, 逐步验证
                 starting_index = next[starting_index];
             }
         }
@@ -400,9 +401,8 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
 int* String::KmpNextByCyberDash(const char* pattern, int pattern_len) {
 
     int* next = new int[pattern_len];
-    if (next == NULL) {
-        cerr << "next array allocate error" << endl;
-        return NULL;
+    if (!next) {
+        throw bad_alloc();
     }
 
     next[0] = -1;
@@ -457,9 +457,8 @@ int String::KmpMatch(String& pattern, int offset) const {
 
     int pattern_len = pattern.Length();
     int* next = KmpNext(pattern.mem_data_, pattern_len);
-    if (next == NULL) {
-        cerr << "next array allocation error" << endl;
-        return -2; //
+    if (!next) {
+        throw bad_alloc();
     }
 
     cout<<"模式串: "<<pattern<<endl<<"对应的next数组: ";
@@ -473,17 +472,10 @@ int String::KmpMatch(String& pattern, int offset) const {
         if (pattern[pattern_str_i] == this->mem_data_[target_str_i]) {
             pattern_str_i++;
             target_str_i++;
-        }
-        /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)不同
-        else
-        {
-            // 如果是模式串第1个字符不匹配, 则目标串向后移位
-            if (pattern_str_i == 0) {
+        } else {    /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)不同
+            if (pattern_str_i == 0) {   // 如果是模式串第1个字符不匹配, 则目标串向后移位
                 target_str_i++;
-            }
-            // 如果不是模式串第1个字符不匹配, 则从模式串的next[pattern_str_i]开始执行下一趟匹配
-            else
-            {
+            } else {  // 如果不是模式串第1个字符不匹配, 则从模式串的next[pattern_str_i]开始执行下一趟匹配
                 pattern_str_i = next[pattern_str_i];
             }
         }
@@ -493,8 +485,7 @@ int String::KmpMatch(String& pattern, int offset) const {
 
     if (pattern_str_i < pattern_len) {
         match_pos = -1; // 不匹配
-    }
-    else {
+    } else {
         match_pos = target_str_i - pattern_len; // 算出目标串中匹配的第一个字符的(在目标串中的)位置
     }
 
@@ -528,16 +519,14 @@ int String::KmpMatchByCyberDash(String& pattern, int offset) const {
         if (pattern_index == -1 || pattern[pattern_index] == mem_data_[target_str_index]) {
             pattern_index++;
             target_str_index++;
-        }
-        else {
+        } else {
             pattern_index = next[pattern_index];
         }
     }
 
     if (pattern_index < pattern_len) {
         match_pos = -1;
-    }
-    else {
+    } else {
         match_pos = target_str_index - pattern_len;
     }
 
@@ -545,4 +534,4 @@ int String::KmpMatchByCyberDash(String& pattern, int offset) const {
 }
 
 
-#endif //CYBER_DASH_YUAN_STRING_H
+#endif // CYBER_DASH_YUAN_STRING_H
