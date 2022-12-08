@@ -163,8 +163,8 @@ void Components(Graph<Vertex, Weight>& graph) {
  * @param min_span_tree 最小生成树(引用)
  * @note
  * 
- * 参数graph对应图{ Vertex(结点集合), { E(边集合) } }
- * 最小生成树的初始状态只有n个顶点, 没有边, MST = { Vertex, { } }
+ * 参数graph对应图{ TVertex(结点集合), { E(边集合) } }
+ * 最小生成树的初始状态只有n个顶点, 没有边, MST = { TVertex, { } }
  * 
  * while MST未完成:
  *     在E中选择代价最小的边
@@ -234,16 +234,16 @@ void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span
  * @note
  *
  * # CyberDash批注
- * 参数graph对应图{ Vertex(结点集合), { E(边集合) } }.
+ * 参数graph对应图{ TVertex(结点集合), { E(边集合) } }.
  * min_span_tree为最小生成树,
  * min_span_tree中的结点对应结点集合mst_vertex_set
  *
  * 算法从mst_vertex_set = { starting_vertex }开始(只包含起始结点),
  * ```
  * 循环以下操作:
- *     在所有u ∈ mst_vertex_set, v ∈ (Vertex - mst_vertex_set)的边(u, v) ∈ E中,
+ *     在所有u ∈ mst_vertex_set, v ∈ (TVertex - mst_vertex_set)的边(u, v) ∈ E中,
  * 
- *    mst_vertex_set    Vertex - mst_vertex_set
+ *    mst_vertex_set    TVertex - mst_vertex_set
  *         ------          ------
  *       /       \       /       \
  *      |   u----|------|---v    |
@@ -305,7 +305,7 @@ bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tr
     // mst_edge_node.tail进入最小生成树结点集合mst_vertex_set
     mst_vertex_set.insert(mst_edge_node.ending_vertex);
 
-    // 将所有u ∈ mst_vertex_set, v ∈ Vertex - mst_vertex_set对应的边(u, v),
+    // 将所有u ∈ mst_vertex_set, v ∈ TVertex - mst_vertex_set对应的边(u, v),
     // 入队到最小优先队列min_priority_queue
     for (typename set<Vertex>::iterator iter = mst_vertex_set.begin(); iter != mst_vertex_set.end(); iter++) {
       Vertex cur_mst_vertex = *iter;

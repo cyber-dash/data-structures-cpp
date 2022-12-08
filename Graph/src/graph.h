@@ -1,12 +1,9 @@
 ﻿/*!
  * @file graph.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 图虚基模板类
+ * @brief 图抽象模板类
  * @version 0.2.1
  * @date 2021-01-23
- *
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_GRAPH_H
@@ -17,162 +14,228 @@ const int DEFAULT_VERTICES = 20; //<! 默认图结点个数
 const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
 
 
-template<class Vertex, class Weight>
+template<class TVertex, class TWeight>
 class Path {
 public:
   Path() = default;
-  Path(Vertex starting_vertex, Vertex ending_vertex, Weight weight):
+  Path(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
     starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
-  Weight weight;
-  Vertex starting_vertex;
-  Vertex ending_vertex;
+  TWeight weight;
+  TVertex starting_vertex;
+  TVertex ending_vertex;
 
   /*!
    * 重载 <=
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<=(Path<Vertex, Weight>& edge) { return weight <= edge.weight; }
+  bool operator<=(Path<TVertex, TWeight>& edge) { return weight <= edge.weight; }
 
   /*!
    * 重载 >=
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>=(Path<Vertex, Weight>& edge) { return weight >= edge.weight; }
+  bool operator>=(Path<TVertex, TWeight>& edge) { return weight >= edge.weight; }
 
   /*!
    * 重载 >
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>(Path<Vertex, Weight>& edge) { return weight > edge.weight; }
+  bool operator>(Path<TVertex, TWeight>& edge) { return weight > edge.weight; }
 
   /*!
    * 重载 <
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<(Path<Vertex, Weight>& edge) { return weight < edge.weight; }
+  bool operator<(Path<TVertex, TWeight>& edge) { return weight < edge.weight; }
 };
 
 
 /*!
- * @brief 图基类(模板类)
- * @tparam Vertex 节点类型模板参数
- * @tparam Weight 边权值类型模板参数
+ * @brief **图抽象模板类**
+ * @tparam TVertex 节点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
  */
-template<class Vertex, class Weight>
+template<class TVertex, class TWeight>
 class Graph {
 public:
 
   /*!
-   * @brief 获取图结点数量
-   * @return 图结点数量
+   * @brief **获取结点数量**
+   * @return 结点数量
+   * @note
+   * 获取结点数量
+   * ----------
+   * ----------
+   *
+   * ----------
    */
-  unsigned int VertexCount() { return this->vertex_cnt_; }
+  unsigned int VertexCount() { return this->vertex_count_; }
 
   /*!
-   * @brief 获取边数量
+   * @brief **获取边数量**
    * @return 边数量
+   * @note
+   * 获取边数量
+   * ---------
+   * ---------
+   *
+   * ---------
    */
-  unsigned int EdgeCount() { return this->edge_cnt_; }
+  unsigned int EdgeCount() { return this->edge_count_; }
 
   /*!
-   * @brief 获取结点(由结点索引)
-   * @param vertex 结点(用于保存结果)
+   * @brief **由结点索引获取结点(纯虚函数)**
+   * @param vertex 结点保存变量
    * @param vertex_index 结点索引
    * @return 执行结果
    * @note
-   * todo: (优化)第一个参数放在最后
+   * 由结点索引获取结点
+   * ---------------
+   * ---------------
+   *
+   * ---------------
    */
-  virtual bool GetVertexByIndex(Vertex& vertex, int vertex_index) = 0;
+  virtual bool GetVertexByIndex(TVertex& vertex, int vertex_index) = 0;
 
   /*!
-   * @brief (由边的两个结点)获取边权值
-   * @param weight 边权值(用于保存结果)
+   * @brief **获取边权值(使用结点)**
+   * @param weight 边权值保存变量
    * @param v1 边的一个节点
    * @param v2 边的另一个节点
    * @return 执行结果
    * @note
-   * todo: (优化)第一个参数放在最后
+   * 获取边权值(使用结点)
+   * -----------------
+   * -----------------
+   *
+   * -----------------
    */
-  virtual bool GetWeight(Weight& weight, Vertex v1, Vertex v2) = 0;
+  virtual bool GetWeight(TWeight& weight, TVertex v1, TVertex v2) = 0;
 
   /*!
-   * @brief (由边的两个结点索引)获取边权值
-   * @param weight 边权值(用于保存结果)
+   * @brief 获取边权值(使用结点索引)
+   * @param weight 边权值保存变量
    * @param v1_index 边的一个结点索引
    * @param v2_index 边的另一个结点索引
    * @return 执行结果
    * @note
-   * todo: (优化)第一个参数放在最后
+   * 获取边权值(使用结点索引)
+   * ---------------------
+   * ---------------------
+   *
+   * ---------------------
    */
-  virtual bool GetWeightByVertexIndex(Weight& weight, int v1_index, int v2_index) = 0;
+  virtual bool GetWeightByVertexIndex(TWeight& weight, int v1_index, int v2_index) = 0;
 
   /*!
-   * @brief 获取结点的第一个相邻结点
-   * @param first_neighbor 结点(用于保存第一个相邻结点)
+   * @brief **获取结点的第一个相邻结点**
+   * @param first_neighbor 第一个相邻结点的保存变量
    * @param vertex 结点
    * @return 执行结果
    * @note
-   * todo: (优化)第一个参数放在最后
+   * 获取结点的第一个相邻结点
+   * --------------------
+   * --------------------
+   *
+   * --------------------
    */
-  virtual bool GetFirstNeighborVertex(Vertex& first_neighbor, const Vertex& vertex) = 0;
+  virtual bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex) = 0;
+
 
   /*!
-   * @brief 获取结点的下一个相邻结点
-   * @param next_neighbor 结点(用于保存下一个相邻结点)
+   * @brief **获取结点的下一个相邻结点**
+   * @param next_neighbor 下一相邻结点的保存变量
    * @param vertex 结点
-   * @param neighbor_vertex 结点的一个相邻节点
+   * @param neighbor_vertex 相邻节点
    * @return 执行结果
    * @note
-   * todo: (优化)第一个参数放在最后
+   * 获取结点的下一个相邻结点
+   * --------------------
+   * --------------------
+   *
+   * --------------------
    */
-  virtual bool GetNextNeighborVertex(Vertex& next_neighbor, const Vertex& vertex, const Vertex& neighbor_vertex) = 0;
+  virtual bool GetNextNeighborVertex(TVertex& next_neighbor, const TVertex& vertex, const TVertex& neighbor_vertex) = 0;
+
 
   /*!
-   * @brief 插入结点
+   * @brief **插入结点**
    * @param vertex 结点
-   * @return 是否插入成功
+   * @return 执行结果
+   * @note
+   * 插入结点
+   * -------
+   * -------
+   *
+   * -------
    */
-  virtual bool InsertVertex(const Vertex& vertex) = 0;
+  virtual bool InsertVertex(const TVertex& vertex) = 0;
 
   /*!
-   * @brief 插入边
+   * @brief **插入边**
    * @param vertex1 边的一个结点
    * @param vertex2 边的另一个结点
    * @param weight 边的权值
-   * @return 是否插入成功
+   * @return 执行结果
+   * @note
+   * 插入边
+   * -----
+   * -----
+   *
+   * -----
    */
-  virtual bool InsertEdge(Vertex vertex1, Vertex vertex2, Weight weight) = 0;
+  virtual bool InsertEdge(TVertex vertex1, TVertex vertex2, TWeight weight) = 0;
+
 
   /*!
-   * @brief 删除结点
-   * @param v 节点
-   * @return 是否删除成功
+   * @brief **删除结点**
+   * @param vector 结点
+   * @return 执行结果
+   * @note
+   * 删除结点
+   * -------
+   * -------
+   *
+   * -------
    */
-  virtual bool RemoveVertex(Vertex v) = 0;
+  virtual bool RemoveVertex(TVertex vector) = 0;
+
 
   /*!
-   * @brief 删除边
-   * @param v1 边的一个节点
-   * @param v2 边的另一个节点
-   * @return 是否删除成功
+   * @brief **删除边**
+   * @param vertex1 边的一个节点
+   * @param vertex2 边的另一个节点
+   * @return 执行结果
+   * @note
+   * 删除边
+   * -----
+   * -----
+   *
+   * -----
    */
-  virtual bool RemoveEdge(Vertex v1, Vertex v2) = 0;
+  virtual bool RemoveEdge(TVertex vertex1, TVertex vertex2) = 0;
 
   /*!
-   * @brief 获取结点的索引值
-   * @param vertex 节点
-   * @return 是否获取成功
+   * @brief **获取结点的索引值**
+   * @param vertex 结点
+   * @return 索引值
+   * @note
+   * 获取结点的索引值
+   * --------------
+   * --------------
+   *
+   * --------------
    */
-  virtual int GetVertexIndex(Vertex vertex) = 0;
+  virtual int GetVertexIndex(TVertex vertex) = 0;
 
 protected:
-  int max_vertex_cnt_; //!< 图节点数量最大限制
-  int edge_cnt_; //!< 边数量
-  int vertex_cnt_; //!< 节点数量
+  int max_vertex_count_; //!< 图节点数量最大限制
+  int edge_count_; //!< 边数量
+  int vertex_count_; //!< 节点数量
 };
 
 

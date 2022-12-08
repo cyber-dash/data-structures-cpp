@@ -129,20 +129,20 @@ private:
 template<class Vertex, class Weight>
 MatrixGraph<Vertex, Weight>::MatrixGraph(int size) {
 
-  this->max_vertex_cnt_ = size;
-  this->vertex_cnt_ = 0;
-  this->edge_cnt_ = 0;
+  this->max_vertex_count_ = size;
+  this->vertex_count_ = 0;
+  this->edge_count_ = 0;
 
   // 所有节点
-  this->vertices_list_ = new Vertex[this->max_vertex_cnt_];
+  this->vertices_list_ = new Vertex[this->max_vertex_count_];
   /* error handler */
 
-  this->adjacency_matrix_ = (Weight**)new Weight*[this->max_vertex_cnt_];
+  this->adjacency_matrix_ = (Weight**)new Weight*[this->max_vertex_count_];
   /* error handler */
 
-  for (int i = 0; i < this->max_vertex_cnt_; i++) {
-    this->adjacency_matrix_[i] = new Weight[this->max_vertex_cnt_]; // 节点i对应的所有边
-    for (int j = 0; j < this->max_vertex_cnt_; j++) {
+  for (int i = 0; i < this->max_vertex_count_; i++) {
+    this->adjacency_matrix_[i] = new Weight[this->max_vertex_count_]; // 节点i对应的所有边
+    for (int j = 0; j < this->max_vertex_count_; j++) {
       this->adjacency_matrix_[i][j] = (i == j) ? 0 : MAX_WEIGHT;
     }
   }
@@ -169,7 +169,7 @@ MatrixGraph<Vertex, Weight>::~MatrixGraph() {
  */
 template<class Vertex, class Weight>
 bool MatrixGraph<Vertex, Weight>::GetVertexByIndex(Vertex& vertex, int vertex_index) {
-  if (vertex_index >= 0 && vertex_index <= this->vertex_cnt_) {
+  if (vertex_index >= 0 && vertex_index <= this->vertex_count_) {
     vertex = this->vertices_list_[vertex_index];
     return true;
   } else {
@@ -228,7 +228,7 @@ bool MatrixGraph<Vertex, Weight>::GetFirstNeighborVertex(Vertex& first_neighbor,
     return false;
   }
 
-  for (int cur_index = 0; cur_index < this->vertex_cnt_; cur_index++) {
+  for (int cur_index = 0; cur_index < this->vertex_count_; cur_index++) {
     Weight weight;
     Vertex cur_vertex;
 
@@ -258,7 +258,7 @@ bool MatrixGraph<Vertex, Weight>::GetNextNeighborVertex(Vertex& next_neighbor_ve
     return false;
   }
 
-  for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertex_cnt_; cur_index ++) {
+  for (int cur_index = neighbor_vertex_index + 1; cur_index < this->vertex_count_; cur_index ++) {
     Weight weight;
     Vertex cur_vertex;
 
@@ -280,12 +280,12 @@ bool MatrixGraph<Vertex, Weight>::GetNextNeighborVertex(Vertex& next_neighbor_ve
 
 template<class Vertex, class Weight>
 bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
-  if (this->vertex_cnt_ >= this->max_vertex_cnt_) {
+  if (this->vertex_count_ >= this->max_vertex_count_) {
     return false;
   }
 
-  this->vertices_list_[this->vertex_cnt_] = vertex;
-  this->vertex_cnt_++;
+  this->vertices_list_[this->vertex_count_] = vertex;
+  this->vertex_count_++;
 
   return true;
 }
@@ -305,7 +305,7 @@ bool MatrixGraph<Vertex, Weight>::InsertEdge(Vertex vertex1, Vertex vertex2, Wei
   this->adjacency_matrix_[v1_index][v2_index] = weight;
   this->adjacency_matrix_[v2_index][v1_index] = weight;
 
-  this->edge_cnt_++;
+  this->edge_count_++;
 
   pair<Vertex, Vertex> edge1(vertex1, vertex2);
   pair<Vertex, Vertex> edge2(vertex2, vertex1);
@@ -322,32 +322,32 @@ bool MatrixGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
 
-  if (vertex_index < 0 || vertex_index >= this->vertex_cnt_) {
+  if (vertex_index < 0 || vertex_index >= this->vertex_count_) {
     return false;
   }
 
   // 只剩1个顶点 todo: 实际上可以删除
-  if (this->vertex_cnt_ == 1) {
+  if (this->vertex_count_ == 1) {
     return false;
   }
 
-  this->vertices_list_[vertex_index] = this->vertices_list_[this->vertex_cnt_ - 1];
+  this->vertices_list_[vertex_index] = this->vertices_list_[this->vertex_count_ - 1];
 
-  for (int i = 0; i < this->vertex_cnt_; i++) {
+  for (int i = 0; i < this->vertex_count_; i++) {
     if (this->adjacency_matrix_[i][vertex_index] > 0 && this->adjacency_matrix_[i][vertex_index] < MAX_WEIGHT) {
-      this->edge_cnt_--;
+      this->edge_count_--;
     }
   }
 
-  for (int row = 0; row < this->vertex_cnt_; row++) {
-    this->adjacency_matrix_[row][vertex_index] = this->adjacency_matrix_[row][this->vertex_cnt_ - 1];
+  for (int row = 0; row < this->vertex_count_; row++) {
+    this->adjacency_matrix_[row][vertex_index] = this->adjacency_matrix_[row][this->vertex_count_ - 1];
   }
 
-  for (int col = 0; col < this->vertex_cnt_; col++) {
-    this->adjacency_matrix_[vertex_index][col] = this->adjacency_matrix_[this->vertex_cnt_ - 1][col];
+  for (int col = 0; col < this->vertex_count_; col++) {
+    this->adjacency_matrix_[vertex_index][col] = this->adjacency_matrix_[this->vertex_count_ - 1][col];
   }
 
-  this->vertex_cnt_--;
+  this->vertex_count_--;
 
   return true;
 }
@@ -365,7 +365,7 @@ bool MatrixGraph<Vertex, Weight>::RemoveEdge(Vertex vertex1, Vertex vertex2) {
     this->adjacency_matrix_[v1_index][v2_index] = MAX_WEIGHT;
     this->adjacency_matrix_[v2_index][v1_index] = MAX_WEIGHT;
 
-    this->edge_cnt_--;
+    this->edge_count_--;
 
     return true;
   }
@@ -450,7 +450,7 @@ int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) {
 
   int vertex_index = -1;
 
-  for (int i = 0; i < this->vertex_cnt_; i++) {
+  for (int i = 0; i < this->vertex_count_; i++) {
     if (this->vertices_list_[i] == vertex) {
       vertex_index = i;
       break;
@@ -468,8 +468,8 @@ int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) {
  */
 template<class Vertex, class Weight>
 void MatrixGraph<Vertex, Weight>::PrintMatrix() {
-  for (int i = 0; i < this->vertex_cnt_; i++) {
-    for (int j = 0; j < this->vertex_cnt_; j++) {
+  for (int i = 0; i < this->vertex_count_; i++) {
+    for (int j = 0; j < this->vertex_count_; j++) {
       cout << this->adjacency_matrix_[i][j] << "  ";
     }
     cout<<endl;
