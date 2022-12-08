@@ -29,28 +29,28 @@ public:
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<=(Path<TVertex, TWeight>& edge) { return weight <= edge.weight; }
+  bool operator<=(const Path<TVertex, TWeight>& edge) const { return weight <= edge.weight; }
 
   /*!
    * 重载 >=
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>=(Path<TVertex, TWeight>& edge) { return weight >= edge.weight; }
+  bool operator>=(const Path<TVertex, TWeight>& edge) const { return weight >= edge.weight; }
 
   /*!
    * 重载 >
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>(Path<TVertex, TWeight>& edge) { return weight > edge.weight; }
+  bool operator>(const Path<TVertex, TWeight>& edge) const { return weight > edge.weight; }
 
   /*!
    * 重载 <
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<(Path<TVertex, TWeight>& edge) { return weight < edge.weight; }
+  bool operator<(const Path<TVertex, TWeight>& edge) const { return weight < edge.weight; }
 };
 
 
@@ -233,9 +233,9 @@ public:
   virtual int GetVertexIndex(TVertex vertex) = 0;
 
 protected:
-  int max_vertex_count_; //!< 图节点数量最大限制
-  int edge_count_; //!< 边数量
-  int vertex_count_; //!< 节点数量
+  int max_vertex_count_;    //!< 图节点数量最大限制
+  int edge_count_;          //!< 边数量
+  int vertex_count_;        //!< 节点数量
 };
 
 
