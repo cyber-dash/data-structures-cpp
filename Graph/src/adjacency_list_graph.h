@@ -63,12 +63,11 @@ struct AdjListVertex {
  * @tparam Weight 边权值类型模板参数
  */
 template<class Vertex, class Weight>
-class AdjacencyListGraph: public Graph<Vertex, Weight> {
+class AdjacencyListGraph: virtual public Graph<Vertex, Weight> {
 public:
 
   // 构造函数
-  AdjacencyListGraph(int size = DEFAULT_VERTICES);
-
+  AdjacencyListGraph(int size, Weight max_weight);
   // 析构函数
   ~AdjacencyListGraph();
 
@@ -109,10 +108,13 @@ public:
   template<class U>
   friend ostream& operator<<(ostream& out, AdjacencyListGraph<Vertex, Weight>& graph_adjacency_list);
 
+  Weight MaxWeight() const { return max_weight_; }
+
   /*! @brief 我们是CyberDash :-) */
   void CyberDashShow();
 private:
   AdjListVertex<Vertex, Weight>* vertex_table_; //!< 邻接点数组
+  Weight max_weight_;
 };
 
 
@@ -123,7 +125,9 @@ private:
  * @param size 结点数量
  */
 template<class Vertex, class Weight>
-AdjacencyListGraph<Vertex, Weight>::AdjacencyListGraph(int size) {
+AdjacencyListGraph<Vertex, Weight>::AdjacencyListGraph(int size, Weight max_weight): max_weight_(max_weight) {
+// AdjacencyListGraph<Vertex, Weight>::AdjacencyListGraph(int size, Weight max_weight) {
+
 
   this->max_vertex_count_ = size;
   this->vertex_count_ = 0;

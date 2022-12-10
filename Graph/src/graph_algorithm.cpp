@@ -382,10 +382,10 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
   // vertex_set初始化为空
   set<Vertex> vertex_set;
 
-  // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为MAX_WEIGHT
+  // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
   for (unsigned int i = 0; i < vertex_cnt; i++) {
-    distance[i] = (Weight)MAX_WEIGHT;
+    distance[i] = graph.MaxWeight();
   }
   distance[starting_vertex_idx] = 0;
 
@@ -395,7 +395,7 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
   /// --- 贪心 ---
 
   for (unsigned int i = 0; i < vertex_cnt; i++) {
-    Weight cur_min_distance = (Weight)MAX_WEIGHT;   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
+    Weight cur_min_distance = graph.MaxWeight();   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
     Vertex cur_min_distance_ending_vertex;          // 当前最短路径对应的的终点结点
 
     // Loop遍历结点(使用优先队列见DijkstraByPriorityQueue), 得到:
@@ -414,8 +414,8 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
         continue;
       }
 
-      if (distance[j] < cur_min_distance)
-      {
+      Weight cur_distance;
+      if (graph.GetWeightByVertexIndex(cur_distance, i, j) && distance[j] < cur_min_distance) {
           cur_min_distance_ending_vertex = vertex_j;
           cur_min_distance = distance[j];
       }
@@ -514,16 +514,16 @@ void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
   // vertex_set初始化为空
   set<Vertex> vertex_set;
 
-  // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为MAX_WEIGHT
+  // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
   for (int i = 0; i < vertex_cnt; i++) {
-    distance[i] = (Weight)MAX_WEIGHT;
+    distance[i] = graph.MaxWeight();
   }
   distance[starting_vertex_idx] = 0;
 
   // 路径的最小优先队列, 路径起始点-->起始点入优先队列
-  MinPriorityQueue<Path<Vertex, Weight> > min_priority_queue;
-  Path<Vertex, Weight> cur_path(starting_vertex, starting_vertex, 0);
+  MinPriorityQueue<AdjacencyListPath<Vertex, Weight> > min_priority_queue;
+  AdjacencyListPath<Vertex, Weight> cur_path(starting_vertex, starting_vertex, 0);
   min_priority_queue.Enqueue(cur_path);
 
   // 起始点的前驱结点索引设为-1
@@ -538,7 +538,7 @@ void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
     //   起始点到(vertex_set的)各结点中的最短路径cur_min_distance_path
     //   该路径对应的终点cur_min_dist_ending_vertex
     //   终点索引cur_min_dist_ending_vertex_idx
-    Path<Vertex, Weight> cur_min_distance_path;
+    AdjacencyListPath<Vertex, Weight> cur_min_distance_path;
     min_priority_queue.Dequeue(cur_min_distance_path);
 
     Vertex cur_min_distance_ending_vertex;
@@ -583,7 +583,7 @@ void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
         distance[j] = distance[cur_min_distance_ending_vertex_idx] + weight;
         predecessor[j] = cur_min_distance_ending_vertex_idx;
 
-        Path<Vertex, Weight> new_min_distance_path(starting_vertex, vertex_j, distance[j]);
+        AdjacencyListPath<Vertex, Weight> new_min_distance_path(starting_vertex, vertex_j, distance[j]);
         min_priority_queue.Enqueue(new_min_distance_path);
       }
     }
@@ -640,10 +640,10 @@ bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight di
 
   // --- 初始化 ---
 
-  // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为MAX_WEIGHT
+  // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
   for (int i = 0; i < vertex_cnt; i++) {
-    distance[i] = (Weight)MAX_WEIGHT;
+      distance[i] = graph.MaxWeight();
   }
   distance[starting_vertex_idx] = 0;
 
@@ -755,7 +755,7 @@ void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vect
         if (done) {
           distance[cur_starting_vertex_idx][cur_ending_vertex_idx] = weight;
         } else {
-          distance[cur_starting_vertex_idx][cur_ending_vertex_idx] = (Weight)MAX_WEIGHT;
+            distance[cur_starting_vertex_idx][cur_ending_vertex_idx] = graph.MaxWeight();
         }
       }
 

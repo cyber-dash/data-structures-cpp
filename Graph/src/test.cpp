@@ -63,7 +63,7 @@ void TestMatrixGraphPrintMatrix() {
   cout<<"|                      Test PrintMatrix                     |"<<endl;
   cout<<"|                       测试矩阵图的矩阵                      |"<<endl;
 
-  MatrixGraph<string, double> matrix_graph(10);
+  MatrixGraph<string, double> matrix_graph(10, 10000);
   matrix_graph.InsertVertex("地球");
   matrix_graph.InsertVertex("火星");
   matrix_graph.InsertVertex("木星");
@@ -89,7 +89,7 @@ void TestGetVertexByIndex() {
   cout<<"|                   测试使用结点索引获取结点                    |"<<endl;
 
   cout<<"**邻接表图**"<<endl;
-  AdjacencyListGraph<string, double> adjacency_list_graph;
+  AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000);
 
   adjacency_list_graph.InsertVertex("北京");
   adjacency_list_graph.InsertVertex("上海");
@@ -118,7 +118,7 @@ void TestGetVertexByIndex() {
   cout<<"结点3: "<<SZ<<endl;
 
   cout<<endl<<"**矩阵图**"<<endl;
-  MatrixGraph<string, double> matrix_graph(10);
+  MatrixGraph<string, double> matrix_graph(10, 10000);
   matrix_graph.InsertVertex("地球");
   matrix_graph.InsertVertex("火星");
   matrix_graph.InsertVertex("木星");
@@ -157,7 +157,7 @@ void TestDFS() {
   int v3 = 3;
   int v4 = 4;
 
-  AdjacencyListGraph<int, int> adjacency_list_graph;
+  AdjacencyListGraph<int, int> adjacency_list_graph(5, 10000);
 
   adjacency_list_graph.InsertVertex(v0);
   adjacency_list_graph.InsertVertex(v1);
@@ -173,7 +173,7 @@ void TestDFS() {
   adjacency_list_graph.InsertEdge(v0, v4, 100);
   adjacency_list_graph.InsertEdge(v2, v4, 10);
 
-  MatrixGraph<int, int> matrix_graph;
+  MatrixGraph<int, int> matrix_graph(5, 10000);
 
   matrix_graph.InsertVertex(v0);
   matrix_graph.InsertVertex(v1);
@@ -212,8 +212,8 @@ void TestBFS() {
   int v3 = 3;
   int v4 = 4;
 
-  AdjacencyListGraph<int, int> adjacency_list_graph;
-  MatrixGraph<int, int> matrix_graph;
+  AdjacencyListGraph<int, int> adjacency_list_graph(5, 10000);
+  MatrixGraph<int, int> matrix_graph(5, 10000);
 
   adjacency_list_graph.InsertVertex(v0);
   adjacency_list_graph.InsertVertex(v1);
@@ -265,7 +265,7 @@ void TestComponents() {
   cout<<"|    0-1权值: 0.8                                            |"<<endl<<endl;
   cout<<"|    2-3权值: 7.3                                            |"<<endl<<endl;
 
-  AdjacencyListGraph<int, double> adjacency_list_graph;
+  AdjacencyListGraph<int, double> adjacency_list_graph(10, 10000);
 
   adjacency_list_graph.InsertVertex(0);
   adjacency_list_graph.InsertVertex(1);
@@ -275,7 +275,7 @@ void TestComponents() {
   adjacency_list_graph.InsertEdge(0, 1, 0.8);
   adjacency_list_graph.InsertEdge(2, 3, 7.3);
 
-  MatrixGraph<int, double> matrix_graph;
+  MatrixGraph<int, double> matrix_graph(10, 10000);
 
   matrix_graph.InsertVertex(0);
   matrix_graph.InsertVertex(1);
@@ -317,7 +317,7 @@ void TestKruskal() {
   MinSpanTree<string, double> min_span_tree_adj(100);
   MinSpanTree<string, double> min_span_tree_matrix(100);
 
-  AdjacencyListGraph<string, double> adjacency_list_graph;
+  AdjacencyListGraph<string, double> adjacency_list_graph(10, 10000);
 
   adjacency_list_graph.InsertVertex(BJ);
   adjacency_list_graph.InsertVertex(SH);
@@ -330,7 +330,7 @@ void TestKruskal() {
   adjacency_list_graph.InsertEdge(BJ, GZ, 11.3);
   adjacency_list_graph.InsertEdge(SH, SZ, 0.3);
 
-  MatrixGraph<string, double> matrix_graph;
+  MatrixGraph<string, double> matrix_graph(10, 10000);
   matrix_graph.InsertVertex(BJ);
   matrix_graph.InsertVertex(SH);
   matrix_graph.InsertVertex(GZ);
@@ -375,7 +375,7 @@ void TestPrim() {
   string GZ = "广州";
   string SZ = "深圳";
 
-  AdjacencyListGraph<string, double> adjacency_list_graph;
+  AdjacencyListGraph<string, double> adjacency_list_graph(5, 10000);
 
   adjacency_list_graph.InsertVertex(BJ);
   adjacency_list_graph.InsertVertex(SH);
@@ -388,7 +388,7 @@ void TestPrim() {
   adjacency_list_graph.InsertEdge(BJ, GZ, 11.3);
   adjacency_list_graph.InsertEdge(SH, SZ, 0.3);
 
-  MatrixGraph<string, double> matrix_graph;
+  MatrixGraph<string, double> matrix_graph(5, 10000);
 
   matrix_graph.InsertVertex(BJ);
   matrix_graph.InsertVertex(SH);
@@ -423,8 +423,10 @@ void TestDijkstra() {
 
   string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
 
-  AdjacencyListGraph<string, double> adjacency_list_graph;	// 邻接表图
-  MatrixGraph<string, double> matrix_graph;					// 矩阵图
+  double max_weight = 10000;
+
+  AdjacencyListGraph<string, double> adjacency_list_graph(10, max_weight);	// 邻接表图
+  MatrixGraph<string, double> matrix_graph(10, max_weight);					// 矩阵图
 
   // 将5个城市都加入到两个图中
   for (int i = 0; i < 5; i++) {
@@ -464,12 +466,14 @@ void TestDijkstra() {
   DijkstraByPriorityQueue(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
   PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
 
+  /*
   cout<<endl<<"**矩阵图测试**"<<endl<<endl;
   double min_dist_arr_matrix[5];
   int from_path_arr_matrix[5];
 
   Dijkstra(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
   PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
+   */
 
   cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -483,8 +487,8 @@ void TestBellmanFord() {
 
   string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
 
-  AdjacencyListGraph<string, double> adjacency_list_graph;	// 邻接表图
-  MatrixGraph<string, double> matrix_graph;					// 矩阵图
+  AdjacencyListGraph<string, double> adjacency_list_graph(10, 10000);	// 邻接表图
+  MatrixGraph<string, double> matrix_graph(10, 10000);					// 矩阵图
 
   // 将5个城市都加入到两个图中
   for (int i = 0; i < 5; i++) {
@@ -545,8 +549,9 @@ void TestFloyd() {
 
     string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
 
-    AdjacencyListGraph<string, double> adjacency_list_graph;	// 邻接表图
-    MatrixGraph<string, double> matrix_graph;					// 矩阵图
+    double max_weight = 10000;
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, max_weight);     // 邻接表图
+    MatrixGraph<string, double> matrix_graph(10, max_weight);					// 矩阵图
 
     // 将5个城市都加入到两个图中
     for (int i = 0; i < 5; i++) {
@@ -619,6 +624,6 @@ void TestFloyd() {
 
 // 关于CyberDash, :)
 void TestCyberDashShow() {
-  MatrixGraph<int, int> cyber_dash_graph;
+  MatrixGraph<int, int> cyber_dash_graph(0, 0);
   cyber_dash_graph.CyberDashShow();
 }

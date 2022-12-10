@@ -10,15 +10,14 @@
 #define CYBER_DASH_GRAPH_H
 
 
-const int DEFAULT_VERTICES = 20; //<! 默认图结点个数
-const int MAX_WEIGHT = 1000; //<! 最大权值, todo: 应剔除这个设计:-(
+// const int DEFAULT_VERTICES = 20;
 
 
 template<class TVertex, class TWeight>
-class Path {
+class AdjacencyListPath {
 public:
-  Path() = default;
-  Path(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
+  AdjacencyListPath() = default;
+  AdjacencyListPath(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
     starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
   TWeight weight;
   TVertex starting_vertex;
@@ -29,28 +28,28 @@ public:
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<=(const Path<TVertex, TWeight>& edge) const { return weight <= edge.weight; }
+  bool operator<=(const AdjacencyListPath<TVertex, TWeight>& edge) const { return weight <= edge.weight; }
 
   /*!
    * 重载 >=
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>=(const Path<TVertex, TWeight>& edge) const { return weight >= edge.weight; }
+  bool operator>=(const AdjacencyListPath<TVertex, TWeight>& edge) const { return weight >= edge.weight; }
 
   /*!
    * 重载 >
    * @param edge 边
    * @return 比较结果
    */
-  bool operator>(const Path<TVertex, TWeight>& edge) const { return weight > edge.weight; }
+  bool operator>(const AdjacencyListPath<TVertex, TWeight>& edge) const { return weight > edge.weight; }
 
   /*!
    * 重载 <
    * @param edge 边
    * @return 比较结果
    */
-  bool operator<(const Path<TVertex, TWeight>& edge) const { return weight < edge.weight; }
+  bool operator<(const AdjacencyListPath<TVertex, TWeight>& edge) const { return weight < edge.weight; }
 };
 
 
@@ -86,6 +85,8 @@ public:
    * ---------
    */
   unsigned int EdgeCount() { return this->edge_count_; }
+
+  virtual TWeight MaxWeight() const { return this->max_weight_; }
 
   /*!
    * @brief **由结点索引获取结点(纯虚函数)**
@@ -236,6 +237,7 @@ protected:
   int max_vertex_count_;    //!< 图节点数量最大限制
   int edge_count_;          //!< 边数量
   int vertex_count_;        //!< 节点数量
+  TWeight max_weight_;
 };
 
 
