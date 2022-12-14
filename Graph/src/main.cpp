@@ -17,25 +17,24 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-  TestMinPriorityQueue();
+  // TestMinPriorityQueue();
 
-    /*
   // 测试矩阵图打印矩阵
-  TestMatrixGraphPrintMatrix();
+  // TestMatrixGraphPrintMatrix();
 
   // 测试由结点索引获取结点
   TestGetVertexByIndex();
 
   // 测试深度优先遍历
-  TestDFS();
+  // TestDFS();
 
   // 测试广度优先遍历
-  TestBFS();
+  // TestBFS();
 
   // 测试连通图
-  TestComponents();
-     */
+  // TestComponents();
 
+  /*
   // 测试普利姆(Prim)最小生成树
   TestPrim();
 
@@ -53,6 +52,7 @@ int main(int argc, char** argv) {
 
   // 我们是CyberDash团队
   TestCyberDashShow();
+   */
 
   return 0;
 }

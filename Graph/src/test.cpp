@@ -4,9 +4,6 @@
  * @brief 图测试.cpp文件
  * @version 0.2.1
  * @date 2021-10-9
- *
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include "test.h"
@@ -83,64 +80,87 @@ void TestMatrixGraphPrintMatrix() {
 
 // 测试使用结点索引获取结点
 void TestGetVertexByIndex() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                   Test GetVertexByIndex                   |"<<endl;
-  cout<<"|                   测试使用结点索引获取结点                    |"<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                   Test GetVertexByIndex                   |"<<endl;
+    cout<<"|                   测试使用结点索引获取结点                    |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                         北京                               |"<<endl;
+    cout<<"|                         / \\                               |"<<endl;
+    cout<<"|                        /   \\                              |"<<endl;
+    cout<<"|                      0.1   0.12                           |"<<endl;
+    cout<<"|                      /       \\                            |"<<endl;
+    cout<<"|                     /         \\                           |"<<endl;
+    cout<<"|                  上海---0.01---广州                        |"<<endl;
+    cout<<"|                   / \\         / \\                         |"<<endl;
+    cout<<"|                  /   \\       /   \\                        |"<<endl;
+    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
+    cout<<"|                /       \\   /       \\                      |"<<endl;
+    cout<<"|               /         \\ /         \\                     |"<<endl;
+    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<endl;
 
-  cout<<"**邻接表图**"<<endl;
-  AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000);
+    int edge_count = 9;
 
-  adjacency_list_graph.InsertVertex("北京");
-  adjacency_list_graph.InsertVertex("上海");
-  adjacency_list_graph.InsertVertex("广州");
-  adjacency_list_graph.InsertVertex("深圳");
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-  adjacency_list_graph.InsertEdge("北京", "上海", 0.8);
-  adjacency_list_graph.InsertEdge("上海", "广州", 3.9);
-  adjacency_list_graph.InsertEdge("广州", "深圳", 7.3);
-  adjacency_list_graph.InsertEdge("北京", "广州", 11.3);
-  adjacency_list_graph.InsertEdge("上海", "深圳", 0.3);
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
 
-  string BJ;
-  string SH;
-  string GZ;
-  string SZ;
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
-  adjacency_list_graph.GetVertexByIndex(BJ, 0);
-  adjacency_list_graph.GetVertexByIndex(SH, 1);
-  adjacency_list_graph.GetVertexByIndex(GZ, 2);
-  adjacency_list_graph.GetVertexByIndex(SZ, 3);
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
 
-  cout<<"结点0: "<<BJ<<endl;
-  cout<<"结点1: "<<SH<<endl;
-  cout<<"结点2: "<<GZ<<endl;
-  cout<<"结点3: "<<SZ<<endl;
+    cout<<"**邻接表图**"<<endl;
 
-  cout<<endl<<"**矩阵图**"<<endl;
-  MatrixGraph<string, double> matrix_graph(10, 10000);
-  matrix_graph.InsertVertex("地球");
-  matrix_graph.InsertVertex("火星");
-  matrix_graph.InsertVertex("木星");
-  matrix_graph.InsertVertex("水星");
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
 
-  matrix_graph.InsertEdge("地球", "火星", 0.8);
-  matrix_graph.InsertEdge("火星", "木星", 3.9);
-  matrix_graph.InsertEdge("木星", "水星", 7.3);
-  matrix_graph.InsertEdge("地球", "木星", 11.3);
-  matrix_graph.InsertEdge("火星", "水星", 0.3);
+    string BJ;
+    string SH;
+    string GZ;
+    string SZ;
 
-  matrix_graph.GetVertexByIndex(BJ, 0);
-  matrix_graph.GetVertexByIndex(SH, 1);
-  matrix_graph.GetVertexByIndex(GZ, 2);
-  matrix_graph.GetVertexByIndex(SZ, 3);
+    adjacency_list_graph.GetVertexByIndex(BJ, 0);
+    adjacency_list_graph.GetVertexByIndex(SH, 1);
+    adjacency_list_graph.GetVertexByIndex(GZ, 2);
+    adjacency_list_graph.GetVertexByIndex(SZ, 3);
 
-  cout<<"结点0: "<<BJ<<endl;
-  cout<<"结点1: "<<SH<<endl;
-  cout<<"结点2: "<<GZ<<endl;
-  cout<<"结点3: "<<SZ<<endl;
+    cout<<"索引0结点: "<<BJ<<endl;
+    cout<<"索引1结点: "<<SH<<endl;
+    cout<<"索引2结点: "<<GZ<<endl;
+    cout<<"索引3结点: "<<SZ<<endl;
 
-  cout<<"-------------------------------------------------------------"<<endl;
+    cout<<endl<<"**矩阵图**"<<endl;
+
+    MatrixGraph<string, double> matrix_graph(10, 10000);
+    matrix_graph.InsertVertex("地球");
+    matrix_graph.InsertVertex("火星");
+    matrix_graph.InsertVertex("木星");
+    matrix_graph.InsertVertex("水星");
+
+    matrix_graph.InsertEdge("地球", "火星", 0.8);
+    matrix_graph.InsertEdge("火星", "木星", 3.9);
+    matrix_graph.InsertEdge("木星", "水星", 7.3);
+    matrix_graph.InsertEdge("地球", "木星", 11.3);
+    matrix_graph.InsertEdge("火星", "水星", 0.3);
+
+    matrix_graph.GetVertexByIndex(BJ, 0);
+    matrix_graph.GetVertexByIndex(SH, 1);
+    matrix_graph.GetVertexByIndex(GZ, 2);
+    matrix_graph.GetVertexByIndex(SZ, 3);
+
+    cout<<"结点0: "<<BJ<<endl;
+    cout<<"结点1: "<<SH<<endl;
+    cout<<"结点2: "<<GZ<<endl;
+    cout<<"结点3: "<<SZ<<endl;
+
+    cout<<"-------------------------------------------------------------"<<endl;
 }
 
 

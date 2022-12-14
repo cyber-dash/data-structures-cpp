@@ -16,7 +16,7 @@
 template<class TVertex, class TWeight>
 class AdjacencyListPath {
 public:
-  AdjacencyListPath() = default;
+  AdjacencyListPath() {};
   AdjacencyListPath(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
     starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
   TWeight weight;
@@ -189,7 +189,7 @@ public:
    *
    * -----
    */
-  virtual bool InsertEdge(TVertex vertex1, TVertex vertex2, TWeight weight) = 0;
+  virtual bool InsertEdge(const TVertex& vertex1, const TVertex& vertex2, const TWeight& weight) = 0;
 
 
   /*!

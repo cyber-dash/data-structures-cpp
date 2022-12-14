@@ -70,7 +70,7 @@ public:
    * @param weight 边权值
    * @return 是否插入成功
    */
-  bool InsertEdge(Vertex vertex1, Vertex vertex2, Weight weight);
+  bool InsertEdge(const Vertex& vertex1, const Vertex& vertex2, const Weight& weight);
 
   /*!
    * @brief 删除边
@@ -298,7 +298,7 @@ bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
 
 
 template<class Vertex, class Weight>
-bool MatrixGraph<Vertex, Weight>::InsertEdge(Vertex vertex1, Vertex vertex2, Weight weight) {
+bool MatrixGraph<Vertex, Weight>::InsertEdge(const Vertex& vertex1, const Vertex& vertex2, const Weight& weight) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
@@ -403,7 +403,7 @@ istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
   for (int i = 0; i < edge_num; i++) {
 
-    cout<<"AdjacencyListEdge "<<i<<":"<<endl;
+    cout<<"AdjacencyEdge "<<i<<":"<<endl;
     in >> src_vertex >> dest_vertex >> weight;
 
     int src_vertex_index = graph_matrix.GetVertexIndex(src_vertex);

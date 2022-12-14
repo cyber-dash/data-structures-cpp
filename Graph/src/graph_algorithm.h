@@ -30,7 +30,7 @@ using namespace std;
 template<class Vertex, class Weight>
 struct MSTNode {
     /*! @brief 构造函数(空参数) */
-    MSTNode() = default;
+    MSTNode() {};
 
     /*!
      * 构造函数(边权值)
