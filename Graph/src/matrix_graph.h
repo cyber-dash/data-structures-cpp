@@ -129,7 +129,7 @@ private:
  * @param max_vertex_count 最大结点数
  */
 template<class Vertex, class Weight>
-// MatrixGraph<Vertex, Weight>::MatrixGraph(int max_vertex_count, Weight max_weight): max_weight_(max_weight) {
+// MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight): max_weight_(max_weight) {
 MatrixGraph<Vertex, Weight>::MatrixGraph(int max_vertex_count, Weight max_weight) {
     this->max_weight_ = max_weight;
 
@@ -403,7 +403,7 @@ istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
   for (int i = 0; i < edge_num; i++) {
 
-    cout<<"AdjListEdge "<<i<<":"<<endl;
+    cout<<"AdjacencyListEdge "<<i<<":"<<endl;
     in >> src_vertex >> dest_vertex >> weight;
 
     int src_vertex_index = graph_matrix.GetVertexIndex(src_vertex);

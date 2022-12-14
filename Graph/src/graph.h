@@ -58,7 +58,7 @@ public:
  * @tparam TVertex 节点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  */
-template<class TVertex, class TWeight>
+template<typename TVertex, typename TWeight>
 class Graph {
 public:
 
@@ -240,5 +240,34 @@ protected:
   TWeight max_weight_;
 };
 
+
+template<typename TVertex, typename TWeight>
+class Edge {
+public:
+    Edge(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
+        starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {};
+
+    // int starting_vertex_index;    //!< 起点索引
+    // int ending_vertex_index;      //!< 终点索引
+    TVertex starting_vertex;
+    TVertex ending_vertex;
+    TWeight weight;                //!< 边权值
+};
+
+
+template<typename TVertex, typename TWeight>
+class Path {
+    Path(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
+        starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {};
+
+    // int starting_vertex_index;    //!< 起点索引
+    // int ending_vertex_index;      //!< 终点索引
+    TVertex starting_vertex;
+    TVertex ending_vertex;
+    TWeight weight;                //!< 边权值
+};
+
+
+// template<class TVertex, class TWeight>
 
 #endif //CYBER_DASH_GRAPH_H

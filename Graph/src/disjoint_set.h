@@ -20,7 +20,7 @@ class DisjointSet {
 
 public:
   // 构造函数
-  DisjointSet(int size);
+  explicit DisjointSet(int size);
 
   /*! @brief 析构函数 */
   ~DisjointSet() { delete[] parent_; }
