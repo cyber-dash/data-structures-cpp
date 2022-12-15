@@ -44,13 +44,8 @@ int main(int argc, char** argv) {
     // 测试贝尔曼福特(BellmanFord)最短路径
     TestBellmanFord();
 
-    /*
     // 测试弗洛伊德(Floyd-Warshall)最短路径
     TestFloyd();
 
-    // 我们是CyberDash团队
-    TestCyberDashShow();
-     */
-
-  return 0;
+    return 0;
 }

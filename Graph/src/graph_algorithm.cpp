@@ -137,7 +137,7 @@ void Components(Graph<Vertex, Weight>& graph) {
 
   int component_idx = 1; // 初始连通分量为1
 
-  for (int i = 0; i < vertex_cnt; i++) {
+  for (int i = 0; i < graph.VertexCount(); i++) {
 
     Vertex vertex;
     bool done = graph.GetVertexByIndex(vertex, i); // 获取索引i对应的结点vertex
@@ -639,28 +639,17 @@ bool BellmanFord(Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeigh
     // --- 动态规划 ---
 
     // BellmanFord执行|V| - 1次"松弛所有边"
-    for (int i = 0; i < graph.VertexCount() - 1; i++) {
+    for (int vertex_index = 0; vertex_index < graph.VertexCount() - 1; vertex_index++) {
+        for (int edge_index = 0; edge_index < graph.EdgeCount(); edge_index++) {
+            TVertex cur_starting_vertex = graph.GetEdge(edge_index).starting_vertex;
+            TVertex cur_ending_vertex = graph.GetEdge(edge_index).ending_vertex;
 
-    // 遍历边, 以下循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历 todo:-)
-    // for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < vertex_cnt; cur_starting_vertex_idx++) {
-      // for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {
-        for (int j = 0; j < graph.EdgeCount(); j++) {
-            TVertex cur_starting_vertex = graph.GetEdge(j).starting_vertex;
-            TVertex cur_ending_vertex = graph.GetEdge(j).ending_vertex;
+            int cur_starting_vertex_index = graph.GetVertexIndex(cur_starting_vertex);
+            int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
-            int cur_starting_vertex_idx = graph.GetVertexIndex(cur_starting_vertex);
-            int cur_ending_vertex_idx = graph.GetVertexIndex(cur_ending_vertex);
-
-            /*
-            TVertex cur_starting_vertex;
-            TVertex cur_ending_vertex;
-            graph.GetVertexByIndex(cur_starting_vertex, cur_starting_vertex_idx);
-            graph.GetVertexByIndex(cur_ending_vertex, cur_ending_vertex_idx);
-            */
-
-            TWeight cur_weight;
-            bool get_weight_done = graph.GetWeight(cur_weight, cur_starting_vertex, cur_ending_vertex);
-            if (!get_weight_done) {
+            TWeight cur_edge_weight;
+            bool res = graph.GetWeight(cur_edge_weight, cur_starting_vertex, cur_ending_vertex);
+            if (!res) {
                 continue;
             }
 
@@ -672,45 +661,36 @@ bool BellmanFord(Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeigh
             //    <
             //   边 (starting_vertex  --------------------------->  cur_ending_vertex) 的weight
             // 则
-            //   更新distance[cur_ending_vertex_idx]和predecessor[cur_ending_vertex_idx]
-            if (distance[cur_starting_vertex_idx] + cur_weight < distance[cur_ending_vertex_idx]) {
-                distance[cur_ending_vertex_idx] = distance[cur_starting_vertex_idx] + cur_weight;
-                predecessor[cur_ending_vertex_idx] = cur_starting_vertex_idx;
+            //   更新distance[cur_ending_vertex_index]和predecessor[cur_ending_vertex_index]
+            if (distance[cur_starting_vertex_index] + cur_edge_weight < distance[cur_ending_vertex_index]) {
+                distance[cur_ending_vertex_index] = distance[cur_starting_vertex_index] + cur_edge_weight;
+                predecessor[cur_ending_vertex_index] = cur_starting_vertex_index;
             }
         }
-      // }
-    // }
     }
 
-  // --- 检查是否有负权重的回路 ---
-  bool has_negative_weight_cycle = false; // 默认没有负权环
-  // 遍历边, 以下结点的两层循环只是一种实现方式, 有其他更好的方式, 实现对边的遍历, todo:-)
-  for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < vertex_cnt; ++cur_starting_vertex_idx) {
-    for (int cur_ending_vertex_idx = cur_starting_vertex_idx + 1; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {
+    // --- 检查是否有负权重的回路 ---
+    bool has_negative_weight_cycle = false; // 默认没有负权环
+    for (int i = 0; i < graph.EdgeCount(); i++) {
+        TVertex cur_starting_vertex = graph.GetEdge(i).starting_vertex;
+        TVertex cur_ending_vertex = graph.GetEdge(i).ending_vertex;
 
-      TVertex cur_starting_vertex;
-      TVertex cur_ending_vertex;
-      graph.GetVertexByIndex(cur_starting_vertex, cur_starting_vertex_idx);
-      graph.GetVertexByIndex(cur_ending_vertex, cur_ending_vertex_idx);
+        int cur_starting_vertex_index = graph.GetVertexIndex(cur_starting_vertex);
+        int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
-      TWeight cur_weight;
-      bool get_weight_done = graph.GetWeight(cur_weight, cur_starting_vertex, cur_ending_vertex);
-      if (!get_weight_done) {
-        continue;
-      }
+        TWeight cur_weight;
+        bool get_weight_done = graph.GetWeight(cur_weight, cur_starting_vertex, cur_ending_vertex);
+        if (!get_weight_done) {
+            continue;
+        }
 
-      if (distance[cur_starting_vertex_idx] + cur_weight < distance[cur_ending_vertex_idx]) {
-        has_negative_weight_cycle = true;
-        break;
-      }
+        if (distance[cur_starting_vertex_index] + cur_weight < distance[cur_ending_vertex_index]) {
+            has_negative_weight_cycle = true;
+            break;
+        }
     }
 
-    if (has_negative_weight_cycle) {
-      break;
-    }
-  }
-
-  return has_negative_weight_cycle;
+    return has_negative_weight_cycle;
 }
 
 
@@ -740,30 +720,30 @@ template<class Vertex, class Weight>
 void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vector<vector<int> >& predecessor) {
   int vertex_cnt = graph.VertexCount();    // 结点数量
 
-  for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < vertex_cnt; cur_starting_vertex_idx++) {
-    for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {
+  for (int cur_starting_vertex_index = 0; cur_starting_vertex_index < graph.VertexCount(); cur_starting_vertex_index++) {
+    for (int cur_ending_vertex_index = 0; cur_ending_vertex_index < graph.VertexCount(); cur_ending_vertex_index++) {
 
-      if (cur_starting_vertex_idx == cur_ending_vertex_idx) {
-        distance[cur_starting_vertex_idx][cur_ending_vertex_idx] = (Weight)0;
+      if (cur_starting_vertex_index == cur_ending_vertex_index) {
+        distance[cur_starting_vertex_index][cur_ending_vertex_index] = (Weight)0;
       } else {
         Weight weight;
-        bool done = graph.GetWeightByVertexIndex(weight, cur_starting_vertex_idx, cur_ending_vertex_idx);
+        bool done = graph.GetWeightByVertexIndex(weight, cur_starting_vertex_index, cur_ending_vertex_index);
         if (done) {
-          distance[cur_starting_vertex_idx][cur_ending_vertex_idx] = weight;
+          distance[cur_starting_vertex_index][cur_ending_vertex_index] = weight;
         } else {
-            distance[cur_starting_vertex_idx][cur_ending_vertex_idx] = graph.MaxWeight();
+            distance[cur_starting_vertex_index][cur_ending_vertex_index] = graph.MaxWeight();
         }
       }
 
-      predecessor[cur_starting_vertex_idx][cur_ending_vertex_idx] = cur_starting_vertex_idx;
+      predecessor[cur_starting_vertex_index][cur_ending_vertex_index] = cur_starting_vertex_index;
     }
   }
 
   // --- 动态规划 ---
 
-  for (int cur_vertex_idx = 0; cur_vertex_idx < vertex_cnt; cur_vertex_idx++) {
-    for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < vertex_cnt; cur_starting_vertex_idx++) {
-      for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {
+  for (int cur_vertex_idx = 0; cur_vertex_idx < graph.VertexCount(); cur_vertex_idx++) {
+    for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < graph.VertexCount(); cur_starting_vertex_idx++) {
+      for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < graph.VertexCount(); cur_ending_vertex_idx++) {
 
         // --- 松弛操作 ---
 
@@ -812,10 +792,10 @@ void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex);
 
   // 用于存放以某个结点为终点的最短路径经过的结点
-  int* inverted_predecessor = new int[vertex_cnt];
+  int* inverted_predecessor = new int[graph.VertexCount()];
 
   // 分别显示starting_vertex到各个结点的最短路径
-  for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {
+  for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < graph.VertexCount(); cur_ending_vertex_idx++) {
     if (cur_ending_vertex_idx == starting_vertex_idx) {
       continue;
     }
@@ -900,13 +880,13 @@ void PrintMultipleSourceShortestPath(Graph<Vertex,
 {
   int vertex_cnt = graph.VertexCount();    // 结点数量
 
-  for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < vertex_cnt; cur_starting_vertex_idx++) {
+  for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < graph.VertexCount(); cur_starting_vertex_idx++) {
     Vertex cur_starting_vertex;
     graph.GetVertexByIndex(cur_starting_vertex, cur_starting_vertex_idx);
 
     cout << "--- 从起始点(" << cur_starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
 
-    for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < vertex_cnt; cur_ending_vertex_idx++) {
+    for (int cur_ending_vertex_idx = 0; cur_ending_vertex_idx < graph.VertexCount(); cur_ending_vertex_idx++) {
       if (cur_starting_vertex_idx == cur_ending_vertex_idx) {
         continue;
       }
