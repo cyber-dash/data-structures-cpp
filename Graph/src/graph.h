@@ -93,19 +93,23 @@ public:
    */
   unsigned int VertexCount() { return this->vertex_count_; }
 
-  /*!
-   * @brief **获取边数量**
-   * @return 边数量
-   * @note
-   * 获取边数量
-   * ---------
-   * ---------
-   *
-   * ---------
-   */
-  unsigned int EdgeCount() { return this->edge_count_; }
+    /*!
+     * @brief **获取边数量**
+     * @return 边数量
+     * @note
+     * 获取边数量
+     * ---------
+     * ---------
+     *
+     * ---------
+     */
+    unsigned int EdgeCount() { return this->edge_count_; }
 
-  virtual TWeight MaxWeight() const { return this->max_weight_; }
+    virtual TWeight MaxWeight() const { return this->max_weight_; }
+
+    virtual const vector<Edge<TVertex, TWeight>>& Edges() const { return this->edges_; }
+
+    virtual const Edge<TVertex, TWeight>& GetEdge(int index) const { return this->edges_[index]; }
 
   /*!
    * @brief **由结点索引获取结点(纯虚函数)**
@@ -239,18 +243,18 @@ public:
    */
   virtual bool RemoveEdge(TVertex vertex1, TVertex vertex2) = 0;
 
-  /*!
-   * @brief **获取结点的索引值**
-   * @param vertex 结点
-   * @return 索引值
-   * @note
-   * 获取结点的索引值
-   * --------------
-   * --------------
-   *
-   * --------------
-   */
-  virtual int GetVertexIndex(TVertex vertex) = 0;
+    /*!
+     * @brief **获取结点的索引值**
+     * @param vertex 结点
+     * @return 索引值
+     * @note
+     * 获取结点的索引值
+     * --------------
+     * --------------
+     *
+     * --------------
+     */
+    virtual int GetVertexIndex(TVertex vertex) = 0;
 
 protected:
     int max_vertex_count_;    //!< 图节点数量最大限制

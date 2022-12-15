@@ -242,6 +242,7 @@ void TestBFS() {
 
     // 构造邻接表图
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
+    // 构造矩阵图
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
 
     cout<<"**邻接表图**"<<endl;
@@ -297,246 +298,226 @@ void TestComponents() {
 
 
 void TestKruskal() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                        Test Kruskal                       |"<<endl;
-  cout<<"|                       测试Kruskal算法                      |"<<endl;
-  cout<<"|  节点:                                                     |"<<endl;
-  cout<<"|    \"北京\", \"上海\", \"广州\", \"深圳\"                           |"<<endl;
-  cout<<"|  边:                                                      |"<<endl;
-  cout<<"|    \"北京\"-\"上海\"权值: 0.8                                   |"<<endl<<endl;
-  cout<<"|    \"上海\"-\"广州\"权值: 3.9                                   |"<<endl<<endl;
-  cout<<"|    \"广州\"-\"深圳\"权值: 7.3                                   |"<<endl<<endl;
-  cout<<"|    \"北京\"-\"广州\"权值: 11.3                                  |"<<endl<<endl;
-  cout<<"|    \"上海\"-\"深圳\"权值: 0.3                                   |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                        Test Kruskal                       |"<<endl;
+    cout<<"|                       测试Kruskal算法                      |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                           北京                               |"<<endl;
+    cout<<"|                           / \\                               |"<<endl;
+    cout<<"|                          /   \\                              |"<<endl;
+    cout<<"|                        0.1   0.12                           |"<<endl;
+    cout<<"|                        /       \\                            |"<<endl;
+    cout<<"|                       /         \\                           |"<<endl;
+    cout<<"|                    上海---0.01---广州                       |"<<endl;
+    cout<<"|                     / \\         / \\                         |"<<endl;
+    cout<<"|                    /   \\       /   \\                        |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
+    cout<<"|                  /       \\   /       \\                      |"<<endl;
+    cout<<"|                 /         \\ /         \\                     |"<<endl;
+    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<endl;
 
-  string BJ = "北京";
-  string SH = "上海";
-  string GZ = "广州";
-  string SZ = "深圳";
+    int edge_count = 9;
 
-  MinSpanTree<string, double> min_span_tree_adj(100);
-  MinSpanTree<string, double> min_span_tree_matrix(100);
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-  AdjacencyListGraph<string, double> adjacency_list_graph(10, 10000);
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
-  adjacency_list_graph.InsertVertex(BJ);
-  adjacency_list_graph.InsertVertex(SH);
-  adjacency_list_graph.InsertVertex(GZ);
-  adjacency_list_graph.InsertVertex(SZ);
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
 
-  adjacency_list_graph.InsertEdge(BJ, SH, 0.8);
-  adjacency_list_graph.InsertEdge(SH, GZ, 3.9);
-  adjacency_list_graph.InsertEdge(GZ, SZ, 7.3);
-  adjacency_list_graph.InsertEdge(BJ, GZ, 11.3);
-  adjacency_list_graph.InsertEdge(SH, SZ, 0.3);
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
-  MatrixGraph<string, double> matrix_graph(10, 10000);
-  matrix_graph.InsertVertex(BJ);
-  matrix_graph.InsertVertex(SH);
-  matrix_graph.InsertVertex(GZ);
-  matrix_graph.InsertVertex(SZ);
+    MinSpanTree<string, double> min_span_tree_adj(100);
+    MinSpanTree<string, double> min_span_tree_matrix(100);
 
-  matrix_graph.InsertEdge(BJ, SH, 0.8);
-  matrix_graph.InsertEdge(SH, GZ, 3.9);
-  matrix_graph.InsertEdge(GZ, SZ, 7.3);
-  matrix_graph.InsertEdge(BJ, GZ, 11.3);
-  matrix_graph.InsertEdge(SH, SZ, 0.3);
+    cout << "**邻接表图测试**" << endl;
+    Kruskal(adjacency_list_graph, min_span_tree_adj);
+    min_span_tree_adj.Show();
 
-  cout<<"**邻接表图测试**"<<endl;
-  Kruskal(adjacency_list_graph, min_span_tree_adj);
-  min_span_tree_adj.Show();
+    cout << endl << "**矩阵图测试**" << endl;
+    Kruskal(matrix_graph, min_span_tree_matrix);
 
-  cout<<endl<<"**矩阵图测试**"<<endl;
-  Kruskal(matrix_graph, min_span_tree_matrix);
-
-  min_span_tree_matrix.Show();
-  cout<<"-------------------------------------------------------------"<<endl;
+    min_span_tree_matrix.Show();
+    cout << "-------------------------------------------------------------" << endl;
 }
 
 
 void TestPrim() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                         Test Prim                         |"<<endl;
-  cout<<"|                        测试Prim算法                        |"<<endl;
-  cout<<"|  节点:                                                     |"<<endl;
-  cout<<"|    \"北京\", \"上海\", \"广州\", \"深圳\"                           |"<<endl;
-  cout<<"|  边:                                                      |"<<endl;
-  cout<<"|    \"北京\"-\"上海\"权值: 0.8                                   |"<<endl<<endl;
-  cout<<"|    \"上海\"-\"广州\"权值: 3.9                                   |"<<endl<<endl;
-  cout<<"|    \"广州\"-\"深圳\"权值: 7.3                                   |"<<endl<<endl;
-  cout<<"|    \"北京\"-\"广州\"权值: 11.3                                  |"<<endl<<endl;
-  cout<<"|    \"上海\"-\"深圳\"权值: 0.3                                   |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                         Test Prim                         |"<<endl;
+    cout<<"|                        测试Prim算法                        |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                           北京                             |"<<endl;
+    cout<<"|                           / \\                               |"<<endl;
+    cout<<"|                          /   \\                              |"<<endl;
+    cout<<"|                        0.1   0.12                          |"<<endl;
+    cout<<"|                        /       \\                            |"<<endl;
+    cout<<"|                       /         \\                           |"<<endl;
+    cout<<"|                    上海---0.01---广州                       |"<<endl;
+    cout<<"|                     / \\         / \\                         |"<<endl;
+    cout<<"|                    /   \\       /   \\                        |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
+    cout<<"|                  /       \\   /       \\                      |"<<endl;
+    cout<<"|                 /         \\ /         \\                     |"<<endl;
+    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<endl;
 
-  // todo: 测试样例增加城市和路径
+    int edge_count = 9;
 
-  string BJ = "北京";
-  string SH = "上海";
-  string GZ = "广州";
-  string SZ = "深圳";
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-  AdjacencyListGraph<string, double> adjacency_list_graph(5, 10000);
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
-  adjacency_list_graph.InsertVertex(BJ);
-  adjacency_list_graph.InsertVertex(SH);
-  adjacency_list_graph.InsertVertex(GZ);
-  adjacency_list_graph.InsertVertex(SZ);
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
 
-  adjacency_list_graph.InsertEdge(BJ, SH, 0.8);
-  adjacency_list_graph.InsertEdge(SH, GZ, 3.9);
-  adjacency_list_graph.InsertEdge(GZ, SZ, 7.3);
-  adjacency_list_graph.InsertEdge(BJ, GZ, 11.3);
-  adjacency_list_graph.InsertEdge(SH, SZ, 0.3);
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
-  MatrixGraph<string, double> matrix_graph(5, 10000);
+    cout<<endl<<"**邻接表图测试**"<<endl;
+    MinSpanTree<string, double> min_span_tree_adj(100);
+    Prim(adjacency_list_graph, min_span_tree_adj);
+    min_span_tree_adj.Show();
 
-  matrix_graph.InsertVertex(BJ);
-  matrix_graph.InsertVertex(SH);
-  matrix_graph.InsertVertex(GZ);
-  matrix_graph.InsertVertex(SZ);
+    cout<<endl<<"**矩阵图测试**"<<endl;
+    MinSpanTree<string, double> min_span_tree_matrix(100);
+    Prim(matrix_graph, min_span_tree_matrix);
+    min_span_tree_matrix.Show();
 
-  matrix_graph.InsertEdge(BJ, SH, 0.8);
-  matrix_graph.InsertEdge(SH, GZ, 3.9);
-  matrix_graph.InsertEdge(GZ, SZ, 7.3);
-  matrix_graph.InsertEdge(BJ, GZ, 11.3);
-  matrix_graph.InsertEdge(SH, SZ, 0.3);
-
-  cout<<endl<<"**邻接表图测试**"<<endl;
-  MinSpanTree<string, double> min_span_tree_adj(100);
-  Prim(adjacency_list_graph, min_span_tree_adj);
-  min_span_tree_adj.Show();
-
-  cout<<endl<<"**矩阵图测试**"<<endl;
-  MinSpanTree<string, double> min_span_tree_matrix(100);
-  Prim(matrix_graph, min_span_tree_matrix);
-  min_span_tree_matrix.Show();
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestDijkstra() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                       Test Dijkstra                       |"<<endl;
-  cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                       Test Dijkstra                       |"<<endl;
+    cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                           北京                             |"<<endl;
+    cout<<"|                           / \\                               |"<<endl;
+    cout<<"|                          /   \\                              |"<<endl;
+    cout<<"|                        0.1   0.12                          |"<<endl;
+    cout<<"|                        /       \\                            |"<<endl;
+    cout<<"|                       /         \\                           |"<<endl;
+    cout<<"|                    上海---0.01---广州                       |"<<endl;
+    cout<<"|                     / \\         / \\                         |"<<endl;
+    cout<<"|                    /   \\       /   \\                        |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
+    cout<<"|                  /       \\   /       \\                      |"<<endl;
+    cout<<"|                 /         \\ /         \\                     |"<<endl;
+    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<endl;
 
-  string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
+    int edge_count = 9;
 
-  double max_weight = 10000;
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-  AdjacencyListGraph<string, double> adjacency_list_graph(10, max_weight);	// 邻接表图
-  MatrixGraph<string, double> matrix_graph(10, max_weight);					// 矩阵图
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
-  // 将5个城市都加入到两个图中
-  for (int i = 0; i < 5; i++) {
-	  adjacency_list_graph.InsertVertex(city[i]);
-  }
-  for (int i = 0; i < 5; i++) {
-	  matrix_graph.InsertVertex(city[i]);
-  }
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
 
-  // 北京 --> 上海, 98.63
-  // 上海 --> 广州, 51.52
-  // 广州 --> 深圳, 17 
-  // 深圳 --> 杭州, 58.98
-  // 北京 --> 深圳, 29.3
-  // 北京 --> 杭州, 100.003
-  // 广州 --> 杭州, 9.34
-  adjacency_list_graph.InsertEdge(city[0], city[1], 98.63);
-  adjacency_list_graph.InsertEdge(city[1], city[2], 51.52);
-  adjacency_list_graph.InsertEdge(city[2], city[3], 17);
-  adjacency_list_graph.InsertEdge(city[3], city[4], 58.98);
-  adjacency_list_graph.InsertEdge(city[0], city[3], 29.3);
-  adjacency_list_graph.InsertEdge(city[0], city[4], 100.003);
-  adjacency_list_graph.InsertEdge(city[2], city[4], 9.34);
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
-  matrix_graph.InsertEdge(city[0], city[1], 98.63);
-  matrix_graph.InsertEdge(city[1], city[2], 51.52);
-  matrix_graph.InsertEdge(city[2], city[3], 17);
-  matrix_graph.InsertEdge(city[2], city[4], 58.98);
-  matrix_graph.InsertEdge(city[0], city[3], 29.3);
-  matrix_graph.InsertEdge(city[0], city[4], 100.003);
-  matrix_graph.InsertEdge(city[2], city[4], 9.34);
+    cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<endl;
+    double min_dist_arr_adj[5];
+    int from_path_arr_adj[5];
 
-  cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<endl;
-  double min_dist_arr_adj[5];
-  int from_path_arr_adj[5];
+    DijkstraByPriorityQueue(adjacency_list_graph, vertices[0], min_dist_arr_adj, from_path_arr_adj);
+    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr_adj, from_path_arr_adj);
 
-  DijkstraByPriorityQueue(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
-  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_adj, from_path_arr_adj);
+    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
+    double min_dist_arr_matrix[5];
+    int from_path_arr_matrix[5];
 
-  /*
-  cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-  double min_dist_arr_matrix[5];
-  int from_path_arr_matrix[5];
+    Dijkstra(adjacency_list_graph, vertices[0], min_dist_arr_matrix, from_path_arr_matrix);
+    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr_matrix, from_path_arr_matrix);
 
-  Dijkstra(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
-  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr_matrix, from_path_arr_matrix);
-   */
-
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void TestBellmanFord() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test BellmanFord                     |"<<endl;
-  cout<<"|                    测试BellmanFord最短路径                  |"<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                      Test BellmanFord                     |"<<endl;
+    cout<<"|                    测试BellmanFord最短路径                  |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                           北京                             |"<<endl;
+    cout<<"|                           / \\                               |"<<endl;
+    cout<<"|                          /   \\                              |"<<endl;
+    cout<<"|                        0.1   0.12                          |"<<endl;
+    cout<<"|                        /       \\                            |"<<endl;
+    cout<<"|                       /         \\                           |"<<endl;
+    cout<<"|                    上海---0.01---广州                       |"<<endl;
+    cout<<"|                     / \\         / \\                         |"<<endl;
+    cout<<"|                    /   \\       /   \\                        |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
+    cout<<"|                  /       \\   /       \\                      |"<<endl;
+    cout<<"|                 /         \\ /         \\                     |"<<endl;
+    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<endl;
 
-  string city[5] = { "北京", "上海", "广州", "深圳", "杭州" };
+    int edge_count = 9;
 
-  AdjacencyListGraph<string, double> adjacency_list_graph(10, 10000);	// 邻接表图
-  MatrixGraph<string, double> matrix_graph(10, 10000);					// 矩阵图
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-  // 将5个城市都加入到两个图中
-  for (int i = 0; i < 5; i++) {
-	  adjacency_list_graph.InsertVertex(city[i]);
-  }
-  for (int i = 0; i < 5; i++) {
-	  matrix_graph.InsertVertex(city[i]);
-  }
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
-  // 北京 --> 上海, 98.63
-  // 上海 --> 广州, 51.52
-  // 广州 --> 深圳, 17 
-  // 深圳 --> 杭州, 58.98
-  // 北京 --> 深圳, 29.3
-  // 北京 --> 杭州, 100.003
-  // 广州 --> 杭州, 9.34
-  adjacency_list_graph.InsertEdge(city[0], city[1], 98.63);
-  adjacency_list_graph.InsertEdge(city[1], city[2], 51.52);
-  adjacency_list_graph.InsertEdge(city[2], city[3], 17);
-  adjacency_list_graph.InsertEdge(city[3], city[4], 58.98);
-  adjacency_list_graph.InsertEdge(city[0], city[3], 29.3);
-  adjacency_list_graph.InsertEdge(city[0], city[4], 100.003);
-  adjacency_list_graph.InsertEdge(city[2], city[4], 9.34);
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
 
-  matrix_graph.InsertEdge(city[0], city[1], 98.63);
-  matrix_graph.InsertEdge(city[1], city[2], 51.52);
-  matrix_graph.InsertEdge(city[2], city[3], 17);
-  matrix_graph.InsertEdge(city[2], city[4], 58.98);
-  matrix_graph.InsertEdge(city[0], city[3], 29.3);
-  matrix_graph.InsertEdge(city[0], city[4], 100.003);
-  matrix_graph.InsertEdge(city[2], city[4], 9.34);
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
-  cout<<endl<<"**邻接表图测试**"<<endl<<endl;
-  double min_dist_arr1[5];
-  int predecessor_arr1[5];
+    double min_dist_arr1[5];
+    int predecessor_arr1[5];
 
-  BellmanFord(adjacency_list_graph, city[0], min_dist_arr1, predecessor_arr1);
-  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr1, predecessor_arr1);
+    BellmanFord(adjacency_list_graph, vertices[0], min_dist_arr1, predecessor_arr1);
+    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr1, predecessor_arr1);
 
-  cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-  double min_dist_arr2[5];
-  int predecessor_arr2[5];
+    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
+    double min_dist_arr2[5];
+    int predecessor_arr2[5];
 
-  BellmanFord(adjacency_list_graph, city[0], min_dist_arr2, predecessor_arr2);
-  PrintSingleSourceShortestPath(adjacency_list_graph, city[0], min_dist_arr2, predecessor_arr2);
+    BellmanFord(adjacency_list_graph, vertices[0], min_dist_arr2, predecessor_arr2);
+    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr2, predecessor_arr2);
 
-  cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 

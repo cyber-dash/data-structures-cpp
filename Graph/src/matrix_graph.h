@@ -340,8 +340,8 @@ bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
 }
 
 
-template<class Vertex, class Weight>
-bool MatrixGraph<Vertex, Weight>::InsertEdge(const Vertex& vertex1, const Vertex& vertex2, const Weight& weight) {
+template<class TVertex, class TWeight>
+bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& vertex1, const TVertex& vertex2, const TWeight& weight) {
 
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
@@ -355,8 +355,8 @@ bool MatrixGraph<Vertex, Weight>::InsertEdge(const Vertex& vertex1, const Vertex
 
   this->edge_count_++;
 
-  pair<Vertex, Vertex> edge1(vertex1, vertex2);
-  pair<Vertex, Vertex> edge2(vertex2, vertex1);
+  pair<TVertex, TVertex> edge1(vertex1, vertex2);
+  pair<TVertex, TVertex> edge2(vertex2, vertex1);
 
   return true;
 }
