@@ -144,8 +144,8 @@ private:
   AdjacencyList<TVertex, TWeight>* adjacency_lists_; //!< 邻接点数组
   TWeight max_weight_;
 
-  vector<TVertex> vertices_;
-  vector<Edge<TVertex, TWeight> > edges_;
+  // vector<TVertex> vertices_;
+  // vector<Edge<TVertex, TWeight> > edges_;
 };
 
 
@@ -189,11 +189,11 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int max_vertex_count,
 
     this->adjacency_lists_ = new AdjacencyList<TVertex, TWeight>[this->max_vertex_count_];
 
-    for (unsigned int i = 0; i < vertices_.size(); i++) {
+    for (unsigned int i = 0; i < this->vertices_.size(); i++) {
         this->InsertVertex(vertices[i]);
     }
 
-    for (unsigned int i = 0; i < edges_.size(); i++) {
+    for (unsigned int i = 0; i < this->edges_.size(); i++) {
         TVertex starting_vertex = edges[i].starting_vertex;
         TVertex ending_vertex = edges[i].ending_vertex;
         TWeight weight = edges[i].weight;
@@ -687,20 +687,20 @@ ostream& operator<<(ostream& out, AdjacencyListGraph<V, W>& adjacency_list_graph
  * @param vertex 结点
  * @return 结点索引
  */
-template<class V, class W>
-int AdjacencyListGraph<V, W>::GetVertexIndex(V vertex) {
+template<class TVertex, class TWeight>
+int AdjacencyListGraph<TVertex, TWeight>::GetVertexIndex(TVertex vertex) {
 
-  int vertex_index = -1; // 如果图中没有该结点, 则返回-1
+    int vertex_index = -1; // 如果图中没有该结点, 则返回-1
 
-  // 在vertex_table_中查哪个的value_为vertex
-  for (int i = 0; i < this->vertex_count_; i++) {
-    if (this->adjacency_lists_[i].starting_vertex == vertex) {
-      vertex_index = i;
-      break;
+    // 在_中查哪个的value_为vertex
+    for (int i = 0; i < this->vertex_count_; i++) {
+        if (this->adjacency_lists_[i].starting_vertex == vertex) {
+            vertex_index = i;
+            break;
+        }
     }
-  }
 
-  return vertex_index;
+    return vertex_index;
 }
 
 

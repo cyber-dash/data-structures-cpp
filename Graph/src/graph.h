@@ -10,8 +10,27 @@
 #define CYBER_DASH_GRAPH_H
 
 
+#include <vector>
+
+
+using namespace std;
+
+
 // const int DEFAULT_VERTICES = 20;
 
+
+template<typename TVertex, typename TWeight>
+class Edge {
+public:
+    Edge(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
+        starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {};
+
+    // int starting_vertex_index;    //!< 起点索引
+    // int ending_vertex_index;      //!< 终点索引
+    TVertex starting_vertex;
+    TVertex ending_vertex;
+    TWeight weight;                //!< 边权值
+};
 
 template<class TVertex, class TWeight>
 class AdjacencyListPath {
@@ -234,25 +253,15 @@ public:
   virtual int GetVertexIndex(TVertex vertex) = 0;
 
 protected:
-  int max_vertex_count_;    //!< 图节点数量最大限制
-  int edge_count_;          //!< 边数量
-  int vertex_count_;        //!< 节点数量
-  TWeight max_weight_;
+    int max_vertex_count_;    //!< 图节点数量最大限制
+    int edge_count_;          //!< 边数量
+    int vertex_count_;        //!< 节点数量
+    TWeight max_weight_;
+
+    vector<TVertex> vertices_;
+    vector<Edge<TVertex, TWeight> > edges_;
 };
 
-
-template<typename TVertex, typename TWeight>
-class Edge {
-public:
-    Edge(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
-        starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {};
-
-    // int starting_vertex_index;    //!< 起点索引
-    // int ending_vertex_index;      //!< 终点索引
-    TVertex starting_vertex;
-    TVertex ending_vertex;
-    TWeight weight;                //!< 边权值
-};
 
 
 template<typename TVertex, typename TWeight>

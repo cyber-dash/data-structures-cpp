@@ -22,46 +22,51 @@ using namespace std;
 
 /*!
  * @brief 矩阵图模板类
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
  */
-template<class Vertex, class Weight>
-class MatrixGraph: public Graph<Vertex, Weight> {
+template<class TVertex, class TWeight>
+class MatrixGraph: public Graph<TVertex, TWeight> {
 
 public:
   // 构造函数
-    MatrixGraph(int max_vertex_count, Weight max_weight);
+    MatrixGraph(int max_vertex_count, TWeight max_weight);
 
-  // 析构函数
-  ~MatrixGraph();
+    MatrixGraph(int max_vertex_count,
+                TWeight max_weight,
+                const vector<Edge<TVertex, TWeight> >& edges,
+                const vector<TVertex>& vertices);
 
-  /*!
-   * @brief 获取节点(由结点索引)
-   * @param vertex 结点(用于保存结果)
-   * @param vertex_index 结点索引
-   * @return 是否获取成功
-   */
-  bool GetVertexByIndex(Vertex& vertex, int vertex_index);
+    // 析构函数
+    ~MatrixGraph();
+
+    /*!
+     * @brief 获取节点(由结点索引)
+     * @param vertex 结点(用于保存结果)
+     * @param vertex_index 结点索引
+     * @return 是否获取成功
+     */
+  bool GetVertexByIndex(TVertex& vertex, int vertex_index);
 
   // (由边的两个结点)获取边权值
-  bool GetWeight(Weight& weight, Vertex v1, Vertex v2);
+  bool GetWeight(TWeight& weight, TVertex v1, TVertex v2);
 
   // (由边的两个结点索引)获取边权值
-  bool GetWeightByVertexIndex(Weight& weight, int v1_index, int v2_index);
+  bool GetWeightByVertexIndex(TWeight& weight, int v1_index, int v2_index);
 
   /*!
    * @brief 插入结点
    * @param vertex 节点
    * @return 是否插入成功
    */
-  bool InsertVertex(const Vertex& vertex);
+  bool InsertVertex(const TVertex& vertex);
 
   /*!
    * @brief 删除结点
    * @param vertex 节点
    * @return 是否删除成功
    */
-  bool RemoveVertex(Vertex vertex);
+  bool RemoveVertex(TVertex vertex);
 
   /*!
    * @brief 插入边
@@ -70,7 +75,7 @@ public:
    * @param weight 边权值
    * @return 是否插入成功
    */
-  bool InsertEdge(const Vertex& vertex1, const Vertex& vertex2, const Weight& weight);
+  bool InsertEdge(const TVertex& vertex1, const TVertex& vertex2, const TWeight& weight);
 
   /*!
    * @brief 删除边
@@ -78,7 +83,7 @@ public:
    * @param vertex2 边结点2
    * @return 是否删除成功
    */
-  bool RemoveEdge(Vertex vertex1, Vertex vertex2);
+  bool RemoveEdge(TVertex vertex1, TVertex vertex2);
 
   /*!
    * 获取第一个相邻结点
@@ -86,7 +91,7 @@ public:
    * @param vertex 节点
    * @return 是否获取成功
    */
-  bool GetFirstNeighborVertex(Vertex& first_neighbor, const Vertex& vertex);
+  bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex);
 
   /*!
    * @brief 获取下一个相邻结点
@@ -95,67 +100,101 @@ public:
    * @param neighbor_vertex 当前相邻结点
    * @return 是否获取成功
    */
-  bool GetNextNeighborVertex(Vertex& next_neighbor_vertex, const Vertex& vertex, const Vertex& neighbor_vertex);
+  bool GetNextNeighborVertex(TVertex& next_neighbor_vertex, const TVertex& vertex, const TVertex& neighbor_vertex);
 
   /*!
    * @brief 获取结点索引
    * @param vertex 结点
    * @return 结点索引
    */
-  int GetVertexIndex(Vertex vertex);
+  int GetVertexIndex(TVertex vertex);
 
   template<class U>
-  friend istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix);
+  friend istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph_matrix);
   template<class U>
-  friend ostream& operator<<(ostream& out, MatrixGraph<Vertex, Weight>& graph_matrix);
+  friend ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph_matrix);
 
   void PrintMatrix();
-  void CyberDashShow();
+  // void CyberDashShow();
 
-  map<pair<Vertex, Vertex>, Weight> edge_map; // todo: 用于保存边集合, 未实现
-
-  Weight MaxWeight() const { return max_weight_; }
+  // map<pair<TVertex, TVertex>, TWeight> edge_map; // todo: 用于保存边集合, 未实现
 private:
-  Vertex* vertices_; //!< 结点列表
-  Weight** adjacency_matrix_; //!< 边矩阵
-  Weight max_weight_;    // 最大权值限制
+  TWeight** adjacency_matrix_; //!< 边矩阵
 };
 
 
 /*!
  * @brief 构造函数
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 最大结点数
  */
-template<class Vertex, class Weight>
-// MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight): max_weight_(max_weight) {
-MatrixGraph<Vertex, Weight>::MatrixGraph(int max_vertex_count, Weight max_weight) {
+template<class TVertex, class TWeight>
+MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight) {
     this->max_weight_ = max_weight;
+    this->max_vertex_count_ = max_vertex_count;
 
-  this->max_vertex_count_ = max_vertex_count;
-  this->vertex_count_ = 0;
-  this->edge_count_ = 0;
+    this->vertex_count_ = 0;
+    this->edge_count_ = 0;
 
-  // 所有节点
-  this->vertices_ = new Vertex[this->max_vertex_count_];
-  if (!this->vertices_) {
-      throw bad_alloc();
-  }
-
-  this->adjacency_matrix_ = (Weight**)new Weight*[this->max_vertex_count_];
-  if (!this->adjacency_matrix_) {
-      throw bad_alloc();
-  }
-
-  for (int i = 0; i < this->max_vertex_count_; i++) {
-    this->adjacency_matrix_[i] = new Weight[this->max_vertex_count_]; // 节点i对应的所有边
-    for (int j = 0; j < this->max_vertex_count_; j++) {
-      this->adjacency_matrix_[i][j] = 0;
+    // 所有节点
+    /*
+    this->vertices_ = new TVertex[this->max_vertex_count_];
+    if (!this->vertices_) {
+        throw bad_alloc();
     }
-  }
+     */
+
+    this->adjacency_matrix_ = (TWeight**)new TWeight*[this->max_vertex_count_];
+    if (!this->adjacency_matrix_) {
+        throw bad_alloc();
+    }
+
+    for (int i = 0; i < this->max_vertex_count_; i++) {
+        this->adjacency_matrix_[i] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
+        for (int j = 0; j < this->max_vertex_count_; j++) {
+            this->adjacency_matrix_[i][j] = 0;
+        }
+    }
 }
 
+template<class TVertex, class TWeight>
+MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
+                                           TWeight max_weight,
+                                           const vector<Edge<TVertex, TWeight> >& edges,
+                                           const vector<TVertex>& vertices)
+{
+    this->max_weight_ = max_weight;
+    this->max_vertex_count_ = max_vertex_count;
+
+    this->edges_ = edges;
+    this->vertices_ = vertices;
+
+    this->vertex_count_ = vertices.size();
+    this->edge_count_ = 0;
+
+    this->adjacency_matrix_ = (TWeight**)new TWeight*[this->max_vertex_count_];
+    if (!this->adjacency_matrix_) {
+        throw bad_alloc();
+    }
+
+    for (int i = 0; i < this->max_vertex_count_; i++) {
+        this->adjacency_matrix_[i] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
+        for (int j = 0; j < this->max_vertex_count_; j++) {
+            this->adjacency_matrix_[i][j] = (TWeight)0;
+        }
+    }
+
+    for (int i = 0; i < this->edges_.size(); i++) {
+        int starting_vertex_index = this->GetVertexIndex(this->edges_[i].starting_vertex);
+        int ending_vertex_index = this->GetVertexIndex(this->edges_[i].ending_vertex);
+
+        this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = this->edges_[i].weight;
+        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = this->edges_[i].weight;
+
+        this->edge_count_++;
+    }
+}
 
 /*!
  * @brief 析构函数
@@ -164,7 +203,10 @@ MatrixGraph<Vertex, Weight>::MatrixGraph(int max_vertex_count, Weight max_weight
  */
 template<class Vertex, class Weight>
 MatrixGraph<Vertex, Weight>::~MatrixGraph() {
-  delete[] this->vertices_;
+  // delete[] this->vertices_;
+  for (int i = 0; i < this->vertex_count_; i++) {
+      delete[] this->adjacency_matrix_[i];
+  }
   delete[] this->adjacency_matrix_;
 }
 
@@ -286,14 +328,15 @@ bool MatrixGraph<Vertex, Weight>::GetNextNeighborVertex(Vertex& next_neighbor_ve
 
 template<class Vertex, class Weight>
 bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
-  if (this->vertex_count_ >= this->max_vertex_count_) {
-    return false;
-  }
+    if (this->vertex_count_ >= this->max_vertex_count_) {
+        return false;
+    }
 
-  this->vertices_[this->vertex_count_] = vertex;
-  this->vertex_count_++;
+    // this->vertices_[this->vertex_count_] = vertex;
+    this->vertices_.push_back(vertex);
+    this->vertex_count_++;
 
-  return true;
+    return true;
 }
 
 
@@ -303,8 +346,7 @@ bool MatrixGraph<Vertex, Weight>::InsertEdge(const Vertex& vertex1, const Vertex
   int v1_index = GetVertexIndex(vertex1);
   int v2_index = GetVertexIndex(vertex2);
 
-  if (v1_index < 0 || v2_index < 0 || v1_index == v2_index)
-  {
+  if (v1_index < 0 || v2_index < 0 || v1_index == v2_index) {
     return false;
   }
 
@@ -315,9 +357,6 @@ bool MatrixGraph<Vertex, Weight>::InsertEdge(const Vertex& vertex1, const Vertex
 
   pair<Vertex, Vertex> edge1(vertex1, vertex2);
   pair<Vertex, Vertex> edge2(vertex2, vertex1);
-
-  this->edge_map.insert(pair<pair<Vertex, Vertex>, Weight>(edge1, weight));
-  this->edge_map.insert(pair<pair<Vertex, Vertex>, Weight>(edge2, weight));
 
   return true;
 }
@@ -453,17 +492,13 @@ ostream& operator<<(ostream& out, MatrixGraph<Vertex, Weight>& graph_matrix) {
  */
 template<class Vertex, class Weight>
 int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) {
-
-  int vertex_index = -1;
-
-  for (int i = 0; i < this->vertex_count_; i++) {
-    if (this->vertices_[i] == vertex) {
-      vertex_index = i;
-      break;
+    for (int i = 0; i < this->vertex_count_; i++) {
+        if (this->vertices_[i] == vertex) {
+            return i;
+        }
     }
-  }
 
-  return vertex_index;
+    return -1;
 }
 
 
@@ -483,18 +518,4 @@ void MatrixGraph<Vertex, Weight>::PrintMatrix() {
 }
 
 
-template<class Vertex, class Weight>
-void MatrixGraph<Vertex, Weight>::CyberDashShow() {
-  cout<<endl
-      <<"*************************************** CyberDash ***************************************"<<endl<<endl
-      <<"抖音号\"CyberDash计算机考研\", id: cyberdash_yuan"<<endl<<endl
-      <<"CyberDash成员:"<<endl
-      <<"元哥(cyberdash@163.com), "<<"北京邮电大学(通信工程本科)/北京邮电大学(信息与通信系统研究生)"<<endl
-      <<"磊哥(alei_go@163.com), "<<"山东理工大学(数学本科)/北京邮电大学(计算机研究生)"<<endl<<endl
-      <<"L_Dash(lyu2586@163.com), "<<"北京邮电大学(计算机在读研究生)"<<endl<<endl
-      <<"数据结构开源代码(C++版本): https://gitee.com/cyberdash/data-structure-cpp"<<endl
-      <<endl<<"*************************************** CyberDash ***************************************"<<endl<<endl;
-}
-
-
-#endif //CYBER_DASH_MATRIX_GRAPH_H
+#endif // CYBER_DASH_MATRIX_GRAPH_H
