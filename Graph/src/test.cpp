@@ -447,18 +447,18 @@ void TestDijkstra() {
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
     cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<endl;
-    double min_dist_arr_adj[5];
-    int from_path_arr_adj[5];
+    double adjacency_list_graph_min_distances[5];
+    int adjacency_list_graph_predecessors[5];
 
-    DijkstraByPriorityQueue(adjacency_list_graph, vertices[0], min_dist_arr_adj, from_path_arr_adj);
-    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr_adj, from_path_arr_adj);
+    DijkstraByPriorityQueue(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
+    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    double min_dist_arr_matrix[5];
-    int from_path_arr_matrix[5];
+    double matrix_graph_min_distances[5];
+    int matrix_graph_predecessors[5];
 
-    Dijkstra(adjacency_list_graph, vertices[0], min_dist_arr_matrix, from_path_arr_matrix);
-    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr_matrix, from_path_arr_matrix);
+    Dijkstra(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
+    PrintSingleSourceShortestPath(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -504,18 +504,18 @@ void TestBellmanFord() {
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
-    double min_dist_arr1[5];
-    int predecessor_arr1[5];
+    double adjacency_list_graph_min_distances[5];
+    int adjacency_list_graph_predecessors[5];
 
-    BellmanFord(adjacency_list_graph, vertices[0], min_dist_arr1, predecessor_arr1);
-    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr1, predecessor_arr1);
+    BellmanFord(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
+    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    double min_dist_arr2[5];
-    int predecessor_arr2[5];
+    double matrix_graph_min_dists[5];
+    int matrix_graph_predecessors[5];
 
-    BellmanFord(adjacency_list_graph, vertices[0], min_dist_arr2, predecessor_arr2);
-    PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], min_dist_arr2, predecessor_arr2);
+    BellmanFord(matrix_graph, vertices[0], matrix_graph_min_dists, matrix_graph_predecessors);
+    PrintSingleSourceShortestPath(matrix_graph, vertices[0], matrix_graph_min_dists, matrix_graph_predecessors);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
@@ -574,7 +574,7 @@ void TestFloyd() {
     vector<vector<int> > adj_list_graph_predecessor(adj_list_graph_vertices_num,
                                                   vector<int>(adj_list_graph_vertices_num));
     // 执行弗洛伊德算法
-    Floyd(matrix_graph, adj_list_graph_distance, adj_list_graph_predecessor);
+    Floyd(adjacency_list_graph, adj_list_graph_distance, adj_list_graph_predecessor);
 
     // 打印多源(MSSP)最短路径
     PrintMultipleSourceShortestPath(adjacency_list_graph,
@@ -584,19 +584,19 @@ void TestFloyd() {
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
     // 矩阵图结点数量
     int matrix_graph_vertices_num = matrix_graph.VertexCount();
-    // matrix_graph_distance
-    vector<vector<double> > matrix_graph_distance(matrix_graph_vertices_num,
-                                                  vector<double>(matrix_graph_vertices_num));
-    // matrix_graph_predecessor
-    vector<vector<int> > matrix_graph_predecessor(matrix_graph_vertices_num,
-                                                  vector<int>(matrix_graph_vertices_num));
+    // matrix_graph_min_distances
+    vector<vector<double> > matrix_graph_min_distances(matrix_graph_vertices_num,
+                                                       vector<double>(matrix_graph_vertices_num));
+    // matrix_graph_predecessors
+    vector<vector<int> > matrix_graph_predecessors(matrix_graph_vertices_num,
+                                                   vector<int>(matrix_graph_vertices_num));
     // 执行弗洛伊德算法
-    Floyd(matrix_graph, matrix_graph_distance, matrix_graph_predecessor);
+    Floyd(matrix_graph, matrix_graph_min_distances, matrix_graph_predecessors);
 
     // 打印多源最短路径
     PrintMultipleSourceShortestPath(matrix_graph,
-                                    matrix_graph_distance,
-                                    matrix_graph_predecessor);
+                                    matrix_graph_min_distances,
+                                    matrix_graph_predecessors);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
