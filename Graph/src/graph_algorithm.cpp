@@ -45,25 +45,26 @@ void DFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
 template<class Vertex, class Weight>
 void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visited_vertex_set) {
 
-  cout<<"访问结点: "<<vertex<<endl;
+    cout<<"访问结点: "<<vertex<<endl;
 
-  visited_vertex_set.insert(vertex);
+    visited_vertex_set.insert(vertex);
 
-  Vertex neighbor_vertex;
-  bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
+    Vertex neighbor_vertex;
+    // bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, vertex);
+    bool has_neighbor = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);
 
-  while (has_neighbor) {
-    if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
-      DFSOnVertex(graph, neighbor_vertex, visited_vertex_set);
+    while (has_neighbor) {
+        if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
+            DFSOnVertex(graph, neighbor_vertex, visited_vertex_set);
+        }
+
+        Vertex next_neighbor_vertex;
+        has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
+
+        if (has_neighbor) {
+            neighbor_vertex = next_neighbor_vertex;
+        }
     }
-
-    Vertex next_neighbor_vertex;
-    has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
-
-    if (has_neighbor) {
-      neighbor_vertex = next_neighbor_vertex;
-    }
-  }
 }
 
 
@@ -95,7 +96,8 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
     //     如果未访问该结点:
     //         入队
     Vertex neighbor_vertex;
-    bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, front_vertex);
+    // bool has_neighbor = graph.GetFirstNeighborVertex(neighbor_vertex, front_vertex);
+      bool has_neighbor = graph.GetFirstNeighborVertex(front_vertex, neighbor_vertex);
     while (has_neighbor) {
       if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {   // 如果未访问
         cout<<"访问结点: "<<neighbor_vertex<<endl;
@@ -269,7 +271,8 @@ bool Prim(Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_spa
     TVertex cur_neighbor_vertex;
     TVertex next_neighbor_vertex;
 
-    bool new_neighbor_exists = graph.GetFirstNeighborVertex(cur_neighbor_vertex, starting_vertex);
+    // bool new_neighbor_exists = graph.GetFirstNeighborVertex(cur_neighbor_vertex, starting_vertex);
+    bool new_neighbor_exists = graph.GetFirstNeighborVertex(starting_vertex, cur_neighbor_vertex);
     while (new_neighbor_exists) {
 
         TWeight cur_edge_weight;
@@ -304,7 +307,8 @@ bool Prim(Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_spa
             TVertex cur_mst_vertex = *iter;
 
             // 结点cur_mst_vertex, 与它的所有不在mst_vertex_set的邻接结点, 所构成的边, 入队到min_priority_queue
-            new_neighbor_exists = graph.GetFirstNeighborVertex(cur_neighbor_vertex, cur_mst_vertex);
+            // new_neighbor_exists = graph.GetFirstNeighborVertex(cur_neighbor_vertex, cur_mst_vertex);
+            new_neighbor_exists = graph.GetFirstNeighborVertex(cur_mst_vertex, cur_neighbor_vertex);
             while (new_neighbor_exists) {
                 if (mst_vertex_set.find(cur_neighbor_vertex) == mst_vertex_set.end()) { // 如果cur_neighbor_vertex不在mst_vertex_set:
                     TWeight cur_weight;

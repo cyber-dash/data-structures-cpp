@@ -125,7 +125,8 @@ public:
   bool RemoveEdge(TVertex vertex1, TVertex vertex2);
 
   // 获取第一个相邻结点
-  bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex);      // todo: 参数顺序调整
+  // bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex);      // todo: 参数顺序调整
+    bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor);
 
   // 获取下一个相邻结点
   bool GetNextNeighborVertex(TVertex& next_neighbor, const TVertex& vertex, const TVertex& neighbor_vertex);    // todo: 参数循序调整
@@ -537,13 +538,14 @@ bool AdjacencyListGraph<V, W>::RemoveEdge(V vertex1, V vertex2) {
  * @param vertex 节点
  * @return 是否获取成功
  */
-template<class V, class W>
-bool AdjacencyListGraph<V, W>::GetFirstNeighborVertex(V& first_neighbor, const V& vertex) {
+template<typename TVertex, typename TWeight>
+// bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex) {
+bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) {
 
   int vertex_index = this->GetVertexIndex(vertex); // 获取结点在vertex_table_的数组索引
 
   if (vertex_index >= 0) {
-    AdjacencyEdge<V, W>* edge = this->adjacency_lists_[vertex_index].adjacency_edges;
+    AdjacencyEdge<TVertex, TWeight>* edge = this->adjacency_lists_[vertex_index].adjacency_edges;
     if (edge != NULL) {
 
       int neighbor_index = edge->ending_vertex_index; // 第一个邻接结点的dest_index_

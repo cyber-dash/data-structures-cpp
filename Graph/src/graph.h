@@ -155,19 +155,20 @@ public:
    */
   virtual bool GetWeightByVertexIndex(TWeight& weight, int v1_index, int v2_index) = 0;
 
-  /*!
-   * @brief **获取结点的第一个相邻结点**
-   * @param first_neighbor 第一个相邻结点的保存变量
-   * @param vertex 结点
-   * @return 执行结果
-   * @note
-   * 获取结点的第一个相邻结点
-   * --------------------
-   * --------------------
-   *
-   * --------------------
-   */
-  virtual bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex) = 0;
+    /*!
+     * @brief **获取结点的第一个相邻结点**
+     * @param first_neighbor 第一个相邻结点的保存变量
+     * @param vertex 结点
+     * @return 执行结果
+     * @note
+     * 获取结点的第一个相邻结点
+     * --------------------
+     * --------------------
+     *
+     * --------------------
+     */
+    // virtual bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex) = 0;
+    virtual bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) = 0;
 
 
   /*!

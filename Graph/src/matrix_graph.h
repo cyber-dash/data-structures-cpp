@@ -91,7 +91,8 @@ public:
    * @param vertex 节点
    * @return 是否获取成功
    */
-  bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex);
+  // bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex);
+    bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor);
 
   /*!
    * @brief 获取下一个相邻结点
@@ -267,20 +268,19 @@ bool MatrixGraph<Vertex, Weight>::GetWeightByVertexIndex(Weight& weight, int v1_
 }
 
 
-template<class Vertex, class Weight>
-bool MatrixGraph<Vertex, Weight>::GetFirstNeighborVertex(Vertex& first_neighbor, const Vertex& vertex) {
+template<typename TVertex, typename TWeight>
+bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) {
 
   int vertex_index = GetVertexIndex(vertex);
-
   if (vertex_index < 0) {
     return false;
   }
 
-  for (int cur_index = 0; cur_index < this->vertex_count_; cur_index++) {
-    Weight weight;
-    Vertex cur_vertex;
+  for (int i = 0; i < this->vertex_count_; i++) {
+    TWeight weight;
+    TVertex cur_vertex;
 
-    bool done = GetVertexByIndex(cur_vertex, cur_index);
+    bool done = GetVertexByIndex(cur_vertex, i);
     if (!done) {
       continue;
     }
