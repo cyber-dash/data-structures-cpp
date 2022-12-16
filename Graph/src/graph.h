@@ -111,49 +111,51 @@ public:
 
     virtual const Edge<TVertex, TWeight>& GetEdge(int index) const { return this->edges_[index]; }
 
-  /*!
-   * @brief **由结点索引获取结点(纯虚函数)**
-   * @param vertex 结点保存变量
-   * @param vertex_index 结点索引
-   * @return 执行结果
-   * @note
-   * 由结点索引获取结点
-   * ---------------
-   * ---------------
-   *
-   * ---------------
-   */
-  virtual bool GetVertexByIndex(TVertex& vertex, int vertex_index) = 0;
+    /*!
+     * @brief **由结点索引获取结点(纯虚函数)**
+     * @param vertex 结点保存变量
+     * @param vertex_index 结点索引
+     * @return 执行结果
+     * @note
+     * 由结点索引获取结点
+     * ---------------
+     * ---------------
+     *
+     * ---------------
+     */
+    virtual bool GetVertexByIndex(int vertex_index, TVertex& vertex) = 0;
 
-  /*!
-   * @brief **获取边权值(使用结点)**
-   * @param weight 边权值保存变量
-   * @param v1 边的一个节点
-   * @param v2 边的另一个节点
-   * @return 执行结果
-   * @note
-   * 获取边权值(使用结点)
-   * -----------------
-   * -----------------
-   *
-   * -----------------
-   */
-  virtual bool GetWeight(TWeight& weight, TVertex v1, TVertex v2) = 0;
+    /*!
+     * @brief **获取边权值(使用结点)**
+     * @param weight 边权值保存变量
+     * @param v1 边的一个节点
+     * @param v2 边的另一个节点
+     * @return 执行结果
+     * @note
+     * 获取边权值(使用结点)
+     * -----------------
+     * -----------------
+     *
+     * -----------------
+     */
+  // virtual bool GetWeight(TWeight& weight, TVertex v1, TVertex v2) = 0;
+    virtual bool GetWeight(TVertex v1, TVertex v2, TWeight& weight) = 0;
 
-  /*!
-   * @brief 获取边权值(使用结点索引)
-   * @param weight 边权值保存变量
-   * @param v1_index 边的一个结点索引
-   * @param v2_index 边的另一个结点索引
-   * @return 执行结果
-   * @note
-   * 获取边权值(使用结点索引)
-   * ---------------------
-   * ---------------------
-   *
-   * ---------------------
-   */
-  virtual bool GetWeightByVertexIndex(TWeight& weight, int v1_index, int v2_index) = 0;
+    /*!
+     * @brief 获取边权值(使用结点索引)
+     * @param weight 边权值保存变量
+     * @param v1_index 边的一个结点索引
+     * @param v2_index 边的另一个结点索引
+     * @return 执行结果
+     * @note
+     * 获取边权值(使用结点索引)
+     * ---------------------
+     * ---------------------
+     *
+     * ---------------------
+     */
+    virtual bool GetWeightByVertexIndex(int v1_index, int v2_index, TWeight& weight) = 0;
+
 
     /*!
      * @brief **获取结点的第一个相邻结点**
@@ -167,24 +169,23 @@ public:
      *
      * --------------------
      */
-    // virtual bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex) = 0;
     virtual bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) = 0;
 
 
-  /*!
-   * @brief **获取结点的下一个相邻结点**
-   * @param next_neighbor 下一相邻结点的保存变量
-   * @param vertex 结点
-   * @param neighbor_vertex 相邻节点
-   * @return 执行结果
-   * @note
-   * 获取结点的下一个相邻结点
-   * --------------------
-   * --------------------
-   *
-   * --------------------
-   */
-  virtual bool GetNextNeighborVertex(TVertex& next_neighbor, const TVertex& vertex, const TVertex& neighbor_vertex) = 0;
+    /*!
+     * @brief **获取结点的下一个相邻结点**
+     * @param next_neighbor 下一相邻结点的保存变量
+     * @param vertex 结点
+     * @param neighbor_vertex 相邻节点
+     * @return 执行结果
+     * @note
+     * 获取结点的下一个相邻结点
+     * --------------------
+     * --------------------
+     *
+     * --------------------
+     */
+    virtual bool GetNextNeighborVertex(const TVertex& vertex, const TVertex& neighbor_vertex, TVertex& next_neighbor) = 0;
 
 
   /*!

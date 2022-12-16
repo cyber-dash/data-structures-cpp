@@ -123,7 +123,8 @@ void TestGetVertexByIndex() {
 
     // 按照索引值读取邻接表图各结点
     for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
-        adjacency_list_graph.GetVertexByIndex(graph_vertices[i], i);
+        // adjacency_list_graph.GetVertexByIndex(graph_vertices[i], i);
+        adjacency_list_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
     // 打印结点
@@ -137,7 +138,8 @@ void TestGetVertexByIndex() {
 
     // 按照索引值读取矩阵图各结点
     for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
-        matrix_graph.GetVertexByIndex(graph_vertices[i], i);
+        // matrix_graph.GetVertexByIndex(graph_vertices[i], i);
+        matrix_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
     // 打印结点

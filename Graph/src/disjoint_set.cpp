@@ -4,9 +4,6 @@
  * @brief 并查集.cpp文件
  * @version 0.2.1
  * @date 2021-02-21
- *
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include "disjoint_set.h"

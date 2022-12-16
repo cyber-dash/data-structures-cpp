@@ -59,7 +59,7 @@ void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visit
         }
 
         Vertex next_neighbor_vertex;
-        has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, vertex, neighbor_vertex);
+        has_neighbor = graph.GetNextNeighborVertex(vertex, neighbor_vertex, next_neighbor_vertex);
 
         if (has_neighbor) {
             neighbor_vertex = next_neighbor_vertex;
@@ -108,7 +108,7 @@ void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex) {
       }
 
       Vertex next_neighbor_vertex;
-      has_neighbor = graph.GetNextNeighborVertex(next_neighbor_vertex, front_vertex, neighbor_vertex);
+        has_neighbor = graph.GetNextNeighborVertex(front_vertex, neighbor_vertex, next_neighbor_vertex);
       if (has_neighbor) {
         neighbor_vertex = next_neighbor_vertex;
       }
@@ -142,7 +142,8 @@ void Components(Graph<Vertex, Weight>& graph) {
   for (int i = 0; i < graph.VertexCount(); i++) {
 
     Vertex vertex;
-    bool done = graph.GetVertexByIndex(vertex, i); // 获取索引i对应的结点vertex
+    //bool done = graph.GetVertexByIndex(vertex, i); // 获取索引i对应的结点vertex
+      bool done = graph.GetVertexByIndex(i, vertex); // 获取索引i对应的结点vertex
 
     if (done) {
       // 如果visited_vertex_set中, 没有查到vertex(说明vertex在一个新的联通分量中):
@@ -189,7 +190,8 @@ void Kruskal(Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_
         // 如果边(cur_starting_vertex, cur_ending_vertex)存在, 即拿到权重:
         //     则插入最小优先队列min_priority_queue
         TWeight weight;
-        bool get_weight_done = graph.GetWeight(weight, cur_starting_vertex, cur_ending_vertex);
+        // bool get_weight_done = graph.GetWeight(weight, cur_starting_vertex, cur_ending_vertex);
+        bool get_weight_done = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, weight);
         if (get_weight_done) {
             MSTNode<TVertex, TWeight> cur_MST_node(weight, cur_starting_vertex, cur_ending_vertex);
             min_priority_queue.Enqueue(cur_MST_node);
@@ -257,7 +259,8 @@ bool Prim(Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_spa
 
     // 索引0对应的结点, 作为Prim算法的起始结点starting_vertex
     TVertex starting_vertex;
-    bool res = graph.GetVertexByIndex(starting_vertex, 0);
+    // bool res = graph.GetVertexByIndex(starting_vertex, 0);
+    bool res = graph.GetVertexByIndex(0, starting_vertex);
     if (!res) {
         return false;
     }
@@ -276,13 +279,14 @@ bool Prim(Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_spa
     while (new_neighbor_exists) {
 
         TWeight cur_edge_weight;
-        graph.GetWeight(cur_edge_weight, starting_vertex, cur_neighbor_vertex);
+        // graph.GetWeight(cur_edge_weight, starting_vertex, cur_neighbor_vertex);
+        graph.GetWeight(starting_vertex, cur_neighbor_vertex, cur_edge_weight);
 
         MSTNode<TVertex, TWeight> cur_mst_edge_node(cur_edge_weight, starting_vertex, cur_neighbor_vertex);
         min_priority_queue.Enqueue(cur_mst_edge_node);
 
         // 遍历至下一个邻接结点
-        new_neighbor_exists = graph.GetNextNeighborVertex(next_neighbor_vertex, starting_vertex, cur_neighbor_vertex);
+        new_neighbor_exists = graph.GetNextNeighborVertex(starting_vertex, cur_neighbor_vertex, next_neighbor_vertex);
         if (new_neighbor_exists) {
             cur_neighbor_vertex = next_neighbor_vertex;
         }
@@ -312,7 +316,8 @@ bool Prim(Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_spa
             while (new_neighbor_exists) {
                 if (mst_vertex_set.find(cur_neighbor_vertex) == mst_vertex_set.end()) { // 如果cur_neighbor_vertex不在mst_vertex_set:
                     TWeight cur_weight;
-                    graph.GetWeight(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
+                    // graph.GetWeight(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
+                    graph.GetWeight(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
 
                     // 用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTNode结点
                     MSTNode<TVertex, TWeight> cur_mst_edge_node(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
@@ -322,7 +327,7 @@ bool Prim(Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_spa
                 }
 
                 // 遍历至下一个邻接结点
-                new_neighbor_exists = graph.GetNextNeighborVertex(next_neighbor_vertex, cur_mst_vertex, cur_neighbor_vertex);
+                new_neighbor_exists = graph.GetNextNeighborVertex(cur_mst_vertex, cur_neighbor_vertex, next_neighbor_vertex);
                 if (new_neighbor_exists) {
                     cur_neighbor_vertex = next_neighbor_vertex;
                 }
@@ -400,7 +405,8 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
 
       // 拿到索引j对应的结点vertex_j
       Vertex vertex_j;
-      graph.GetVertexByIndex(vertex_j, j);
+      // graph.GetVertexByIndex(vertex_j, j);
+        graph.GetVertexByIndex(j, vertex_j);
 
       // 如果vertex_j已经在vertex_set中, continue
       if (vertex_set.find(vertex_j) != vertex_set.end()) {
@@ -408,7 +414,8 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
       }
 
       Weight cur_distance;
-      if (graph.GetWeightByVertexIndex(cur_distance, i, j) && distance[j] < cur_min_distance) {
+      //if (graph.GetWeightByVertexIndex(cur_distance, i, j) && distance[j] < cur_min_distance) {
+      if (graph.GetWeightByVertexIndex(i, j, cur_distance) && distance[j] < cur_min_distance) {
           cur_min_distance_ending_vertex = vertex_j;
           cur_min_distance = distance[j];
       }
@@ -424,7 +431,8 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
 
       // 拿到索引j对应的结点vertex_j
       Vertex vertex_j;
-      graph.GetVertexByIndex(vertex_j, j);
+      // graph.GetVertexByIndex(vertex_j, j);
+        graph.GetVertexByIndex(j, vertex_j);
       /* error handler */
 
       // 如果vertex_j已经在vertex_set中, continue
@@ -434,7 +442,8 @@ void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight dista
 
       // 边(cur_min_distance_ending_vertex --> vertex_j)的值, 赋给weight
       Weight weight;
-      bool get_weight_done = graph.GetWeight(weight, cur_min_distance_ending_vertex, vertex_j);
+      // bool get_weight_done = graph.GetWeight(weight, cur_min_distance_ending_vertex, vertex_j);
+        bool get_weight_done = graph.GetWeight(cur_min_distance_ending_vertex, vertex_j, weight);
       if (!get_weight_done) { // 如果没有边, continue
         continue;
       }
@@ -544,7 +553,8 @@ void DijkstraByPriorityQueue(Graph<TVertex, TWeight>& graph,
 
       // 索引j对应的结点vertex_j
       TVertex vertex_j;
-      graph.GetVertexByIndex(vertex_j, j);
+      // graph.GetVertexByIndex(vertex_j, j);
+        graph.GetVertexByIndex(j, vertex_j);
 
       // 如果vertex_j已经在vertex_set中, continue
       if (vertex_set.find(vertex_j) != vertex_set.end()) {
@@ -553,7 +563,8 @@ void DijkstraByPriorityQueue(Graph<TVertex, TWeight>& graph,
 
       // 边(cur_min_distance_ending_vertex --> vertex_j)的值, 赋给weight
       TWeight weight;
-      bool get_weight_done = graph.GetWeight(weight, cur_min_distance_ending_vertex, vertex_j);
+      // bool get_weight_done = graph.GetWeight(weight, cur_min_distance_ending_vertex, vertex_j);
+        bool get_weight_done = graph.GetWeight(cur_min_distance_ending_vertex, vertex_j, weight);
       if (!get_weight_done) { // 如果没有边, continue
         continue;
       }
@@ -652,7 +663,8 @@ bool BellmanFord(Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeigh
             int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
             TWeight cur_edge_weight;
-            bool res = graph.GetWeight(cur_edge_weight, cur_starting_vertex, cur_ending_vertex);
+            // bool res = graph.GetWeight(cur_edge_weight, cur_starting_vertex, cur_ending_vertex);
+            bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, cur_edge_weight);
             if (!res) {
                 continue;
             }
@@ -683,7 +695,8 @@ bool BellmanFord(Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeigh
         int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
         TWeight cur_weight;
-        bool get_weight_done = graph.GetWeight(cur_weight, cur_starting_vertex, cur_ending_vertex);
+        // bool get_weight_done = graph.GetWeight(cur_weight, cur_starting_vertex, cur_ending_vertex);
+        bool get_weight_done = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, cur_weight);
         if (!get_weight_done) {
             continue;
         }
@@ -731,7 +744,8 @@ void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vect
         distance[cur_starting_vertex_index][cur_ending_vertex_index] = (Weight)0;
       } else {
         Weight weight;
-        bool done = graph.GetWeightByVertexIndex(weight, cur_starting_vertex_index, cur_ending_vertex_index);
+        // bool done = graph.GetWeightByVertexIndex(weight, cur_starting_vertex_index, cur_ending_vertex_index);
+          bool done = graph.GetWeightByVertexIndex(cur_starting_vertex_index, cur_ending_vertex_index, weight);
         if (done) {
           distance[cur_starting_vertex_index][cur_ending_vertex_index] = weight;
         } else {
@@ -792,7 +806,6 @@ void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
 {
   cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
 
-  int vertex_cnt = graph.VertexCount();
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex);
 
   // 用于存放以某个结点为终点的最短路径经过的结点
@@ -815,17 +828,19 @@ void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
     }
 
     // 获取索引i对应的结点
-    Vertex vertex_ending_vertex;
-    graph.GetVertexByIndex(vertex_ending_vertex, cur_ending_vertex_idx);
+    Vertex ending_vertex;
+    // graph.GetVertexByIndex(ending_vertex, cur_ending_vertex_idx);
+      graph.GetVertexByIndex(cur_ending_vertex_idx, ending_vertex);
 
-    cout << "起始点(" << starting_vertex << ")到结点(" << vertex_ending_vertex << ")的最短路径为:";
+    cout << "起始点(" << starting_vertex << ")到结点(" << ending_vertex << ")的最短路径为:";
     cout << starting_vertex << " ";
 
     // 使用inverted_predecessor数组打印出路径, 对inverted_predecessor数组从后向前, 依次打印
     while (inverted_predecessor_vertex_idx > 0) {
       inverted_predecessor_vertex_idx--;
-      graph.GetVertexByIndex(vertex_ending_vertex, inverted_predecessor[inverted_predecessor_vertex_idx]);
-      cout << vertex_ending_vertex << " ";
+      // graph.GetVertexByIndex(ending_vertex, inverted_predecessor[inverted_predecessor_vertex_idx]);
+        graph.GetVertexByIndex(inverted_predecessor[inverted_predecessor_vertex_idx], ending_vertex);
+      cout << ending_vertex << " ";
     }
 
     cout << ", ";
@@ -859,7 +874,8 @@ void PrintOneSourceShortestPathRecursive(Graph<Vertex, Weight>& graph,
   }
 
   Vertex ending_vertex;
-  graph.GetVertexByIndex(ending_vertex, ending_vertex_idx);
+  // graph.GetVertexByIndex(ending_vertex, ending_vertex_idx);
+    graph.GetVertexByIndex(ending_vertex_idx, ending_vertex);
 
   cout << ending_vertex << " ";
 }
@@ -886,7 +902,8 @@ void PrintMultipleSourceShortestPath(Graph<Vertex,
 
   for (int cur_starting_vertex_idx = 0; cur_starting_vertex_idx < graph.VertexCount(); cur_starting_vertex_idx++) {
     Vertex cur_starting_vertex;
-    graph.GetVertexByIndex(cur_starting_vertex, cur_starting_vertex_idx);
+    // graph.GetVertexByIndex(cur_starting_vertex, cur_starting_vertex_idx);
+      graph.GetVertexByIndex(cur_starting_vertex_idx, cur_starting_vertex);
 
     cout << "--- 从起始点(" << cur_starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
 
@@ -896,7 +913,8 @@ void PrintMultipleSourceShortestPath(Graph<Vertex,
       }
 
       Vertex cur_ending_vertex;
-      graph.GetVertexByIndex(cur_ending_vertex, cur_ending_vertex_idx);
+      // graph.GetVertexByIndex(cur_ending_vertex, cur_ending_vertex_idx);
+        graph.GetVertexByIndex(cur_ending_vertex_idx, cur_ending_vertex);
 
       cout << "起始点(" << cur_starting_vertex << ")到结点(" << cur_ending_vertex << ")的最短路径为: ";
 
