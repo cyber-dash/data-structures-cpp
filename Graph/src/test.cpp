@@ -127,10 +127,16 @@ void TestGetVertexByIndex() {
         adjacency_list_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
+    adjacency_list_graph.RemoveEdge("北京", "上海");
+    adjacency_list_graph.RemoveEdge("北京", "广州");
+    adjacency_list_graph.RemoveVertex("北京");
+
     // 打印结点
     cout<<"**邻接表图**"<<endl;
     for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
-        cout << "索引" << i << "结点: " << graph_vertices[i] << endl;
+        string cur_vertex;
+        adjacency_list_graph.GetVertexByIndex(i, cur_vertex);
+        cout << "索引" << i << "结点: " << cur_vertex << endl;
     }
 
     // 构造矩阵图

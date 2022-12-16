@@ -69,7 +69,7 @@ public:
    * @param vertex 节点
    * @return 是否删除成功
    */
-  bool RemoveVertex(TVertex vertex);
+  bool RemoveVertex(const TVertex& vertex);
 
   /*!
    * @brief 插入边
@@ -375,7 +375,7 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& vertex1, const TVe
 
 
 template<class Vertex, class Weight>
-bool MatrixGraph<Vertex, Weight>::RemoveVertex(Vertex vertex) {
+bool MatrixGraph<Vertex, Weight>::RemoveVertex(const Vertex& vertex) {
 
   int vertex_index = GetVertexIndex(vertex);
 

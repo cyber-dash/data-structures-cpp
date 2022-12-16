@@ -228,7 +228,7 @@ public:
    *
    * -------
    */
-  virtual bool RemoveVertex(TVertex vector) = 0;
+  virtual bool RemoveVertex(const TVertex& vector) = 0;
 
 
   /*!
