@@ -663,7 +663,6 @@ bool BellmanFord(Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeigh
             int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
             TWeight cur_edge_weight;
-            // bool res = graph.GetWeight(cur_edge_weight, cur_starting_vertex, cur_ending_vertex);
             bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, cur_edge_weight);
             if (!res) {
                 continue;

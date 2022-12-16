@@ -451,19 +451,18 @@ void TestDijkstra() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
-
     cout<<endl<<"**邻接表图Dijkstra测试**"<<endl<<endl;
-    double adjacency_list_graph_min_distances[5];
-    int adjacency_list_graph_predecessors[5];
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
+    double adjacency_list_graph_min_distances[10];
+    int adjacency_list_graph_predecessors[10];
 
     DijkstraByPriorityQueue(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
     PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    double matrix_graph_min_distances[5];
-    int matrix_graph_predecessors[5];
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
+    double matrix_graph_min_distances[10];
+    int matrix_graph_predecessors[10];
 
     Dijkstra(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
     PrintSingleSourceShortestPath(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
@@ -512,15 +511,15 @@ void TestBellmanFord() {
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
-    double adjacency_list_graph_min_distances[5];
-    int adjacency_list_graph_predecessors[5];
+    double adjacency_list_graph_min_distances[10];
+    int adjacency_list_graph_predecessors[10];
 
     BellmanFord(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
     PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    double matrix_graph_min_dists[5];
-    int matrix_graph_predecessors[5];
+    double matrix_graph_min_dists[10];
+    int matrix_graph_predecessors[10];
 
     BellmanFord(matrix_graph, vertices[0], matrix_graph_min_dists, matrix_graph_predecessors);
     PrintSingleSourceShortestPath(matrix_graph, vertices[0], matrix_graph_min_dists, matrix_graph_predecessors);

@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     TestBFS();
 
     // 测试连通图
-    // TestComponents();
+    TestComponents();
 
     // 测试普利姆(Prim)最小生成树
     TestPrim();
