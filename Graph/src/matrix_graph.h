@@ -73,12 +73,12 @@ public:
 
   /*!
    * @brief 插入边
-   * @param vertex1 边节点1
-   * @param vertex2 边节点2
+   * @param starting_vertex 边节点1
+   * @param ending_vertex 边节点2
    * @param weight 边权值
    * @return 是否插入成功
    */
-  bool InsertEdge(const TVertex& vertex1, const TVertex& vertex2, const TWeight& weight);
+  bool InsertEdge(const TVertex& starting_vertex, const TVertex& ending_vertex, const TWeight& weight);
 
   /*!
    * @brief 删除边
@@ -163,7 +163,8 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
     }
 }
 
-template<class TVertex, class TWeight>
+
+template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
                                            TWeight max_weight,
                                            const vector<Edge<TVertex, TWeight> >& edges,
@@ -172,10 +173,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
-    this->edges_ = edges;
-    this->vertices_ = vertices;
-
-    this->vertex_count_ = vertices.size();
+    this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
     this->adjacency_matrix_ = (TWeight**)new TWeight*[this->max_vertex_count_];
@@ -190,14 +188,16 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
         }
     }
 
-    for (int i = 0; i < this->edges_.size(); i++) {
-        int starting_vertex_index = this->GetVertexIndex(this->edges_[i].starting_vertex);
-        int ending_vertex_index = this->GetVertexIndex(this->edges_[i].ending_vertex);
+    for (unsigned int i = 0; i < vertices.size(); i++) {
+        this->InsertVertex(vertices[i]);
+    }
 
-        this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = this->edges_[i].weight;
-        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = this->edges_[i].weight;
+    for (unsigned int i = 0; i < edges.size(); i++) {
+        TVertex starting_vertex = edges[i].starting_vertex;
+        TVertex ending_vertex = edges[i].ending_vertex;
+        TWeight weight = edges[i].weight;
 
-        this->edge_count_++;
+        this->InsertEdge(starting_vertex, ending_vertex, weight);
     }
 }
 
@@ -208,7 +208,6 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
  */
 template<class Vertex, class Weight>
 MatrixGraph<Vertex, Weight>::~MatrixGraph() {
-  // delete[] this->vertices_;
   for (int i = 0; i < this->vertex_count_; i++) {
       delete[] this->adjacency_matrix_[i];
   }
@@ -243,7 +242,7 @@ bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& 
  * @return
  */
 template<class Vertex, class Weight>
-// bool MatrixGraph<Vertex, Weight>::GetWeight(Weight& weight, Vertex v1, Vertex v2) {
+// bool MatrixGraph<TVertex, TWeight>::GetWeight(TWeight& weight, TVertex v1, TVertex v2) {
 bool MatrixGraph<Vertex, Weight>::GetWeight(Vertex v1, Vertex v2, Weight& weight) {
 
   int v1_index = GetVertexIndex(v1);
@@ -260,7 +259,7 @@ bool MatrixGraph<Vertex, Weight>::GetWeight(Vertex v1, Vertex v2, Weight& weight
 
 
 template<class Vertex, class Weight>
-// bool MatrixGraph<Vertex, Weight>::GetWeightByVertexIndex(Weight& weight, int v1_index, int v2_index) {
+// bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(TWeight& weight, int v1_index, int v2_index) {
 bool MatrixGraph<Vertex, Weight>::GetWeightByVertexIndex(int v1_index, int v2_index, Weight& weight) {
 
     if (v1_index >= 0 && v2_index >= 0 && v1_index != v2_index &&
@@ -344,7 +343,6 @@ bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
         return false;
     }
 
-    // this->vertices_[this->vertex_count_] = vertex;
     this->vertices_.push_back(vertex);
     this->vertex_count_++;
 
@@ -353,24 +351,26 @@ bool MatrixGraph<Vertex, Weight>::InsertVertex(const Vertex& vertex) {
 
 
 template<class TVertex, class TWeight>
-bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& vertex1, const TVertex& vertex2, const TWeight& weight) {
+bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
+                                               const TVertex& ending_vertex,
+                                               const TWeight& weight)
+{
+    int starting_vertex_index = GetVertexIndex(starting_vertex);
+    int ending_vertex_index = GetVertexIndex(ending_vertex);
 
-  int v1_index = GetVertexIndex(vertex1);
-  int v2_index = GetVertexIndex(vertex2);
+    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index) {
+        return false;
+    }
 
-  if (v1_index < 0 || v2_index < 0 || v1_index == v2_index) {
-    return false;
-  }
+    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = weight;
+    this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;
 
-  this->adjacency_matrix_[v1_index][v2_index] = weight;
-  this->adjacency_matrix_[v2_index][v1_index] = weight;
+    this->edge_count_++;
 
-  this->edge_count_++;
+    Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
+    this->edges_.push_back(edge);
 
-  pair<TVertex, TVertex> edge1(vertex1, vertex2);
-  pair<TVertex, TVertex> edge2(vertex2, vertex1);
-
-  return true;
+    return true;
 }
 
 
@@ -455,7 +455,7 @@ istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
   for (int i = 0; i < edge_num; i++) {
 
-    cout<<"AdjacencyEdge "<<i<<":"<<endl;
+    cout<<"Adjacency "<<i<<":"<<endl;
     in >> src_vertex >> dest_vertex >> weight;
 
     int src_vertex_index = graph_matrix.GetVertexIndex(src_vertex);
@@ -472,8 +472,8 @@ istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
 
 
 /*
-template<class Vertex, class Weight>
-ostream& operator<<(ostream& out, MatrixGraph<Vertex, Weight>& graph_matrix) {
+template<class TVertex, class TWeight>
+ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph_matrix) {
 
   int vertex_num = graph_matrix.VertexCount();
   int edge_num = graph_matrix.EdgeCount();
@@ -483,12 +483,12 @@ ostream& operator<<(ostream& out, MatrixGraph<Vertex, Weight>& graph_matrix) {
   for (int vertex1_index = 0; vertex1_index < vertex_num; vertex1_index++) {
     for (int vertex2_index = 0; vertex2_index < vertex_num; vertex2_index++) {
 
-        Weight weight = graph_matrix.GetWeight(vertex1_index, vertex2_index);
+        TWeight weight = graph_matrix.GetWeight(vertex1_index, vertex2_index);
 
       if (weight > 0) {
 
-        Vertex vertex1 = graph_matrix.GetValue(vertex1_index);
-        Vertex vertex2 = graph_matrix.GetValue(vertex2_index);
+        TVertex vertex1 = graph_matrix.GetValue(vertex1_index);
+        TVertex vertex2 = graph_matrix.GetValue(vertex2_index);
 
         out << "(" << vertex1 << "," << vertex2 << "," << weight << ")" << endl;
       }
