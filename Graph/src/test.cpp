@@ -123,13 +123,17 @@ void TestGetVertexByIndex() {
 
     // 按照索引值读取邻接表图各结点
     for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
-        // adjacency_list_graph.GetVertexByIndex(graph_vertices[i], i);
         adjacency_list_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
     adjacency_list_graph.RemoveEdge("北京", "上海");
     adjacency_list_graph.RemoveEdge("北京", "广州");
     adjacency_list_graph.RemoveVertex("北京");
+    adjacency_list_graph.RemoveVertex("上海");
+    adjacency_list_graph.RemoveVertex("广州");
+    adjacency_list_graph.RemoveVertex("深圳");
+    adjacency_list_graph.RemoveVertex("杭州");
+    // adjacency_list_graph.RemoveVertex("成都");
 
     // 打印结点
     cout<<"**邻接表图**"<<endl;
@@ -143,14 +147,13 @@ void TestGetVertexByIndex() {
     MatrixGraph<string, double> matrix_graph(10, 10000, edges, vertices);
 
     // 按照索引值读取矩阵图各结点
-    for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
-        // matrix_graph.GetVertexByIndex(graph_vertices[i], i);
+    for (int i = 0; i < matrix_graph.VertexCount(); i++) {
         matrix_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
     // 打印结点
     cout<<endl<<"**矩阵图**"<<endl;
-    for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
+    for (int i = 0; i < matrix_graph.VertexCount(); i++) {
         cout << "索引" << i << "结点: " << graph_vertices[i] << endl;
     }
 

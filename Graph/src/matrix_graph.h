@@ -181,15 +181,16 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
         throw bad_alloc();
     }
 
-    for (int i = 0; i < this->max_vertex_count_; i++) {
-        this->adjacency_matrix_[i] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
-        for (int j = 0; j < this->max_vertex_count_; j++) {
-            this->adjacency_matrix_[i][j] = (TWeight)0;
+    for (int starting_vertex_index = 0; starting_vertex_index < this->max_vertex_count_; starting_vertex_index++) {
+        this->adjacency_matrix_[starting_vertex_index] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
+        for (int ending_vertex_index = 0; ending_vertex_index < this->max_vertex_count_; ending_vertex_index++) {
+            this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = (TWeight)0;
         }
     }
 
     for (unsigned int i = 0; i < vertices.size(); i++) {
-        this->InsertVertex(vertices[i]);
+        TVertex vertex = vertices[i];
+        this->InsertVertex(vertex);
     }
 
     for (unsigned int i = 0; i < edges.size(); i++) {

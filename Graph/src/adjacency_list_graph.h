@@ -185,8 +185,9 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int max_vertex_count,
         throw bad_alloc();
     }
 
-    for (unsigned int i = 0; i < this->vertices_.size(); i++) {
-        this->InsertVertex(vertices[i]);
+    for (unsigned int i = 0; i < vertices.size(); i++) {
+        TVertex vertex = vertices[i];
+        this->InsertVertex(vertex);
     }
 
     for (unsigned int i = 0; i < edges.size(); i++) {
@@ -206,13 +207,13 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int max_vertex_count,
  */
 template<typename TVertex, typename TWeight>
 AdjacencyListGraph<TVertex, TWeight>::~AdjacencyListGraph() {
-    for (int i = 0; i < this->vertex_count_; i++) {
-        Adjacency<TVertex, TWeight>* temp = this->adjacency_list_[i].adjacency; // temp指向待删除邻接元素
+    for (int starting_vertex_index = 0; starting_vertex_index < this->vertex_count_; starting_vertex_index++) {
+        Adjacency<TVertex, TWeight>* temp = this->adjacency_list_[starting_vertex_index].adjacency; // temp指向待删除邻接元素
 
         while (temp != NULL) {
-            this->adjacency_list_[i].adjacency = temp->next;
+            this->adjacency_list_[starting_vertex_index].adjacency = temp->next;
             delete temp;
-            temp = this->adjacency_list_[i].adjacency;
+            temp = this->adjacency_list_[starting_vertex_index].adjacency;
         }
     }
 
@@ -317,74 +318,99 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
 
 
 /*!
- * @brief 删除结点
- * @param vertex 节点
- * @return 是否删除成功
+ * @brief **删除结点**
+ * @param vertex 结点
+ * @return 执行结果
+ * @note
+ * 删除结点
+ * -------
+ * -------
+ *
+ * todo: 丑陋:-(, 进行封装
+ *
+ * -------
  */
-template<class Vertex, class Weight>
-bool AdjacencyListGraph<Vertex, Weight>::RemoveVertex(const Vertex& vertex) {
+template<class TVertex, class TWeight>
+bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
     int vertex_index = this->GetVertexIndex(vertex);
 
-    if (this->vertex_count_ == 1 || vertex_index < 0 || vertex_index >= this->vertex_count_) {
+    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {
         return false;
     }
 
-    while (this->adjacency_list_[vertex_index].adjacency != NULL) {
+    // todo: 此为无向图/网的逻辑
+    // vertex的邻接结点, 在adjacency_list_各自所在的链表, 执行删除
+    Adjacency<TVertex, TWeight>* cur_adjacency = this->adjacency_list_[vertex_index].adjacency;
+    while (cur_adjacency) {
 
-        Adjacency<Vertex, Weight>* prior = NULL;
-        Adjacency<Vertex, Weight>* cur_adjacency_edge = this->adjacency_list_[vertex_index].adjacency;
+        // vertex的当前邻接结点, 在邻接表中的自身链表中的邻接结点元素指针
+        Adjacency<TVertex, TWeight>* cur_adjacency_ending_vertex_adjacency =
+            this->adjacency_list_[cur_adjacency->ending_vertex_index].adjacency;
 
-        Adjacency<Vertex, Weight>* delete_edge = NULL;
-        Adjacency<Vertex, Weight>* cur = this->adjacency_list_[cur_adjacency_edge->ending_vertex_index].adjacency;
-
-        while (cur != NULL && cur->ending_vertex_index != vertex_index) {
-            prior = cur;
-            cur = cur->next;
+        Adjacency<TVertex, TWeight>* prior = NULL;    // 待删除结点的前驱, 初始化为NULL
+        // 找到前驱结点和待删除结点
+        while (cur_adjacency_ending_vertex_adjacency != NULL &&
+               cur_adjacency_ending_vertex_adjacency->ending_vertex_index != vertex_index)
+        {
+            prior = cur_adjacency_ending_vertex_adjacency;
+            cur_adjacency_ending_vertex_adjacency = cur_adjacency_ending_vertex_adjacency->next;
         }
-        delete_edge = cur;
 
-        if (delete_edge != NULL) {
+        Adjacency<TVertex, TWeight>* temp = cur_adjacency_ending_vertex_adjacency;
+        if (temp != NULL) {
             if (prior == NULL) {
-                this->adjacency_list_[cur_adjacency_edge->ending_vertex_index].adjacency = delete_edge->next;
+                this->adjacency_list_[cur_adjacency->ending_vertex_index].adjacency = temp->next;
             } else {
-                prior->next = delete_edge->next;
+                prior->next = temp->next;
             }
 
-            delete delete_edge;
-            delete_edge = NULL;
+            delete temp;
+            temp = NULL;
         }
 
-        this->adjacency_list_[vertex_index].adjacency = cur_adjacency_edge->next;
-
-        delete cur_adjacency_edge;
+        cur_adjacency = cur_adjacency->next;
 
         this->edge_count_--;
     }
 
+    Adjacency<TVertex, TWeight>* temp = this->adjacency_list_[vertex_index].adjacency;
+    while (temp) {
+        this->adjacency_list_[vertex_index].adjacency = temp->next;
+        delete temp;
+        temp = this->adjacency_list_[vertex_index].adjacency;
+    }
+    this->adjacency_list_[vertex_index].adjacency = NULL;
+    this->adjacency_list_[vertex_index].starting_vertex = TVertex();
+
     this->vertex_count_--;
 
+    // 将当前最后一个结点索引(this->vertex_count_)的链表, 挪至vertex_index对应的位置
     this->adjacency_list_[vertex_index].starting_vertex = this->adjacency_list_[this->vertex_count_].starting_vertex;
     this->adjacency_list_[vertex_index].adjacency = this->adjacency_list_[this->vertex_count_].adjacency;
 
-    Adjacency<Vertex, Weight>* cur_adjacency_edge = this->adjacency_list_[this->vertex_count_].adjacency;
-    while (cur_adjacency_edge) {
+    // 将该链表的每个结点在其他链表中对应的adjacency进行ending_vertex_index调整
+    Adjacency<TVertex, TWeight>* cur_adjacency_ending_vertex_adjacency =
+        this->adjacency_list_[this->vertex_count_].adjacency;
+    while (cur_adjacency_ending_vertex_adjacency) {
 
-        Adjacency<Vertex, Weight>* modify_adjacency_edge = this->adjacency_list_[cur_adjacency_edge->ending_vertex_index].adjacency;
+        Adjacency<TVertex, TWeight>* cur =
+            this->adjacency_list_[cur_adjacency_ending_vertex_adjacency->ending_vertex_index].adjacency;
 
-        while (modify_adjacency_edge != NULL) {
-            if (modify_adjacency_edge->ending_vertex_index == this->vertex_count_) {
-                modify_adjacency_edge->ending_vertex_index = vertex_index;
+        while (cur != NULL) {
+            if (cur->ending_vertex_index == this->vertex_count_) {
+                cur->ending_vertex_index = vertex_index;
                 break;
             } else {
-                modify_adjacency_edge = modify_adjacency_edge->next;
+                cur = cur->next;
             }
         }
 
-        cur_adjacency_edge = cur_adjacency_edge->next;
+        cur_adjacency_ending_vertex_adjacency = cur_adjacency_ending_vertex_adjacency->next;
     }
 
     this->adjacency_list_[this->vertex_count_].adjacency = NULL;
+    this->adjacency_list_[this->vertex_count_].starting_vertex = TVertex();
 
     // vertices_删除结点
     for (int i = 0; i < this->VertexCount(); i++) {
