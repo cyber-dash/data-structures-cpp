@@ -15,6 +15,54 @@
 using namespace std;
 
 
+void TestBaseFunctions() {
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                  Test Graph BaseFunctions                 |"<<endl;
+    cout<<"|                        测试图基础函数                       |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                         北京                               |"<<endl;
+    cout<<"|                         / \\                               |"<<endl;
+    cout<<"|                        /   \\                              |"<<endl;
+    cout<<"|                      0.1   0.12                           |"<<endl;
+    cout<<"|                      /       \\                            |"<<endl;
+    cout<<"|                     /         \\                           |"<<endl;
+    cout<<"|                  上海---0.01---广州                        |"<<endl;
+    cout<<"|                   / \\         / \\                         |"<<endl;
+    cout<<"|                  /   \\       /   \\                        |"<<endl;
+    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
+    cout<<"|                /       \\   /       \\                      |"<<endl;
+    cout<<"|               /         \\ /         \\                     |"<<endl;
+    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<endl;
+
+    int edge_count = 9;
+
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
+
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
+
+    vector<string> graph_vertices(vertices.size());
+
+    // 构造邻接表图
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
+
+    cout << adjacency_list_graph << endl;
+
+    cout<<"-------------------------------------------------------------"<<endl;
+}
+
+
 void TestMinPriorityQueue() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;

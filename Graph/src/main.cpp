@@ -15,6 +15,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+    TestBaseFunctions();
+
     // TestMinPriorityQueue();
 
     // 测试矩阵图打印矩阵

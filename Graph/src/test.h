@@ -17,6 +17,8 @@
 #include <iostream>
 
 
+void TestBaseFunctions();
+
 /*! 测试优先队列(最小) */
 void TestMinPriorityQueue();
 

@@ -60,7 +60,7 @@ struct LinkedNode {
 
 
 template <class TData> class LinkedStack;
-template<class TData> ostream& operator<<(ostream& os, LinkedStack<TData>& stack);
+template<class TData> ostream& operator<<(ostream& os, const LinkedStack<TData>& stack);
 
 /*!
  * @brief **链式栈模板类**
@@ -104,7 +104,7 @@ public:
     void Clear();
 
     // 重载<<(打印栈)
-    friend ostream& operator<< <>(ostream& os, LinkedStack<TData>& stack);
+    friend ostream& operator<< <>(ostream& os, const LinkedStack<TData>& stack);
 
 private:
 
@@ -338,7 +338,7 @@ void LinkedStack<TData>::Clear() {
   * ------
   */
 template<class TData>
-ostream& operator<<(ostream& os, LinkedStack<TData>& stack) {
+ostream& operator<<(ostream& os, const LinkedStack<TData>& stack) {
 
     os << "栈中元素个数: " << stack.Length() << endl;
 
