@@ -91,7 +91,7 @@ public:
    *
    * ----------
    */
-  unsigned int VertexCount() { return this->vertex_count_; }
+  unsigned int VertexCount() const { return this->vertex_count_; }
 
     /*!
      * @brief **获取边数量**
@@ -103,7 +103,7 @@ public:
      *
      * ---------
      */
-    unsigned int EdgeCount() { return this->edge_count_; }
+    unsigned int EdgeCount() const { return this->edge_count_; }
 
     virtual TWeight MaxWeight() const { return this->max_weight_; }
 
@@ -123,7 +123,7 @@ public:
      *
      * ---------------
      */
-    virtual bool GetVertexByIndex(int vertex_index, TVertex& vertex) = 0;
+    virtual bool GetVertexByIndex(int vertex_index, TVertex& vertex) const = 0;
 
     /*!
      * @brief **获取边权值(使用结点)**
@@ -138,8 +138,7 @@ public:
      *
      * -----------------
      */
-  // virtual bool GetWeight(TWeight& weight, TVertex v1, TVertex v2) = 0;
-    virtual bool GetWeight(TVertex v1, TVertex v2, TWeight& weight) = 0;
+    virtual bool GetWeight(TVertex v1, TVertex v2, TWeight& weight) const = 0;
 
     /*!
      * @brief 获取边权值(使用结点索引)
@@ -154,7 +153,7 @@ public:
      *
      * ---------------------
      */
-    virtual bool GetWeightByVertexIndex(int v1_index, int v2_index, TWeight& weight) = 0;
+    virtual bool GetWeightByVertexIndex(int v1_index, int v2_index, TWeight& weight) const = 0;
 
 
     /*!
@@ -169,7 +168,7 @@ public:
      *
      * --------------------
      */
-    virtual bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) = 0;
+    virtual bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) const = 0;
 
 
     /*!
@@ -185,7 +184,9 @@ public:
      *
      * --------------------
      */
-    virtual bool GetNextNeighborVertex(const TVertex& vertex, const TVertex& neighbor_vertex, TVertex& next_neighbor) = 0;
+    virtual bool GetNextNeighborVertex(const TVertex& vertex,
+                                       const TVertex& neighbor_vertex,
+                                       TVertex& next_neighbor) const = 0;
 
 
   /*!
@@ -256,7 +257,7 @@ public:
      *
      * --------------
      */
-    virtual int GetVertexIndex(TVertex vertex) = 0;
+    virtual int GetVertexIndex(TVertex vertex) const = 0;
 
 protected:
     int max_vertex_count_;    //!< 图节点数量最大限制

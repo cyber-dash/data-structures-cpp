@@ -135,43 +135,43 @@ protected:
 
 
 // 图深度优先遍历
-template<class Vertex, class Weight>
-void DFS(Graph<Vertex, Weight>& graph, const Vertex& vertex);
+template<typename TVertex, typename TWeight>
+void DFS(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 
 
 // 图深度优先遍历(递归)
-template<class Vertex, class Weight>
-void DFSOnVertex(Graph<Vertex, Weight>& graph, Vertex vertex, set<Vertex>& visited_vertex_set);
+template<typename TVertex, typename TWeight>
+void DFSOnVertex(const Graph<TVertex, TWeight>& graph, TVertex vertex, set<TVertex>& visited_vertex_set);
 
 
 // 图广度优先遍历
-template<class Vertex, class Weight>
-void BFS(Graph<Vertex, Weight>& graph, const Vertex& vertex);
+template<typename TVertex, typename TWeight>
+void BFS(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 
 
 // 求图的连通分量
-template<class Vertex, class Weight>
-void Components(Graph<Vertex, Weight>& graph);
+template<typename TVertex, typename TWeight>
+void Components(const Graph<TVertex, TWeight>& graph);
 
 
 // Prim算法
-template<class Vertex, class Weight>
-bool Prim(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
+template<typename TVertex, typename TWeight>
+bool Prim(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_span_tree);
 
 
 // Kruskal最小生成树(优先队列)
-template<class Vertex, class Weight>
-void Kruskal(Graph<Vertex, Weight>& graph, MinSpanTree<Vertex, Weight>& min_span_tree);
+template<typename TVertex, typename TWeight>
+void Kruskal(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_span_tree);
 
 
 // 迪杰斯特拉(Dijkstra)最短路径
 template<class Vertex, class Weight>
-void Dijkstra(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
+void Dijkstra(const Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
 
 
 // 迪杰斯特拉(Dijkstra)最短路径(优先队列)
 template<class Vertex, class Weight>
-void DijkstraByPriorityQueue(Graph<Vertex, Weight>& graph,
+void DijkstraByPriorityQueue(const Graph<Vertex, Weight>& graph,
                              Vertex starting_vertex,
                              Weight distance[],
                              int predecessor[]);
@@ -193,26 +193,26 @@ void DijkstraByStlPriorityQueue(Graph<Vertex, Weight>& graph,
 
 // 贝尔曼福特(Bellman-Ford)最短路径
 template<class Vertex, class Weight>
-bool BellmanFord(Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
+bool BellmanFord(const Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
 
 
 // 弗洛伊德(Floyd-Warshall)最短路径
 template<class Vertex, class Weight>
-void Floyd(Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vector<vector<int> >& predecessor);
+void Floyd(const Graph<Vertex, Weight>& graph, vector<vector<Weight> >& distance, vector<vector<int> >& predecessor);
 
 
 // 打印单源最短路径(迪杰斯特拉Dijkstra, 贝尔曼福特BellmanFord等)
-template<class Vertex, class Weight>
-void PrintSingleSourceShortestPath(Graph<Vertex, Weight>& graph,
-                                   Vertex starting_vertex,
-                                   Weight distance[],
+template<typename TVertex, typename TWeight>
+void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
+                                   TVertex starting_vertex,
+                                   TWeight distance[],
                                    const int predecessor[]);
 
 
 // 打印多源最短路径(弗洛伊德Floyd等)
-template<class Vertex, class Weight>
-void PrintMultipleSourceShortestPath(Graph<Vertex, Weight>& graph,
-                                     vector<vector<Weight> > distance,
+template<typename TVertex, typename TWeight>
+void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
+                                     vector<vector<TWeight> > distance,
                                      vector<vector<int> > predecessor);
 
 

@@ -4,20 +4,27 @@
  * @brief 矩阵图模板类
  * @version 0.2.1
  * @date 2021-07-14
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_MATRIX_GRAPH_H
 #define CYBER_DASH_MATRIX_GRAPH_H
 
 
-#include "graph.h"
 #include <iostream>
 #include <map>
+#include "graph.h"
 
 
 using namespace std;
+
+
+template<typename TVertex, typename TWeight> class MatrixGraph;
+// 输入图(重载标准输入)
+template<typename TVertex, typename TWeight>
+istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph);
+// 打印图(重载标准输出)
+template<typename TVertex, typename TWeight>
+ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph);
 
 
 /*!
@@ -25,7 +32,7 @@ using namespace std;
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  */
-template<class TVertex, class TWeight>
+template<typename TVertex, typename TWeight>
 class MatrixGraph: public Graph<TVertex, TWeight> {
 
 public:
@@ -46,16 +53,13 @@ public:
      * @param vertex_index 结点索引
      * @return 是否获取成功
      */
-  // bool GetVertexByIndex(TVertex& vertex, int vertex_index);
-    bool GetVertexByIndex(int vertex_index, TVertex& vertex);
+    bool GetVertexByIndex(int vertex_index, TVertex& vertex) const;
 
     // (由边的两个结点)获取边权值
-  // bool GetWeight(TWeight& weight, TVertex v1, TVertex v2);
-    bool GetWeight(TVertex v1, TVertex v2, TWeight& weight);
+    bool GetWeight(TVertex v1, TVertex v2, TWeight& weight) const;
 
     // (由边的两个结点索引)获取边权值
-  // bool GetWeightByVertexIndex(TWeight& weight, int v1_index, int v2_index);
-    bool GetWeightByVertexIndex(int v1_index, int v2_index, TWeight& weight);
+    bool GetWeightByVertexIndex(int v1_index, int v2_index, TWeight& weight) const;
 
   /*!
    * @brief 插入结点
@@ -94,8 +98,7 @@ public:
    * @param vertex 节点
    * @return 是否获取成功
    */
-  // bool GetFirstNeighborVertex(TVertex& first_neighbor, const TVertex& vertex);
-    bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor);
+    bool GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) const;
 
     /*!
      * @brief 获取下一个相邻结点
@@ -104,25 +107,28 @@ public:
      * @param neighbor_vertex 当前相邻结点
      * @return 是否获取成功
      */
-    // bool GetNextNeighborVertex(TVertex& next_neighbor_vertex, const TVertex& vertex, const TVertex& neighbor_vertex);
-    bool GetNextNeighborVertex(const TVertex& vertex, const TVertex& neighbor_vertex, TVertex& next_neighbor_vertex);
+    bool GetNextNeighborVertex(const TVertex& vertex,
+                               const TVertex& neighbor_vertex,
+                               TVertex& next_neighbor_vertex) const;
 
-  /*!
-   * @brief 获取结点索引
-   * @param vertex 结点
-   * @return 结点索引
-   */
-  int GetVertexIndex(TVertex vertex);
+    /*!
+     * @brief **获取结点索引**
+     * @param vertex 结点
+     * @return 结点索引
+     * @note
+     * 获取结点索引
+     * ----------
+     * ----------
+     *
+     * ----------
+     */
+    int GetVertexIndex(TVertex vertex) const;
 
-  template<class U>
-  friend istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph_matrix);
-  template<class U>
-  friend ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph_matrix);
+    friend istream& operator>> <>(istream& in, MatrixGraph<TVertex, TWeight>& graph_matrix);
+    friend ostream& operator<< <>(ostream& out, MatrixGraph<TVertex, TWeight>& graph_matrix);
 
-  void PrintMatrix();
-  // void CyberDashShow();
-
-  // map<pair<TVertex, TVertex>, TWeight> edge_map; // todo: 用于保存边集合, 未实现
+    void PrintMatrix();
+    // void CyberDashShow();
 private:
   TWeight** adjacency_matrix_; //!< 边矩阵
 };
@@ -223,7 +229,7 @@ MatrixGraph<Vertex, Weight>::~MatrixGraph() {
  * @return 是否获取成功
  */
 template<class TVertex, class TWeight>
-bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& vertex) {
+bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& vertex) const {
   if (vertex_index >= 0 && vertex_index <= this->vertex_count_) {
     vertex = this->vertices_[vertex_index];
     return true;
@@ -243,8 +249,7 @@ bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& 
  * @return
  */
 template<class Vertex, class Weight>
-// bool MatrixGraph<TVertex, TWeight>::GetWeight(TWeight& weight, TVertex v1, TVertex v2) {
-bool MatrixGraph<Vertex, Weight>::GetWeight(Vertex v1, Vertex v2, Weight& weight) {
+bool MatrixGraph<Vertex, Weight>::GetWeight(Vertex v1, Vertex v2, Weight& weight) const {
 
   int v1_index = GetVertexIndex(v1);
   int v2_index = GetVertexIndex(v2);
@@ -252,7 +257,6 @@ bool MatrixGraph<Vertex, Weight>::GetWeight(Vertex v1, Vertex v2, Weight& weight
       return false;
   }
 
-  // bool res = GetWeightByVertexIndex(weight, v1_index, v2_index);
     bool res = GetWeightByVertexIndex(v1_index, v2_index, weight);
 
   return res;
@@ -260,8 +264,7 @@ bool MatrixGraph<Vertex, Weight>::GetWeight(Vertex v1, Vertex v2, Weight& weight
 
 
 template<class Vertex, class Weight>
-// bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(TWeight& weight, int v1_index, int v2_index) {
-bool MatrixGraph<Vertex, Weight>::GetWeightByVertexIndex(int v1_index, int v2_index, Weight& weight) {
+bool MatrixGraph<Vertex, Weight>::GetWeightByVertexIndex(int v1_index, int v2_index, Weight& weight) const {
 
     if (v1_index >= 0 && v2_index >= 0 && v1_index != v2_index &&
         adjacency_matrix_[v1_index][v2_index] != 0)
@@ -276,7 +279,7 @@ bool MatrixGraph<Vertex, Weight>::GetWeightByVertexIndex(int v1_index, int v2_in
 
 
 template<typename TVertex, typename TWeight>
-bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) {
+bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) const {
 
   int vertex_index = GetVertexIndex(vertex);
   if (vertex_index < 0) {
@@ -293,7 +296,6 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
       continue;
     }
 
-    // bool has_weight = GetWeight(weight, vertex, cur_vertex);
       bool has_weight = GetWeight(vertex, cur_vertex, weight);
     if (has_weight) {
       first_neighbor = cur_vertex;
@@ -306,8 +308,10 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
 
 
 template<class TVertex, class TWeight>
-// bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(TVertex& next_neighbor_vertex, const TVertex& vertex, const TVertex& neighbor_vertex) {
-bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex, const TVertex& neighbor_vertex, TVertex& next_neighbor_vertex) {
+bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
+                                                          const TVertex& neighbor_vertex,
+                                                          TVertex& next_neighbor_vertex) const
+{
 
   int vertex_index = GetVertexIndex(vertex);
   int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);
@@ -320,13 +324,11 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
     TWeight weight;
     TVertex cur_vertex;
 
-    // bool done = GetVertexByIndex(cur_vertex, cur_index);
-      bool done = GetVertexByIndex(cur_index, cur_vertex);
-    if (!done) {
+      bool res = GetVertexByIndex(cur_index, cur_vertex);
+    if (!res) {
       continue;
     }
 
-    // bool has_weight = GetWeight(weight, vertex, cur_vertex);
       bool has_weight = GetWeight(vertex, cur_vertex, weight);
     if (has_weight) {
       next_neighbor_vertex = cur_vertex;
@@ -434,14 +436,14 @@ bool MatrixGraph<Vertex, Weight>::RemoveEdge(Vertex vertex1, Vertex vertex2) {
 
 
 // todo: 需要测试, 但这个方法太笨重了, 懒得动 :-(
-template<class Vertex, class Weight>
-istream& operator>>(istream& in, MatrixGraph<Vertex, Weight>& graph_matrix) {
+template<typename TVertex, typename TWeight>
+istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph_matrix) {
 
   int vertex_num;
   int edge_num;
-  Vertex src_vertex;
-  Vertex dest_vertex;
-  Weight weight;
+  TVertex src_vertex;
+  TVertex dest_vertex;
+  TWeight weight;
 
   cout<<"Input the vertex_num and edge_num"<<endl;
   in >> vertex_num >> edge_num;
@@ -507,7 +509,7 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph_matrix) {
  * @return
  */
 template<class Vertex, class Weight>
-int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) {
+int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) const {
     for (int i = 0; i < this->vertex_count_; i++) {
         if (this->vertices_[i] == vertex) {
             return i;
