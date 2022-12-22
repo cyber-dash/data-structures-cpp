@@ -510,8 +510,8 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
   distance[starting_vertex_idx] = 0;
 
   // 路径的最小优先队列, 路径起始点-->起始点入优先队列
-  MinPriorityQueue<AdjacencyListPath<TVertex, TWeight> > min_priority_queue;
-  AdjacencyListPath<TVertex, TWeight> cur_path(starting_vertex, starting_vertex, 0);
+  MinPriorityQueue<Path<TVertex, TWeight> > min_priority_queue;
+  Path<TVertex, TWeight> cur_path(starting_vertex, starting_vertex, 0);
   min_priority_queue.Enqueue(cur_path);
 
   // 起始点的前驱结点索引设为-1
@@ -525,7 +525,7 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
     //   起始点到(vertex_set的)各结点中的最短路径cur_min_distance_path
     //   该路径对应的终点cur_min_dist_ending_vertex
     //   终点索引cur_min_dist_ending_vertex_idx
-    AdjacencyListPath<TVertex, TWeight> cur_min_distance_path;
+    Path<TVertex, TWeight> cur_min_distance_path;
     min_priority_queue.Dequeue(cur_min_distance_path);
 
     TVertex cur_min_distance_ending_vertex;
@@ -572,7 +572,7 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
         distance[j] = distance[cur_min_distance_ending_vertex_idx] + weight;
         predecessor[j] = cur_min_distance_ending_vertex_idx;
 
-        AdjacencyListPath<TVertex, TWeight> new_min_distance_path(starting_vertex, vertex_j, distance[j]);
+        Path<TVertex, TWeight> new_min_distance_path(starting_vertex, vertex_j, distance[j]);
         min_priority_queue.Enqueue(new_min_distance_path);
       }
     }

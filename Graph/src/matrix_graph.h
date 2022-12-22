@@ -28,7 +28,7 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph);
 
 
 /*!
- * @brief 矩阵图模板类
+ * @brief **矩阵图模板类**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  */
@@ -36,7 +36,7 @@ template<typename TVertex, typename TWeight>
 class MatrixGraph: public Graph<TVertex, TWeight> {
 
 public:
-  // 构造函数
+    // 构造函数
     MatrixGraph(int max_vertex_count, TWeight max_weight);
 
     MatrixGraph(int max_vertex_count,
@@ -47,12 +47,7 @@ public:
     // 析构函数
     ~MatrixGraph();
 
-    /*!
-     * @brief 获取节点(由结点索引)
-     * @param vertex 结点(用于保存结果)
-     * @param vertex_index 结点索引
-     * @return 是否获取成功
-     */
+    // 获取结点(by结点索引)
     bool GetVertexByIndex(int vertex_index, TVertex& vertex) const;
 
     // (由边的两个结点)获取边权值
@@ -223,10 +218,16 @@ MatrixGraph<Vertex, Weight>::~MatrixGraph() {
 
 
 /*!
- * @brief 使用结点索引获取结点
- * @param vertex 结点(保存结果的节点)
+ * @brief **获取结点(by结点索引)**
  * @param vertex_index 结点索引
- * @return 是否获取成功
+ * @param vertex 结点保存遍历
+ * @return 执行结果
+ * @note
+ * 获取结点(by结点索引)
+ * -----------------
+ * -----------------
+ *
+ * -----------------
  */
 template<class TVertex, class TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& vertex) const {
