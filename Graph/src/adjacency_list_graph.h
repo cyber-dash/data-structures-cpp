@@ -435,7 +435,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
     this->vertices_.erase(this->vertices_.begin() + vertex_index);
 
     // edges_删除边
-    for (vector<Edge<TVertex, TWeight> >::iterator iter = this->edges_.begin(); iter != this->edges_.end(); iter++) {
+    for (typename vector<Edge<TVertex, TWeight> >::iterator iter = this->edges_.begin(); iter != this->edges_.end(); iter++) {
         if (iter->ending_vertex == vertex || iter->starting_vertex == vertex) {
             iter = this->edges_.erase(iter);
         }
