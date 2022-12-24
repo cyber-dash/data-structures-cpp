@@ -193,6 +193,7 @@ void TestGetVertexByIndex() {
 
     // 构造矩阵图
     MatrixGraph<string, double> matrix_graph(10, 10000, edges, vertices);
+    matrix_graph.RemoveVertex("北京");
 
     // 按照索引值读取矩阵图各结点
     for (int i = 0; i < matrix_graph.VertexCount(); i++) {

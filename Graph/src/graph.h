@@ -161,7 +161,7 @@ public:
      *
      * -----------------
      */
-    virtual bool GetWeight(TVertex starting_vertex, TVertex ending_vertex, TWeight& weight) const = 0;
+    virtual bool GetWeight(const TVertex& starting_vertex, const TVertex& ending_vertex, TWeight& weight) const = 0;
 
     /*!
      * @brief 获取边权值(by结点索引)
@@ -265,7 +265,7 @@ public:
      *
      * -----
      */
-    virtual bool RemoveEdge(TVertex starting_vertex, TVertex ending_vertex) = 0;
+    virtual bool RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) = 0;
 
     /*!
      * @brief **获取结点索引**
