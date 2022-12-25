@@ -246,7 +246,7 @@ void TestGetVertexByIndex() {
 void TestDFS() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                       Test Graph DFS                      |"<<endl;
+    cout<<"|                       Test Graph DfsRecursive                      |"<<endl;
     cout<<"|                      测试图深度优先遍历                      |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                           北京                               |"<<endl;
@@ -285,10 +285,10 @@ void TestDFS() {
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
 
     cout<<"**邻接表图**"<<endl;
-    DFS(adjacency_list_graph, vertices[0]);
+    DfsRecursive(adjacency_list_graph, vertices[0]);
 
     cout<<endl<<"**矩阵图**"<<endl;
-    DFS(matrix_graph, vertices[0]);
+    DfsRecursive(matrix_graph, vertices[0]);
 
     cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -298,7 +298,7 @@ void TestDFS() {
 void TestBFS() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                          Test BFS                         |"<<endl;
+    cout<<"|                          Test Bfs                         |"<<endl;
     cout<<"|                       测试广度优先遍历                      |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                           北京                               |"<<endl;
@@ -338,10 +338,10 @@ void TestBFS() {
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
 
     cout<<"**邻接表图**"<<endl;
-    BFS(adjacency_list_graph, vertices[0]);
+    Bfs(adjacency_list_graph, vertices[0]);
 
     cout<<endl<<"**矩阵图**"<<endl;
-    BFS(matrix_graph, vertices[0]);
+    Bfs(matrix_graph, vertices[0]);
 
     cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -434,12 +434,12 @@ void TestKruskal() {
 
     cout << "**邻接表图测试**" << endl;
     Kruskal(adjacency_list_graph, min_span_tree_adj);
-    min_span_tree_adj.Show();
+    min_span_tree_adj.Print();
 
     cout << endl << "**矩阵图测试**" << endl;
     Kruskal(matrix_graph, min_span_tree_matrix);
 
-    min_span_tree_matrix.Show();
+    min_span_tree_matrix.Print();
     cout << "-------------------------------------------------------------" << endl;
 }
 
@@ -487,12 +487,12 @@ void TestPrim() {
     cout<<endl<<"**邻接表图测试**"<<endl;
     MinimumSpanTree<string, double> min_span_tree_adj(100);
     Prim(adjacency_list_graph, min_span_tree_adj);
-    min_span_tree_adj.Show();
+    min_span_tree_adj.Print();
 
     cout<<endl<<"**矩阵图测试**"<<endl;
     MinimumSpanTree<string, double> min_span_tree_matrix(100);
     Prim(matrix_graph, min_span_tree_matrix);
-    min_span_tree_matrix.Show();
+    min_span_tree_matrix.Print();
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

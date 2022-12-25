@@ -103,14 +103,24 @@ struct MinimumSpanTreeEdge {
 template<typename TVertex, typename TWeight>
 class MinimumSpanTree {
 public:
-    /*! 构造函数 */
+
+    /*!
+     * @brief **构造函数**
+     * @param max_size 边数上限
+     * @note
+     * 构造函数
+     * -------
+     * -------
+     *
+     * -------
+     */
     explicit MinimumSpanTree(int max_size): max_size_(max_size), size_(0) {
         this->mst_edges_ = new MinimumSpanTreeEdge<TVertex, TWeight>[max_size];
     }
 
     /*!
-     * @brief 向MST插入结点
-     * @param mst_edge MST结点
+     * @brief 向MST插入边
+     * @param mst_edge MST边
      * @return 当前最小生成树边的数量
      */
     int Insert(MinimumSpanTreeEdge<TVertex, TWeight>& mst_edge) {
@@ -125,42 +135,43 @@ public:
     }
 
     /*! @brief 显示最小生成树 */
-    void Show() {
-        TWeight sum = 0; // 总权值
-        for (int i = 0; i < size_; i++) {
-            sum += mst_edges_[i].weight;
-            cout << "starting_vertex: " << mst_edges_[i].starting_vertex << ", ending_vertex: " << mst_edges_[i].ending_vertex << ", weight: "
-                 << mst_edges_[i].weight << endl;
+    void Print() {
+        TWeight total_weight = 0; // 总权值
+        for (int i = 0; i < this->size_; i++) {
+            total_weight += this->mst_edges_[i].weight;
+            cout << "starting_vertex: " << this->mst_edges_[i].starting_vertex
+                 << ", ending_vertex: " << mst_edges_[i].ending_vertex
+                 << ", weight: " << mst_edges_[i].weight << endl;
         }
 
-        cout<<"最小生成树边, 总权值: "<<sum<<endl;
+        cout << "最小生成树边, 总权值: " << total_weight << endl;
     }
 
 protected:
-    MinimumSpanTreeEdge<TVertex, TWeight>* mst_edges_; //!< 最小生成树结点数组
-    int max_size_; //!< 最大结点数
-    int size_; //!< 当前生成树的节点数量
+    MinimumSpanTreeEdge<TVertex, TWeight>* mst_edges_; //!< 最小生成树边数组
+    int max_size_;    //!< 边数上限
+    int size_;        //!< 当前边数量
 };
 
 
 // 图深度优先遍历
 template<typename TVertex, typename TWeight>
-void DFS(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
+void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 
 
 // 图深度优先遍历(递归)
 template<typename TVertex, typename TWeight>
-void DFSOnVertex(const Graph<TVertex, TWeight>& graph, TVertex vertex, set<TVertex>& visited_vertex_set);
+void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex, set<TVertex>& visited_vertex_set);
 
 
 // 图广度优先遍历
 template<typename TVertex, typename TWeight>
-void BFS(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
+void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 
 
 // 求图的连通分量
 template<typename TVertex, typename TWeight>
-void Components(const Graph<TVertex, TWeight>& graph);
+int Components(const Graph<TVertex, TWeight>& graph);
 
 
 // Prim算法
@@ -174,8 +185,11 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
 
 
 // 迪杰斯特拉(Dijkstra)最短路径
-template<class Vertex, class Weight>
-void Dijkstra(const Graph<Vertex, Weight>& graph, Vertex starting_vertex, Weight distance[], int predecessor[]);
+template<typename TVertex, typename TWeight>
+void Dijkstra(const Graph<TVertex, TWeight>& graph,
+              const TVertex& starting_vertex,
+              TWeight distance[],
+              int predecessor[]);
 
 
 // 迪杰斯特拉(Dijkstra)最短路径(优先队列)

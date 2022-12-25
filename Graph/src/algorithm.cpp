@@ -4,8 +4,6 @@
  * @brief 图算法.cpp文件
  * @version 0.2.1
  * @date 2021-02-04
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include <iostream>
@@ -25,42 +23,48 @@
  * @param vertex 遍历起始结点
  */
 template<typename TVertex, typename TWeight>
-void DFS(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
+void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
+    set<TVertex> visited_vertex_set;
 
-  set<TVertex> visited_vertex_set;
-
-  DFSOnVertex(graph, vertex, visited_vertex_set);
+    DfsOnVertexRecursive(graph, vertex, visited_vertex_set);
 }
 
 
 /*!
- * @brief 图深度优先遍历(递归)
- * @tparam TVertex 结点模板参数
- * @tparam TWeight 边权值模板参数
+ * @brief 图结点深度优先遍历(递归)
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
  * @param graph 图
- * @param vertex 遍历起始结点
+ * @param vertex 遍历起点
  * @param visited_vertex_set 已访问结点集合
- * @note 利用函数的调用关系来模拟栈
+ * @note
+ * 图结点深度优先遍历(递归)
+ * --------------------
+ * --------------------
+ *
+ * 利用函数的调用关系来模拟栈
+ *
+ * --------------------
  */
 template<typename TVertex, typename TWeight>
-void DFSOnVertex(const Graph<TVertex, TWeight>& graph, TVertex vertex, set<TVertex>& visited_vertex_set) {
+void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex, set<TVertex>& visited_vertex_set) {
 
     cout<<"访问结点: "<<vertex<<endl;
 
     visited_vertex_set.insert(vertex);
 
     TVertex neighbor_vertex;
-    bool has_neighbor = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);
+    bool new_neighbor_exists = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);
 
-    while (has_neighbor) {
+    while (new_neighbor_exists) {
         if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
-            DFSOnVertex(graph, neighbor_vertex, visited_vertex_set);
+            DfsOnVertexRecursive(graph, neighbor_vertex, visited_vertex_set);
         }
 
         TVertex next_neighbor_vertex;
-        has_neighbor = graph.GetNextNeighborVertex(vertex, neighbor_vertex, next_neighbor_vertex);
+        new_neighbor_exists = graph.GetNextNeighborVertex(vertex, neighbor_vertex, next_neighbor_vertex);
 
-        if (has_neighbor) {
+        if (new_neighbor_exists) {
             neighbor_vertex = next_neighbor_vertex;
         }
     }
@@ -77,50 +81,55 @@ void DFSOnVertex(const Graph<TVertex, TWeight>& graph, TVertex vertex, set<TVert
  * 使用队列进行广度优先遍历
  */
 template<typename TVertex, typename TWeight>
-void BFS(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
+void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
 
-  cout<<"访问结点: "<<vertex<<endl;
+    cout<<"访问结点: "<<vertex<<endl;
 
-  set<TVertex> visited_vertex_set;       // 已访问结点集合
-  visited_vertex_set.insert(vertex);    // 插入已访问的起始结点vertex
+    set<TVertex> visited_vertex_set;       // 已访问结点集合
+    visited_vertex_set.insert(vertex);    // 插入已访问的起始结点vertex
 
-  queue<TVertex> vertex_queue;           // 结点队列
-  vertex_queue.push(vertex);            // 已访问的起始结点vertex入队
+    queue<TVertex> vertex_queue;           // 结点队列
+    vertex_queue.push(vertex);            // 已访问的起始结点vertex入队
 
-  while (!vertex_queue.empty()) {
-    TVertex front_vertex = vertex_queue.front(); // 每次取队头
-    vertex_queue.pop();
+    while (!vertex_queue.empty()) {
+        TVertex front_vertex = vertex_queue.front(); // 每次取队头
+        vertex_queue.pop();
 
-    // 遍历:已取出的队头结点的相邻结点
-    //     如果未访问该结点:
-    //         入队
-    TVertex neighbor_vertex;
-      bool has_neighbor = graph.GetFirstNeighborVertex(front_vertex, neighbor_vertex);
-    while (has_neighbor) {
-      if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {   // 如果未访问
-        cout<<"访问结点: "<<neighbor_vertex<<endl;
+        // 遍历:已取出的队头结点的相邻结点
+        //     如果未访问该结点:
+        //         入队
+        TVertex neighbor_vertex;
+        bool has_neighbor = graph.GetFirstNeighborVertex(front_vertex, neighbor_vertex);
+        while (has_neighbor) {
+            if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {   // 如果未访问
+                cout<<"访问结点: "<<neighbor_vertex<<endl;
 
-        visited_vertex_set.insert(neighbor_vertex);
+                visited_vertex_set.insert(neighbor_vertex);
 
-        vertex_queue.push(neighbor_vertex);
-      }
+                vertex_queue.push(neighbor_vertex);
+            }
 
-      TVertex next_neighbor_vertex;
-        has_neighbor = graph.GetNextNeighborVertex(front_vertex, neighbor_vertex, next_neighbor_vertex);
-      if (has_neighbor) {
-        neighbor_vertex = next_neighbor_vertex;
-      }
+            TVertex next_neighbor_vertex;
+            has_neighbor = graph.GetNextNeighborVertex(front_vertex, neighbor_vertex, next_neighbor_vertex);
+            if (has_neighbor) {
+                neighbor_vertex = next_neighbor_vertex;
+            }
+        }
     }
-  }
 }
 
 
 /*!
- * @brief 求图的连通分量
- * @tparam TVertex 结点模板参数
- * @tparam TWeight 边权值模板参数
- * @param graph 图(引用)
+ * @brief **图的连通分量**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
  * @note
+ * 图的连通分量
+ * ----------
+ * ----------
+ *
+ * ----------
  * 1. 使用visited_vertex_set保存已经遍历过的结点
  * 2. 每遍历一个结点vertex
  *   如果在visited_vertex_set中(则已经在某连通分量中)
@@ -130,29 +139,38 @@ void BFS(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  *       连通分量数量+1
  */
 template<typename TVertex, typename TWeight>
-void Components(const Graph<TVertex, TWeight>& graph) {
+int Components(const Graph<TVertex, TWeight>& graph) {
 
-  set<TVertex> visited_vertex_set; // 使用set保存已经遍历过的结点
+    if (graph.VertexCount() == 0) {
 
-  int component_idx = 1; // 初始连通分量为1
-
-  for (int i = 0; i < graph.VertexCount(); i++) {
-
-    TVertex vertex;
-      bool done = graph.GetVertexByIndex(i, vertex); // 获取索引i对应的结点vertex
-
-    if (done) {
-      // 如果visited_vertex_set中, 没有查到vertex(说明vertex在一个新的联通分量中):
-      //     对vertex执行DFS遍历(书中的算法, 使用BFS也可以)
-      if (visited_vertex_set.find(vertex) == visited_vertex_set.end()) {
-        cout << "连通分量" << component_idx << ":" << endl;
-        DFSOnVertex(graph, vertex, visited_vertex_set);
-
-        component_idx++; // 连通分量数量+1
-        cout<<endl;
-      }
     }
-  }
+
+    set<TVertex> visited_vertex_set; // 使用set保存已经遍历过的结点
+
+    int counter = 1; // 初始连通分量为1
+
+    for (int i = 0; i < graph.VertexCount(); i++) {
+
+        TVertex vertex;
+        bool res = graph.GetVertexByIndex(i, vertex); // 获取索引i对应的结点vertex
+        if (!res) {
+            continue;
+        }
+
+        // 如果visited_vertex_set中, 没有查到vertex(说明vertex在一个新的联通分量中):
+        //     对vertex执行DFS遍历(书中的算法, 使用BFS也可以)
+        if (visited_vertex_set.find(vertex) != visited_vertex_set.end()) {
+            continue;
+        }
+
+        cout << "连通分量" << counter << ":" << endl;
+          DfsOnVertexRecursive(graph, vertex, visited_vertex_set);
+
+        counter++; // 连通分量数量+1
+        cout<<endl;
+
+        return counter;
+    }
 }
 
 
@@ -363,95 +381,95 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
  *             松弛(u, v, 边集合)                 // 松弛成功的结点, 会被加入到vertex_set
  */
 template<typename TVertex, typename TWeight>
-void Dijkstra(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeight distance[], int predecessor[]) {
+void Dijkstra(const Graph<TVertex, TWeight>& graph,
+              const TVertex& starting_vertex,
+              TWeight distance[], int predecessor[])
+{
+    /// --- 初始化 ---
 
-  /// --- 初始化 ---
+    // vertex_set初始化为空
+    set<TVertex> vertex_set;
 
-  // vertex_set初始化为空
-  set<TVertex> vertex_set;
-
-  // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
-  int starting_vertex_index = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
-  for (unsigned int i = 0; i < graph.VertexCount(); i++) {
-    distance[i] = graph.MaxWeight();
-  }
-  distance[starting_vertex_index] = 0;
-
-  // 起始点的前驱结点索引设为-1
-  predecessor[starting_vertex_index] = -1;
-
-  /// --- 贪心 ---
-
-  for (unsigned int i = 0; i < graph.VertexCount(); i++) {
-    TWeight cur_min_distance = graph.MaxWeight();   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
-    TVertex cur_min_distance_ending_vertex;          // 当前最短路径对应的的终点结点
-
-    // Loop遍历结点(使用优先队列见DijkstraByPriorityQueue), 得到:
-    //   起始点到(vertex_set的)各结点中的最短路径cur_min_distance_path
-    //   该路径对应的终点cur_min_dist_ending_vertex
-    //   终点索引cur_min_dist_ending_vertex_idx
-
-    for (unsigned int j = 0; j < graph.VertexCount(); j++) {
-
-      // 拿到索引j对应的结点vertex_j
-      TVertex vertex_j;
-      // graph.GetVertexByIndex(vertex_j, j);
-        graph.GetVertexByIndex(j, vertex_j);
-
-      // 如果vertex_j已经在vertex_set中, continue
-      if (vertex_set.find(vertex_j) != vertex_set.end()) {
-        continue;
-      }
-
-      TWeight cur_distance;
-      if (graph.GetWeightByVertexIndex(i, j, cur_distance) && distance[j] < cur_min_distance) {
-          cur_min_distance_ending_vertex = vertex_j;
-          cur_min_distance = distance[j];
-      }
+    // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
+    int starting_vertex_index = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
+        distance[i] = graph.MaxWeight();
     }
+    distance[starting_vertex_index] = 0;
 
-    int cur_min_dist_ending_vertex_index = graph.GetVertexIndex(cur_min_distance_ending_vertex);
+    // 起始点的前驱结点索引设为-1
+    predecessor[starting_vertex_index] = -1;
 
-    // 将cur_min_dist_ending_vertex插入到vertex_set
-    vertex_set.insert(cur_min_distance_ending_vertex);
+    /// --- 贪心 ---
 
-    // 对cur_min_dist_ending_vertex的每个(未进入vertex_set的)相邻节点执行松弛
-    for (unsigned int j = 0; j < graph.VertexCount(); j++) {
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
+        TWeight cur_min_distance = graph.MaxWeight();   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
+        TVertex cur_min_distance_ending_vertex;          // 当前最短路径对应的的终点结点
 
-      // 拿到索引j对应的结点vertex_j
-      TVertex vertex_j;
-      // graph.GetVertexByIndex(vertex_j, j);
-        graph.GetVertexByIndex(j, vertex_j);
-      /* error handler */
+        // Loop遍历结点(使用优先队列见DijkstraByPriorityQueue), 得到:
+        //   起始点到(vertex_set的)各结点中的最短路径cur_min_distance_path
+        //   该路径对应的终点cur_min_dist_ending_vertex
+        //   终点索引cur_min_dist_ending_vertex_idx
 
-      // 如果vertex_j已经在vertex_set中, continue
-      if (vertex_set.find(vertex_j) != vertex_set.end()) {
-        continue;
-      }
+        for (unsigned int j = 0; j < graph.VertexCount(); j++) {
 
-      // 边(cur_min_distance_ending_vertex --> vertex_j)的值, 赋给weight
-      TWeight weight;
-        bool get_weight_done = graph.GetWeight(cur_min_distance_ending_vertex, vertex_j, weight);
-      if (!get_weight_done) { // 如果没有边, continue
-        continue;
-      }
+            // 拿到索引j对应的结点vertex_j
+            TVertex vertex_j;
+            // graph.GetVertexByIndex(vertex_j, j);
+            graph.GetVertexByIndex(j, vertex_j);
 
-      // 松弛操作:
-      // 如果
-      //   边 (starting_vertex  --> cur_min_distance_ending_vertex)                的weight
-      //    +
-      //   边                      (cur_min_distance_ending_vertex  -->  vertex_j) 的weight
-      //    <
-      //   边 (starting_vertex  ---------------------------------->  vertex_j) 的weight
-      // 则
-      //   更新distance[j]和predecessor[j]
-      if (distance[cur_min_dist_ending_vertex_index] + weight < distance[j])
-      {
-        distance[j] = distance[cur_min_dist_ending_vertex_index] + weight;
-        predecessor[j] = cur_min_dist_ending_vertex_index;
-      }
+            // 如果vertex_j已经在vertex_set中, continue
+            if (vertex_set.find(vertex_j) != vertex_set.end()) {
+                continue;
+            }
+
+            TWeight cur_distance;
+            if (graph.GetWeightByVertexIndex(i, j, cur_distance) && distance[j] < cur_min_distance) {
+                cur_min_distance_ending_vertex = vertex_j;
+                cur_min_distance = distance[j];
+            }
+        }
+
+        int cur_min_dist_ending_vertex_index = graph.GetVertexIndex(cur_min_distance_ending_vertex);
+
+        // 将cur_min_dist_ending_vertex插入到vertex_set
+        vertex_set.insert(cur_min_distance_ending_vertex);
+
+        // 对cur_min_dist_ending_vertex的每个(未进入vertex_set的)相邻节点执行松弛
+        for (unsigned int j = 0; j < graph.VertexCount(); j++) {
+
+            // 拿到索引j对应的结点vertex_j
+            TVertex vertex_j;
+            graph.GetVertexByIndex(j, vertex_j);
+            /* error handler */
+
+            // 如果vertex_j已经在vertex_set中, continue
+            if (vertex_set.find(vertex_j) != vertex_set.end()) {
+                continue;
+            }
+
+            // 边(cur_min_distance_ending_vertex --> vertex_j)的值, 赋给weight
+            TWeight weight;
+            bool res = graph.GetWeight(cur_min_distance_ending_vertex, vertex_j, weight);
+            if (!res) { // 如果没有边, continue
+                continue;
+            }
+
+            // 松弛操作:
+            // 如果
+            //   边 (starting_vertex  --> cur_min_distance_ending_vertex)                的weight
+            //    +
+            //   边                      (cur_min_distance_ending_vertex  -->  vertex_j) 的weight
+            //    <
+            //   边 (starting_vertex  ---------------------------------->  vertex_j) 的weight
+            // 则
+            //   更新distance[j]和predecessor[j]
+            if (distance[cur_min_dist_ending_vertex_index] + weight < distance[j]) {
+                distance[j] = distance[cur_min_dist_ending_vertex_index] + weight;
+                predecessor[j] = cur_min_dist_ending_vertex_index;
+            }
+        }
     }
-  }
 }
 
 
