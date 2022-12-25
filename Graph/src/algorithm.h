@@ -4,8 +4,6 @@
  * @brief 图算法.h文件
  * @version 0.2.1
  * @date 2021-02-04
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_GRAPH_ALGORITHM_H
@@ -13,36 +11,42 @@
 
 
 #include <iostream>
-#include "graph.h"
 #include <set>
 #include <queue>
 #include <vector>
+#include "graph.h"
 
 
 using namespace std;
 
 
 /*!
- * 最小生成树结点结构体
+ * @brief **最小生成树边结构体模板**
  * @tparam Vertex 结点类型模板参数
  * @tparam Weight 边权值类型模板参数
+ * @note
+ * 最小生成树边结构体
+ * ---------------
+ * ---------------
+ *
+ * ---------------
  */
-template<class Vertex, class Weight>
-struct MSTNode {
+template<typename Vertex, typename Weight>
+struct MinimumSpanTreeEdge {
     /*! @brief 构造函数(空参数) */
-    MSTNode() {};
+    MinimumSpanTreeEdge(): starting_vertex(Vertex()), ending_vertex(Vertex()), weight(Weight()) {};
 
     /*!
      * 构造函数(边权值)
      * @param weight 边权值
      */
-    explicit MSTNode(Weight weight): weight(weight) {}
+    explicit MinimumSpanTreeEdge(Weight weight): weight(weight) {}
 
     /*!
      * 构造函数(边权值)
      * @param weight 边权值
      */
-    MSTNode(Weight weight, Vertex starting_vertex, Vertex ending_vertex):
+    MinimumSpanTreeEdge(Weight weight, Vertex starting_vertex, Vertex ending_vertex):
       weight(weight), starting_vertex(starting_vertex), ending_vertex(ending_vertex) {}
 
     /*!
@@ -50,28 +54,28 @@ struct MSTNode {
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator<=(MSTNode<Vertex, Weight>& node) { return weight <= node.weight; }
+    bool operator<=(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight <= node.weight; }
 
     /*!
      * 重载 >=
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator>=(MSTNode<Vertex, Weight>& node) { return weight >= node.weight; }
+    bool operator>=(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight >= node.weight; }
 
     /*!
      * 重载 >
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator>(MSTNode<Vertex, Weight>& node) { return weight > node.weight; }
+    bool operator>(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight > node.weight; }
 
     /*!
      * 重载 <
      * @param node MST结点
      * @return 比较结果
      */
-    bool operator<(MSTNode<Vertex, Weight>& node) { return weight < node.weight; }
+    bool operator<(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight < node.weight; }
 
     Vertex ending_vertex;    //!< 尾结点
     Vertex starting_vertex;  //!< 头结点
@@ -81,9 +85,14 @@ struct MSTNode {
 
 /*!
  * @brief 最小生成树模板类
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
  * @note
+ * 最小生成树模板类
+ * --------------
+ * --------------
+ *
+ * --------------
  * 最小生成树的大多数算法, 利用了MST性质:
  *     假设N = { TVertex(结点), { E(边) } }是一个连通网, U是顶点集V的一个非空子集.
  *     若
@@ -91,46 +100,46 @@ struct MSTNode {
  *     则
  *         必存在一颗包含边(u, v)的最小生成树
  */
-template<class Vertex, class Weight>
-class MinSpanTree {
+template<typename TVertex, typename TWeight>
+class MinimumSpanTree {
 public:
     /*! 构造函数 */
-    MinSpanTree(int size): max_size_(size), cur_size_(0) {
-        array_ = new MSTNode<Vertex, Weight>[size];
+    explicit MinimumSpanTree(int max_size): max_size_(max_size), size_(0) {
+        this->mst_edges_ = new MinimumSpanTreeEdge<TVertex, TWeight>[max_size];
     }
 
     /*!
-     * 向MST插入结点
-     * @param mst_edge_node MSTEdgeNode类型结点
+     * @brief 向MST插入结点
+     * @param mst_edge MST结点
      * @return 当前最小生成树边的数量
      */
-    int Insert(MSTNode<Vertex, Weight>& mst_edge_node) {
-        if (cur_size_ >= max_size_) {
+    int Insert(MinimumSpanTreeEdge<TVertex, TWeight>& mst_edge) {
+        if (size_ >= max_size_) {
             return -1;
         }
 
-        array_[cur_size_] = mst_edge_node;
-        cur_size_++;
+        mst_edges_[size_] = mst_edge;
+        size_++;
 
-        return cur_size_ - 1;
+        return size_ - 1;
     }
 
     /*! @brief 显示最小生成树 */
     void Show() {
-        Weight sum = 0; // 总权值
-        for (int i = 0; i < cur_size_; i++) {
-            sum += array_[i].weight;
-            cout << "starting_vertex: " << array_[i].starting_vertex << ", ending_vertex: " << array_[i].ending_vertex << ", weight: "
-                 << array_[i].weight << endl;
+        TWeight sum = 0; // 总权值
+        for (int i = 0; i < size_; i++) {
+            sum += mst_edges_[i].weight;
+            cout << "starting_vertex: " << mst_edges_[i].starting_vertex << ", ending_vertex: " << mst_edges_[i].ending_vertex << ", weight: "
+                 << mst_edges_[i].weight << endl;
         }
 
         cout<<"最小生成树边, 总权值: "<<sum<<endl;
     }
 
 protected:
-    MSTNode<Vertex, Weight>* array_; //!< 最小生成树结点数组
+    MinimumSpanTreeEdge<TVertex, TWeight>* mst_edges_; //!< 最小生成树结点数组
     int max_size_; //!< 最大结点数
-    int cur_size_; //!< 当前生成树的节点数量
+    int size_; //!< 当前生成树的节点数量
 };
 
 
@@ -156,12 +165,12 @@ void Components(const Graph<TVertex, TWeight>& graph);
 
 // Prim算法
 template<typename TVertex, typename TWeight>
-bool Prim(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_span_tree);
+bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree);
 
 
 // Kruskal最小生成树(优先队列)
 template<typename TVertex, typename TWeight>
-void Kruskal(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_span_tree);
+void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree);
 
 
 // 迪杰斯特拉(Dijkstra)最短路径

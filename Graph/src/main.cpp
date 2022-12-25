@@ -6,7 +6,7 @@
  * @date 2021-07-14
  */
 
-#include "graph_algorithm.cpp"
+#include "algorithm.cpp"
 #include "test.h"
 
 

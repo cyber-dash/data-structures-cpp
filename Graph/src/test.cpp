@@ -8,8 +8,8 @@
 
 #include "test.h"
 #include "priority_queue.h"
-#include "graph_algorithm.h"
-#include "graph_algorithm.cpp"
+#include "algorithm.h"
+#include "algorithm.cpp"
 
 
 using namespace std;
@@ -429,8 +429,8 @@ void TestKruskal() {
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
-    MinSpanTree<string, double> min_span_tree_adj(100);
-    MinSpanTree<string, double> min_span_tree_matrix(100);
+    MinimumSpanTree<string, double> min_span_tree_adj(100);
+    MinimumSpanTree<string, double> min_span_tree_matrix(100);
 
     cout << "**邻接表图测试**" << endl;
     Kruskal(adjacency_list_graph, min_span_tree_adj);
@@ -485,12 +485,12 @@ void TestPrim() {
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
 
     cout<<endl<<"**邻接表图测试**"<<endl;
-    MinSpanTree<string, double> min_span_tree_adj(100);
+    MinimumSpanTree<string, double> min_span_tree_adj(100);
     Prim(adjacency_list_graph, min_span_tree_adj);
     min_span_tree_adj.Show();
 
     cout<<endl<<"**矩阵图测试**"<<endl;
-    MinSpanTree<string, double> min_span_tree_matrix(100);
+    MinimumSpanTree<string, double> min_span_tree_matrix(100);
     Prim(matrix_graph, min_span_tree_matrix);
     min_span_tree_matrix.Show();
 

@@ -12,7 +12,7 @@
 #include <set>
 #include <queue>
 #include <vector>
-#include "graph_algorithm.h"
+#include "algorithm.h"
 #include "priority_queue.h"
 #include "disjoint_set.h"
 
@@ -174,9 +174,9 @@ void Components(const Graph<TVertex, TWeight>& graph) {
  *         E舍去这条边
  */
 template<typename TVertex, typename TWeight>
-void Kruskal(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_span_tree) {
+void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree) {
 
-    MinPriorityQueue<MSTNode<TVertex, TWeight> > min_priority_queue;    // 最小优先队列
+    MinPriorityQueue<MinimumSpanTreeEdge<TVertex, TWeight> > min_priority_queue;    // 最小优先队列
     DisjointSet disjoint_set(graph.VertexCount());                             // 使用并查集来判断连通分量
 
     for (int i = 0; i < graph.EdgeCount(); i++) {
@@ -188,14 +188,14 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>
         TWeight weight;
         bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, weight);
         if (res) {
-            MSTNode<TVertex, TWeight> cur_MST_node(weight, cur_starting_vertex, cur_ending_vertex);
+            MinimumSpanTreeEdge<TVertex, TWeight> cur_MST_node(weight, cur_starting_vertex, cur_ending_vertex);
             min_priority_queue.Enqueue(cur_MST_node);
         }
     }
 
     // 执行Kruskal算法核心流程
     for (int i = 0; i < graph.VertexCount() - 1;) {
-        MSTNode<TVertex, TWeight> cur_MST_node;
+        MinimumSpanTreeEdge<TVertex, TWeight> cur_MST_node;
         min_priority_queue.Dequeue(cur_MST_node);
 
         int cur_ending_vertex_index = graph.GetVertexIndex(cur_MST_node.ending_vertex);       // 当前边的起点索引
@@ -250,7 +250,7 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>
  * 此时min_span_tree为最小生成树, 有** n-1条边
  */
 template<typename TVertex, typename TWeight>
-bool Prim(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& min_span_tree) {
+bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree) {
 
     // 索引0对应的结点, 作为Prim算法的起始结点starting_vertex
     TVertex starting_vertex;
@@ -263,7 +263,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& m
     set<TVertex> mst_vertex_set;
     mst_vertex_set.insert(starting_vertex);
 
-    MinPriorityQueue<MSTNode<TVertex, TWeight> > min_priority_queue;   // 最小优先队列
+    MinPriorityQueue<MinimumSpanTreeEdge<TVertex, TWeight> > min_priority_queue;   // 最小优先队列
 
     TVertex cur_neighbor_vertex;
     TVertex next_neighbor_vertex;
@@ -274,7 +274,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& m
         TWeight cur_edge_weight;
         graph.GetWeight(starting_vertex, cur_neighbor_vertex, cur_edge_weight);
 
-        MSTNode<TVertex, TWeight> cur_mst_edge_node(cur_edge_weight, starting_vertex, cur_neighbor_vertex);
+        MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge_node(cur_edge_weight, starting_vertex, cur_neighbor_vertex);
         min_priority_queue.Enqueue(cur_mst_edge_node);
 
         // 遍历至下一个邻接结点
@@ -288,7 +288,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& m
     while (mst_vertex_set.size() < graph.VertexCount()) {
 
         // 最小优先队列Dequeue出最短边, 赋给mst_edge_node
-        MSTNode<TVertex, TWeight> mst_edge_node;
+        MinimumSpanTreeEdge<TVertex, TWeight> mst_edge_node;
         min_priority_queue.Dequeue(mst_edge_node);
 
         // 最短边进入min_span_tree
@@ -310,7 +310,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinSpanTree<TVertex, TWeight>& m
                     graph.GetWeight(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
 
                     // 用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTNode结点
-                    MSTNode<TVertex, TWeight> cur_mst_edge_node(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
+                    MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge_node(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
 
                     // 将其入队到最小优先队列min_priority_queue
                     min_priority_queue.Enqueue(cur_mst_edge_node);
