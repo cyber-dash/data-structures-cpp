@@ -11,6 +11,7 @@
 
 
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include "graph.h"
 
@@ -19,10 +20,10 @@ using namespace std;
 
 
 template<typename TVertex, typename TWeight> class MatrixGraph;
-// 输入图(重载标准输入)
+// 重载>>
 template<typename TVertex, typename TWeight>
 istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph);
-// 打印图(重载标准输出)
+// 重载<<
 template<typename TVertex, typename TWeight>
 ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph);
 
@@ -74,30 +75,18 @@ public:
     // 删除结点
     bool RemoveVertex(const TVertex& vertex);
 
-  /*!
-   * @brief 删除边
-   * @param starting_vertex 起点
-   * @param ending_vertex 终点
-   * @return 执行结果
-   */
-  bool RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex);
+    // 删除边
+    bool RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex);
 
-    /*!
-     * @brief **获取结点索引**
-     * @param vertex 结点
-     * @return 结点索引
-     * @note
-     * 获取结点索引
-     * ----------
-     * ----------
-     *
-     * ----------
-     */
-    int GetVertexIndex(TVertex vertex) const;
+    // 获取结点索引
+    int GetVertexIndex(const TVertex& vertex) const;
 
-    friend istream& operator>> <>(istream& in, MatrixGraph<TVertex, TWeight>& graph_matrix);
-    friend ostream& operator<< <>(ostream& out, MatrixGraph<TVertex, TWeight>& graph_matrix);
+    // 重载>>
+    friend istream& operator>> <>(istream& in, MatrixGraph<TVertex, TWeight>& graph);
+    // 重载<<
+    friend ostream& operator<< <>(ostream& out, MatrixGraph<TVertex, TWeight>& graph);
 
+    // 打印邻接数组
     void PrintMatrix();
 private:
     TWeight** adjacency_matrix_; //!< 邻接矩阵
@@ -486,11 +475,13 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
     }
 
     // edges_删除边
-    for (typename vector<Edge<TVertex, TWeight> >::iterator iter = this->edges_.begin(); iter != this->edges_.end(); iter++) {
+    for (typename vector<Edge<TVertex, TWeight> >::iterator iter = this->edges_.begin(); iter != this->edges_.end();) {
         if (iter->ending_vertex == vertex || iter->starting_vertex == vertex) {
             iter = this->edges_.erase(iter);
+            this->edge_count_--;
+        } else {
+            iter++;
         }
-        this->edge_count_--;
     }
 
     // 调整邻接矩阵
@@ -510,12 +501,18 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
 
 /*!
- * @brief 删除边
+ * @brief **删除边**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param starting_vertex 起点
  * @param ending_vertex 终点
  * @return 执行结果
+ * @note
+ * 删除边
+ * -----
+ * -----
+ *
+ * -----
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
@@ -541,81 +538,94 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
 }
 
 
-// todo: 需要测试, 但这个方法太笨重了, 懒得动 :-(
-template<typename TVertex, typename TWeight>
-istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph_matrix) {
-
-  int vertex_num;
-  int edge_num;
-  TVertex src_vertex;
-  TVertex dest_vertex;
-  TWeight weight;
-
-  cout<<"Input the vertex_num and edge_num"<<endl;
-  in >> vertex_num >> edge_num;
-
-  for (int i = 0; i < vertex_num; i++) {
-
-    cout<<"src_vertex "<<i<<":"<<endl;
-    in >> src_vertex;
-
-    graph_matrix.InsertVertex(src_vertex);
-  }
-
-  for (int i = 0; i < edge_num; i++) {
-
-    cout<<"Adjacency "<<i<<":"<<endl;
-    in >> src_vertex >> dest_vertex >> weight;
-
-    int src_vertex_index = graph_matrix.GetVertexIndex(src_vertex);
-    int dest_vertex_index = graph_matrix.GetVertexIndex(dest_vertex);
-
-    if (src_vertex_index < 0 || dest_vertex_index < 0) {
-      cout<<"Error input"<<endl;
-      continue;
-    }
-
-    graph_matrix.InsertEdge(src_vertex_index, dest_vertex_index, weight);
-  }
-}
-
-
-/*
-template<class TVertex, class TWeight>
-ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph_matrix) {
-
-  int vertex_num = graph_matrix.VertexCount();
-  int edge_num = graph_matrix.EdgeCount();
-
-  cout<<"vertex_num: "<<vertex_num<<", edge_num: "<<edge_num<<endl;
-
-  for (int vertex1_index = 0; vertex1_index < vertex_num; vertex1_index++) {
-    for (int vertex2_index = 0; vertex2_index < vertex_num; vertex2_index++) {
-
-        TWeight weight = graph_matrix.GetWeight(vertex1_index, vertex2_index);
-
-      if (weight > 0) {
-
-        TVertex vertex1 = graph_matrix.GetValue(vertex1_index);
-        TVertex vertex2 = graph_matrix.GetValue(vertex2_index);
-
-        out << "(" << vertex1 << "," << vertex2 << "," << weight << ")" << endl;
-      }
-    }
-  }
-}
+/*!
+ * @brief **重载>>**
+ * @tparam TVertex 结点模板参数
+ * @tparam TWeight 边权值模板参数
+ * @param out 输入流
+ * @param graph 图
+ * @return 输入流
+ * @note
+ * 重载>>
+ * -----
+ * -----
+ *
+ * -----
  */
+template<typename TVertex, typename TWeight>
+istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph) {
+    // todo: 根据自己的想法, 自行实现
+    return in;
+}
 
 
 /*!
- * 获取结点索引
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
- * @param vertex 结点
- * @return
+ * @brief **重载<<**
+ * @tparam TVertex 结点模板参数
+ * @tparam TWeight 边权值模板参数
+ * @param out 输出流
+ * @param graph 图
+ * @return 输出流
+ * @note
+ * 重载<<
+ * -----
+ * -----
+ *
+ * -----
  */
-template<class Vertex, class Weight>
-int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) const {
+template<typename TVertex, typename TWeight>
+ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
+
+    out << "--- 基本信息 ---" << endl;
+    out << "结点数量: " << graph.VertexCount() << endl;
+
+    for (int i = 0; i < graph.VertexCount(); i++) {
+        TVertex vertex;
+        graph.GetVertexByIndex(i, vertex);
+        out << vertex << " ";
+    }
+    cout << endl << endl;
+    out << "边数量: " << graph.EdgeCount() << endl;
+
+    for (int i = 0; i < graph.EdgeCount(); i++) {
+        Edge<TVertex, TWeight> edge = graph.GetEdge(i);
+        out << "(" << edge.starting_vertex << ", " << edge.ending_vertex << "), 权重: " << edge.weight << endl;
+    }
+    cout << endl;
+
+    out << "--- 邻接矩阵信息 ---" << endl;
+    for (int row = 0; row < graph.VertexCount(); row++) {
+        for (int col = 0; col < graph.VertexCount(); col++) {
+
+            TWeight weight;
+            bool res = graph.GetWeightByVertexIndex(row, col, weight);
+            if (!res) {
+                continue;
+            }
+
+            out << "[" << row << "][" << col << "]: " << weight << endl;
+        }
+    }
+
+    return out;
+}
+
+
+/*!
+ * @brief **获取结点索引**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param vertex 结点
+ * @return 索引值
+ * @note
+ * 获取结点索引
+ * ----------
+ * ----------
+ *
+ * ----------
+ */
+template<typename TVertex, typename TWeight>
+int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
     for (int i = 0; i < this->vertex_count_; i++) {
         if (this->vertices_[i] == vertex) {
             return i;
@@ -627,18 +637,24 @@ int MatrixGraph<Vertex, Weight>::GetVertexIndex(Vertex vertex) const {
 
 
 /*!
+ * @brief **打印图邻接矩阵**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @note
  * 打印图邻接矩阵
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight
+ * ------------
+ * ------------
+ *
+ * ------------
  */
-template<class Vertex, class Weight>
-void MatrixGraph<Vertex, Weight>::PrintMatrix() {
-  for (int i = 0; i < this->vertex_count_; i++) {
-    for (int j = 0; j < this->vertex_count_; j++) {
-      cout << this->adjacency_matrix_[i][j] << "  ";
+template<typename TVertex, typename TWeight>
+void MatrixGraph<TVertex, TWeight>::PrintMatrix() {
+    for (int row = 0; row < this->vertex_count_; row++) {
+        for (int col = 0; col < this->vertex_count_; col++) {
+            cout << setw(5) << this->adjacency_matrix_[row][col] << "  ";
+        }
+        cout<<endl;
     }
-    cout<<endl;
-  }
 }
 
 

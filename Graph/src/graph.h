@@ -278,7 +278,7 @@ public:
      *
      * --------------
      */
-    virtual int GetVertexIndex(TVertex vertex) const = 0;
+    virtual int GetVertexIndex(const TVertex& vertex) const = 0;
 
 protected:
     int max_vertex_count_{};    //!< 图结点数量上限

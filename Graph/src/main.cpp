@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     // TestMinPriorityQueue();
 
     // 测试矩阵图打印矩阵
-    // TestMatrixGraphPrintMatrix();
+    TestMatrixGraphPrintMatrix();
 
     // 测试由结点索引获取结点
     TestGetVertexByIndex();

@@ -52,12 +52,20 @@ void TestBaseFunctions() {
         edges.push_back(edge);
     }
 
-    vector<string> graph_vertices(vertices.size());
-
     // 构造邻接表图
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
 
-    cout << adjacency_list_graph << endl;
+    cout << "##### 1 邻接表图删除结点\"北京\" #####" << endl << endl;
+    adjacency_list_graph.RemoveVertex("北京");
+
+    cout << adjacency_list_graph << endl << endl << endl << endl;
+
+    // 构造邻接表图
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
+    cout << "##### 2 矩阵图删除结点\"上海\" #####" << endl << endl;
+    matrix_graph.RemoveVertex("上海");
+
+    cout << matrix_graph << endl;
 
     cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -107,22 +115,43 @@ void TestMatrixGraphPrintMatrix() {
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                      Test PrintMatrix                     |"<<endl;
   cout<<"|                       测试矩阵图的矩阵                      |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                         北京                               |"<<endl;
+    cout<<"|                         / \\                               |"<<endl;
+    cout<<"|                        /   \\                              |"<<endl;
+    cout<<"|                      0.1   0.12                           |"<<endl;
+    cout<<"|                      /       \\                            |"<<endl;
+    cout<<"|                     /         \\                           |"<<endl;
+    cout<<"|                  上海---0.01---广州                        |"<<endl;
+    cout<<"|                   / \\         / \\                         |"<<endl;
+    cout<<"|                  /   \\       /   \\                        |"<<endl;
+    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
+    cout<<"|                /       \\   /       \\                      |"<<endl;
+    cout<<"|               /         \\ /         \\                     |"<<endl;
+    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<endl;
 
-  MatrixGraph<string, double> matrix_graph(10, 10000);
-  matrix_graph.InsertVertex("地球");
-  matrix_graph.InsertVertex("火星");
-  matrix_graph.InsertVertex("木星");
-  matrix_graph.InsertVertex("水星");
+    int edge_count = 9;
 
-  matrix_graph.InsertEdge("地球", "火星", 0.8);
-  matrix_graph.InsertEdge("火星", "木星", 3.9);
-  matrix_graph.InsertEdge("木星", "水星", 7.3);
-  matrix_graph.InsertEdge("地球", "木星", 11.3);
-  matrix_graph.InsertEdge("火星", "水星", 0.3);
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-  matrix_graph.PrintMatrix();
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
-  cout<<"-------------------------------------------------------------"<<endl;
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
+
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
+
+    matrix_graph.PrintMatrix();
+
+    cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
@@ -183,13 +212,16 @@ void TestGetVertexByIndex() {
     adjacency_list_graph.RemoveVertex("杭州");
     // adjacency_list_graph.RemoveVertex("成都");
 
+    cout << adjacency_list_graph << endl;
     // 打印结点
+    /*
     cout<<"**邻接表图**"<<endl;
     for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
         string cur_vertex;
         adjacency_list_graph.GetVertexByIndex(i, cur_vertex);
         cout << "索引" << i << "结点: " << cur_vertex << endl;
     }
+     */
 
     // 构造矩阵图
     MatrixGraph<string, double> matrix_graph(10, 10000, edges, vertices);
