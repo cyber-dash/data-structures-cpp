@@ -1,7 +1,7 @@
 ﻿/*!
  * @file graph_algorithm.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 图算法.h文件
+ * @brief 图算法h文件
  * @version 0.2.1
  * @date 2021-02-04
  */
@@ -22,8 +22,8 @@ using namespace std;
 
 /*!
  * @brief **最小生成树边结构体模板**
- * @tparam Vertex 结点类型模板参数
- * @tparam Weight 边权值类型模板参数
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
  * @note
  * 最小生成树边结构体
  * ---------------
@@ -31,55 +31,107 @@ using namespace std;
  *
  * ---------------
  */
-template<typename Vertex, typename Weight>
+template<typename TVertex, typename TWeight>
 struct MinimumSpanTreeEdge {
-    /*! @brief 构造函数(空参数) */
-    MinimumSpanTreeEdge(): starting_vertex(Vertex()), ending_vertex(Vertex()), weight(Weight()) {};
+    /*!
+     * @brief **默认构造函数**
+     * @note
+     * 默认构造函数
+     * ----------
+     * ----------
+     *
+     * starting_vertex(起点), ending_vertex(终点), weight(边)调用默认构造函数进行初始化
+     *
+     * ----------
+     */
+    MinimumSpanTreeEdge(): starting_vertex(TVertex()), ending_vertex(TVertex()), weight(TWeight()) {};
 
     /*!
-     * 构造函数(边权值)
+     * @brief **构造函数(边权值)**
      * @param weight 边权值
+     * @note
+     * 构造函数(边权值)
+     * --------------
+     * --------------
+     *
+     * --------------
      */
-    explicit MinimumSpanTreeEdge(Weight weight): weight(weight) {}
+    explicit MinimumSpanTreeEdge(const TWeight& weight): starting_vertex(TVertex()), ending_vertex(TVertex()), weight(weight) {}
 
     /*!
-     * 构造函数(边权值)
+     * @brief **构造函数(边权值/起点/终点)**
      * @param weight 边权值
+     * @param starting_vertex 起点
+     * @param ending_vertex 终点
+     * @note
+     * 构造函数(边权值/起点/终点)
+     * -----------------------
+     * -----------------------
+     *
+     * -----------------------
      */
-    MinimumSpanTreeEdge(Weight weight, Vertex starting_vertex, Vertex ending_vertex):
+    MinimumSpanTreeEdge(const TVertex& starting_vertex, const TVertex& ending_vertex, const TWeight& weight):
       weight(weight), starting_vertex(starting_vertex), ending_vertex(ending_vertex) {}
 
     /*!
-     * 重载 <=
-     * @param node MST结点
-     * @return 比较结果
+     * @brief **重载<=**
+     * @param mst_edge 最小生成树边
+     * @return 执行结果
+     * @note
+     * 重载<=
+     * -----
+     * -----
+     *
+     * -----
      */
-    bool operator<=(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight <= node.weight; }
+    bool operator<=(const MinimumSpanTreeEdge<TVertex, TWeight>& mst_edge) { return weight <= mst_edge.weight; }
 
     /*!
-     * 重载 >=
-     * @param node MST结点
-     * @return 比较结果
+     * @brief **重载>=**
+     * @param mst_edge MST结点
+     * @return 执行结果
+     * @note
+     * 重载>=
+     * -----
+     * -----
+     *
+     * -----
      */
-    bool operator>=(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight >= node.weight; }
+    bool operator>=(const MinimumSpanTreeEdge<TVertex, TWeight>& mst_edge) { return weight >= mst_edge.weight; }
 
     /*!
-     * 重载 >
-     * @param node MST结点
-     * @return 比较结果
+     * @brief **重载>**
+     * @param mst_edge 最小生成树边
+     * @return 执行结果
+     * @note
+     * 重载>
+     * ----
+     * ----
+     *
+     * ----
      */
-    bool operator>(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight > node.weight; }
+    bool operator>(const MinimumSpanTreeEdge<TVertex, TWeight>& mst_edge) { return weight > mst_edge.weight; }
 
     /*!
-     * 重载 <
-     * @param node MST结点
-     * @return 比较结果
+     * @brief **重载&lt;**
+     * @param mst_edge 最小生成树边
+     * @return 执行结果
+     * @note
+     * 重载<
+     * ----
+     * ----
+     *
+     * <span style="color:#DF5A00">
+     * doxygen处理less-than符号(&lt;)不是很友好, 所以注释中使用"\&lt;"来表达&lt;
+     * </span>
+     *
+     * ----
      */
-    bool operator<(MinimumSpanTreeEdge<Vertex, Weight>& node) { return weight < node.weight; }
+    bool operator<(const MinimumSpanTreeEdge<TVertex, TWeight>& mst_edge) { return weight < mst_edge.weight; }
 
-    Vertex ending_vertex;    //!< 尾结点
-    Vertex starting_vertex;  //!< 头结点
-    Weight weight;           //!< 边权重
+    TVertex ending_vertex;    //!< 起点
+    TVertex starting_vertex;  //!< 终点
+    TWeight weight;           //!< 边权重
 };
 
 

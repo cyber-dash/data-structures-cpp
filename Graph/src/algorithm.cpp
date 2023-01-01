@@ -206,8 +206,8 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
         TWeight weight;
         bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, weight);
         if (res) {
-            MinimumSpanTreeEdge<TVertex, TWeight> cur_MST_node(weight, cur_starting_vertex, cur_ending_vertex);
-            min_priority_queue.Enqueue(cur_MST_node);
+            MinimumSpanTreeEdge<TVertex, TWeight> cur_MST_edge(cur_starting_vertex, cur_ending_vertex, weight);
+            min_priority_queue.Enqueue(cur_MST_edge);
         }
     }
 
@@ -292,8 +292,8 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
         TWeight cur_edge_weight;
         graph.GetWeight(starting_vertex, cur_neighbor_vertex, cur_edge_weight);
 
-        MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge_node(cur_edge_weight, starting_vertex, cur_neighbor_vertex);
-        min_priority_queue.Enqueue(cur_mst_edge_node);
+        MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge(starting_vertex, cur_neighbor_vertex, cur_edge_weight);
+        min_priority_queue.Enqueue(cur_mst_edge);
 
         // 遍历至下一个邻接结点
         new_neighbor_exists = graph.GetNextNeighborVertex(starting_vertex, cur_neighbor_vertex, next_neighbor_vertex);
@@ -328,10 +328,10 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
                     graph.GetWeight(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
 
                     // 用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTNode结点
-                    MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge_node(cur_weight, cur_mst_vertex, cur_neighbor_vertex);
+                    MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
 
                     // 将其入队到最小优先队列min_priority_queue
-                    min_priority_queue.Enqueue(cur_mst_edge_node);
+                    min_priority_queue.Enqueue(cur_mst_edge);
                 }
 
                 // 遍历至下一个邻接结点
