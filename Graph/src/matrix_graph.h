@@ -35,12 +35,11 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph);
  */
 template<typename TVertex, typename TWeight>
 class MatrixGraph: public Graph<TVertex, TWeight> {
-
 public:
-    // 构造函数
+    // 构造函数(结点数上限/边权值上限)
     MatrixGraph(int max_vertex_count, TWeight max_weight);
 
-    // 构造函数(边/结点vector)
+    // 构造函数(最大节点数/最大边权值/边/结点vector)
     MatrixGraph(int max_vertex_count,
                 TWeight max_weight,
                 const vector<Edge<TVertex, TWeight> >& edges,
@@ -94,26 +93,36 @@ private:
 
 
 /*!
- * @brief **构造函数**
+ * @brief **构造函数(结点数上限/边权值上限)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 结点数上限
  * @param max_weight 边权值上限
  * @note
- * 构造函数
+ * 构造函数(结点数上限/边权值上限)
  * -------
  * -------
  *
+ * <span style="color:#DF5A00">
+ * 听过的风, 走过的路
+ * </span>
+ *
  * -------
+ * ###1 设置部分成员变量###
+ * ###2 设置邻接矩阵###
+ *
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight) {
+
+    // ---------- 1 设置部分成员变量 ----------
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
+    // ---------- 2 设置邻接矩阵 ----------
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
     if (!this->adjacency_matrix_) {
         throw bad_alloc();
@@ -133,7 +142,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
 
 
 /*!
- * @brief **构造函数(边/结点vector)**
+ * @brief **构造函数(结点数上限/边权值上限/边/结点vector)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 结点数上限
@@ -141,11 +150,18 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
  * @param edges 边vector
  * @param vertices 结点vector
  * @note
- * 构造函数(边/结点vector)
+ * 构造函数(结点数上限/边权值上限/边/结点vector)
  * ---------------------
  * ---------------------
  *
+ * <span style="color:#DF5A00">
+ * 听过的风, 走过的路\n
+ * 爱过的人, 闯过的祸
+ * </span>
+ *
  * ---------------------
+ * ###1 设置部分成员变量###
+ * ###2 设置邻接矩阵###
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
@@ -153,12 +169,14 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
                                            const vector<Edge<TVertex, TWeight> >& edges,
                                            const vector<TVertex>& vertices)
 {
+    // ---------- 1 设置部分成员变量 ----------
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
+    // ---------- 2 设置邻接矩阵 ----------
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
     if (!this->adjacency_matrix_) {
         throw bad_alloc();
@@ -194,14 +212,22 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
  * -------
  * -------
  *
+ * <span style="color:#DF5A00">
+ * 所谓痛苦不算什么
+ * </span>
+ *
  * -------
+ * ###1 释放邻接矩阵的每行###
+ * ###2 释放邻接矩阵###
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
+    // ---------- 1 释放邻接矩阵的每行 ----------
     for (int row = 0; row < this->vertex_count_; row++) {
         delete[] this->adjacency_matrix_[row];
     }
 
+    // ---------- 2 释放邻接矩阵 ----------
     delete[] this->adjacency_matrix_;
 }
 
@@ -550,6 +576,10 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
  * -----
  * -----
  *
+ * <span style="color:#DF5A00">
+ * 请各位根据自己的设计, 自行实现:-)
+ * </span>
+ *
  * -----
  */
 template<typename TVertex, typename TWeight>
@@ -560,7 +590,7 @@ istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph) {
 
 
 /*!
- * @brief **重载<<**
+ * @brief **重载&lt;&lt;**
  * @tparam TVertex 结点模板参数
  * @tparam TWeight 边权值模板参数
  * @param out 输出流
@@ -571,11 +601,19 @@ istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph) {
  * -----
  * -----
  *
+ * <span style="color:#DF5A00">
+ * 电子文档并没有节省纸, 反而增加了纸张的消耗\n
+ * 因为人们习惯于把文档打印在纸上:-(
+ * </span>
+ *
  * -----
+ * ###1 打印图的各种信息###
+ * ###2 打印邻接矩阵信息###
  */
 template<typename TVertex, typename TWeight>
 ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
 
+    // ---------- 1 打印图的各种信息 ----------
     out << "--- 基本信息 ---" << endl;
     out << "结点数量: " << graph.VertexCount() << endl;
 
@@ -593,6 +631,7 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
     }
     cout << endl;
 
+    // ---------- 2 打印邻接矩阵信息 ----------
     out << "--- 邻接矩阵信息 ---" << endl;
     for (int row = 0; row < graph.VertexCount(); row++) {
         for (int col = 0; col < graph.VertexCount(); col++) {
