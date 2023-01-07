@@ -39,14 +39,16 @@ public:
     // 构造函数(结点数上限/边权值上限)
     MatrixGraph(int max_vertex_count, TWeight max_weight);
 
+    // 构造函数(图类型/结点数上线/边权值上线)
     MatrixGraph(int type, int max_vertex_count, TWeight max_weight);
 
-    // 构造函数(边/结点vector)
+    // 构造函数(结点数上限/边权值上限/边/结点vector)
     MatrixGraph(int max_vertex_count,
                 TWeight max_weight,
                 const vector<Edge<TVertex, TWeight> >& edges,
                 const vector<TVertex>& vertices);
 
+    // 构造函数(图类型/结点数上线/边权值上线/边/节点vector)
     MatrixGraph(int type,
                 int max_vertex_count,
                 TWeight max_weight,
