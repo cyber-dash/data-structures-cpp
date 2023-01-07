@@ -15,6 +15,55 @@
 using namespace std;
 
 
+void TestDn() {
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                    Test Directed Graph                    |"<<endl;
+    cout<<"|                         测试有向图                          |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                         北京                               |"<<endl;
+    cout<<"|                         / \\                               |"<<endl;
+    cout<<"|                        /   \\                              |"<<endl;
+    cout<<"|                      0.1   0.12                           |"<<endl;
+    cout<<"|                      /       \\                            |"<<endl;
+    cout<<"|                     /         \\                           |"<<endl;
+    cout<<"|                  上海---0.01---广州                        |"<<endl;
+    cout<<"|                   / \\         / \\                         |"<<endl;
+    cout<<"|                  /   \\       /   \\                        |"<<endl;
+    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
+    cout<<"|                /       \\   /       \\                      |"<<endl;
+    cout<<"|               /         \\ /         \\                     |"<<endl;
+    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<endl;
+
+    int edge_count = 9;
+
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
+
+    // 边信息
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
+
+    // 构造矩阵图
+    int graph_type = 1; // 有向
+    MatrixGraph<string, double> matrix_graph(graph_type, 10, 1000, edges, vertices);
+    cout << matrix_graph << endl << endl;
+
+    cout << "##### 2 矩阵图删除结点\"上海\" #####" << endl << endl;
+    matrix_graph.RemoveVertex("上海");
+
+    cout << matrix_graph << endl;
+}
+
+
 void TestBaseFunctions() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -60,7 +109,7 @@ void TestBaseFunctions() {
 
     cout << adjacency_list_graph << endl << endl << endl << endl;
 
-    // 构造邻接表图
+    // 构造矩阵图
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
     cout << "##### 2 矩阵图删除结点\"上海\" #####" << endl << endl;
     matrix_graph.RemoveVertex("上海");
@@ -544,11 +593,11 @@ void TestDijkstra() {
     PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
+    MatrixGraph<string, double> matrix_graph(1, 10, 1000, edges, vertices);                // 构造矩阵图
     double matrix_graph_min_distances[10];
     int matrix_graph_predecessors[10];
 
-    Dijkstra(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
+    DijkstraByPriorityQueue(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
     PrintSingleSourceShortestPath(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -664,6 +713,13 @@ void TestFloyd() {
     // 邻接表图predecessor
     vector<vector<int> > adj_list_graph_predecessor(adj_list_graph_vertices_num,
                                                   vector<int>(adj_list_graph_vertices_num));
+
+    for (int i = 0; i < adj_list_graph_vertices_num; i++) {
+        for (int j = 0; j < adj_list_graph_vertices_num; j++) {
+            adj_list_graph_predecessor[i][j] = -1;
+        }
+    }
+
     // 执行弗洛伊德算法
     Floyd(adjacency_list_graph, adj_list_graph_distance, adj_list_graph_predecessor);
 
@@ -681,6 +737,12 @@ void TestFloyd() {
     // matrix_graph_predecessors
     vector<vector<int> > matrix_graph_predecessors(matrix_graph_vertices_num,
                                                    vector<int>(matrix_graph_vertices_num));
+
+    for (int i = 0; i < matrix_graph_vertices_num; i++) {
+        for (int j = 0; j < matrix_graph_vertices_num; j++) {
+            matrix_graph_predecessors[i][j] = -1;
+        }
+    }
     // 执行弗洛伊德算法
     Floyd(matrix_graph, matrix_graph_min_distances, matrix_graph_predecessors);
 

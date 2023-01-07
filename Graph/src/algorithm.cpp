@@ -745,17 +745,17 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
 
             if (start == end) {
                 distance[start][end] = TWeight();
+                predecessor[start][end] = start;
             } else {
                 TWeight weight;
                 bool res = graph.GetWeightByVertexIndex(start, end, weight);
                 if (res) {
                     distance[start][end] = weight;
+                    predecessor[start][end] = start;
                 } else {
                     distance[start][end] = graph.MaxWeight();
                 }
             }
-
-            predecessor[start][end] = start;
         }
     }
 
@@ -854,22 +854,33 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * @param ending_vertex_index
  */
 template<typename TVertex, typename TWeight>
-void PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
+// void PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
+bool PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
                                          vector<vector<int> > predecessor,
                                          int starting_vertex_index,
                                          int ending_vertex_index)
 {
+    if (predecessor[starting_vertex_index][ending_vertex_index] == -1) {
+        cout << "没有路径" << endl;
+        return false;
+    }
+
     if (starting_vertex_index != ending_vertex_index) {
-        PrintOneSourceShortestPathRecursive(graph,
+        bool res = PrintOneSourceShortestPathRecursive(graph,
                                             predecessor,
                                             starting_vertex_index,
                                             predecessor[starting_vertex_index][ending_vertex_index]);
+        if (!res) {
+            return false;
+        }
     }
 
     TVertex ending_vertex;
     graph.GetVertexByIndex(ending_vertex_index, ending_vertex);
 
     cout << ending_vertex << " ";
+
+    return true;
 }
 
 
@@ -909,9 +920,11 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
 
             cout << "起始点(" << starting_vertex << ")到结点(" << ending_vertex << ")的最短路径为: ";
 
-            PrintOneSourceShortestPathRecursive(graph, predecessor, starting_vertex_index, ending_vertex_index);
+            bool res = PrintOneSourceShortestPathRecursive(graph, predecessor, starting_vertex_index, ending_vertex_index);
+            if (res) {
+                cout << ", 最短路径长度为: " << distance[starting_vertex_index][ending_vertex_index] << endl;
+            }
 
-            cout << ", 最短路径长度为: " << distance[starting_vertex_index][ending_vertex_index] << endl;
         }
 
         cout<<endl;

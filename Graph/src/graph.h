@@ -22,8 +22,6 @@ public:
     Edge(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
         starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {};
 
-    // int starting_vertex_index;       //!< 起点索引
-    // int ending_vertex_index;         //!< 终点索引
     TVertex starting_vertex;        //!< 起点
     TVertex ending_vertex;          //!< 终点
     TWeight weight;                 //!< 边权值
@@ -84,6 +82,7 @@ public:
 template<typename TVertex, typename TWeight>
 class Graph {
 public:
+    int Type() const { return this->type_; }
 
     /*!
      * @brief **获取结点数量**
@@ -282,9 +281,10 @@ public:
 
 protected:
     int max_vertex_count_{};    //!< 图结点数量上限
-    TWeight max_weight_;      //!< 边权值上限
+    TWeight max_weight_;        //!< 边权值上限
     int edge_count_{};          //!< 边数量
     int vertex_count_{};        //!< 结点数量
+    int type_{};                //!< 1: 有向, 2: 无向
 
     vector<TVertex> vertices_;              //!< 结点vector
     vector<Edge<TVertex, TWeight> > edges_; //!< 边vector

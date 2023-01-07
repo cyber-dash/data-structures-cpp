@@ -19,7 +19,14 @@
 
 void TestBaseFunctions();
 
-/*! 测试优先队列(最小) */
+/*!
+ * @brief 测试有向网
+ */
+void TestDn();
+
+/*!
+ * @brief 测试优先队列(最小)
+ */
 void TestMinPriorityQueue();
 
 /*! 测试矩阵图的矩阵 */
