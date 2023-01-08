@@ -126,6 +126,7 @@ template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight) {
 
     // ---------- 1 设置部分成员变量 ----------
+    this->type_ = 2;
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
@@ -224,6 +225,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
                                            const vector<TVertex>& vertices)
 {
     // ---------- 1 设置部分成员变量 ----------
+    this->type_ = 2;
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 

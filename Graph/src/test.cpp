@@ -700,33 +700,32 @@ void TestFloyd() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
+    AdjacencyListGraph<string, double> adjacency_list_graph(1, 10, 1000, edges, vertices); // 构造邻接表图
+    MatrixGraph<string, double> matrix_graph(1, 10, 1000, edges, vertices);                // 构造矩阵图
 
 
     cout<<endl<<"**邻接表图测试**"<<endl<<endl;
     // 邻接表图结点数量
     int adj_list_graph_vertices_num = adjacency_list_graph.VertexCount();
     // 邻接表图distance
-    vector<vector<double> > adj_list_graph_distance(adj_list_graph_vertices_num,
-                                                  vector<double>(adj_list_graph_vertices_num));
+    vector<vector<double> > adj_list_graph_distances(adj_list_graph_vertices_num,
+                                                     vector<double>(adj_list_graph_vertices_num));
     // 邻接表图predecessor
-    vector<vector<int> > adj_list_graph_predecessor(adj_list_graph_vertices_num,
-                                                  vector<int>(adj_list_graph_vertices_num));
-
+    vector<vector<int> > adj_list_graph_predecessors(adj_list_graph_vertices_num,
+                                                     vector<int>(adj_list_graph_vertices_num));
     for (int i = 0; i < adj_list_graph_vertices_num; i++) {
         for (int j = 0; j < adj_list_graph_vertices_num; j++) {
-            adj_list_graph_predecessor[i][j] = -1;
+            adj_list_graph_predecessors[i][j] = -1;
         }
     }
 
     // 执行弗洛伊德算法
-    Floyd(adjacency_list_graph, adj_list_graph_distance, adj_list_graph_predecessor);
+    Floyd(adjacency_list_graph, adj_list_graph_distances, adj_list_graph_predecessors);
 
     // 打印多源(MSSP)最短路径
     PrintMultipleSourceShortestPath(adjacency_list_graph,
-                                    adj_list_graph_distance,
-                                    adj_list_graph_predecessor);
+                                    adj_list_graph_distances,
+                                    adj_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
     // 矩阵图结点数量

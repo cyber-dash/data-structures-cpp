@@ -93,7 +93,15 @@ public:
     // 构造函数
     AdjacencyListGraph(int max_vertex_count, TWeight max_weight);
 
+    AdjacencyListGraph(int type, int max_vertex_count, TWeight max_weight);
+
     AdjacencyListGraph(int max_vertex_count,
+                       TWeight max_weight,
+                       const vector<Edge<TVertex, TWeight> >& edges,
+                       const vector<TVertex>& vertices);
+
+    AdjacencyListGraph(int type,
+                       int max_vertex_count,
                        TWeight max_weight,
                        const vector<Edge<TVertex, TWeight> >& edges,
                        const vector<TVertex>& vertices);
@@ -150,16 +158,33 @@ private:
 template<class TVertex, class TWeight>
 AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int max_vertex_count, TWeight max_weight) {
 
-  this->max_vertex_count_ = max_vertex_count;
-  this->max_weight_ = max_weight;
-  this->vertex_count_ = 0;
-  this->edge_count_ = 0;
+    this->type_ = 2;
+    this->max_vertex_count_ = max_vertex_count;
+    this->max_weight_ = max_weight;
+    this->vertex_count_ = 0;
+    this->edge_count_ = 0;
 
-  this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];
+    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];
 
-  for (int i = 0; i < this->max_vertex_count_; i++) {
-    this->adjacency_list_[i].adjacency = NULL;
-  }
+    for (int i = 0; i < this->max_vertex_count_; i++) {
+        this->adjacency_list_[i].adjacency = NULL;
+    }
+}
+
+
+template<class TVertex, class TWeight>
+AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type, int max_vertex_count, TWeight max_weight) {
+    this->type_ = type;
+    this->max_vertex_count_ = max_vertex_count;
+    this->max_weight_ = max_weight;
+    this->vertex_count_ = 0;
+    this->edge_count_ = 0;
+
+    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];
+
+    for (int i = 0; i < this->max_vertex_count_; i++) {
+        this->adjacency_list_[i].adjacency = NULL;
+    }
 }
 
 
@@ -173,6 +198,45 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int max_vertex_count,
         throw length_error("vertices size wrong");
     }
 
+    this->type_ = 2;
+    this->max_vertex_count_ = max_vertex_count;
+    this->max_weight_ = max_weight;
+
+    this->vertex_count_ = 0;
+    this->edge_count_ = 0;
+
+    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];
+    if (!this->adjacency_list_) {
+        throw bad_alloc();
+    }
+
+    for (unsigned int i = 0; i < vertices.size(); i++) {
+        TVertex vertex = vertices[i];
+        this->InsertVertex(vertex);
+    }
+
+    for (unsigned int i = 0; i < edges.size(); i++) {
+        TVertex starting_vertex = edges[i].starting_vertex;
+        TVertex ending_vertex = edges[i].ending_vertex;
+        TWeight weight = edges[i].weight;
+
+        this->InsertEdge(starting_vertex, ending_vertex, weight);
+    }
+}
+
+
+template<typename TVertex, typename TWeight>
+AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type,
+                                                         int max_vertex_count,
+                                                         TWeight max_weight,
+                                                         const vector<Edge<TVertex, TWeight> >& edges,
+                                                         const vector<TVertex>& vertices)
+{
+    if (max_vertex_count < vertices.size()) {
+        throw length_error("vertices size wrong");
+    }
+
+    this->type_ = type;
     this->max_vertex_count_ = max_vertex_count;
     this->max_weight_ = max_weight;
 
@@ -497,20 +561,23 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
     if (!ending_adjacency) {
         return false;
     }
-
-    // ----- ending_vertex --> starting_vertex ----- todo: 无向图逻辑
-    Adjacency<TVertex, TWeight>* starting_adjacency =
-        new Adjacency<TVertex, TWeight>(starting_vertex,
-                                        starting_vertex_index,
-                                        weight,
-                                        this->adjacency_list_[ending_vertex_index].adjacency);
-    if (!starting_adjacency) {
-        return false;
-    }
-
     // 更新邻接表内对应的数据
     this->adjacency_list_[starting_vertex_index].adjacency = ending_adjacency;
-    this->adjacency_list_[ending_vertex_index].adjacency = starting_adjacency;  // todo: 无向图逻辑
+
+    // ----- ending_vertex --> starting_vertex -----
+    if (this->type_ == 2) {
+        Adjacency<TVertex, TWeight>* starting_adjacency =
+            new Adjacency<TVertex, TWeight>(starting_vertex,
+                                            starting_vertex_index,
+                                            weight,
+                                            this->adjacency_list_[ending_vertex_index].adjacency);
+        if (!starting_adjacency) {
+            return false;
+        }
+
+        // 更新邻接表内对应的数据
+        this->adjacency_list_[ending_vertex_index].adjacency = starting_adjacency;  // todo: 无向图逻辑
+    }
 
     this->edge_count_++; // 边的数量+1
 
@@ -568,26 +635,28 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
         temp = NULL;
     }
 
-    // -----  ending_vertex --> starting_vertex 做删除 ----- todo: 无向图逻辑
-    temp = this->adjacency_list_[ending_vertex_index].adjacency;
-    prior = NULL;
+    // ----- ending_vertex --> starting_vertex 做删除 -----
+    if (this->type_ == 2) { // 无向图
+        temp = this->adjacency_list_[ending_vertex_index].adjacency;
+        prior = NULL;
 
-    while (temp != NULL && temp->ending_vertex_index != starting_vertex_index) {
-        prior = temp;
-        temp = temp->next;
-    }
+        while (temp != NULL && temp->ending_vertex_index != starting_vertex_index) {
+            prior = temp;
+            temp = temp->next;
+        }
 
-    if (temp == NULL) {
-        return false;
-    }
+        if (temp == NULL) {
+            return false;
+        }
 
-    if (this->adjacency_list_[ending_vertex_index].adjacency == temp) {
-        this->adjacency_list_[ending_vertex_index].adjacency = temp->next;
-    } else {
-        prior->next = temp->next;
+        if (this->adjacency_list_[ending_vertex_index].adjacency == temp) {
+            this->adjacency_list_[ending_vertex_index].adjacency = temp->next;
+        } else {
+            prior->next = temp->next;
 
-        delete temp;
-        temp = NULL;
+            delete temp;
+            temp = NULL;
+        }
     }
 
     // 边的总数减1
@@ -596,11 +665,16 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
     for (int i = 0; i < this->EdgeCount(); i++) {
         if (this->GetEdge(i).ending_vertex == ending_vertex && this->GetEdge(i).starting_vertex == starting_vertex) {
             this->edges_.erase(this->edges_.begin() + i);
+            if (this->type_ == 1) {
+                break;
+            }
         }
 
-        // todo: 此为无向图逻辑
+        // 此为无向图逻辑
         if (this->GetEdge(i).ending_vertex == starting_vertex && this->GetEdge(i).starting_vertex == ending_vertex) {
-            this->edges_.erase(this->edges_.begin() + i);
+            if (this->type_ == 2) {
+                this->edges_.erase(this->edges_.begin() + i);
+            }
         }
     }
 
@@ -687,57 +761,16 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& 
 
 /*!
  * @brief 输入图
- * @tparam V 结点类型模板参数
- * @tparam W 边权值类型模板参数
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
  * @param in 输入流(引用)
  * @param adjacency_list_graph 邻接表图
  * @return 输入流(引用)
  */
-template<class V, class W>
-istream& operator>>(istream& in, AdjacencyListGraph<V, W>& adjacency_list_graph) {
-
-  int vertex_num;
-  int edge_num;
-
-  cout<<"Input the vertex_num and edge_num"<<endl;
-  in >> vertex_num >> edge_num;
-
-  for (int i = 0; i < vertex_num; i++) {
-
-    V vertex;
-
-    cout<<"Input starting_vertex "<<i<<":"<<endl;
-    in >> vertex;
-
-    bool insert_done = adjacency_list_graph.InsertVertex(vertex);
-    if (insert_done) {
-      cout<<"Insert starting_vertex "<<i<<" done."<<endl;
-    } else {
-      cout<<"Insert starting_vertex "<<i<<" failed."<<endl;
-      exit(1);
-    }
-  }
-
-  for (int i = 0; i < edge_num; i++) {
-
-    V src_vertex;
-    V dest_vertex;
-    W weight;
-
-    cout<<"Adjacency "<<i<<":"<<endl;
-    in >> src_vertex >> dest_vertex >> weight;
-
-    int src_vertex_index = adjacency_list_graph.GetVertexIndex(src_vertex);
-    int dest_vertex_index = adjacency_list_graph.GetVertexIndex(dest_vertex);
-    if (src_vertex_index < 0 || dest_vertex_index < 0) {
-      cout<<"Error input"<<endl;
-      continue;
-    }
-
-    adjacency_list_graph.InsertEdge(src_vertex, dest_vertex, weight);
-  }
-
-  return in;
+template<class TVertex, class TWeight>
+istream& operator>>(istream& in, AdjacencyListGraph<TVertex, TWeight>& adjacency_list_graph) {
+    // todo: 自行实现
+    return in;
 }
 
 
