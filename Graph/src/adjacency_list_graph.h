@@ -523,7 +523,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
                                                       const TVertex& ending_vertex,
                                                       const TWeight& weight)
 {
-
+    // ---------- 1 合法性判断 ----------
     int starting_vertex_index = this->GetVertexIndex(starting_vertex);
     int ending_vertex_index = this->GetVertexIndex(ending_vertex);
 
@@ -542,24 +542,30 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
         return false;
     }
 
-    // 在邻接表中找 starting_vertex_index --> ending_vertex_index 是否存在, 如果存在说明边已经存在, 不能插入
-    Adjacency<TVertex, TWeight>* cur = this->adjacency_list_[starting_vertex_index].adjacency;
-
-    for (int i = 0; i < this->EdgeCount(); i++) {
-        if (this->GetEdge(i).ending_vertex == ending_vertex && this->GetEdge(i).starting_vertex == starting_vertex) {
-            this->edges_.erase(this->edges_.begin() + i);
-            if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
-                break;
-            }
-        }
-
-        // 此为无向图逻辑
-        if (this->GetEdge(i).ending_vertex == starting_vertex && this->GetEdge(i).starting_vertex == ending_vertex) {
+    // --------- 2 edges_和edge_count_调整 ----------
+    /*
+    bool is_in_edges = false;
+    for (int i = 0; i < this->edges_.size(); i++) {
+        if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
+            (this->edges_[i].ending_vertex == starting_vertex && this->edges_[i].starting_vertex == starting_vertex))
+        {
             if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-                this->edges_.erase(this->edges_.begin() + i);
+                return false;   // 无向图重复插入
             }
+            is_in_edges = true;
+            break;
         }
     }
+
+    if (!is_in_edges) {
+        Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
+        this->edges_.push_back(edge);
+    }
+     */
+
+
+    // 在邻接表中找 starting_vertex_index --> ending_vertex_index 是否存在, 如果存在说明边已经存在, 不能插入
+    Adjacency<TVertex, TWeight>* cur = this->adjacency_list_[starting_vertex_index].adjacency;
     while (cur != NULL && cur->ending_vertex_index != ending_vertex_index) {
         cur = cur->next;
     }
