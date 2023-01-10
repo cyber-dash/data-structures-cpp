@@ -57,8 +57,8 @@ void TestDn() {
     MatrixGraph<string, double> matrix_graph(graph_type, 10, 1000, edges, vertices);
     cout << matrix_graph << endl << endl;
 
-    cout << "##### 2 矩阵图删除结点\"上海\" #####" << endl << endl;
-    matrix_graph.RemoveVertex("上海");
+    cout << "##### 2 矩阵图删除边(\"上海\", \"北京\") #####" << endl << endl;
+    matrix_graph.RemoveEdge("北京", "上海");
 
     cout << matrix_graph << endl;
 }

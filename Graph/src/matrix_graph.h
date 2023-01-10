@@ -126,7 +126,7 @@ template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight) {
 
     // ---------- 1 设置部分成员变量 ----------
-    this->type_ = 2;
+    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
@@ -225,7 +225,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
                                            const vector<TVertex>& vertices)
 {
     // ---------- 1 设置部分成员变量 ----------
-    this->type_ = 2;
+    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
@@ -577,15 +577,15 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
 
     this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = weight;
 
+    Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
+    this->edges_.push_back(edge);
+
     // 无向图逻辑
-    if (this->type_ == 2) {
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
         this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;
     }
 
     this->edge_count_++;
-
-    Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
-    this->edges_.push_back(edge);
 
     return true;
 }
@@ -687,8 +687,24 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
     this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = TWeight();
 
     // 无向(图/网)
-    if (this->type_ == 2) {
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
         this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();
+    }
+
+    for (int i = 0; i < this->EdgeCount(); i++) {
+        if (this->GetEdge(i).ending_vertex == ending_vertex && this->GetEdge(i).starting_vertex == starting_vertex) {
+            this->edges_.erase(this->edges_.begin() + i);
+            if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
+                break;
+            }
+        }
+
+        // 此为无向图逻辑
+        if (this->GetEdge(i).ending_vertex == starting_vertex && this->GetEdge(i).starting_vertex == ending_vertex) {
+            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+                this->edges_.erase(this->edges_.begin() + i);
+            }
+        }
     }
 
     this->edge_count_--;

@@ -16,9 +16,50 @@
 using namespace std;
 
 
+/*!
+ * @brief **边模板类**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @note
+ * 边模板类
+ * -------
+ * -------
+ *
+ * 注:
+ * 此模板类只表示存在边, 并不表达边的方向
+ * 边的方向在邻接表图中, 由邻接表表示, 在邻接矩阵图中, 由邻接矩阵表示
+ *
+ * -------
+ *
+ */
 template<typename TVertex, typename TWeight>
 class Edge {
 public:
+    /*!
+     * @brief **默认构造函数**
+     * @note
+     * 默认构造函数
+     * ----------
+     * ----------
+     *
+     * ----------
+     */
+    Edge(): starting_vertex(TVertex()), ending_vertex(TVertex()), weight(TWeight()) {}
+
+    /*!
+     * @brief 构造函数
+     * @param starting_vertex 起点
+     * @param ending_vertex 终点
+     * @param weight 边权值
+     * @note
+     * 构造函数
+     * -------
+     * -------
+     *
+     * 注: 起点, 终点仅是为构成边, 不包含方向的意义
+     *
+     * -------
+     */
     Edge(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
         starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {};
 
@@ -82,6 +123,12 @@ public:
 template<typename TVertex, typename TWeight>
 class Graph {
 public:
+    /*!
+     * @brief **获取图类型**
+     * @return 图类型
+     * @note
+     * 1: 有向, 2: 无向
+     */
     int Type() const { return this->type_; }
 
     /*!
@@ -288,6 +335,9 @@ protected:
 
     vector<TVertex> vertices_;              //!< 结点vector
     vector<Edge<TVertex, TWeight> > edges_; //!< 边vector
+
+    static const int DIRECTED = 1; //!< 有向
+    static const int UNDIRECTED = 2; //!< 无向
 };
 
 
