@@ -423,7 +423,7 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
                                                            TWeight& weight) const
 {
     if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
-        adjacency_matrix_[starting_vertex_index][ending_vertex_index] == 0)
+        adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
     {
         return false;
     }
@@ -569,39 +569,83 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
                                                const TWeight& weight)
 {
     // ---------- 1 检查插入合法性 ---------
+
+    // 1.1 结点检查
     int starting_vertex_index = GetVertexIndex(starting_vertex);
     int ending_vertex_index = GetVertexIndex(ending_vertex);
+
+    // 如果starting_vertex不在图中, 将结点starting_vertex插入
+    if (starting_vertex_index < 0) {
+        bool res = this->InsertVertex(starting_vertex);
+        if (!res) {
+            return false;
+        }
+
+        starting_vertex_index = this->GetVertexIndex(starting_vertex);
+    }
+
+    // 如果ending_vertex不在图中, 将结点ending_vertex插入
+    if (ending_vertex_index < 0) {
+        bool res = this->InsertVertex(ending_vertex);
+        if (!res) {
+            return false;
+        }
+
+        ending_vertex_index = this->GetVertexIndex(ending_vertex);
+    }
 
     if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index) {
         return false;
     }
 
-    // --------- 2 edges_和edge_count_调整 ----------
-    // todo: 困了, 好像写的不对
-    bool is_in_edges = false;
+    // 遍历edges_, 检查是否能找到待插入边
     for (int i = 0; i < this->edges_.size(); i++) {
-        if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
-            (this->edges_[i].ending_vertex == starting_vertex && this->edges_[i].starting_vertex == starting_vertex))
-        {
-            is_in_edges = true;
-            break;
+        if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // 无向
+            // 无向图/网已存在该边, 不能插入
+            if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
+                (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex)) {
+                return false;
+            }
+        } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {    // 有向
+            // 有向图/网已存在该边, 不能插入
+            if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
+                return false;
+            }
         }
     }
 
-    if (!is_in_edges) {
-        Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
-        this->edges_.push_back(edge);
+    // 1.3 邻接矩阵检查
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        // 邻接矩阵存在该边
+        if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight() ||
+            this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] != TWeight())
+        {
+            return false;
+        }
+    } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
+        // 邻接矩阵存在该边
+        if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight()) {
+            return false;
+        }
     }
 
-    this->edge_count_++;
-
-    // ---------- 3 邻接数组处理 ----------
+    // ---------- 2 执行插入 ----------
+    // 2.1 边(starting_vertex ---> ending_vertex) 插入
+    // 插入邻接矩阵
     this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = weight;
 
-    // 无向图逻辑
+    // 插入edges_
+    Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
+    this->edges_.push_back(edge);
+
+    // 2.2 无向图, 反向边(ending_vertex ---> starting_vertex) 插入
     if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        // 反向边插入邻接矩阵
         this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;
     }
+
+    // ---------- 3 调edge_count_ ----------
+    this->edge_count_++;
 
     return true;
 }
@@ -688,34 +732,69 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
 
+    /// ----- 1 检查合法性 -----
+    // 1.1 检查结点
+    // 起点/结点, 如果有一个不存在, 则返回false
     int starting_vertex_index = GetVertexIndex(starting_vertex);
     int ending_vertex_index = GetVertexIndex(ending_vertex);
     if (starting_vertex_index < 0 || ending_vertex_index < 0) {
         return false;
     }
 
+    // 1.2 检查边
+    // 遍历edges_, 检查是否能找到待删除边
+    int remove_edge_index = -1;
+    if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
+        for (int i = 0; i < this->edges_.size(); i++) {
+            if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
+                remove_edge_index = i;
+                break;
+            }
+        }
+    } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        for (int i = 0; i < this->edges_.size(); i++) {
+            if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
+                (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex))
+            {
+                remove_edge_index = i;
+                break;
+            }
+        }
+    }
+
+    if (remove_edge_index == -1) {    // edges_无此边,
+        return false;
+    }
+
+    // 1.3 检查邻接矩阵
+    // 如果没有此边, 则不能删除
     TWeight weight;
     bool res = GetWeight(starting_vertex, ending_vertex, weight);
     if (!res) {
         return false;
     }
 
-    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = TWeight();
-
-    // 无向(图/网)
     if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();
-    }
-
-    for (int i = 0; i < this->EdgeCount(); i++) {
-        if ((this->GetEdge(i).ending_vertex == ending_vertex && this->GetEdge(i).starting_vertex == starting_vertex) ||
-            (this->GetEdge(i).starting_vertex == ending_vertex && this->GetEdge(i).ending_vertex == starting_vertex))
-        {
-            this->edges_.erase(this->edges_.begin() + i);
-            break;
+        res = GetWeight(ending_vertex, starting_vertex, weight);
+        if (!res) {
+            return false;
         }
     }
 
+    /// ------ 2 在edges和邻接表做删除 ------\n
+    /// 2.1 starting_vertex --> ending_vertex 做删除
+    // 邻接矩阵内删除
+    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = TWeight();
+    // edges_内删除
+    this->edges_.erase(this->edges_.begin() + remove_edge_index);
+
+    // 2.1 无向(图/网), 增加 ending_vertex --> starting_vertex 做删除
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        // 邻接矩阵内删除
+        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();
+    }
+
+    /// ------ 3 edge_count_调整 ------\n
     this->edge_count_--;
 
     return true;

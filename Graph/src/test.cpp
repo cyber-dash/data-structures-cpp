@@ -160,10 +160,10 @@ void TestMinPriorityQueue() {
 
 // 测试矩阵图的矩阵
 void TestMatrixGraphPrintMatrix() {
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test PrintMatrix                     |"<<endl;
-  cout<<"|                       测试矩阵图的矩阵                      |"<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                      Test PrintMatrix                     |"<<endl;
+    cout<<"|                       测试矩阵图的矩阵                      |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                         北京                               |"<<endl;
     cout<<"|                         / \\                               |"<<endl;
@@ -252,7 +252,8 @@ void TestGetVertexByIndex() {
         adjacency_list_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
-    adjacency_list_graph.RemoveEdge("北京", "上海");
+    // adjacency_list_graph.RemoveEdge("北京", "上海");
+    adjacency_list_graph.RemoveEdge("上海", "北京");
     adjacency_list_graph.RemoveEdge("北京", "广州");
     adjacency_list_graph.RemoveVertex("北京");
     adjacency_list_graph.RemoveVertex("上海");
