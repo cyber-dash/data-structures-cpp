@@ -487,7 +487,7 @@ bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& 
  * - **1** 判断合法性\n
  * 获取起点索引starting_vertex_index\n
  * 获取终点索引starting_vertex_index\n
- * **if** 起点索引 < 0 或者 终点索引 < 0 :\n
+ * **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :\n
  * &emsp; 返回false\n
  * - **2** 获取边权值\n
  * 调用GetWeightByVertexIndex\n
@@ -531,7 +531,7 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
  *
  * -------------------
  * - **1** 判断合法性\n
- * **if** 起点索引 < 0 或者 终点索引 < 0 :\n
+ * **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :\n
  * - **2** 获取边权值\n
  * adjacency_matrix_[starting_vertex_index][ending_vertex_index]赋给参数weight\n
  */
@@ -569,6 +569,15 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
  * 获取结点的索引\n
  * **if** 结点索引 < 0 :\n
  * &emsp; 返回false\n
+ * - **2** 遍历结点找到第一个相邻结点\n
+ * **for loop** 遍历结点 :\n
+ * &emsp; 获取当前索引(i)对应的结点\n
+ * &emsp; **if** 当前索引无对应结点 :\n
+ * &emsp;&emsp; continue\n
+ * &emsp; 获取 结点--->当前结点 的边权值\n
+ * &emsp; **if** 边权值存在(边存在) :\n
+ * &emsp;&emsp; 当前结点赋给参数first_neighbor\n
+ * &emsp;&emsp; 返回true
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) const {
@@ -598,7 +607,7 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
 
 
 /*!
- * @brief 获取结点的下一个相邻结点
+ * @brief **获取结点相对于某一相邻结点的下一个相邻结点**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param vertex 结点
@@ -606,11 +615,25 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
  * @param next_neighbor_vertex 下一相邻结点保存变量
  * @return 执行结果
  * @note
- * 获取结点的下一个相邻结点
- * --------------------
- * --------------------
+ * 获取结点相对于某一相邻结点的下一个相邻结点
+ * -----------------------------------
+ * -----------------------------------
  *
- * --------------------
+ * -----------------------------------
+ * - **1** 判断合法性\n
+ * 获取结点的索引\n
+ * 获取相邻某结点的索引\n
+ * **if** 结点索引 < 0 || 某相邻结点索引 < 0 :\n
+ * &emsp; 返回false\n
+ * - **2** 遍历结点找到下一个相邻结点\n
+ * **for loop** 遍历结点索引, 从neighbor_vertex_index到vertex_count_(不包含) :\n
+ * &emsp; 获取当前索引(i)对应的结点\n
+ * &emsp; **if** 当前索引无对应结点 :\n
+ * &emsp;&emsp; continue\n
+ * &emsp; 获取 结点--->当前结点 的边权值\n
+ * &emsp; **if** 边权值存在(边存在) :\n
+ * &emsp;&emsp; 当前结点赋给参数next_neighbor_vertex\n
+ * &emsp;&emsp; 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
@@ -645,7 +668,7 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
 
 
 /*!
- * @brief 插入结点
+ * @brief **插入结点**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param vertex 结点
@@ -656,15 +679,26 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
  * -------
  *
  * -------
+ * - **1** 判断合法性\n
+ * **if** 结点数 >= 结点数上限 :\n
+ * &emsp; 返回false\n
+ * - **2** 执行插入\n
+ * &emsp; vertices_插入结点\n
+ * &emsp; vertex_count_加1\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
-    if (this->vertex_count_ >= this->max_vertex_count_) {
-        return false;
+
+    // ---------- 1 判断合法性 ----------
+
+    if (this->vertex_count_ >= this->max_vertex_count_) {   // if 结点数 >= 结点数上限
+        return false;                                       // 返回false
     }
 
-    this->vertices_.push_back(vertex);
-    this->vertex_count_++;
+    // ---------- 2 执行插入 ----------
+
+    this->vertices_.push_back(vertex);  // vertices_插入结点
+    this->vertex_count_++;              // vertex_count_加1
 
     return true;
 }
@@ -682,8 +716,47 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  * 插入边
  * -----
  * -----
- * 需要起点和终点都已经在图内, 否则无法插入(先插入结点, 再插入边)
+ *
  * -----
+ * + **1** 检查插入合法性\n
+ *  - **1.1** 结点检查和相关处理\n
+ *  &emsp; 获取起点索引\n
+ *  &emsp; 获取终点索引\n
+ *  &emsp; **if** 起点索引 < 0 :\n
+ *  &emsp;&emsp; 插入起点\n
+ *  &emsp;&emsp; **if** 插入失败 :\n
+ *  &emsp;&emsp;&emsp; 返回false\n
+ *  &emsp;&emsp; 使用新插入的起点获取起点索引\n
+ *  &emsp; **if** 终点索引 < 0 :\n
+ *  &emsp;&emsp; 插入终点\n
+ *  &emsp;&emsp; **if** 插入失败 :\n
+ *  &emsp;&emsp;&emsp; 返回false\n
+ *  &emsp;&emsp; 使用新插入的终点获取终点索引\n
+ *  &emsp; **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引 等于 终点索引 :\n
+ *  &emsp;&emsp; 返回false\n
+ *  - **1.2** 边检查\n
+ *  &emsp; **for loop** 遍历edges_ :\n
+ *  &emsp;&emsp; **if** 无向图 :\n
+ *  &emsp;&emsp;&emsp; **if** 边(起点--->终点) or 反向边(终点--->起点) 存在 :\n
+ *  &emsp;&emsp;&emsp;&emsp; 返回false\n
+ *  &emsp;&emsp; **if** 有向图 :\n
+ *  &emsp;&emsp;&emsp; **if** 边(起点--->终点) 存在 :\n
+ *  &emsp;&emsp;&emsp;&emsp; 返回false\n
+ *  - **1.3** 邻接矩阵检查\n
+ *  &emsp; **if** 无向图 :\n
+ *  &emsp;&emsp; **if** 邻接矩阵内存在该边or反向边 :\n
+ *  &emsp;&emsp;&emsp; 返回false;\n
+ *  &emsp; **else if** 有向图 :\n
+ *  &emsp;&emsp; **if** 邻接矩阵内存在该边 :\n
+ *  &emsp;&emsp;&emsp; 返回false;\n
+ * + **2** 执行插入\n
+ *  - **2.1** 该边插入\n
+ *   * 插入邻接矩阵\n
+ *   * 插入edges_\n
+ *  - **2.2** 无向图处理\n
+ *  &emsp; **if** 无向图 :\n
+ *  &emsp;&emsp; 反向边插入邻接矩阵\n
+ *  - **2.3** 边数加1\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
@@ -766,7 +839,7 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
         this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;
     }
 
-    // ---------- 3 调edge_count_ ----------
+    // 2.3 edge_count_加1
     this->edge_count_++;
 
     return true;
