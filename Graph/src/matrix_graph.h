@@ -110,67 +110,85 @@ private:
  * @param max_weight 边权值上限
  * @note
  * 构造函数(结点数上限/边权值上限)
- * -------
- * -------
+ * ---------------------------
+ * ---------------------------
  *
  * <span style="color:#DF5A00">
  * 听过的风, 走过的路
  * </span>
  *
- * -------
- * ###1 设置部分成员变量###
- * ###2 设置邻接矩阵###
- *
+ * ---------------------------
+ * + **1** 设置部分成员变量\n
+ *  - type_(**图类型**)设为UNDIRECTED(**无向**)\n
+ *  - max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
+ *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
+ * + **2** 设置邻接矩阵\n
+ *  - **2.1** 分配邻接矩阵行内存\n
+ *  **if** 内存分配失败 :\n
+ *  &emsp; 抛出bad_alloc()错误\n
+ *  - **2.2** 分配邻接矩阵每行的内存, 并初始化\n
+ *  **for loop** 遍历adjacency_matrix_ :\n
+ *  &emsp; 分配矩阵当前行的内存\n
+ *  &emsp; **if** 内存分配失败 :\n
+ *  &emsp;&emsp; 抛出bad_alloc()错误\n
+ *  &emsp; **for loop** 遍历当前行 :\n
+ *  &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight) {
 
     // ---------- 1 设置部分成员变量 ----------
+
+    // type_(**图类型**)设为UNDIRECTED(**无向**)
     this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;
+
+    // max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
+    // vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
     // ---------- 2 设置邻接矩阵 ----------
+
+    // 2.1 分配邻接矩阵行内存
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
-    if (!this->adjacency_matrix_) {
-        throw bad_alloc();
+    if (!this->adjacency_matrix_) {     //if 内存分配失败
+        throw bad_alloc();              // 抛出bad_alloc()错误
     }
 
-    for (int row = 0; row < this->max_vertex_count_; row++) {
-        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
-        if (!this->adjacency_matrix_[row]) {
-            throw bad_alloc();
+    // 2.2 分配邻接矩阵每行的内存, 并初始化
+    for (int row = 0; row < this->max_vertex_count_; row++) {   // for loop 遍历adjacency_matrix_
+        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];    // 分配矩阵当前行的内存
+        if (!this->adjacency_matrix_[row]) {                                    // if 内存分配失败
+            throw bad_alloc();                                                  // 抛出bad_alloc()错误
         }
 
-        for (int col = 0; col < this->max_vertex_count_; col++) {
-            this->adjacency_matrix_[row][col] = TWeight();
+        for (int col = 0; col < this->max_vertex_count_; col++) {   // for loop 遍历当前行
+            this->adjacency_matrix_[row][col] = TWeight();          // 对当前矩阵元素adjacency_matrix_[row][col]初始化
         }
     }
 }
 
 
 /*!
-<<<<<<< HEAD
- * @brief **构造函数(结点数上限/边权值上限/边/结点vector)**
-=======
- * @brief **构造函数**
+ * @brief **构造函数(图类型/结点数上限/边权值上限)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param type 图类型
  * @param max_vertex_count 结点数上限
  * @param max_weight 边权值上限
  * @note
- * 构造函数
- * -------
- * -------
+ * 构造函数(图类型/结点数上限/边权值上限)
+ * ---------------------------------
+ * ---------------------------------
  *
- * -------
+ * ---------------------------------
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeight max_weight) {
+    // ---------- 1 设置部分成员变量 ----------
     this->type_ = type;
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
@@ -178,11 +196,14 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
+    // ---------- 2 设置邻接矩阵 ----------
+    // 2.1 分配邻接矩阵行内存
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
     if (!this->adjacency_matrix_) {
         throw bad_alloc();
     }
 
+    // 2.2 分配邻接矩阵每行的内存, 并初始化
     for (int row = 0; row < this->max_vertex_count_; row++) {
         this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
         if (!this->adjacency_matrix_[row]) {
@@ -196,8 +217,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
 }
 
 /*!
- * @brief **构造函数(边/结点vector)**
->>>>>>> 矩阵图增加有向/无向(图/网)类型的支持, Floyd函数支持有向(图/网)的支持
+ * @brief **构造函数(结点数上限/边权值上限/边/结点vector)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 结点数上限
@@ -206,15 +226,10 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
  * @param vertices 结点vector
  * @note
  * 构造函数(结点数上限/边权值上限/边/结点vector)
- * ---------------------
- * ---------------------
+ * ----------------------------------------
+ * ----------------------------------------
  *
- * <span style="color:#DF5A00">
- * 听过的风, 走过的路\n
- * 爱过的人, 闯过的祸
- * </span>
- *
- * ---------------------
+ * ----------------------------------------
  * ###1 设置部分成员变量###
  * ###2 设置邻接矩阵###
  */
@@ -233,11 +248,13 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
     this->edge_count_ = 0;
 
     // ---------- 2 设置邻接矩阵 ----------
+    // 2.1 分配邻接矩阵行内存
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
     if (!this->adjacency_matrix_) {
         throw bad_alloc();
     }
 
+    // 2.2 分配邻接矩阵每行的内存, 并初始化
     for (int row = 0; row < this->max_vertex_count_; row++) {
         this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
         if (!this->adjacency_matrix_) {
@@ -249,10 +266,13 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
         }
     }
 
+    // ---------- 3 插入结点和边----------
+    // 3.1 将vertices插入
     for (unsigned int i = 0; i < vertices.size(); i++) {
         this->InsertVertex(vertices[i]);
     }
 
+    // 3.1 将edges插入
     for (unsigned int i = 0; i < edges.size(); i++) {
         this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);
     }
@@ -260,19 +280,25 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
 
 
 /*!
- * @brief **构造函数(边/结点vector)**
+ * @brief **构造函数(图类型/结点数上限/边权值上限/边/结点vector)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
+ * @param type 图类型
  * @param max_vertex_count 结点数上限
  * @param max_weight 边权值上限
  * @param edges 边vector
  * @param vertices 结点vector
  * @note
- * 构造函数(边/结点vector)
- * ---------------------
- * ---------------------
+ * 构造函数(图类型/结点数上限/边权值上限/边/结点vector)
+ * ----------------------------------------------
+ * ----------------------------------------------
  *
- * ---------------------
+ * <span style="color:#DF5A00">
+ * 听过的风, 走过的路\n
+ * 爱过的人, 闯过的祸
+ * </span>
+ *
+ * ----------------------------------------------
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
@@ -281,6 +307,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
                                            const vector<Edge<TVertex, TWeight> >& edges,
                                            const vector<TVertex>& vertices)
 {
+    // ---------- 1 设置部分成员变量 ----------
     this->type_ = type;
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
@@ -288,11 +315,15 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
+
+    // ---------- 2 设置邻接矩阵 ----------
+    // 2.1 分配邻接矩阵行内存
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
     if (!this->adjacency_matrix_) {
         throw bad_alloc();
     }
 
+    // 2.2 分配邻接矩阵每行的内存, 并初始化
     for (int row = 0; row < this->max_vertex_count_; row++) {
         this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
         if (!this->adjacency_matrix_) {
@@ -304,10 +335,13 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
         }
     }
 
+    // ---------- 3 插入结点和边----------
+    // 3.1 将vertices插入
     for (unsigned int i = 0; i < vertices.size(); i++) {
         this->InsertVertex(vertices[i]);
     }
 
+    // 3.1 将edges插入
     for (unsigned int i = 0; i < edges.size(); i++) {
         this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);
     }
@@ -328,17 +362,17 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
  * </span>
  *
  * -------
- * ###1 释放邻接矩阵的每行###
- * ###2 释放邻接矩阵###
+ * ###1 释放邻接矩阵的每行的内存###
+ * ###2 释放邻接矩阵行内存###
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
-    // ---------- 1 释放邻接矩阵的每行 ----------
+    // ---------- 1 释放邻接矩阵的每行的内存 ----------
     for (int row = 0; row < this->vertex_count_; row++) {
         delete[] this->adjacency_matrix_[row];
     }
 
-    // ---------- 2 释放邻接矩阵 ----------
+    // ---------- 2 释放邻接矩阵行内存 ----------
     delete[] this->adjacency_matrix_;
 }
 

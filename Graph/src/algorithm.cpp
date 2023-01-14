@@ -142,7 +142,7 @@ template<typename TVertex, typename TWeight>
 int Components(const Graph<TVertex, TWeight>& graph) {
 
     if (graph.VertexCount() == 0) {
-
+        return 0;
     }
 
     set<TVertex> visited_vertex_set; // 使用set保存已经遍历过的结点
@@ -168,9 +168,9 @@ int Components(const Graph<TVertex, TWeight>& graph) {
 
         counter++; // 连通分量数量+1
         cout<<endl;
-
-        return counter;
     }
+
+    return counter;
 }
 
 
@@ -509,7 +509,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  *         for u的每个邻接结点v:
  *             松弛(u, v, 边集合)                 // 松弛成功的结点, 会被加入到vertex_set, u进入MinPriorityQueue
  */
-template<class TVertex, class TWeight>
+template<typename TVertex, typename TWeight>
 void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
                              TVertex starting_vertex,
                              TWeight distance[],
@@ -643,8 +643,6 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
  */
 template<class TVertex, class TWeight>
 bool BellmanFord(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeight distance[], int predecessor[]) {
-    int vertex_cnt = graph.VertexCount();
-
     // --- 初始化 ---
 
     // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
