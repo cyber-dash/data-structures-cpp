@@ -501,7 +501,9 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
 {
     int starting_vertex_index = GetVertexIndex(starting_vertex);
     int ending_vertex_index = GetVertexIndex(ending_vertex);
-    if (starting_vertex_index < 0 || ending_vertex_index < 0) {
+    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
+        adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
+    {
         return false;
     }
 
@@ -538,7 +540,9 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
                                                            int ending_vertex_index,
                                                            TWeight& weight) const
 {
-    if (starting_vertex_index < 0 || ending_vertex_index < 0) {
+    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
+        adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
+    {
         return false;
     }
 
