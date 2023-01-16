@@ -10,28 +10,39 @@
 #include <set>
 #include <queue>
 #include <vector>
-#include "algorithm.h"
+#include "graph_algorithm.h"
 #include "priority_queue.h"
 #include "disjoint_set.h"
 
 
 /*!
- * @brief 图深度优先遍历
- * @tparam TVertex 结点模版参数
- * @tparam TWeight 边权值模板参数
- * @param graph 图的引用
- * @param vertex 遍历起始结点
+ * @brief **图深度优先遍历**
+ * @tparam TVertex 结点类型模版参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
+ * @param vertex 遍历起点
+ * @note
+ * 图深度优先遍历
+ * ------------
+ * ------------
+ *
+ * ------------
+ * - **1 声明已访问结点集合visited_vertex_set**\n
+ * - **2 对vertex(遍历起点)调用DfsOnVertexRecursive**\n
  */
 template<typename TVertex, typename TWeight>
 void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
+
+    // 1 声明已访问结点集合visited_vertex_set
     set<TVertex> visited_vertex_set;
 
+    // 2 对vertex(遍历起点)调用DfsOnVertexRecursive
     DfsOnVertexRecursive(graph, vertex, visited_vertex_set);
 }
 
 
 /*!
- * @brief 图结点深度优先遍历(递归)
+ * @brief **图结点深度优先遍历(递归)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param graph 图
@@ -45,74 +56,120 @@ void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * 利用函数的调用关系来模拟栈
  *
  * --------------------
+ * + **1 起点插入已遍历结点集合**\n
+ * + **2 遍历起点的邻接点, 执行递归**\n
+ *  - **2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)**\n
+ *  &emsp; 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists\n
+ *  - **2.2 遍历执行递归**\n
+ *  &emsp;**while loop** 存在新邻接点 :\n
+ *  &emsp;&emsp; **if** 新邻接点不在visit_vertex_set(已访问结点集合)中 :\n
+ *  &emsp;&emsp;&emsp; 对新邻接点调用DfsOnVertexRecursive(递归)\n
+ *  &emsp;&emsp; 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists\n
+ *  &emsp;&emsp; **if** 下一新邻接点存在 :\n
+ *  &emsp;&emsp;&emsp; 更新neighbor_vertex\n
  */
 template<typename TVertex, typename TWeight>
 void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex, set<TVertex>& visited_vertex_set) {
 
-    cout<<"访问结点: "<<vertex<<endl;
+    cout << "访问结点: " << vertex << endl;
 
+    // ---------- 1 起点插入已遍历结点集合 ----------
     visited_vertex_set.insert(vertex);
 
+    // ---------- 2 遍历起点的邻接点, 执行递归 ----------
+
+    // 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)
+    // 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists
     TVertex neighbor_vertex;
     bool new_neighbor_exists = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);
 
-    while (new_neighbor_exists) {
+    // 2.2 遍历执行递归
+    while (new_neighbor_exists) {                   // while loop 存在新邻接点
+        // if 新邻接点不在visit_vertex_set(已访问结点集合)中
         if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
+            // 对新邻接点调用DfsOnVertexRecursive(递归)
             DfsOnVertexRecursive(graph, neighbor_vertex, visited_vertex_set);
         }
 
+        // 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
         TVertex next_neighbor_vertex;
         new_neighbor_exists = graph.GetNextNeighborVertex(vertex, neighbor_vertex, next_neighbor_vertex);
 
-        if (new_neighbor_exists) {
-            neighbor_vertex = next_neighbor_vertex;
+        if (new_neighbor_exists) {                  // if 下一新邻接点存在
+            neighbor_vertex = next_neighbor_vertex; // 更新neighbor_vertex
         }
     }
 }
 
 
 /*!
- * @brief 图广度优先遍历
- * @tparam TVertex 结点模板参数
- * @tparam TWeight 边权值模板参数
- * @param graph 图的引用
- * @param vertex 遍历起始结点
+ * @brief **图广度优先遍历**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
+ * @param vertex 遍历起点
  * @note
- * 使用队列进行广度优先遍历
+ * 图广度优先遍历
+ * ------------
+ * ------------
+ *
+ * ------------
+ * + **1 起点插入已遍历结点集合**\n
+ * &emsp; 声明已遍历结点集合\n
+ * &emsp; 插入起点\n
+ * + **2 起点入队**\n
+ * &emsp; 声明结点队列\n
+ * &emsp; 起点入队\n
+ * + **3 使用队列进行遍历结点**\n
+ * &emsp; **while loop** 队列不为空 :\n
+ * &emsp;&emsp; 取队头\n
+ * &emsp;&emsp; 队头出队\n
+ * &emsp;&emsp; 对队头结点调用GetFirstNeighborVertex, 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)\n
+ * &emsp;&emsp; **while loop** 存在新邻接点 :\n
+ * &emsp;&emsp;&emsp; **if** 该新邻接点未被访问 :\n
+ * &emsp;&emsp;&emsp;&emsp; 访问新邻接点\n
+ * &emsp;&emsp;&emsp;&emsp; 该结点插入visited_vertex_set(已访问结点集合)\n
+ * &emsp;&emsp;&emsp;&emsp; 该结点入队\n
+ * &emsp;&emsp;&emsp; 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists\n
+ * &emsp;&emsp;&emsp; **if** 下一新邻接点存在 :\n
+ * &emsp;&emsp;&emsp;&emsp; 更新neighbor_vertex\n
  */
 template<typename TVertex, typename TWeight>
 void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
 
     cout<<"访问结点: "<<vertex<<endl;
 
-    set<TVertex> visited_vertex_set;       // 已访问结点集合
-    visited_vertex_set.insert(vertex);    // 插入已访问的起始结点vertex
+    // ---------- 1 起点插入已遍历结点集合 ----------
 
-    queue<TVertex> vertex_queue;           // 结点队列
-    vertex_queue.push(vertex);            // 已访问的起始结点vertex入队
+    set<TVertex> visited_vertex_set;    // 声明已遍历结点集合
+    visited_vertex_set.insert(vertex);  // 插入起点
 
-    while (!vertex_queue.empty()) {
-        TVertex front_vertex = vertex_queue.front(); // 每次取队头
-        vertex_queue.pop();
+    // ---------- 2 起点入队 ----------
 
-        // 遍历:已取出的队头结点的相邻结点
-        //     如果未访问该结点:
-        //         入队
+    queue<TVertex> vertex_queue;        // 声明结点队列
+    vertex_queue.push(vertex);          // 起点入队
+
+    // ---------- 3 使用队列进行遍历结点 ----------
+    while (!vertex_queue.empty()) {                     // while loop 队列不为空
+        TVertex front_vertex = vertex_queue.front();    // 取队头
+        vertex_queue.pop();                             // 队头出队
+
+        // 对队头结点调用GetFirstNeighborVertex, 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)
         TVertex neighbor_vertex;
-        bool has_neighbor = graph.GetFirstNeighborVertex(front_vertex, neighbor_vertex);
-        while (has_neighbor) {
-            if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {   // 如果未访问
-                cout<<"访问结点: "<<neighbor_vertex<<endl;
+        bool new_neighbor_exists = graph.GetFirstNeighborVertex(front_vertex, neighbor_vertex);
+        while (new_neighbor_exists) {                                                   // while loop 存在新邻接点
 
-                visited_vertex_set.insert(neighbor_vertex);
-
-                vertex_queue.push(neighbor_vertex);
+            if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) { // if 该新邻接点未被访问
+                cout<<"访问结点: "<<neighbor_vertex<<endl;           // 访问新邻接点
+                visited_vertex_set.insert(neighbor_vertex);         // 该结点插入visited_vertex_set(已访问结点集合)
+                vertex_queue.push(neighbor_vertex);                 // 该结点入队
             }
 
+            // 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
             TVertex next_neighbor_vertex;
-            has_neighbor = graph.GetNextNeighborVertex(front_vertex, neighbor_vertex, next_neighbor_vertex);
-            if (has_neighbor) {
-                neighbor_vertex = next_neighbor_vertex;
+            new_neighbor_exists = graph.GetNextNeighborVertex(front_vertex, neighbor_vertex, next_neighbor_vertex);
+            if (new_neighbor_exists) {                  // if 下一新邻接点存在
+                neighbor_vertex = next_neighbor_vertex; // 更新neighbor_vertex
             }
         }
     }
@@ -124,19 +181,27 @@ void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param graph 图
+ * @return 连通分量个数
  * @note
  * 图的连通分量
  * ----------
  * ----------
  *
+ * 打印连通分量与算法耦合太重, 有兴趣的朋友自行解耦:-)
+ *
  * ----------
- * 1. 使用visited_vertex_set保存已经遍历过的结点
- * 2. 每遍历一个结点vertex
- *   如果在visited_vertex_set中(则已经在某连通分量中)
- *       不再处理;
- *   如果不在visited_vertex_set中:
- *       使用DFS对vertex进行遍历
- *       连通分量数量+1
+ * - **1 边界条件处理**\n
+ * &emsp; **if** 结点数为0 :\n
+ * &emsp;&emsp; 返回0\n
+ * - **2 声明visited_vertex_set(已访问结点集合)**\n
+ * - **3 遍历结点, 使用DFS划分联通分量**\n
+ * &emsp; **for loop** 遍历结点索引 :\n
+ * &emsp;&emsp; 获取i(当前索引)对应的结点vertex\n
+ * &emsp;&emsp; **if** 在visited_vertex_set中(则已经在某连通分量中) :\n
+ * &emsp;&emsp;&emsp; continue(不再处理)\n
+ * &emsp;&emsp; **else if** 不在visited_vertex_set中 :\n
+ * &emsp;&emsp;&emsp; 使用DfsOnVertexRecursive对vertex进行遍历\n
+ * &emsp;&emsp; 连通分量数量+1\n
  */
 template<typename TVertex, typename TWeight>
 int Components(const Graph<TVertex, TWeight>& graph) {
@@ -164,7 +229,7 @@ int Components(const Graph<TVertex, TWeight>& graph) {
         }
 
         cout << "连通分量" << counter << ":" << endl;
-          DfsOnVertexRecursive(graph, vertex, visited_vertex_set);
+        DfsOnVertexRecursive(graph, vertex, visited_vertex_set);
 
         counter++; // 连通分量数量+1
         cout<<endl;
