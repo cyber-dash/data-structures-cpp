@@ -10,8 +10,8 @@ add_executable(main
         src/graph.h
         src/matrix_graph.h
         src/adjacency_list_graph.h
-        src/algorithm.h
-        src/algorithm.cpp
+        src/graph_algorithm.h
+        src/graph_algorithm.cpp
         src/disjoint_set.h
         src/disjoint_set.cpp
         src/test.h

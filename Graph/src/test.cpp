@@ -8,8 +8,8 @@
 
 #include "test.h"
 #include "priority_queue.h"
-#include "algorithm.h"
-#include "algorithm.cpp"
+#include "graph_algorithm.h"
+#include "graph_algorithm.cpp"
 
 
 using namespace std;
