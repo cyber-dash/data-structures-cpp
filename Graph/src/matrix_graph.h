@@ -756,7 +756,7 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  *  - **2.2** 无向图处理\n
  *  &emsp; **if** 无向图 :\n
  *  &emsp;&emsp; 反向边插入邻接矩阵\n
- *  - **2.3** 边数加1\n
+ *  - **2.3** edge_count_(边数)加1\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
@@ -859,51 +859,67 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
  * -------
  *
  * <span style="color:#DF5A00">
- * 除了删除结点, 还要删除该结点所对应的每条边
+ * 除了删除结点, 还要删除该结点作为起点/终点的每条边
  * </span>
  *
  * -------
- * ### 1 判断删除合理性 ###
- * ### 2 邻接矩阵调整 ###
- * ### 3 边/结点vector执行删除 ###
- * - 边vector执行删除\n
+ * + **1 判断删除合理性**\n
+ * &emsp; 获取待删除结点的索引\n
+ * &emsp; **if** 结点索引 < 0 or 结点索引 >= vertex_count_ :\n
+ * &emsp;&emsp; 返回false\n
+ * + **2 邻接矩阵执行删除**\n
+ * &emsp; (用索引vertex_count_ - 1结点, 替换待删除结点)\n
+ * &emsp; **for loop** 遍历结点索引 :\n
+ * &emsp;&emsp; 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素\n
+ * &emsp;&emsp; 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素\n
+ * + **3 edges_执行删除**\n
  * &emsp; **for loop** 遍历edges_ :\n
  * &emsp;&emsp; **if** 当前边起点or当前边终点 为待删除节点 :\n
  * &emsp;&emsp;&emsp; 删除当前边\n
- * &emsp;&emsp;&emsp; edge_count_减1\n
- * - 结点vector执行删除\n
- * &emsp; 删除vertices_的this->vertex_count_ - 1\n
+ * &emsp;&emsp;&emsp; edge_count_(边数)减1\n
+ * + **4 vertices_执行删除**\n
+ * &emsp; vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素\n
+ * &emsp; vertices_删除索引vertex_count - 1位置元素\n
+ * + **5 vertex_count_(结点数)减1**\n
+ * &emsp; **注意**: 通过此操作, 缩小了邻接矩阵的访问范围, 等于对邻接矩阵做了删除相关的操作\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
     // ---------- 1 判断删除合理性 ----------
-    int vertex_index = GetVertexIndex(vertex);
-    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {
-        return false;
+    int vertex_index = GetVertexIndex(vertex);                      // 获取待删除结点的索引
+    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {  // if 结点索引 < 0 or 结点索引 >= vertex_count_
+        return false;                                               // 返回false
     }
 
-    // ---------- 2 邻接矩阵调整 ----------
-
-    for (int i = 0; i < this->vertex_count_; i++) {
+    // ---------- 2 邻接矩阵执行删除 ----------
+    // (用索引vertex_count_ - 1结点, 替换待删除结点)
+    for (int i = 0; i < this->vertex_count_; i++) {     // for loop 遍历结点索引
+        // 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素
         this->adjacency_matrix_[i][vertex_index] = this->adjacency_matrix_[i][this->vertex_count_ - 1];
+        // 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素
         this->adjacency_matrix_[vertex_index][i] = this->adjacency_matrix_[this->vertex_count_ - 1][i];
     }
 
-    // ---------- 3 边/结点vector执行删除 ----------
-    // 边vector执行删除
+    // ---------- 3 edges_执行删除 ----------
+    // for loop 遍历edges_
     for (typename vector<Edge<TVertex, TWeight> >::iterator iter = this->edges_.begin(); iter != this->edges_.end();) {
-        if (iter->ending_vertex == vertex || iter->starting_vertex == vertex) {
-            iter = this->edges_.erase(iter);
-            this->edge_count_--;
+        if (iter->ending_vertex == vertex || iter->starting_vertex == vertex) { // if 当前边起点or当前边终点 为待删除节点
+            iter = this->edges_.erase(iter);                                    // 删除当前边
+            this->edge_count_--;                                                // edge_count_(边数)减1
         } else {
             iter++;
         }
     }
 
-    // 结点vector执行删除
+    // ---------- 4 vertices_执行删除 ----------
+    // vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素
     this->vertices_[vertex_index] = this->vertices_[this->vertex_count_ - 1];
+    // vertices_删除索引vertex_count - 1位置元素
     this->vertices_.erase(this->vertices_.begin() + this->vertex_count_ - 1);
+
+    // ---------- 5 vertex_count_(边数)减1 ----------
+    // 注意: 通过此操作, 缩小了邻接矩阵的访问范围, 等于对邻接矩阵做了删除相关的操作
     this->vertex_count_--;
 
     return true;
@@ -923,73 +939,112 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
  * -----
  *
  * -----
+ * + **1 检查合法性**\n
+ *  - **1.1 检查结点**\n
+ *  &emsp; 获取起点索引and终点索引\n
+ *  &emsp; **if** 起点索引 < 0 || 终点索引 < 0 :\n
+ *  &emsp;&emsp; 返回false\n
+ *  - **1.2 检查边**\n
+ *  &emsp; 待删除边索引变量remove_edge_index, 初始化为-1\n
+ *  &emsp; **if** 有向图 :\n
+ *  &emsp;&emsp; **for loop** 遍历edges_ :\n
+ *  &emsp;&emsp;&emsp; **if** this->edges_[i](当前边)的起点和结点, 与参数起点和结点相同 :\n
+ *  &emsp;&emsp;&emsp;&emsp; 将i(当前边索引)赋给remove_edge_index\n
+ *  &emsp;&emsp;&emsp;&emsp; break(找到待删除边, 结束循环);\n
+ *  &emsp; **else if** 无向图 :\n
+ *  &emsp;&emsp; **for loop** 遍历edges_ :\n
+ *  &emsp;&emsp;&emsp; **if** this->edges_[i](当前边)或者反向边的起点和结点, 与参数起点和结点相同 :\n
+ *  &emsp;&emsp;&emsp;&emsp; 将i(当前边索引)赋给remove_edge_index\n
+ *  &emsp;&emsp;&emsp;&emsp; break(找到待删除边, 结束循环);\n
+ *  &emsp; **if** remove_edge_index为-1(说明没有找到待删除边) :\n
+ *  &emsp;&emsp; 返回false\n
+ *  - **1.3 检查邻接矩阵**\n
+ *   * 检查 边(starting_vertex ---> ending_vertex) :\n
+ *   &emsp; 调用GetWeight读取临界数组中的边信息\n
+ *   &emsp; **if** GetWeight返回false :\n
+ *   &emsp;&emsp; 返回false\n
+ *   * 如果无向图, 检查 边(starting_vertex ---> ending_vertex) :\n
+ *   &emsp;**if** 无向图: \n
+ *   &emsp;&emsp; 调用GetWeight读取临界数组中的边信息\n
+ *   &emsp;&emsp; **if** GetWeight返回false :\n
+ *   &emsp;&emsp;&emsp; 返回false\n
+ * + **2 edges_和邻接矩阵执行删除**\n
+ *  - 2.1 (起点 ---> 终点)方向删除\n
+ *   * 邻接矩阵内删除\n
+ *   * edges_内删除\n
+ *  - 2.2 无向图 (终点 ---> 起点)方向删除\n
+ *  &emsp; **if** 无向图 :\n
+ *  &emsp;&emsp; 邻接矩阵内删除反向边\n
+ * + **3 edge_count_(边数)减1**\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
 
-    /// ----- 1 检查合法性 -----
+    // ---------- 1 检查合法性 ----------
+
     // 1.1 检查结点
-    // 起点/结点, 如果有一个不存在, 则返回false
+    // 获取起点索引and终点索引
     int starting_vertex_index = GetVertexIndex(starting_vertex);
     int ending_vertex_index = GetVertexIndex(ending_vertex);
-    if (starting_vertex_index < 0 || ending_vertex_index < 0) {
-        return false;
+    if (starting_vertex_index < 0 || ending_vertex_index < 0) {     // if 起点索引 < 0 || 终点索引 < 0
+        return false;                                               // 返回false
     }
 
     // 1.2 检查边
-    // 遍历edges_, 检查是否能找到待删除边
-    int remove_edge_index = -1;
-    if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
-        for (int i = 0; i < this->edges_.size(); i++) {
+    int remove_edge_index = -1;     // 待删除边索引变量remove_edge_index, 初始化为-1
+    if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {             // if 有向图
+        for (int i = 0; i < this->edges_.size(); i++) {                 // for loop 遍历edges_
+            // if this->edges_[i](当前边)的起点和结点, 与参数起点和结点相同
             if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
-                remove_edge_index = i;
-                break;
+                remove_edge_index = i;      // 将i(当前边索引)赋给remove_edge_index
+                break;                      // break(找到待删除边, 结束循环)
             }
         }
-    } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        for (int i = 0; i < this->edges_.size(); i++) {
+    } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {    // else if 无向图
+        for (int i = 0; i < this->edges_.size(); i++) {                 // for loop 遍历edges_
+            // if this->edges_[i](当前边)或者反向边的起点和结点, 与参数起点和结点相同
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
                 (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex))
             {
-                remove_edge_index = i;
-                break;
+                remove_edge_index = i;      // 将i(当前边索引)赋给remove_edge_index
+                break;                      // break(找到待删除边, 结束循环)
             }
         }
     }
 
-    if (remove_edge_index == -1) {    // edges_无此边,
-        return false;
+    if (remove_edge_index == -1) {  // if remove_edge_index为-1(说明没有找到待删除边)
+        return false;               // 返回false
     }
 
     // 1.3 检查邻接矩阵
-    // 如果没有此边, 则不能删除
+    // 检查 边(starting_vertex ---> ending_vertex)
     TWeight weight;
-    bool res = GetWeight(starting_vertex, ending_vertex, weight);
-    if (!res) {
-        return false;
+    bool res = GetWeight(starting_vertex, ending_vertex, weight);   // 调用GetWeight读取临界数组中的边信息
+    if (!res) {                                                     // if GetWeight返回false
+        return false;                                               // 返回false
     }
 
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        res = GetWeight(ending_vertex, starting_vertex, weight);
-        if (!res) {
-            return false;
+    // 如果无向图, 检查 边(starting_vertex ---> ending_vertex)
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {       // if 无向图
+        res = GetWeight(ending_vertex, starting_vertex, weight);    // 调用GetWeight读取临界数组中的边信息
+        if (!res) {                                                 // if GetWeight返回false
+            return false;                                           // 返回false
         }
     }
 
-    /// ------ 2 在edges和邻接表做删除 ------\n
-    /// 2.1 starting_vertex --> ending_vertex 做删除
-    // 邻接矩阵内删除
-    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = TWeight();
-    // edges_内删除
-    this->edges_.erase(this->edges_.begin() + remove_edge_index);
+    // ------ 2 在edges和邻接矩阵做删除 ------
 
-    // 2.1 无向(图/网), 增加 ending_vertex --> starting_vertex 做删除
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        // 邻接矩阵内删除
-        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();
+    // 2.1 (起点 ---> 终点)方向删除
+    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = TWeight();        // 邻接矩阵内删除
+    this->edges_.erase(this->edges_.begin() + remove_edge_index);                           // edges_内删除
+
+    // 2.2 无向图 (终点 ---> 起点)方向删除
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                               // if 无向图
+        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();    // 邻接矩阵内删除反向边
     }
 
-    /// ------ 3 edge_count_调整 ------\n
+    // ----------- 3 edge_count_(边数)减1 ----------
+
     this->edge_count_--;
 
     return true;
@@ -1016,7 +1071,7 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
  */
 template<typename TVertex, typename TWeight>
 istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph) {
-    // todo: 根据自己的想法, 自行实现
+    //  根据自己的想法, 自行实现
     return in;
 }
 
@@ -1039,24 +1094,28 @@ istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph) {
  * </span>
  *
  * -----
- * ###1 打印图的各种信息###
- * ###2 打印邻接矩阵信息###
+ * + **1 打印图的各种信息**\n
+ *  - **1.1 打印结点信息**\n
+ *  - **1.2 打印边信息**\n
+ * + **2 打印邻接矩阵信息**\n
  */
 template<typename TVertex, typename TWeight>
 ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
 
     // ---------- 1 打印图的各种信息 ----------
     out << "--- 基本信息 ---" << endl;
-    out << "结点数量: " << graph.VertexCount() << endl;
 
+    // 1.1 打印结点信息
+    out << "结点数量: " << graph.VertexCount() << endl;
     for (int i = 0; i < graph.VertexCount(); i++) {
         TVertex vertex;
         graph.GetVertexByIndex(i, vertex);
         out << vertex << " ";
     }
     cout << endl << endl;
-    out << "边数量: " << graph.EdgeCount() << endl;
 
+    // 1.2 打印边信息
+    out << "边数量: " << graph.EdgeCount() << endl;
     for (int i = 0; i < graph.EdgeCount(); i++) {
         Edge<TVertex, TWeight> edge = graph.GetEdge(i);
         out << "(" << edge.starting_vertex << ", " << edge.ending_vertex << "), 权重: " << edge.weight << endl;
@@ -1094,6 +1153,10 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
  * ----------
  *
  * ----------
+ * **for loop** 遍历结点索引: \n
+ * &emsp; **if** i(当前索引)对应的结点等于vertex :\n
+ * &emsp;&emsp; 返回i\n
+ * 返回-1(如果没有找到对应索引)\n
  */
 template<typename TVertex, typename TWeight>
 int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
@@ -1117,6 +1180,9 @@ int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
  * ------------
  *
  * ------------
+ * **for loop** 遍历行索引: \n
+ * &emsp; **for loop** 遍历列索引:\n
+ * &emsp;&emsp; 打印adjacency_matrix_[row][col](当前矩阵元素)\n
  */
 template<typename TVertex, typename TWeight>
 void MatrixGraph<TVertex, TWeight>::PrintMatrix() {

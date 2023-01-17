@@ -852,7 +852,6 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * @param ending_vertex_index
  */
 template<typename TVertex, typename TWeight>
-// void PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
 bool PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
                                          vector<vector<int> > predecessor,
                                          int starting_vertex_index,
