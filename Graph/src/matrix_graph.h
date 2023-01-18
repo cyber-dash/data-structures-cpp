@@ -794,7 +794,7 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
     }
 
     // 遍历edges_, 检查是否能找到待插入边
-    for (int i = 0; i < this->edges_.size(); i++) {
+    for (unsigned int i = 0; i < this->edges_.size(); i++) {
         if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // 无向
             // 无向图/网已存在该边, 不能插入
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
@@ -940,14 +940,14 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
     // 遍历edges_, 检查是否能找到待删除边
     int remove_edge_index = -1;
     if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
-        for (int i = 0; i < this->edges_.size(); i++) {
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {
             if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
                 remove_edge_index = i;
                 break;
             }
         }
     } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        for (int i = 0; i < this->edges_.size(); i++) {
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
                 (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex))
             {
@@ -1049,7 +1049,7 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
     out << "--- 基本信息 ---" << endl;
     out << "结点数量: " << graph.VertexCount() << endl;
 
-    for (int i = 0; i < graph.VertexCount(); i++) {
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
         TVertex vertex;
         graph.GetVertexByIndex(i, vertex);
         out << vertex << " ";
@@ -1057,7 +1057,7 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
     cout << endl << endl;
     out << "边数量: " << graph.EdgeCount() << endl;
 
-    for (int i = 0; i < graph.EdgeCount(); i++) {
+    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {
         Edge<TVertex, TWeight> edge = graph.GetEdge(i);
         out << "(" << edge.starting_vertex << ", " << edge.ending_vertex << "), 权重: " << edge.weight << endl;
     }
@@ -1065,8 +1065,8 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
 
     // ---------- 2 打印邻接矩阵信息 ----------
     out << "--- 邻接矩阵信息 ---" << endl;
-    for (int row = 0; row < graph.VertexCount(); row++) {
-        for (int col = 0; col < graph.VertexCount(); col++) {
+    for (unsigned int row = 0; row < graph.VertexCount(); row++) {
+        for (unsigned int col = 0; col < graph.VertexCount(); col++) {
 
             TWeight weight;
             bool res = graph.GetWeightByVertexIndex(row, col, weight);

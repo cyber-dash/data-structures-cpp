@@ -79,8 +79,8 @@ void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& v
     // ---------- 2 遍历起点的邻接点, 执行递归 ----------
 
     // 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)
-    // 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists
     TVertex neighbor_vertex;
+    // 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists
     bool new_neighbor_exists = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);
 
     // 2.2 遍历执行递归
@@ -187,7 +187,9 @@ void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * ----------
  * ----------
  *
+ * <span style="color:#DF5A00">
  * 打印连通分量与算法耦合太重, 有兴趣的朋友自行解耦:-)
+ * </span>
  *
  * ----------
  * - **1 边界条件处理**\n
@@ -195,106 +197,146 @@ void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * &emsp;&emsp; 返回0\n
  * - **2 声明visited_vertex_set(已访问结点集合)**\n
  * - **3 遍历结点, 使用DFS划分联通分量**\n
+ * &emsp; 初始化连通分量数量为1
  * &emsp; **for loop** 遍历结点索引 :\n
  * &emsp;&emsp; 获取i(当前索引)对应的结点vertex\n
  * &emsp;&emsp; **if** 在visited_vertex_set中(则已经在某连通分量中) :\n
  * &emsp;&emsp;&emsp; continue(不再处理)\n
- * &emsp;&emsp; **else if** 不在visited_vertex_set中 :\n
- * &emsp;&emsp;&emsp; 使用DfsOnVertexRecursive对vertex进行遍历\n
+ * &emsp;&emsp; 使用DfsOnVertexRecursive对vertex进行遍历\n
  * &emsp;&emsp; 连通分量数量+1\n
  */
 template<typename TVertex, typename TWeight>
 int Components(const Graph<TVertex, TWeight>& graph) {
 
-    if (graph.VertexCount() == 0) {
-        return 0;
+    // ---------- 1 边界条件处理 ----------
+
+    if (graph.VertexCount() == 0) {     // if 结点数为0
+        return 0;                       // 返回0
     }
 
-    set<TVertex> visited_vertex_set; // 使用set保存已经遍历过的结点
+    // 2 ---------- 声明visited_vertex_set(已访问结点集合) ----------
 
-    int counter = 1; // 初始连通分量为1
+    set<TVertex> visited_vertex_set;
 
-    for (int i = 0; i < graph.VertexCount(); i++) {
+    int count = 1; // 初始连通分量数量为1
+
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点索引
 
         TVertex vertex;
-        bool res = graph.GetVertexByIndex(i, vertex); // 获取索引i对应的结点vertex
+        bool res = graph.GetVertexByIndex(i, vertex);   // 获取i(当前索引)对应的结点vertex
         if (!res) {
             continue;
         }
 
-        // 如果visited_vertex_set中, 没有查到vertex(说明vertex在一个新的联通分量中):
-        //     对vertex执行DFS遍历(书中的算法, 使用BFS也可以)
+        // if 在visited_vertex_set中(则已经在某连通分量中)
         if (visited_vertex_set.find(vertex) != visited_vertex_set.end()) {
-            continue;
+            continue;   // continue(不再处理)
         }
 
-        cout << "连通分量" << counter << ":" << endl;
+        cout << "连通分量" << count << ":" << endl;
+
+        // 使用DfsOnVertexRecursive对vertex进行遍历
         DfsOnVertexRecursive(graph, vertex, visited_vertex_set);
 
-        counter++; // 连通分量数量+1
+        count++; // 连通分量数量+1
         cout<<endl;
     }
 
-    return counter;
+    return count;
 }
 
 
 /*!
- * @brief Kruskal算法
- * @tparam TVertex 结点模板参数
- * @tparam TWeight 边权值模板参数
- * @param graph 图(引用)
- * @param min_span_tree 最小生成树(引用)
+ * @brief **Kruskal最小生成树算法**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
+ * @param min_span_tree 最小生成树保存变量
  * @note
- * 
- * 参数graph对应图{ TVertex(结点集合), { E(边集合) } }
- * 最小生成树的初始状态只有n个顶点, 没有边, MST = { TVertex, { } }
- * 
- * while MST未完成:
- *     在E中选择代价最小的边
- *     如果 此边的两个结点, 分别落在不同的连通分量:
- *         将此边加入到MST
- *         E舍去这条边
+ * Kruskal最小生成树算法
+ * -------------------
+ * -------------------
+ *
+ * <span style="color:#DF5A00">
+ * 图 { Vertices(结点集合), { Edges(边集合) } }\n
+ * \n
+ * 最小生成树的初始状态: 只有n个顶点, 没有边, MST = { Vertices, { } }\n
+ * \n
+ * while MST未完成:\n
+ * &emsp;&emsp; 在Edges中选择权值最小的边\n
+ * &emsp;&emsp; if 此边的两个结点, 分别落在不同的连通分量:\n
+ * &emsp;&emsp;&emsp;&emsp; 将此边加入到MST\n
+ * &emsp;&emsp;&emsp;&emsp; Edges舍去这条边\n
+ * </span>
+ *
+ * -------------------
+ * + **1 初始化min_priority_queue(最小优先队列)和disjoint_set(并查集)**\n
+ *  - 声明并初始化最小优先队列\n
+ *  - 初始化并查集, size为图结点数\n
+ * + **2 将所有边入队到最小优先队列**\n
+ * &emsp; **for loop** 遍历边索引 :\n
+ * &emsp;&emsp; 获取i(当前边索引)对应的starting_vertex(起点)和ending_vertex(终点)\n
+ * &emsp;&emsp; 对起点和终点调用GetWeight\n
+ * &emsp;&emsp; **if** 边存在 :\n
+ * &emsp;&emsp;&emsp; 声明并初始化mst_edge(最小生成树边)\n
+ * &emsp;&emsp;&emsp; 入队到最小优先队列\n
+ * + **3 贪心**\n
+ * &emsp; **for loop** 循环"图结点数 - 1"次 :\n
+ * &emsp;&emsp; 最小优先队列队头出队, 赋给cur_edge(**当前边**)\n
+ * &emsp;&emsp; 取当前边的cur_starting_vertex_index(**起点索引**)和cur_ending_vertex_index(**终点索引**)\n
+ * &emsp;&emsp; 取起点的cur_starting_vertex_root_index(**并查集根节点索引**)和
+ * 终点的cur_ending_vertex_root_index(**并查集根节点索引**)\n
+ * &emsp;&emsp; **if** 起点和终点不在一个并查集 :\n
+ * &emsp;&emsp;&emsp; 将起点所在的并查集与终点所在的并查集合并\n
+ * &emsp;&emsp;&emsp; cur_edge(**当前边**)插入到min_span_tree\n
+ * &emsp;&emsp;&emsp; 循环计数加1\n
  */
 template<typename TVertex, typename TWeight>
 void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree) {
 
-    MinPriorityQueue<MinimumSpanTreeEdge<TVertex, TWeight> > min_priority_queue;    // 最小优先队列
-    DisjointSet disjoint_set(graph.VertexCount());                             // 使用并查集来判断连通分量
+    // ---------- 1 初始化min_priority_queue(最小优先队列)和disjoint_set(并查集) ----------
 
-    for (int i = 0; i < graph.EdgeCount(); i++) {
+    MinPriorityQueue<Edge<TVertex, TWeight> > min_priority_queue;    // 声明并初始化最小优先队列
+    DisjointSet disjoint_set(graph.VertexCount());                   // 初始化并查集, size为图结点数
+
+    // ---------- 2 将所有边入队到最小优先队列 ----------
+
+    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {   // for loop 遍历边索引
+        // 获取i(当前边索引)对应的starting_vertex(起点)和ending_vertex(终点)
         TVertex cur_starting_vertex = graph.GetEdge(i).starting_vertex;
         TVertex cur_ending_vertex = graph.GetEdge(i).ending_vertex;
 
-        // 如果边(cur_starting_vertex, cur_ending_vertex)存在, 即拿到权重:
-        //     则插入最小优先队列min_priority_queue
         TWeight weight;
-        bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, weight);
-        if (res) {
-            MinimumSpanTreeEdge<TVertex, TWeight> cur_MST_edge(cur_starting_vertex, cur_ending_vertex, weight);
-            min_priority_queue.Enqueue(cur_MST_edge);
+        bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, weight); // 对起点和终点调用GetWeight
+        if (res) {  // if 边存在
+            // 声明并初始化mst_edge(最小生成树边)
+            Edge<TVertex, TWeight> mst_edge(cur_starting_vertex, cur_ending_vertex, weight);
+            // 入队到最小优先队列
+            min_priority_queue.Enqueue(mst_edge);
         }
     }
 
-    // 执行Kruskal算法核心流程
-    for (int i = 0; i < graph.VertexCount() - 1;) {
-        MinimumSpanTreeEdge<TVertex, TWeight> cur_MST_node;
-        min_priority_queue.Dequeue(cur_MST_node);
+    // ---------- 3 贪心 ----------
+    for (unsigned int i = 0; i < graph.VertexCount() - 1;) {
+        Edge<TVertex, TWeight> cur_edge;
+        min_priority_queue.Dequeue(cur_edge);
 
-        int cur_ending_vertex_index = graph.GetVertexIndex(cur_MST_node.ending_vertex);       // 当前边的起点索引
-        int cur_starting_vertex_index = graph.GetVertexIndex(cur_MST_node.starting_vertex);   // 当前边的终点索引
+        // 当前边的cur_starting_vertex_index(起点索引)
+        int cur_starting_vertex_index = graph.GetVertexIndex(cur_edge.starting_vertex);
+        // 当前边的cur_ending_vertex_index(终点索引)
+        int cur_ending_vertex_index = graph.GetVertexIndex(cur_edge.ending_vertex);
 
-        int cur_starting_vertex_root_index = disjoint_set.Find(cur_ending_vertex_index);    // 当前边的起点对应的并查集根结点索引
-        int cur_ending_vertex_root_index = disjoint_set.Find(cur_starting_vertex_index);    // 当前边的终点对应的并查集根节点索引
+        // 当前边的起点对应的cur_starting_vertex_root_index(起点所在并查集的根节点索引)
+        int cur_starting_vertex_root_index = disjoint_set.Find(cur_ending_vertex_index);
+        // 当前边的终点对应的cur_ending_vertex_root_index(终点所在并查集的根节点索引)
+        int cur_ending_vertex_root_index = disjoint_set.Find(cur_starting_vertex_index);
 
-        // if 两个根节点不在一个并查集内:
-        //     合并两个并查集
-        //     当前最小生成树结点cur_MST_node, 插入最小生成树min_span_tree
-        //     i++
-        if (cur_starting_vertex_root_index != cur_ending_vertex_root_index) {
-            disjoint_set.Union(cur_starting_vertex_root_index, cur_ending_vertex_root_index); // 合并
-            min_span_tree.Insert(cur_MST_node);   // 插入到最小生成树
-            i++;
+        if (cur_starting_vertex_root_index != cur_ending_vertex_root_index) {   // if 起点和终点不在一个并查集
+            // 将起点所在的并查集与终点所在的并查集合并
+            disjoint_set.Union(cur_starting_vertex_root_index, cur_ending_vertex_root_index);
+
+            min_span_tree.Insert(cur_edge); // cur_edge(当前边)插入到min_span_tree
+            i++;                            // 循环计数加1
         }
     }
 }
@@ -346,7 +388,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
     set<TVertex> mst_vertex_set;
     mst_vertex_set.insert(starting_vertex);
 
-    MinPriorityQueue<MinimumSpanTreeEdge<TVertex, TWeight> > min_priority_queue;   // 最小优先队列
+    MinPriorityQueue<Edge<TVertex, TWeight> > min_priority_queue;   // 最小优先队列
 
     TVertex cur_neighbor_vertex;
     TVertex next_neighbor_vertex;
@@ -357,7 +399,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
         TWeight cur_edge_weight;
         graph.GetWeight(starting_vertex, cur_neighbor_vertex, cur_edge_weight);
 
-        MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge(starting_vertex, cur_neighbor_vertex, cur_edge_weight);
+        Edge<TVertex, TWeight> cur_mst_edge(starting_vertex, cur_neighbor_vertex, cur_edge_weight);
         min_priority_queue.Enqueue(cur_mst_edge);
 
         // 遍历至下一个邻接结点
@@ -371,7 +413,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
     while (mst_vertex_set.size() < graph.VertexCount()) {
 
         // 最小优先队列Dequeue出最短边, 赋给mst_edge_node
-        MinimumSpanTreeEdge<TVertex, TWeight> mst_edge_node;
+        Edge<TVertex, TWeight> mst_edge_node;
         min_priority_queue.Dequeue(mst_edge_node);
 
         // 最短边进入min_span_tree
@@ -393,7 +435,7 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
                     graph.GetWeight(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
 
                     // 用 边(cur_mst_vertex, cur_neighbor_vertex) 的信息, 构造MSTNode结点
-                    MinimumSpanTreeEdge<TVertex, TWeight> cur_mst_edge(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
+                    Edge<TVertex, TWeight> cur_mst_edge(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
 
                     // 将其入队到最小优先队列min_priority_queue
                     min_priority_queue.Enqueue(cur_mst_edge);
@@ -413,172 +455,55 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
 
 
 /*!
- * @brief 迪杰斯特拉(Dijkstra)最短路径
- * @tparam TVertex 图结点模板类型
- * @tparam TWeight 图边权值模板类型
- * @param graph 图的引用
- * @param starting_vertex 起始结点
+ * @brief **Dijkstra迪杰斯特拉最短路径**
+ * @tparam TVertex 结点类型模板类型
+ * @tparam TWeight 边权值类型模板类型
+ * @param graph 图
+ * @param starting_vertex 起点
  * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点的索引
  * @note
- * Dijkstra算法伪代码
+ * Dijkstra迪杰斯特拉最短路径
+ * ------------------------
+ * ------------------------
  *
- * vertex_set: 保存所有已知实际(起始点 --> 该结点)最短路径值的结点的集合
- * MinPriorityQueue: 结点的一个优先队列，以结点的最短路径估计(起始点 --> 该节点的路径值), 进行排序
+ * <span style="color:#E76600">
+ * Dijkstra算法伪代码\n
+ * \n
+ * vertex_set: 保存所有已知实际(起始点 --> 该结点)最短路径值的结点的集合\n
+ * min_priority_queue: 结点的一个优先队列，以结点的最短路径估计(起始点 --> 该节点的路径值), 进行排序\n
+ * \n
+ * 迪杰斯特拉算法:\n
+ * \n
+ * &emsp; --- 初始化 ---\n
+ * \n
+ * &emsp; // 初始化起点到每个(以外的)结点的distance, 到自身的距离为0, 到其他结点为无穷大\n
+ * &emsp; INITIALIZE-SINGLE-SOURCE(graph(图), starting_vertex(起点))\n
+ * \n
+ * &emsp; // vertex_set初始化为空\n
+ * &emsp; vertex_set(结点集合) <-- 空\n
+ * \n
+ * &emsp; // 起点进入优先队列\n
+ * &emsp; priority_queue(优先队列) <-- 路径(起始点, 起始点, 路径长度)\n
+ * \n
+ * &emsp; --- 贪心 ---\n
+ * \n
+ * &emsp; while (min_priority_queue中有元素) :\n
+ * &emsp;&emsp; do u <-- EXTRACT_MIN(priority_queue)  // 选取u为priority_queue中, 最短路径估计最小(起始点到该节点的路径最短)的结点\n
+ * \n
+ * &emsp;&emsp; vertex_set <-- vertex_set and u       // u加入集合vertex_set\n
+ * &emsp;&emsp; for u的每个邻接结点v:\n
+ * &emsp;&emsp;&emsp; 松弛(u, v, 边集合)               // 松弛成功的结点, 会被加入到vertex_set, u进入priority_queue
+ * </span>
  *
- *
- * 迪杰斯特拉算法:
- *
- *     --- 初始化 ---
- *
- *     // 起始点到每个(原点以外的)结点的distance为无穷大，distance[起始点索引] = 0
- *     INITIALIZE-SINGLE-SOURCE(graph(图), starting_vertex(起始点))
- *
- *     // vertex_set初始化为空
- *     vertex_set(结点集合) <-- 空
- *
- *     --- 贪心 ---
- *
- *     while (PriorityQueue中有元素)
- *         do u <-- EXTRACT_MIN()  // 选取最短路径估计最小(起始点到该节点的路径最短)的结点u
- *         vertex_set <-- vertex_set and u      // u加入集合vertex_set
- *         for u的每个邻接结点v:
- *             松弛(u, v, 边集合)                 // 松弛成功的结点, 会被加入到vertex_set
+ * ------------------------
+ * + **1 **
  */
 template<typename TVertex, typename TWeight>
 void Dijkstra(const Graph<TVertex, TWeight>& graph,
-              const TVertex& starting_vertex,
-              TWeight distance[], int predecessor[])
-{
-    /// --- 初始化 ---
-
-    // vertex_set初始化为空
-    set<TVertex> vertex_set;
-
-    // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
-    int starting_vertex_index = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
-        distance[i] = graph.MaxWeight();
-    }
-    distance[starting_vertex_index] = 0;
-
-    // 起始点的前驱结点索引设为-1
-    predecessor[starting_vertex_index] = -1;
-
-    /// --- 贪心 ---
-
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
-        TWeight cur_min_distance = graph.MaxWeight();   // 以starting_vertex为起点, 某个结点为终点的最短路径(当前最短路径)
-        TVertex cur_min_distance_ending_vertex;          // 当前最短路径对应的的终点结点
-
-        // Loop遍历结点(使用优先队列见DijkstraByPriorityQueue), 得到:
-        //   起始点到(vertex_set的)各结点中的最短路径cur_min_distance_path
-        //   该路径对应的终点cur_min_dist_ending_vertex
-        //   终点索引cur_min_dist_ending_vertex_idx
-
-        for (unsigned int j = 0; j < graph.VertexCount(); j++) {
-
-            // 拿到索引j对应的结点vertex_j
-            TVertex vertex_j;
-            // graph.GetVertexByIndex(vertex_j, j);
-            graph.GetVertexByIndex(j, vertex_j);
-
-            // 如果vertex_j已经在vertex_set中, continue
-            if (vertex_set.find(vertex_j) != vertex_set.end()) {
-                continue;
-            }
-
-            TWeight cur_distance;
-            if (graph.GetWeightByVertexIndex(i, j, cur_distance) && distance[j] < cur_min_distance) {
-                cur_min_distance_ending_vertex = vertex_j;
-                cur_min_distance = distance[j];
-            }
-        }
-
-        int cur_min_dist_ending_vertex_index = graph.GetVertexIndex(cur_min_distance_ending_vertex);
-
-        // 将cur_min_dist_ending_vertex插入到vertex_set
-        vertex_set.insert(cur_min_distance_ending_vertex);
-
-        // 对cur_min_dist_ending_vertex的每个(未进入vertex_set的)相邻节点执行松弛
-        for (unsigned int j = 0; j < graph.VertexCount(); j++) {
-
-            // 拿到索引j对应的结点vertex_j
-            TVertex vertex_j;
-            graph.GetVertexByIndex(j, vertex_j);
-            /* error handler */
-
-            // 如果vertex_j已经在vertex_set中, continue
-            if (vertex_set.find(vertex_j) != vertex_set.end()) {
-                continue;
-            }
-
-            // 边(cur_min_distance_ending_vertex --> vertex_j)的值, 赋给weight
-            TWeight weight;
-            bool res = graph.GetWeight(cur_min_distance_ending_vertex, vertex_j, weight);
-            if (!res) { // 如果没有边, continue
-                continue;
-            }
-
-            // 松弛操作:
-            // 如果
-            //   边 (starting_vertex  --> cur_min_distance_ending_vertex)                的weight
-            //    +
-            //   边                      (cur_min_distance_ending_vertex  -->  vertex_j) 的weight
-            //    <
-            //   边 (starting_vertex  ---------------------------------->  vertex_j) 的weight
-            // 则
-            //   更新distance[j]和predecessor[j]
-            if (distance[cur_min_dist_ending_vertex_index] + weight < distance[j]) {
-                distance[j] = distance[cur_min_dist_ending_vertex_index] + weight;
-                predecessor[j] = cur_min_dist_ending_vertex_index;
-            }
-        }
-    }
-}
-
-
-/*!
- * @brief 迪杰斯特拉(Dijkstra)最短路径(优先队列)
- * @tparam TVertex 图结点模板类型
- * @tparam TWeight 图边权值模板类型
- * @param graph 图的引用
- * @param starting_vertex 起始结点
- * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
- * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点的索引
- * @note
- * Dijkstra算法伪代码
- *
- * vertex_set: 保存所有已知实际(起始点 --> 该结点)最短路径值的结点的集合
- * MinPriorityQueue: 结点的一个优先队列，以结点的最短路径估计(起始点 --> 该节点的路径值), 进行排序
- *
- * 迪杰斯特拉算法:
- *
- *     --- 初始化 ---
- *
- *     // 起始点到每个(原点以外的)结点的distance为无穷大，distance[起始点索引] = 0
- *     INITIALIZE-SINGLE-SOURCE(graph(图), starting_vertex(起始点))
- *
- *     // vertex_set初始化为空
- *     vertex_set(结点集合) <-- 空
- *
- *     // 起始点进入优先队列
- *     MinPriorityQueue(优先队列) <-- 路径(起始点, 起始点, 路径长度)
- *
- *     --- 贪心 ---
- *
- *     while (PriorityQueue中有元素)
- *         do u <-- EXTRACT_MIN(MinPriorityQueue)  // 选取u为PriorityQueue中, 最短路径估计最小(起始点到该节点的路径最短)的结点
- *
- *         vertex_set <-- vertex_set and u      // u加入集合vertex_set
- *         for u的每个邻接结点v:
- *             松弛(u, v, 边集合)                 // 松弛成功的结点, 会被加入到vertex_set, u进入MinPriorityQueue
- */
-template<typename TVertex, typename TWeight>
-void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
-                             TVertex starting_vertex,
-                             TWeight distance[],
-                             int predecessor[])
+               const TVertex& starting_vertex,
+               TWeight distance[],
+               int predecessor[])
 {
   /// --- 初始化 ---
 
@@ -587,7 +512,7 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
 
   // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
   int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
-  for (int i = 0; i < graph.VertexCount(); i++) {
+  for (unsigned int i = 0; i < graph.VertexCount(); i++) {
     distance[i] = graph.MaxWeight();
   }
   distance[starting_vertex_idx] = 0;
@@ -606,7 +531,8 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
 
     // 优先队列出队元素到min_distance_path, 得到:
     //   起始点到(vertex_set的)各结点中的最短路径cur_min_distance_path
-    //   该路径对应的终点cur_min_dist_ending_vertex
+    //   该路径对应的终点cur_min_dist_endking_vertex
+
     //   终点索引cur_min_dist_ending_vertex_idx
     Path<TVertex, TWeight> cur_min_distance_path;
     min_priority_queue.Dequeue(cur_min_distance_path);
@@ -620,7 +546,7 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
     vertex_set.insert(cur_min_distance_ending_vertex);
 
     // 对cur_min_dist_ending_vertex的每个(未进入vertex_set的)相邻节点执行松弛
-    for (int j = 0; j < graph.VertexCount(); j++) {
+    for (unsigned int j = 0; j < graph.VertexCount(); j++) {
 
       // 索引j对应的结点vertex_j
       TVertex vertex_j;
@@ -664,7 +590,7 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
 
 
 /*!
- * 贝尔曼福特(Bellman-Ford)最短路径
+ * Bellman-Ford贝尔曼福特最短路径
  * @tparam TVertex 图结点模板类型
  * @tparam TWeight 图边权值模板类型
  * @param graph 图的引用
@@ -706,13 +632,17 @@ void DijkstraByPriorityQueue(const Graph<TVertex, TWeight>& graph,
  *         如果 distance[u] + 边(u, v)权重 < distance[v]:
  *             error "图包含负回路"
  */
-template<class TVertex, class TWeight>
-bool BellmanFord(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, TWeight distance[], int predecessor[]) {
+template<typename TVertex, typename TWeight>
+bool BellmanFord(const Graph<TVertex, TWeight>& graph,
+                 const TVertex& starting_vertex,
+                 TWeight distance[],
+                 int predecessor[])
+{
     // --- 初始化 ---
 
     // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
     int starting_vertex_index = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
-    for (int i = 0; i < graph.VertexCount(); i++) {
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
         distance[i] = graph.MaxWeight();
     }
     distance[starting_vertex_index] = 0;
@@ -723,8 +653,8 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, 
     // --- 动态规划 ---
 
     // BellmanFord执行|V| - 1次"松弛所有边"
-    for (int vertex_index = 0; vertex_index < graph.VertexCount() - 1; vertex_index++) {
-        for (int edge_index = 0; edge_index < graph.EdgeCount(); edge_index++) {
+    for (unsigned int vertex_index = 0; vertex_index < graph.VertexCount() - 1; vertex_index++) {
+        for (unsigned int edge_index = 0; edge_index < graph.EdgeCount(); edge_index++) {
             TVertex cur_starting_vertex = graph.GetEdge(edge_index).starting_vertex;
             TVertex cur_ending_vertex = graph.GetEdge(edge_index).ending_vertex;
 
@@ -755,7 +685,7 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, 
 
     // --- 检查是否有负权重的回路 ---
     bool has_negative_weight_cycle = false; // 默认没有负权环
-    for (int i = 0; i < graph.EdgeCount(); i++) {
+    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {
         TVertex cur_starting_vertex = graph.GetEdge(i).starting_vertex;
         TVertex cur_ending_vertex = graph.GetEdge(i).ending_vertex;
 
@@ -763,7 +693,6 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, 
         int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
         TWeight cur_weight;
-        // bool get_weight_done = graph.GetWeight(cur_weight, cur_starting_vertex, cur_ending_vertex);
         bool get_weight_done = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, cur_weight);
         if (!get_weight_done) {
             continue;
@@ -787,10 +716,13 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, 
  * @param distance 最短路径数组, distance[i][j]表示: 索引i结点到索引j结点的最短路径
  * @param predecessor 前一结点数组, predecessor[i][j]表示: 索引i结点到索引j结点最短路径中, j的前一结点
  * @note
+ * Floyd-Warshall弗洛伊德最短路径算法
+ * --------------------------------
+ * --------------------------------
  *
- * 弗洛伊德算法:
+ * Floyd:
  *     distance[][] is a distance matrix for n vertices.
- *         distance[i][j] is the distance to move directly from i to j.
+ *     distance[i][j] is the distance to move directly from i to j.
  *         if no direct link from i to j
  *             then initialize distance[i][j] = INFINITY
  *         the distance from a node to itself is 0.(Initialize distance[i][i] = 0 for all i)
@@ -800,11 +732,12 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph, TVertex starting_vertex, 
  * 算法执行结果:
  *     distance[i][j] contains the total cost along the shortest path from i to j.
  *     predecessor[i][j] contains the predecessor of j on the shortest path from i to j.
+ * --------------------------------
  */
 template<typename TVertex, typename TWeight>
 void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& distance, vector<vector<int> >& predecessor) {
-    for (int start = 0; start < graph.VertexCount(); start++) {
-        for (int end = 0; end < graph.VertexCount(); end++) {
+    for (unsigned int start = 0; start < graph.VertexCount(); start++) {
+        for (unsigned int end = 0; end < graph.VertexCount(); end++) {
 
             if (start == end) {
                 distance[start][end] = TWeight();
@@ -824,9 +757,9 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
 
     // --- 动态规划 ---
 
-    for (int intermediate = 0; intermediate < graph.VertexCount(); intermediate++) {
-        for (int start = 0; start < graph.VertexCount(); start++) {
-            for (int end = 0; end < graph.VertexCount(); end++) {
+    for (unsigned int intermediate = 0; intermediate < graph.VertexCount(); intermediate++) {
+        for (unsigned int start = 0; start < graph.VertexCount(); start++) {
+            for (unsigned int end = 0; end < graph.VertexCount(); end++) {
 
                 // --- 松弛操作 ---
 
@@ -859,7 +792,7 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
  */
 template<typename TVertex, typename TWeight>
 void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
-                                   TVertex starting_vertex,
+                                   const TVertex& starting_vertex,
                                    TWeight distance[],
                                    const int predecessor[])
 {
@@ -871,7 +804,7 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
     int* inverted_predecessors = new int[graph.VertexCount()];
 
     // 分别显示starting_vertex到各个结点的最短路径
-    for (int ending_vertex_index = 0; ending_vertex_index < graph.VertexCount(); ending_vertex_index++) {
+    for (unsigned int ending_vertex_index = 0; ending_vertex_index < graph.VertexCount(); ending_vertex_index++) {
         if (ending_vertex_index == starting_vertex_index) {
             continue;
         }
@@ -963,17 +896,17 @@ bool PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
  */
 template<typename TVertex, typename TWeight>
 void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
-                                     vector<vector<TWeight> > distance,
-                                     vector<vector<int> > predecessor)
+                                     const vector<vector<TWeight> >& distance,
+                                     const vector<vector<int> >& predecessor)
 {
-    for (int starting_vertex_index = 0; starting_vertex_index < graph.VertexCount(); starting_vertex_index++) {
+    for (unsigned int starting_vertex_index = 0; starting_vertex_index < graph.VertexCount(); starting_vertex_index++) {
 
         TVertex starting_vertex;
         graph.GetVertexByIndex(starting_vertex_index, starting_vertex);
 
         cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
 
-        for (int ending_vertex_index = 0; ending_vertex_index < graph.VertexCount(); ending_vertex_index++) {
+        for (unsigned int ending_vertex_index = 0; ending_vertex_index < graph.VertexCount(); ending_vertex_index++) {
             if (starting_vertex_index == ending_vertex_index) {
                 continue;
             }

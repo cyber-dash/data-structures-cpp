@@ -36,7 +36,7 @@ void TestDn() {
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -85,7 +85,7 @@ void TestBaseFunctions() {
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -180,7 +180,7 @@ void TestMatrixGraphPrintMatrix() {
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -226,7 +226,7 @@ void TestGetVertexByIndex() {
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -248,7 +248,7 @@ void TestGetVertexByIndex() {
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
 
     // 按照索引值读取邻接表图各结点
-    for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
+    for (unsigned int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
         adjacency_list_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
@@ -278,13 +278,13 @@ void TestGetVertexByIndex() {
     matrix_graph.RemoveVertex("北京");
 
     // 按照索引值读取矩阵图各结点
-    for (int i = 0; i < matrix_graph.VertexCount(); i++) {
+    for (unsigned int i = 0; i < matrix_graph.VertexCount(); i++) {
         matrix_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
     // 打印结点
     cout<<endl<<"**矩阵图**"<<endl;
-    for (int i = 0; i < matrix_graph.VertexCount(); i++) {
+    for (unsigned int i = 0; i < matrix_graph.VertexCount(); i++) {
         cout << "索引" << i << "结点: " << graph_vertices[i] << endl;
     }
 
@@ -314,7 +314,7 @@ void TestDFS() {
     cout<<"|              杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -366,7 +366,7 @@ void TestBFS() {
     cout<<"|              杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -460,7 +460,7 @@ void TestKruskal() {
     cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -515,7 +515,7 @@ void TestPrim() {
     cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -569,7 +569,7 @@ void TestDijkstra() {
     cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -590,7 +590,7 @@ void TestDijkstra() {
     double adjacency_list_graph_min_distances[10];
     int adjacency_list_graph_predecessors[10];
 
-    DijkstraByPriorityQueue(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
+    Dijkstra(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
     PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
@@ -598,7 +598,7 @@ void TestDijkstra() {
     double matrix_graph_min_distances[10];
     int matrix_graph_predecessors[10];
 
-    DijkstraByPriorityQueue(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
+    Dijkstra(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
     PrintSingleSourceShortestPath(matrix_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
@@ -626,7 +626,7 @@ void TestBellmanFord() {
     cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
@@ -685,7 +685,7 @@ void TestFloyd() {
     cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
     cout<<endl;
 
-    int edge_count = 9;
+    unsigned int edge_count = 9;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };

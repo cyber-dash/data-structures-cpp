@@ -1,7 +1,7 @@
 ﻿/*!
  * @file graph.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 图抽象模板类
+ * @brief 图抽象模板类与边模板类
  * @version 0.2.1
  * @date 2021-01-23
  */
@@ -25,9 +25,11 @@ using namespace std;
  * -------
  * -------
  *
- * 注:
- * 此模板类只表示存在边, 并不表达边的方向
- * 边的方向在邻接表图中, 由邻接表表示, 在邻接矩阵图中, 由邻接矩阵表示
+ * <span style="color:#DF5A00">
+ * 注:\n
+ * 此模板类只表示存在边, 并不表达边的方向\n
+ * 边的方向在邻接表图中, 由邻接表表示, 在邻接矩阵图中, 由邻接矩阵表示\n
+ * </span>
  *
  * -------
  *
@@ -47,25 +49,79 @@ public:
     Edge(): starting_vertex(TVertex()), ending_vertex(TVertex()), weight(TWeight()) {}
 
     /*!
-     * @brief 构造函数
+     * @brief **构造函数(边权值/起点/终点)**
+     * @param weight 边权值
      * @param starting_vertex 起点
      * @param ending_vertex 终点
-     * @param weight 边权值
      * @note
-     * 构造函数
-     * -------
-     * -------
+     * 构造函数(边权值/起点/终点)
+     * -----------------------
+     * -----------------------
      *
-     * 注: 起点, 终点仅是为构成边, 不包含方向的意义
-     *
-     * -------
+     * -----------------------
      */
-    Edge(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
-        starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {};
+    Edge(const TVertex& starting_vertex, const TVertex& ending_vertex, const TWeight& weight):
+        weight(weight), starting_vertex(starting_vertex), ending_vertex(ending_vertex) {}
 
-    TVertex starting_vertex;        //!< 起点
-    TVertex ending_vertex;          //!< 终点
-    TWeight weight;                 //!< 边权值
+    /*!
+     * @brief **重载<=**
+     * @param edge 边
+     * @return 执行结果
+     * @note
+     * 重载<=
+     * -----
+     * -----
+     *
+     * -----
+     */
+    bool operator<=(const Edge<TVertex, TWeight>& edge) { return weight <= edge.weight; }
+
+    /*!
+     * @brief **重载>=**
+     * @param edge 边
+     * @return 执行结果
+     * @note
+     * 重载>=
+     * -----
+     * -----
+     *
+     * -----
+     */
+    bool operator>=(const Edge<TVertex, TWeight>& edge) { return weight >= edge.weight; }
+
+    /*!
+     * @brief **重载>**
+     * @param edge 边
+     * @return 执行结果
+     * @note
+     * 重载>
+     * ----
+     * ----
+     *
+     * ----
+     */
+    bool operator>(const Edge<TVertex, TWeight>& edge) { return weight > edge.weight; }
+
+    /*!
+     * @brief **重载&lt;**
+     * @param edge 最小生成树边
+     * @return 执行结果
+     * @note
+     * 重载<
+     * ----
+     * ----
+     *
+     * <span style="color:#DF5A00">
+     * doxygen处理less-than符号(&lt;)不是很友好, 所以注释中使用"\&lt;"来表达&lt;
+     * </span>
+     *
+     * ----
+     */
+    bool operator<(const Edge<TVertex, TWeight>& edge) { return weight < edge.weight; }
+
+    TVertex starting_vertex;  //!< 起点
+    TVertex ending_vertex;    //!< 终点
+    TWeight weight;           //!< 边权重
 };
 
 
@@ -75,39 +131,11 @@ public:
  * @tparam TWeight 边权值类型模板参数
  */
 template<typename TVertex, typename TWeight>
-class Path {
+class Path: public Edge<TVertex, TWeight> {
 public:
     Path(): starting_vertex(TVertex()), ending_vertex(TVertex()), weight(TWeight()) {};
     Path(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
       starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
-
-    /*!
-     * 重载 <=
-     * @param path 边
-     * @return 比较结果
-     */
-    bool operator<=(const Path<TVertex, TWeight>& path) const { return weight <= path.weight; }
-
-    /*!
-     * 重载 >=
-     * @param path 边
-     * @return 比较结果
-     */
-    bool operator>=(const Path<TVertex, TWeight>& path) const { return weight >= path.weight; }
-
-    /*!
-     * 重载 >
-     * @param path 边
-     * @return 比较结果
-     */
-    bool operator>(const Path<TVertex, TWeight>& path) const { return weight > path.weight; }
-
-    /*!
-     * 重载 <
-     * @param path 边
-     * @return 比较结果
-     */
-    bool operator<(const Path<TVertex, TWeight>& path) const { return weight < path.weight; }
 
     TWeight weight;             //!< 路径权值
     TVertex starting_vertex;    //!< 起点
