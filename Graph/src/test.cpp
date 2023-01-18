@@ -691,9 +691,9 @@ void TestFloyd() {
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
     // 边信息
-    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
-    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
-    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+    vector<string> starting_vertices{ "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices  { "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights          {  0.1,   0.12,   0.01,  0.14,   0.13,  0.05,  0.17,   0.09,  0.11  };
 
     vector<Edge<string, double> > edges;
     for (unsigned int i = 0; i < edge_count; i++) {
@@ -704,45 +704,38 @@ void TestFloyd() {
     AdjacencyListGraph<string, double> adjacency_list_graph(1, 10, 1000, edges, vertices); // 构造邻接表图
     MatrixGraph<string, double> matrix_graph(1, 10, 1000, edges, vertices);                // 构造矩阵图
 
-
     cout<<endl<<"**邻接表图测试**"<<endl<<endl;
-    // 邻接表图结点数量
-    int adj_list_graph_vertices_num = adjacency_list_graph.VertexCount();
+
     // 邻接表图distance
-    vector<vector<double> > adj_list_graph_distances(adj_list_graph_vertices_num,
-                                                     vector<double>(adj_list_graph_vertices_num));
+    vector<vector<double> > adjacency_list_graph_distances(adjacency_list_graph.VertexCount(),
+                                                           vector<double>(adjacency_list_graph.VertexCount()));
     // 邻接表图predecessor
-    vector<vector<int> > adj_list_graph_predecessors(adj_list_graph_vertices_num,
-                                                     vector<int>(adj_list_graph_vertices_num));
-    for (int i = 0; i < adj_list_graph_vertices_num; i++) {
-        for (int j = 0; j < adj_list_graph_vertices_num; j++) {
-            adj_list_graph_predecessors[i][j] = -1;
-        }
-    }
+    vector<vector<int> > adjacency_list_graph_predecessors(adjacency_list_graph.VertexCount(),
+                                                           vector<int>(adjacency_list_graph.VertexCount()));
 
     // 执行弗洛伊德算法
-    Floyd(adjacency_list_graph, adj_list_graph_distances, adj_list_graph_predecessors);
+    Floyd(adjacency_list_graph, adjacency_list_graph_distances, adjacency_list_graph_predecessors);
 
     // 打印多源(MSSP)最短路径
     PrintMultipleSourceShortestPath(adjacency_list_graph,
-                                    adj_list_graph_distances,
-                                    adj_list_graph_predecessors);
+                                    adjacency_list_graph_distances,
+                                    adjacency_list_graph_predecessors);
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    // 矩阵图结点数量
-    int matrix_graph_vertices_num = matrix_graph.VertexCount();
-    // matrix_graph_min_distances
-    vector<vector<double> > matrix_graph_min_distances(matrix_graph_vertices_num,
-                                                       vector<double>(matrix_graph_vertices_num));
-    // matrix_graph_predecessors
-    vector<vector<int> > matrix_graph_predecessors(matrix_graph_vertices_num,
-                                                   vector<int>(matrix_graph_vertices_num));
 
-    for (int i = 0; i < matrix_graph_vertices_num; i++) {
-        for (int j = 0; j < matrix_graph_vertices_num; j++) {
+    // matrix_graph_min_distances
+    vector<vector<double> > matrix_graph_min_distances(matrix_graph.VertexCount(),
+                                                       vector<double>(matrix_graph.VertexCount()));
+    // matrix_graph_predecessors
+    vector<vector<int> > matrix_graph_predecessors(matrix_graph.VertexCount(),
+                                                   vector<int>(matrix_graph.VertexCount()));
+
+    for (unsigned int i = 0; i < matrix_graph.VertexCount(); i++) {
+        for (unsigned int j = 0; j < matrix_graph.VertexCount(); j++) {
             matrix_graph_predecessors[i][j] = -1;
         }
     }
+
     // 执行弗洛伊德算法
     Floyd(matrix_graph, matrix_graph_min_distances, matrix_graph_predecessors);
 
@@ -751,5 +744,5 @@ void TestFloyd() {
                                     matrix_graph_min_distances,
                                     matrix_graph_predecessors);
 
-    cout<<"-------------------------------------------------------------"<<endl<<endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
