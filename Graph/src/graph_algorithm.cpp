@@ -343,36 +343,40 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
 
 
 /*!
- * @brief Prim算法
+ * @brief **Prim最小生成树算法**
  * @tparam TVertex 结点模板参数
  * @tparam TWeight 边权值模板参数
  * @param graph 图(引用)
  * @param min_span_tree 最小生成树
  * @note
  *
- * # CyberDash批注
- * 参数graph对应图{ TVertex(结点集合), { E(边集合) } }.
- * min_span_tree为最小生成树,
- * min_span_tree中的结点对应结点集合mst_vertex_set
+ * <span style="color:#FB1927">
+ * 图 { Vertices(结点集合), { Edges(边集合) } }\n
+ * min_span_tree: 最小生成树\n
+ * mst_vertex_set: min_span_tree的结点集合\n
+ * \n
+ * 算法从mst_vertex_set = { starting_vertex }开始(只包含起始结点)\n
+ * 循环:\n
+ * &emsp;&emsp; 在所有u ∈ mst_vertex_set, v ∈ (Vertices - mst_vertex_set)的边(u, v) ∈ E中\n
+ * </span>
+ * ```
+ *             mst_vertex_set    Vertices - mst_vertex_set
+ *                   ------          ------
+ *                 /       \       /       \
+ *                |   u ---|------|-- v    |
+ *                \       /       \       /
+ *                 -------         ------
+ * ```
+ * <span style="color:#FB1927">
+ * &emsp;&emsp; 找一条权值最小的边(starting_vertex, ending_vertex), 权值weight\n
+ * &emsp;&emsp;&emsp;&emsp; 加入min_span_tree\n
+ * &emsp;&emsp;&emsp;&emsp; 结点u加入mst_vertex_set\n
+ * &emsp;&emsp; 直到mst_vertex_set = Vertices为止\n
+ * \n
+ * 此时min_span_tree为最小生成树, 有vertex_count - 1条边\n
+ * </span>
  *
- * 算法从mst_vertex_set = { starting_vertex }开始(只包含起始结点),
- * ```
- * 循环以下操作:
- *     在所有u ∈ mst_vertex_set, v ∈ (TVertex - mst_vertex_set)的边(u, v) ∈ E中,
- * 
- *    mst_vertex_set    TVertex - mst_vertex_set
- *         ------          ------
- *       /       \       /       \
- *      |   u----|------|---v    |
- *      \       /       \       /
- *       -------         ------
- * 
- *     找一条权值最小的边(starting_vertex, ending_vertex), 权值weight,
- *         加入min_span_tree(以MSTEdgeNode的方式)
- *         结点u加入mst_vertex_set,
- *     直到mst_vertex_set = V为止
- * ```
- * 此时min_span_tree为最小生成树, 有** n-1条边
+ *
  */
 template<typename TVertex, typename TWeight>
 bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree) {
@@ -505,7 +509,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
                TWeight distance[],
                int predecessor[])
 {
-  /// --- 初始化 ---
+  // --- 初始化 ---
 
   // vertex_set初始化为空
   set<TVertex> vertex_set;
@@ -525,7 +529,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
   // 起始点的前驱结点索引设为-1
   predecessor[starting_vertex_idx] = -1;
 
-  /// --- 贪心 ---
+  // --- 贪心 ---
 
   while (min_priority_queue.Size() != 0) {   // 当所有结点插入到vertex_set时, 由于内层循环continue所有结点, 优先队列将为空
 
@@ -566,7 +570,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
         continue;
       }
 
-      /// --- 松弛操作 ---
+      // --- 松弛操作 ---
 
       // 如果
       //   边 (starting_vertex  --> cur_min_distance_ending_vertex)                的weight
@@ -600,10 +604,11 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  * @return 是否有负环
  * @note
  *
- * BellmanFord算法:
- *
- *     --- 初始化 ---
- *
+ * <span style="color:#FB1927">
+ * BellmanFord算法:\n
+ * \n
+ * &emsp;--- 初始化 ---
+ * \n
  *     for 图中的每个结点v:
  *         如果(starting_vertex, v)没有边:
  *             distance[v] <-- MAX(不存在路径)
@@ -631,6 +636,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  *     for 每一条边edge (u, v):
  *         如果 distance[u] + 边(u, v)权重 < distance[v]:
  *             error "图包含负回路"
+ * </span>
  */
 template<typename TVertex, typename TWeight>
 bool BellmanFord(const Graph<TVertex, TWeight>& graph,
