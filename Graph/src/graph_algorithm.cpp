@@ -715,53 +715,74 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
 
 
 /*!
- * @brief **弗洛伊德(Floyd-Warshall)最短路径**
+ * @brief **Floyd-Warshall弗洛伊德最短路径算法**
  * @tparam TVertex 图结点类型模板参数
  * @tparam TWeight 图边权值类型模板参数
  * @param graph 图
- * @param distance 最短路径数组, distance[i][j]表示: 索引i结点到索引j结点的最短路径
- * @param predecessor 前一结点数组, predecessor[i][j]表示: 索引i结点到索引j结点最短路径中, j的前一结点
+ * @param distance 最短路径数组
+ * @param predecessor 前一结点数组
  * @note
  * Floyd-Warshall弗洛伊德最短路径算法
  * --------------------------------
  * --------------------------------
  *
- * Floyd:
- *     distance[][] is a distance matrix for n vertices.
- *     distance[i][j] is the distance to move directly from i to j.
- *         if no direct link from i to j
- *             then initialize distance[i][j] = INFINITY
- *         the distance from a node to itself is 0.(Initialize distance[i][i] = 0 for all i)
- *     predecessor[][] is a predecessor matrix. it enables you to reconstruct the shortest paths.
- *         predecessor[i][j] should be initialized to i.
+ * <span style="color:#DF5A00">
+ * distance[i][j]表示: 索引i结点到索引j结点的最短路径\n
+ * predecessor[i][j]表示: 索引i结点到索引j结点的最短路径中, j的前一结点\n
+ * <span style="color:#DF5A00">
  *
- * 算法执行结果:
- *     distance[i][j] contains the total cost along the shortest path from i to j.
- *     predecessor[i][j] contains the predecessor of j on the shortest path from i to j.
+ * <span style="color:#65000b">
+ * Floyd:\n
+ * &emsp; distance[][] is a distance matrix for n vertices.\n
+ * &emsp; distance[i][j] is the distance to move directly from i to j.\n
+ * &emsp; if no direct link from i to j\n
+ * &emsp;&emsp; then initialize distance[i][j] = INFINITY\n
+ * &emsp; the distance from a node to itself is 0.(Initialize distance[i][i] = 0 for all i)\n
+ * \n
+ * &emsp; predecessor[][] is a predecessor matrix. it enables you to reconstruct the shortest paths.\n
+ * &emsp; predecessor[i][j] should be initialized to i.\n
+ * \n
+ * 算法执行结果:\n
+ * &emsp; distance[i][j] contains the total cost along the shortest path from i to j.\n
+ * &emsp; predecessor[i][j] contains the predecessor of j on the shortest path from i to j.\n
+ * </span>
+ *
+ * - **1 使用图的信息填充distance和predecessor数组**\n
+ * **for loop** 遍历起点 :\n
+ * &emsp; **for loop** 遍历终点 :\n
+ * - **2 动态规划**\n
+ * **for loop** 遍历中间点 :\n
+ * &emsp; **for loop** 遍历起点 :\n
+ * &emsp;&emsp; **for loop** 遍历终点 :\n
+ * &emsp;&emsp;&emsp; **for loop** 遍历终点 :\n
+ *
  * --------------------------------
  */
 template<typename TVertex, typename TWeight>
 void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& distance, vector<vector<int> >& predecessor) {
+
+    // ---------- 1 使用图的信息填充distance和predecessor数组 ----------
     for (unsigned int start = 0; start < graph.VertexCount(); start++) {
         for (unsigned int end = 0; end < graph.VertexCount(); end++) {
 
             if (start == end) {
                 distance[start][end] = TWeight();
-                predecessor[start][end] = start;
+                predecessor[start][end] = (int)start;
             } else {
                 TWeight weight;
                 bool res = graph.GetWeightByVertexIndex(start, end, weight);
                 if (res) {
                     distance[start][end] = weight;
-                    predecessor[start][end] = start;
+                    predecessor[start][end] = (int)start;
                 } else {
                     distance[start][end] = graph.MaxWeight();
+                    predecessor[start][end] = -1;
                 }
             }
         }
     }
 
-    // --- 动态规划 ---
+    // ---------- 2 动态规划 ----------
 
     for (unsigned int intermediate = 0; intermediate < graph.VertexCount(); intermediate++) {
         for (unsigned int start = 0; start < graph.VertexCount(); start++) {
@@ -816,7 +837,7 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
         }
 
         // 构造"以索引starting_vertex_idx结点(staring_vertex)为起点, 索引cur_ending_vertex_idx结点为终点"的最短路径
-        int predecessor_vertex_index = ending_vertex_index;
+        int predecessor_vertex_index = (int)ending_vertex_index;
         int inverted_predecessor_vertex_index = 0; // 最短路径结点倒序索引
 
         while (predecessor_vertex_index != starting_vertex_index) {
