@@ -39,16 +39,16 @@ public:
     // 构造函数(结点数上限/边权值上限)
     MatrixGraph(int max_vertex_count, TWeight max_weight);
 
-    // 构造函数(图类型/结点数上线/边权值上线)
+    // 构造函数(图类型/结点数上限/边权值上限)
     MatrixGraph(int type, int max_vertex_count, TWeight max_weight);
 
-    // 构造函数(结点数上限/边权值上限/边/结点vector)
+    // 构造函数(结点数上限/边权值上限/边vector/结点vector)
     MatrixGraph(int max_vertex_count,
                 TWeight max_weight,
                 const vector<Edge<TVertex, TWeight> >& edges,
                 const vector<TVertex>& vertices);
 
-    // 构造函数(图类型/结点数上线/边权值上线/边/节点vector)
+    // 构造函数(图类型/结点数上限/边权值上限/边vector/结点vector)
     MatrixGraph(int type,
                 int max_vertex_count,
                 TWeight max_weight,
@@ -234,8 +234,9 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
     }
 }
 
+
 /*!
- * @brief **构造函数(结点数上限/边权值上限/边/结点vector)**
+ * @brief **构造函数(结点数上限/边权值上限/边vector/结点vector)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 结点数上限
@@ -243,20 +244,21 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
  * @param edges 边vector
  * @param vertices 结点vector
  * @note
- * 构造函数(结点数上限/边权值上限/边/结点vector)
+ * 构造函数(结点数上限/边权值上限/边vector/结点vector)
  * ----------------------------------------
  * ----------------------------------------
  *
  * ----------------------------------------
  * + **1** 设置部分成员变量\n
- *  - type_(**图类型**)和max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
+ *  - type_(**图类型**)设为UNDIRECTED(**无向**)\n
+ *  - max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
  *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
  * + **2** 设置邻接矩阵\n
  *  - **2.1** 分配邻接矩阵行内存\n
  *  **if** 内存分配失败 :\n
  *  &emsp; 抛出bad_alloc()错误\n
  *  - **2.2** 分配邻接矩阵每行的内存, 并初始化\n
- *  **for loop** 遍历adjacency_matrix_ :\n
+ *  **for loop** 遍历矩阵行:\n
  *  &emsp; 分配矩阵当前行的内存\n
  *  &emsp; **if** 内存分配失败 :\n
  *  &emsp;&emsp; 抛出bad_alloc()错误\n
@@ -277,47 +279,55 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
                                            const vector<TVertex>& vertices)
 {
     // ---------- 1 设置部分成员变量 ----------
+
+    // type_(图类型)设为UNDIRECTED(无向)
     this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;
+
+    // max_vertex_count_(结点数上限)和max_weight_(边权值上限)使用参数赋值
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
+    // vertex_count_(结点数量)和edge_count_(边数量)设为0
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
     // ---------- 2 设置邻接矩阵 ----------
+
     // 2.1 分配邻接矩阵行内存
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
-    if (!this->adjacency_matrix_) {
-        throw bad_alloc();
+    if (!this->adjacency_matrix_) {     // if 内存分配失败
+        throw bad_alloc();              // 抛出bad_alloc()错误
     }
 
     // 2.2 分配邻接矩阵每行的内存, 并初始化
-    for (int row = 0; row < this->max_vertex_count_; row++) {
-        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
-        if (!this->adjacency_matrix_) {
-            throw bad_alloc();
+    for (int row = 0; row < this->max_vertex_count_; row++) {   // for loop 遍历矩阵行
+        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];    // 分配矩阵当前行的内存
+        if (!this->adjacency_matrix_) {                                         // if 内存分配失败
+            throw bad_alloc();                                                  // 抛出bad_alloc()错误
         }
 
-        for (int col = 0; col < this->max_vertex_count_; col++) {
-            this->adjacency_matrix_[row][col] = TWeight();
+        for (int col = 0; col < this->max_vertex_count_; col++) {   // for loop 遍历当前行
+            this->adjacency_matrix_[row][col] = TWeight();          // 对当前矩阵元素adjacency_matrix_[row][col]初始化
         }
     }
 
     // ---------- 3 插入结点和边----------
+
     // 3.1 将vertices插入
-    for (unsigned int i = 0; i < vertices.size(); i++) {
-        this->InsertVertex(vertices[i]);
+    for (unsigned int i = 0; i < vertices.size(); i++) {            // for loop 遍历vertices
+        this->InsertVertex(vertices[i]);                            // 调用InsertVertex, 插入当前节点vertices[i]
     }
 
     // 3.1 将edges插入
-    for (unsigned int i = 0; i < edges.size(); i++) {
+    for (unsigned int i = 0; i < edges.size(); i++) {               // for loop 遍历vertices
+        // 调用InsertEdge, 插入当前边edges[i]
         this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);
     }
 }
 
 
 /*!
- * @brief **构造函数(图类型/结点数上限/边权值上限/边/结点vector)**
+ * @brief **构造函数(图类型/结点数上限/边权值上限/边vector/结点vector)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param type 图类型
@@ -326,19 +336,18 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
  * @param edges 边vector
  * @param vertices 结点vector
  * @note
- * 构造函数(图类型/结点数上限/边权值上限/边/结点vector)
+ * 构造函数(图类型/结点数上限/边权值上限/边vector/结点vector)
  * ----------------------------------------------
  * ----------------------------------------------
  *
  * <span style="color:#DF5A00">
  * 听过的风, 走过的路\n
- * 爱过的人, 闯过的祸
+ * 爱过的人, 闯过的祸\n
  * </span>
  *
  * ----------------------------------------------
  * + **1** 设置部分成员变量\n
- *  - type_(**图类型**)设为UNDIRECTED(**无向**)\n
- *  - max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
+ *  - type_(**图类型**), max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
  *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
  * + **2** 设置邻接矩阵\n
  *  - **2.1** 分配邻接矩阵行内存\n
@@ -367,41 +376,46 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
                                            const vector<TVertex>& vertices)
 {
     // ---------- 1 设置部分成员变量 ----------
+
+    // type_(图类型), max_vertex_count_(结点数上限)和max_weight_(边权值上限)使用参数赋值
     this->type_ = type;
     this->max_weight_ = max_weight;
     this->max_vertex_count_ = max_vertex_count;
 
+    // vertex_count_(结点数量)和edge_count_(边数量)设为0
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
-
     // ---------- 2 设置邻接矩阵 ----------
+
     // 2.1 分配邻接矩阵行内存
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
-    if (!this->adjacency_matrix_) {
-        throw bad_alloc();
+    if (!this->adjacency_matrix_) {     // if 内存分配失败
+        throw bad_alloc();              // 抛出bad_alloc()错误
     }
 
     // 2.2 分配邻接矩阵每行的内存, 并初始化
-    for (int row = 0; row < this->max_vertex_count_; row++) {
-        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_]; // 节点i对应的所有边
-        if (!this->adjacency_matrix_) {
-            throw bad_alloc();
+    for (int row = 0; row < this->max_vertex_count_; row++) {   // for loop 遍历矩阵行
+        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];    // 分配矩阵当前行的内存
+        if (!this->adjacency_matrix_) {                                         // if 内存分配失败
+            throw bad_alloc();                                                  // 抛出bad_alloc()错误
         }
 
-        for (int col = 0; col < this->max_vertex_count_; col++) {
-            this->adjacency_matrix_[row][col] = TWeight();
+        for (int col = 0; col < this->max_vertex_count_; col++) {   // for loop 遍历当前行
+            this->adjacency_matrix_[row][col] = TWeight();          // 对当前矩阵元素adjacency_matrix_[row][col]初始化
         }
     }
 
-    // ---------- 3 插入结点和边----------
+    // ---------- 3 插入结点和边 ----------
+
     // 3.1 将vertices插入
-    for (unsigned int i = 0; i < vertices.size(); i++) {
-        this->InsertVertex(vertices[i]);
+    for (unsigned int i = 0; i < vertices.size(); i++) {            // for loop 遍历vertices
+        this->InsertVertex(vertices[i]);                            // 调用InsertVertex, 插入当前节点vertices[i]
     }
 
     // 3.1 将edges插入
-    for (unsigned int i = 0; i < edges.size(); i++) {
+    for (unsigned int i = 0; i < edges.size(); i++) {               // for loop 遍历vertices
+        // 调用InsertEdge, 插入当前边edges[i]
         this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);
     }
 }
@@ -429,12 +443,15 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
+
     // ---------- 1 释放邻接矩阵的每行的内存 ----------
+
     for (int row = 0; row < this->vertex_count_; row++) {
         delete[] this->adjacency_matrix_[row];
     }
 
     // ---------- 2 释放邻接矩阵行内存 ----------
+
     delete[] this->adjacency_matrix_;
 }
 
@@ -458,11 +475,16 @@ MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& vertex) const {
-    if (vertex_index < 0 && vertex_index >= this->vertex_count_) {
-        return false;
+
+    // ---------- 1 判断合法性 ----------
+
+    if (vertex_index < 0 && vertex_index >= this->vertex_count_) {  // if 结点索引 < 0 或者 结点索引 >= 图结点数
+        return false;                                               // 返回false
     }
 
-    vertex = this->vertices_[vertex_index];
+    // ---------- 2 获取结点 ----------
+
+    vertex = this->vertices_[vertex_index];                         // vertices_[vertex_index]赋给参数vertex
 
     return true;
 }
@@ -486,7 +508,7 @@ bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& 
  * ----------------
  * - **1** 判断合法性\n
  * 获取起点索引starting_vertex_index\n
- * 获取终点索引starting_vertex_index\n
+ * 获取终点索引ending_vertex_index\n
  * **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :\n
  * &emsp; 返回false\n
  * - **2** 获取边权值\n
@@ -499,17 +521,24 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
                                               const TVertex& ending_vertex,
                                               TWeight& weight) const
 {
-    int starting_vertex_index = GetVertexIndex(starting_vertex);
-    int ending_vertex_index = GetVertexIndex(ending_vertex);
+    // ---------- 1 判断合法性 ----------
+
+    int starting_vertex_index = GetVertexIndex(starting_vertex);    // 获取起点索引starting_vertex_index
+    int ending_vertex_index = GetVertexIndex(ending_vertex);        // 获取终点索引ending_vertex_index
+
+    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :
     if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
         adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
     {
-        return false;
+        return false;   // 返回false
     }
 
+    // ---------- 2 获取边权值 ----------
+
+    // 调用GetWeightByVertexIndex
     bool res = GetWeightByVertexIndex(starting_vertex_index, ending_vertex_index, weight);
-    if (!res) {
-        return false;
+    if (!res) {             // if 执行结果为false
+        return false;       // 返回false
     }
 
     return true;
@@ -517,7 +546,7 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
 
 
 /*!
- * @brief 获取边权值(by结点索引)
+ * @brief **获取边权值(by结点索引)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param starting_vertex_index 起点索引
@@ -532,6 +561,7 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
  * -------------------
  * - **1** 判断合法性\n
  * **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :\n
+ * &emsp; 返回false\n
  * - **2** 获取边权值\n
  * adjacency_matrix_[starting_vertex_index][ending_vertex_index]赋给参数weight\n
  */
@@ -540,12 +570,18 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
                                                            int ending_vertex_index,
                                                            TWeight& weight) const
 {
+    // ---------- 1 判断合法性 ----------
+
+    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值
     if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
         adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
     {
-        return false;
+        return false;   // 返回false
     }
 
+    // ---------- 2 获取边权值 ----------
+
+    // adjacency_matrix_[starting_vertex_index][ending_vertex_index]赋给参数weight
     weight = adjacency_matrix_[starting_vertex_index][ending_vertex_index];
 
     return true;
@@ -581,24 +617,29 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) const {
-    int vertex_index = GetVertexIndex(vertex);
-    if (vertex_index < 0) {
-        return false;
+
+    // ---------- 1 判断合法性 ----------
+
+    int vertex_index = GetVertexIndex(vertex);  // 获取结点的索引
+    if (vertex_index < 0) {                     // if 结点索引 < 0
+        return false;                           // 返回false
     }
 
-    for (int i = 0; i < this->vertex_count_; i++) {
+    // ---------- 2 遍历结点找到第一个相邻结点 ----------
+
+    for (int i = 0; i < this->vertex_count_; i++) {     // for loop 遍历结点
         TWeight weight;
         TVertex cur_vertex;
 
-        bool res = GetVertexByIndex(i, cur_vertex);
-        if (!res) {
-            continue;
+        bool res = GetVertexByIndex(i, cur_vertex);     // 获取当前索引(i)对应的结点
+        if (!res) {                                     // if 当前索引无对应结点
+            continue;                                   // continue
         }
 
-        res = GetWeight(vertex, cur_vertex, weight);
-        if (res) {
-            first_neighbor = cur_vertex;
-            return true;
+        res = GetWeight(vertex, cur_vertex, weight);    // 获取 结点--->当前结点 的边权值
+        if (res) {                                      // if 边权值存在(边存在)
+            first_neighbor = cur_vertex;                // 当前结点赋给参数first_neighbor
+            return true;                                // 返回true
         }
     }
 
@@ -640,26 +681,31 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
                                                           const TVertex& neighbor_vertex,
                                                           TVertex& next_neighbor_vertex) const
 {
-    int vertex_index = GetVertexIndex(vertex);
-    int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);
+    // ---------- 1 判断合法性 -----------
 
-    if (vertex_index < 0 || neighbor_vertex_index < 0) {
-        return false;
+    int vertex_index = GetVertexIndex(vertex);                      // 获取结点的索引
+    int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);    // 获取相邻某结点的索引
+
+    if (vertex_index < 0 || neighbor_vertex_index < 0) {            // if 结点索引 < 0 || 某相邻结点索引 < 0
+        return false;                                               // 返回false
     }
 
+    // ---------- 2 遍历结点找到下一个相邻结点 ----------
+
+    // for loop 遍历结点索引, 从neighbor_vertex_index到vertex_count_(不包含)
     for (int i = neighbor_vertex_index + 1; i < this->vertex_count_; i++) {
         TWeight weight;
         TVertex cur_vertex;
 
-        bool res = GetVertexByIndex(i, cur_vertex);
-        if (!res) {
-            continue;
+        bool res = GetVertexByIndex(i, cur_vertex);     // 获取当前索引(i)对应的结点
+        if (!res) {                                     // if 当前索引无对应结点
+            continue;                                   // continue
         }
 
-        res = GetWeight(vertex, cur_vertex, weight);
-        if (res) {
-            next_neighbor_vertex = cur_vertex;
-            return true;
+        res = GetWeight(vertex, cur_vertex, weight);    // 获取 结点--->当前结点 的边权值
+        if (res) {                                      // if 边权值存在(边存在)
+            next_neighbor_vertex = cur_vertex;          // 当前结点赋给参数next_neighbor_vertex
+            return true;                                // 返回true
         }
     }
 
@@ -750,12 +796,12 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  *  &emsp;&emsp; **if** 邻接矩阵内存在该边 :\n
  *  &emsp;&emsp;&emsp; 返回false;\n
  * + **2** 执行插入\n
- *  - **2.1** 该边插入\n
+ *  - **2.1** 该边(starting_vertex ---> ending_vertex)插入\n
  *   * 插入邻接矩阵\n
  *   * 插入edges_\n
  *  - **2.2** 无向图处理\n
  *  &emsp; **if** 无向图 :\n
- *  &emsp;&emsp; 反向边插入邻接矩阵\n
+ *  &emsp;&emsp; 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵\n
  *  - **2.3** edge_count_(边数)加1\n
  */
 template<typename TVertex, typename TWeight>
@@ -765,66 +811,66 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
 {
     // ---------- 1 检查插入合法性 ---------
 
-    // 1.1 结点检查
-    int starting_vertex_index = GetVertexIndex(starting_vertex);
-    int ending_vertex_index = GetVertexIndex(ending_vertex);
+    // 1.1 结点检查和相关处理
+    int starting_vertex_index = GetVertexIndex(starting_vertex);        // 获取起点索引
+    int ending_vertex_index = GetVertexIndex(ending_vertex);            // 获取终点索引
 
-    // 如果starting_vertex不在图中, 将结点starting_vertex插入
-    if (starting_vertex_index < 0) {
-        bool res = this->InsertVertex(starting_vertex);
-        if (!res) {
-            return false;
+    if (starting_vertex_index < 0) {                                    // if 起点索引 < 0
+        bool res = this->InsertVertex(starting_vertex);                 // 插入起点
+        if (!res) {                                                     // if 插入失败
+            return false;                                               // 返回false
         }
 
-        starting_vertex_index = this->GetVertexIndex(starting_vertex);
+        starting_vertex_index = this->GetVertexIndex(starting_vertex);  // 使用新插入的起点获取起点索引
     }
 
-    // 如果ending_vertex不在图中, 将结点ending_vertex插入
-    if (ending_vertex_index < 0) {
-        bool res = this->InsertVertex(ending_vertex);
-        if (!res) {
-            return false;
+    if (ending_vertex_index < 0) {                                      // if 终点索引 < 0
+        bool res = this->InsertVertex(ending_vertex);                   // 插入终点
+        if (!res) {                                                     // if 插入失败
+            return false;                                               // 返回false
         }
 
-        ending_vertex_index = this->GetVertexIndex(ending_vertex);
+        ending_vertex_index = this->GetVertexIndex(ending_vertex);      // 使用新插入的终点获取终点索引
     }
 
+    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引 等于 终点索引
     if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index) {
-        return false;
+        return false;                                                   // 返回false
     }
 
-    // 遍历edges_, 检查是否能找到待插入边
-    for (unsigned int i = 0; i < this->edges_.size(); i++) {
-        if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // 无向
-            // 无向图/网已存在该边, 不能插入
+    // ---------- 1.2 边检查 ----------
+    for (unsigned int i = 0; i < this->edges_.size(); i++) {            // for loop 遍历edges_
+        if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {       // if 无向图
+            // if 边(起点--->终点) or 反向边(终点--->起点) 存在
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
                 (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex)) {
-                return false;
+                return false;   // 返回false
             }
-        } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {    // 有向
-            // 有向图/网已存在该边, 不能插入
+        } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {  // if 有向图
+            // if 边(起点--->终点) 存在
             if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
-                return false;
+                return false;   // 返回false
             }
         }
     }
 
-    // 1.3 邻接矩阵检查
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        // 邻接矩阵存在该边
+    // ---------- 1.3 邻接矩阵检查 ----------
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {       // if 无向图
+        // if 邻接矩阵内存在该边or反向边
         if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight() ||
             this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] != TWeight())
         {
-            return false;
+            return false;   // 返回false
         }
-    } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
-        // 邻接矩阵存在该边
+    } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {  // else if 有向图
+        // if 邻接矩阵内存在该边
         if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight()) {
-            return false;
+            return false;   // 返回false
         }
     }
 
     // ---------- 2 执行插入 ----------
+
     // 2.1 边(starting_vertex ---> ending_vertex) 插入
     // 插入邻接矩阵
     this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = weight;
@@ -833,13 +879,13 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
     Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
     this->edges_.push_back(edge);
 
-    // 2.2 无向图, 反向边(ending_vertex ---> starting_vertex) 插入
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        // 反向边插入邻接矩阵
+    // 2.2 无向图处理
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // if 无向图
+        // 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵
         this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;
     }
 
-    // 2.3 edge_count_加1
+    // 2.3 edge_count_(边数)加1
     this->edge_count_++;
 
     return true;
@@ -993,21 +1039,21 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
     // 1.2 检查边
     int remove_edge_index = -1;     // 待删除边索引变量remove_edge_index, 初始化为-1
     if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {             // if 有向图
-        for (unsigned int i = 0; i < this->edges_.size(); i++) {                 // for loop 遍历edges_
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {        // for loop 遍历edges_
             // if this->edges_[i](当前边)的起点和结点, 与参数起点和结点相同
             if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
-                remove_edge_index = i;      // 将i(当前边索引)赋给remove_edge_index
-                break;                      // break(找到待删除边, 结束循环)
+                remove_edge_index = (int)i;      // 将i(当前边索引)赋给remove_edge_index
+                break;                           // break(找到待删除边, 结束循环)
             }
         }
     } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {    // else if 无向图
-        for (unsigned int i = 0; i < this->edges_.size(); i++) {                 // for loop 遍历edges_
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {        // for loop 遍历edges_
             // if this->edges_[i](当前边)或者反向边的起点和结点, 与参数起点和结点相同
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
                 (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex))
             {
-                remove_edge_index = i;      // 将i(当前边索引)赋给remove_edge_index
-                break;                      // break(找到待删除边, 结束循环)
+                remove_edge_index = (int)i;      // 将i(当前边索引)赋给remove_edge_index
+                break;                           // break(找到待删除边, 结束循环)
             }
         }
     }
@@ -1160,13 +1206,13 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
  */
 template<typename TVertex, typename TWeight>
 int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
-    for (int i = 0; i < this->vertex_count_; i++) {
-        if (this->vertices_[i] == vertex) {
-            return i;
+    for (int i = 0; i < this->vertex_count_; i++) {     // for loop 遍历结点索引
+        if (this->vertices_[i] == vertex) {             // if i(当前索引)对应的结点等于vertex
+            return i;                                   // 返回i
         }
     }
 
-    return -1;
+    return -1;  // 返回-1(如果没有找到对应索引)
 }
 
 
@@ -1186,9 +1232,9 @@ int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
  */
 template<typename TVertex, typename TWeight>
 void MatrixGraph<TVertex, TWeight>::PrintMatrix() {
-    for (int row = 0; row < this->vertex_count_; row++) {
-        for (int col = 0; col < this->vertex_count_; col++) {
-            cout << setw(5) << this->adjacency_matrix_[row][col] << "  ";
+    for (int row = 0; row < this->vertex_count_; row++) {                   // for loop 遍历行索引
+        for (int col = 0; col < this->vertex_count_; col++) {               // for loop 遍历列索引
+            cout << setw(5) << this->adjacency_matrix_[row][col] << "  ";   // 打印adjacency_matrix_[row][col](当前矩阵元素)
         }
         cout<<endl;
     }
