@@ -918,11 +918,11 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
  * &emsp; **for loop** 遍历结点索引 :\n
  * &emsp;&emsp; 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素\n
  * &emsp;&emsp; 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素\n
+ * &emsp;&emsp; edge_count_(边数)减1\n
  * + **3 edges_执行删除**\n
  * &emsp; **for loop** 遍历edges_ :\n
  * &emsp;&emsp; **if** 当前边起点or当前边终点 为待删除节点 :\n
  * &emsp;&emsp;&emsp; 删除当前边\n
- * &emsp;&emsp;&emsp; edge_count_(边数)减1\n
  * + **4 vertices_执行删除**\n
  * &emsp; vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素\n
  * &emsp; vertices_删除索引vertex_count - 1位置元素\n
@@ -945,6 +945,7 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
         this->adjacency_matrix_[i][vertex_index] = this->adjacency_matrix_[i][this->vertex_count_ - 1];
         // 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素
         this->adjacency_matrix_[vertex_index][i] = this->adjacency_matrix_[this->vertex_count_ - 1][i];
+        this->edge_count_--;                                                // edge_count_(边数)减1
     }
 
     // ---------- 3 edges_执行删除 ----------
@@ -952,7 +953,6 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
     for (typename vector<Edge<TVertex, TWeight> >::iterator iter = this->edges_.begin(); iter != this->edges_.end();) {
         if (iter->ending_vertex == vertex || iter->starting_vertex == vertex) { // if 当前边起点or当前边终点 为待删除节点
             iter = this->edges_.erase(iter);                                    // 删除当前边
-            this->edge_count_--;                                                // edge_count_(边数)减1
         } else {
             iter++;
         }

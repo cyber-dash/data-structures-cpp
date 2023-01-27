@@ -147,6 +147,7 @@ public:
  * @brief **图抽象模板类**
  * @tparam TVertex 节点类型模板参数
  * @tparam TWeight 边权值类型模板参数
+ * @note
  */
 template<typename TVertex, typename TWeight>
 class Graph {
@@ -357,7 +358,7 @@ public:
 protected:
     int max_vertex_count_{};    //!< 图结点数量上限
     TWeight max_weight_;        //!< 边权值上限
-    int edge_count_{};          //!< 边数量
+    int edge_count_{};          //!< 边数量(只表达存在, 不表达方向)
     int vertex_count_{};        //!< 结点数量
     int type_{};                //!< 1: 有向, 2: 无向
 
