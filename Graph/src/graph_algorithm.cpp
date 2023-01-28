@@ -811,11 +811,10 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
  * **for loop** 遍历intermediate(中间点) :\n
  * &emsp; **for loop** 遍历起点 :\n
  * &emsp;&emsp; **for loop** 遍历终点 :\n
- * &emsp;&emsp;&emsp; **for loop** 遍历终点 :\n
- * &emsp;&emsp;&emsp;&emsp; (松弛)\n
- * &emsp;&emsp;&emsp;&emsp; **if** 路径(start ---> intermediate) + 路径(intermediate ---> end) < 路径(start ---> end) :\n
- * &emsp;&emsp;&emsp;&emsp;&emsp; 路径(start ---> end) <= 路径(start ---> intermediate) + 路径(intermediate ---> end)\n
- * &emsp;&emsp;&emsp;&emsp;&emsp; 路径(start ---> end)终点的前一结点 <= 路径(intermediate ---> end)终点的前一结点\n
+ * &emsp;&emsp;&emsp; (松弛)\n
+ * &emsp;&emsp;&emsp; **if** 路径(start ---> intermediate) + 路径(intermediate ---> end) < 路径(start ---> end) :\n
+ * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end) <= 路径(start ---> intermediate) + 路径(intermediate ---> end)\n
+ * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)终点的前一结点 <= 路径(intermediate ---> end)终点的前一结点\n
  */
 template<typename TVertex, typename TWeight>
 void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& distance, vector<vector<int> >& predecessor) {
