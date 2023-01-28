@@ -501,7 +501,6 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
  * </span>
  *
  * ------------------------
- * + **1 **
  */
 template<typename TVertex, typename TWeight>
 void Dijkstra(const Graph<TVertex, TWeight>& graph,
@@ -594,7 +593,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
 
 
 /*!
- * Bellman-Ford贝尔曼福特最短路径
+ * @brief **Bellman-Ford贝尔曼福特最短路径**
  * @tparam TVertex 图结点模板类型
  * @tparam TWeight 图边权值模板类型
  * @param graph 图的引用
@@ -603,40 +602,75 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
  * @return 是否有负环
  * @note
+ * Bellman-Ford贝尔曼福特最短路径
+ * ---------------------------
+ * ---------------------------
  *
  * <span style="color:#FB1927">
  * BellmanFord算法:\n
  * \n
- * &emsp;--- 初始化 ---
+ * --- 初始化 ---\n
  * \n
- *     for 图中的每个结点v:
- *         如果(starting_vertex, v)没有边:
- *             distance[v] <-- MAX(不存在路径)
- *         否则:
- *             如果 v 是starting_vertex(起始点):
- *                 distance[v] = 0
- *                 predecessor[v] <-- -1(没有前一结点)
- *             否则:
- *                 distance[v] = 边(starting_vertex, v)的长度(权值)
- *                 predecessor[v] <-- starting_vertex_index(结点starting_vertex的索引) // v的前一结点是starting_vertex
- *
- *
- *     --- 动态规划 ---
- *
- *     for循环(图结点总数 - 1)次:
- *         for 图的每一条边edge (u, v):
- *             // 松弛
- *             如果 distance[u] + 边(u, v)权重 < distance[v]:
- *                 distance[v] <-- distance[u] + 边(u, v)权重
- *                 predecessor[v] <-- u
- *
- *
- *     --- 检查是否有负权重的回路 ---
- *
- *     for 每一条边edge (u, v):
- *         如果 distance[u] + 边(u, v)权重 < distance[v]:
- *             error "图包含负回路"
+ * &emsp;&emsp; for 图中的每个结点v:\n
+ * &emsp;&emsp;&emsp;&emsp; 如果(starting_vertex, v)没有边:\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; distance[v] <-- MAX(不存在路径)\n
+ * &emsp;&emsp;&emsp;&emsp; 否则:\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 如果 v 是starting_vertex(起始点):\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; distance[v] = 0\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; predecessor[v] <-- -1(没有前一结点)\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 否则:\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; distance[v] = 边(starting_vertex, v)的长度(权值)\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; predecessor[v] <-- starting_vertex_index(结点starting_vertex的索引) // v的前一结点是starting_vertex
+ * \n
+ * \n
+ * --- 动态规划 ---\n
+ * \n
+ * &emsp;&emsp; for循环(图结点总数 - 1)次:\n
+ * &emsp;&emsp;&emsp;&emsp; for 图的每一条边edge (u, v):\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; // 松弛\n
+ * &emsp;&emsp;&emsp;&emsp; 如果 distance[u] + 边(u, v)权重 < distance[v]:\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; distance[v] <-- distance[u] + 边(u, v)权重\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; predecessor[v] <-- u\n
+ * \n
+ * \n
+ * --- 检查是否有负权重的回路 ---\n
+ * \n
+ * &emsp;&emsp; for 每一条边edge (u, v):\n
+ * &emsp;&emsp;&emsp;&emsp; 如果 distance[u] + 边(u, v)权重 < distance[v]:\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; error "图包含负回路"\n
  * </span>
+ *
+ * ---------------------------
+ * + **1 初始化**\n
+ * 初始化starting_vertex_index(起点索引)\n
+ * **while loop** 遍历结点索引 :\n
+ * &emsp; (起点 ---> 索引i结点)的最短路径, 权值(长度)初始化为MaxWeight(), 即初始化为不存在最短路径\n
+ * (起点 ---> 起点)的最短路径, 权值(长度)初始化为0\n
+ * (起点 ---> 起点)的最短路径, 起点的前一结点索引设为-1\n
+ * + **2 动态规划**\n
+ * **while loop** 循环VertexCount() - 1次 :\n
+ * &emsp; **while loop** 循环每条边 :\n
+ * &emsp;&emsp; 取当前边起点, 取当前边终点\n
+ * &emsp;&emsp; 取当前边起点索引, 取当前边终点索引\n
+ * &emsp;&emsp; 取当前边(cur_starting_vertex ---> cur_ending_vertex)的权重cur_edge_weight\n
+ * &emsp;&emsp; **if** 不存在边(cur_starting_vertex ---> cur_ending_vertex) :\n
+ * &emsp;&emsp;&emsp; continue\n
+ * &emsp;&emsp; (松弛)\n
+ * &emsp;&emsp; **if** (起点 ---> 当前边起点)的最短路径 + 当前边权值 < (起点 ---> 当前边终点)的最短路径 :\n
+ * &emsp;&emsp;&emsp; (起点 ---> 当前边终点)的最短路径 = (起点 ---> 当前边起点)的最短路径 + 当前边权值\n
+ * &emsp;&emsp;&emsp; (起点 ---> 当前边终点)的最短路径, 当前边终点的前一结点, 被赋值为当前边起点\n
+ * + **3 检查是否有负权重的回路**\n
+ * 初始化negative_weight_cycle_exists为false(初始化为没有负权环)\n
+ * **for loop** 遍历每条边 :\n
+ * &emsp; 取当前边起点, 当前边终点 :\n
+ * &emsp; 取当前边起点索引, 当前边终点索引 :\n
+ * &emsp;&emsp; 取当前边(cur_starting_vertex ---> cur_ending_vertex)的权重cur_edge_weight\n
+ * &emsp;&emsp; **if** 不存在边(cur_starting_vertex ---> cur_ending_vertex) :\n
+ * &emsp;&emsp;&emsp; continue\n
+ * &emsp;&emsp; **if** (起点 ---> 当前边起点)的最短路径 + 当前边权值 < (起点 ---> 当前边终点)的最短路径 :\n
+ * &emsp;&emsp;&emsp; negative_weight_cycle_exists设为true\n
+ * &emsp;&emsp;&emsp; 跳出循环(发现负权回路)\n
+ * 返回negative_weight_cycle_exists\n
  */
 template<typename TVertex, typename TWeight>
 bool BellmanFord(const Graph<TVertex, TWeight>& graph,
@@ -644,36 +678,36 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
                  TWeight distance[],
                  int predecessor[])
 {
-    // --- 初始化 ---
+    // ---------- 1 初始化 ----------
 
-    // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
-    int starting_vertex_index = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
-        distance[i] = graph.MaxWeight();
+    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);  // 初始化starting_vertex_index(起点索引)
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // while loop 遍历结点索引
+        distance[i] = graph.MaxWeight();                        // (起点 ---> 索引i结点)的最短路径, 权值(长度)初始化为MaxWeight(), 即初始化为不存在最短路径
     }
-    distance[starting_vertex_index] = 0;
+    distance[starting_vertex_index] = starting_vertex_index;    // (起点 ---> 起点)的最短路径, 权值(长度)初始化为0
 
-    // 起始点的前驱结点索引设为-1
-    predecessor[starting_vertex_index] = -1;
+    predecessor[starting_vertex_index] = -1;                    // (起点 ---> 起点)的最短路径, 起点的前一结点索引设为-1
 
-    // --- 动态规划 ---
+    // ---------- 2 动态规划 ----------
 
-    // BellmanFord执行|V| - 1次"松弛所有边"
-    for (unsigned int vertex_index = 0; vertex_index < graph.VertexCount() - 1; vertex_index++) {
-        for (unsigned int edge_index = 0; edge_index < graph.EdgeCount(); edge_index++) {
+    for (unsigned int vertex_index = 0; vertex_index < graph.VertexCount() - 1; vertex_index++) {   // while loop 循环VertexCount() - 1次
+        for (unsigned int edge_index = 0; edge_index < graph.EdgeCount(); edge_index++) {           // while loop 循环每条边
+            // 取当前边起点, 取当前边终点
             TVertex cur_starting_vertex = graph.GetEdge(edge_index).starting_vertex;
             TVertex cur_ending_vertex = graph.GetEdge(edge_index).ending_vertex;
 
+            // 取当前边起点索引, 取当前边终点索引
             int cur_starting_vertex_index = graph.GetVertexIndex(cur_starting_vertex);
             int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
             TWeight cur_edge_weight;
+            // 取当前边(cur_starting_vertex ---> cur_ending_vertex)的权重cur_edge_weight
             bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, cur_edge_weight);
-            if (!res) {
+            if (!res) {     // if 不存在边(cur_starting_vertex ---> cur_ending_vertex)
                 continue;
             }
 
-            /// --- 松弛 ---
+            // --- 松弛 ---
             // 如果
             //   边 (starting_vertex  --> cur_starting_vertex)                         的weight
             //    +
@@ -682,35 +716,45 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
             //   边 (starting_vertex  --------------------------->  cur_ending_vertex) 的weight
             // 则
             //   更新distance[cur_ending_vertex_index]和predecessor[cur_ending_vertex_index]
+
+            // if (起点 ---> 当前边起点)的最短路径 + 当前边权值 < (起点 ---> 当前边终点)的最短路径
             if (distance[cur_starting_vertex_index] + cur_edge_weight < distance[cur_ending_vertex_index]) {
+                // (起点 ---> 当前边终点)的最短路径 = (起点 ---> 当前边起点)的最短路径 + 当前边权值
                 distance[cur_ending_vertex_index] = distance[cur_starting_vertex_index] + cur_edge_weight;
+                // (起点 ---> 当前边终点)的最短路径, 当前边终点的前一结点, 被赋值为当前边起点
                 predecessor[cur_ending_vertex_index] = cur_starting_vertex_index;
             }
         }
     }
 
-    // --- 检查是否有负权重的回路 ---
-    bool has_negative_weight_cycle = false; // 默认没有负权环
-    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {
+    // ---------- 3 检查是否有负权重的回路 ----------
+
+    bool negative_weight_cycle_exists = false;  // 初始化negative_weight_cycle_exists为false(初始化为没有负权环)
+
+    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {  // for loop 遍历每条边
+        // 取当前边起点, 当前边终点
         TVertex cur_starting_vertex = graph.GetEdge(i).starting_vertex;
         TVertex cur_ending_vertex = graph.GetEdge(i).ending_vertex;
 
+        // 取当前边起点索引, 当前边终点索引
         int cur_starting_vertex_index = graph.GetVertexIndex(cur_starting_vertex);
         int cur_ending_vertex_index = graph.GetVertexIndex(cur_ending_vertex);
 
         TWeight cur_weight;
+        // 取当前边(cur_starting_vertex ---> cur_ending_vertex)的权重cur_edge_weight
         bool get_weight_done = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, cur_weight);
-        if (!get_weight_done) {
+        if (!get_weight_done) { // if 不存在边(cur_starting_vertex ---> cur_ending_vertex)
             continue;
         }
 
+        // if (起点 ---> 当前边起点)的最短路径 + 当前边权值 < (起点 ---> 当前边终点)的最短路径
         if (distance[cur_starting_vertex_index] + cur_weight < distance[cur_ending_vertex_index]) {
-            has_negative_weight_cycle = true;
-            break;
+            negative_weight_cycle_exists = true;    // negative_weight_cycle_exists设为true
+            break;                                  // 跳出循环(发现负权回路)
         }
     }
 
-    return has_negative_weight_cycle;
+    return negative_weight_cycle_exists;    // 返回negative_weight_cycle_exists
 }
 
 
@@ -747,16 +791,31 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
  * &emsp; predecessor[i][j] contains the predecessor of j on the shortest path from i to j.\n
  * </span>
  *
+ * --------------------------------
+ *
  * - **1 使用图的信息填充distance和predecessor数组**\n
- * **for loop** 遍历起点 :\n
- * &emsp; **for loop** 遍历终点 :\n
+ * **for loop** 遍历start(起点) :\n
+ * &emsp; **for loop** 遍历end(终点) :\n
+ * &emsp;&emsp; **if** start等于end :\n
+ * &emsp;&emsp;&emsp; 路径(start ---> start)长度初始化\n
+ * &emsp;&emsp;&emsp; 路径(start ---> start), start的前一结点为start\n
+ * &emsp;&emsp; **else** (start不等于end):\n
+ * &emsp;&emsp;&emsp; 获取边(start ---> end)的权值(长度)\n
+ * &emsp;&emsp;&emsp; **if** 存在边 :\n
+ * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)的长度为边权值\n
+ * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end), end的前一结点为start\n
+ * &emsp;&emsp;&emsp; **else** (不存在边) :\n
+ * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)的长度为边权值上限\n
+ * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end), end的前一结点不存在(predecessor[start][end]设为-1)\n
  * - **2 动态规划**\n
- * **for loop** 遍历中间点 :\n
+ * **for loop** 遍历intermediate(中间点) :\n
  * &emsp; **for loop** 遍历起点 :\n
  * &emsp;&emsp; **for loop** 遍历终点 :\n
  * &emsp;&emsp;&emsp; **for loop** 遍历终点 :\n
- *
- * --------------------------------
+ * &emsp;&emsp;&emsp;&emsp; (松弛)\n
+ * &emsp;&emsp;&emsp;&emsp; **if** 路径(start ---> intermediate) + 路径(intermediate ---> end) < 路径(start ---> end) :\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp; 路径(start ---> end) <= 路径(start ---> intermediate) + 路径(intermediate ---> end)\n
+ * &emsp;&emsp;&emsp;&emsp;&emsp; 路径(start ---> end)终点的前一结点 <= 路径(intermediate ---> end)终点的前一结点\n
  */
 template<typename TVertex, typename TWeight>
 void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& distance, vector<vector<int> >& predecessor) {
