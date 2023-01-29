@@ -148,6 +148,13 @@ public:
  * @tparam TVertex 节点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @note
+ * 图抽象模板类
+ * ----------
+ * ----------
+ * 注: 成员变量edges_表示的边, 指的是两个结点(例如结点A, 结点B)是否存在边\n
+ * 并不能表达边的方向, 因此无法代表有向图边\n
+ * 有向图边请使用邻接表或者邻接矩阵\n
+ * ----------
  */
 template<typename TVertex, typename TWeight>
 class Graph {

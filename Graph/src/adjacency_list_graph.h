@@ -886,6 +886,10 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
     // ---------- 1 检查插入合法性 ---------
 
     // 1.1 结点检查和相关处理
+    // 获取起点索引
+    // 获取终点索引
+    // if 起点索引 < 0
+    // 插入起点
     int starting_vertex_index = GetVertexIndex(starting_vertex);        // 获取起点索引
     int ending_vertex_index = GetVertexIndex(ending_vertex);            // 获取终点索引
 
@@ -1012,7 +1016,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
     if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
         for (unsigned int i = 0; i < this->edges_.size(); i++) {
             if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
-                remove_edge_index = i;
+                remove_edge_index = (int)i;
                 break;
             }
         }
@@ -1021,7 +1025,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
                 (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex))
             {
-                remove_edge_index = i;
+                remove_edge_index = (int)i;
                 break;
             }
         }
