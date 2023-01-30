@@ -18,6 +18,7 @@ public:
 
     bool Enqueue(const T& item) { return min_heap_.Insert(item); }
     bool Dequeue(T& item) { return min_heap_.Pop(item); }
+    bool Top(T& item) { return min_heap_.Top(item); }
     int Size() { return min_heap_.Size(); }
     void Clear() { min_heap_.MakeEmpty(); }
 

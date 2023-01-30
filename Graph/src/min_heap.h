@@ -34,6 +34,7 @@ public:
 
   bool Insert(const T& item);
   bool Pop(T& item);
+  bool Top(T& item);
   bool IsEmpty() const { return heap_size_ == 0; }
   bool IsFull() const { return heap_size_ == max_size_; }
   int Size() { return heap_size_; }
@@ -147,6 +148,19 @@ bool MinHeap<T>::Pop(T& item) {
   SiftDown_(0);
 
   return true;
+}
+
+
+template <class T>
+bool MinHeap<T>::Top(T& item) {
+    if (!heap_size_) {
+        cerr << "Heap Empty." << endl;
+        return false;
+    }
+
+    item = item_array_[0];
+
+    return true;
 }
 
 

@@ -575,8 +575,8 @@ void TestDijkstra() {
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
     // 边信息
-    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
-    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<string> starting_vertices{ "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices{   "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
     vector<Edge<string, double> > edges;
@@ -660,7 +660,6 @@ void TestBellmanFord() {
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
-
 
 
 /*! 测试Floyd最短路径 */
