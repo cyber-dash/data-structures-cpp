@@ -767,8 +767,6 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
         }
 
         cur_adjacency = cur_adjacency->next;
-
-        this->edge_count_--;
     }
 
     // ----- 2.2 vertex对应的结点邻接项, 执行删除 -----
@@ -814,6 +812,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
     for (typename vector<Edge<TVertex, TWeight> >::iterator iter = this->edges_.begin(); iter != this->edges_.end();) {
         if (iter->ending_vertex == vertex || iter->starting_vertex == vertex) { // if 当前边起点or当前边终点 为待删除节点
             iter = this->edges_.erase(iter);                                    // 删除当前边
+            this->edge_count_--;
         } else {
             iter++;
         }
@@ -886,10 +885,6 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
     // ---------- 1 检查插入合法性 ---------
 
     // 1.1 结点检查和相关处理
-    // 获取起点索引
-    // 获取终点索引
-    // if 起点索引 < 0
-    // 插入起点
     int starting_vertex_index = GetVertexIndex(starting_vertex);        // 获取起点索引
     int ending_vertex_index = GetVertexIndex(ending_vertex);            // 获取终点索引
 

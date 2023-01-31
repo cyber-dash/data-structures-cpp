@@ -22,7 +22,7 @@ void TestBaseFunctions();
 /*!
  * @brief 测试有向网
  */
-void TestDn();
+void TestDirectedGraph();
 
 /*!
  * @brief 测试优先队列(最小)

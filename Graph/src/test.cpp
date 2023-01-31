@@ -15,7 +15,7 @@
 using namespace std;
 
 
-void TestDn() {
+void TestDirectedGraph() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|                    Test Directed Graph                    |"<<endl;
@@ -36,15 +36,24 @@ void TestDn() {
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    unsigned int edge_count = 9;
+    unsigned int edge_count = 18;
 
     // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
     // 边信息
-    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
-    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
-    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+    vector<string> starting_vertices{
+        "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳",
+        "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都",
+    };
+    vector<string> ending_vertices{
+        "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都",
+        "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳",
+    };
+    vector<double> weights{
+        0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11,
+        0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11,
+    };    // 边权重数组
 
     vector<Edge<string, double> > edges;
     for (unsigned int i = 0; i < edge_count; i++) {
@@ -52,14 +61,20 @@ void TestDn() {
         edges.push_back(edge);
     }
 
-    // 构造矩阵图
     int graph_type = 1; // 有向
-    MatrixGraph<string, double> matrix_graph(graph_type, 10, 1000, edges, vertices);
-    cout << matrix_graph << endl << endl;
+    // 构造邻接表图
+    AdjacencyListGraph<string, double> adj_list_graph(graph_type, 10, 1000, edges, vertices);
+    // cout << adj_list_graph << endl << endl;
 
-    cout << "##### 2 矩阵图删除边(\"上海\", \"北京\") #####" << endl << endl;
+    // 构造矩阵图
+    MatrixGraph<string, double> matrix_graph(graph_type, 10, 1000, edges, vertices);
+    // cout << matrix_graph << endl << endl;
+
+    cout << "##### 2 删除边(\"上海\", \"北京\") #####" << endl << endl;
+    adj_list_graph.RemoveEdge("北京", "上海");
     matrix_graph.RemoveEdge("北京", "上海");
 
+    cout << adj_list_graph << endl;
     cout << matrix_graph << endl;
 }
 
