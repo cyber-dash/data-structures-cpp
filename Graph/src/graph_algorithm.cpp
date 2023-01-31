@@ -16,17 +16,17 @@
 
 
 /*!
- * @brief **图深度优先遍历**
+ * @brief **图深度优先遍历(递归)**
  * @tparam TVertex 结点类型模版参数
  * @tparam TWeight 边权值类型模板参数
  * @param graph 图
  * @param vertex 遍历起点
  * @note
- * 图深度优先遍历
- * ------------
- * ------------
+ * 图深度优先遍历(递归)
+ * -----------------
+ * -----------------
  *
- * ------------
+ * -----------------
  * - **1 声明已访问结点集合visited_vertex_set**\n
  * - **2 对vertex(遍历起点)调用DfsOnVertexRecursive**\n
  */
@@ -517,13 +517,29 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
  *
  * ------------------------
  * + **1 初始化**\n
- * &emsp; vertex_set(结点集合)初始化为空集\n
- * &emsp; distance数组(起点到各点的最短路径长度)初始化\n
- * &emsp; min_priority_queue(最短路径的最小优先队列)初始化, 路径(起点 ---> 起点)入队\n
- * &emsp; predecessor数组(最短路径终点的前驱结点索引)初始化, 路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1\n
- * + **2 贪心**\n
+ *  - **1.1 distance数组(起点到各点的最短路径长度)初始化**\n
+ *  &emsp; 获取starting_vertex_index(起点索引)\n
+ *  &emsp; **for loop** 遍历结点 :\n
+ *  &emsp;&emsp; 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值(不存在最短路径)\n
+ *  &emsp; 路径(起点 ---> 起点)的最短路径, 长度设为0\n
+ *  - **1.2 min_priority_queue(最短路径的最小优先队列)初始化**\n
+ *  &emsp; 路径(起点 ---> 起点)入队\n
+ *  - **1.3 predecessor数组(最短路径终点的前驱结点索引)初始化**\n
+ *  路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1\n
+ * + **2 贪心** &emsp;&emsp;&emsp;<span style="color:#d40000">两层对结点的循环, 故时间复杂度: O(V^2)</span>\n
  * **while loop** 最短路径的最小优先队列不为空 :\n
- * &emsp;
+ * &emsp; min_priority_queue队头出队, 赋给cur_min_path(从起点开始到各个结点, 当前最短的路径)\n
+ * &emsp; 获取cur_min_path的终点索引, 赋给cur_min_path_ending_vertex_index\n
+ * &emsp; **for loop** 遍历结点 :\n
+ * &emsp;&emsp; 获取当前结点cur_vertex\n
+ * &emsp;&emsp; 获取 边(cur_min_path.ending_vertex ---> cur_vertex) (即: 当前最短的路径的终点 ---> 当前遍历结点)\n
+ * &emsp;&emsp; **if** 边(cur_min_path.ending_vertex ---> cur_vertex)不存在 :\n
+ * &emsp;&emsp;&emsp; continue(不做处理)\n
+ * &emsp;&emsp; **if** 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值 < 路径(起点 ---> 当前遍历结点) :\n
+ * &emsp;&emsp;&emsp; 路径(起点 ---> 当前遍历结点) = 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值\n
+ * &emsp;&emsp;&emsp; 路径(起点 ---> 当前遍历结点), 当前遍历结点的前一结点索引设为cur_min_path_ending_vertex_index\n
+ * &emsp;&emsp;&emsp; 生成路径new_min_distance_path(起点 ---> 当前遍历结点)\n
+ * &emsp;&emsp;&emsp; 将new_min_distance_path插入min_priority_queue(路径的最小优先队列)\n
  */
 template<typename TVertex, typename TWeight>
 void Dijkstra(const Graph<TVertex, TWeight>& graph,
@@ -531,61 +547,69 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
                TWeight distance[],
                int predecessor[])
 {
-    // --- 初始化 ---
+    // ---------- 1 初始化 ----------
 
-    // 起始点到自身的最短路径值为0, 到其他结点的最短路径值为graph.MaxWeight()
-    int starting_vertex_idx = graph.GetVertexIndex(starting_vertex); // starting_vertex结点的索引
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
-        distance[i] = graph.MaxWeight();
+    // 1.1 distance数组(起点到各点的最短路径长度)初始化
+    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);  // 获取starting_vertex_index(起点索引)
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点
+        distance[i] = graph.MaxWeight();                        // 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值(不存在最短路径)
     }
-    distance[starting_vertex_idx] = 0;
+    distance[starting_vertex_index] = 0;                        // 路径(起点 ---> 起点)的最短路径, 长度设为0
 
-    // 路径的最小优先队列, 路径起始点-->起始点入优先队列
+    // 1.2 min_priority_queue(最短路径的最小优先队列)初始化
     MinPriorityQueue<Path<TVertex, TWeight> > min_priority_queue;
     Path<TVertex, TWeight> cur_path(starting_vertex, starting_vertex, 0);
-    min_priority_queue.Enqueue(cur_path);
+    min_priority_queue.Enqueue(cur_path);       // 路径(起点 ---> 起点)入队
 
-    // 起始点的前驱结点索引设为-1
-    predecessor[starting_vertex_idx] = -1;
+    // 1.3 predecessor数组(最短路径终点的前驱结点索引)初始化
+    predecessor[starting_vertex_index] = -1;    // 路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1
 
-    // --- 贪心 ---
+    // ---------- 2 贪心 ----------
 
-    while (min_priority_queue.Size() != 0) {   // 当所有结点插入到vertex_set时, 由于内层循环continue所有结点, 优先队列将为空
+    while (min_priority_queue.Size() != 0) {    // while loop 最短路径的最小优先队列不为空
 
+        // min_priority_queue队头出队, 赋给cur_min_path(从起点开始到各个结点, 当前最短的路径)
         Path<TVertex, TWeight> cur_min_path;
         min_priority_queue.Dequeue(cur_min_path);
 
+        // 获取cur_min_path的终点索引, 赋给cur_min_path_ending_vertex_index
         int cur_min_path_ending_vertex_index = graph.GetVertexIndex(cur_min_path.ending_vertex);
 
-        for (unsigned int j = 0; j < graph.VertexCount(); j++) {
+        for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点
 
-            // 索引j对应的结点vertex_j
-            TVertex vertex_j;
-            graph.GetVertexByIndex(j, vertex_j);
+            // 获取当前结点cur_vertex
+            TVertex cur_vertex;
+            graph.GetVertexByIndex(i, cur_vertex);
 
-            // 边(cur_min_path_ending_vertex --> vertex_j)的值, 赋给weight
+            // 获取 边(cur_min_path.ending_vertex ---> cur_vertex) (即: 当前最短的路径的终点 ---> 当前遍历结点)
             TWeight weight;
-            bool get_weight_done = graph.GetWeight(cur_min_path.ending_vertex, vertex_j, weight);
-            if (!get_weight_done) { // 如果没有边, continue
-                continue;
+            bool get_weight_done = graph.GetWeight(cur_min_path.ending_vertex, cur_vertex, weight);
+            if (!get_weight_done) {     // if 边(cur_min_path.ending_vertex ---> cur_vertex)不存在
+                continue;               // continue(不做处理)
             }
 
             // --- 松弛操作 ---
 
             // 如果
-            //   边 (starting_vertex  --> cur_min_path_ending_vertex)                的weight
+            //   路径 (starting_vertex  --> cur_min_path_ending_vertex)                的weight
             //    +
-            //   边                      (cur_min_path_ending_vertex  -->  vertex_j) 的weight
+            //   边                      (cur_min_path_ending_vertex  -->  cur_vertex) 的weight
             //    <
-            //   边 (starting_vertex  ---------------------------------->  vertex_j) 的weight
+            //   路径 (starting_vertex  ---------------------------------->  cur_vertex) 的weight
             // 则
-            //   更新distance[j]和predecessor[j]
+            //   更新distance[i]和predecessor[i]
             //   生成new_min_distance_path, 进入最小优先队列
-            if (distance[cur_min_path_ending_vertex_index] + weight < distance[j]) {
-                distance[j] = distance[cur_min_path_ending_vertex_index] + weight;
-                predecessor[j] = cur_min_path_ending_vertex_index;
 
-                Path<TVertex, TWeight> new_min_distance_path(starting_vertex, vertex_j, distance[j]);
+            // if 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值 < 路径(起点 ---> 当前遍历结点)
+            if (distance[cur_min_path_ending_vertex_index] + weight < distance[i]) {
+                // 路径(起点 ---> 当前遍历结点) = 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值
+                distance[i] = distance[cur_min_path_ending_vertex_index] + weight;
+                // 路径(起点 ---> 当前遍历结点), 当前遍历结点的前一结点索引设为cur_min_path_ending_vertex_index
+                predecessor[i] = cur_min_path_ending_vertex_index;
+
+                // 生成路径new_min_distance_path(起点 ---> 当前遍历结点)
+                Path<TVertex, TWeight> new_min_distance_path(starting_vertex, cur_vertex, distance[i]);
+                // 将new_min_distance_path插入min_priority_queue(路径的最小优先队列)
                 min_priority_queue.Enqueue(new_min_distance_path);
             }
         }
@@ -648,7 +672,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  * &emsp; (起点 ---> 索引i结点)的最短路径, 权值(长度)初始化为MaxWeight(), 即初始化为不存在最短路径\n
  * (起点 ---> 起点)的最短路径, 权值(长度)初始化为0\n
  * (起点 ---> 起点)的最短路径, 起点的前一结点索引设为-1\n
- * + **2 动态规划**\n
+ * + **2 动态规划**  &emsp;&emsp;&emsp;<span style="color:#d40000">1层对结点的循环, 1层对边的循环, 故时间复杂度: O(V*E)</span>\n
  * **while loop** 循环VertexCount() - 1次 :\n
  * &emsp; **while loop** 循环每条边 :\n
  * &emsp;&emsp; 取当前边起点, 取当前边终点\n
@@ -868,13 +892,43 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
 
 
 /*!
- * @brief 打印单源最短路径(SSSP)
+ * @brief **打印单源最短路径(SSSP)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param graph 图
  * @param starting_vertex 起点
  * @param distance 最短路径数组, distance[i]表示: 起始结点到索引i结点的最短路径
  * @param predecessor 前一结点数组, predecessor[i]表示: 最短路径中, 索引i结点的前一结点
+ * @note
+ * 打印单源最短路径(SSSP)
+ * --------------------
+ * --------------------
+ *
+ * distance[i]表示: 起始结点到索引i结点的最短路径\n
+ * predecessor[i]表示: 最短路径中, 索引i结点的前一结点\n
+ *
+ * --------------------
+ * 打印一段文本\n
+ * 获取起点索引\n
+ * 声明inverted_predecessors(反向前驱数组), 并分配内存\n
+ * **for loop** 遍历结点索引(当前索引作为路径终点索引) :\n
+ * &emsp; **if** 起点索引 等于 终点索引 :\n
+ * &emsp;&emsp; continue\n
+ * &emsp; 初始化cur_predecessor_index(最短路径当前结点的前驱结点索引)为ending_vertex_index(终点索引)\n
+ * &emsp; 初始化i(inverted_predecessors的数组索引)为0\n
+ * &emsp; **while loop** 当前结点的前驱结点 不等于 起点 :\n
+ * &emsp;&emsp; inverted_predecessors[i]被赋值为当前结点的前驱结点\n
+ * &emsp;&emsp; cur_predecessor_index更新为predecessor[cur_predecessor_index](向前驱方向进行)\n
+ * &emsp;&emsp; i++(填充inverted_predecessors的下一个位置的内容)\n
+ * &emsp;&emsp; 获取当前终点的索引\n
+ * &emsp;&emsp; 打印一段文本\n
+ * &emsp;&emsp; (使用inverted_predecessors数组打印出路径, 对inverted_predecessor数组从后向前, 依次打印)\n
+ * &emsp;&emsp; **while loop** i > 0 :\n
+ * &emsp;&emsp;&emsp; i--\n
+ * &emsp;&emsp;&emsp; 获取inverted_predecessors[i]对应的结点, 赋给cur_vertex\n
+ * &emsp;&emsp;&emsp; 打印cur_vertex\n
+ * &emsp; 打印一段文本\n
+ * 释放inverted_predecessors\n
  */
 template<typename TVertex, typename TWeight>
 void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
@@ -896,13 +950,13 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
         }
 
         // 构造"以索引starting_vertex_idx结点(staring_vertex)为起点, 索引cur_ending_vertex_idx结点为终点"的最短路径
-        int predecessor_vertex_index = (int)ending_vertex_index;
-        int inverted_predecessor_vertex_index = 0; // 最短路径结点倒序索引
+        int cur_predecessor_index = (int)ending_vertex_index;
+        int i = 0; // 最短路径结点倒序索引
 
-        while (predecessor_vertex_index != starting_vertex_index) {
-            inverted_predecessors[inverted_predecessor_vertex_index] = predecessor_vertex_index;
-            predecessor_vertex_index = predecessor[predecessor_vertex_index];
-            inverted_predecessor_vertex_index++;
+        while (cur_predecessor_index != starting_vertex_index) {
+            inverted_predecessors[i] = cur_predecessor_index;
+            cur_predecessor_index = predecessor[cur_predecessor_index];
+            i++;
         }
 
         TVertex ending_vertex;
@@ -912,10 +966,11 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
         cout << starting_vertex << " ";
 
         // 使用inverted_predecessor数组打印出路径, 对inverted_predecessor数组从后向前, 依次打印
-        while (inverted_predecessor_vertex_index > 0) {
-            inverted_predecessor_vertex_index--;
-            graph.GetVertexByIndex(inverted_predecessors[inverted_predecessor_vertex_index], ending_vertex);
-            cout << ending_vertex << " ";
+        while (i > 0) {
+            i--;
+            TVertex cur_vertex;
+            graph.GetVertexByIndex(inverted_predecessors[i], cur_vertex);
+            cout << cur_vertex << " ";
         }
 
         cout << ", ";
@@ -927,39 +982,72 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
 
 
 /*!
- * 递归打印某一个起始点的最短路径(在多源最短路径中)
- * @tparam TVertex 结点模板类型
- * @tparam TWeight 边权值模板类型
- * @param graph 图(引用)
- * @param predecessor 前一结点数组, predecessor[starting_vertex_index][ending_vertex_index]表示: 索引i结点到索引j结点最短路径中, j的前一结点
- * @param starting_vertex_index
- * @param ending_vertex_index
+ * @brief **打印单源最短路径(在多源最短路径中)(递归)**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
+ * @param predecessor 前一结点数组
+ * @param starting_vertex_index 起点索引
+ * @param ending_vertex_index 终点索引
+ * @note
+ * 打印单源最短路径(在多源最短路径中)(递归)
+ * -----------------------------------
+ * -----------------------------------
+ *
+ * <span style="color:#893834">
+ * **Sssp**: Single source shortest path, 单源最短路径\n
+ * **Mssp**: Multiple source shortest path, 单源最短路径\n
+ * **predecessor[i][j]**: 路径(索引i结点 ----> 索引j结点)的最短路径中, 索引j结点的前一结点\n
+ * </span>
+ *
+ * -----------------------------------
+ * + **1 合法性校验**\n
+ * &emsp; **if** predecessor[starting_vertex_index][ending_vertex_index]为-1, 即起点到结点不存在最短路径 :\n
+ * &emsp;&emsp; 打印"没有路径"\n
+ * &emsp;&emsp; 返回false\n
+ * + **2 递归执行**\n
+ * &emsp; **if** 起点索引 不等于 终点索引 :\n
+ * &emsp;&emsp; 对最短路径中的(**起点索引**)starting_vertex_index和
+ * (**终点的前一结点索引**)predecessor[starting_vertex_index][ending_vertex_index], 调用PrintSsspInMsspRecursive\n
+ * &emsp;&emsp; **if** 执行结果失败 :\n
+ * &emsp;&emsp;&emsp; 返回false\n
+ * + **3 打印结点**\n
+ * &emsp; 获取终点\n
+ * &emsp; 打印终点\n
  */
 template<typename TVertex, typename TWeight>
-bool PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
-                                         vector<vector<int> > predecessor,
-                                         int starting_vertex_index,
-                                         int ending_vertex_index)
+bool PrintSsspInMsspRecursive(const Graph<TVertex, TWeight>& graph,
+                              vector<vector<int> > predecessor,
+                              int starting_vertex_index,
+                              int ending_vertex_index)
 {
+    // ---------- 1 合法性校验 ----------
+
+    // if predecessor[starting_vertex_index][ending_vertex_index]为-1, 即起点到结点不存在最短路径
     if (predecessor[starting_vertex_index][ending_vertex_index] == -1) {
-        cout << "没有路径" << endl;
-        return false;
+        cout << "没有路径" << endl;                                         // 打印"没有路径"
+        return false;                                                      // 返回false
     }
 
-    if (starting_vertex_index != ending_vertex_index) {
-        bool res = PrintOneSourceShortestPathRecursive(graph,
+    // ---------- 2 递归执行 ----------
+
+    if (starting_vertex_index != ending_vertex_index) {     // if 起点索引 不等于 终点索引
+        // 对最短路径中的(起点索引)starting_vertex_index和(终点的前一结点索引)predecessor[starting_vertex_index][ending_vertex_index], 调用PrintSsspInMsspRecursive
+        bool res = PrintSsspInMsspRecursive(graph,
                                             predecessor,
                                             starting_vertex_index,
                                             predecessor[starting_vertex_index][ending_vertex_index]);
-        if (!res) {
-            return false;
+        if (!res) {         // if 执行结果失败
+            return false;   // 返回false
         }
     }
 
-    TVertex ending_vertex;
-    graph.GetVertexByIndex(ending_vertex_index, ending_vertex);
+    // ---------- 3 打印结点 ----------
 
-    cout << ending_vertex << " ";
+    TVertex ending_vertex;
+    graph.GetVertexByIndex(ending_vertex_index, ending_vertex);     // 获取终点
+
+    cout << ending_vertex << " ";                                   // 打印终点
 
     return true;
 }
@@ -976,36 +1064,48 @@ bool PrintOneSourceShortestPathRecursive(const Graph<TVertex, TWeight>& graph,
  * 打印多源最短路径(弗洛伊德Floyd等MSSP)
  * ---------------------------------
  * ---------------------------------
+ *
  * 按照不同起始点, 分类打印
+ *
  * ---------------------------------
+ * **for loop** 遍历结点索引i :\n
+ * &emsp; 获取i对应的结点, 作为当前路径起点\n
+ * &emsp; 打印一段文字\n
+ * &emsp; **for loop** 遍历结点索引j :\n
+ * &emsp;&emsp; **if** i等于j(代表起点与终点重合) :\n
+ * &emsp;&emsp;&emsp; continue\n
+ * &emsp;&emsp; 获取j对应的结点, 作为当前路径终点\n
+ * &emsp;&emsp; 打印一段文字\n
+ * &emsp;&emsp; 对i(当前路径起点索引)和j(当前路径终点索引)调用PrintSsspInMsspRecursive\n
+ * &emsp;&emsp; **if** 存在最短路径 :\n
+ * &emsp;&emsp;&emsp; 打印最短路径长度\n
  */
 template<typename TVertex, typename TWeight>
 void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
                                      const vector<vector<TWeight> >& distance,
                                      const vector<vector<int> >& predecessor)
 {
-    for (unsigned int starting_vertex_index = 0; starting_vertex_index < graph.VertexCount(); starting_vertex_index++) {
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {        // for loop 遍历结点索引i
 
-        TVertex starting_vertex;
-        graph.GetVertexByIndex(starting_vertex_index, starting_vertex);
+        TVertex cur_starting_vertex;
+        graph.GetVertexByIndex(i, cur_starting_vertex);             // 获取i对应的结点, 作为当前路径起点
 
-        cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
+        cout << "--- 从起始点(" << cur_starting_vertex << ")到其他各顶点的最短路径 ---" << endl;   // 打印一段文字
 
-        for (unsigned int ending_vertex_index = 0; ending_vertex_index < graph.VertexCount(); ending_vertex_index++) {
-            if (starting_vertex_index == ending_vertex_index) {
+        for (unsigned int j = 0; j < graph.VertexCount(); j++) {    // for loop 遍历结点索引j
+            if (i == j) {   // if i等于j(代表起点与终点重合)
                 continue;
             }
 
             TVertex ending_vertex;
-            graph.GetVertexByIndex(ending_vertex_index, ending_vertex);
+            graph.GetVertexByIndex(j, ending_vertex);   // 获取j对应的结点, 作为当前路径终点
 
-            cout << "起始点(" << starting_vertex << ")到结点(" << ending_vertex << ")的最短路径为: ";
+            cout << "起始点(" << cur_starting_vertex << ")到结点(" << ending_vertex << ")的最短路径为: ";   // 打印一段文字
 
-            bool res = PrintOneSourceShortestPathRecursive(graph, predecessor, starting_vertex_index, ending_vertex_index);
-            if (res) {
-                cout << ", 最短路径长度为: " << distance[starting_vertex_index][ending_vertex_index] << endl;
+            bool res = PrintSsspInMsspRecursive(graph, predecessor, i, j); // 对i(当前路径起点索引)和j(当前路径终点索引)调用PrintSsspInMsspRecursive
+            if (res) {                                                     // if 存在最短路径
+                cout << ", 最短路径长度为: " << distance[i][j] << endl;      // 打印最短路径长度
             }
-
         }
 
         cout<<endl;
