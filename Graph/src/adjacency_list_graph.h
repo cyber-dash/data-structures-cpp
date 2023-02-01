@@ -1114,18 +1114,20 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex&
 
     int vertex_index = this->GetVertexIndex(vertex); // 获取结点在adjacency_list_的数组索引
 
-    if (vertex_index >= 0) {
-        Adjacency<TVertex, TWeight>* adjacency = this->adjacency_list_[vertex_index].first_adjacency;
-        if (adjacency != NULL) {
-            int neighbor_index = adjacency->ending_vertex_index; // 第一个邻接结点的索引
-
-            bool new_neighbor_exists = this->GetVertexByIndex(neighbor_index, first_neighbor);
-
-            return new_neighbor_exists;
-        }
+    if (vertex_index < 0) {
+        return false;
     }
 
-    return false;
+    Adjacency<TVertex, TWeight>* adjacency = this->adjacency_list_[vertex_index].first_adjacency;
+    if (!adjacency) {
+        return false;
+    }
+
+    int neighbor_index = adjacency->ending_vertex_index; // 第一个邻接结点的索引
+
+    bool new_neighbor_exists = this->GetVertexByIndex(neighbor_index, first_neighbor);
+
+    return new_neighbor_exists;
 }
 
 
@@ -1146,30 +1148,32 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& 
                                                                  const TVertex& neighbor_vertex,
                                                                  TVertex& next_neighbor) const
 {
-    // 拿到vertex和neighbor_vertex对应的adjacency_list_数组索引
     int vertex_index = GetVertexIndex(vertex);
     int neighbor_index = GetVertexIndex(neighbor_vertex);
 
-    if (vertex_index >= 0) {
-
-        // 邻接表中, 找到neighbor_vertex的位置
-        Adjacency<TVertex, TWeight>* cur = this->adjacency_list_[vertex_index].first_adjacency;
-
-        while (cur->next != NULL && cur->ending_vertex_index != neighbor_index) {
-            cur = cur->next;
-        }
-
-        // 将下一个位置的结点赋给next_neighbor
-        if (cur != NULL && cur->next != NULL) {
-            int next_neighbor_index = cur->next->ending_vertex_index;
-
-            bool new_neighbor_exists = this->GetVertexByIndex(next_neighbor_index, next_neighbor);
-
-            return new_neighbor_exists;
-        }
+    if (vertex_index < 0) {
+        return false;
     }
 
-    return false;
+    // 邻接表中, 找到neighbor_vertex的位置
+    Adjacency<TVertex, TWeight>* cur = this->adjacency_list_[vertex_index].first_adjacency;
+    if (!cur) {
+        return false;
+    }
+
+    while (cur->next != NULL && cur->ending_vertex_index != neighbor_index) {
+        cur = cur->next;
+    }
+
+    if (!cur || !cur->next) {
+        return false;
+    }
+
+    int next_neighbor_index = cur->next->ending_vertex_index;
+
+    bool new_neighbor_exists = this->GetVertexByIndex(next_neighbor_index, next_neighbor);
+
+    return new_neighbor_exists;
 }
 
 
