@@ -23,19 +23,6 @@ DisjointSet::DisjointSet(int size) {
 
 
 /*!
- * @brief 重载=
- * @param disjoint_set 源并查集
- * @return 赋值后的并查集
- * @note
- *  todo: 未实现
- */
-DisjointSet& DisjointSet::operator=(const DisjointSet& disjoint_set) {
-
-  return *this;
-}
-
-
-/*!
  * @brief 查找(非递归)
  * @param index 数组索引
  * @return 根节点

@@ -197,7 +197,7 @@ void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * &emsp;&emsp; 返回0\n
  * - **2 声明visited_vertex_set(已访问结点集合)**\n
  * - **3 遍历结点, 使用DFS划分联通分量**\n
- * &emsp; 初始化连通分量数量为1
+ * &emsp; 初始化连通分量数量为1\n
  * &emsp; **for loop** 遍历结点索引 :\n
  * &emsp;&emsp; 获取i(当前索引)对应的结点vertex\n
  * &emsp;&emsp; **if** 在visited_vertex_set中(则已经在某连通分量中) :\n
@@ -822,8 +822,8 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
  * **for loop** 遍历start(起点) :\n
  * &emsp; **for loop** 遍历end(终点) :\n
  * &emsp;&emsp; **if** start等于end :\n
- * &emsp;&emsp;&emsp; 路径(start ---> start)长度初始化\n
- * &emsp;&emsp;&emsp; 路径(start ---> start), start的前一结点为start\n
+ * &emsp;&emsp;&emsp; 路径(start ---> end)长度初始化\n
+ * &emsp;&emsp;&emsp; 路径(start ---> end), start的前一结点为start\n
  * &emsp;&emsp; **else** (start不等于end):\n
  * &emsp;&emsp;&emsp; 获取边(start ---> end)的权值(长度)\n
  * &emsp;&emsp;&emsp; **if** 存在边 :\n
@@ -839,27 +839,28 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp;&emsp; (松弛)\n
  * &emsp;&emsp;&emsp; **if** 路径(start ---> intermediate) + 路径(intermediate ---> end) < 路径(start ---> end) :\n
  * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end) <= 路径(start ---> intermediate) + 路径(intermediate ---> end)\n
- * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)终点的前一结点 <= 路径(intermediate ---> end)终点的前一结点\n
+ * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)终点的前一结点, 修改为路径(intermediate ---> end)终点的前一结点\n
  */
 template<typename TVertex, typename TWeight>
 void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& distance, vector<vector<int> >& predecessor) {
 
     // ---------- 1 使用图的信息填充distance和predecessor数组 ----------
-    for (unsigned int start = 0; start < graph.VertexCount(); start++) {
-        for (unsigned int end = 0; end < graph.VertexCount(); end++) {
 
-            if (start == end) {
-                distance[start][end] = TWeight();
-                predecessor[start][end] = (int)start;
-            } else {
+    for (unsigned int start = 0; start < graph.VertexCount(); start++) {    // for loop 遍历start(起点)
+        for (unsigned int end = 0; end < graph.VertexCount(); end++) {      // for loop 遍历end(终点)
+
+            if (start == end) {     // if start等于end
+                distance[start][end] = TWeight();               // 路径(start ---> start)长度初始化
+                predecessor[start][end] = (int)start;           // 路径(start ---> end), start的前一结点为start
+            } else {                // else (start不等于end)
                 TWeight weight;
-                bool res = graph.GetWeightByVertexIndex(start, end, weight);
-                if (res) {
-                    distance[start][end] = weight;
-                    predecessor[start][end] = (int)start;
-                } else {
-                    distance[start][end] = graph.MaxWeight();
-                    predecessor[start][end] = -1;
+                bool res = graph.GetWeightByVertexIndex(start, end, weight);    // 获取边(start ---> end)的权值(长度)
+                if (res) {                                      // if 存在边
+                    distance[start][end] = weight;              // 路径(start ---> end)的长度为边权值
+                    predecessor[start][end] = (int)start;       // 路径(start ---> end), end的前一结点为start
+                } else {                                        // else (不存在边)
+                    distance[start][end] = graph.MaxWeight();   // 路径(start ---> end)的长度为边权值上限
+                    predecessor[start][end] = -1;               // 路径(start ---> end), end的前一结点不存在(predecessor[start][end]设为-1)
                 }
             }
         }
@@ -867,9 +868,9 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
 
     // ---------- 2 动态规划 ----------
 
-    for (unsigned int intermediate = 0; intermediate < graph.VertexCount(); intermediate++) {
-        for (unsigned int start = 0; start < graph.VertexCount(); start++) {
-            for (unsigned int end = 0; end < graph.VertexCount(); end++) {
+    for (unsigned int intermediate = 0; intermediate < graph.VertexCount(); intermediate++) {   // for loop 遍历intermediate(中间点)
+        for (unsigned int start = 0; start < graph.VertexCount(); start++) {                    // for loop 遍历起点
+            for (unsigned int end = 0; end < graph.VertexCount(); end++) {                      // for loop 遍历终点
 
                 // --- 松弛操作 ---
 
@@ -881,8 +882,13 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
                 //     边 (start  -------------------->  end) 的weight
                 // 则
                 //     更新distance[start][end] 和 predecessor[start][end]
+
+                // (松弛)
+                // if 路径(start ---> intermediate) + 路径(intermediate ---> end) < 路径(start ---> end)
                 if (distance[start][intermediate] + distance[intermediate][end] < distance[start][end]) {
+                    // 路径(start ---> end) <= 路径(start ---> intermediate) + 路径(intermediate ---> end)
                     distance[start][end] = distance[start][intermediate] + distance[intermediate][end];
+                    // 路径(start ---> end)终点的前一结点, 修改为路径(intermediate ---> end)终点的前一结点
                     predecessor[start][end] = predecessor[intermediate][end];
                 }
             }
