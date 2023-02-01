@@ -11,7 +11,7 @@
 #include <queue>
 #include <vector>
 #include "graph_algorithm.h"
-#include "priority_queue.h"
+#include "min_priority_queue.h"
 #include "disjoint_set.h"
 
 

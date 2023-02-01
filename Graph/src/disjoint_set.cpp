@@ -77,9 +77,19 @@ void DisjointSet::WeightedUnion(int node1, int node2) {
 
 
 /*!
- * @brief 查找(对原书进行优化)
- * @param node1
- * @param node2
+ * @brief **合并**
+ * @param node1 结点1
+ * @param node2 结点2
+ * @note
+ * 合并
+ * ----
+ * ----
+ *
+ * ----
+ * + **1 获取根结点**\n
+ * &emsp; 获取node1的根结点root1\n
+ * &emsp; 获取node2的根结点root2\n
+ * + **2 判断是否已在同一集合**\n
  */
 void DisjointSet::Union(int node1, int node2) {
   int root1 = Find(node1);

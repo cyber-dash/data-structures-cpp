@@ -19,29 +19,35 @@
 class DisjointSet {
 
 public:
-  // 构造函数
-  explicit DisjointSet(int size);
+    // 构造函数
+    explicit DisjointSet(int size);
 
-  /*! @brief 析构函数 */
-  ~DisjointSet() { delete[] parent_; }
+    /*!
+     * @brief **析构函数**
+     * @note
+     * 析构函数
+     * -------
+     * -------
+     *
+     * -------
+     * 释放parent_
+     */
+    ~DisjointSet() { delete[] parent_; }
 
-  // 合并两个集合
-  void Union(int root1, int root2);
+    // 合并
+    void Union(int node1, int node2);
 
-  // 重载=
-  DisjointSet& operator=(const DisjointSet& disjoint_set);
+    // 查找
+    int Find(int index);
 
-  // 查找
-  int Find(int index);
+    // 合并集合(Weighted)
+    void WeightedUnion(int node1, int node2);
 
-  // 合并集合(Weighted)
-  void WeightedUnion(int node1, int node2);
-
-  // 查找(非递归)
-  int FindNonRecursive(int index);
+    // 查找(非递归)
+    int FindNonRecursive(int index);
 private:
-  int size_; //!< 大小
-  int* parent_; //!< 父节点数组
+    int size_;     //!< 大小
+    int* parent_;  //!< 父节点数组
 };
 
 

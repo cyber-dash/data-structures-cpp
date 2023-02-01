@@ -7,7 +7,7 @@
  */
 
 #include "test.h"
-#include "priority_queue.h"
+#include "min_priority_queue.h"
 #include "graph_algorithm.h"
 #include "graph_algorithm.cpp"
 

@@ -773,7 +773,6 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
     this->adjacency_list_[vertex_index].Clear();
 
     // ----- 2.3 索引vertex_count_ - 1对应结点的结点代替已删除的结点 -----
-
     // 使用索引vertex_count_ - 1的结点邻接项, 替换索引vertex_index的结点邻接项
     this->adjacency_list_[vertex_index].starting_vertex = this->adjacency_list_[this->vertex_count_ - 1].starting_vertex;
     this->adjacency_list_[vertex_index].first_adjacency = this->adjacency_list_[this->vertex_count_ - 1].first_adjacency;

@@ -17,7 +17,7 @@ add_executable(main
         src/test.h
         src/test.cpp
         src/main.cpp
-        src/priority_queue.h
+        src/min_priority_queue.h
 )
 
 if (MSVC)
