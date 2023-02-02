@@ -638,15 +638,38 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_ver
 
 /*!
  * @brief **获取边权值(by结点索引)**
- * @tparam TVertex
- * @tparam TWeight
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param starting_vertex_index 起点索引
+ * @param ending_vertex_index 终点索引
+ * @param weight 边权值保存变量
+ * @return 执行结果
+ * @note
+ * 获取边权值(by结点索引)
+ * --------------------
+ * --------------------
+ *
+ * --------------------
+ * - **1** 判断合法性\n
+ * **if** 起点索引 < 0 <b>||</b> 终点索引 < 0 <b>||</b> 起点索引等于终点索引 <b>||</b> 起点索引 >= 结点数
+ * <b>||</b> 终点索引 >= 结点数 :\n
+ * &emsp; 返回false\n
+ * - **2** 获取边权值\n
+ * 初始化指针cur, 指向adjacency_list_<b>[</b>starting_vertex_index<b>]</b>.first_adjacency\n
+ * **while loop** cur不为NULL <b>&&</b> cur的终点结点索引不等于终点索引 :\n
+ * &emsp; cur指向cur->next\n
+ * **if** cur不为NULL :\n
+ * &emsp; cur->weight赋给weight(获取到对应边权值)\n
+ * &emsp; 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_index,
                                                                   int ending_vertex_index,
                                                                   TWeight& weight) const
 {
-    if (starting_vertex_index < 0 || ending_vertex_index < 0) {
+    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
+        starting_vertex_index >= this->vertex_count_ || ending_vertex_index >= this->vertex_count_)
+    {
         return false;
     }
 
@@ -675,19 +698,28 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_v
  * -------
  *
  * -------
+ * + **1 合法性检查**\n
+ * &emsp; **if** 当前图结点数 >= 结点数上限 :\n
+ * &emsp;&emsp; 返回false\n
+ * + **2 执行插入**\n
+ * &emsp; 邻接表索引vertex_count_元素的start_vertex设置为vertex\n
+ * &emsp; vertex_count_加1\n
+ * &emsp; vertices插入vertex\n
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
 
-    // 如果已有节点数大于限制, 则不执行插入, 返回失败
-    if (this->vertex_count_ >= this->max_vertex_count_) {
-        return false;
+    // ---------- 1 合法性检查 ----------
+
+    if (this->vertex_count_ >= this->max_vertex_count_) {   // if 当前图结点数 >= 结点数上限
+        return false;                                       // 返回false
     }
 
-    this->adjacency_list_[this->vertex_count_].starting_vertex = vertex; // vertex_table_增加结点数据
-    this->vertex_count_++; // 结点数增加
+    // ---------- 2 执行插入 ----------
 
-    this->vertices_.push_back(vertex);
+    this->adjacency_list_[this->vertex_count_].starting_vertex = vertex;    // 邻接表索引vertex_count_元素的start_vertex设置为vertex
+    this->vertex_count_++;                                  // vertex_count_加1
+    this->vertices_.push_back(vertex);                      // vertices插入vertex
 
     return true;
 }
@@ -994,7 +1026,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
 
-    /// ---------- 1 合法性检查 ----------
+    // ---------- 1 合法性检查 ----------
     // 1.1 检查结点
     // 起点/结点, 如果有一个不存在, 则返回false
     int starting_vertex_index = this->GetVertexIndex(starting_vertex);

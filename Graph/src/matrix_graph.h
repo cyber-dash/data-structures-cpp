@@ -560,10 +560,11 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
  *
  * -------------------
  * - **1** 判断合法性\n
- * **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :\n
+ * **if** 起点索引 < 0 <b>||</b> 终点索引 < 0 <b>||</b> 起点索引等于终点索引 <b>||</b> 起点索引 >= 结点数
+ * <b>||</b> 终点索引 >= 结点数 <b>||</b> 邻接矩阵内对应元素为初始值 :\n
  * &emsp; 返回false\n
  * - **2** 获取边权值\n
- * adjacency_matrix_[starting_vertex_index][ending_vertex_index]赋给参数weight\n
+ * adjacency_matrix_<b>[</b>starting_vertex_index<b>][</b>ending_vertex_index<b>]</b>赋给参数weight\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_index,
@@ -572,8 +573,9 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
 {
     // ---------- 1 判断合法性 ----------
 
-    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值
+    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 起点索引 >= 结点数 || 终点索引 >= 结点数 || 邻接矩阵内对应元素为初始值
     if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
+        starting_vertex_index >= this->vertex_count_ || ending_vertex_index >= this->vertex_count_ ||
         adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
     {
         return false;   // 返回false
