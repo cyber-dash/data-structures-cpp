@@ -363,7 +363,7 @@ public:
 protected:
     int max_vertex_count_{};    //!< 图结点数量上限
     TWeight max_weight_;        //!< 边权值上限
-    int edge_count_{};          //!< 边数量(只表达存在, 不表达方向)
+    int edge_count_{};          //!< 边数量
     int vertex_count_{};        //!< 结点数量
     int type_{};                //!< 1: 有向, 2: 无向
 
