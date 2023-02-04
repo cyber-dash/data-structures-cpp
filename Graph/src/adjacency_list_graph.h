@@ -1133,11 +1133,21 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
  * @param first_neighbor 第一个相邻结点保存变量
  * @param vertex 当前结点
  * @return 执行结果
+ * @note
  * 获取第一个相邻结点
  * ---------------
  * ---------------
  *
  * ---------------
+ * + **1 合法性判断**\n
+ * &emsp; 获取结点索引(结点在adjacency_list_数组中的位置)\n
+ * &emsp; **if** 索引 < 0 :\n
+ * &emsp;&emsp; 返回false\n
+ * &emsp; 获取结点的第一个邻接项\n
+ * &emsp; **if** 第一个邻接项为NULL :\n
+ * &emsp;&emsp; 返货false\n
+ * + **2 获取结点**\n
+ * &emsp; 第一个邻接项的ending_vertex赋给first_neighbor\n
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex,
@@ -1145,7 +1155,6 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex&
 {
 
     int vertex_index = this->GetVertexIndex(vertex); // 获取结点在adjacency_list_的数组索引
-
     if (vertex_index < 0) {
         return false;
     }
@@ -1155,11 +1164,14 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex&
         return false;
     }
 
-    int neighbor_index = adjacency->ending_vertex_index; // 第一个邻接结点的索引
+    // (保留)如果邻接项只保存了结点索引, 使用这3行的方式
+    // int neighbor_index = adjacency->ending_vertex_index; // 第一个邻接结点的索引
+    // bool new_neighbor_exists = this->GetVertexByIndex(neighbor_index, first_neighbor);
+    // return new_neighbor_exists;
 
-    bool new_neighbor_exists = this->GetVertexByIndex(neighbor_index, first_neighbor);
+    first_neighbor = adjacency->ending_vertex;
 
-    return new_neighbor_exists;
+    return true;
 }
 
 
@@ -1169,11 +1181,25 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex&
  * @param vertex 当前结点
  * @param neighbor_vertex 当前相邻结点
  * @return 执行结果
+ * @note
  * 获取下一个相邻结点
  * ---------------
  * ---------------
  *
  * ---------------
+ * + **1 合法性判断**\n
+ * &emsp; 获取结点索引(结点在adjacency_list_数组中的位置)\n
+ * &emsp; **if** 索引 < 0 :\n
+ * &emsp;&emsp; 返回false\n
+ * &emsp; 获取结点的第一个邻接项\n
+ * &emsp; **if** 第一个邻接项为NULL :\n
+ * &emsp;&emsp; 返货false\n
+ * &emsp;**while loop** cur->next存在 <b>&&</b> cur->ending_vertex_index不等于neighbor_index :\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * &emsp; **if** cur为NULL || cur->next为NULL :\n
+ * &emsp;&emsp; 返回false\n
+ * + **2 获取结点**\n
+ * &emsp; cur->next->ending_vertex赋给next_neighbor(下一相邻结点)\n
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
@@ -1182,7 +1208,6 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& 
 {
     int vertex_index = GetVertexIndex(vertex);
     int neighbor_index = GetVertexIndex(neighbor_vertex);
-
     if (vertex_index < 0) {
         return false;
     }
@@ -1201,11 +1226,14 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& 
         return false;
     }
 
-    int next_neighbor_index = cur->next->ending_vertex_index;
+    // (保留)如果邻接项只保存了结点索引, 使用这3行的方式
+    // int next_neighbor_index = cur->next->ending_vertex_index;
+    // bool new_neighbor_exists = this->GetVertexByIndex(next_neighbor_index, next_neighbor);
+    // return new_neighbor_exists;
 
-    bool new_neighbor_exists = this->GetVertexByIndex(next_neighbor_index, next_neighbor);
+    next_neighbor = cur->next->ending_vertex;
 
-    return new_neighbor_exists;
+    return true;
 }
 
 
