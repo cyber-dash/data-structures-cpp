@@ -70,7 +70,7 @@ public:
      * ---
      *
      * ---
-     * 执行min_heap_.Pop
+     * 执行min_heap_.Pop()
      */
     bool Dequeue(TElement& item) { return min_heap_.Pop(item); }
 
