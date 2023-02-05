@@ -460,7 +460,7 @@ public:
     friend ostream& operator<< <>(ostream& out, AdjacencyListGraph<TVertex, TWeight>& graph_adjacency_list);
 
 private:
-    VertexAdjacencies<TVertex, TWeight>* adjacency_list_; //!< 邻接表
+    VertexAdjacencies<TVertex, TWeight>* adjacency_list_;    //!< 邻接表
 };
 
 
@@ -674,33 +674,43 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type,
                                                          const vector<Edge<TVertex, TWeight> >& edges,
                                                          const vector<TVertex>& vertices)
 {
+    // ---------- 1 设置部分成员变量 ----------
+
     if (max_vertex_count < vertices.size()) {
         throw length_error("vertices size wrong");
     }
 
+    // type_(图类型), max_vertex_count_(结点数上限)和max_weight_(边权值上限)使用参数赋值
     this->type_ = type;
     this->max_vertex_count_ = max_vertex_count;
     this->max_weight_ = max_weight;
 
+    // vertex_count_(结点数量)和edge_count_(边数量)设为0
     this->vertex_count_ = 0;
     this->edge_count_ = 0;
 
-    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];
-    if (!this->adjacency_list_) {
-        throw bad_alloc();
+    // ---------- 2 设置邻接表 ----------
+
+    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];   // 分配邻接矩阵行内存
+    if (!this->adjacency_list_) {   // if 内存分配失败
+        throw bad_alloc();          // 抛出bad_alloc()错误
     }
 
-    for (unsigned int i = 0; i < vertices.size(); i++) {
+    // ---------- 3 插入结点和边 ----------
+
+    // ----- 3.1 使用vertices插入结点 -----
+    for (unsigned int i = 0; i < vertices.size(); i++) {            // for loop 遍历vertices
         TVertex vertex = vertices[i];
-        this->InsertVertex(vertex);
+        this->InsertVertex(vertex);                                 // 调用InsertVertex, 插入当前节点vertices[i]
     }
 
-    for (unsigned int i = 0; i < edges.size(); i++) {
+    // ----- 3.2 使用edges插入边 -----
+    for (unsigned int i = 0; i < edges.size(); i++) {               // for loop 遍历vertices
         TVertex starting_vertex = edges[i].starting_vertex;
         TVertex ending_vertex = edges[i].ending_vertex;
         TWeight weight = edges[i].weight;
 
-        this->InsertEdge(starting_vertex, ending_vertex, weight);
+        this->InsertEdge(starting_vertex, ending_vertex, weight);   // 调用InsertEdge, 插入当前边edges[i]
     }
 }
 
@@ -1277,13 +1287,13 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
  *  &emsp; **for** 遍历边vector :\n
  *  &emsp;&emsp; **if** 当前边的起点等于参数起点 <b>&&</b> 当前边的终点等于参数终点 :\n
  *  &emsp;&emsp;&emsp; i<b>(当前边索引)</b>赋给remove_edge_index\n
- *  &emsp;&emsp;&emsp; 推出循环\n
+ *  &emsp;&emsp;&emsp; 退出循环\n
  *  **else if** 无向图 :\n
  *  &emsp; **for loop** 遍历边vector :\n
  *  &emsp;&emsp; **if** <b>(</b>当前边的起点等于参数起点 <b>&&</b> 当前边的终点等于参数终点<b>)</b> <b>||</b>
  *  <b>(</b>当前边的起点等于参数终点 <b>&&</b> 当前边的终点等于参数起点<b>)</b> :\n
  *  &emsp;&emsp;&emsp; i<b>(当前边索引)</b>赋给remove_edge_index\n
- *  &emsp;&emsp;&emsp; 推出循环\n
+ *  &emsp;&emsp;&emsp; 退出循环\n
  *  **if** remove_edge_index等于-1(edges_内无次边) :\n
  *  &emsp; 返回false\n
  *  - **1.3 检查邻接表**\n
@@ -1320,87 +1330,95 @@ template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
 
     // ---------- 1 合法性检查 ----------
-    // 1.1 检查结点
-    // 起点/结点, 如果有一个不存在, 则返回false
-    int starting_vertex_index = this->GetVertexIndex(starting_vertex);
+
+    // ----- 1.1 检查结点 -----
+    int starting_vertex_index = this->GetVertexIndex(starting_vertex);  // 获取起点索引和终点索引
     int ending_vertex_index = this->GetVertexIndex(ending_vertex);
-    if (starting_vertex_index < 0 || ending_vertex_index < 0) {
-        return false;
+    if (starting_vertex_index < 0 || ending_vertex_index < 0) {         // if 起点索引 < 0 <b>||</b> 终点索引 < 0
+        return false;                                                   // 返回false
     }
 
-    // 1.2 检查边
-    // 遍历edges_, 检查是否能找到待删除边
-    int remove_edge_index = -1;
-    if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {
-        for (unsigned int i = 0; i < this->edges_.size(); i++) {
+    // ----- 1.2 检查边vector -----
+    int remove_edge_index = -1;     // 初始化remove_edge_index(待删除边索引)为-1
+    if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {             // if 有向图
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {        // for 遍历边vector
+            // if 当前边的起点等于参数起点 && 当前边的终点等于参数终点
             if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
-                remove_edge_index = (int)i;
-                break;
+                remove_edge_index = (int)i;     // i(当前边索引)赋给remove_edge_index
+                break;                          // 退出循环
             }
         }
-    } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        for (unsigned int i = 0; i < this->edges_.size(); i++) {
+    } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {    // else if 无向图
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {        // for loop 遍历边vector
+            // if (当前边的起点等于参数起点 && 当前边的终点等于参数终点) || (当前边的起点等于参数终点 && 当前边的终点等于参数起点)
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
                 (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex))
             {
-                remove_edge_index = (int)i;
-                break;
+                remove_edge_index = (int)i;     // i(当前边索引)赋给remove_edge_index
+                break;                          // 退出循环
             }
         }
     }
 
-    if (remove_edge_index == -1) {    // edges_无此边,
-        return false;
+    if (remove_edge_index == -1) {  // if remove_edge_index等于-1(edges_内无次边)
+        return false;               // 返回false
     }
 
-    // 1.3 检查邻接表
-    // 待删除邻接元素, 初始化指向starting_vertex的第一个邻接元素
+    // ----- 1.3 检查邻接表 -----
+    // 初始化待删除邻接项temp = NULL
     Adjacency<TVertex, TWeight>* temp = this->adjacency_list_[starting_vertex_index].first_adjacency;
-    // 待删除邻接元素的前一元素
+    // 初始化待删除邻接项的前一邻接项(前驱)prior = NULL
     Adjacency<TVertex, TWeight>* prior = NULL;
 
+    // 初始化反向边待删除邻接项reverse_temp = NULL, 用于无向图
     Adjacency<TVertex, TWeight>* reverse_edge_temp = NULL;
+    // 初始化反向边待删除邻接项的前一邻接项(前驱)reverse_prior = NULL, 用于无向图
     Adjacency<TVertex, TWeight>* reverse_edge_prior = NULL;
 
-    // 如果邻接表没有待删除边(starting_vertex ---> ending_vertex), 返回false
+    // 在starting_vertex_index所在的节点邻接项中, 查找temp和prior
     bool res = this->adjacency_list_[starting_vertex_index].FindAdjacencyAndPriorByIndex(ending_vertex_index, temp, prior);
-    if (!res || temp == NULL) {
-        return false;
+    if (!res || temp == NULL) {     // if 执行失败 || 未找到待删除邻接项
+        return false;               // 返回false
     }
 
-    // 有向图/网, 如果邻接表没有待删除边(ending_vertex ---> starting_vertex), 返回false
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // if 无向图
+        // 在ending_vertex_index所在的节点邻接项中, 查找reverse_temp和reverse_prior
         res = this->adjacency_list_[ending_vertex_index].FindAdjacencyAndPriorByIndex(starting_vertex_index,
                                                                                       reverse_edge_temp,
                                                                                       reverse_edge_prior);
-        if (!res || reverse_edge_temp == NULL) {
-            return false;
+        if (!res || reverse_edge_temp == NULL) {    // if 执行失败 || 未找到待删除邻接项
+            return false;                           // 返回false
         }
     }
 
     // ---------- 2 在edges和邻接表做删除 ----------
 
     // ----- 2.1 边(starting_vertex --> ending_vertex)做删除 -----
-    if (this->adjacency_list_[starting_vertex_index].first_adjacency == temp) { // 如果第一个邻接结点所对应的边就是待删除边
+    // if temp指向starting_vertex_index所在的节点邻接项的首个邻接项(不存在前驱)
+    if (this->adjacency_list_[starting_vertex_index].first_adjacency == temp) {
+        // starting_vertex_index所在的节点邻接项的first_adjacency指向temp->next
         this->adjacency_list_[starting_vertex_index].first_adjacency = temp->next;
-    } else { // 第一个邻接结点对应的边不是待删除边
-        prior->next = temp->next;
+    } else {    // else (存在前驱)
+        prior->next = temp->next;   // prior->next指向temp->next
     }
 
-    delete temp;
+    delete temp;    // 释放temp
     temp = NULL;
 
-    this->edges_.erase(this->edges_.begin() + remove_edge_index);
+    this->edges_.erase(this->edges_.begin() + remove_edge_index);   // edges_中删除remove_edge_index对应的元素
 
     // ----- 2.2 如果是无向图, 边(ending_vertex --> starting_vertex)做删除 -----
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) { // 无向图
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // if 无向图
+        // if reverse_temp指向ending_vertex_index所在的节点邻接项的首个邻接项(不存在前驱)
         if (this->adjacency_list_[ending_vertex_index].first_adjacency == reverse_edge_temp) {
+            // ending_vertex_index所在的节点邻接项的first_adjacency指向reverse_temp->next
             this->adjacency_list_[ending_vertex_index].first_adjacency = reverse_edge_temp->next;
-        } else {
+        } else {    // else (存在前驱)
+            // reverse_prior->next指向reverse_temp->next
             reverse_edge_prior->next = reverse_edge_temp->next;
         }
 
-        delete reverse_edge_temp;
+        delete reverse_edge_temp;   // 释放reverse_temp
         reverse_edge_temp = NULL;
     }
 
@@ -1590,37 +1608,45 @@ istream& operator>>(istream& in, AdjacencyListGraph<TVertex, TWeight>& adjacency
 template<typename TVertex, typename TWeight>
 ostream& operator<<(ostream& out, AdjacencyListGraph<TVertex, TWeight>& graph) {
 
-    out << "--- 基本信息 ---" << endl;
-    out << "结点数量: " << graph.VertexCount() << endl;
+    // ---------- 1 打印基本信息 ----------
 
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
+    // ----- 1.1 打印结点信息 -----
+    out << "--- 基本信息 ---" << endl;
+    out << "结点数量: " << graph.VertexCount() << endl;          // 打印文本
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点索引
         TVertex cur_vertex;
-        graph.GetVertexByIndex(i, cur_vertex);
-        out << cur_vertex << " ";
+        graph.GetVertexByIndex(i, cur_vertex);                  // 获取当前结点
+        out << cur_vertex << " ";                               // 打印当前结点
     }
     cout << endl << endl;
-    out << "边数量: " << graph.EdgeCount() << endl;
 
-    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {
-        Edge<TVertex, TWeight> cur_edge = graph.GetEdge(i);
+    // ----- 1.2 打印边信息 -----
+    out << "边数量: " << graph.EdgeCount() << endl;              // 打印文本
+    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {      // for loop 遍历边索引
+        Edge<TVertex, TWeight> cur_edge = graph.GetEdge(i);     // 获取当前边
+        // 打印当前边
         out << "(" << cur_edge.starting_vertex << ", " << cur_edge.ending_vertex << "), 权重: " << cur_edge.weight << endl;
     }
     cout << endl;
 
+    // ---------- 2 打印邻接表信息 ----------
+
     out << "--- 邻接表信息 ---" << endl;
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
+
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点索引
         TVertex cur_vertex;
-        graph.GetVertexByIndex(i, cur_vertex);
+        graph.GetVertexByIndex(i, cur_vertex);                  // 获取i(当前索引)对应的结点cur_vertex
 
-        out << cur_vertex << "的邻接结点: ";
+        out << cur_vertex << "的邻接结点: ";                     // 打印一条文本
 
+        // 声明遍历指针cur_vertex_adjacency, 指向结点cur_vertex的首个邻接项
         Adjacency<TVertex, TWeight>* cur_vertex_adjacency = graph.adjacency_list_[i].first_adjacency;
-        while (cur_vertex_adjacency) {
-            out << cur_vertex_adjacency->ending_vertex;
-            if (cur_vertex_adjacency->next) {
-                out << "-->";
+        while (cur_vertex_adjacency) {                          // while loop cur_vertex_adjacency不为NULL
+            out << cur_vertex_adjacency->ending_vertex;         // 打印当前邻接项的终点
+            if (cur_vertex_adjacency->next) {                   // if 当前邻接项的next不为NULL(不是最后一项)
+                out << "-->";                                   // 打印"--->"
             }
-            cur_vertex_adjacency = cur_vertex_adjacency->next;
+            cur_vertex_adjacency = cur_vertex_adjacency->next;  // cur_vertex_adjacency指向next
         }
 
         out << endl;
@@ -1647,13 +1673,13 @@ ostream& operator<<(ostream& out, AdjacencyListGraph<TVertex, TWeight>& graph) {
  */
 template<typename TVertex, typename TWeight>
 int AdjacencyListGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
-    for (int i = 0; i < this->vertex_count_; i++) {
-        if (this->adjacency_list_[i].starting_vertex == vertex) {
-            return i;
+    for (int i = 0; i < this->vertex_count_; i++) {                 // for loop 遍历邻接表
+        if (this->adjacency_list_[i].starting_vertex == vertex) {   // if 当前结点邻接项的starting_vertex等于vertex
+            return i;                                               // 返回i
         }
     }
 
-    return -1;
+    return -1;  // 返回-1(此时没有找到对应结点)
 }
 
 
