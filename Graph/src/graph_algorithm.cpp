@@ -412,6 +412,7 @@ template<typename TVertex, typename TWeight>
 bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree) {
 
     // ---------- 1 设置起点 ----------
+
     TVertex starting_vertex;
     bool res = graph.GetVertexByIndex(0, starting_vertex);  // 获取索引0结点, 作为起点
     if (!res) {         // if 获取失败
@@ -419,12 +420,14 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
     }
 
     // ---------- 2 初始化最小生成树结点集合和边的最小优先队列 ----------
+
     set<TVertex> mst_vertex_set;                                    // 声明mst_vertex_set(最小生成树结点集合)
     mst_vertex_set.insert(starting_vertex);                         // 起点插入集合
 
     MinPriorityQueue<Edge<TVertex, TWeight> > min_priority_queue;   // 声明min_priority_queue(边的最小优先队列)
 
     // ---------- 3 贪心 ----------
+
     while (mst_vertex_set.size() < graph.VertexCount()) {       // while loop 最小生成树结点集合的结点数 < 图结点数(最小生成树未完成)
 
         if (min_priority_queue.Size() != 0) {                   // if 最小优先队列不为空

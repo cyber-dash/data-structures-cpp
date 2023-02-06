@@ -20,6 +20,11 @@
 using namespace std;
 
 
+/*!
+ * @brief 最小生成树模板类
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ */
 template<typename TVertex, typename TWeight>
 class MinimumSpanTree {
 public:
@@ -33,17 +38,20 @@ public:
      * -------
      *
      * -------
+     * mst_edges_分配内存\n
+     * **if** 内存分配失败 :\n
+     * &emsp; 抛出bad_alloc()\n
      */
     explicit MinimumSpanTree(int max_size): max_size_(max_size), size_(0) {
-        this->mst_edges_ = new Edge<TVertex, TWeight>[max_size];
-        if (!this->mst_edges_) {
-            throw bad_alloc();
+        this->mst_edges_ = new Edge<TVertex, TWeight>[max_size];    // mst_edges_分配内存
+        if (!this->mst_edges_) {                                    // if 内存分配失败
+            throw bad_alloc();                                      // 抛出bad_alloc()
         }
     }
 
     /*!
      * @brief **插入边**
-     * @param mst_edge 最小生成树边
+     * @param edge 边
      * @return 当前最小生成树边的数量
      * @note
      * 插入边
@@ -51,25 +59,49 @@ public:
      * -----
      *
      * -----
+     * + **1 合法性判断**\n
+     * **if** 当前边数量 >= 最大边数量 :\n
+     * &emsp; 返回-1\n
+     * + **2 执行插入**\n
+     * &emsp; 插入到最后一项\n
+     * &emsp; size_加1\n
      */
-    int Insert(Edge<TVertex, TWeight>& mst_edge) {
-        if (size_ >= max_size_) {
-            return -1;
+    int Insert(Edge<TVertex, TWeight>& edge) {
+        // ---------- 1 合法性判断 ----------
+
+        if (size_ >= max_size_) {   // if 当前边数量 >= 最大边数量 :
+            return -1;              // 返回-1
         }
 
-        mst_edges_[size_] = mst_edge;
-        size_++;
+        // ---------- 2 执行插入 ----------
+
+        mst_edges_[size_] = edge;   // 插入到最后一项
+        size_++;                    // size_加1
 
         return size_ - 1;
     }
 
-    /*! @brief 显示最小生成树 */
+    /*!@brief 显示最小生成树
+     * @note
+     * 显示最小生成树
+     * -------------
+     * -------------
+     *
+     * -------------
+     * 初始化total_weight(总权值)
+     * **for loop** 遍历最小生成树 :\n
+     * &emsp; 获取当前边权值\n
+     * &emsp; 打印当前边信息\n
+     * 打一段文本\n
+     * */
     void Print() {
+        // 初始化total_weight(总权值)
         TWeight total_weight = 0; // 总权值
-        for (int i = 0; i < this->size_; i++) {
+        for (int i = 0; i < this->size_; i++) {             // for loop 遍历最小生成树
             total_weight += this->mst_edges_[i].weight;
-            cout << "starting_vertex: " << this->mst_edges_[i].starting_vertex
-                 << ", ending_vertex: " << mst_edges_[i].ending_vertex
+            cout << "starting_vertex: " << this->mst_edges_[i].starting_vertex  // 获取当前边权值\n
+                                        // 打一段文本\n
+                 << ", ending_vertex: " << mst_edges_[i].ending_vertex          // 打印当前边信息\n
                  << ", weight: " << mst_edges_[i].weight << endl;
         }
 
