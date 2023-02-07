@@ -7,8 +7,7 @@ include_directories("./*")
 add_executable(
     main
     src/binary_search_tree.h
-    src/person.h
-    src/main.cpp
+        src/main.cpp
     src/test.cpp
     src/test.h
     src/avl_tree.h

@@ -94,27 +94,44 @@ protected:
 
 
 /**
- * @brief 在子树中, 使用关键码进行搜索
- * @tparam TValue 数据项模板类型
- * @tparam TKey 关键码模板类型
- * @param key 关键码
+ * @brief **(子树)搜索(递归)**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param key 搜索关键字
  * @param subtree_root 子树根节点
  * @return 搜索结果
  * @note
- * 1. 如果子树根节点为NULL, 返回NULL
- * 2. 使用当前遍历节点的key, 与参数key作比较, 分别进行递归和返回搜索结果(终止递归)
+ * (子树)搜索(递归)
+ * --------------
+ * --------------
+ *
+ * <span style="color:#FF9900">
+ * 如果子树根节点为NULL, 返回NULL
+ * </span>
+ *
+ * --------------
+ * + **1 空子树处理**\n
+ * &emsp; **if** 空子树 :\n
+ * &emsp;&emsp; 返回NULL\n
+ * + **2 分治递归**\n
+ * &emsp; 获取subtree_root_key<b>(子树根节点关键字)</b>\n
+ * &emsp; **if** 搜索关键字 < 子树根节点关键字 :\n
+ * &emsp;&emsp; 对子树的左子树, 递归执行SearchInSubTree_, 返回结果\n
+ * &emsp; **else if** 搜索关键字 > 子树根节点关键字 :\n
+ * &emsp;&emsp; 对子树的右子树, 递归执行SearchInSubTree_, 返回结果\n
+ * &emsp; 返回子树根节点(根结点既是对应的结点)\n
  */
-template <class TKey, class TValue>
+template <typename TKey, typename TValue>
 BinarySearchTreeNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::SearchInSubTree_(TKey key, BinarySearchTreeNode<TKey, TValue>* subtree_root) {
     if (subtree_root == NULL) {
         return NULL;
     }
 
-    TKey cur_key = subtree_root->Key();
+    TKey subtree_root_key = subtree_root->Key();
 
-    if (key < cur_key) {
+    if (key < subtree_root_key) {
         return SearchInSubTree_(key, subtree_root->LeftChild());
-    } else if (key > cur_key) {
+    } else if (key > subtree_root_key) {
         return SearchInSubTree_(key, subtree_root->RightChild());
     }
 
