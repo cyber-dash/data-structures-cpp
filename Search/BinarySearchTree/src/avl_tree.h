@@ -15,7 +15,7 @@
  * @tparam TKey 关键码类型模板参数
  * @tparam TValue 数据项类型模板参数
  */
-template<class TKey, class TValue>
+template<typename TKey, typename TValue>
 class AvlNode: public BinarySearchTreeNode<TKey, TValue> {
 public:
 
@@ -129,7 +129,7 @@ protected:
 };
 
 
-template<class TKey, class TValue>
+template<typename TKey, typename TValue>
 class AvlTree : public BinarySearchTree<TKey, TValue> {
 public:
     AvlTree() : root_(NULL) {}
@@ -159,7 +159,7 @@ protected:
     bool InsertInSubTree_(AvlNode<TKey, TValue>*& subtree_root, TKey key, TValue value);   // 平衡树子树插入
 
     bool RemoveInSubTree_(AvlNode<TKey, TValue>*& subtree_root, TKey key);                // 平衡树子树删除
-    bool RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& subtree_root, TKey key);
+    bool DeletionInSubTreeRecursive_(AvlNode<TKey, TValue>*& subtree_root, TKey key);
 
     AvlNode<TKey, TValue>* InsertionBalanceByStack_(stack<AvlNode<TKey, TValue>*>& backtrack_stack);
     AvlNode<TKey, TValue>* DeletionBalanceByStack_(stack<AvlNode<TKey, TValue>*>& backtrack_stack);
@@ -402,7 +402,7 @@ bool AvlTree<TKey, TValue>::InsertRecursive(TKey key, TValue value) {
 
 template<class TKey, class TValue>
 bool AvlTree<TKey, TValue>::RemoveRecursive(TKey key) {
-    return this->RemoveInSubTreeRecursive_(this->Root(), key);
+    return this->DeletionInSubTreeRecursive_(this->Root(), key);
 }
 
 
@@ -597,52 +597,6 @@ bool AvlTree<TKey, TValue>::InsertInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
 }
 
 
-/*
- * @brief 子树插入结点
- * @tparam TKey 关键字类型模板参数
- * @tparam TValue 值类型模板参数
- * @param subtree_root 子树根结点
- * @param key 关键字
- * @param value 值
- * @return 执行结果
- * @note
- * 子树插入结点
- * ----------
- * ----------
- *
- * ----------
- * + **1 重复插入检查与回溯栈初始化**\n
- * 声明backtrack_stack(回溯栈)\n
- * 调用CheckInsertLegalAndInitStack_, 检查是否重复插入, 并将沿途检查的各点入栈\n
- * **if** 重复插入 :\n
- * &emsp; 返回false\n
- * + **2 插入结点**\n
- *  初始化new_node(待插入结点)\n
- *  **if** new失败 :\name
- *  &emsp; 抛出bad_alloc()异常\n
- *  - **2.1 空子树插入结点**\n
- *  new_node成为根节点\n
- *  返回true\n
- *  - **2.2 非空子树插入结点**\n
- *  取栈顶, 作为插入结点的父结点(parent_node)\n
- *  **if** 插入结点key < 父结点key :\n
- *  &emsp;&emsp; 插入结点为父结点的左孩子\n
- *  **else** (插入结点key > 父结点key) :\n
- *  &emsp;&emsp; 插入结点为父结点的右孩子\n
- *  调用InsertionBalanceByStack_, 对回溯栈内的结点做平衡, 返回最终的平衡结点balance_node\n
- * + **3 回溯栈处理结束后的补充处理**\n
- * **if** 回溯栈为空 :\n
- * &emsp; balance_node为最新的子树根结点\n
- * **else** (回溯栈不为空) :\n
- * &emsp; 取回溯栈栈顶\n
- * &emsp; **if** 栈顶结点key > 平衡点key :\n
- * &emsp;&emsp; 平衡点为栈顶结点的左孩子\n
- * &emsp; **else** (栈顶结点key < 平衡点key) :\n
- * &emsp;&emsp; 平衡点为栈顶结点的右孩子\n
- * + **4 函数返回**\n
- * 返回true\n
- */
-
 /*!
  * @brief **子树插入结点**
  * @tparam TKey 关键字类型模板参数
@@ -740,19 +694,66 @@ bool AvlTree<TKey, TValue>::InsertInSubTree_(AvlNode<TKey, TValue>*& subtree_roo
 }
 
 
-template<class TKey, class TValue>
-bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& subtree_root, TKey key) {
+/*!
+ * @brief **子树删除结点(递归)**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param subtree_root 子树根结点
+ * @param key 待删除关键字
+ * @return 执行结果
+ * @note
+ * 子树删除结点(递归)
+ * ----------------
+ * ----------------
+ *
+ * ----------------
+ * + **1 空子树处理**\n
+ * **if** 空子树 :\n
+ * &emsp; 返回false\n
+ * + **2 执行递归**\n
+ * **if** 待删除key < 子树根结点key :\n
+ * &emsp; 子树根结点左孩子, 递归执行DeletionInSubTreeRecursive_\n
+ * &emsp; **if** 递归失败 :\n
+ * &emsp;&emsp; 返回false\n
+ * **else if** 待删除key > 子树根结点key :\n
+ * &emsp; 子树根结点右孩子, 递归执行DeletionInSubTreeRecursive_\n
+ * &emsp; **if** 递归失败 :\n
+ * &emsp;&emsp; 返回false\n
+ * **else** (待删除key 等于 子树根结点key) :\n
+ * &emsp; **if** 子树为叶子(根结点没有左右孩子) :\n
+ * &emsp;&emsp; 释放子树根结点\n
+ * &emsp;&emsp; 返回true\n
+ * &emsp; **else if** 子树左孩子为NULL :\n
+ * &emsp;&emsp; 根结点指向右孩子\n
+ * &emsp;&emsp; 原根结点释放\n
+ * &emsp; **else if** 子树右孩子为NULL :\n
+ * &emsp;&emsp; 根结点指向左孩子\n
+ * &emsp;&emsp; 原根结点释放\n
+ * &emsp; **else** (根结点同时存在左右孩子) \n
+ * &emsp;&emsp; prev_node指向根结点中序的前一个结点(在左子树内)\n
+ * &emsp;&emsp; prev_node的数据赋给子树根结点\n
+ * &emsp;&emsp; 子树根结点左孩子, 递归执行DeletionInSubTreeRecursive_\n
+ * &emsp;&emsp; **if** 递归失败 :\n
+ * &emsp;&emsp;&emsp; 返回false\n
+ * + **3 平衡**\n
+ * 调整子树根结点高度\n
+ * 调整子树根结点平衡因子\n
+ * 对子树根结点执行Balance_, 进行平衡\n
+ * + **4 返回true**\n
+ */
+template<typename TKey, typename TValue>
+bool AvlTree<TKey, TValue>::DeletionInSubTreeRecursive_(AvlNode<TKey, TValue>*& subtree_root, TKey key) {
     if (!subtree_root) {
         return false;
     }
 
     if (key < subtree_root->Key()) {
-        bool res = RemoveInSubTreeRecursive_(subtree_root->LeftChild(), key);
+        bool res = DeletionInSubTreeRecursive_(subtree_root->LeftChild(), key);
         if (!res) {
             return res;
         }
     } else if (key > subtree_root->Key()) {
-        bool res = RemoveInSubTreeRecursive_(subtree_root->RightChild(), key);
+        bool res = DeletionInSubTreeRecursive_(subtree_root->RightChild(), key);
         if (!res) {
             return res;
         }
@@ -760,13 +761,17 @@ bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
         if (!subtree_root->LeftChild() && !subtree_root->RightChild()) {
             delete subtree_root;
             subtree_root = NULL;
+
+            return true;
         } else if (!subtree_root->LeftChild()) {
             AvlNode<TKey, TValue>* temp = subtree_root;
             subtree_root = subtree_root->RightChild();
+
             delete temp;
         } else if (!subtree_root->RightChild()) {
             AvlNode<TKey, TValue>* temp = subtree_root;
             subtree_root = subtree_root->LeftChild();
+
             delete temp;
         } else {
             AvlNode<TKey, TValue>* prev_node = this->PreviousNode_(subtree_root);
@@ -774,15 +779,11 @@ bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
             subtree_root->SetKey(prev_node->Key());
             subtree_root->SetValue(prev_node->Value());
 
-            bool res = RemoveInSubTreeRecursive_(subtree_root->LeftChild(), prev_node->Key());
+            bool res = DeletionInSubTreeRecursive_(subtree_root->LeftChild(), prev_node->Key());
             if (!res) {
                 return res;
             }
         }
-    }
-
-    if (!subtree_root) {
-        return true;
     }
 
     subtree_root->UpdateHeight();
@@ -792,8 +793,6 @@ bool AvlTree<TKey, TValue>::RemoveInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
 
     return true;
 }
-
-
 
 
 /*!
