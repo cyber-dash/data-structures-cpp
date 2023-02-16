@@ -1050,13 +1050,13 @@ bool AvlTree<TKey, TValue>::RemoveInSubTree_(AvlNode<TKey, TValue>*& subtree_roo
 
 
 /**
- * @brief **打印子树(递归)**
+ * @brief **子树打印(递归)**
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值字类型模板参数
  * @param subtree_root 子树根结点
  * @param visit 访问函数
  * @note
- * 打印子树(递归)
+ * 子树打印(递归)
  * ------------
  * ------------
  *
@@ -1100,18 +1100,25 @@ void AvlTree<TKey, TValue>::PrintSubTreeRecursive_(
 
 /*!
  * @brief **打印**
- * @tparam TKey
- * @tparam TValue
- * @param visit
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param visit 访问函数
+ * @note
+ * 打印
+ * ---
+ * ---
+ *
+ * ---
+ * 调用PrintSubTreeRecursive_访问root_
  */
 template<typename TKey, typename TValue>
 void AvlTree<TKey, TValue>::Print(void (*visit)(AvlNode<TKey, TValue>*)) {
-    this->PrintSubTreeRecursive_((AvlNode<TKey, TValue> *) this->root_, visit);
+    this->PrintSubTreeRecursive_(this->root_, visit);
     cout << endl;
 }
 
 
-template<class TKey, class TValue>
+template<typename TKey, typename TValue>
 bool AvlTree<TKey, TValue>::Remove(TKey key) {
     return this->RemoveInSubTree_(this->Root(), key);
 }
@@ -1137,6 +1144,15 @@ TValue AvlTree<TKey, TValue>::Min() {
  * -----------------------
  *
  * -----------------------
+ * + **1 空子树处理**\n
+ * **if** 子树根结点为NULL :\n
+ * &emsp; 返回NULL\n
+ * + **2 向左遍历**\n
+ * 声明并初始化cur指向子树根结点\n
+ * **while loop** cur不为NULL <b>&&</b> cur的左孩子不为NULL :\n
+ * &emsp; cur指向自身左孩子\n
+ * + **3 返回结果**\n
+ * 返回cur\n
  */
 template <typename TKey, typename TValue>
 AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::MinInSubTree_(AvlNode<TKey, TValue>* subtree_root) const {
@@ -1162,16 +1178,29 @@ TValue AvlTree<TKey, TValue>::Max() {
 }
 
 
-/**
- * @brief 子树中关键码最大项
- * @tparam TValue 数据项模板类型
- * @tparam TKey 关键码模板类型
- * @param subtree_root 子树根节点
- * @return 关键码最大项
+/*!
+ * @brief **获取(子树中)关键字最大结点**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param subtree_root 子树根结点
+ * @return 最大节点指针
  * @note
- * 右孩子节点迭代
+ * 获取(子树中)关键字最大结点
+ * -----------------------
+ * -----------------------
+ *
+ * -----------------------
+ * + **1 空子树处理**\n
+ * **if** 子树根结点为NULL :\n
+ * &emsp; 返回NULL\n
+ * + **2 向右遍历**\n
+ * 声明并初始化cur指向子树根结点\n
+ * **while loop** cur不为NULL <b>&&</b> cur的右孩子不为NULL :\n
+ * &emsp; cur指向自身右孩子\n
+ * + **3 返回结果**\n
+ * 返回cur\n
  */
-template <class TKey, class TValue>
+template <typename TKey, typename TValue>
 AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::MaxInSubTree_(AvlNode<TKey, TValue>* subtree_root) const {
 
     if (subtree_root == NULL) {
@@ -1230,19 +1259,47 @@ AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::PreviousNode_(AvlNode<TKey, TValue
 }
 
 
+/*!
+ * @brief **子树高度**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param subtree_root 子树根结点
+ * @return 高度
+ * @note
+ * 子树高度
+ * -------
+ * -------
+ *
+ * -------
+ * + **1 空树处理**\n
+ * **if** 空子树 :\n
+ * &emsp; 返回0\n
+ * + **2 分治递归**\n
+ * 取left_subtree_height(左子树高度)和right_subtree_height(右子树高度)\n
+ * **if** left_subtree_height < right_subtree_height :\n
+ * &emsp; 返回right_subtree_height + 1\n
+ * **else** (left_subtree_height >= right_subtree_height) :\n
+ * &emsp; 返回left_subtree_height + 1\n
+ */
 template<typename TKey, typename TValue>
 int AvlTree<TKey, TValue>::HeightOfSubtreeRecursive_(AvlNode<TKey, TValue>* subtree_root) {
-    if (!subtree_root) {
-        return 0;
+
+    // ---------- 1 空树处理 ----------
+
+    if (!subtree_root) {    // if 空子树
+        return 0;           // 返回0
     }
 
+    // ---------- 2 分治递归 ----------
+
+    // 取left_subtree_height(左子树高度)和right_subtree_height(右子树高度)
     int left_subtree_height = HeightOfSubtreeRecursive_(subtree_root->LeftChild());
     int right_subtree_height = HeightOfSubtreeRecursive_(subtree_root->RightChild());
 
-    if (left_subtree_height < right_subtree_height) {
-        return right_subtree_height + 1;
-    } else {
-        return left_subtree_height + 1;
+    if (left_subtree_height < right_subtree_height) {   // if left_subtree_height < right_subtree_height
+        return right_subtree_height + 1;                // 返回right_subtree_height + 1
+    } else {                                            // else (left_subtree_height >= right_subtree_height)
+        return left_subtree_height + 1;                 // 返回left_subtree_height + 1
     }
 }
 
