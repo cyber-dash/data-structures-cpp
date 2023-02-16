@@ -148,7 +148,7 @@ public:
     TValue Max();
     TValue Min();
 
-    AvlNode<TKey, TValue>* Search(TKey key) { return this->SearchInSubTree_(key, this->root_); }
+    AvlNode<TKey, TValue>* Search(TKey key) { return this->SearchInSubTree_(this->root_, key); }
 
     void Print(void (*visit)(AvlNode<TKey, TValue>*));
 
@@ -174,7 +174,7 @@ protected:
     // 先右后左双旋转(Rotation Right Left)
     int RightLeftRotate_(AvlNode<TKey, TValue>*& node);
 
-    AvlNode<TKey, TValue>* SearchInSubTree_(TKey key, AvlNode<TKey, TValue>* subtree_root);
+    AvlNode<TKey, TValue>* SearchInSubTree_(AvlNode<TKey, TValue>* subtree_root, TKey key);
 
     // 子树中关键码最小项
     AvlNode<TKey, TValue>* MinInSubTree_(AvlNode<TKey, TValue>* subtree_root) const;
@@ -808,10 +808,6 @@ bool AvlTree<TKey, TValue>::DeletionInSubTreeRecursive_(AvlNode<TKey, TValue>*& 
  * ----------------------
  * ----------------------
  *
- * 函数执行完后:\n
- *     1. 返回待删除结点的指针, 如果没有找到则返回NULL\n
- *     2. 待删除结点的祖先节点进入队列\n
- *
  * ----------------------
  * 初始化遍历指针cur, 指向子树根结点\n
  * **while loop** cur不为NULL :\n
@@ -882,9 +878,7 @@ bool AvlTree<TKey, TValue>::CheckInsertLegalAndInitStack_(TKey key,
 {
     AvlNode<TKey, TValue>* cur = subtree_root;
 
-    // 寻找插入位置
     while (cur != NULL) {
-        // 找到等于key的结点, 无法插入
         if (key == cur->Key()) {
             return false;
         }
@@ -903,28 +897,38 @@ bool AvlTree<TKey, TValue>::CheckInsertLegalAndInitStack_(TKey key,
 
 
 /**
- * @brief **子树搜索**
+ * @brief **子树搜索(递归)**
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值类型模板参数
  * @param key 关键字
  * @param subtree_root 子树根结点
- * @return 搜索结果
+ * @return 结点指针
  * @note
- * 1. 如果子树根节点为NULL, 返回NULL
- * 2. 使用当前遍历节点的key, 与参数key作比较, 分别进行递归和返回搜索结果(终止递归)
+ * 子树搜索(递归)
+ * -------------
+ * -------------
+ *
+ * -------------
+ * + **1 空树处理**\n
+ * **if** 子树根结点为NULL :\n
+ * &emsp; 返回NULL\n
+ * + **2 分治递归**\n
+ * **if** 被查找key < 子树结点key :\n
+ * &emsp; 调用SearchInSubTree左孩子结点进行递归\n
+ * **if** 被查找key > 子树结点key :\n
+ * &emsp; 调用SearchInSubTree左孩子结点进行递归\n
+ * + **3 返回结果**\n
  */
 template <typename TKey, typename TValue>
-AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::SearchInSubTree_(TKey key, AvlNode<TKey, TValue>* subtree_root) {
+AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::SearchInSubTree_(AvlNode<TKey, TValue>* subtree_root, TKey key) {
     if (subtree_root == NULL) {
         return NULL;
     }
 
-    TKey subtree_root_key = subtree_root->Key();
-
-    if (key < subtree_root_key) {
-        return SearchInSubTree_(key, subtree_root->LeftChild());
-    } else if (key > subtree_root_key) {
-        return SearchInSubTree_(key, subtree_root->RightChild());
+    if (key < subtree_root->Key()) {
+        return SearchInSubTree_(subtree_root->LeftChild(), key);
+    } else if (key > subtree_root->Key()) {
+        return SearchInSubTree_(subtree_root->RightChild(), key);
     }
 
     return subtree_root;
@@ -1057,6 +1061,15 @@ bool AvlTree<TKey, TValue>::RemoveInSubTree_(AvlNode<TKey, TValue>*& subtree_roo
  * ------------
  *
  * ------------
+ * + **1 空树处理**\n
+ * **if** 子树根结点为NULL :\n
+ * &emsp; 返回\n
+ * + **2 分治递归**\n
+ * **if** 被查找key < 子树结点key :\n
+ * &emsp; 调用SearchInSubTree左孩子结点进行递归\n
+ * **if** 被查找key > 子树结点key :\n
+ * &emsp; 调用SearchInSubTree左孩子结点进行递归\n
+ * + **3 返回结果**\n
  */
 template <typename TKey, typename TValue>
 void AvlTree<TKey, TValue>::PrintSubTreeRecursive_(
