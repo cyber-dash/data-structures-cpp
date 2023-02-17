@@ -145,8 +145,8 @@ public:
     int Height() { return this->root_->Height(); }
     int HeightRecursive() { return this->HeightOfSubtreeRecursive_(this->root_); }
 
-    TValue Max();
-    TValue Min();
+    bool Max(TValue& value);
+    bool Min(TValue& min_value);
 
     AvlNode<TKey, TValue>* Search(TKey key) { return this->SearchInSubTree_(this->root_, key); }
 
@@ -187,7 +187,7 @@ protected:
     // AVL子树的高度
     int HeightOfSubtreeRecursive_(AvlNode<TKey, TValue>* subtree_root);
 
-    void PrintSubTreeRecursive_(AvlNode<TKey, TValue>* subtree_root, void (*visit)(AvlNode<TKey, TValue>*));
+    void PrintSubTreeRecursive_(AvlNode<TKey, TValue>* subtree_root, void (*Print)(AvlNode<TKey, TValue>*));
 
     bool CheckInsertLegalAndInitStack_(
             TKey key,
@@ -1054,7 +1054,7 @@ bool AvlTree<TKey, TValue>::RemoveInSubTree_(AvlNode<TKey, TValue>*& subtree_roo
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值字类型模板参数
  * @param subtree_root 子树根结点
- * @param visit 访问函数
+ * @param Print 结点打印函数
  * @note
  * 子树打印(递归)
  * ------------
@@ -1065,36 +1065,44 @@ bool AvlTree<TKey, TValue>::RemoveInSubTree_(AvlNode<TKey, TValue>*& subtree_roo
  * **if** 子树根结点为NULL :\n
  * &emsp; 返回\n
  * + **2 分治递归**\n
- * **if** 被查找key < 子树结点key :\n
- * &emsp; 调用SearchInSubTree左孩子结点进行递归\n
- * **if** 被查找key > 子树结点key :\n
- * &emsp; 调用SearchInSubTree左孩子结点进行递归\n
- * + **3 返回结果**\n
+ * 访问结点\n
+ * **if** 子树为叶子类型(没有左右孩子): \n
+ * &emsp; 返回\n
+ * 打印'('\n
+ * 递归调用PrintSubTreeRecursive_, 对左子树进行打印\n
+ * 打印','\n
+ * 递归调用PrintSubTreeRecursive_, 对右子树进行打印\n
+ * 打印')'\n
  */
 template <typename TKey, typename TValue>
 void AvlTree<TKey, TValue>::PrintSubTreeRecursive_(
         AvlNode<TKey, TValue>* subtree_root,
-        void (*visit)(AvlNode<TKey, TValue>*))
+        void (*Print)(AvlNode<TKey, TValue>*))
 {
-    if (subtree_root == NULL) {
-        return;
+    // ---------- 1 空树处理 ----------
+
+    if (subtree_root == NULL) {                                 // if 子树根结点为NULL
+        return;                                                 // 返回
     }
 
-    visit(subtree_root);
+    // ---------- 2 分治递归 ----------
 
-    if (subtree_root->LeftChild() != NULL || subtree_root->RightChild() != NULL) {
+    Print(subtree_root);                                        // 访问结点
 
-        cout << "(";
-
-        PrintSubTreeRecursive_(subtree_root->LeftChild(), visit);
-
-        cout << ",";
-
-        PrintSubTreeRecursive_(subtree_root->RightChild(), visit);
-
-        cout << ")";
-
+    // if 子树为叶子类型(没有左右孩子)
+    if (subtree_root->LeftChild() == NULL && subtree_root->RightChild() == NULL) {
+        return;                                                 // 返回
     }
+
+    cout << "(";                                                // 打印'('
+
+    PrintSubTreeRecursive_(subtree_root->LeftChild(), Print);   // 递归调用PrintSubTreeRecursive_, 对左子树进行打印
+
+    cout << ",";                                                // 打印','
+
+    PrintSubTreeRecursive_(subtree_root->RightChild(), Print);  // 递归调用PrintSubTreeRecursive_, 对右子树进行打印
+
+    cout << ")";                                                // 打印')'
 }
 
 
@@ -1109,7 +1117,7 @@ void AvlTree<TKey, TValue>::PrintSubTreeRecursive_(
  * ---
  *
  * ---
- * 调用PrintSubTreeRecursive_访问root_
+ * 对root_(根结点)调用PrintSubTreeRecursive_
  */
 template<typename TKey, typename TValue>
 void AvlTree<TKey, TValue>::Print(void (*visit)(AvlNode<TKey, TValue>*)) {
@@ -1124,11 +1132,28 @@ bool AvlTree<TKey, TValue>::Remove(TKey key) {
 }
 
 
-// todo: 改成返回bool
+/*!
+ * @note **获取最小关键字对应的值**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param min_value 值保存变量
+ * @return 执行结果
+ * 获取最小关键字对应的值
+ * -------------------
+ * -------------------
+ *
+ * -------------------
+ */
 template<typename TKey, typename TValue>
-TValue AvlTree<TKey, TValue>::Min() {
+bool AvlTree<TKey, TValue>::Min(TValue& min_value) {
     AvlNode<TKey, TValue>* node = this->MinInSubTree_(this->Root());
-    return node->Value();
+    if (!node) {
+        return false;
+    }
+
+    min_value = node->Value();
+
+    return true;
 }
 
 
@@ -1172,9 +1197,15 @@ AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::MinInSubTree_(AvlNode<TKey, TValue
 
 
 template<class TKey, class TValue>
-TValue AvlTree<TKey, TValue>::Max() {
+bool AvlTree<TKey, TValue>::Max(TValue& value) {
     AvlNode<TKey, TValue>* node = this->MaxInSubTree_(this->Root());
-    return node->Value();
+    if (!node) {
+        return false;
+    }
+
+    value = node->Value();
+
+    return true;
 }
 
 

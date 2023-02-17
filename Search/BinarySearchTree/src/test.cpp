@@ -347,11 +347,17 @@ void TestAVLMaxAndMin() {
     AVL_tree->Insert(question8, answer8);
     AVL_tree->Insert(question9, answer9);
 
-    string max_data = AVL_tree->Max();
-    cout << "max_data: " << max_data << endl;
+    string max_data;
+    bool res = AVL_tree->Max(max_data);
+    if (res) {
+        cout << "max_data: " << max_data << endl;
+    }
 
-    string min_data = AVL_tree->Min();
-    cout << "min_data: " << min_data << endl;
+    string min_data;
+    res = AVL_tree->Min(min_data);
+    if (res) {
+        cout << "min_data: " << min_data << endl;
+    }
 
     cout << "-------------------------------------------------------------" << endl;
 }
@@ -605,14 +611,14 @@ void TestAvlInsertAndRemoveRecursive() {
 
     AvlTree<int, int>* AVL_tree = new AvlTree<int, int>();
 
-    int keys[31] =
+    int keys[30] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
-          21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
-    int values[31] =
+          21, 6, 4, 24, 11, 19, 3, 1, 29, 10 };
+    int values[30] =
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
-          21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
+          21, 6, 4, 24, 11, 19, 3, 1, 29, 10 };
     int count = 30;
 
     for (int i = 0; i < count; i++) {
