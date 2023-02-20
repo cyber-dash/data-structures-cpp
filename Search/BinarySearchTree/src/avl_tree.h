@@ -300,6 +300,8 @@ protected:
  *  &emsp; pivot更新平衡因子\n
  * + **4 修改node**\n
  * &emsp; node的<b>(引用)</b>值改为pivot\n
+ * + **5 返回旋转后的平衡因子**\n
+ * 返回node的平衡因子\n
  */
 template<class TKey, class TValue>
 int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
@@ -327,7 +329,9 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
 
     node = pivot;                                       // node的(引用)值改为pivot
 
-    return node->BalanceFactor();
+    // ---------- 5 返回旋转后的平衡因子 ----------
+
+    return node->BalanceFactor();                       // 返回node的平衡因子
 }
 
 
@@ -373,10 +377,10 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
  *               node                                  pivot
  *               / \                                   / \
  *              /   \                                 /   \
- *          pivot  node3                           node4  node
- *            / \                                   / \     \
- *           /   \                                 /   \     \
- *       node4  node2                           node5 node2  node3
+ *          pivot  node2                           node3  node
+ *            / \                                   /     / \
+ *           /   \                                 /     /   \
+ *       node3  node4                          node5  node4  node2
  *         /
  *        /
  *     node5
@@ -397,24 +401,38 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
  *  &emsp; pivot更新平衡因子\n
  * + **4 修改node**\n
  * &emsp; node的<b>(引用)</b>值改为pivot\n
+ * + **5 返回旋转后的平衡因子**\n
+ * 返回node的平衡因子\n
  */
 template<typename TKey, typename TValue>
 int AvlTree<TKey, TValue>::RightRotate_(AvlNode<TKey, TValue>*& node) {
 
-    AvlNode<TKey, TValue>* pivot = node->LeftChild();
+    // ---------- 1 指定pivot(旋转轴) ----------
 
-    node->SetLeftChild(pivot->RightChild());
-    pivot->SetRightChild(node);
+    AvlNode<TKey, TValue>* pivot = node->LeftChild();       // 取结点左孩子为pivot(旋转轴)
 
-    node->UpdateHeight();
-    pivot->UpdateHeight();
+    // ---------- 2 旋转 ----------
 
-    node->UpdateBalanceFactor();
-    pivot->UpdateBalanceFactor();
+    node->SetLeftChild(pivot->RightChild());                // pivot的右孩子, 改为node的左孩子
+    pivot->SetRightChild(node);                             // node改为pivot的右孩子
 
-    node = pivot;
+    // ---------- 3 调整高度和平衡因子 ----------
 
-    return node->BalanceFactor();
+    // ----- 3.1 调整高度 -----
+    node->UpdateHeight();                                   // node更新高度
+    pivot->UpdateHeight();                                  // pivot更新高度
+
+    // ----- 3.2 调整平衡因子 -----
+    node->UpdateBalanceFactor();                            // node更新平衡因子
+    pivot->UpdateBalanceFactor();                           // pivot更新平衡因子
+
+    // ---------- 4 修改node ----------
+
+    node = pivot;                                           // node的(引用)值改为pivot
+
+    // ---------- 5 返回旋转后的平衡因子 ----------
+
+    return node->BalanceFactor();                           // 返回node的平衡因子
 }
 
 
