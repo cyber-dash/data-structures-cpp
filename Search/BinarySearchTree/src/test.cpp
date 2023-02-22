@@ -8,7 +8,7 @@
 
 
 template<class Value, class Key>
-void BSTNodeVisit(BinarySearchTreeNode<Value, Key>* node) {
+void BSTNodeVisit(BstNode<Value, Key>* node) {
     cout << "[" << node->Key() << ":" << node->Value() << "]";
 }
 
@@ -156,7 +156,7 @@ void TestBSTSearch() {
 
     binary_search_tree->Remove(question9);
 
-    BinarySearchTreeNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
+    BstNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
     if (the_9th_node == NULL) { // 没有搜索到
         cout << "此问题已删除" << endl;
     } else { // 搜索到
@@ -165,7 +165,7 @@ void TestBSTSearch() {
 
     cout << endl;
 
-    BinarySearchTreeNode<string, string>* the_8th_node = binary_search_tree->Search(question8);
+    BstNode<string, string>* the_8th_node = binary_search_tree->Search(question8);
     if (the_8th_node == NULL) { // 没有搜索到
         cout << "Duck不必" << endl;
     } else { // 搜索到

@@ -20,7 +20,7 @@
  * @tparam TValue 值类型模板参数
  */
 template<typename TKey, typename TValue>
-class AvlNode: public BinarySearchTreeNode<TKey, TValue> {
+class AvlNode: public BstNode<TKey, TValue> {
 public:
 
     /*!
