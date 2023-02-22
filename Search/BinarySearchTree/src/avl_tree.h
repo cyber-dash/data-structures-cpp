@@ -1,6 +1,10 @@
-﻿//
-// Created by cyberdash@163.com on 2021/7/5.
-//
+﻿/*!
+ * @file avl_tree.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief AVL树结点模板类与AVL树模板类
+ * @version 0.2.1
+ * @date 2023-02-22
+ */
 
 #ifndef CYBER_DASH_AVL_TREE_H
 #define CYBER_DASH_AVL_TREE_H
@@ -12,19 +16,19 @@
 
 /*!
  * @brief **AVL树结点模板类**
- * @tparam TKey 关键码类型模板参数
- * @tparam TValue 数据项类型模板参数
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
  */
 template<typename TKey, typename TValue>
 class AvlNode: public BinarySearchTreeNode<TKey, TValue> {
 public:
 
     /*!
-     * @brief **构造函数(默认)**
+     * @brief **默认构造函数**
      * @note
-     * 构造函数(默认)
-     * ------------
-     * ------------
+     * 默认构造函数
+     * ----------
+     * ----------
      * 左右孩子为NULL, 高度设为1, 平衡因子设为0
      */
     AvlNode(): left_child_(NULL), right_child_(NULL), height_(1), balance_factor_(BALANCED) {}
@@ -37,22 +41,26 @@ public:
      * 构造函数(关键字/值)
      * -----------------
      * -----------------
+     *
+     * -----------------
      * 设置key_/value_, 左右孩子为NULL, 高度设为1, 平衡因子设为0
      */
     AvlNode(const TKey& key, const TValue& value) :
         value_(value), key_(key), left_child_(NULL), right_child_(NULL), height_(1), balance_factor_(BALANCED) {}
 
     /*!
-     * @brief **构造函数(有左右孩子)**
-     * @param key 关键码
-     * @param value 数据项
+     * @brief **构造函数(关键字/值/左右孩子)**
+     * @param key 关键字
+     * @param value 值
      * @param left_child 左孩子
      * @param right_child 右孩子
      * @note
-     * 构造函数(有左右孩子)
-     * ------------
-     * ------------
-     * 设置key/value/左右孩子, 高度设为1, 平衡因子设为0
+     * 构造函数(关键字/值/左右孩子)
+     * ------------------------
+     * ------------------------
+     *
+     * ------------------------
+     * 设置key_/value_/左右孩子, 高度设为1, 平衡因子设为0
      */
     AvlNode(TKey key, TValue value, AvlNode<TKey, TValue>* left_child, AvlNode<TKey, TValue>* right_child) :
         value_(value), key_(key), left_child_(left_child), right_child_(right_child),
@@ -60,43 +68,85 @@ public:
 
     /*!
      * @brief **获取左孩子结点**
-     * @return 左孩子结点
+     * @return 左孩子结点(指针引用)
      */
     AvlNode<TKey, TValue>*& LeftChild() { return this->left_child_; };
+
     /*!
      * @brief **设置左孩子结点**
-     * @param node avl树结点
+     * @param node 结点(指针)
      */
     void SetLeftChild(AvlNode<TKey, TValue>* node) { this->left_child_ = node; }
 
     /*!
      * @brief **获取右孩子结点**
-     * @return 右孩子结点
+     * @return 右孩子结点(指针引用)
      */
     AvlNode<TKey, TValue>*& RightChild() { return this->right_child_; };
 
     /*!
      * @brief **设置右孩子结点**
-     * @param node avl树结点
+     * @param node 结点(指针)
      */
     void SetRightChild(AvlNode<TKey, TValue>* node) { this->right_child_ = node; }
 
+    /*!
+     * @brief **获取关键字**
+     * @return 关键字
+     */
     TKey Key() { return this->key_; }
+    /*!
+     * @brief **设置关键字**
+     * @param key 关键字
+     */
     void SetKey(const TKey& key) { this->key_ = key; }
 
+    /*!
+     * @brief **获取值**
+     * @return 值
+     */
     TValue Value() { return this->value_; }
+    /*!
+     * @brief **设置值**
+     * @param value 值
+     */
     void SetValue(const TValue& value) { this->value_ = value; }
 
+    /*!
+     * @brief **获取高度**
+     * @return 高度
+     */
     int Height() { return this->height_; }
+    /*!
+     * @brief **设置高度**
+     * @param height 高度
+     */
     void SetHeight(int height) { this->height_ = height; }
 
+    /*!
+     * @brief **获取平衡因子**
+     * @return 平衡因子
+     */
     int BalanceFactor() { return this->balance_factor_; }
+    /*!
+     * @brief **设置平衡因子**
+     * @param balance_factor 平衡因子
+     */
     void SetBalanceFactor(int balance_factor) { this->balance_factor_ = balance_factor; }
 
     /*!
      * @brief **更新高度**
      * @note
-     * 作为子树根节点时具有意义
+     * 更新高度
+     * -------
+     * -------
+     *
+     * 以该结点为根结点的子树, 更新高度
+     *
+     * -------
+     * 获取left_height(左子树高度)\n
+     * 获取right_height(右子树高度)\n
+     * 取left_height最大值, 加1赋给height_\n
      */
     void UpdateHeight() {
         int left_height = LeftChild() ? LeftChild()->Height() : 0;
@@ -111,8 +161,12 @@ public:
      * -----------
      * -----------
      *
-     * -----------
      * 以该结点为根结点的子树, 更新平衡因子
+     *
+     * -----------
+     * 获取left_height(左子树高度)\n
+     * 获取right_height(右子树高度)\n
+     * 取right_height - left_height赋给balance_factor_\n
      */
     void UpdateBalanceFactor() {
         int left_height = LeftChild() ? LeftChild()->Height() : 0;
@@ -387,7 +441,7 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
  *                node                       pivot
  *                /                           / \
  *               /                           /   \
- *            pivot         ---->          node2  node
+ *            pivot          ----->          node2  node
  *             / \                               /
  *            /   \                             /
  *        node2  node3                       node3
@@ -400,7 +454,7 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
  *               node                         pivot
  *                /                            / \
  *               /                            /   \
- *            pivot         ---->          node2  node
+ *            pivot          ----->          node2  node
  *             /
  *            /
  *         node2
@@ -413,7 +467,7 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
  *               / \                                   / \
  *              /   \                                 /   \
  *          pivot  node2                           node3  node
- *            / \                                   /     / \
+ *            / \              ----->               /     / \
  *           /   \                                 /     /   \
  *       node3  node4                          node5  node4  node2
  *         /
