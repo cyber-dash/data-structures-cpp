@@ -46,7 +46,7 @@ void TestBSTInsert() {
     binary_search_tree->Insert(question2, answer2);
     binary_search_tree->Insert(question3, answer3);
 
-    binary_search_tree->PrintTree(BSTNodeVisit);
+    binary_search_tree->Print(BSTNodeVisit);
 
     cout << endl;
 
@@ -95,13 +95,13 @@ void TestBSTRemove() {
     binary_search_tree->Insert(question7, answer7);
     binary_search_tree->Insert(question8, answer8);
 
-    binary_search_tree->PrintTree(BSTNodeVisit);
+    binary_search_tree->Print(BSTNodeVisit);
 
     cout << endl;
 
     binary_search_tree->Remove(question1);
 
-    binary_search_tree->PrintTree(BSTNodeVisit);
+    binary_search_tree->Print(BSTNodeVisit);
 
     cout << endl;
 
@@ -419,7 +419,7 @@ void TestBSTMin() {
 void TestBSTMakeEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                Test BinarySearchTree MakeEmpty            |" << endl;
+    cout << "|                Test BinarySearchTree Clear            |" << endl;
     cout << "|                      测试搜索二叉树的清除                    |" << endl;
 
     BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
@@ -461,9 +461,9 @@ void TestBSTMakeEmpty() {
     binary_search_tree->Insert(question8, answer8);
     binary_search_tree->Insert(question9, answer9);
 
-    binary_search_tree->MakeEmpty();
+    binary_search_tree->Clear();
 
-    binary_search_tree->PrintTree(BSTNodeVisit);
+    binary_search_tree->Print(BSTNodeVisit);
 
     cout << "-------------------------------------------------------------" << endl;
 }

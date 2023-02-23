@@ -116,8 +116,8 @@ protected:
     BstNode<TKey, TValue>* left_child_;    //!< 左孩子(指针)
     BstNode<TKey, TValue>* right_child_;   //!< 右孩子(指针)
 
-    TKey key_;                                          //!< 关键字
-    TValue value_;                                      //!< 值
+    TKey key_;                             //!< 关键字
+    TValue value_;                         //!< 值
 };
 
 
@@ -140,12 +140,37 @@ public:
      * 根结点为NULL
      */
     BinarySearchTree() : root_(NULL) {}
+
+    // 构造函数(关键字/值)
     BinarySearchTree(TKey key, TValue value);
 
+    /*!
+     * @brief 析构函数
+     * @note
+     * 析构函数
+     * -------
+     * -------
+     *
+     * -------
+     * 释放root_
+     */
     virtual ~BinarySearchTree() { delete this->root_; };
 
     virtual bool Insert(TKey key, TValue value);
-    virtual bool Remove(const TKey& key) { return RemoveInSubTree_(key, root_); }
+
+    /*!
+     * @brief 删除结点
+     * @param key 关键字
+     * @return 执行结果
+     * @note
+     * 删除结点
+     * -------
+     * -------
+     *
+     * -------
+     * 对root_调用RemoveInSubTree_
+     */
+    virtual bool Remove(const TKey& key) { return RemoveInSubTree_(root_, key); }
 
     /*!
      * @brief **搜索**
@@ -160,24 +185,62 @@ public:
      * 对根结点调用SearchInSubTree_
      */
     virtual BstNode<TKey, TValue>* Search(TKey key) { return SearchInSubTree_(this->root_, key); }
+
+    /*!
+     * @brief **获取高度**
+     * @return 高度
+     * @note
+     * 获取高度
+     * -------
+     * -------
+     *
+     * -------
+     * 对根结点调用HeightOfSubtreeRecursive_
+     */
     virtual int Height() { return this->HeightOfSubtreeRecursive_(this->root_); }
 
     virtual TValue Min();
     virtual TValue Max();
 
+    /*!
+     * @brief **获取根结点**
+     * @return 根结点
+     */
     BstNode<TKey, TValue>*& Root() { return this->root_; }
 
-    virtual void MakeEmpty() { MakeEmptySubTree_(root_); root_ = NULL; }
-    void PrintTree(void (*visit)(BstNode<TKey, TValue>*)) { this->PrintSubTree_(this->root_, visit); }
+    /*!
+     * @brief 清除结点
+     * @note
+     * 清除结点
+     * -------
+     * -------
+     *
+     * -------
+     * 对根结点调用ClearSubTree_
+     */
+    virtual void Clear() { ClearSubTree_(root_); }
 
-    BinarySearchTree<TKey, TValue>& operator=(const BinarySearchTree<TKey, TValue>& origin_BST);
+    /*!
+     * @brief **打印(中序)**
+     * @param NodePrint 结点打印函数
+     * @note
+     * 打印(中序)
+     * --------
+     * --------
+     *
+     * --------
+     * 对根结点调用PrintSubTree_
+     */
+    void Print(void (*NodePrint)(BstNode<TKey, TValue>*)) { this->PrintSubTree_(this->root_, NodePrint); }
+
+    BinarySearchTree<TKey, TValue>& operator=(const BinarySearchTree<TKey, TValue>& origin_bst);
 
 protected:
-    // 子树中插入节点(递归)
+    // 子树插入节点(递归)
     bool InsertInSubTree_(TKey key, TValue value, BstNode<TKey, TValue>*& subtree_root);
 
-    // 子树中删除节点(递归)
-    bool RemoveInSubTree_(TKey key, BstNode<TKey, TValue>*& subtree_root);
+    // 子树删除节点(递归)
+    bool RemoveInSubTree_(BstNode<TKey, TValue>*& subtree_root, TKey key);
 
     // 子树搜索(递归)
     BstNode<TKey, TValue>* SearchInSubTree_(BstNode<TKey, TValue>* subtree_root, TKey key);
@@ -185,14 +248,14 @@ protected:
     int HeightOfSubtreeRecursive_(BstNode<TKey, TValue>* subtree_root);
 
     // 清除子树(递归)
-    void MakeEmptySubTree_(BstNode<TKey, TValue>*& subtree_root);
+    void ClearSubTree_(BstNode<TKey, TValue>*& subtree_root);
 
     // 打印子树(递归/中序)
     void PrintSubTree_(BstNode<TKey, TValue>* subtree_root,
                        void (*visit)(BstNode<TKey, TValue>*)) const;
 
     // 复制一颗树
-    BstNode<TKey, TValue>* CopySubTreeRecursive_(const BstNode<TKey, TValue>* origin_tree_root);
+    BstNode<TKey, TValue>* CopySubTreeRecursive_(const BstNode<TKey, TValue>* src_bst_root);
 
     // 子树中关键码最小项
     BstNode<TKey, TValue>* MinInSubTree_(BstNode<TKey, TValue>* subtree_root) const;
@@ -310,18 +373,30 @@ bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key,
 }
 
 
+/*!
+ * @brief **构造函数(关键字/值)**
+ * @param key 关键字
+ * @param value 值
+ * @note
+ * 构造函数(关键字/值)
+ * ----------------
+ * ----------------
+ *
+ * ----------------
+ * 调用Insert, 构造只有一个结点的二叉搜索树
+ */
 template <class TKey, class TValue>
 BinarySearchTree<TKey, TValue>::BinarySearchTree(TKey key, TValue value) {
-    this->Insert(key, value);
+    this->Insert(key, value);   // 调用Insert, 构造只有一个结点的二叉搜索树
 }
 
 
 /**
- * @brief 子树中删除节点(递归)
- * @tparam TValue 数据项模板类型
- * @tparam TKey 关键码模板类型
- * @param key 待删除节点的数据码
+ * @brief 子树删除节点(递归)
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
  * @param subtree_root 子树根节点
+ * @param key 待删除节点的数据码
  * @return 是否删除成功
  * @note
  * 1. 如果子树根节点指针为NULL, 则返回false
@@ -329,19 +404,19 @@ BinarySearchTree<TKey, TValue>::BinarySearchTree(TKey key, TValue value) {
  * 3. 如果有两个孩子节点, 使用中序前驱or后继, 替换掉待删除节点
  * 4. 如果只有一个孩子节点, 则将该孩子提升至待删除节点
  */
-template <class TKey, class TValue>
-bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BstNode<TKey, TValue>*& subtree_root) {
+template <typename TKey, typename TValue>
+bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(BstNode<TKey, TValue>*& subtree_root, TKey key) {
 
     if (subtree_root == NULL) {
         return false;
     }
 
     if (key < subtree_root->Key()) {
-        return RemoveInSubTree_(key, subtree_root->LeftChild());
+        return RemoveInSubTree_(subtree_root->LeftChild(), key);
     }
 
     if (key > subtree_root->Key()) {
-        return RemoveInSubTree_(key, subtree_root->RightChild());
+        return RemoveInSubTree_(subtree_root->RightChild(), key);
     }
 
     // 删除subtree_root, 使用中序前驱or后继替换掉该节点, 此处使用后继
@@ -360,7 +435,7 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BstNode<TKey, TV
         subtree_root->SetKey(replace_key);
 
         // 删除替换数据原先所在的节点
-        return RemoveInSubTree_(replace_key, subtree_root->RightChild());
+        return RemoveInSubTree_(subtree_root->RightChild(), replace_key);
     } else {
         BstNode<TKey, TValue>* delete_node = subtree_root;
 
@@ -389,14 +464,14 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(TKey key, BstNode<TKey, TV
  * 对子树节点执行delete和置NULL操作
  */
 template <class TKey, class TValue>
-void BinarySearchTree<TKey, TValue>::MakeEmptySubTree_(BstNode<TKey, TValue>*& subtree_root) {
+void BinarySearchTree<TKey, TValue>::ClearSubTree_(BstNode<TKey, TValue>*& subtree_root) {
 
     if (subtree_root == NULL) {
         return;
     }
 
-    MakeEmptySubTree_(subtree_root->LeftChild());
-    MakeEmptySubTree_(subtree_root->RightChild());
+    ClearSubTree_(subtree_root->LeftChild());
+    ClearSubTree_(subtree_root->RightChild());
 
     delete subtree_root;
     subtree_root = NULL;
@@ -442,28 +517,49 @@ void BinarySearchTree<TKey, TValue>::PrintSubTree_(BstNode<TKey, TValue>* subtre
 
 
 /**
- * @brief 复制一颗树
- * @tparam TValue 数据项模板类型
- * @tparam TKey 关键码模板类型
- * @param origin_tree_root 源子树
- * @return 新树的根节点
+ * @brief **子树复制**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param src_bst_root 源子树根结点
+ * @return 新树根节点
+ * 子树复制
+ * -------
+ * -------
+ *
+ * <span style="color:#FF9900">
+ * **分治递归**\n
+ * </span>
+ *
+ * -------
+ * + **1 源子树空树处理**\n
+ * **if** 源子树为空树 :\n
+ * &emsp; 返回NULL\n
+ * + **2 生成新树根结点**\n
+ * 声明new_bst_root(新二叉搜索树根结点), 并分配内存\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n
+ * + **3 左右子树分治递归复制**\n
+ * 左子树递归调用CopySubTreeRecursive_, 生成新左子树\n
+ * 右子树递归调用CopySubTreeRecursive_, 生成新右子树\n
+ * + **4 返回新树根结点**\n
+ * 返回new_bst_root\n
  */
-template <class TKey, class TValue>
-BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(const BstNode<TKey, TValue>* origin_tree_root) {
+template <typename TKey, typename TValue>
+BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(const BstNode<TKey, TValue>* src_bst_root) {
 
-    if (origin_tree_root == NULL) {
+    if (src_bst_root == NULL) {
         return NULL;
     }
 
-    BstNode<TKey, TValue>* new_tree_root = new BstNode<TKey, TValue>(
-            origin_tree_root->Value(),
-        origin_tree_root->Key());
-    /* error handler */
+    BstNode<TKey, TValue>* new_bst_root = new BstNode<TKey, TValue>(src_bst_root->Value(), src_bst_root->Key());
+    if (new_bst_root == NULL) {
+        throw bad_alloc();
+    }
 
-    new_tree_root->SetLeftChild(CopySubTreeRecursive_(origin_tree_root->left_child_));
-    new_tree_root->SetRightChild(CopySubTreeRecursive_(origin_tree_root->right_child_));
+    new_bst_root->SetLeftChild(CopySubTreeRecursive_(src_bst_root->left_child_));
+    new_bst_root->SetRightChild(CopySubTreeRecursive_(src_bst_root->right_child_));
 
-    return new_tree_root;
+    return new_bst_root;
 }
 
 
@@ -519,9 +615,9 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MaxInSubTree_(BstNode<TKe
 
 
 template<class TKey, class TValue>
-BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const BinarySearchTree<TKey, TValue>& origin_BST) {
+BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const BinarySearchTree<TKey, TValue>& origin_bst) {
 
-    this->root_ = CopySubTreeRecursive_(origin_BST.root_);
+    this->root_ = CopySubTreeRecursive_(origin_bst.root_);
 
     return *this;
 }
