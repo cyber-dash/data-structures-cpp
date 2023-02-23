@@ -292,10 +292,12 @@ void TestBSTMaxAndMin() {
     binary_search_tree->Insert(question8, answer8);
     binary_search_tree->Insert(question9, answer9);
 
-    string max_data = binary_search_tree->Max();
+    string max_data;
+    bool res = binary_search_tree->Max(max_data);
     cout << "max_data: " << max_data << endl;
 
-    string min_data = binary_search_tree->Min();
+    string min_data;
+    res = binary_search_tree->Min(min_data);
     cout << "min_data: " << min_data << endl;
 
     cout << "-------------------------------------------------------------" << endl;
@@ -408,7 +410,8 @@ void TestBSTMin() {
     binary_search_tree->Insert(question8, answer8);
     binary_search_tree->Insert(question9, answer9);
 
-    string minData = binary_search_tree->Min();
+    string minData;
+    bool res = binary_search_tree->Min(minData);
 
     cout << "minData: " << minData << endl;
 

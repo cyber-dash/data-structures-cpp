@@ -199,8 +199,8 @@ public:
      */
     virtual int Height() { return this->HeightOfSubtreeRecursive_(this->root_); }
 
-    virtual TValue Min();
-    virtual TValue Max();
+    bool Min(TValue& min_value);
+    virtual bool Max(TValue& max_value);
 
     /*!
      * @brief **获取根结点**
@@ -328,9 +328,16 @@ bool BinarySearchTree<TKey, TValue>::Insert(TKey key, TValue value) {
 }
 
 
-template<class TKey, class TValue>
-TValue BinarySearchTree<TKey, TValue>::Min() {
-    return MinInSubTree_(root_)->Value();
+template<typename TKey, typename TValue>
+bool BinarySearchTree<TKey, TValue>::Min(TValue& min_value) {
+    BstNode<TKey, TValue>* node = this->MinInSubTree_(this->Root());    // 对根结点调用MinInSubTree_, 获取key最小的结点
+    if (!node) {                                                        // if node为NULL
+        return false;                                                   // 返回false
+    }
+
+    min_value = node->Value();                                          // node的value_赋给min_value
+
+    return true;                                                        // 返回true
 }
 
 
@@ -624,10 +631,15 @@ BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const 
 
 
 template<class TKey, class TValue>
-TValue BinarySearchTree<TKey, TValue>::Max() {
-    BstNode<TKey, TValue>* root_node = this->root_;
-    BstNode<TKey, TValue>* max_node = this->BinarySearchTree::MaxInSubTree_(root_node);
-    return max_node->Value();
+bool BinarySearchTree<TKey, TValue>::Max(TValue& max_value) {
+    BstNode<TKey, TValue>* node = this->MaxInSubTree_(this->Root());    // 对根结点调用MaxInSubTree_, 获取key最大的结点
+    if (!node) {                                                        // if node为NULL
+        return false;                                                   // 返回false
+    }
+
+    max_value = node->Value();                                          // node的value_赋给max_value
+
+    return true;                                                        // 返回true
 }
 
 
