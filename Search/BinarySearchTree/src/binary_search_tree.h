@@ -154,10 +154,10 @@ public:
      * ----------------
      * 调用Insert, 构造只有一个结点的二叉搜索树
      */
-    BinarySearchTree(TKey key, TValue value) { this->Insert(key, value); }
+    BinarySearchTree(TKey key, TValue value) { this->InsertRecursive(key, value); }
 
     /*!
-     * @brief 析构函数
+     * @brief **析构函数**
      * @note
      * 析构函数
      * -------
@@ -169,7 +169,7 @@ public:
     virtual ~BinarySearchTree() { delete this->root_; };
 
     /*!
-     * @brief 插入结点
+     * @brief **插入结点(递归)**
      * @tparam TKey 关键字类型模板参数
      * @tparam TValue 值类型模板参数
      * @param key 关键字
@@ -183,10 +183,10 @@ public:
      * -------
      * 调用InsertInSubTree_
      */
-    virtual bool Insert(TKey key, TValue value) { return this->InsertInSubTree_(key, value, this->root_); }
+    virtual bool InsertRecursive(TKey key, TValue value) { return this->InsertInSubTree_(key, value, this->root_); }
 
     /*!
-     * @brief 删除结点
+     * @brief **删除结点**
      * @param key 关键字
      * @return 执行结果
      * @note
@@ -197,7 +197,7 @@ public:
      * -------
      * 对root_调用RemoveInSubTree_
      */
-    virtual bool Remove(const TKey& key) { return RemoveInSubTree_(root_, key); }
+    virtual bool RemoveRecursive(const TKey& key) { return RemoveInSubTree_(root_, key); }
 
     /*!
      * @brief **搜索**
@@ -278,14 +278,14 @@ protected:
     // 子树高度
     int HeightOfSubtreeRecursive_(BstNode<TKey, TValue>* subtree_root);
 
-    // 清除子树(递归)
+    // 子树清除(递归)
     void ClearSubTree_(BstNode<TKey, TValue>*& subtree_root);
 
     // 子树打印(递归)
     void PrintSubTreeRecursive_(BstNode<TKey, TValue>* subtree_root,
-                                void (*Print)(BstNode<TKey, TValue>*)) const;
+                                void (*NodePrint)(BstNode<TKey, TValue>*)) const;
 
-    // 子树复制
+    // 子树复制(递归)
     BstNode<TKey, TValue>* CopySubTreeRecursive_(const BstNode<TKey, TValue>* src_bst_root);
 
     // 子树中关键码最小项
@@ -386,41 +386,62 @@ bool BinarySearchTree<TKey, TValue>::Min(TValue& min_value) {
 
 
 /**
- * @brief 子树中插入节点(递归)
- * @tparam TValue 数据项模板类型
- * @tparam TKey 关键码模板类型
- * @param value 数据项
- * @param key 关键码
- * @param subtree_root 子树根节点指针
- * @return 是否插入成功
+ * @brief **子树插入节点(递归)**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ * @param key 关键字
+ * @param value 值
+ * @param subtree_root 子树根结点
+ * @return 执行结果
  * @note
- * 如果根节点指针为NULL, 则创建节点
- * 判断插入关键码与子树根节点关键码的大小关系, 在左子树or右子树做插入操作(递归)
- * 如果关键码相同, 则返回false
+ * 子树插入节点(递归)
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * + **1 空子树插入**\n
+ * **if** 空子树 :\n
+ * &emsp; 子树根结点分配内存\n
+ * &emsp; **if** 内存分配失败 :\n
+ * &emsp;&emsp; 抛出bad_alloc()\n
+ * &emsp; 返回true(结束递归)\n
+ * + **2 分治递归**\n
+ * **if** key小于子树根结点key :\n
+ * &emsp; 对根结点左孩子, 递归调用InsertInSubTree_, 返回结果\n
+ * **if** key大于子树根结点key :\n
+ * &emsp; 对根结点右孩子, 递归调用InsertInSubTree_, 返回结果\n
+ * + **3 返回**\n
+ * 返回false(递归失败, 重复插入)
  */
-template <class TKey, class TValue>
+template <typename TKey, typename TValue>
 bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key,
                                                       TValue value,
                                                       BstNode<TKey, TValue>*& subtree_root)
 {
-    if (subtree_root == NULL) {
-        subtree_root = new BstNode<TKey, TValue>(key, value);
-        if (!subtree_root) {
-            throw bad_alloc();
+    // ---------- 1 空子树插入 ----------
+
+    if (subtree_root == NULL) {                                             // if 空子树
+        subtree_root = new BstNode<TKey, TValue>(key, value);               // 子树根结点分配内存
+        if (!subtree_root) {                                                // if 内存分配失败
+            throw bad_alloc();                                              // 抛出bad_alloc()
         }
 
-        return true;
+        return true;                                                        // 返回true(结束递归)
     }
 
-    if (key < subtree_root->Key()) {
-        return InsertInSubTree_(key, value, subtree_root->LeftChild());
+    // ---------- 2 分治递归 ----------
+
+    if (key < subtree_root->Key()) {                                        // if key小于子树根结点key
+        return InsertInSubTree_(key, value, subtree_root->LeftChild());     // 对根结点左孩子, 递归调用InsertInSubTree_, 返回结果
     }
 
-    if (key > subtree_root->Key()) {
-        return InsertInSubTree_(key, value, subtree_root->RightChild());
+    if (key > subtree_root->Key()) {                                        // if key大于子树根结点key
+        return InsertInSubTree_(key, value, subtree_root->RightChild());    // 对根结点右孩子, 递归调用InsertInSubTree_, 返回结果
     }
 
-    return false;
+    // ---------- 3 返回 ----------
+
+    return false;                                                           // 返回false(递归失败, 重复插入)
 }
 
 
@@ -514,7 +535,7 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(BstNode<TKey, TValue>*& su
 
 
 /**
- * @brief 子树清除(递归)
+ * @brief **子树清除(递归)**
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值类型模板参数
  * @param subtree_root 子树根结点指针
@@ -558,18 +579,22 @@ void BinarySearchTree<TKey, TValue>::ClearSubTree_(BstNode<TKey, TValue>*& subtr
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值字类型模板参数
  * @param subtree_root 子树根结点
- * @param Print 结点打印函数
+ * @param NodePrint 结点打印函数
  * @note
  * 子树打印(递归)
  * ------------
  * ------------
+ *
+ * <span style="color:#FF9900">
+ * **分治递归**\n
+ * </span>
  *
  * ------------
  * + **1 空树处理**\n
  * **if** 子树根结点为NULL :\n
  * &emsp; 返回\n
  * + **2 分治递归**\n
- * 访问结点\n
+ * 打印结点\n
  * **if** 子树为叶子类型(没有左右孩子): \n
  * &emsp; 返回\n
  * 打印'('\n
@@ -580,7 +605,7 @@ void BinarySearchTree<TKey, TValue>::ClearSubTree_(BstNode<TKey, TValue>*& subtr
  */
 template <typename TKey, typename TValue>
 void BinarySearchTree<TKey, TValue>::PrintSubTreeRecursive_(BstNode<TKey, TValue>* subtree_root,
-                                                            void (*Print)(BstNode<TKey, TValue>*)) const
+                                                            void (*NodePrint)(BstNode<TKey, TValue>*)) const
 {
     // ---------- 1 空树处理 ----------
 
@@ -590,7 +615,7 @@ void BinarySearchTree<TKey, TValue>::PrintSubTreeRecursive_(BstNode<TKey, TValue
 
     // ---------- 2 分治递归 ----------
 
-    Print(subtree_root);                                        // 访问结点
+    NodePrint(subtree_root);                                        // 打印结点
 
     // if 子树为叶子类型(没有左右孩子)
     if (subtree_root->LeftChild() == NULL && subtree_root->RightChild() == NULL) {
@@ -599,11 +624,11 @@ void BinarySearchTree<TKey, TValue>::PrintSubTreeRecursive_(BstNode<TKey, TValue
 
     cout << "(";                                                // 打印'('
 
-    PrintSubTreeRecursive_(subtree_root->LeftChild(), Print);   // 递归调用PrintSubTreeRecursive_, 对左子树进行打印
+    PrintSubTreeRecursive_(subtree_root->LeftChild(), NodePrint);   // 递归调用PrintSubTreeRecursive_, 对左子树进行打印
 
     cout << ",";                                                // 打印','
 
-    PrintSubTreeRecursive_(subtree_root->RightChild(), Print);  // 递归调用PrintSubTreeRecursive_, 对右子树进行打印
+    PrintSubTreeRecursive_(subtree_root->RightChild(), NodePrint);  // 递归调用PrintSubTreeRecursive_, 对右子树进行打印
 
     cout << ")";                                                // 打印')'
 }

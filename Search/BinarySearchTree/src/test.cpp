@@ -42,9 +42,9 @@ void TestBSTInsert() {
     string question3 = "我最爱的电影";
     string answer3 = "《黑客帝国》";
 
-    binary_search_tree->Insert(question1, answer1);
-    binary_search_tree->Insert(question2, answer2);
-    binary_search_tree->Insert(question3, answer3);
+    binary_search_tree->InsertRecursive(question1, answer1);
+    binary_search_tree->InsertRecursive(question2, answer2);
+    binary_search_tree->InsertRecursive(question3, answer3);
 
     BinarySearchTree<string, string> test_bst = *binary_search_tree;
 
@@ -89,20 +89,20 @@ void TestBSTRemove() {
     string question8 = "最后随便说句话";
     string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
 
-    binary_search_tree->Insert(question1, answer1);
-    binary_search_tree->Insert(question2, answer2);
-    binary_search_tree->Insert(question3, answer3);
-    binary_search_tree->Insert(question4, answer4);
-    binary_search_tree->Insert(question5, answer5);
-    binary_search_tree->Insert(question6, answer6);
-    binary_search_tree->Insert(question7, answer7);
-    binary_search_tree->Insert(question8, answer8);
+    binary_search_tree->InsertRecursive(question1, answer1);
+    binary_search_tree->InsertRecursive(question2, answer2);
+    binary_search_tree->InsertRecursive(question3, answer3);
+    binary_search_tree->InsertRecursive(question4, answer4);
+    binary_search_tree->InsertRecursive(question5, answer5);
+    binary_search_tree->InsertRecursive(question6, answer6);
+    binary_search_tree->InsertRecursive(question7, answer7);
+    binary_search_tree->InsertRecursive(question8, answer8);
 
     binary_search_tree->Print(BSTNodeVisit);
 
     cout << endl;
 
-    binary_search_tree->Remove(question1);
+    binary_search_tree->RemoveRecursive(question1);
 
     binary_search_tree->Print(BSTNodeVisit);
 
@@ -147,17 +147,17 @@ void TestBSTSearch() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "烂到肚子里也不会说的";
 
-    binary_search_tree->Insert(question1, answer1);
-    binary_search_tree->Insert(question2, answer2);
-    binary_search_tree->Insert(question3, answer3);
-    binary_search_tree->Insert(question4, answer4);
-    binary_search_tree->Insert(question5, answer5);
-    binary_search_tree->Insert(question6, answer6);
-    binary_search_tree->Insert(question7, answer7);
-    binary_search_tree->Insert(question8, answer8);
-    binary_search_tree->Insert(question9, answer9);
+    binary_search_tree->InsertRecursive(question1, answer1);
+    binary_search_tree->InsertRecursive(question2, answer2);
+    binary_search_tree->InsertRecursive(question3, answer3);
+    binary_search_tree->InsertRecursive(question4, answer4);
+    binary_search_tree->InsertRecursive(question5, answer5);
+    binary_search_tree->InsertRecursive(question6, answer6);
+    binary_search_tree->InsertRecursive(question7, answer7);
+    binary_search_tree->InsertRecursive(question8, answer8);
+    binary_search_tree->InsertRecursive(question9, answer9);
 
-    binary_search_tree->Remove(question9);
+    binary_search_tree->RemoveRecursive(question9);
 
     BstNode<string, string>* the_9th_node = binary_search_tree->Search(question9);
     if (the_9th_node == NULL) { // 没有搜索到
@@ -285,15 +285,15 @@ void TestBSTMaxAndMin() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "那些无法形容的痛, 见不得光";
 
-    binary_search_tree->Insert(question1, answer1);
-    binary_search_tree->Insert(question2, answer2);
-    binary_search_tree->Insert(question3, answer3);
-    binary_search_tree->Insert(question4, answer4);
-    binary_search_tree->Insert(question5, answer5);
-    binary_search_tree->Insert(question6, answer6);
-    binary_search_tree->Insert(question7, answer7);
-    binary_search_tree->Insert(question8, answer8);
-    binary_search_tree->Insert(question9, answer9);
+    binary_search_tree->InsertRecursive(question1, answer1);
+    binary_search_tree->InsertRecursive(question2, answer2);
+    binary_search_tree->InsertRecursive(question3, answer3);
+    binary_search_tree->InsertRecursive(question4, answer4);
+    binary_search_tree->InsertRecursive(question5, answer5);
+    binary_search_tree->InsertRecursive(question6, answer6);
+    binary_search_tree->InsertRecursive(question7, answer7);
+    binary_search_tree->InsertRecursive(question8, answer8);
+    binary_search_tree->InsertRecursive(question9, answer9);
 
     string max_data;
     bool res = binary_search_tree->Max(max_data);
@@ -403,15 +403,15 @@ void TestBSTMin() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "那些无法形容的痛, 见不得光";
 
-    binary_search_tree->Insert(question1, answer1);
-    binary_search_tree->Insert(question2, answer2);
-    binary_search_tree->Insert(question3, answer3);
-    binary_search_tree->Insert(question4, answer4);
-    binary_search_tree->Insert(question5, answer5);
-    binary_search_tree->Insert(question6, answer6);
-    binary_search_tree->Insert(question7, answer7);
-    binary_search_tree->Insert(question8, answer8);
-    binary_search_tree->Insert(question9, answer9);
+    binary_search_tree->InsertRecursive(question1, answer1);
+    binary_search_tree->InsertRecursive(question2, answer2);
+    binary_search_tree->InsertRecursive(question3, answer3);
+    binary_search_tree->InsertRecursive(question4, answer4);
+    binary_search_tree->InsertRecursive(question5, answer5);
+    binary_search_tree->InsertRecursive(question6, answer6);
+    binary_search_tree->InsertRecursive(question7, answer7);
+    binary_search_tree->InsertRecursive(question8, answer8);
+    binary_search_tree->InsertRecursive(question9, answer9);
 
     string minData;
     bool res = binary_search_tree->Min(minData);
@@ -457,15 +457,15 @@ void TestBSTMakeEmpty() {
     string question9 = "讲一件后悔的事儿";
     string answer9 = "烂到肚子里也不会说的";
 
-    binary_search_tree->Insert(question1, answer1);
-    binary_search_tree->Insert(question2, answer2);
-    binary_search_tree->Insert(question3, answer3);
-    binary_search_tree->Insert(question4, answer4);
-    binary_search_tree->Insert(question5, answer5);
-    binary_search_tree->Insert(question6, answer6);
-    binary_search_tree->Insert(question7, answer7);
-    binary_search_tree->Insert(question8, answer8);
-    binary_search_tree->Insert(question9, answer9);
+    binary_search_tree->InsertRecursive(question1, answer1);
+    binary_search_tree->InsertRecursive(question2, answer2);
+    binary_search_tree->InsertRecursive(question3, answer3);
+    binary_search_tree->InsertRecursive(question4, answer4);
+    binary_search_tree->InsertRecursive(question5, answer5);
+    binary_search_tree->InsertRecursive(question6, answer6);
+    binary_search_tree->InsertRecursive(question7, answer7);
+    binary_search_tree->InsertRecursive(question8, answer8);
+    binary_search_tree->InsertRecursive(question9, answer9);
 
     binary_search_tree->Clear();
 
@@ -671,7 +671,7 @@ void TestBSTAndAVLHeight() {
     AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
     for (int i = 0; i < count; i++) {
-        bst_tree->Insert(keys[i], elements[i]);
+        bst_tree->InsertRecursive(keys[i], elements[i]);
     }
 
     for (int i = 0; i < count; i++) {
