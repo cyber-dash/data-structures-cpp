@@ -46,7 +46,10 @@ void TestBSTInsert() {
     binary_search_tree->Insert(question2, answer2);
     binary_search_tree->Insert(question3, answer3);
 
-    binary_search_tree->Print(BSTNodeVisit);
+    BinarySearchTree<string, string> test_bst = *binary_search_tree;
+
+    // binary_search_tree->Print(BSTNodeVisit);
+    test_bst.Print(BSTNodeVisit);
 
     cout << endl;
 
