@@ -1,6 +1,11 @@
-﻿//
-// Created by cyberdash@163.com on 2021/6/26.
-//
+﻿/*!
+ * @file main.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief main函数文件
+ * @version 0.2.1
+ * @date 2023-02-25
+ */
+
 
 #include "test.h"
 
@@ -8,31 +13,40 @@
 using namespace std;
 
 
+/*!
+ * @brief main函数
+ * @return 0
+ * @note
+ * main函数
+ * -------
+ * -------
+ *
+ * -------
+ */
 int main()
 {
-	// 插入
-	TestBSTInsert();
-	TestAVLInsert2();
-	TestAVLInsertByCyberDash();
+	/// 测试插入
+    TestBstInsert();
+    TestAVLInsert();
 
-	// 删除
-	TestBSTRemove();
+	/// 测试删除
+    TestBstRemove();
     TestAvlInsertAndRemove();
     TestAvlInsertAndRemoveRecursive();
 
-	// 查询
-	TestBSTSearch();
-	TestAVLSearch();
+	/// 测试查询
+    TestBstSearch();
+    TestAvlSearch();
 
-	// 高度
-	TestBSTAndAVLHeight();
+	/// 测试高度
+    TestBstAndAvlHeight();
 
-	// 最大最小值
+	/// 测试最大最小值
 	TestBSTMaxAndMin();
 	TestAVLMaxAndMin();
 
-	// 清除所有数据
-	TestBSTMakeEmpty();
+	/// 测试清空
+    TestBstClear();
 
 	return 0;
 }

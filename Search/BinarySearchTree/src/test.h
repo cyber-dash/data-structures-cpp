@@ -1,6 +1,11 @@
-﻿//
-// Created by cyberdash@163.com on 2021/6/26.
-//
+﻿/*!
+ * @file test.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 二叉搜索树测试h文件
+ * @version 0.2.1
+ * @date 2023-02-25
+ */
+
 
 #ifndef CYBER_DASH_SEARCH_TREE_TEST_H
 #define CYBER_DASH_SEARCH_TREE_TEST_H
@@ -10,35 +15,38 @@
 #include "avl_tree.h"
 
 
-void TestOperatorEqual();
+// 二叉搜索树_插入结点_测试
+void TestBstInsert();
 
-void TestBSTInsert();
+// 二叉搜索树_删除结点_测试
+void TestBstRemove();
 
-void TestBSTRemove();
+// 二叉搜索树_搜索_测试
+void TestBstSearch();
 
-void TestBSTSearch();
-
+// 二叉搜索树_最大值最小值_测试
 void TestBSTMaxAndMin();
 
+// AVL树_最大值最小值_测试
 void TestAVLMaxAndMin();
 
-void TestBSTMin();
+// 二叉搜索树_清空_测试
+void TestBstClear();
 
-void TestBSTMakeEmpty();
+// AVL树_搜索_测试
+void TestAvlSearch();
 
-void TestAVLSearch();
-
+// AVL树_插入结点_测试
 void TestAVLInsert();
 
-void TestAVLInsert2();
-
-void TestAVLInsertByCyberDash();
-
+// AVL树_插入结点和删除结点_测试
 void TestAvlInsertAndRemove();
 
+// AVL树_插入结点(递归)和删除结点(递归)_测试
 void TestAvlInsertAndRemoveRecursive();
 
-void TestBSTAndAVLHeight();
+// 二叉搜索树和AVL树_树高度_测试
+void TestBstAndAvlHeight();
 
 
 #endif // CYBER_DASH_SEARCH_TREE_TEST_H

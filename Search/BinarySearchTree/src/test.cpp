@@ -1,31 +1,80 @@
-﻿//
-// Created by cyberdash@163.com on 2021/6/26.
-//
+﻿/*!
+ * @file test.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 二叉搜索树测试cpp文件
+ * @version 0.2.1
+ * @date 2023-02-25
+ */
 
 
 #include "test.h"
 #include "vector"
 
 
-template<class Value, class Key>
-void BSTNodeVisit(BstNode<Value, Key>* node) {
+/*!
+ * @brief **搜索二叉树结点打印**
+ * @tparam Key 关键字类型模板参数
+ * @tparam Value 值类型模板参数
+ * @param node 结点
+ * @note
+ * 搜索二叉树结点打印
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ */
+template<typename Key, typename Value>
+void BstNodePrint(BstNode<Key, Value>* node) {
     cout << "[" << node->Key() << ":" << node->Value() << "]";
 }
 
 
-template<class Value, class Key>
-void AVLNodeVisit(AvlNode<Value, Key>* node) {
+/*!
+ * @brief **AVL树结点打印**
+ * @tparam Key 关键字类型模板参数
+ * @tparam Value 值类型模板参数
+ * @param node 结点
+ * @note
+ * AVL树结点打印
+ * -----------
+ * -----------
+ *
+ * -----------
+ */
+template<typename Key, typename Value>
+void AVLNodeVisit(AvlNode<Key, Value>* node) {
     cout << "[" << node->Key() << ":" << node->Value() << "|" << node->BalanceFactor() << "]";
 }
 
 
-template<class Value, class Key>
-void VisitKey(AvlNode<Value, Key>* node) {
+/*!
+ * @brief **AVL树结点Key打印**
+ * @tparam Key 关键字类型模板参数
+ * @tparam Value 值类型模板参数
+ * @param node 结点
+ * @note
+ * AVL树结点Key打印
+ * --------------
+ * --------------
+ *
+ * --------------
+ */
+template<typename Key, typename Value>
+void VisitKey(AvlNode<Key, Value>* node) {
     cout << node->Key() ;
 }
 
 
-void TestBSTInsert() {
+/*!
+ * @brief **二叉搜索树_插入结点_测试**
+ * @note
+ * 二叉搜索树_插入结点_测试
+ * ---------------------
+ * ---------------------
+ *
+ * ---------------------
+ */
+void TestBstInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test BinarySearchTree Insert               |" << endl;
@@ -46,10 +95,9 @@ void TestBSTInsert() {
     binary_search_tree->InsertRecursive(question2, answer2);
     binary_search_tree->InsertRecursive(question3, answer3);
 
-    BinarySearchTree<string, string> test_bst = *binary_search_tree;
+    BinarySearchTree<string, string> new_bst = *binary_search_tree;
 
-    // binary_search_tree->Print(BSTNodeVisit);
-    test_bst.Print(BSTNodeVisit);
+    new_bst.Print(BstNodePrint);
 
     cout << endl;
 
@@ -57,7 +105,16 @@ void TestBSTInsert() {
 }
 
 
-void TestBSTRemove() {
+/*!
+ * @brief **二叉搜索树_删除结点_测试**
+ * @note
+ * 二叉搜索树_删除结点_测试
+ * ---------------------
+ * ---------------------
+ *
+ * ---------------------
+ */
+void TestBstRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test BinarySearchTree Remove               |" << endl;
@@ -98,13 +155,13 @@ void TestBSTRemove() {
     binary_search_tree->InsertRecursive(question7, answer7);
     binary_search_tree->InsertRecursive(question8, answer8);
 
-    binary_search_tree->Print(BSTNodeVisit);
+    binary_search_tree->Print(BstNodePrint);
 
     cout << endl;
 
     binary_search_tree->RemoveRecursive(question1);
 
-    binary_search_tree->Print(BSTNodeVisit);
+    binary_search_tree->Print(BstNodePrint);
 
     cout << endl;
 
@@ -112,7 +169,16 @@ void TestBSTRemove() {
 }
 
 
-void TestBSTSearch() {
+/*!
+ * @brief **二叉搜索树_搜索_测试**
+ * @note
+ * 二叉搜索树_搜索_测试
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ */
+void TestBstSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test BinarySearchTree Search               |" << endl;
@@ -181,7 +247,16 @@ void TestBSTSearch() {
 }
 
 
-void TestAVLSearch() {
+/*!
+ * @brief **AVL树_搜索_测试**
+ * @note
+ * AVL树_搜索_测试
+ * -------------
+ * -------------
+ *
+ * -------------
+ */
+void TestAvlSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test AVL Search                      |" << endl;
@@ -250,6 +325,15 @@ void TestAVLSearch() {
 }
 
 
+/*!
+ * @brief **二叉搜索树_最大值最小值_测试**
+ * @note
+ * 二叉搜索树_最大值最小值_测试
+ * ------------------------
+ * ------------------------
+ *
+ * ------------------------
+ */
 void TestBSTMaxAndMin() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -307,6 +391,15 @@ void TestBSTMaxAndMin() {
 }
 
 
+/*!
+ * @brief **AVL树_最大值最小值_测试**
+ * @note
+ * AVL树_最大值最小值_测试
+ * --------------------
+ * --------------------
+ *
+ * --------------------
+ */
 void TestAVLMaxAndMin() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -368,61 +461,16 @@ void TestAVLMaxAndMin() {
 }
 
 
-void TestBSTMin() {
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test BinarySearchTree Min                 |" << endl;
-    cout << "|                     测试搜索二叉树的最小值                    |" << endl;
-
-    BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
-
-    string question1 = "最爱的乐队";
-    string answer1 = "林肯公园";
-
-    string question2 = "最爱的游戏";
-    string answer2 = "Dota2";
-
-    string question3 = "最爱的电影";
-    string answer3 = "《黑客帝国》";
-
-    string question4 = "最爱的运动";
-    string answer4 = "足球";
-
-    string question5 = "最讨厌的编程语言";
-    string answer5 = "Java";
-
-    string question6 = "如果暴富了想干嘛";
-    string answer6 = "包养数学家";
-
-    string question7 = "推荐几首歌听";
-    string answer7 = "Learning To Survive|Final Masquerade|Nothing";
-
-    string question8 = "最后随便说句话";
-    string answer8 = "搞编程一定要爱这个世界, 否则只有折磨";
-
-    string question9 = "讲一件后悔的事儿";
-    string answer9 = "那些无法形容的痛, 见不得光";
-
-    binary_search_tree->InsertRecursive(question1, answer1);
-    binary_search_tree->InsertRecursive(question2, answer2);
-    binary_search_tree->InsertRecursive(question3, answer3);
-    binary_search_tree->InsertRecursive(question4, answer4);
-    binary_search_tree->InsertRecursive(question5, answer5);
-    binary_search_tree->InsertRecursive(question6, answer6);
-    binary_search_tree->InsertRecursive(question7, answer7);
-    binary_search_tree->InsertRecursive(question8, answer8);
-    binary_search_tree->InsertRecursive(question9, answer9);
-
-    string minData;
-    bool res = binary_search_tree->Min(minData);
-
-    cout << "minData: " << minData << endl;
-
-    cout << "-------------------------------------------------------------" << endl;
-}
-
-
-void TestBSTMakeEmpty() {
+/*!
+ * @brief **二叉搜索树_清空_测试**
+ * @note
+ * 二叉搜索树_清空_测试
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ */
+void TestBstClear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test BinarySearchTree Clear            |" << endl;
@@ -469,50 +517,26 @@ void TestBSTMakeEmpty() {
 
     binary_search_tree->Clear();
 
-    binary_search_tree->Print(BSTNodeVisit);
+    binary_search_tree->Print(BstNodePrint);
 
     cout << "-------------------------------------------------------------" << endl;
 }
 
 
+/*!
+ * @brief **AVL树_插入结点_测试**
+ * @note
+ * AVL树_插入节点_测试
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ */
 void TestAVLInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test AVL Insert                      |" << endl;
     cout << "|                     测试平衡二叉树的插入                     |" << endl;
-
-    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
-
-    string question1 = "我最爱的乐队";
-    string answer1 = "林肯公园";
-
-    string question2 = "我最爱的游戏";
-    string answer2 = "Dota2";
-
-    string question3 = "我最爱的电影";
-    string answer3 = "《黑客帝国》";
-
-    string question4 = "最爱的运动";
-    string answer4 = "足球";
-
-    AVL_tree->Insert(question1, answer1);
-    AVL_tree->Insert(question2, answer2);
-    AVL_tree->Insert(question3, answer3);
-    AVL_tree->Insert(question4, answer4);
-
-    AVL_tree->Print(AVLNodeVisit);
-
-    cout << endl;
-
-    cout << "-------------------------------------------------------------" << endl;
-}
-
-
-void TestAVLInsert2() {
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                     Test AVL Insert2                      |" << endl;
-    cout << "|                    测试平衡二叉树的插入2                     |" << endl;
 
     AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
 
@@ -541,39 +565,15 @@ void TestAVLInsert2() {
 }
 
 
-void TestAVLInsertByCyberDash() {
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test AVL Insert                      |" << endl;
-    cout << "|                     测试平衡二叉树的插入                     |" << endl;
-
-    AvlTree<string, string>* AVL_tree = new AvlTree<string, string>();
-
-    string question1 = "我最爱的乐队";
-    string answer1 = "林肯公园";
-
-    string question2 = "我最爱的游戏";
-    string answer2 = "Dota2";
-
-    string question3 = "我最爱的电影";
-    string answer3 = "《黑客帝国》";
-
-    string question4 = "最爱的运动";
-    string answer4 = "足球";
-
-    AVL_tree->Insert(question1, answer1);
-    AVL_tree->Insert(question2, answer2);
-    AVL_tree->Insert(question3, answer3);
-    AVL_tree->Insert(question4, answer4);
-
-    AVL_tree->Print(AVLNodeVisit);
-
-    cout << endl;
-
-    cout << "-------------------------------------------------------------" << endl;
-}
-
-
+/*!
+ * @brief **AVL树_插入结点和删除结点_测试**
+ * @note
+ * AVL树_插入结点和删除结点_测试
+ * --------------------------
+ * --------------------------
+ *
+ * --------------------------
+ */
 void TestAvlInsertAndRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -609,6 +609,15 @@ void TestAvlInsertAndRemove() {
 }
 
 
+/*!
+ * @brief **AVL树_插入结点(递归)和删除结点(递归)_测试**
+ * @note
+ * AVL树_插入结点(递归)和删除结点(递归)_测试
+ * -------------------------------------
+ * -------------------------------------
+ *
+ * -------------------------------------
+ */
 void TestAvlInsertAndRemoveRecursive() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -644,7 +653,16 @@ void TestAvlInsertAndRemoveRecursive() {
 }
 
 
-void TestBSTAndAVLHeight() {
+/*!
+ * @brief **二叉搜索树和AVL树_树高度_测试**
+ * @note
+ * 二叉搜索树和AVL树_树高度_测试
+ * -------------------------
+ * -------------------------
+ *
+ * -------------------------
+ */
+void TestBstAndAvlHeight() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinarySearchTree & AVL Height           |" << endl;

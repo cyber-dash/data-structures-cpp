@@ -238,13 +238,13 @@ public:
     BstNode<TKey, TValue>*& Root() { return this->root_; }
 
     /*!
-     * @brief **清除结点**
+     * @brief **清空**
      * @note
-     * 清除结点
-     * -------
-     * -------
+     * 清空
+     * ---
+     * ---
      *
-     * -------
+     * ---
      * 对根结点调用ClearSubTree_
      */
     virtual void Clear() { ClearSubTree_(root_); }
@@ -278,7 +278,7 @@ protected:
     // 子树高度
     int HeightOfSubtreeRecursive_(BstNode<TKey, TValue>* subtree_root);
 
-    // 子树清除(递归)
+    // 子树清空(递归)
     void ClearSubTree_(BstNode<TKey, TValue>*& subtree_root);
 
     // 子树打印(递归)
@@ -535,12 +535,12 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(BstNode<TKey, TValue>*& su
 
 
 /**
- * @brief **子树清除(递归)**
+ * @brief **子树清空(递归)**
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值类型模板参数
  * @param subtree_root 子树根结点指针
  * @note
- * 子树清除(递归)
+ * 子树清空(递归)
  * ------------
  * ------------
  *

@@ -192,6 +192,11 @@ protected:
 };
 
 
+/*!
+ * @brief **AVL树模板类**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TValue 值类型模板参数
+ */
 template<typename TKey, typename TValue>
 class AvlTree : public BinarySearchTree<TKey, TValue> {
 public:
