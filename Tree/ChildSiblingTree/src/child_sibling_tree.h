@@ -25,16 +25,16 @@ using namespace std;
 template <class TData>
 struct ChildSiblingNode {
     /*!
-     * @brief **结构体构造函数**
+     * @brief **构造函数(数据项/长子结点/下一兄弟结点)**
      * @param data 数据项
      * @param first_child 长子结点
      * @param next_sibling 下一兄弟结点
      * @note
-     * 结构体构造函数
-     * ------------
-     * ------------
+     * 构造函数(数据项/长子结点/下一兄弟结点)
+     * ---------------------------------
+     * ---------------------------------
      *
-     * ------------
+     * ---------------------------------
      * 设置data, first_child和next_sibling
      */
     explicit ChildSiblingNode(TData data,
@@ -83,12 +83,40 @@ public:
     ChildSiblingNode<TData>* NextSibling();
 
     /*!
-     * @brief **是否为空树**
-     * @return 是/否
+     * @brief **判断是否空树**
+     * @return 是否空树
      */
-    bool IsEmpty() { return this->root_ == NULL; }
-    int NodeCount() { return this->SubTreeNodeCountRecursive_(this->root_); }
-    int Depth() { return this->SubTreeDepthRecursive_(this->root_); }
+    bool Empty() { return this->root_ == NULL; }
+
+    /*!
+     * @brief **获取结点数(递归)**
+     * @return 结点数
+     * 获取结点数(递归)
+     * --------------
+     * --------------
+     *
+     * --------------
+     * 对根结点调用NodeCountOfSubTreeRecursive_, 返回结果
+     */
+    int NodeCountRecursive() { return this->NodeCountOfSubTreeRecursive_(this->root_); }
+
+    /*!
+     * @brief **获取高度(递归)**
+     * @return 高度
+     * @note
+     * 获取高度(递归)
+     * ------------
+     * ------------
+     *
+     * ------------
+     * 对根结点调用HeightOfSubTreeRecursive_, 返回结果
+     */
+    int Height() { return this->HeightOfSubTreeRecursive_(this->root_); }
+
+    /*!
+     * @brief **获取根结点**
+     * @return 根结点
+     */
     ChildSiblingNode<TData>* Root() { return this->root_; }
     void PreOrder(void (*visit)(ChildSiblingNode<TData>*)) { PreOrderInSubTreeRecursive_(root_, visit); }
     void PostOrder(void (*visit)(ChildSiblingNode<TData>*)) { PostOrderInSubTreeRecursive_(root_, visit); }
@@ -108,9 +136,9 @@ private:
     // 使用字符串创建子女兄弟树
     void CreateTreeByStrRecursive_(ChildSiblingNode<TData>*&, char*& str);
     // 子树节点数量(递归)
-    int SubTreeNodeCountRecursive_(ChildSiblingNode<TData>* sub_tree_root);
+    int NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root);
     // 子树深度(递归)
-    int SubTreeDepthRecursive_(ChildSiblingNode<TData>* sub_tree_root);
+    int HeightOfSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root);
     // 打印子树(递归)
     void ShowSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root);
 };
@@ -228,15 +256,15 @@ void ChildSiblingTree<TData>::LevelOrderInSubTree_(ChildSiblingNode<TData>* sub_
  * @return 节点数量
  */
 template <class TData>
-int ChildSiblingTree<TData>::SubTreeNodeCountRecursive_(ChildSiblingNode<TData>* sub_tree_root) {
+int ChildSiblingTree<TData>::NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root) {
     if (sub_tree_root == NULL) {
         return 0;
     }
 
     int count = 1;
 
-    count += SubTreeNodeCountRecursive_(sub_tree_root->first_child);
-    count += SubTreeNodeCountRecursive_(sub_tree_root->next_sibling);
+    count += NodeCountOfSubTreeRecursive_(sub_tree_root->first_child);
+    count += NodeCountOfSubTreeRecursive_(sub_tree_root->next_sibling);
 
     return count;
 }
@@ -249,15 +277,15 @@ int ChildSiblingTree<TData>::SubTreeNodeCountRecursive_(ChildSiblingNode<TData>*
  * @return 深度
  */
 template <class TData>
-int ChildSiblingTree<TData>::SubTreeDepthRecursive_(ChildSiblingNode<TData>* sub_tree_root) {
+int ChildSiblingTree<TData>::HeightOfSubTreeRecursive_(ChildSiblingNode<TData>* sub_tree_root) {
     if (sub_tree_root == NULL) {
         return 0;
     }
 
     // 长子结点对应的深度
-    int first_child_depth = SubTreeDepthRecursive_(sub_tree_root->first_child) + 1;
+    int first_child_depth = HeightOfSubTreeRecursive_(sub_tree_root->first_child) + 1;
     // 下一兄弟结点对应的深度
-    int next_sibling_depth = SubTreeDepthRecursive_(sub_tree_root->next_sibling);
+    int next_sibling_depth = HeightOfSubTreeRecursive_(sub_tree_root->next_sibling);
 
     return (first_child_depth > next_sibling_depth) ? first_child_depth : next_sibling_depth;
 }

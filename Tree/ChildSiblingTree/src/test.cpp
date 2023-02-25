@@ -58,7 +58,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
 	ChildSiblingTree<int> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
-	int node_count = child_sibling_tree.NodeCount();
+	int node_count = child_sibling_tree.NodeCountRecursive();
 	cout << "树的节点数量: " << node_count << endl;
 
 	cout << "调用ShowTree显示: ";
@@ -76,7 +76,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
 void TestChildSiblingTreeDepth() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                 Test ChildSiblingTree Depth               |" << endl;
+	cout << "|                 Test ChildSiblingTree Height               |" << endl;
 	cout << "|                          测试深度                           |" << endl << endl;
     cout<<"            0                                       0        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
@@ -94,7 +94,7 @@ void TestChildSiblingTreeDepth() {
 	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
-	int depth = child_sibling_tree.Depth();
+	int depth = child_sibling_tree.Height();
 	cout << "深度: " << depth << endl;
 
 	cout << "-------------------------------------------------------------" << endl << endl;
@@ -107,7 +107,7 @@ void TestChildSiblingTreeDepth() {
 void TestChildSiblingTreeNodeCount() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|               Test ChildSiblingTree NodeCount             |" << endl;
+	cout << "|               Test ChildSiblingTree NodeCountRecursive             |" << endl;
 	cout << "|                         测试节点数量                         |" << endl << endl;
     cout<<"            0                                       0        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
@@ -125,7 +125,7 @@ void TestChildSiblingTreeNodeCount() {
 	ChildSiblingTree<int> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
-	int node_count = child_sibling_tree.NodeCount();
+	int node_count = child_sibling_tree.NodeCountRecursive();
 	cout << "节点数量: " << node_count << endl;
 
 	cout << "-------------------------------------------------------------" << endl << endl;
