@@ -1,5 +1,5 @@
 ﻿/*!
- * @file merge_sort.cpp
+ * @file merge_sort.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 归并排序
  * @version 0.2.1

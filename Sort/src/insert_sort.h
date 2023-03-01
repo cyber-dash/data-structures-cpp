@@ -1,5 +1,5 @@
 ﻿/*!
- * @file insert_sort.cpp
+ * @file insert_sort.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 插入排序
  * @version 0.2.1

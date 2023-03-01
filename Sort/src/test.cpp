@@ -1,7 +1,7 @@
 ﻿/*!
  * @file test.cpp
  * @author CyberDash, cyberdash@163.com(id:cyberdash_yuan)
- * @brief .cppļ
+ * @brief 测试函数cpp文件
  * @version 0.2.1
  * @date 2021-09-19
  * @copyright Copyright (c) 2021
@@ -144,7 +144,7 @@ void TestQuickSort() {
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
-    QuickSort<int>(array, array_size);
+    QuickSortRecursive<int>(array, array_size);
 
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
