@@ -71,17 +71,17 @@ int main() {
 	CircularDoublyLinkedListTest::TestSearch();
 
 	CircularDoublyLinkedListTest::TestGetDataAndSetData();
-
-	LinkListTest::TestCopyConstructor();
-
-	LinkListTest::TestRemove();
-
-	LinkListTest::TestMakeEmpty();
-
-	LinkListTest::TestLocate();
-
-	LinkListTest::TestGetDataAndSetData();
      */
+
+	SinglyLinkListTest::TestCopyConstructor();
+
+	SinglyLinkListTest::TestRemove();
+
+    SinglyLinkListTest::TestClear();
+
+	SinglyLinkListTest::TestLocate();
+
+	SinglyLinkListTest::TestGetDataAndSetData();
 
     StaticLinkedListTest::TestInsert();
 
