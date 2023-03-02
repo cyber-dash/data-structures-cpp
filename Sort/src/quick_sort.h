@@ -4,8 +4,6 @@
  * @brief 快速排序
  * @version 0.2.1
  * @date 2021-09-19
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #include "util.h"
@@ -23,12 +21,19 @@
  *
  * ------------
  * + **1 初始化左右边界**\n
- * + **2 调用递归函数排序**\n
+ * left(左边界)设为0\n
+ * right(右边界)设为size - 1\n
+ * + **2 调用子数组递归函数排序**\n
  */
 template<typename TElement>
 void QuickSortRecursive(TElement* elements, int size) {
-    int left = 0;
-    int right = size - 1;
+
+    // ---------- 1 初始化左右边界 ----------
+
+    int left = 0;           // left(左边界)设为0
+    int right = size - 1;   // right(右边界)设为size - 1
+
+    // ---------- 2 调用子数组递归函数排序 ----------
 
     QuickSortInSubArrayRecursive(elements, left, right);
 }
@@ -74,50 +79,71 @@ void QuickSortRecursive(TElement* elements, int size) {
 template<typename TElement>
 int Partition(TElement* elements, int left, int right) {
 
-    int pivot = left;
+    int pivot = left;                                       // 声明并初始化pivot(轴), 等于left(数组左边界)
 
-    while (left <= right) {
+    while (left <= right) {                                 // while loop left <= right (左右边界还有向中间逼近的可能)
 
-        for (; right >= pivot; right--) {
-            if (elements[pivot] > elements[right]) {
-                Swap(elements + pivot, elements + right);
-                left = pivot + 1;
-                pivot = right;
-                break;
+        // (右侧逼近)
+        for (; right >= pivot; right--) {                   // for loop right>= pivot; right--
+            if (elements[pivot] > elements[right]) {        // if pivot位置元素 > right位置元素
+                Swap(elements + pivot, elements + right);   // 交换pivot和right位置元素
+                left = pivot + 1;                           // left(左边界)修改为pivot + 1
+                pivot = right;                              // pivot修改为right(右边界)
+                break;                                      // break跳出循环(本轮从右向左逼近结束)
             }
         }
 
-        for (; left <= pivot; left++) {
-            if (elements[pivot] < elements[left]) {
-                Swap(elements + left, elements + pivot);
-                right = pivot - 1;
-                pivot = left;
-                break;
+        // (左侧逼近)
+        for (; left <= pivot; left++) {                     // for loop left <= pivot; right--
+            if (elements[pivot] < elements[left]) {         // if pivot位置元素 < left位置元素
+                Swap(elements + left, elements + pivot);    // 交换pivot和left位置元素
+                right = pivot - 1;                          // right(右边界)修改为pivot - 1
+                pivot = left;                               // pivot修改为left(左边界)
+                break;                                      // break跳出循环(本轮从左向右逼近结束)
             }
         }
     }
 
-    return pivot;
+    return pivot;                                           // 返回pivot
 }
 
 
 /*!
- * @brief 子数组快速排序(递归)
+ * @brief **子数组快速排序(递归)**
  * @tparam TElement 数组元素类型模板参数
  * @param elements 数组
  * @param left 左边界
  * @param right 右边界
+ * @note
+ * 子数组快速排序(递归)
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * + **1 边界条件判断**\n
+ * **if** left >= right :\n
+ * &emsp; 退出函数\n
+ * + **2 划分区域**\n
+ * 调用Partition划分数组, 取返回值为pivot(轴)\n
+ * + **3 分治递归**\n
+ * 对轴的左侧区域进行递归\n
+ * 对轴的右侧区域进行递归\n
  */
 template<typename TElement>
 void QuickSortInSubArrayRecursive(TElement* elements, int left, int right) {
 
-    if (left >= right) {
-        return;
+    // ---------- 1 边界条件判断 ----------
+
+    if (left >= right) {                                        // if left >= right
+        return;                                                 // 退出函数
     }
 
-    int pivot = Partition(elements, left, right);
+    // ---------- 2 划分区域 ----------
 
-    QuickSortInSubArrayRecursive(elements, left, pivot - 1);
-    QuickSortInSubArrayRecursive(elements, pivot + 1, right);
+    int pivot = Partition(elements, left, right);               // 调用Partition划分数组, 取返回值为pivot(轴)
+
+    // ---------- 3 分治递归 ----------
+
+    QuickSortInSubArrayRecursive(elements, left, pivot - 1);    // 对轴的左侧区域进行递归
+    QuickSortInSubArrayRecursive(elements, pivot + 1, right);   // 对轴的右侧区域进行递归
 }
-
