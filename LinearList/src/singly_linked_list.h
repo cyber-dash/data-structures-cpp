@@ -112,9 +112,9 @@ private:
  */
 template<typename TData>
 SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
-    this->head_ = new LinkedNode<TData>();
-    if (!this->head_) {
-        throw bad_alloc();
+    this->head_ = new LinkedNode<TData>();  // head_分配内存, length_设置为0
+    if (!this->head_) {                     // if head_内存分配失败
+        throw bad_alloc();                  // 抛出bad_alloc()
     }
 };
 

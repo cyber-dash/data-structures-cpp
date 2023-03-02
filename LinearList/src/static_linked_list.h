@@ -48,7 +48,7 @@ public:
 
     void Print() const;
 
-    static const int NOT_IN_USE = -1;
+    static const int NONE = -1;
     static const int HEAD = 0;
 
 private:
@@ -57,33 +57,85 @@ private:
     bool GetNodeIndexByPos_(int pos, int& index) const;
 
     StaticLinkedListNode<TData>* mem_data_;    //!< 静态链表, mem_data_[0]为头结点(不保存元素)
-    int length_;    //!< 静态链表长度
-    int capacity_;  //!< 静态链表容量
+    int length_;                               //!< 静态链表长度
+    int capacity_;                             //!< 静态链表容量
 };
 
 
+/*!
+ * @brief **构造函数(容量)**
+ * @tparam TData 数据项类型模板参数
+ * @param capacity 容量
+ * @note
+ * 构造函数(容量)
+ * ------------
+ * ------------
+ *
+ * ------------
+ * + **1 初始化成员变量**\n
+ * capacity_(容量)使用参数进行初始化\n
+ * length_(当前长度)初始化为0\n
+ * mem_data_分配内存, capacity_ + 1个元素, 首元素为头结点\n
+ * **if** mem_data_内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()异常\n
+ * + **2 初始化结点**\n
+ * HEAD结点的next指向HEAD(数组索引0)\n
+ * **for loop** 数组索引从1到capacity :\n
+ * &emsp; 每个数组元素的next指向NONE(索引值-1)\n
+ */
 template <typename TData>
 StaticLinkedList<TData>::StaticLinkedList(int capacity) {
     capacity_ = capacity;
     length_ = 0;
-    mem_data_ = new StaticLinkedListNode<TData>[capacity + 1];
+    mem_data_ = new StaticLinkedListNode<TData>[capacity_ + 1];
+    if (!mem_data_) {
+        throw bad_alloc();
+    }
 
     mem_data_[HEAD].next = HEAD;
     for (int i = 1; i <= capacity; i++) {
-        mem_data_[i].next = StaticLinkedList<TData>::NOT_IN_USE;
+        mem_data_[i].next = StaticLinkedList<TData>::NONE;
     }
 }
 
 
+/*!
+ * @brief **根据pos获取结点的数组索引**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
+ * @param index 数组索引保存变量
+ * @return 执行结果
+ * @note
+ * 根据pos获取结点的数组索引
+ * ----------------------
+ * ----------------------
+ *
+ * <span style="color:#FF8100">
+ * pos为0时, 取静态链表head结点(数组索引0元素)\n
+ * </span>
+ * <span style="color:#038575">
+ * (pos < 0)或者(pos > 链表长度)时, 返回false\n
+ * </span>
+ * <span style="color:#65000b">
+ * pos为1时, 取链表第一个元素结点, 与数组的方式有区别\n
+ * </span>
+ *
+ * ----------------------
+ * + **1 pos非法情况处理**\n
+ * + **2 pos为0情况处理**\n
+ * + **3 遍历链表至相应位置并取索引**\n
+ * + **4 退出函数**\n
+ */
 template<typename TData>
 bool StaticLinkedList<TData>::GetNodeIndexByPos_(int pos, int& index) const {
-    if (pos == HEAD) {
-        index = HEAD;
-        return true;
-    }
 
     if (pos < 0|| pos > this->length_) {
         return false;
+    }
+
+    if (pos == 0) {
+        index = HEAD;
+        return true;
     }
 
     int cur_index = this->mem_data_[HEAD].next;
@@ -97,6 +149,22 @@ bool StaticLinkedList<TData>::GetNodeIndexByPos_(int pos, int& index) const {
 }
 
 
+/*!
+ * @brief **搜索**
+ * @tparam TData 数据项类型模板参数
+ * @param data 搜索数据
+ * @param pos 位置
+ * @return 执行结果
+ * @note
+ * 搜索
+ * ---
+ * ---
+ *
+ * ---
+ * + **1 空链表处理**\n
+ * + **2 遍历链表搜索**\n
+ * + **3 返回false**\n
+ */
 template<typename TData>
  bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
 
@@ -170,7 +238,7 @@ bool StaticLinkedList<TData>::Remove(int pos, TData& data) {
     int next_index = mem_data_[delete_index].next;
 
     mem_data_[prev_index].next = next_index;
-    mem_data_[delete_index].next = NOT_IN_USE;
+    mem_data_[delete_index].next = NONE;
 
     data = mem_data_[delete_index].data;
 
@@ -210,7 +278,7 @@ bool StaticLinkedList<TData>::Extend_(int capacity) {
     }
 
     for (int i = length_ + 1; i <= capacity_; i++) {
-        new_mem_data[i].next = NOT_IN_USE;
+        new_mem_data[i].next = NONE;
     }
 
     delete[] mem_data_;
@@ -222,14 +290,13 @@ bool StaticLinkedList<TData>::Extend_(int capacity) {
 
 
 template <typename TData>
-// int StaticLinkedList<TData>::GetInsertIndex_() const {
 bool StaticLinkedList<TData>::GetInsertIndex_(int& index) const {
     if (length_ == capacity_) {
         return false;
     }
 
     for (int i = 1; i <= length_ + 1; i++) {
-        if (mem_data_[i].next == StaticLinkedList<TData>::NOT_IN_USE) {
+        if (mem_data_[i].next == StaticLinkedList<TData>::NONE) {
             index = i;
             return true;
         }
