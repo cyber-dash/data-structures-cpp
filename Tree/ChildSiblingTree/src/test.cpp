@@ -62,7 +62,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
 	cout << "树的节点数量: " << node_count << endl;
 
 	cout << "调用ShowTree显示: ";
-	child_sibling_tree.ShowTree();
+    child_sibling_tree.PrintRecursive();
 
 	cout << endl;
 
