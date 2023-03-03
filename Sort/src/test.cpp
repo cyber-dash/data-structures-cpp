@@ -101,7 +101,7 @@ void TestMergeSort() {
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
-	MergeSort<int>(array, array_size);
+    MergeSortRecursive<int>(array, array_size);
 
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
@@ -123,7 +123,7 @@ void TestMergeSortNonRecursive() {
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
-	MergeSortNonRecursive<int>(array, array_size);
+    MergeSort<int>(array, array_size);
 
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
