@@ -16,7 +16,7 @@
   * @brief 节点遍历函数
   * @param node 节点(指针)
   */
-void visit(ChildSiblingNode<int>* node) {
+void visit(ChildSiblingNode<char>* node) {
 	cout << node->data << " ";
 }
 
@@ -55,7 +55,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
 
 	char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
-	ChildSiblingTree<int> child_sibling_tree;
+	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
 	int node_count = child_sibling_tree.NodeCountRecursive();
@@ -122,7 +122,7 @@ void TestChildSiblingTreeNodeCount() {
 
     char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
-	ChildSiblingTree<int> child_sibling_tree;
+	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
 	int node_count = child_sibling_tree.NodeCountRecursive();
@@ -153,7 +153,7 @@ void TestChildSiblingTreePreOrder() {
 
     char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
-	ChildSiblingTree<int> child_sibling_tree;
+	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
 	cout << "先根遍历: " << endl;
@@ -186,7 +186,7 @@ void TestChildSiblingTreePostOrder() {
 
     char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
-	ChildSiblingTree<int> child_sibling_tree;
+	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
 	cout << "后根遍历: " << endl;
@@ -219,7 +219,7 @@ void TestChildSiblingTreeLevelOrder() {
 
     char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
-	ChildSiblingTree<int> child_sibling_tree;
+	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
 	cout << "层序遍历: " << endl;

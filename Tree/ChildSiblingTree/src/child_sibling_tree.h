@@ -77,7 +77,7 @@ public:
      *
      * ----------------------------------
      */
-    void CreateByPreorderStr(char*& str) { this->CreateTreeByStrRecursive_(this->root_, str); }
+    void CreateByPreorderStr(TData*& str) { this->CreateSubTreeByPreorderStrRecursive_(this->root_, str); }
 
     /*!
      * @brief 获取长子结点
@@ -191,7 +191,7 @@ private:
     // 子树层序遍历
     void LevelOrderOfSubTree_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 使用字符串创建子女兄弟树
-    void CreateTreeByStrRecursive_(ChildSiblingNode<TData>*&, char*& str);
+    void CreateSubTreeByPreorderStrRecursive_(ChildSiblingNode<TData>*&, TData*& str);
     // 子树节点数量(递归)
     int NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root);
     // 子树深度(递归)
@@ -425,50 +425,88 @@ int ChildSiblingTree<TData>::MaxHeightWithYoungerSiblingTreesRecursive_(ChildSib
 
 
 /*!
- * @brief **创建子女兄弟树(使用字符串)(递归)**
- * @tparam TData 类型模板参数
- * @param sub_tree_root 子树根节点
- * @param str 字符串
+ * @brief **创建子女兄弟树(使用先根遍历字符串)(递归)**
+ * @tparam TData 数据项类型模板参数
+ * @param subtree_root 子树根节点
+ * @param str 先根遍历字符串
  * @note
- * 创建子女兄弟树(使用字符串)(递归)
- * ---------------------------
- * ---------------------------
+ * 创建子女兄弟树(使用先根遍历字符串)(递归)
+ * ----------------------------------
+ * ----------------------------------
  *
- * ---------------------------
+ * ----------------------------------
+ * + **1 建树结束处理**\n
+ * **if** 当前字符为'\0' :\n
+ * &emsp; 返回(建树完成)\n
+ * \n
+ * + **2 某子树结束处理**\n
+ * **if** 当前字符为')' :\n
+ * &emsp; str向后移动1位(处理下一个兄弟结点)\n
+ * &emsp; 返回(当前子树建树完成)\n
+ * \n
+ * + **3 新子树根结点开始处理**\n
+ * **if** 当前字符为'(' :\n
+ * &emsp; str向后移动1位(处理下一个兄弟结点)\n
+ * \n
+ * + **4 创建新子树根结点**\n
+ * **if** int类型 :\n
+ * &emsp; 进行转换\n
+ * **else if** char类型 :\n
+ * &emsp; 用*转换进行赋值\n
+ * str向后移动1位(处理下一个兄弟结点)\n
+ * \n
+ * 初始化subtree_root(子树根结点)并分配内存\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n
+ * \n
+ * + **5 对长子结点和兄弟节点递归构造子树**\n
+ * 对first_child递归创建子树\n
+ * 对next_sibling递归创建子树\n
  */
-template <class TData>
-void ChildSiblingTree<TData>::CreateTreeByStrRecursive_(ChildSiblingNode<TData>*& sub_tree_root, char*& str) {
-    /// ### 1 字符串遍历结束处理 ###
-    if (*str == '\0') {
-        return;
+template <typename TData>
+void ChildSiblingTree<TData>::CreateSubTreeByPreorderStrRecursive_(ChildSiblingNode<TData>*& subtree_root, TData*& str) {
+
+    // ---------- 1 建树结束处理 ----------
+
+    if (*str == TData('\0')) {                              // if 当前字符为'\0'
+        return;                                             // 返回(建树完成)
     }
 
-    /// ### 2 节点结束处理 ###
-    if (*str == ')') {
-        str++; // 下一个兄弟节点
-        return;
+    // ---------- 2 某子树结束处理 ----------
+
+    if (*str == TData(')')) {                               // if 当前字符为')'
+        str++;                                              // str向后移动1位(处理下一个兄弟结点)
+        return;                                             // 返回(当前子树建树完成)
     }
 
-    /// ### 3 节点开始处理 ###
-    while (*str == '(') {
-        str++;
+    // ---------- 3 新子树根结点开始处理 ----------
+
+    while (*str == TData('(')) {                            // if 当前字符为'('
+        str++;                                              // str向后移动1位(处理下一个兄弟结点)
     }
 
-    /// ### 4 数据项赋值 ###
+    // ---------- 4 创建新子树根结点 ----------
+
     TData cur_data;
-    if (is_same<TData, int>::value) {
-        cur_data = (TData)(*str - '0');
-    } else if (is_same<TData, char>::value) {
-        cur_data = *str;
+    if (is_same<TData, int>::value) {                       // if int类型
+        cur_data = (TData)(*str - '0');                     // 进行转换
+    } else if (is_same<TData, char>::value) {               // else if char类型
+        cur_data = *str;                                    // 用*转换进行赋值
     }
-    str++;
 
-    sub_tree_root = new ChildSiblingNode<TData>(cur_data);
-    /* error handler */
+    str++;                                                  // str向后移动1位(处理下一个兄弟结点)
 
-    /// ### 5 递归 ###
-    CreateTreeByStrRecursive_(sub_tree_root->first_child, str);
-    CreateTreeByStrRecursive_(sub_tree_root->next_sibling, str);
+    subtree_root = new ChildSiblingNode<TData>(cur_data);   // 初始化subtree_root(子树根结点)并分配内存
+    if (!subtree_root) {                                    // if 内存分配失败
+        throw bad_alloc();                                  // 抛出bad_alloc()
+    }
+
+    // ---------- 5 对长子结点和兄弟节点递归构造子树 ----------
+
+    // 对first_child递归创建子树
+    CreateSubTreeByPreorderStrRecursive_(subtree_root->first_child, str);
+    // 对next_sibling递归创建子树
+    CreateSubTreeByPreorderStrRecursive_(subtree_root->next_sibling, str);
 }
 
 
