@@ -76,6 +76,7 @@ public:
      * ----------------------------------
      *
      * ----------------------------------
+     * 调用CreateSubTreeByPreorderStrRecursive_\n
      */
     void CreateByPreorderStr(TData*& str) { this->CreateSubTreeByPreorderStrRecursive_(this->root_, str); }
 
@@ -108,7 +109,7 @@ public:
      * ------------
      * 对根结点调用HeightOfSubTreeRecursive_, 返回结果
      */
-    int Height() { return this->MaxHeightWithYoungerSiblingTreesRecursive_(this->root_); }
+    int HeightRecursive() { return this->MaxHeightWithYoungerSiblingTreesRecursive_(this->root_); }
 
     /*!
      * @brief **获取根结点**
@@ -426,9 +427,9 @@ int ChildSiblingTree<TData>::NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData
  * **if** 空树 :\n
  * &emsp; 返回0\n
  * + **2 递归**\n
- * 求self_height, 自身(以node为根结点的子树)的高度
- * 求max_younger_sibling_height, 所有弟弟子树的最大的高度
- * 取max_height, 为MAX(self_height, max_younger_sibling_height)
+ * 求self_height, 自身(以node为根结点的子树)的高度\n
+ * 求max_younger_sibling_height, 所有弟弟子树的最大的高度\n
+ * 取max_height, 为MAX(self_height, max_younger_sibling_height)\n
  * + **3 返回结果**\n
  * 返回max_height\n
  */

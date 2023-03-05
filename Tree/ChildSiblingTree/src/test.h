@@ -4,8 +4,6 @@
  * @brief 子女兄弟树测试.h文件
  * @version 0.2.1
  * @date 2020-11-01
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_CHILD_SIBLING_TREE_TEST_H
@@ -19,13 +17,13 @@
 using namespace std;
 
 
-// 测试使用字符串创建子女孩子树
+// 测试CreateByPreorderStr
 void TestChildSiblingTreeCreateTreeByStr();
 
-// 测试深度
+// 测试高度
 void TestChildSiblingTreeHeight();
 
-// 测试节点数量
+// 测试结点数量
 void TestChildSiblingTreeNodeCount();
 
 // 测试先根遍历

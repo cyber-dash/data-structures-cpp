@@ -13,17 +13,32 @@
 
 
  /*!
-  * @brief 节点遍历函数
-  * @param node 节点(指针)
+  * @brief **结点访问函数**
+  * @tparam TData 数据项类型模板参数
+  * @param node 结点(指针)
+  * @note
+  * 结点访问函数
+  * ----------
+  * ----------
+  *
+  * ----------
+  * 打印node->data
   */
-void visit(ChildSiblingNode<char>* node) {
+template<typename TData>
+void visit(ChildSiblingNode<TData>* node) {
 	cout << node->data << " ";
 }
 
 
 /*!
- * @brief 测试使用创建子女孩子树(使用字符串)
+ * @brief **测试CreateByPreorderStr**
  * @note
+ * 测试CreateByPreorderStr
+ * ----------------------
+ * ----------------------
+ *
+ * ----------------------
+ * 使用字符串"(c(y(b(e)(r)))(d(a)(s))(h))", 建树\n
  * ```
  *            c                                            c
  *           /                                            /|\
@@ -36,6 +51,7 @@ void visit(ChildSiblingNode<char>* node) {
  *    /                                            /   \
  *   e --- r                                      e     r
  * ```
+ * 打印树\n
  */
 void TestChildSiblingTreeCreateTreeByStr() {
 	cout<<endl;
@@ -71,12 +87,32 @@ void TestChildSiblingTreeCreateTreeByStr() {
 
 
 /*!
- * @brief 测试深度
+ * @brief **测试高度**
+ * @note
+ * 测试高度
+ * -------
+ * -------
+ *
+ * -------
+ * 使用字符串"(c(y(b(e)(r)))(d(a)(s))(h))", 建树\n
+ * ```
+ *            c                                            c
+ *           /                                            /|\
+ *          /                                            / | \
+ *         y --- d --- h                                y  d  h
+ *        /     /                                      /  / \
+ *       /     /                                      /  /   \
+ *      b     a --- s                                b  a     s
+ *     /                                            / \
+ *    /                                            /   \
+ *   e --- r                                      e     r
+ * ```
+ * 调用Height求高度\n
  */
 void TestChildSiblingTreeHeight() {
 	cout<<endl;
 	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-	cout<<"|                Test ChildSiblingTree Height               |"<<endl;
+	cout<<"|                Test ChildSiblingTree HeightRecursive               |"<<endl;
 	cout<<"|                          测试高度                          |"<<endl<<endl;
     cout<<"            c                                       c        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
@@ -94,15 +130,35 @@ void TestChildSiblingTreeHeight() {
 	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(preorder_str);
 
-	int height = child_sibling_tree.Height();
-	cout << "深度: " << height << endl;
+	int height = child_sibling_tree.HeightRecursive();
+	cout << "高度: " << height << endl;
 
 	cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 /*!
- * @brief 测试节点数量
+ * @brief **测试结点数量**
+ * @note
+ * 测试结点数量
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 使用字符串"(c(y(b(e)(r)))(d(a)(s))(h))", 建树\n
+ * ```
+ *            c                                            c
+ *           /                                            /|\
+ *          /                                            / | \
+ *         y --- d --- h                                y  d  h
+ *        /     /                                      /  / \
+ *       /     /                                      /  /   \
+ *      b     a --- s                                b  a     s
+ *     /                                            / \
+ *    /                                            /   \
+ *   e --- r                                      e     r
+ * ```
+ * 调用NodeCountRecursive求结点数量\n
  */
 void TestChildSiblingTreeNodeCount() {
 	cout<<endl;
@@ -133,7 +189,27 @@ void TestChildSiblingTreeNodeCount() {
 
 
 /*!
- * @brief 测试先根遍历
+ * @brief **测试先根遍历**
+ * @note
+ * 测试先根遍历
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 使用字符串"(0(1(2(4)(5)))(3(7)(8))(6))", 建树\n
+ * ```
+ *            0                                            0
+ *           /                                            /|\
+ *          /                                            / | \
+ *         1 --- 3 --- 6                                1  3  6
+ *        /     /                                      /  / \
+ *       /     /                                      /  /   \
+ *      2     7 --- 8                                2  7     8
+ *     /                                            / \
+ *    /                                            /   \
+ *   4 --- 5                                      4     5
+ * ```
+ * 调用PreOrderRecursive进行前根遍历\n
  */
 void TestChildSiblingTreePreorder() {
 	cout<<endl;
@@ -166,7 +242,27 @@ void TestChildSiblingTreePreorder() {
 
 
 /*!
- * @brief 测试后根遍历
+ * @brief **测试后根遍历**
+ * @note
+ * 测试后根遍历
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 使用字符串"(0(1(2(4)(5)))(3(7)(8))(6))", 建树\n
+ * ```
+ *            0                                            0
+ *           /                                            /|\
+ *          /                                            / | \
+ *         1 --- 3 --- 6                                1  3  6
+ *        /     /                                      /  / \
+ *       /     /                                      /  /   \
+ *      2     7 --- 8                                2  7     8
+ *     /                                            / \
+ *    /                                            /   \
+ *   4 --- 5                                      4     5
+ * ```
+ * 调用PostOrderRecursive进行后根遍历\n
  */
 void TestChildSiblingTreePostOrder() {
 	cout<<endl;
@@ -199,7 +295,27 @@ void TestChildSiblingTreePostOrder() {
 
 
 /*!
- * @brief 测试层序遍历
+ * @brief **测试层序遍历**
+ * @note
+ * 测试层序遍历
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 使用字符串"(0(1(2(4)(5)))(3(7)(8))(6))", 建树\n
+ * ```
+ *            0                                            0
+ *           /                                            /|\
+ *          /                                            / | \
+ *         1 --- 3 --- 6                                1  3  6
+ *        /     /                                      /  / \
+ *       /     /                                      /  /   \
+ *      2     7 --- 8                                2  7     8
+ *     /                                            / \
+ *    /                                            /   \
+ *   4 --- 5                                      4     5
+ * ```
+ * 调用LevelOrder进行层序遍历\n
  */
 void TestChildSiblingTreeLevelOrder() {
 	cout << endl;
