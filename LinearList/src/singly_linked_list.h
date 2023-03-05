@@ -63,7 +63,7 @@ public:
     // 默认构造函数
     SinglyLinkedList();
     // 复制构造函数
-    SinglyLinkedList(const SinglyLinkedList<TData>& linked_list);
+    SinglyLinkedList(const SinglyLinkedList<TData>& src_linked_list);
     // 析构函数
     ~SinglyLinkedList();
     // 清空链表
@@ -122,7 +122,7 @@ SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
 /*!
  * @brief **复制构造函数**
  * @tparam TData 数据项类型模板参数
- * @param linked_list 被复制链表
+ * @param src_linked_list 被复制链表
  * @note
  * 复制构造函数
  * ----------
@@ -142,7 +142,7 @@ SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
  * &emsp; cur->next置为NULL\n
  */
 template<typename TData>
-SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& linked_list): length_(0) {
+SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& src_linked_list): length_(0) {
 
     // ----- I 分配head_结点内存 -----
 
@@ -150,23 +150,23 @@ SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& linked_
 
     // ----- II 声明并初始化两个头结点指针 -----
 
-    LinkedNode<TData>* src_list_cur = linked_list.Head();   // origin_obj_cur指向源链表head_
-    LinkedNode<TData>* cur = this->Head();                  // cur指向自身链表head_
+    LinkedNode<TData>* src_list_cur = src_linked_list.Head();   // src_list_cur指向源链表head_
+    LinkedNode<TData>* cur = this->Head();                      // cur指向自身链表head_
 
     // ----- III 循环复制结点 -----
 
-    while (src_list_cur->next != NULL) {                    // while origin_obj_cur->next不为NULL:
+    while (src_list_cur->next != NULL) {                        // while src_list_cur->next不为NULL:
 
         TData data = src_list_cur->next->data;
-        cur->next = new LinkedNode<TData>(data);            // 使用src_list_cur->next的数据项构造新结点, 赋给cur->next指向的内存
+        cur->next = new LinkedNode<TData>(data);                // 使用src_list_cur->next的数据项构造新结点, 赋给cur->next指向的内存
 
-        cur = cur->next;                                    // cur指向cur->next
-        src_list_cur = src_list_cur->next;                  // src_list_cur指向src_list_cur->next
+        cur = cur->next;                                        // cur指向cur->next
+        src_list_cur = src_list_cur->next;                      // src_list_cur指向src_list_cur->next
 
-        this->length_++;                                    // 链表长度加1
+        this->length_++;                                        // 链表长度加1
     }
 
-    cur->next = NULL;                                       // cur->next置为NULL
+    cur->next = NULL;                                           // cur->next置为NULL
 }
 
 

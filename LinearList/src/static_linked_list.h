@@ -16,9 +16,14 @@
 using namespace std;
 
 
-/*! @brief 静态链表结点模板结构体 */
+/*!
+ * @brief 静态链表结点模板结构体
+ */
 template <typename TData>
 struct StaticLinkedListNode {
+    /*!
+     * @brief **默认构造函数**
+     */
     StaticLinkedListNode<TData>() : next(0) {}
     explicit StaticLinkedListNode<TData>(TData data) : data(data), next(0) {}
     StaticLinkedListNode<TData>(TData data, int next) : data(data), next(next) {}
@@ -28,7 +33,15 @@ struct StaticLinkedListNode {
 };
 
 
-/*! @brief 静态链表模板类 */
+/*!
+ * @brief **静态链表模板类**
+ * @note
+ * 静态链表模板类
+ * ------------
+ * ------------
+ *
+ * ------------
+ */
 template <typename TData>
 class StaticLinkedList {
 public:
@@ -47,6 +60,8 @@ public:
     bool Remove(int pos, TData& data);
 
     void Print() const;
+
+    StaticLinkedListNode<TData>& operator[] (size_t index);
 
     static const int NONE = -1;
     static const int HEAD = 0;
@@ -122,30 +137,48 @@ StaticLinkedList<TData>::StaticLinkedList(int capacity) {
  *
  * ----------------------
  * + **1 pos非法情况处理**\n
+ * **if** pos < 0 或者 pos > 静态链表长度 :\n
+ * &emsp; 返回false\n
  * + **2 pos为0情况处理**\n
+ * **if** pos等于0 :\n
+ * &emsp; index赋值为HEAD(0)\n
+ * &emsp; 返回true\n
  * + **3 遍历链表至相应位置并取索引**\n
+ * 声明并初始化cur_index(遍历变量), 等于HEAD结点的next\n
+ * **for loop** 从1遍历到pos - 1 :\n
+ * &emsp; cur_index指向cur_index结点的next\n
+ * cur_index的值赋给index\n
  * + **4 退出函数**\n
+ * 返回true\n
  */
 template<typename TData>
 bool StaticLinkedList<TData>::GetNodeIndexByPos_(int pos, int& index) const {
 
-    if (pos < 0|| pos > this->length_) {
-        return false;
+    // ---------- 1 pos非法情况处理 ----------
+
+    if (pos < 0|| pos > this->length_) {                // if pos < 0 或者 pos > 静态链表长度
+        return false;                                   // 返回false
     }
 
-    if (pos == 0) {
-        index = HEAD;
-        return true;
+    // ---------- 2 pos为0情况处理 ----------
+
+    if (pos == 0) {                                     // if pos等于0
+        index = HEAD;                                   // index赋值为HEAD(0)
+        return true;                                    // 返回true
     }
 
-    int cur_index = this->mem_data_[HEAD].next;
-    for (int i = 1; i < pos; i++) {
-        cur_index = this->mem_data_[cur_index].next;
+    // ---------- 3 遍历链表至相应位置并取索引 ----------
+
+    int cur_index = this->mem_data_[HEAD].next;         // 声明并初始化cur_index(遍历变量), 等于HEAD结点的next
+    for (int i = 1; i < pos; i++) {                     // for loop 从1遍历到pos - 1
+        cur_index = this->mem_data_[cur_index].next;    // cur_index指向cur_index结点的next
     }
 
-    index = cur_index;
+    index = cur_index;                                  // cur_index的值赋给index
 
-    return true;
+    // ---------- 4 退出函数 ----------
+
+    return true;                                        // 返回true
 }
 
 
@@ -288,7 +321,6 @@ bool StaticLinkedList<TData>::Extend_(int capacity) {
 }
 
 
-
 template <typename TData>
 bool StaticLinkedList<TData>::GetInsertIndex_(int& index) const {
     if (length_ == capacity_) {
@@ -303,6 +335,16 @@ bool StaticLinkedList<TData>::GetInsertIndex_(int& index) const {
     }
 
     return false;
+}
+
+
+template <typename TData>
+StaticLinkedListNode<TData>& StaticLinkedList<TData>::operator[] (size_t index) {
+    if ((int)index > length_) {
+        throw exception("Out of Range");
+    }
+
+    return this->mem_data_[index];
 }
 
 
