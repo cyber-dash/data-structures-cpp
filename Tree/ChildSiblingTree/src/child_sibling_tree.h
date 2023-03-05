@@ -80,18 +80,6 @@ public:
     void CreateByPreorderStr(TData*& str) { this->CreateSubTreeByPreorderStrRecursive_(this->root_, str); }
 
     /*!
-     * @brief 获取长子结点
-     * @return 长子结点
-     */
-    ChildSiblingNode<TData>*& FirstChild();
-
-    /*!
-     * @brief 获取下一个兄弟
-     * @return 下一兄弟结点
-     */
-    ChildSiblingNode<TData>*& NextSibling();
-
-    /*!
      * @brief **判断是否空树**
      * @return 是否空树
      */
@@ -183,13 +171,12 @@ private:
 
     // 子树删除(递归)
     void RemoveSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root);
-
     // 子树先根遍历(递归)
     void PreOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 子树后根遍历(递归)
     void PostOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 子树层序遍历
-    void LevelOrderOfSubTree_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*));
+    void LevelOrderOfSubTree_(ChildSiblingNode<TData>* subtree_root, void (*visit)(ChildSiblingNode<TData>*));
     // 使用字符串创建子女兄弟树
     void CreateSubTreeByPreorderStrRecursive_(ChildSiblingNode<TData>*&, TData*& str);
     // 子树节点数量(递归)
@@ -244,35 +231,42 @@ void ChildSiblingTree<TData>::RemoveSubTreeRecursive_(ChildSiblingNode<TData>* s
 }
 
 
-template <typename TData>
-ChildSiblingNode<TData>*& ChildSiblingTree<TData>::FirstChild() {
-    return this->root_->first_child;
-}
-
-
-template <class TData>
-ChildSiblingNode<TData>*& ChildSiblingTree<TData>::NextSibling() {
-    return this->root_->next_sibling;
-}
-
-
 /*!
- * @brief 子树先根遍历
+ * @brief **子树先根遍历(递归)**
  * @tparam TData 数据项类型模板参数
  * @param subtree_root 子树根结点
- * @param visit 遍历函数
+ * @param visit 结点访问函数
+ * @note
+ * 子树先根遍历(递归)
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * + **1 空树处理**\n
+ * **if** 空树 :\n
+ * &emsp; 返回\n
+ * + **2 递归**\n
+ * 访问当前子树根结点\n
+ * 对长子结点递归后根遍历\n
+ * 对下一兄弟结点递归后根遍历\n
  */
 template <typename TData>
 void ChildSiblingTree<TData>::PreOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root,
                                                           void (*visit)(ChildSiblingNode<TData>*))
 {
-    if (subtree_root == NULL) {
-        return;
+    // ---------- 1 空树处理 ----------
+
+    if (subtree_root == NULL) { // if 空树
+        return;                 // 返回
     }
 
-    visit(subtree_root);
+    // ---------- 2 递归 ----------
 
+    // 访问当前子树根结点
+    visit(subtree_root);
+    // 对长子结点递归后根遍历
     PreOrderOfSubTreeRecursive_(subtree_root->first_child, visit); // 对长子结点进行递归
+    // 对下一兄弟结点递归后根遍历
     PreOrderOfSubTreeRecursive_(subtree_root->next_sibling, visit); // 对兄弟结点进行递归
 }
 
@@ -288,49 +282,86 @@ void ChildSiblingTree<TData>::PreOrderOfSubTreeRecursive_(ChildSiblingNode<TData
  * ----------------
  *
  * ----------------
+ * + **1 空树处理**\n
+ * **if** 空树 :\n
+ * &emsp; 返回\n
+ * + **2 递归**\n
+ * 对长子结点递归后根遍历\n
+ * 访问当前子树根结点\n
+ * 对下一兄弟结点递归后根遍历\n
  */
 template <typename TData>
 void ChildSiblingTree<TData>::PostOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root,
                                                            void (*visit)(ChildSiblingNode<TData>*))
 {
-    if (subtree_root == NULL) {
-        return;
+    // ---------- 1 空树处理 ----------
+
+    if (subtree_root == NULL) { // if 空树
+        return;                 // 返回
     }
 
+    // ---------- 2 递归 ----------
+
+    // 对长子结点递归后根遍历
     PostOrderOfSubTreeRecursive_(subtree_root->first_child, visit);
+    // 访问当前子树根结点
     visit(subtree_root);
+    // 对下一兄弟结点递归后根遍历
     PostOrderOfSubTreeRecursive_(subtree_root->next_sibling, visit);
 }
 
 
 /*!
- * @brief 在子树中层序遍历
- * @tparam TData 类型模板参数
- * @param out 输出流
- * @param sub_tree_root 子树根节点
+ * @brief **子树层序遍历**
+ * @tparam TData 数据项类型模板参数
+ * @param subtree_root 子树根节点
+ * @param visit 结点访问函数
+ * @note
+ * 子树层序遍历
+ * ----------
+ * ----------
+ *
+ * ----------
+ * + **1 空树处理**\n
+ * **if** 空树 :\n
+ * &emsp; 返回\n
+ * + **2 队列初始化**\n
+ * 声明node_queue(结点队列)\n
+ * 子树根结点入队\n
+ * + **3 使用队列进行遍历**\n
+ * **while loop** 队列不为空 :\n
+ * &emsp; 取队头结点front_node\n
+ * &emsp; 队头出队\n
+ * &emsp; 访问结点\n
+ * &emsp; **while loop** 遍历front_node的所有孩子结点 :\n
+ * &emsp;&emsp; 当前孩子结点入队\n
  */
-template <class TData>
-void ChildSiblingTree<TData>::LevelOrderOfSubTree_(ChildSiblingNode<TData>* sub_tree_root, void (*visit)(ChildSiblingNode<TData>*)) {
-    queue<ChildSiblingNode<TData>*> node_queue;
+template <typename TData>
+void ChildSiblingTree<TData>::LevelOrderOfSubTree_(ChildSiblingNode<TData>* subtree_root,
+                                                   void (*visit)(ChildSiblingNode<TData>*))
+{
+    // ---------- 1 空树处理 ----------
 
-    if (sub_tree_root == NULL) {
-        return;
+    if (subtree_root == NULL) {                                    // if 空树
+        return;                                                    // 返回
     }
 
-    // 初始化队列node_queue
-    node_queue.push(sub_tree_root);
+    // ---------- 2 队列初始化 ----------
 
-    while (!node_queue.empty()) {
-        // 取队头
-        ChildSiblingNode<TData>* front_node = node_queue.front();
-        node_queue.pop();
+    queue<ChildSiblingNode<TData>*> node_queue;                    // 声明node_queue(结点队列)
+    node_queue.push(subtree_root);                              // 子树根结点入队
 
-        // 输出流输出
-        visit(front_node);
+    // ---------- 3 使用队列进行遍历 ----------
 
-        // 队头节点的所有孩子节点入队
+    while (!node_queue.empty()) {                                   // while loop 队列不为空
+        ChildSiblingNode<TData>* front_node = node_queue.front();   // 取队头结点front_node
+        node_queue.pop();                                           // 队头出队
+
+        visit(front_node);                                          // 访问结点
+
+        // while loop 遍历front_node的所有孩子结点
         for (ChildSiblingNode<TData>* cur = front_node->first_child; cur != NULL; cur = cur->next_sibling) {
-            node_queue.push(cur);
+            node_queue.push(cur);                                // 当前孩子结点入队
         }
     }
 }
@@ -511,7 +542,7 @@ void ChildSiblingTree<TData>::CreateSubTreeByPreorderStrRecursive_(ChildSiblingN
 
 
 /*!
- * @brief 子树打印(递归)
+ * @brief **子树打印(递归)**
  * @tparam TData 数据项类型模板参数
  * @param subtree_root 子树根结点
  * @note
@@ -520,20 +551,39 @@ void ChildSiblingTree<TData>::CreateSubTreeByPreorderStrRecursive_(ChildSiblingN
  * ------------
  *
  * ------------
+ * + **1 空树处理**\n
+ * **if** 空树 :\n
+ * &emsp; 返回\n
+ * + **2 打印'('和子树根结点**\n
+ * 打印'('\n
+ * 打印子树根结点\n
+ * + **3 递归打印所有孩子结点的子树**\n
+ * **for loop** 子树根结点的所有孩子结点 :\n
+ * &emsp; 递归打印以当前孩子结点为根结点的子树\n
+ * + **4 打印')'**\n
  */
 template <typename TData>
 void ChildSiblingTree<TData>::PrintSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root) {
-    if (subtree_root == NULL) {
-        return;
+
+    // ---------- 1 空树处理 ----------
+
+    if (subtree_root == NULL) {                       // if 空树
+        return;                                       // 返回
     }
 
-    cout << '(';
+    // ---------- 2 打印'('和子树根结点 ----------
 
-    cout << subtree_root->data;
+    cout << '(';                                      // 打印'('
+    cout << subtree_root->data;                       // 打印子树根结点
 
+    // ---------- 3 递归打印所有孩子结点的子树 ----------
+
+    // for loop 子树根结点的所有孩子结点
     for (ChildSiblingNode<TData>* cur = subtree_root->first_child; cur != NULL; cur = cur->next_sibling) {
-        PrintSubTreeRecursive_(cur);
+        PrintSubTreeRecursive_(cur);    // 递归打印以当前孩子结点为根结点的子树
     }
+
+    // ---------- 4 打印')' ----------
 
     cout << ')';
 }
