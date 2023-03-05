@@ -18,13 +18,13 @@ int main() {
 
 	TestChildSiblingTreeCreateTreeByStr();
 
-	TestChildSiblingTreeDepth();
+    TestChildSiblingTreeHeight();
 
 	TestChildSiblingTreeNodeCount();
 
 	TestChildSiblingTreePostOrder();
 
-	TestChildSiblingTreePreOrder();
+    TestChildSiblingTreePreorder();
 
 	TestChildSiblingTreeLevelOrder();
 

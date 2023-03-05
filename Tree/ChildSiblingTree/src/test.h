@@ -23,13 +23,13 @@ using namespace std;
 void TestChildSiblingTreeCreateTreeByStr();
 
 // 测试深度
-void TestChildSiblingTreeDepth();
+void TestChildSiblingTreeHeight();
 
 // 测试节点数量
 void TestChildSiblingTreeNodeCount();
 
 // 测试先根遍历
-void TestChildSiblingTreePreOrder();
+void TestChildSiblingTreePreorder();
 
 // 测试后根遍历
 void TestChildSiblingTreePostOrder();

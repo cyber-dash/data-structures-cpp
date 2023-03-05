@@ -25,16 +25,16 @@ void visit(ChildSiblingNode<char>* node) {
  * @brief 测试使用创建子女孩子树(使用字符串)
  * @note
  * ```
- *            0                                            0
+ *            c                                            c
  *           /                                            /|\
  *          /                                            / | \
- *         1 --- 3 --- 6                                1  3  6
+ *         y --- d --- h                                y  d  h
  *        /     /                                      /  / \
  *       /     /                                      /  /   \
- *      2     7 --- 8                                2  7     8
+ *      b     a --- s                                b  a     s
  *     /                                            / \
  *    /                                            /   \
- *   4 --- 5                                      4     5
+ *   e --- r                                      e     r
  * ```
  */
 void TestChildSiblingTreeCreateTreeByStr() {
@@ -42,18 +42,18 @@ void TestChildSiblingTreeCreateTreeByStr() {
 	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
 	cout<<"|          Test ChildSiblingTree CreateByPreorderStr        |"<<endl;
 	cout<<"|            测试使用先根(前序)遍历字符串创建子女孩子树           |"<<endl<<endl;
-    cout<<"            0                                       0        "<<endl;
+    cout<<"            c                                       c        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
     cout<<"          /                                       / | \\     "<<endl;
-    cout<<"         1 --- 3 --- 6                           1  3  6     "<<endl;
+    cout<<"         y --- d --- h                           y  d  h     "<<endl;
     cout<<"        /     /                                 /  / \\      "<<endl;
     cout<<"       /     /                                 /  /   \\     "<<endl;
-    cout<<"      2     7 --- 8                           2  7     8     "<<endl;
+    cout<<"      b     a --- s                           b  a     s     "<<endl;
     cout<<"     /                                       / \\            "<<endl;
     cout<<"    /                                       /   \\           "<<endl;
-    cout<<"   4 --- 5                                 4     5           "<<endl;
+    cout<<"   e --- r                                 e     r           "<<endl;
 
-	char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
+	char* pre_order_str = (char*)"(c(y(b(e)(r)))(d(a)(s))(h))";
 
 	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
@@ -61,7 +61,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
 	int node_count = child_sibling_tree.NodeCountRecursive();
 	cout << "树的节点数量: " << node_count << endl;
 
-	cout << "调用ShowTree显示: ";
+	cout << "调用PrintRecursive显示: ";
     child_sibling_tree.PrintRecursive();
 
 	cout << endl;
@@ -73,29 +73,29 @@ void TestChildSiblingTreeCreateTreeByStr() {
 /*!
  * @brief 测试深度
  */
-void TestChildSiblingTreeDepth() {
-	cout << endl;
-	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                 Test ChildSiblingTree Height               |" << endl;
-	cout << "|                          测试深度                           |" << endl << endl;
-    cout<<"            0                                       0        "<<endl;
+void TestChildSiblingTreeHeight() {
+	cout<<endl;
+	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+	cout<<"|                Test ChildSiblingTree Height               |"<<endl;
+	cout<<"|                          测试高度                          |"<<endl<<endl;
+    cout<<"            c                                       c        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
     cout<<"          /                                       / | \\     "<<endl;
-    cout<<"         1 --- 3 --- 6                           1  3  6     "<<endl;
+    cout<<"         y --- d --- h                           y  d  h     "<<endl;
     cout<<"        /     /                                 /  / \\      "<<endl;
     cout<<"       /     /                                 /  /   \\     "<<endl;
-    cout<<"      2     7 --- 8                           2  7     8     "<<endl;
+    cout<<"      b     a --- s                           b  a     s     "<<endl;
     cout<<"     /                                       / \\            "<<endl;
     cout<<"    /                                       /   \\           "<<endl;
-    cout<<"   4 --- 5                                 4     5           "<<endl;
+    cout<<"   e --- r                                 e     r           "<<endl;
 
-    char* pre_order_str = (char*)"(a(b(c(d)(e)))(f(g)(h))(i))";
+    char* preorder_str = (char*)"(c(y(b(e)(r)))(d(a)(s))(h))";
 
 	ChildSiblingTree<char> child_sibling_tree;
-    child_sibling_tree.CreateByPreorderStr(pre_order_str);
+    child_sibling_tree.CreateByPreorderStr(preorder_str);
 
-	int depth = child_sibling_tree.Height();
-	cout << "深度: " << depth << endl;
+	int height = child_sibling_tree.Height();
+	cout << "深度: " << height << endl;
 
 	cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -105,25 +105,25 @@ void TestChildSiblingTreeDepth() {
  * @brief 测试节点数量
  */
 void TestChildSiblingTreeNodeCount() {
-	cout << endl;
-	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|               Test ChildSiblingTree NodeCountRecursive             |" << endl;
-	cout << "|                         测试节点数量                         |" << endl << endl;
-    cout<<"            0                                       0        "<<endl;
+	cout<<endl;
+	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+	cout<<"|          Test ChildSiblingTree NodeCountRecursive         |"<<endl;
+	cout<<"|                         测试节点数量                        |"<<endl<<endl;
+    cout<<"            c                                       c        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
     cout<<"          /                                       / | \\     "<<endl;
-    cout<<"         1 --- 3 --- 6                           1  3  6     "<<endl;
+    cout<<"         y --- d --- h                           y  d  h     "<<endl;
     cout<<"        /     /                                 /  / \\      "<<endl;
     cout<<"       /     /                                 /  /   \\     "<<endl;
-    cout<<"      2     7 --- 8                           2  7     8     "<<endl;
+    cout<<"      b     a --- s                           b  a     s     "<<endl;
     cout<<"     /                                       / \\            "<<endl;
     cout<<"    /                                       /   \\           "<<endl;
-    cout<<"   4 --- 5                                 4     5           "<<endl;
+    cout<<"   e --- r                                 e     r           "<<endl;
 
-    char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
+    char* preorder_str = (char*)"(c(y(b(e)(r)))(d(a)(s))(h))";
 
 	ChildSiblingTree<char> child_sibling_tree;
-    child_sibling_tree.CreateByPreorderStr(pre_order_str);
+    child_sibling_tree.CreateByPreorderStr(preorder_str);
 
 	int node_count = child_sibling_tree.NodeCountRecursive();
 	cout << "节点数量: " << node_count << endl;
@@ -135,11 +135,11 @@ void TestChildSiblingTreeNodeCount() {
 /*!
  * @brief 测试先根遍历
  */
-void TestChildSiblingTreePreOrder() {
-	cout << endl;
-	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                Test ChildSiblingTree PreOrderByOstream             |" << endl;
-	cout << "|                         测试先根遍历                        |" << endl << endl;
+void TestChildSiblingTreePreorder() {
+	cout<<endl;
+	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+	cout<<"|           Test ChildSiblingTree PreOrderRecursive         |"<<endl;
+	cout<<"|                         测试先根遍历                        |"<<endl<<endl;
     cout<<"            0                                       0        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
     cout<<"          /                                       / | \\     "<<endl;
@@ -151,10 +151,10 @@ void TestChildSiblingTreePreOrder() {
     cout<<"    /                                       /   \\           "<<endl;
     cout<<"   4 --- 5                                 4     5           "<<endl;
 
-    char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
+    char* preorder_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
 	ChildSiblingTree<char> child_sibling_tree;
-    child_sibling_tree.CreateByPreorderStr(pre_order_str);
+    child_sibling_tree.CreateByPreorderStr(preorder_str);
 
 	cout << "先根遍历: " << endl;
     child_sibling_tree.PreOrderRecursive(visit);
@@ -169,10 +169,10 @@ void TestChildSiblingTreePreOrder() {
  * @brief 测试后根遍历
  */
 void TestChildSiblingTreePostOrder() {
-	cout << endl;
-	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|               Test ChildSiblingTree PostOrderByOstream             |" << endl;
-	cout << "|                         测试后根遍历                        |" << endl << endl;
+	cout<<endl;
+	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+	cout<<"|           Test ChildSiblingTree PostOrderRecursive        |"<<endl;
+	cout<<"|                         测试后根遍历                        |"<<endl<<endl;
     cout<<"            0                                       0        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
     cout<<"          /                                       / | \\     "<<endl;
