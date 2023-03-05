@@ -157,7 +157,7 @@ void TestChildSiblingTreePreOrder() {
     child_sibling_tree.CreateByPreorderStr(pre_order_str);
 
 	cout << "先根遍历: " << endl;
-	child_sibling_tree.PreOrder(visit);
+    child_sibling_tree.PreOrderRecursive(visit);
 
 	cout << endl;
 
