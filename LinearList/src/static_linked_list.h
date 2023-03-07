@@ -39,7 +39,7 @@ struct StaticLinkedListNode {
      * @brief **默认构造函数**
      */
     StaticLinkedListNode<TData>() : next(0) {}
-    explicit StaticLinkedListNode<TData>(TData data) : data(data), next(0) {}
+    explicit StaticLinkedListNode<TData>(TData data) : data(data), next(-1) {}
     StaticLinkedListNode<TData>(TData data, int next) : data(data), next(next) {}
 
     TData data;    //!< 数据项
@@ -82,7 +82,7 @@ public:
 
 private:
     bool GetInsertionIndex_(int& index) const;
-    bool Extend_(int capacity);
+    bool Extend_(int increased_capacity);
     bool GetIndexByPos_(int pos, int& index) const;
 
     StaticLinkedListNode<TData>* mem_data_;    //!< 静态链表, mem_data_[0]为头结点(不保存元素)
@@ -219,29 +219,39 @@ bool StaticLinkedList<TData>::GetIndexByPos_(int pos, int& index) const {
  *
  * ---
  * + **1 空链表处理**\n
+ * **if** 空链表 :\n
+ * &emsp; 返回false\n
  * + **2 遍历链表搜索**\n
+ * **for loop** 遍历链表的每个结点 :\n
+ * &emsp; **if** 当前结点的data等于参数data :\n
+ * &emsp;&emsp; cur_pos(当前位置)赋给pos\n
+ * &emsp;&emsp; 返回true\n
+ * &emsp; cur_pos加1\n
  * + **3 返回false**\n
  */
 template<typename TData>
- bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
+bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
 
-    if (length_ == 0) {
-        return false;
+    // ---------- 1 空链表处理 ----------
+
+    if (length_ == 0) {                     // if 空链表
+        return false;                       // 返回false
     }
 
-    int cur_pos = 1;
-    for (int i = mem_data_[HEAD].next; i <= length_; i = mem_data_[i].next) {
-        if (i == HEAD) {
-            break;
+    // ---------- 2 遍历链表搜索 ----------
+
+    // for loop 遍历链表的每个结点
+    for (int cur_pos = 1, i = mem_data_[HEAD].next; i != HEAD; i = mem_data_[i].next) {
+
+        if (mem_data_[i].data == data) {    // if 当前结点的data等于参数data
+            pos = cur_pos;                  // cur_pos(当前位置)赋给pos
+            return true;                    // 返回true
         }
 
-        if (mem_data_[i].data == data) {
-            pos = cur_pos;
-            return true;
-        }
-
-        cur_pos++;
+        cur_pos++;                          // cur_pos加1
     }
+
+    // ---------- 3 返回false ----------
 
     return false;
 }
@@ -325,8 +335,42 @@ bool StaticLinkedList<TData>::Insert(int pos, const TData& data) {
 }
 
 
+/*!
+ * @brief **删除结点**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 删除结点位置
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 删除结点
+ * -------
+ * -------
+ *
+ * -------
+ * + **1 非法情况处理**\n
+ * **if** 空链表 :\n
+ * &emsp; 返回false\n
+ * **if** pos < 1 <b>||</b> pos > 链表长度 :\n
+ * &emsp; 返回false\n
+ * + **2 找到删除结点前一结点**\n
+ * 初始化prev_index(待删除结点前一结点的数组索引)\n
+ * **for loop** 从位置1遍历到位置pos - 1 :\n
+ * &emsp; prev_index值改为mem_data_[prev_index].next\n
+ * + **3 删除**\n
+ * 初始化deletion_index(待删除结点的数组索引), 等于mem_data_[prev_index].next\n
+ * 前一结点的next, 指向待删除结点的next\n
+ * 待删除结点的next设置为NONE(此数组元素不再在链表中)\n
+ * 被删除结点的data赋给参数data\n
+ * 链表长度减1\n
+ * + **4 退出函数**\n
+ * 返回true\n
+ */
 template<typename TData>
 bool StaticLinkedList<TData>::Remove(int pos, TData& data) {
+
+    if (length_ == 0) {
+        return false;
+    }
 
     if (pos < 1 || pos > length_) {
         return false;
@@ -337,13 +381,12 @@ bool StaticLinkedList<TData>::Remove(int pos, TData& data) {
         prev_index = mem_data_[prev_index].next;
     }
 
-    int delete_index = mem_data_[prev_index].next;
-    int next_index = mem_data_[delete_index].next;
+    int deletion_index = mem_data_[prev_index].next;
+    mem_data_[prev_index].next = mem_data_[deletion_index].next;
 
-    mem_data_[prev_index].next = next_index;
-    mem_data_[delete_index].next = NONE;
+    mem_data_[deletion_index].next = NONE;
 
-    data = mem_data_[delete_index].data;
+    data = mem_data_[deletion_index].data;
 
     length_--;
 
@@ -384,19 +427,49 @@ void StaticLinkedList<TData>::Print() const {
 }
 
 
+/*!
+ * @brief **扩容**
+ * @tparam TData 数据项类型模板参数
+ * @param increased_capacity 增加的容量
+ * @return 执行结果
+ * @note
+ * 扩容
+ * ---
+ * ---
+ *
+ * ---
+ * + **1 容量数值增加**\n
+ * 使用old_capacity保存旧链表的容量\n
+ * capacity_增加数值\n
+ * + **2 开辟新内存**\n
+ * 使用新容量, 初始化并分配内存\n
+ * **if** 新内存分配失败 :\n
+ * &emsp; 返回false\n
+ * + **3 新内存赋值**\n
+ * **for loop** 遍历原链表容量内的数组元素\n
+ * &emsp; new_mem_data[i] = mem_data_[i]\n
+ * **for loop** 遍历新链表新增容量的数组元素\n
+ * &emsp; 每个元素的next设置为NONE(-1, 不在链表中)\n
+ * + **4 使用新内存并释放旧内存**\n
+ * 释放旧内存\n
+ * 指向新内存\n
+ * + **5 退出函数**\n
+ * 返回true\n
+ */
 template <typename TData>
-bool StaticLinkedList<TData>::Extend_(int capacity) {
-    capacity_ += capacity;
+bool StaticLinkedList<TData>::Extend_(int increased_capacity) {
+    int old_capacity = capacity_;
+    capacity_ += increased_capacity;
     StaticLinkedListNode<TData>* new_mem_data = new StaticLinkedListNode<TData>[capacity_ + 1];
     if (!new_mem_data) {
         return false;
     }
 
-    for (int i = HEAD; i <= length_; i++) {
+    for (int i = HEAD; i <= old_capacity; i++) {
         new_mem_data[i] = mem_data_[i];
     }
 
-    for (int i = length_ + 1; i <= capacity_; i++) {
+    for (int i = old_capacity + 1; i <= capacity_; i++) {
         new_mem_data[i].next = NONE;
     }
 
@@ -407,6 +480,28 @@ bool StaticLinkedList<TData>::Extend_(int capacity) {
 }
 
 
+/*!
+ * @brief **获取插入位置的数组索引**
+ * @tparam TData 数据项类型模板参数
+ * @param index 索引保存变量
+ * @return 执行结果
+ * @note
+ * 获取插入位置的数组索引
+ * ------------------
+ * ------------------
+ *
+ * ------------------
+ * + **1 非法情况处理**\n
+ * **if** 链表长度等于容量 :\n
+ * &emsp; 返回false\n
+ * + **2 查找到插入位置并赋值**\n
+ * **for loop** 从位置1遍历到位置length_ + 1 :\n
+ * &emsp; **if** 当前位置的next等于NONE(-1, 未被链表使用) :\n
+ * &emsp;&emsp; 当前位置的索引i, 赋给参数index\n
+ * &emsp;&emsp; 返回true\n
+ * + **3 退出函数**\n
+ * 返回false(失败情况处理)\n
+ */
 template <typename TData>
 bool StaticLinkedList<TData>::GetInsertionIndex_(int& index) const {
     if (length_ == capacity_) {
