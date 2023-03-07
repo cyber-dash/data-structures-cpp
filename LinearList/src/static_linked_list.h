@@ -504,18 +504,25 @@ bool StaticLinkedList<TData>::Extend_(int increased_capacity) {
  */
 template <typename TData>
 bool StaticLinkedList<TData>::GetInsertionIndex_(int& index) const {
-    if (length_ == capacity_) {
-        return false;
+
+    // ---------- 1 非法情况处理 ----------
+
+    if (length_ == capacity_) {                                     // if 链表长度等于容量
+        return false;                                               // 返回false
     }
 
-    for (int i = 1; i <= length_ + 1; i++) {
-        if (mem_data_[i].next == StaticLinkedList<TData>::NONE) {
-            index = i;
-            return true;
+    // ---------- 2 查找到插入位置并赋值 ----------
+
+    for (int i = 1; i <= length_ + 1; i++) {                        // for loop 从位置1遍历到位置length_ + 1
+        if (mem_data_[i].next == StaticLinkedList<TData>::NONE) {   // if 当前位置的next等于NONE(-1, 未被链表使用)
+            index = i;                                              // 当前位置的索引i, 赋给参数index
+            return true;                                            // 返回true
         }
     }
 
-    return false;
+    // ---------- 3 退出函数 -----------
+
+    return false;                                                   //返回false(失败情况处理)
 }
 
 
