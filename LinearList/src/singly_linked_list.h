@@ -28,17 +28,14 @@ struct LinkedNode {
      * @brief **构造函数(下一结点地址)**
      * @param node 下一结点(指针)
      */
-    explicit LinkedNode(LinkedNode<TData>* node = NULL) { this->next = node; }
+    explicit LinkedNode(LinkedNode<TData>* node = NULL): next(node) {}
 
     /*!
-     * @brief **构造函数(数据项和下一结点地址)**
+     * @brief **构造函数(数据项/下一结点地址)**
      * @param data 数据项数据
      * @param node 下一结点(指针)
      */
-    explicit LinkedNode(const TData& data, LinkedNode<TData>* node = NULL) {
-        this->data = data;
-        this->next = node;
-    }
+    LinkedNode(const TData& data, LinkedNode<TData>* node = NULL): data(data), next(node) {}
 
     TData data;                 //!< 链表数据项
     LinkedNode<TData>* next;    //!< 下一结点
@@ -53,7 +50,7 @@ struct LinkedNode {
  * ----------
  * ----------
  *
- * head_指针指向头结点, 头结点只是用于方便操作
+ * head_指针指向头结点, 头结点只是用于简化操作
  *
  * ----------
  */
@@ -104,15 +101,19 @@ private:
  * 默认构造函数
  * ----------
  * ----------
+ * 
+ * <span style="color:#FF8100">
+ * 我来组成头部:-)
+ * </span>
  *
  * ----------
- * head_分配内存, length_设置为0\n
+ * head_<b>(头结点)</b>分配内存, length_<b>(长度)</b>设置为0\n
  * **if* head_内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n
  */
 template<typename TData>
 SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
-    this->head_ = new LinkedNode<TData>();  // head_分配内存, length_设置为0
+    this->head_ = new LinkedNode<TData>();  // head_(头结点)分配内存, length_(长度)设置为0
     if (!this->head_) {                     // if head_内存分配失败
         throw bad_alloc();                  // 抛出bad_alloc()
     }
@@ -129,39 +130,47 @@ SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
  * ----------
  *
  * ----------
- * **I&nbsp;&nbsp; 分配head_结点内存**\n
- * **II&nbsp; 声明并初始化两个头结点指针**\n
- * &emsp; origin_obj_cur指向源链表head_\n
- * &emsp; cur指向自身链表head_\n
- * **III 循环复制结点**\n
- * &emsp; **while** origin_obj_cur->next不为NULL:\n
- * &emsp;&emsp; 使用src_list_cur->next的数据项构造新结点, 赋给cur->next指向的内存\n
- * &emsp;&emsp; cur指向cur->next\n
- * &emsp;&emsp; src_list_cur指向src_list_cur->next\n
- * &emsp;&emsp; 链表长度加1\n
- * &emsp; cur->next置为NULL\n
+ * **1 头结点初始化**\n
+ * head_(头结点)分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n
+ * \n
+ * **2 初始化指向两个链表各自头结点的遍历指针**\n
+ * src_list_cur指向源链表头结点\n
+ * cur指向自身链表头结点\n
+ * \n
+ * **3 循环复制结点**\n
+ * **while** src_list_cur->next不为NULL:\n
+ * &emsp; 使用src_list_cur->next的数据项构造新结点, 赋给cur->next指向该新节点(自身链表插入新节点)\n
+ * &emsp; cur向后移动1位\n
+ * &emsp; src_list_cur向后移动1位\n
+ * &emsp; 链表长度加1\n
+ * cur->next置为NULL\n
  */
 template<typename TData>
 SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& src_linked_list): length_(0) {
 
-    // ----- I 分配head_结点内存 -----
+    // ---------- 1 头结点初始化 ----------
 
     this->head_ = new LinkedNode<TData>();
+    if (this->head_ == NULL) {
+        throw bad_alloc();
+    }
 
-    // ----- II 声明并初始化两个头结点指针 -----
+    // ---------- 2 初始化指向两个链表各自头结点的遍历指针 ----------
 
     LinkedNode<TData>* src_list_cur = src_linked_list.Head();   // src_list_cur指向源链表head_
     LinkedNode<TData>* cur = this->Head();                      // cur指向自身链表head_
 
-    // ----- III 循环复制结点 -----
+    // ---------- 3 循环复制结点 ----------
 
     while (src_list_cur->next != NULL) {                        // while src_list_cur->next不为NULL:
 
         TData data = src_list_cur->next->data;
-        cur->next = new LinkedNode<TData>(data);                // 使用src_list_cur->next的数据项构造新结点, 赋给cur->next指向的内存
+        cur->next = new LinkedNode<TData>(data);                // 使用src_list_cur->next的数据项构造新结点, 赋给cur->next指向该新节点(自身链表插入新节点)
 
-        cur = cur->next;                                        // cur指向cur->next
-        src_list_cur = src_list_cur->next;                      // src_list_cur指向src_list_cur->next
+        cur = cur->next;                                        // cur向后移动1位
+        src_list_cur = src_list_cur->next;                      // src_list_cur向后移动1位
 
         this->length_++;                                        // 链表长度加1
     }
@@ -194,13 +203,13 @@ SinglyLinkedList<TData>::~SinglyLinkedList() {
 
 
 /*!
- * @brief **获取结点据**
+ * @brief **获取结点数据项**
  * @tparam TData 数据项类型模板参数
  * @param pos 结点位置
- * @param data 数据保存变量
+ * @param data 数据项保存变量
  * @return 执行结果
  * @note
- * 获取结点数据
+ * 获取结点数据项
  * -----------
  * -----------
  *
@@ -218,12 +227,12 @@ SinglyLinkedList<TData>::~SinglyLinkedList() {
 template<typename TData>
 bool SinglyLinkedList<TData>::GetData(int pos, TData& data) const {
 
-    // ----- I 非法位置处理 -----
+    // ---------- I 非法位置处理 ----------
     if (pos < 1 || pos > this->Length()) {  // if pos < 1 或者 pos > Length():
         return false;                       // 返回false
     }
 
-    // ----- II 遍历至pos位置 -----
+    // ---------- II 遍历至pos位置 ----------
     LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_
 
     while (pos > 0) {                       // while pos > 0 (遍历pos次):
@@ -231,7 +240,7 @@ bool SinglyLinkedList<TData>::GetData(int pos, TData& data) const {
         pos--;                              // pos减1
     }
 
-    // ----- III 获取数据项 -----
+    // ---------- III 获取数据项 ----------
     data = cur->data;
 
     return true;
@@ -239,13 +248,13 @@ bool SinglyLinkedList<TData>::GetData(int pos, TData& data) const {
 
 
 /*!
- * @brief **设置结点数据**
+ * @brief **设置结点数据项**
  * @tparam TData 数据项类型模板参数
  * @param pos 位置
- * @param data 数据
+ * @param data 数据项值
  * @return 执行结果
  * @note
- * 设置结点数据
+ * 设置结点数据项
  * -----------
  * -----------
  *
@@ -284,15 +293,15 @@ bool SinglyLinkedList<TData>::SetData(int pos, const TData& data) {
 
 
 /*!
- * @brief **清除链表**
+ * @brief **清空链表**
  * @tparam TData 数据项类型模板参数
  * @note
- * 清除链表
+ * 清空链表
  * -------
  * -------
  *
  * <span style="color:#FF8100">
- * 保留head结点, 删除其他所有结点
+ * 保留head_结点, 删除其他所有结点
  * </span>
  *
  * -------
@@ -325,7 +334,7 @@ void SinglyLinkedList<TData>::Clear() {
 
 /*!
  * @brief **打印链表**
- * @tparam TData 类型模板参数
+ * @tparam TData 数据项类型模板参数
  * @note
  * 打印链表
  * -------

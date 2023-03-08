@@ -4,8 +4,6 @@
  * @brief 顺序表模板类
  * @version 0.2.1
  * @date 2021-09-28
- * @copyright Copyright (c) 2021
- * **CyberDash计算机考研**
  */
 
 #ifndef CYBER_DASH_SEQ_LIST_H
@@ -22,21 +20,21 @@ using namespace std;
 
 
 /*!
- * @brief 顺序表模板类
- * @tparam TData 类型模板参数
+ * @brief **顺序表模板类**
+ * @tparam TData 数据项类型模板参数
  */
-template<class TData>
+template<typename TData>
 class SeqList : public LinearList<TData> {
 
 public:
-    // 构造函数(无参数)
+    // 默认构造函数
     SeqList() : mem_data_(NULL), size_(0), last_index_(-1) {}
 
     // 构造函数(参数:顺序表总长度)
     explicit SeqList(int size = 100);
 
     // 复制构造函数(参数:顺序表)
-    SeqList(SeqList<TData>& seq_list);
+    SeqList(const SeqList<TData>& seq_list);
 
     // 析构函数
     ~SeqList() { delete[] mem_data_; }
@@ -131,7 +129,7 @@ SeqList<TData>::SeqList(int size) {
  * ### 3. mem_data_内存赋值 ###
  */
 template<class TData>
-SeqList<TData>::SeqList(SeqList<TData>& seq_list) {
+SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
 
     // ----- 1. 初始化size_和last_index_
     this->size_ = seq_list.Size();
