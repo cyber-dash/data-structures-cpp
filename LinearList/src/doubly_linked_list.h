@@ -37,12 +37,16 @@ struct DoublyLinkedNode {
     explicit DoublyLinkedNode(const TData& data, DoublyLinkedNode<TData>* next = NULL, DoublyLinkedNode<TData>* prev = NULL) :
         data(data), prev(prev), next(next) {}
 
-    TData data;                               //!< 数据项
+    TData data;                       //!< 数据项
     DoublyLinkedNode<TData>* next;    //!< 下一结点
     DoublyLinkedNode<TData>* prev;    //!< 上一结点
 };
 
 
+/*!
+ * @brief **双向链表模板类**
+ * @tparam TData 数据项类型模板参数
+ */
 template<typename TData>
 class DoublyLinkedList : public LinearList<TData> {
 public:
@@ -75,18 +79,48 @@ public:
     /*! @brief **长度** */
     int Length() const { return this->length_; }
 private:
-    DoublyLinkedNode<TData>* SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_head, const TData& data) const;
+    DoublyLinkedNode<TData>* SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_first_element, const TData& data) const;
 
-    DoublyLinkedNode<TData>* head_;
-    DoublyLinkedNode<TData>* tail_;
-    int length_;
+    DoublyLinkedNode<TData>* head_;     //!< **头结点**
+    DoublyLinkedNode<TData>* tail_;     //!< **尾结点**
+    int length_;                        //!< **长度**
 };
 
 
+/*!
+ * @brief **默认构造函数**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 默认构造函数
+ * -----------
+ * -----------
+ * 
+ * -----------
+ * + **1 初始化头结点和尾结点**\n
+ * head_分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n\n
+ * tail_分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n\n
+ * + **2 初始化头结点和尾结点**\n
+ * head_的next(下一结点), 指向tail_\n
+ * head_的prev(前一结点), 为NULL\n\n
+ * tail_的next(下一结点), 为NULL\n
+ * tail_的prev(前一结点), 指向head_\n\n
+ * lenght_设为0\n
+ */
 template<typename TData>
 DoublyLinkedList<TData>::DoublyLinkedList() {
     head_ = new DoublyLinkedNode<TData>();
+    if (head_ == NULL) {
+        throw bad_alloc();
+    }
+
     tail_ = new DoublyLinkedNode<TData>();
+    if (tail_ == NULL) {
+        throw bad_alloc();
+    }
 
     head_->next = tail_;
     head_->prev = NULL;
@@ -98,6 +132,22 @@ DoublyLinkedList<TData>::DoublyLinkedList() {
 }
 
 
+/*!
+ * @brief **搜索**
+ * @tparam TData 数据项类型模板参数
+ * @param data 搜索数据项
+ * @return 结点指针
+ * @note
+ * 搜索
+ * ----
+ * ----
+ * 
+ * ----
+ * **for loop** 遍历指针cur, 从head_->next遍历到最后一个结点 :\n
+ * &emsp; **if** 当前结点data等于参数data :\n
+ * &emsp;&emsp; 返回cur\n
+ * return NULL(未搜索到时返回NULL)\n
+ */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::Search(const TData& data) const {
     for (DoublyLinkedNode<TData>* cur = head_->next; cur != NULL; cur = cur->next) {
@@ -110,6 +160,19 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::Search(const TData& data) cons
 }
 
 
+/*!
+ * @brief **搜索(递归)**
+ * @tparam TData 数据项类型模板参数
+ * @param data 搜索数据项
+ * @return 结点指针
+ * @note
+ * 搜索(递归)
+ * ---------
+ * ---------
+ * 
+ * ---------
+ * 对head_(头结点)调用SearchInSubListRecursive_, 返回结果\n
+ */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchRecursive(const TData &data) const {
 
@@ -119,30 +182,86 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchRecursive(const TData &d
 }
 
 
+/*!
+ * @brief **子链表搜索(递归)**
+ * @tparam TData 数据项类型模板参数
+ * @param sub_list_first_element 子链表首个元素结点
+ * @param data 搜索数据项
+ * @return 结点指针
+ * @note
+ * 子链表搜索(递归)
+ * --------------
+ * --------------
+ * 
+ * --------------
+ * + **1 空链表处理**\n
+ * **if** 子链表首个结点为NULL :\n
+ * &emsp; 返回NULL\n\n
+ * + **2 子链表首个元素结点既是搜索结点的处理**\n
+ * **if** 子链表首个元素结点的数据项 == data :\n
+ * &emsp; 返回该结点(指针)\n\n
+ * + **3 递归搜索**\n
+ * 对sub_list_first_element->next(子链表首个元素结点的下一结点)递归调用SearchInSubListRecursive_, 返回结果\n
+ */
 template<typename TData>
-DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_head,
+DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_first_element,
                                                                             const TData& data) const
 {
-    if (sub_list_head == NULL) {
+    if (sub_list_first_element == NULL) {
         return NULL;
     }
 
-    if (sub_list_head->data == data) {
-        return sub_list_head;
+    if (sub_list_first_element->data == data) {
+        return sub_list_first_element;
     }
 
-    return SearchInSubListRecursive_(sub_list_head->next, data);
+    return SearchInSubListRecursive_(sub_list_first_element->next, data);
 }
 
 
+/*!
+ * @brief **插入结点**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 插入位置的前一位置
+ * @param data 插入数据项
+ * @return 执行结果
+ * @note
+ * 插入结点
+ * -------
+ * -------
+ * 
+ * -------
+ * + **1 非法位置处理**\n
+ * **if** pos > 链表长度 || pos < 0 :\n
+ * &emsp; 返回false\n\n
+ * + **2 构造插入结点**\n
+ * 分配内存并初始化insertion_node(插入结点)\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 返回false\n\n
+ * + **3 插入**\n
+ * <span style="color:#003153">(3.1 遍历至pos位置(插入位置前一位置))\n</span>
+ * 初始化cur(遍历指针)指向head_(头结点)\n
+ * **while loop** pos > 0 :\n
+ * &emsp; cur指向下一结点\n
+ * &emsp; pos减1\n\n
+ * <span style="color:#003153">(3.2 插入)\n</span>
+ * 插入结点的next, 指向插入结点的前一结点的next\n
+ * 插入结点的前一结点的next, 指向插入结点\n\n
+ * 插入结点的下一结点的prev, 指向插入结点\n
+ * 插入结点的prev, 指向插入结点的前一结点\n\n
+ * <span style="color:#003153">(3.3 调整长度)\n</span>
+ * length_加1\n\n
+ * + **4 返回**\n
+ * 返回true\n
+ */
 template<typename TData>
 bool DoublyLinkedList<TData>::Insert(int pos, const TData& data) {
     if (pos > length_ || pos < 0) {
         return false;
     }
 
-    DoublyLinkedNode<TData>* node = new DoublyLinkedNode<TData>(data);
-    if (!node) {
+    DoublyLinkedNode<TData>* insertion_node = new DoublyLinkedNode<TData>(data);
+    if (!insertion_node) {
         return false;
     }
 
@@ -152,10 +271,11 @@ bool DoublyLinkedList<TData>::Insert(int pos, const TData& data) {
         pos--;
     }
 
-    node->next = cur->next;     // node->next指向cur->next
-    cur->next = node;           // cur->next指向node
-    node->next->prev = node;    // node->next->prev指向node
-    node->prev = cur;           // node->prev指向cur
+    insertion_node->next = cur->next;
+    cur->next = insertion_node;
+
+    insertion_node->next->prev = insertion_node;
+    insertion_node->prev = cur;
 
     length_++;
 
@@ -163,6 +283,12 @@ bool DoublyLinkedList<TData>::Insert(int pos, const TData& data) {
 }
 
 
+/*!
+ *
+ * @tparam TData
+ * @param pos
+ * @return
+ */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
     if (pos < 1 || pos > Length()) {
@@ -178,6 +304,19 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
 }
 
 
+/*!
+ * @brief **获取结点数据项**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 获取结点数据项
+ * -----------
+ * -----------
+ *
+ * -----------
+ */
 template<typename TData>
 bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
     if (pos < 1 || pos > Length()) {
@@ -195,6 +334,13 @@ bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
 }
 
 
+/*!
+ *
+ * @tparam TData
+ * @param pos
+ * @param data
+ * @return
+ */
 template<typename TData>
 bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
     if (pos < 1 || pos > Length()) {
@@ -212,6 +358,13 @@ bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
 }
 
 
+/*!
+ *
+ * @tparam TData
+ * @param pos
+ * @param data
+ * @return
+ */
 template<typename TData>
 bool DoublyLinkedList<TData>::Remove(int pos, TData& data) {
 
@@ -238,6 +391,10 @@ bool DoublyLinkedList<TData>::Remove(int pos, TData& data) {
 }
 
 
+/*!
+ *
+ * @tparam TData
+ */
 template<typename TData>
 void DoublyLinkedList<TData>::Clear() {
     DoublyLinkedNode<TData>* cur = this->head_->next;
@@ -258,6 +415,10 @@ void DoublyLinkedList<TData>::Clear() {
 }
 
 
+/*!
+ *
+ * @tparam TData
+ */
 template<typename TData>
 void DoublyLinkedList<TData>::Print() {
     if (this->length_ == 0) {
