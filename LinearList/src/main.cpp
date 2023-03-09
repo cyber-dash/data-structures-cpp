@@ -37,6 +37,7 @@ int main() {
 	SeqListTest::TestUnion();
 
 	SeqListTest::TestIntersection();
+     */
 
     DoublyLinkedListTest::TestInsert();
 
@@ -48,6 +49,7 @@ int main() {
 
     DoublyLinkedListTest::TestClear();
 
+    /*
     CircularSinglyLinkedListTest::TestInsert();
 
     CircularSinglyLinkedListTest::TestRemove();
@@ -73,6 +75,7 @@ int main() {
 	CircularDoublyLinkedListTest::TestGetDataAndSetData();
      */
 
+    /*
 	SinglyLinkListTest::TestCopyConstructor();
 
 	SinglyLinkListTest::TestRemove();
@@ -88,6 +91,7 @@ int main() {
     StaticLinkedListTest::TestSearch();
 
     StaticLinkedListTest::TestRemove();
+     */
 
 	return 0;
 }
