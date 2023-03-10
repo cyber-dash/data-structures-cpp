@@ -107,13 +107,13 @@ private:
  * </span>
  *
  * ----------
- * head_<b>(头结点)</b>分配内存, length_<b>(长度)</b>设置为0\n
+ * first_<b>(头结点)</b>分配内存, length_<b>(长度)</b>设置为0\n
  * **if* head_内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n
  */
 template<typename TData>
 SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
-    this->head_ = new LinkedNode<TData>();  // head_(头结点)分配内存, length_(长度)设置为0
+    this->head_ = new LinkedNode<TData>();  // first_(头结点)分配内存, length_(长度)设置为0
     if (!this->head_) {                     // if head_内存分配失败
         throw bad_alloc();                  // 抛出bad_alloc()
     }
@@ -131,7 +131,7 @@ SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
  *
  * ----------
  * **1 头结点初始化**\n
- * head_(头结点)分配内存并初始化\n
+ * first_(头结点)分配内存并初始化\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n
  * \n
@@ -305,10 +305,10 @@ bool SinglyLinkedList<TData>::SetData(int pos, const TData& data) {
  * </span>
  *
  * -------
- * **while** head_->next存在 :\n
- * &emsp; **I**&nbsp;&nbsp; head_->next指向head_->next->next\n
+ * **while** first_->next存在 :\n
+ * &emsp; **I**&nbsp;&nbsp; first_->next指向head_->next->next\n
  * &emsp;&emsp; 声明指针cur, 指向head_->next\n
- * &emsp;&emsp; head_->next指向cur->next\n
+ * &emsp;&emsp; first_->next指向cur->next\n
  * &emsp; **II**&nbsp; 删除head_->next\n
  * &emsp;&emsp; 释放cur指向的结点\n
  * &emsp; **III** 调整链表长度\n
@@ -317,11 +317,11 @@ bool SinglyLinkedList<TData>::SetData(int pos, const TData& data) {
 template<typename TData>
 void SinglyLinkedList<TData>::Clear() {
 
-    while (this->head_->next != NULL) {             // while head_->next存在 :
+    while (this->head_->next != NULL) {             // while first_->next存在 :
 
-        // ----- I head_->next指向head_->next->next -----
+        // ----- I first_->next指向head_->next->next -----
         LinkedNode<TData>* cur = this->head_->next; // 声明指针cur, 指向head_->next
-        this->head_->next = cur->next;              // head_->next指向cur->next
+        this->head_->next = cur->next;              // first_->next指向cur->next
 
         // ----- II 删除head_->next -----
         delete cur;                                 // 释放cur指向的结点
@@ -342,7 +342,7 @@ void SinglyLinkedList<TData>::Clear() {
  *
  * -------
  * **I&nbsp;&nbsp; 空链表打印**\n
- * &emsp; **if** head_->next为NULL:\n
+ * &emsp; **if** first_->next为NULL:\n
  * &emsp;&emsp; 打印"Empty list"\n
  * &emsp;&emsp; return\n
  * **II&nbsp; 非空链表打印**\n
@@ -355,7 +355,7 @@ template<typename TData>
 void SinglyLinkedList<TData>::Print() {
 
     // ----- I 空链表打印 -----
-    if (this->head_->next == NULL) {        // if head_->next为NULL:
+    if (this->head_->next == NULL) {        // if first_->next为NULL:
         cout<<"Empty list"<<endl;           // 打印Empty list
         return;
     }
@@ -523,7 +523,7 @@ bool SinglyLinkedList<TData>::Insert(int pos, LinkedNode<TData>* node) {
  * </span>
  *
  * -----------
- * **if** head_->next为NULL:\n
+ * **if** first_->next为NULL:\n
  * &emsp; 则为空链表\n
  * **else**\n
  * &emsp; 不是空链表\n

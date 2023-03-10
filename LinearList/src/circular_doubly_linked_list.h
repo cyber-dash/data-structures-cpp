@@ -61,13 +61,13 @@ public:
     int Length() const { return this->length_; }
 
     /*! @brief **判断链表是否为空** */
-    bool IsEmpty() const { return this->head_ == NULL; }
+    bool IsEmpty() const { return this->first_ == NULL; }
 
     // 清空链表
     void Clear();
 
     /*! @brief 获取链表头结点 */
-    CircularDoublyLinkedNode<TData>* Head() const { return this->head_; }
+    CircularDoublyLinkedNode<TData>* Head() const { return this->first_; }
 
     // 搜索
     CircularDoublyLinkedNode<TData>* Search(const TData& data);
@@ -103,7 +103,7 @@ public:
     static const int FORWARD_DIRECTION = 1;
 
 private:
-    CircularDoublyLinkedNode<TData>* head_;
+    CircularDoublyLinkedNode<TData>* first_;
     int length_;
 };
 
@@ -119,7 +119,7 @@ private:
  */
 template<typename TData>
 CircularDoublyLinkedList<TData>::CircularDoublyLinkedList() {
-    this->head_ = NULL;
+    this->first_ = NULL;
     this->length_ = 0;
 }
 
@@ -146,9 +146,9 @@ CircularDoublyLinkedList<TData>::CircularDoublyLinkedList() {
  */
 template<typename TData>
 void CircularDoublyLinkedList<TData>::Clear() {
-    while (head_ != NULL) {
-        CircularDoublyLinkedNode<TData>* cur = this->head_;
-        head_ = cur->next;
+    while (first_ != NULL) {
+        CircularDoublyLinkedNode<TData>* cur = this->first_;
+        first_ = cur->next;
 
         delete cur;                                         // 释放cur指向的结点
         cur = NULL;
@@ -174,7 +174,7 @@ CircularDoublyLinkedList<TData>::~CircularDoublyLinkedList() {
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const TData& data) {
-    CircularDoublyLinkedNode<TData>* cur = this->head_;
+    CircularDoublyLinkedNode<TData>* cur = this->first_;
     for (int pos = 1; pos <= this->Length(); pos++, cur = cur->next) {
         if (cur->data == data) {
             return cur;
@@ -211,7 +211,7 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirec
         return NULL;
     }
 
-    CircularDoublyLinkedNode<TData>* cur = head_;
+    CircularDoublyLinkedNode<TData>* cur = first_;
 
     for (int i = 1; i < pos; i++) {
         if (direction == CircularDoublyLinkedList::BACKWARD_DIRECTION) {
@@ -273,8 +273,8 @@ bool CircularDoublyLinkedList<TData>::InsertByDirection(int pos, const TData& da
         return false;       // 返回false
     }
 
-    if (head_ == NULL) {
-        head_ = node;
+    if (first_ == NULL) {
+        first_ = node;
         node->next = node;
         node->prev = node;
         this->length_ = 1;
@@ -282,7 +282,7 @@ bool CircularDoublyLinkedList<TData>::InsertByDirection(int pos, const TData& da
     }
 
     // ----- I 获取插入结点的前驱结点 -----
-    CircularDoublyLinkedNode<TData>* cur = head_;
+    CircularDoublyLinkedNode<TData>* cur = first_;
     for (int i = 1; i < pos; i++) {
         if (direction == CircularDoublyLinkedList::BACKWARD_DIRECTION) {
             cur = cur->prev;
@@ -349,18 +349,18 @@ bool CircularDoublyLinkedList<TData>::RemoveByDirection(int pos, TData &data, in
         data = cur->data;
 
         delete cur;
-        this->head_ = NULL;
+        this->first_ = NULL;
 
         length_ = 0;
 
         return true;
     }
 
-    if (cur == head_) {
+    if (cur == first_) {
         if (direction == CircularDoublyLinkedList<TData>::FORWARD_DIRECTION) {
-            head_ = cur->next;
+            first_ = cur->next;
         } else if (direction == CircularDoublyLinkedList<TData>::BACKWARD_DIRECTION) {
-            head_ = cur->prev;
+            first_ = cur->prev;
         }
     }
 
@@ -396,7 +396,7 @@ bool CircularDoublyLinkedList<TData>::GetData(int pos, TData& data) const {
         return false;
     }
 
-    CircularDoublyLinkedNode<TData>* cur = this->head_;
+    CircularDoublyLinkedNode<TData>* cur = this->first_;
 
     while (pos > 1) {
         cur = cur->next;
@@ -423,7 +423,7 @@ bool CircularDoublyLinkedList<TData>::SetData(int pos, const TData& data) {
         return false;
     }
 
-    CircularDoublyLinkedNode<TData>* cur = this->head_;
+    CircularDoublyLinkedNode<TData>* cur = this->first_;
 
     while (pos > 1) {
         cur = cur->next;
@@ -442,7 +442,7 @@ bool CircularDoublyLinkedList<TData>::SetData(int pos, const TData& data) {
  */
 template<typename TData>
 void CircularDoublyLinkedList<TData>::Print() {
-    if (this->head_ == NULL) {
+    if (this->first_ == NULL) {
         cout << "Empty list" << endl;
         return;
     }
