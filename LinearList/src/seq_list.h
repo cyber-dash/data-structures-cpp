@@ -239,7 +239,7 @@ int SeqList<TData>::Locate(int pos) const {
     else {
         return 0;
     }
-};
+}
 
 
 /*!

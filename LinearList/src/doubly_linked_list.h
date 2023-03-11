@@ -26,7 +26,7 @@ struct DoublyLinkedNode {
      * @param prev 上一结点(指针)
      */
     explicit DoublyLinkedNode(DoublyLinkedNode<TData>* next = NULL, DoublyLinkedNode<TData>* prev = NULL) :
-        prev(prev), next(next) {}
+        next(next), prev(prev) {}
 
     /*!
      * @brief **构造函数(data, next和prev)**
@@ -35,7 +35,7 @@ struct DoublyLinkedNode {
      * @param prev 上一结点指针
      */
     explicit DoublyLinkedNode(const TData& data, DoublyLinkedNode<TData>* next = NULL, DoublyLinkedNode<TData>* prev = NULL) :
-        data(data), prev(prev), next(next) {}
+        data(data), next(next), prev(prev) {}
 
     TData data;                       //!< 数据项
     DoublyLinkedNode<TData>* next;    //!< 下一结点

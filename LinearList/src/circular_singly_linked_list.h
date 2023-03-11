@@ -44,7 +44,7 @@ template<typename TData>
 class CircularSinglyLinkedList : public LinearList<TData> {
 public:
     // 默认构造函数
-    CircularSinglyLinkedList(): length_(0), first_(NULL), last_(NULL) {}
+    CircularSinglyLinkedList(): first_(NULL), last_(NULL), length_(0) {}
 
     // 析构函数
     ~CircularSinglyLinkedList();

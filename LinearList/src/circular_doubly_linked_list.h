@@ -16,27 +16,30 @@
 
 
  /*!
-  * @brief **双向循环链表结点模板类**
+  * @brief **双向循环链表结点模板结构体**
   * @tparam TData 数据项类型模板参数
   */
 template <typename TData>
 struct CircularDoublyLinkedNode {
     /*!
-     * @brief **构造函数(next与prev)**
+     * @brief **构造函数(下一结点/前一节点)**
      * @param next 下一结点(指针)
      * @param prev 上一结点(指针)
      */
-    explicit CircularDoublyLinkedNode(CircularDoublyLinkedNode<TData>* next = NULL, CircularDoublyLinkedNode<TData>* prev = NULL) :
-        prev(prev), next(next) {}
+    explicit CircularDoublyLinkedNode(CircularDoublyLinkedNode<TData>* next = NULL,
+                                      CircularDoublyLinkedNode<TData>* prev = NULL)
+        : next(next), prev(prev) {}
 
     /*!
-     * @brief **构造函数(data, next和prev)**
+     * @brief **构造函数(数据项/前一结点/前一结点)**
      * @param data 数据项
-     * @param next 下一结点指针
-     * @param prev 上一结点指针
+     * @param next 下一结点(指针)
+     * @param prev 上一结点(指针)
      */
-    explicit CircularDoublyLinkedNode(const TData& data, CircularDoublyLinkedNode<TData>* next = NULL, CircularDoublyLinkedNode<TData>* prev = NULL) :
-        data(data), prev(prev), next(next) {}
+    explicit CircularDoublyLinkedNode(const TData& data,
+                                      CircularDoublyLinkedNode<TData>* next = NULL,
+                                      CircularDoublyLinkedNode<TData>* prev = NULL)
+        : data(data), next(next), prev(prev) {}
 
     TData data;                               //!< 数据项
     CircularDoublyLinkedNode<TData>* next;    //!< 下一结点
@@ -45,14 +48,14 @@ struct CircularDoublyLinkedNode {
 
 
 /*!
- * @brief **双向循环链表模板类**
+ * @brief **循环双向链表模板类**
  * @tparam TData 数据项类型模板参数
  */
 template<typename TData>
 class CircularDoublyLinkedList : public LinearList<TData> {
 public:
-    // 默认构造函数
-    CircularDoublyLinkedList();
+    /*! @brief 默认构造函数 */
+    CircularDoublyLinkedList(): first_(NULL), length_(0) {}
 
     // 析构函数
     ~CircularDoublyLinkedList();
@@ -60,10 +63,10 @@ public:
     /*! @brief **长度** */
     int Length() const { return this->length_; }
 
-    /*! @brief **判断链表是否为空** */
+    /*! @brief **判断是否为空链表** */
     bool IsEmpty() const { return this->first_ == NULL; }
 
-    // 清空链表
+    // 清空
     void Clear();
 
     /*! @brief 获取链表头结点 */
@@ -75,89 +78,86 @@ public:
     // 获取结点(按方向)
     CircularDoublyLinkedNode<TData>* GetNodeByDirection(int pos, int direction);
 
-    // 定位
+    // 获取结点(按next方向)
     CircularDoublyLinkedNode<TData>* GetNode(int pos);
 
-    // 按方向插入
+    // 插入结点(按方向)
     bool InsertByDirection(int pos, const TData& data, int direction);
 
-    // 向后插入
+    // 插入结点(按next方向)
     bool Insert(int pos, const TData& data);
 
-    // 按方向删除结点
+    // 删除结点(按方向)
     bool RemoveByDirection(int pos, TData& data, int direction);
 
-    // 向后删除节点
+    // 删除结点(按next方向)
     bool Remove(int pos, TData& data);
 
-    // 获取结点数据
+    // 获取结点数据(按next方向)
     bool GetData(int pos, TData& data) const;
 
-    // 设置结点数据
+    // 设置结点数据(按next方向)
     bool SetData(int pos, const TData& data);
 
-    // 打印双向链表
+    // 打印
     void Print();
 
-    static const int BACKWARD_DIRECTION = 0;
-    static const int FORWARD_DIRECTION = 1;
+    static const int BACKWARD_DIRECTION = 0;    // prev方向
+    static const int FORWARD_DIRECTION = 1;     // next方向
 
 private:
-    CircularDoublyLinkedNode<TData>* first_;
-    int length_;
+    CircularDoublyLinkedNode<TData>* first_;     // 首元素结点(指针)
+    int length_;                                // 长度
 };
 
 
 /*!
- * @brief **默认构造函数**
+ * @brief **清空**
  * @note
- * 默认构造函数
- * ----------
- * ----------
- *
- * ----------
- */
-template<typename TData>
-CircularDoublyLinkedList<TData>::CircularDoublyLinkedList() {
-    this->first_ = NULL;
-    this->length_ = 0;
-}
-
-
-/*!
- * @brief **清空链表**
- * @note
- * 清空链表
- * -------
- * -------
+ * 清空
+ * ---
+ * ---
  *
  * <span style="color:#FF8100">
  *
  * </span>
  *
- * -------
- * **I&nbsp;&nbsp; 清空链表**\n
- * **while** head_不为NULL:\n
- * &emsp; 声明指针cur, 指向head_\n
- * &emsp; head_指向cur->next\n
- * &emsp; 释放cur指向的结点\n
- * **II&nbsp; 调整长度**\n
+ * ---
+ * + **1 释放结点内存**\n
+ * **while** first_(首元素结点)不为NULL:\n
+ * &emsp; (删除当前头结点)\n
+ * &emsp; 声明deletion_node(删除结点), 指向first_\n
+ * &emsp; first_指向cur->next\n
+ * &emsp; 释放deletion_node指向的结点\n
+ * &emsp; deletion_node置NULL\n
+ * + **2 调整长度**\n
  * length_设置为0\n
  */
 template<typename TData>
 void CircularDoublyLinkedList<TData>::Clear() {
     while (first_ != NULL) {
-        CircularDoublyLinkedNode<TData>* cur = this->first_;
-        first_ = cur->next;
+        CircularDoublyLinkedNode<TData>* deletion_node = this->first_;
+        first_ = deletion_node->next;
 
-        delete cur;                                         // 释放cur指向的结点
-        cur = NULL;
+        delete deletion_node;                                         // 释放cur指向的结点
+        deletion_node = NULL;
     }
 
     this->length_ = 0;
 }
 
 
+/*!
+ * @brief **析构函数**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 析构函数
+ * -------
+ * -------
+ *
+ * -------
+ * 调用Clear()函数\n
+ */
 template<typename TData>
 CircularDoublyLinkedList<TData>::~CircularDoublyLinkedList() {
     this->Clear();
@@ -197,7 +197,7 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
  *
  * CircularDoublyLinkedList::BACKWARD_DIRECTION, 从head->next_开始, 向next指针方向找位置
  * CircularDoublyLinkedList::BACKWARD_DIRECTION, 从head->next_开始, 向prev指针方向找位置
- * 链表结点从1开始, 当pos为0时, 返回head_结点的地址
+ * 链表结点从1开始, 当pos为0时, 返回first_结点的地址
  *
  * --------------
  * **I&nbsp;&nbsp; 位置0处理** \n

@@ -117,7 +117,7 @@ SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
     if (!this->head_) {                     // if head_内存分配失败
         throw bad_alloc();                  // 抛出bad_alloc()
     }
-};
+}
 
 
 /*!

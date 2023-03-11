@@ -609,7 +609,7 @@ bool StaticLinkedList<TData>::GetInsertionIndex_(int& index) const {
 template <typename TData>
 StaticLinkedListNode<TData>& StaticLinkedList<TData>::operator[] (size_t index) {
     if ((int)index > length_) {
-        throw exception("Out of Range");
+        throw out_of_range("wrong index");
     }
 
     return this->mem_data_[index];
