@@ -53,11 +53,11 @@ void CircularDoublyLinkedListTest::TestInsert() {
     string band4("Coldplay");
     string band5("黑豹");
 
-    band_list->InsertByDirection(0, band1, CircularDoublyLinkedList<string>::FORWARD_DIRECTION);
-    band_list->InsertByDirection(1, band2, CircularDoublyLinkedList<string>::FORWARD_DIRECTION);
-    band_list->InsertByDirection(2, band3, CircularDoublyLinkedList<string>::FORWARD_DIRECTION);
-    band_list->InsertByDirection(3, band4, CircularDoublyLinkedList<string>::FORWARD_DIRECTION);
-    band_list->InsertByDirection(4, band5, CircularDoublyLinkedList<string>::FORWARD_DIRECTION);
+    band_list->Insert(0, band1);
+    band_list->Insert(1, band2);
+    band_list->Insert(2, band3);
+    band_list->Insert(3, band4);
+    band_list->Insert(4, band5);
 
     band_list->Print();
 
@@ -85,16 +85,16 @@ void CircularDoublyLinkedListTest::TestRemove() {
 
     string delete_item;
 
-    int delete_pos = 3;
-    city_list->RemoveByDirection(delete_pos, delete_item, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
+    int step = 2;
+    city_list->RemoveByDirection(step, delete_item, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
 
-    cout << "向后删除城市" << delete_pos << "之后: " << endl;
+    cout << endl << "向后删除, 首结点城市" << step << "个结点之后的城市: " << endl;
     city_list->Print();
 
-    delete_pos = 1;
-    city_list->RemoveByDirection(delete_pos, delete_item, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
+    step = 0;
+    city_list->RemoveByDirection(step, delete_item, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
 
-    cout << "向后删除城市" << delete_pos << "之后: " << endl;
+    cout << "向后删除, 首结点城市" << step << "个结点之后的城市: " << endl;
     city_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -199,13 +199,13 @@ void CircularDoublyLinkedListTest::TestGetNode() {
     circular_doubly_linked_list->Insert(5, 5);
     circular_doubly_linked_list->Insert(6, 7);
 
-    CircularDoublyLinkedNode<int>* node1 = circular_doubly_linked_list->GetNode(1);
-    CircularDoublyLinkedNode<int>* node2 = circular_doubly_linked_list->GetNode(4);
-    CircularDoublyLinkedNode<int>* node3 = circular_doubly_linked_list->GetNode(7);
+    CircularDoublyLinkedNode<int>* pos1_node = circular_doubly_linked_list->GetNode(1);
+    CircularDoublyLinkedNode<int>* pos4_node = circular_doubly_linked_list->GetNode(4);
+    CircularDoublyLinkedNode<int>* pos7_node = circular_doubly_linked_list->GetNode(7);
 
-    cout<<"node->data: "<<node1->data<<endl;
-    cout<<"node->data: "<<node2->data<<endl;
-    cout<<"node->data: "<<node3->data<<endl;
+    cout << "pos1, node->data: " << pos1_node->data << endl;
+    cout << "pos4, node->data: " << pos4_node->data << endl;
+    cout << "pos7, node->data: " << pos7_node->data << endl;
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

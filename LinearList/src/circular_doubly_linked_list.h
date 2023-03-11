@@ -52,7 +52,7 @@ struct CircularDoublyLinkedNode {
  * @tparam TData 数据项类型模板参数
  */
 template<typename TData>
-class CircularDoublyLinkedList : public LinearList<TData> {
+class CircularDoublyLinkedList: public LinearList<TData> {
 public:
     /*! @brief 默认构造函数 */
     CircularDoublyLinkedList(): first_(NULL), length_(0) {}
@@ -76,27 +76,24 @@ public:
     CircularDoublyLinkedNode<TData>* Search(const TData& data);
 
     // 获取结点(按方向)
-    CircularDoublyLinkedNode<TData>* GetNodeByDirection(int pos, int direction);
+    CircularDoublyLinkedNode<TData>* GetNodeByDirection(int step, int direction);
 
-    // 获取结点(按next方向)
+    // 获取结点
     CircularDoublyLinkedNode<TData>* GetNode(int pos);
 
-    // 插入结点(按方向)
-    bool InsertByDirection(int pos, const TData& data, int direction);
-
-    // 插入结点(按next方向)
+    // 插入结点
     bool Insert(int pos, const TData& data);
 
     // 删除结点(按方向)
-    bool RemoveByDirection(int pos, TData& data, int direction);
+    bool RemoveByDirection(int step, TData& data, int direction);
 
-    // 删除结点(按next方向)
+    // 删除结点
     bool Remove(int pos, TData& data);
 
-    // 获取结点数据(按next方向)
+    // 获取结点数据
     bool GetData(int pos, TData& data) const;
 
-    // 设置结点数据(按next方向)
+    // 设置结点数据
     bool SetData(int pos, const TData& data);
 
     // 打印
@@ -165,12 +162,20 @@ CircularDoublyLinkedList<TData>::~CircularDoublyLinkedList() {
 
 
 /*!
- * @brief 搜索
- * @param data 数据
+ * @brief **搜索**
+ * @param data 数据项
  * @return 结点指针
  * @note
- * 返回数据项等于数据的结点,
- * 若没有, 则返回NULL
+ * 搜索
+ * ---
+ * ---
+ *
+ * ---
+ * 初始化cur(遍历指针), 指向first_(首个结点)\n
+ * **for loop** 遍历链表每个结点, 从pos(位置)等于1开始, 每次遍历结束cur指向自身next :\n
+ * **if** cur->data等于参数data :\n
+ * &emsp; 返回cur\n
+ * 返回NULL(没有对应结点)\n
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const TData& data) {
@@ -187,7 +192,7 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
 
 /*!
  * @brief 获取结点(按方向)
- * @param pos 位置
+ * @param step 步数
  * @param direction 方向
  * @return 结点指针
  * @note
@@ -195,25 +200,33 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
  * --------------
  * --------------
  *
- * CircularDoublyLinkedList::BACKWARD_DIRECTION, 从head->next_开始, 向next指针方向找位置
- * CircularDoublyLinkedList::BACKWARD_DIRECTION, 从head->next_开始, 向prev指针方向找位置
- * 链表结点从1开始, 当pos为0时, 返回first_结点的地址
+ * CircularDoublyLinkedList::BACKWARD_DIRECTION, 从first_->next开始, 向next指针方向
+ * CircularDoublyLinkedList::FORWARD_DIRECTION, 从first_->prev开始, 向prev指针方向
  *
  * --------------
- * **I&nbsp;&nbsp; 位置0处理** \n
- * **II&nbsp; 位置溢出处理** \n
- * **III 按方向遍历至pos位置** \n
+ * + **1 非法步数处理** \n
+ * **if** step < 0 || step >= 链表长度 :\n
+ * &emsp; 返回NULL\n
+ * + **2 按方向遍历至pos位置** \n
+ * 初始化cur(遍历指针), 指向first_(首结点) \n
+ * **for loop** 循环step次 :\n
+ * &emsp; **if** 向prev方向 :\n
+ * &emsp;&emsp; cur指向cur->prev\n
+ * &emsp; **else** (向next方向) :\n
+ * &emsp;&emsp; cur指向cur->next\n
+ * + **3 返回结果** \n
+ * 返回cur\n
  */
 template<typename TData>
-CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirection(int pos, int direction) {
+CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirection(int step, int direction) {
 
-    if (pos <= 0 || length_ < pos) {
+    if (step < 0 || step >= length_) {
         return NULL;
     }
 
     CircularDoublyLinkedNode<TData>* cur = first_;
 
-    for (int i = 1; i < pos; i++) {
+    for (int i = 1; i <= step; i++) {
         if (direction == CircularDoublyLinkedList::BACKWARD_DIRECTION) {
             cur = cur->prev;
         } else {
@@ -226,57 +239,56 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirec
 
 
 /*!
- * @brief **获取结点(forward方向)**
+ * @brief **获取结点**
  * @tparam TData 数据项类型模板参数
  * @param pos 位置
  * @return 结点指针
- * 获取结点(forward方向)
+ * 获取结点
  * -------------------
  * -------------------
  *
  * -------------------
- * 使用DoublyLinkedList::FORWARD_DIRECTION, 调用GetDataByDirection
+ * 计算step = pos - 1\n
+ * 按照FORWARD_DIRECTION方向, 调用GetDataByDirection\n
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNode(int pos) {
-    return this->GetNodeByDirection(pos, CircularDoublyLinkedList::FORWARD_DIRECTION);
+    int step = pos - 1;
+    return this->GetNodeByDirection(step, CircularDoublyLinkedList::FORWARD_DIRECTION);
 }
 
 
 /*!
- * @brief 插入(按方向)
+ * @brief **插入结点**
  * @tparam TData 数据项类型模板参数
  * @param pos 位置
  * @param data 数据
- * @param direction 方向
  * @return 执行结果
- * 插入(按方向)
- * ----------
- * ----------
+ * 插入结点
+ * -------
+ * -------
  *
- * 在pos位置插入, 原本pos位置和之后的元素向后移动
- * CircularDoublyLinkedList::BACKWARD_DIRECTION, 从head->next开始, 向next指针方向找插入位置, 并插入
- * CircularDoublyLinkedList::BACKWARD_DIRECTION, 从head->next开始, 向prev指针方向找插入位置, 并插入
+ * 在pos位置之后的位置插入
  *
- * ----------
+ * -------
  */
 template<typename TData>
-bool CircularDoublyLinkedList<TData>::InsertByDirection(int pos, const TData& data, int direction) {
+bool CircularDoublyLinkedList<TData>::Insert(int pos, const TData& data) {
 
     if (Length() < pos || pos < 0) {
         return false;
     }
 
     // ----- II 生成新结点 -----
-    CircularDoublyLinkedNode<TData>* node = new CircularDoublyLinkedNode<TData>(data);
-    if (node == NULL) {     // if 生成结点失败
+    CircularDoublyLinkedNode<TData>* insertion_node = new CircularDoublyLinkedNode<TData>(data);
+    if (insertion_node == NULL) {     // if 生成结点失败
         return false;       // 返回false
     }
 
     if (first_ == NULL) {
-        first_ = node;
-        node->next = node;
-        node->prev = node;
+        first_ = insertion_node;
+        insertion_node->next = insertion_node;
+        insertion_node->prev = insertion_node;
         this->length_ = 1;
         return true;
     }
@@ -284,25 +296,14 @@ bool CircularDoublyLinkedList<TData>::InsertByDirection(int pos, const TData& da
     // ----- I 获取插入结点的前驱结点 -----
     CircularDoublyLinkedNode<TData>* cur = first_;
     for (int i = 1; i < pos; i++) {
-        if (direction == CircularDoublyLinkedList::BACKWARD_DIRECTION) {
-            cur = cur->prev;
-        } else if (direction == CircularDoublyLinkedList::FORWARD_DIRECTION) {
-            cur = cur->next;
-        }
+        cur = cur->next;
     }
 
     // ----- III 执行插入 -----
-    if (direction == CircularDoublyLinkedList::BACKWARD_DIRECTION) {        // if 向prev指针方向插入(backward):
-        node->prev = cur->prev;     // node->prev指向cur->prev
-        cur->prev = node;           // cur->prev指向node
-        node->prev->next = node;    // node->prev->next指向node
-        node->next = cur;           // node->next指向cur
-    } else if (direction == CircularDoublyLinkedList::FORWARD_DIRECTION) { // else if** 向next指针方向插入(backward):
-        node->next = cur->next;     // node->next指向cur->next
-        cur->next = node;           // cur->next指向node
-        node->next->prev = node;    // node->next->prev指向node
-        node->prev = cur;           // node->prev指向cur
-    }
+    insertion_node->next = cur->next;     // insertion_node->next指向cur->next
+    cur->next = insertion_node;           // cur->next指向node
+    insertion_node->next->prev = insertion_node;    // insertion_node->next->prev指向node
+    insertion_node->prev = cur;           // insertion_node->prev指向cur
 
     // ----- IV 链表长度调整 -----
     this->length_++;                        // 链表长度加1
@@ -312,35 +313,16 @@ bool CircularDoublyLinkedList<TData>::InsertByDirection(int pos, const TData& da
 
 
 /*!
- * @brief **插入(forward方向)**
- * @tparam TData 数据项类型模板参数
- * @param pos 位置
- * @param data 数据
- * @return 执行结果
- * 插入(forward方向)
- * ----------------
- * ----------------
- *
- * ----------------
- * 使用DoublyLinkedList::FORWARD_DIRECTION调用InsertByDirection
- */
-template<typename TData>
-bool CircularDoublyLinkedList<TData>::Insert(int pos, const TData& data) {
-    return this->InsertByDirection(pos, data, CircularDoublyLinkedList::FORWARD_DIRECTION);
-}
-
-
-/*!
  * @brief **删除(结点)元素(按方向)**
  * @tparam TData 数据项类型模板参数
- * @param pos 位置
+ * @param step 位置
  * @param data 数据项保存变量
  * @param direction 方向
  * @return 执行结果
  */
 template<typename TData>
-bool CircularDoublyLinkedList<TData>::RemoveByDirection(int pos, TData &data, int direction) {
-    CircularDoublyLinkedNode<TData>* cur = GetNodeByDirection(pos, direction);
+bool CircularDoublyLinkedList<TData>::RemoveByDirection(int step, TData &data, int direction) {
+    CircularDoublyLinkedNode<TData>* cur = GetNodeByDirection(step, direction);
     if (cur == NULL) {
         return false;
     }
@@ -379,7 +361,8 @@ bool CircularDoublyLinkedList<TData>::RemoveByDirection(int pos, TData &data, in
 
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::Remove(int pos, TData& data) {
-    return this->RemoveByDirection(pos, data, CircularDoublyLinkedList::FORWARD_DIRECTION);
+    int step = pos - 1;
+    return this->RemoveByDirection(step, data, CircularDoublyLinkedList::FORWARD_DIRECTION);
 }
 
 

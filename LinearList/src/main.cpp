@@ -51,6 +51,7 @@ int main() {
     DoublyLinkedListTest::TestClear();
      */
 
+    /*
     CircularSinglyLinkedListTest::TestInsert();
 
     CircularSinglyLinkedListTest::TestRemove();
@@ -60,8 +61,8 @@ int main() {
     CircularSinglyLinkedListTest::TestLength();
 
     CircularSinglyLinkedListTest::TestSearch();
+     */
 
-    /*
 	CircularDoublyLinkedListTest::TestInsert();
 
 	CircularDoublyLinkedListTest::TestRemove();
@@ -75,7 +76,6 @@ int main() {
 	CircularDoublyLinkedListTest::TestSearch();
 
 	CircularDoublyLinkedListTest::TestGetDataAndSetData();
-     */
 
     /*
 	SinglyLinkListTest::TestCopyConstructor();
