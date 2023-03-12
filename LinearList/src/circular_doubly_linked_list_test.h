@@ -43,7 +43,7 @@ void CircularDoublyLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|       Test CircularDoublyLinkedList InsertByDirection     |" << endl;
-    cout << "|                     测试双向链表按方向插入                   |" << endl << endl << endl;
+    cout << "|                   测试循环双向链表按方向插入                  |" << endl << endl << endl;
 
     CircularDoublyLinkedList<string>* band_list = new CircularDoublyLinkedList<string>();
 
@@ -54,10 +54,10 @@ void CircularDoublyLinkedListTest::TestInsert() {
     string band5("黑豹");
 
     band_list->Insert(0, band1);
-    band_list->Insert(1, band2);
-    band_list->Insert(2, band3);
-    band_list->Insert(3, band4);
-    band_list->Insert(4, band5);
+    band_list->Insert(0, band2);
+    band_list->Insert(0, band3);
+    band_list->Insert(0, band4);
+    band_list->Insert(0, band5);
 
     band_list->Print();
 
@@ -202,10 +202,12 @@ void CircularDoublyLinkedListTest::TestGetNode() {
     CircularDoublyLinkedNode<int>* pos1_node = circular_doubly_linked_list->GetNode(1);
     CircularDoublyLinkedNode<int>* pos4_node = circular_doubly_linked_list->GetNode(4);
     CircularDoublyLinkedNode<int>* pos7_node = circular_doubly_linked_list->GetNode(7);
+    CircularDoublyLinkedNode<int>* pos0_node = circular_doubly_linked_list->GetNode(0);
 
     cout << "pos1, node->data: " << pos1_node->data << endl;
     cout << "pos4, node->data: " << pos4_node->data << endl;
     cout << "pos7, node->data: " << pos7_node->data << endl;
+    cout << "pos0, node->data: " << pos0_node->data << endl;
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

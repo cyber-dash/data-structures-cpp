@@ -72,8 +72,18 @@ void CircularSinglyLinkedListTest::TestClear() {
     string singer4("Coldplay");
     string singer5("黑豹");
 
+    singer_list->Insert(0, singer1);    // 插入"The Script"作为首结点
+    singer_list->Insert(0, singer2);    // 插入"Linkin Park"作为首结点
+    singer_list->Insert(0, singer3);    // 插入"Queen"作为首结点
+    singer_list->Insert(0, singer4);    // 插入"Coldplay"作为首结点
+    singer_list->Insert(0, singer5);    // 插入"黑豹"作为首结点
+
+    cout << "歌手链表:" << endl;
+    singer_list->Print();
+
     singer_list->Clear();
 
+    cout << "清空后的歌手链表:" << endl;
     singer_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -189,6 +199,7 @@ void CircularSinglyLinkedListTest::TestSearch() {
 
     string data;
     cout << "张雨生结点的地址: " << singer_list->Search(singer2)<< endl;
+    cout << "莫文蔚结点的地址: " << singer_list->Search(singer5)<< endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
