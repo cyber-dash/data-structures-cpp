@@ -21,22 +21,22 @@ using namespace std;
 template <typename TData>
 struct CircularSinglyLinkedNode {
     /*!
-     * @brief **构造函数(next)**
+     * @brief **构造函数(下一结点)**
      * @param next 下一结点(指针)
      */
     explicit CircularSinglyLinkedNode(CircularSinglyLinkedNode<TData>* next = NULL):
         next(next) {}
 
     /*!
-     * @brief **构造函数(data, next)**
+     * @brief **构造函数(数据项/下一结点)**
      * @param data 数据项
      * @param next 下一结点指针
      */
     explicit CircularSinglyLinkedNode(const TData& data, CircularSinglyLinkedNode<TData>* next = NULL) :
         data(data), next(next) {}
 
-    TData data;                               //!< 数据项
-    CircularSinglyLinkedNode<TData>* next;    //!< 下一结点
+    TData data;                               //!< **数据项**
+    CircularSinglyLinkedNode<TData>* next;    //!< **下一结点**
 };
 
 
@@ -61,12 +61,12 @@ public:
     // 搜索
     CircularSinglyLinkedNode<TData>* Search(const TData& data);
 
-    // 定位
+    // 获取结点
     CircularSinglyLinkedNode<TData>* GetNode(int pos);
 
     bool Insert(int pos, const TData& data);
 
-    bool Remove(int pos, TData& data);
+    bool Remove(int deletion_pos, TData& data);
 
     // 获取结点数据
     bool GetData(int pos, TData& data) const;
@@ -146,7 +146,7 @@ CircularSinglyLinkedList<TData>::~CircularSinglyLinkedList() {
 
 template<typename TData>
 CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int pos) {
-    if (pos < 1 || length_ < pos) {
+    if (pos < 1 || pos > length_) {
         return NULL;
     }
 
@@ -202,9 +202,9 @@ bool CircularSinglyLinkedList<TData>::Insert(int pos, const TData& data) {
 
 
 /*!
- * @brief **删除(结点)元素**
+ * @brief **删除结点**
  * @tparam TData 数据项类型模板参数
- * @param pos 位置
+ * @param deletion_pos 位置
  * @param data 数据项保存变量
  * @return 执行结果
  * @note
@@ -214,7 +214,7 @@ bool CircularSinglyLinkedList<TData>::Insert(int pos, const TData& data) {
  * 如果删除first_结点, 则新的first_结点为原first_结点的next(如果原first_->next不为自身)
  * ------------
  * **1 非法位置处理**\n
- * **if** pos < 0 或者 pos > 链表长度:\n
+ * **if** deletion_pos < 0 或者 deletion_pos > 链表长度:\n
  * &emsp; 返回false\n
  * **2 链表长度为1的情况**\n
  * **if** 链表长度为1\n
@@ -236,9 +236,9 @@ bool CircularSinglyLinkedList<TData>::Insert(int pos, const TData& data) {
  * **5 退出函数**\n
  */
 template<typename TData>
-bool CircularSinglyLinkedList<TData>::Remove(int pos, TData& data) {
+bool CircularSinglyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
     // ----- I 错误位置处理 -----
-    if (pos < 0 || pos > length_) {
+    if (deletion_pos < 0 || deletion_pos > length_) {
         return false;
     }
 
@@ -256,7 +256,7 @@ bool CircularSinglyLinkedList<TData>::Remove(int pos, TData& data) {
     }
 
     // ----- III 删除first_结点的情况 -----
-    if (pos == 1) {
+    if (deletion_pos == 1) {
         data = first_->data;
 
         CircularSinglyLinkedNode<TData>* deletion_node = first_;
@@ -273,20 +273,17 @@ bool CircularSinglyLinkedList<TData>::Remove(int pos, TData& data) {
     }
 
     // ----- IV 其他情况 -----
-    CircularSinglyLinkedNode<TData>* cur = first_;
-    for (int i = 1; i < pos - 1; i++) {
-        cur = cur->next;
-    }
+    CircularSinglyLinkedNode<TData>* prev_node = this->GetNode(deletion_pos - 1);
 
     // 删除cur->next
-    if (cur->next == last_) {
-        last_ = cur;
+    if (prev_node->next == last_) {
+        last_ = prev_node;
     }
 
-    data = cur->next->data;
+    data = prev_node->next->data;
 
-    CircularSinglyLinkedNode<TData>* deletion_node = cur->next;
-    cur->next = cur->next->next;
+    CircularSinglyLinkedNode<TData>* deletion_node = prev_node->next;
+    prev_node->next = prev_node->next->next;
 
     delete deletion_node;
     deletion_node = NULL;

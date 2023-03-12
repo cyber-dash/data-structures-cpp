@@ -56,7 +56,10 @@ public:
     // 析构函数
     ~DoublyLinkedList();
 
-    // 判断是否为空
+    /*!
+     * @brief **判断是否为空链表**
+     * @return 是否为空链表
+     */
     bool IsEmpty() const { return this->head_->next == head_; }
 
     // 插入结点
@@ -88,6 +91,7 @@ public:
 
     /*! @brief **长度** */
     int Length() const { return this->length_; }
+
 private:
     DoublyLinkedNode<TData>* SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_first_element, const TData& data) const;
 
@@ -118,7 +122,7 @@ private:
  * head_的prev(前一结点), 为NULL\n\n
  * tail_的next(下一结点), 为NULL\n
  * tail_的prev(前一结点), 指向head_\n\n
- * lenght_设为0\n
+ * length_设为0\n
  */
 template<typename TData>
 DoublyLinkedList<TData>::DoublyLinkedList() {
@@ -139,6 +143,23 @@ DoublyLinkedList<TData>::DoublyLinkedList() {
     tail_->prev = head_;
 
     length_ = 0;
+}
+
+
+/*!
+ * @brief **析构函数**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 析构函数
+ * ------
+ * ------
+ *
+ * ------
+ * 调用Clear()\n
+ */
+template<typename TData>
+DoublyLinkedList<TData>::~DoublyLinkedList() {
+    this->Clear();
 }
 
 
