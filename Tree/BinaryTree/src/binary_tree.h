@@ -26,18 +26,15 @@ using namespace std;
  */
 template <class TData>
 struct BinaryTreeNode {
-    /*!
-     * @brief 默认构造函数
-     * @note
-     */
+    /*! @brief **默认构造函数** */
     BinaryTreeNode() : left_child(NULL), right_child(NULL) {}
-    /*! @brief 构造函数(数据项和左右孩子) */
-    BinaryTreeNode(TData data, BinaryTreeNode<TData>* left_child = NULL, BinaryTreeNode<TData>* right_child = NULL) :
-        data(data), left_child(left_child), right_child(right_child) {}
+    /*! @brief 构造函数(数据项/左右孩子) */
+    BinaryTreeNode(TData data, BinaryTreeNode<TData>* left_child = NULL, BinaryTreeNode<TData>* right_child = NULL)
+        : data(data), left_child(left_child), right_child(right_child) {}
 
-    TData data;                           //!< 二叉树结点数据项
-    BinaryTreeNode<TData>* left_child;    //!< 左孩子结点指针
-    BinaryTreeNode<TData>* right_child;   //!< 右孩子结点指针
+    TData data;                           //!< **数据项**
+    BinaryTreeNode<TData>* left_child;    //!< **左孩子结点(指针)**
+    BinaryTreeNode<TData>* right_child;   //!< **右孩子结点(指针)**
 };
 
 
@@ -47,77 +44,52 @@ struct BinaryTreeNode {
  */
 template <class TData>
 struct PostorderBacktrackStackNode {
-    /*! @brief 构造函数 */
+    /*! @brief 构造函数(二叉树结点指针) */
     explicit PostorderBacktrackStackNode(BinaryTreeNode<TData>* node = NULL) : node(node), tag(LEFT_BACK_TRACKING) {}
 
-    BinaryTreeNode<TData>* node;    //!< 二叉树结点指针
-    enum { LEFT_BACK_TRACKING, RIGHT_BACK_TRACKING } tag;       //!< 标签
+    BinaryTreeNode<TData>* node;                                //!< 二叉树结点指针
+    enum { LEFT_BACK_TRACKING, RIGHT_BACK_TRACKING } tag;       //!< 标签, 0: 左孩子回溯, 1: 右孩子回溯
 };
 
 
 /*!
  * @brief 二叉树模板类
- * @tparam TData 类型模板参数
+ * @tparam TData 数据项类型模板参数
  */
 template <class TData>
 class BinaryTree {
 public:
     /*! @brief 默认构造函数*/
     BinaryTree() : root_(NULL) {}
-    /*! @brief 构造函数(根节点数据项) */
+    /*! @brief 构造函数(根结点数据项) */
     BinaryTree(const TData& data) { this->InsertInSubTreeRecursive_(this->root_, data); }
     /*! @brief 复制构造函数 */
     BinaryTree(const BinaryTree<TData>& binary_tree);
     /*! @brief 析构函数 */
     ~BinaryTree() { this->DestroySubtreeRecursive_(root_); }
 
-    /* 基础函数 */
-    /*!
-     * @brief 获取根节点
-     * @return 根结点指针
-     * */
+    /*! @brief 获取根节点 */
     BinaryTreeNode<TData>* Root() const { return this->root_; }
 
-    /*!
-     * @brief 是否为空树
-     * @return 是否为空
-     */
+    /*! @brief 是否为空树 */
     bool IsEmpty() { return this->root_ == NULL; }
 
     /*!
-     * @brief 获取根节点
-     * @return 根结点指针
-     */
-    // BinaryTreeNode<TData>* GetRoot() const { return this->root_; }
-
-    /*!
-     * @brief获取父节点
-     * @return 父节点指针
+     * @brief 获取父节点
+     * @return 父节点(指针)
      */
     BinaryTreeNode<TData>* Parent(BinaryTreeNode<TData>* node) const {
         return (this->root_ == NULL || this->root_ == node) ? NULL : this->Parent_(this->root_, node);
     }
 
     /*!
-     * @brief 左孩子
-     * @return 左孩子指针
-     */
-    // BinaryTreeNode<TData>* LeftChild(BinaryTreeNode<TData>* node) { return (node != NULL) ? node->left_child : NULL; }
-
-    /*!
-     * @brief 左孩子
-     * @return 左孩子指针
-     */
-    // BinaryTreeNode<TData>* RightChild(BinaryTreeNode<TData>* node) { return (node != NULL) ? node->right_child : NULL; }
-
-    /*!
-     * @brief 获取树的高度
+     * @brief 获取高度
      * @return 高度
      */
     int Height() { return this->HeightOfSubTreeRecursive_(this->root_); }
 
     /*!
-     * @brief 获取树的结点数
+     * @brief 获取结点数
      * @return 结点数
      */
     int Size() { return this->SizeOfSubTree_(this->root_); }
@@ -130,24 +102,24 @@ public:
     bool Insert(const TData& data) { return this->InsertInSubTreeRecursive_(this->root_, data); }
 
     /*!
-     * @brief 查询数据项
-     * @param data 数据
+     * @brief 查询数据项是否在树中
+     * @param data 数据项
      * @return 是否在树中
      */
     bool Exist(TData data) { return this->ExistInSubTree_(this->root_, data); }
 
     /* 遍历系列 */
     /*!
-     * @brief 前序遍历(使用递归)
-     * @param visit 结点遍历函数
+     * @brief 前序遍历(递归)
+     * @param visit 结点访问函数
      */
     void PreOrderTraversal(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->PreOrderTraversalOfSubTreeRecursive_(this->root_, visit);
     }
 
     /*!
-     * @brief 前序遍历(使用非递归)
-     * @param visit 结点遍历函数
+     * @brief 前序遍历(非递归)
+     * @param visit 结点访问函数
      */
     void PreOrderTraversalNonRecursive(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->PreorderTraversalOfSubtreeNonRecursive_(this->root_, visit);
@@ -155,7 +127,7 @@ public:
 
     /*!
      * @brief 中序遍历(使用递归)
-     * @param visit 结点遍历函数
+     * @param visit 结点访问函数
      */
     void InorderTraversal(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->InorderTraversalOfSubtreeRecursive_(this->root_, visit);
@@ -163,7 +135,7 @@ public:
 
     /*!
      * @brief 中序遍历(使用非递归)
-     * @param visit 结点遍历函数
+     * @param visit 结点访问函数
      */
     void InorderTraversalNonRecursive(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->InorderTraversalOfSubtreeNonRecursive_(this->root_, visit);
@@ -171,7 +143,7 @@ public:
 
     /*!
      * @brief 后序遍历(使用递归)
-     * @param visit 结点遍历函数
+     * @param visit 结点访问函数
      */
     void PostorderTraversal(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->PostorderTraversalOfSubtreeRecursive_(this->root_, visit);
@@ -179,7 +151,7 @@ public:
 
     /*!
      * @brief 后序遍历(使用非递归)
-     * @param visit 结点遍历函数
+     * @param visit 结点访问函数
      */
     void PostorderTraversalNonRecursive(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->PostorderTraversalOfSubtreeNonRecursive_(this->root_, visit);
@@ -187,16 +159,16 @@ public:
 
     /*!
      * @brief 层序遍历
-     * @param visit 结点遍历函数
+     * @param visit 结点访问函数
      */
     void LevelOrderTraversal(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->LevelOrderTraversalOfSubtree_(this->root_, visit);
     }
 
     /*!
-     * @brief 使用前序遍历和中序遍历结果, 创建二叉树
-     * @param preorder_list 前序遍历字符串
-     * @param inorder_list 中序遍历字符串
+     * @brief 建树(by前序遍历和中序遍历)
+     * @param preorder_list 前序遍历列表
+     * @param inorder_list 中序遍历列表
      * @param length 字符串长度
      */
     bool CreateByPreorderAndInorderList(TData* preorder_list, TData* inorder_list, int length) {
@@ -204,22 +176,16 @@ public:
         return res;
     }
 
-    /* 打印输出系列 */
     /*!
      * @brief 打印二叉树(使用'(', ',',')')
      */
     void Print() { this->PrintSubTree_(this->root_); };
-
-    // 使用输入流创建二叉树
-    // void CreateByInStream(istream& in) { this->CreateBinTree_(in, this->root_); }
 
     // 判断两颗二叉树是否相同(递归)
     static bool Equal(BinaryTreeNode<TData>* root1, BinaryTreeNode<TData>* root2);
 
 protected:
     BinaryTreeNode<TData>* root_; //!< 根结点
-
-    // void CreateBinTree_(istream& in, BinaryTreeNode<TData>*& subTree);
 
     // 子树插入数据
     bool InsertInSubTreeRecursive_(BinaryTreeNode<TData>*& subtree_root, TData data);
@@ -261,7 +227,6 @@ protected:
     void PrintSubTree_(BinaryTreeNode<TData>* subtree_root);
 
     // 使用前序遍历和中序遍历结果, 创建二叉子树(递归)
-    // void CreateSubtreeByPreorderAndInorderList_(TData* preorder_list,
     bool CreateSubtreeByPreorderAndInorderList_(TData* preorder_list,
                                                 TData* inorder_list,
                                                 int length,
@@ -270,9 +235,6 @@ protected:
     // 判断两颗树相同
     template<class TData>
     friend bool operator == (const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>& binary_tree_2);
-    // 输入二叉树
-    // template<class TData>
-    // friend istream& operator >> (istream& in, BinaryTree<TData>& binary_tree);
     // 输出二叉树
     template<class TData>
     friend ostream& operator << (ostream& out, BinaryTree<TData>& binary_tree);
@@ -491,18 +453,6 @@ BinaryTreeNode<TData>* BinaryTree<TData>::Parent_(BinaryTreeNode<TData>* subtree
 }
 
 
-/*
-template<class TData>
-void BinaryTree<TData>::Traverse(BinaryTreeNode<TData> *subtree_root, ostream& out) {
-  if (subtree_root != NULL) {
-    out << subtree_root->data << ' ';
-    Traverse(subtree_root->left_child, out);
-    Traverse(subtree_root->right_child, out);
-  }
-}
- */
-
-
  /*!
   * @brief 子树前序遍历(递归)
   * @tparam TData 节点数据模板类型
@@ -542,19 +492,19 @@ void BinaryTree<TData>::PreorderTraversalOfSubtreeNonRecursive_(BinaryTreeNode<T
     while (!backtrack_stack.empty()) {
 
         // 出栈
-        BinaryTreeNode<TData>* cur_tree_node = backtrack_stack.top();
+        BinaryTreeNode<TData>* cur = backtrack_stack.top();
         backtrack_stack.pop();
 
         // 访问
-        visit(cur_tree_node);
+        visit(cur);
 
         // 孩子节点入栈
-        if (cur_tree_node->right_child != NULL) {
-            backtrack_stack.push(cur_tree_node->right_child);
+        if (cur->right_child != NULL) {
+            backtrack_stack.push(cur->right_child);
         }
 
-        if (cur_tree_node->left_child != NULL) {
-            backtrack_stack.push(cur_tree_node->left_child);
+        if (cur->left_child != NULL) {
+            backtrack_stack.push(cur->left_child);
         }
     }
 }
@@ -753,7 +703,6 @@ void BinaryTree<TData>::PrintSubTree_(BinaryTreeNode<TData>* subtree_root) {
  * @param subtree_root 子树根结点
  */
 template<class TData>
-// void BinaryTree<TData>::CreateSubtreeByPreorderAndInorderList_(TData* preorder_list,
 bool BinaryTree<TData>::CreateSubtreeByPreorderAndInorderList_(TData* preorder_list,
                                                                TData* inorder_list,
                                                                int length,
@@ -811,33 +760,10 @@ bool BinaryTree<TData>::Equal(BinaryTreeNode<TData>* root1, BinaryTreeNode<TData
         && BinaryTree<TData>::Equal(root1->right_child, root2->right_child))
     {
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
-
-
-/*
-template<class TData>
-void BinaryTree<TData>::CreateBinTree_(istream& in, BinaryTreeNode<TData>*& subTree) {
-  TData item;
-
-  if (!in.eof()) {
-    in >> item;
-    if (item != value_) {
-      subTree = new BinaryTreeNode<TData>(item);
-      if(subTree == NULL) {
-        cerr << "存储分配错误!" << endl;
-        exit(1);
-      }
-      CreateBinTree_(in, subTree->left_child);
-      CreateBinTree_(in, subTree->right_child);
-    } else {
-      subTree = NULL;
-    }
-  }
-}
- */
 
 
  /*!
@@ -851,15 +777,6 @@ template<class TData>
 bool operator == (const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>& binary_tree_2) {
     return (BinaryTree<TData>::Equal(binary_tree_1.Root(), binary_tree_2.Root()));
 }
-
-
-/*
-template<class TData>
-istream& operator >> (istream& in, BinaryTree<TData>& binary_tree) {
-    binary_tree.CreateByInStream(in);
-    return in;
-}
- */
 
 
 template<class TData>
