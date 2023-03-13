@@ -409,10 +409,10 @@ void SinglyLinkedList<TData>::Print() {
  * &emsp; 链表长度加1\n
  */
 template<typename TData>
-bool SinglyLinkedList<TData>::Insert(int pos, const TData& data) {
+bool SinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
 
     // ----- I 非法位置处理 -----
-    if (pos < 0 || pos > Length()) {                        // if pos < 0 或者 pos > Length():
+    if (prev_pos < 0 || prev_pos > Length()) {                        // if pos < 0 或者 pos > Length():
         return false;                                       // 返回false
     }
 
@@ -424,9 +424,9 @@ bool SinglyLinkedList<TData>::Insert(int pos, const TData& data) {
 
     // ----- III 遍历至插入位置 -----
     LinkedNode<TData>* cur = this->head_;                   // 声明指针cur, 指向head_->next
-    while (pos > 0) {                                       // while pos > 0 (遍历pos次):
+    while (prev_pos > 0) {                                       // while pos > 0 (遍历pos次):
         cur = cur->next;                                    // cur指向cur->next
-        pos--;                                              // pos减1
+        prev_pos--;                                              // pos减1
     }
 
     // ----- IV 执行插入 -----
@@ -478,10 +478,10 @@ bool SinglyLinkedList<TData>::Insert(int pos, const TData& data) {
  * &emsp; 链表长度加1\n
  */
 template<typename TData>
-bool SinglyLinkedList<TData>::Insert(int pos, LinkedNode<TData>* node) {
+bool SinglyLinkedList<TData>::Insert(int prev_pos, LinkedNode<TData>* node) {
 
     // ----- I 非法位置处理 -----
-    if (pos < 0 || pos > this->Length()) {  // if pos < 0 或者 pos > Length():
+    if (prev_pos < 0 || prev_pos > this->Length()) {  // if pos < 0 或者 pos > Length():
         return false;                       // 返回false
     }
 
@@ -492,9 +492,9 @@ bool SinglyLinkedList<TData>::Insert(int pos, LinkedNode<TData>* node) {
 
     // ----- III 遍历至插入位置 -----
     LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_->next
-    while (pos > 0) {                       // while pos > 0 (遍历pos次):
+    while (prev_pos > 0) {                       // while pos > 0 (遍历pos次):
         cur = cur->next;                    // cur指向cur->next
-        pos--;                              // pos减1
+        prev_pos--;                              // pos减1
     }
 
     // ----- IV 执行插入 -----
@@ -659,16 +659,16 @@ LinkedNode<TData>* SinglyLinkedList<TData>::GetNode(int pos) {
  * &emsp; 链表长度减1\n
  */
 template<typename TData>
-bool SinglyLinkedList<TData>::Remove(int pos, TData& data) {
+bool SinglyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
 
     // ----- I 非法条件处理 -----
-    if (this->Length() == 0 || pos < 1 || pos > this->Length()) {   // if 空链表 或者 pos < 1 或者 pos > Length():
+    if (this->Length() == 0 || deletion_pos < 1 || deletion_pos > this->Length()) {   // if 空链表 或者 pos < 1 或者 pos > Length():
         return false;                                               // 返回false
     }
 
     // ----- II 遍历至pos位置的前驱结点(pos - 1位置) -----
     LinkedNode<TData>* cur = this->head_;   // 声明遍历指针cur, 并初始化指向Head()
-    for (int i = 1; i < pos; i++) {         // for loop 循环pos - 1次:
+    for (int i = 1; i < deletion_pos; i++) {         // for loop 循环pos - 1次:
         cur = cur->next;                    // cur指向cur->next
     }
 

@@ -286,8 +286,8 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(Doub
  * 返回true\n
  */
 template<typename TData>
-bool DoublyLinkedList<TData>::Insert(int pos, const TData& data) {
-    if (pos > length_ || pos < 0) {
+bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
+    if (prev_pos > length_ || prev_pos < 0) {
         return false;
     }
 
@@ -296,17 +296,13 @@ bool DoublyLinkedList<TData>::Insert(int pos, const TData& data) {
         return false;
     }
 
-    DoublyLinkedNode<TData>* cur = head_;
-    while (pos > 0) {
-        cur = cur->next;
-        pos--;
-    }
+    DoublyLinkedNode<TData>* prev_node = this->GetNode(prev_pos);
 
-    insertion_node->next = cur->next;
-    cur->next = insertion_node;
+    insertion_node->next = prev_node->next;
+    prev_node->next = insertion_node;
 
     insertion_node->next->prev = insertion_node;
-    insertion_node->prev = cur;
+    insertion_node->prev = prev_node;
 
     length_++;
 
@@ -337,12 +333,12 @@ bool DoublyLinkedList<TData>::Insert(int pos, const TData& data) {
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
-    if (pos < 1 || pos > Length()) {
+    if (pos < 0 || pos > Length()) {
         return NULL;
     }
 
-    DoublyLinkedNode<TData>* cur = head_->next;
-    for (int i = 1; i < pos; i++) {
+    DoublyLinkedNode<TData>* cur = head_;
+    for (int i = 0; i < pos; i++) {
         cur = cur->next;
     }
 
@@ -464,13 +460,13 @@ bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
  * 返回true\n
  */
 template<typename TData>
-bool DoublyLinkedList<TData>::Remove(int pos, TData& data) {
+bool DoublyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
 
-    if (pos > Length() || pos < 0) {
+    if (deletion_pos > Length() || deletion_pos < 1) {
         return false;
     }
 
-    DoublyLinkedNode<TData>* deletion_node = this->GetNode(pos);
+    DoublyLinkedNode<TData>* deletion_node = this->GetNode(deletion_pos);
 
     deletion_node->next->prev = deletion_node->prev;
     deletion_node->prev->next = deletion_node->next;
@@ -495,12 +491,13 @@ bool DoublyLinkedList<TData>::Remove(int pos, TData& data) {
  * ---
  *
  * ---
- * **for loop** 遍历length_次 :\n
+ * **for loop** 遍历结点数量次数 :\n
  * &emsp; 删除位置1的结点\n
  */
 template<typename TData>
 void DoublyLinkedList<TData>::Clear() {
-    for (int pos = 1; pos <= length_; pos++) {
+    int node_count = length_;
+    for (int i = 1; i <= node_count; i++) {
         TData deletion_data;
         this->Remove(1, deletion_data);
     }

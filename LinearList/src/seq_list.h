@@ -290,21 +290,21 @@ bool SeqList<TData>::SetData(int pos, const TData& data) {
  * 当pos为0时, 表示插入位置1
  */
 template<class TData>
-bool SeqList<TData>::Insert(int pos, const TData& data) {
+bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
 
     if (last_index_ == size_ - 1) {
         return false;
     }
 
-    if (pos < 0 || pos > last_index_ + 1) {
+    if (prev_pos < 0 || prev_pos > last_index_ + 1) {
         return false;
     }
 
-    for (int i = last_index_; i >= pos; i--) {
+    for (int i = last_index_; i >= prev_pos; i--) {
         mem_data_[i + 1] = mem_data_[i];
     }
 
-    mem_data_[pos] = data;
+    mem_data_[prev_pos] = data;
 
     last_index_++;
 
@@ -320,19 +320,19 @@ bool SeqList<TData>::Insert(int pos, const TData& data) {
  * @return 是否删除成功
  */
 template<class TData>
-bool SeqList<TData>::Remove(int pos, TData& remove_data) {
+bool SeqList<TData>::Remove(int deletion_pos, TData& remove_data) {
 
     if (last_index_ == -1) {
         return false;
     }
 
-    if (pos < 1 || pos > last_index_ + 1) {
+    if (deletion_pos < 1 || deletion_pos > last_index_ + 1) {
         return false;
     }
 
-    remove_data = mem_data_[pos - 1];
+    remove_data = mem_data_[deletion_pos - 1];
 
-    for (int i = pos; i <= last_index_; i++) {
+    for (int i = deletion_pos; i <= last_index_; i++) {
         mem_data_[i - 1] = mem_data_[i];
     }
 

@@ -367,21 +367,18 @@ bool CircularSinglyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
 
     // ----- IV 其他情况 -----
     CircularSinglyLinkedNode<TData>* prev_node = this->GetNode(deletion_pos - 1);
-
-    // 删除cur->next
-    if (prev_node->next == last_) {
+    CircularSinglyLinkedNode<TData>* deletion_node = prev_node->next;
+    if (deletion_node == last_) {
         last_ = prev_node;
     }
 
-    data = prev_node->next->data;
+    data = deletion_node->data;
 
-    CircularSinglyLinkedNode<TData>* deletion_node = prev_node->next;
-    prev_node->next = prev_node->next->next;
+    prev_node->next = deletion_node->next;
 
     delete deletion_node;
     deletion_node = NULL;
 
-    // ----- V 长度调整 -----
     length_--;
 
     return true;
