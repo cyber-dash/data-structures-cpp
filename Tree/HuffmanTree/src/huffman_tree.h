@@ -13,78 +13,83 @@
 using namespace std;
 
 
-template <class T>
-struct HuffmanNode {
-    HuffmanNode(): weight(0), left_child(NULL), right_child(NULL), parent(NULL) {}
-    HuffmanNode(double weight, HuffmanNode* left = NULL,
-                HuffmanNode* right = NULL, HuffmanNode* pr = NULL) :
-        weight(weight), left_child(left), right_child(right), parent(pr) {}
+template<typename TWeight>
+struct HuffmanTreeNode {
+    HuffmanTreeNode(): weight(TWeight()), left_child(NULL), right_child(NULL), parent(NULL) {}
 
-    bool operator<=(HuffmanNode& node) { return weight <= node.weight; }
-    bool operator>(HuffmanNode& node) { return weight > node.weight; }
+    HuffmanTreeNode(TWeight weight, HuffmanTreeNode* left = NULL, HuffmanTreeNode* right = NULL, HuffmanTreeNode* parent = NULL)
+        : weight(weight), left_child(left), right_child(right), parent(parent) {}
 
-    double weight;
-    HuffmanNode* left_child;
-    HuffmanNode* right_child;
-    HuffmanNode* parent;
+    bool operator<=(const HuffmanTreeNode& node) { return weight <= node.weight; }
+    bool operator>(const HuffmanTreeNode& node) { return weight > node.weight; }
+
+    TWeight weight;
+    HuffmanTreeNode* left_child;
+    HuffmanTreeNode* right_child;
+    HuffmanTreeNode* parent;
 };
 
-template <class T>
+
+template <class TWeight>
 class HuffmanTree {
 public:
-	HuffmanTree(const double weight[], int n);
-	~HuffmanTree() { deleteTree(root); }
+	HuffmanTree(const TWeight weight[], int n);
+	~HuffmanTree() { ClearSubTree(root_); }
 
-	void showTree() { showTree(root); }
+	void showTree() { showTree(root_); }
 
 protected:
-	HuffmanNode<T>* root;
-	void deleteTree(HuffmanNode<T>* t);
-	void mergeTree(HuffmanNode<T>* ht1, HuffmanNode<T>* ht2, HuffmanNode<T>*& parent);
-	void showTree(HuffmanNode<T>* t);
+	HuffmanTreeNode<TWeight>* root_;
+	void ClearSubTree(HuffmanTreeNode<TWeight>* t);
+	void mergeTree(HuffmanTreeNode<TWeight>* ht1, HuffmanTreeNode<TWeight>* ht2, HuffmanTreeNode<TWeight>*& parent);
+	void showTree(HuffmanTreeNode<TWeight>* t);
 };
 
 
-template <class T>
-HuffmanTree<T>::HuffmanTree(const double* weight, int n) {
-    MinHeap<HuffmanNode<T> > hp;
-    HuffmanNode<T>* parent, * first, * second, * work, temp;
+template <class TWeight>
+HuffmanTree<TWeight>::HuffmanTree(const TWeight* weight, int n) {
+    MinHeap<HuffmanTreeNode<TWeight> > hp;
 
     for (int i = 0; i < n; i++) {
-        work = new HuffmanNode<T>(weight[i], NULL, NULL, NULL);
+        HuffmanTreeNode<TWeight>* work = new HuffmanTreeNode<TWeight>(weight[i], NULL, NULL, NULL);
         work->parent = work;
         hp.Insert(*work);
     }
 
+    HuffmanTreeNode<TWeight>* parent = NULL;
     for (int i = 0; i < n - 1; i++) {
+        HuffmanTreeNode<TWeight> temp;
+
         hp.RemoveMin(temp);
-        first = temp.parent;
+        HuffmanTreeNode<TWeight>* first = temp.parent;
         hp.RemoveMin(temp);
-        second = temp.parent;
+        HuffmanTreeNode<TWeight>* second = temp.parent;
+
         mergeTree(first, second, parent);
         hp.Insert(*parent);
     }
 
-    root = parent;
+    root_ = parent;
 }
 
 
-template <class T>
-void HuffmanTree<T>::deleteTree(HuffmanNode<T>* t) {
+template <class TWeight>
+void HuffmanTree<TWeight>::ClearSubTree(HuffmanTreeNode<TWeight>* t) {
     if (t == NULL) {
         return;
     }
 
-    deleteTree(t->left_child);
-    deleteTree(t->right_child);
+    ClearSubTree(t->left_child);
+    ClearSubTree(t->right_child);
 
     delete t;
 }
 
-template <class T>
-void HuffmanTree<T>::
-mergeTree(HuffmanNode<T>* ht1, HuffmanNode<T>* ht2, HuffmanNode<T>*& parent) {
-    parent = new HuffmanNode<T>(ht1->weight + ht2->weight, ht1, ht2, NULL);
+
+template <class TWeight>
+void HuffmanTree<TWeight>::
+mergeTree(HuffmanTreeNode<TWeight>* ht1, HuffmanTreeNode<TWeight>* ht2, HuffmanTreeNode<TWeight>*& parent) {
+    parent = new HuffmanTreeNode<TWeight>(ht1->weight + ht2->weight, ht1, ht2, NULL);
 
     parent->parent = parent;
 
@@ -92,8 +97,8 @@ mergeTree(HuffmanNode<T>* ht1, HuffmanNode<T>* ht2, HuffmanNode<T>*& parent) {
 }
 
 
-template <class T>
-void HuffmanTree<T>::showTree(HuffmanNode<T>* t) {
+template <class TWeight>
+void HuffmanTree<TWeight>::showTree(HuffmanTreeNode<TWeight>* t) {
     if (t == NULL) {
         return;
     }
