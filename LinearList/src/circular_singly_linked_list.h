@@ -304,34 +304,45 @@ bool CircularSinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * 删除(结点)元素
  * ------------
  * ------------
- * 如果删除first_结点, 则新的first_结点为原first_结点的next(如果原first_->next不为自身)
+ * 
+ * 如果删除first_结点, 则新的first_结点为原first_结点的next(如果原first_->next不为自身)\n
+ * 
  * ------------
- * **1 非法位置处理**\n
+ * + **1 非法位置处理**\n
  * **if** deletion_pos < 0 或者 deletion_pos > 链表长度:\n
  * &emsp; 返回false\n
- * **2 链表长度为1的情况**\n
+ * + **2 链表长度为1的情况**\n
  * **if** 链表长度为1\n
  * &emsp; (此时, first_/last_指向唯一结点)\n
  * &emsp; first_->data赋给参数data\n
  * &emsp; 释放first_并置NULL\n
  * &emsp; last_置NULL\n
  * &emsp; 长度置0\n
- * **3 删除first_结点的情况**\n
+ * + **3 删除first_结点的情况**\n
  * **if** pos等于1(删除first_结点):\n
- * first_->data赋给参数data\n
- * 声明指针deletion_node指向首元素结点\n
- * last_->next指向first_->next\n
- * first_指向first_->next
+ * &emsp; first_->data赋给参数data\n\n
+ * &emsp; 声明指针deletion_node指向首元素结点\n\n
+ * &emsp; last_->next指向first_->next\n
+ * &emsp; first_指向first_->next\n\n
+ * &emsp; 释放deletion_node\n\n
+ * &emsp; 链表长度减1\n\n
+ * &emsp; 返回true\n\n
+ * + **4 其他情况**\n
+ * 调用GetNode, 获取prev_node(待删除结点的前一结点)\n
+ * 初始化deletion_node(待删除结点)为prev_node->next\n
+ * **if** 删除last_结点 :\n
+ * &emsp; last_指向prev_node\n
+ * deletion_node->data赋给参数data\n
  * 释放deletion_node\n
+ * deletion_node置NULL\n
  * 链表长度减1\n
+ * + **5 退出函数**\n
  * 返回true\n
- * **4 其他情况**\n
- * **5 退出函数**\n
  */
 template<typename TData>
 bool CircularSinglyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
     // ----- I 错误位置处理 -----
-    if (deletion_pos < 0 || deletion_pos > length_) {
+    if (deletion_pos < 1 || deletion_pos > length_) {
         return false;
     }
 
@@ -385,6 +396,29 @@ bool CircularSinglyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
 }
 
 
+/*!
+ * @brief **打印**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 打印
+ * ---
+ * ---
+ *
+ * ---
+ * + **1 空链表处理**\n
+ * **if** 空链表 :\n
+ * &emsp; 打印"Empty list"\n
+ * &emsp; 退出函数\n
+ * + **2 执行打印**\n
+ * 打印 "打印循环单链表: { "\n
+ * 初始化cur(遍历指针), 指向first_\n
+ * **for loop** 遍历length_次 :\n
+ * &emsp; 打印cur->data\n
+ * &emsp; **if** 不是length_位置结点 :\n
+ * &emsp;&emsp; 打印", "\n
+ * &emsp; cur指向cur->next\n
+ * 打印 " }"\n
+ */
 template<typename TData>
 void CircularSinglyLinkedList<TData>::Print() {
 
@@ -459,6 +493,34 @@ bool CircularSinglyLinkedList<TData>::GetData(int pos, TData& data) const {
 }
 
 
+/*!
+ * @brief **设置数据项**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
+ * @param data 数据项
+ * @return 执行结果
+ * @note
+ * 设置数据项
+ * --------
+ * --------
+ *
+ * --------
+ * + **1 非法位置处理**\n
+ * **if** pos < 1 || pos > 链表长度 || 链表长度为0 :\n
+ * &emsp; 返回false\n\n
+ * + **2 pos为0情况处理**\n
+ * **if** pos为0 :\n
+ * &emsp; last_->data赋给参数data\n
+ * &emsp; 返回true\n\n
+ * + **3 遍历至目标结点**\n
+ * 初始化cur(遍历指针), 指向first_\n
+ * **for loop** 遍历pos - 1次 :\n
+ * &emsp; cur指向自身next结点\n\n
+ * + **4 赋值**\n
+ * 参数data赋给cur->data\n\n
+ * + **5 退出函数**\n
+ * 返回true\n
+ */
 template<typename TData>
 bool CircularSinglyLinkedList<TData>::SetData(int pos, const TData& data) {
 

@@ -54,7 +54,7 @@ struct CircularDoublyLinkedNode {
 template<typename TData>
 class CircularDoublyLinkedList: public LinearList<TData> {
 public:
-    /*! @brief 默认构造函数 */
+    /*! @brief **默认构造函数** */
     CircularDoublyLinkedList(): first_(NULL), length_(0) {}
 
     // 析构函数
@@ -69,7 +69,7 @@ public:
     // 清空
     void Clear();
 
-    /*! @brief 获取链表头结点 */
+    /*! @brief **获取链表首结点** */
     CircularDoublyLinkedNode<TData>* First() const { return this->first_; }
 
     // 搜索
@@ -99,12 +99,12 @@ public:
     // 打印
     void Print();
 
-    static const int BACKWARD_DIRECTION = 0;    // prev方向
-    static const int FORWARD_DIRECTION = 1;     // next方向
+    static const int BACKWARD_DIRECTION = 0;    //!< **prev方向**
+    static const int FORWARD_DIRECTION = 1;     //!< **next方向**
 
 private:
-    CircularDoublyLinkedNode<TData>* first_;    // 首元素结点(指针)
-    int length_;                                // 长度
+    CircularDoublyLinkedNode<TData>* first_;    //!< **首元素结点(指针)**
+    int length_;                                //!< **长度**
 };
 
 
@@ -116,16 +116,17 @@ private:
  * ---
  *
  * <span style="color:#FF8100">
+ * one by one
  * </span>
  *
  * ---
  * + **1 释放结点内存**\n
- * **while** first_(首元素结点)不为NULL:\n
- * &emsp; (删除当前头结点)\n
- * &emsp; 声明deletion_node(删除结点), 指向first_\n
- * &emsp; first_指向cur->next\n
- * &emsp; 释放deletion_node指向的结点\n
- * &emsp; deletion_node置NULL\n
+ * **while** first_(首元素结点)不为NULL:\n\n
+ * &emsp; <span style="color:#003153">(首结点调整)\n</span>
+ * &emsp; 声明cur_deletion_node(本轮删除的结点), 指向first_\n
+ * &emsp; first_指向cur->next\n\n
+ * &emsp; 释放cur_deletion_node指向的结点\n
+ * &emsp; cur_deletion_node置NULL\n\n
  * + **2 调整长度**\n
  * length_设置为0\n
  */
@@ -133,13 +134,13 @@ template<typename TData>
 void CircularDoublyLinkedList<TData>::Clear() {
     // ---------- 1 释放结点内存 ----------
 
-    while (first_ != NULL) {                                            // while first_(首元素结点)不为NULL
-        // (删除当前头结点)
-        CircularDoublyLinkedNode<TData>* deletion_node = this->first_;  // 声明deletion_node(删除结点), 指向first_
-        first_ = deletion_node->next;                                   // first_指向cur->next
+    while (first_ != NULL) {                                                // while first_(首元素结点)不为NULL
+        // (删除当前首结点)
+        CircularDoublyLinkedNode<TData>* cur_deletion_node = this->first_;  // 声明cur_deletion_node(本轮删除的结点), 指向first_
+        first_ = cur_deletion_node->next;                                   // first_指向cur->next
 
-        delete deletion_node;                                           // 释放deletion_node指向的结点
-        deletion_node = NULL;                                           // deletion_node置NULL
+        delete cur_deletion_node;                                           // 释放cur_deletion_node指向的结点
+        cur_deletion_node = NULL;                                           // deletion_node置NULL
     }
 
     // ---------- 2 调整长度 ----------
@@ -197,7 +198,7 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
 
 
 /*!
- * @brief 获取结点(按方向)
+ * @brief **获取结点(按方向)**
  * @param step 步数
  * @param direction 方向
  * @return 结点指针
@@ -206,8 +207,10 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
  * --------------
  * --------------
  *
- * CircularDoublyLinkedList::BACKWARD_DIRECTION, 向next指针方向
- * CircularDoublyLinkedList::FORWARD_DIRECTION, 向prev指针方向
+ * <span style="color:#FF8100">
+ * CircularDoublyLinkedList::BACKWARD_DIRECTION, 向prev指针方向\n
+ * CircularDoublyLinkedList::FORWARD_DIRECTION, 向next指针方向\n
+ * </span>
  *
  * --------------
  * + **1 非法步数处理** \n

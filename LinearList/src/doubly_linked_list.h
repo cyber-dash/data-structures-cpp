@@ -456,7 +456,7 @@ bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
  * deletion_node置NULL\n\n
  * + **4 长度调整**\n
  * length_减1\n\n
- * + **4 退出函数**\n
+ * + **5 退出函数**\n
  * 返回true\n
  */
 template<typename TData>

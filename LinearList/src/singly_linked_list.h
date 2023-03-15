@@ -78,11 +78,11 @@ public:
     // 设置结点数据
     bool SetData(int pos, const TData& data);
     // 插入(数据)
-    bool Insert(int pos, const TData& data);
+    bool Insert(int prev_pos, const TData& data);
     // 插入(结点)
-    bool Insert(int pos, LinkedNode<TData>* node);
+    bool Insert(int prev_pos, LinkedNode<TData>* node);
     // 删除(结点)元素
-    bool Remove(int pos, TData& data);
+    bool Remove(int deletion_pos, TData& data);
     // 判断是否为空链表
     bool IsEmpty() const;
     // 打印链表

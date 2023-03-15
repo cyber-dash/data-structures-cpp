@@ -72,7 +72,7 @@ public:
 	/*!
 	 * @brief **插入(纯虚函数)**
      * @tparam TData 数据项类型模板参数
-	 * @param pos 插入位置的前一位置
+	 * @param prev_pos 插入位置的前一位置
 	 * @param data 数据项
 	 * @return 执行结果
 	 * @note
@@ -84,12 +84,12 @@ public:
 	 *
 	 * ---------
 	 */
-	virtual bool Insert(int pos, const TData& data) = 0;
+	virtual bool Insert(int prev_pos, const TData& data) = 0;
 
 	/*!
 	 * @brief **删除元素(纯虚函数)**
      * @tparam TData 数据项类型模板参数
-	 * @param pos 位置
+	 * @param deletion_pos 位置
 	 * @param data 数据项保存变量
 	 * @return 执行结果
 	 * @note
@@ -99,7 +99,7 @@ public:
 	 *
 	 * ---------
 	 */
-	virtual bool Remove(int pos, TData& data) = 0;
+	virtual bool Remove(int deletion_pos, TData& data) = 0;
 
 	/*!
 	 * @brief **判断是否为空(纯虚函数)**

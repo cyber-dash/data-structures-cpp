@@ -281,30 +281,37 @@ bool SeqList<TData>::SetData(int pos, const TData& data) {
 
 
 /*!
- * @brief 在第pos个元素之后, 插入数据
+ * @brief 插入结点
  * @param pos 位置pos
  * @param data 数据项值
  * @return 是否成功
  * @note
+ * 插入结点
+ * -------
+ * -------
+ *
+ * todo: 参数改为prev_pos
+ *
+ * -------
  * 区别于数组, 以1开始\n
  * 当pos为0时, 表示插入位置1
  */
 template<class TData>
-bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
+bool SeqList<TData>::Insert(int pos, const TData& data) {
 
     if (last_index_ == size_ - 1) {
         return false;
     }
 
-    if (prev_pos < 0 || prev_pos > last_index_ + 1) {
+    if (pos < 0 || pos > last_index_ + 1) {
         return false;
     }
 
-    for (int i = last_index_; i >= prev_pos; i--) {
+    for (int i = last_index_; i >= pos; i--) {
         mem_data_[i + 1] = mem_data_[i];
     }
 
-    mem_data_[prev_pos] = data;
+    mem_data_[pos] = data;
 
     last_index_++;
 
