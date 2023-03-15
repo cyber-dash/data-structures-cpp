@@ -1,319 +1,320 @@
 //
-// Created by cyberdash@163.com(¶¶Òô: cyberdash_yuan) on 2021/4/19.
+// Created by cyberdash@163.com(æŠ–éŸ³: cyberdash_yuan) on 2021/4/19.
 //
 
-#include "test.h"
+#include "inorder_threaded_binary_tree.h"
 
 
-void visit(ThreadNode<int>* node_ptr) {
-  cout << node_ptr->data << " ";
+
+void visit(ThreadedNode<int>* node_ptr) {
+    cout << node_ptr->data << " ";
 };
 
 
 void TestFirst() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|              Test InOrder ThreadTree First Node           |"<<endl;
-  cout<<"|                  ²âÊÔÖÐÐòÏßË÷Ê÷µÚÒ»¸öÏßË÷½Úµã                 |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|              Test InOrder InorderThreadedBinaryTree First Node           |"<<endl;
+    cout<<"|                  æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘ç¬¬ä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹                 |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
+    int count = 7;
 
-  ThreadTree<int> in_order_thread_tree;
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* root_ptr = in_order_thread_tree.Root();
+    ThreadedNode<int>* root_ptr = in_order_thread_tree.Root();
 
-  ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(root_ptr);
+    ThreadedNode<int>* first_node_ptr = in_order_thread_tree.First(root_ptr);
 
-  cout << "ÖÐÐòÏßË÷µÚÒ»¸öÏßË÷½Úµã :" << first_node_ptr->data << endl;
+    cout << "ä¸­åºçº¿ç´¢ç¬¬ä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹ :" << first_node_ptr->data << endl;
 
-  cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }
 
 
 void TestLast() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|              Test InOrder ThreadTree Last Node            |"<<endl;
-  cout<<"|                 ²âÊÔÖÐÐòÏßË÷Ê÷×îºóÒ»¸öÏßË÷½Úµã                 |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|              Test InOrder InorderThreadedBinaryTree Last Node            |"<<endl;
+    cout<<"|                 æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘æœ€åŽä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹                 |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
+    int count = 7;
 
-  ThreadTree<int> in_order_thread_tree;
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* root_ptr = in_order_thread_tree.Root();
+    ThreadedNode<int>* root_ptr = in_order_thread_tree.Root();
 
-  ThreadNode<int>* last_node_ptr = in_order_thread_tree.Last(root_ptr);
+    ThreadedNode<int>* last_node_ptr = in_order_thread_tree.Last(root_ptr);
 
-  cout << "ÖÐÐòÏßË÷×îºóÒ»¸öÏßË÷½Úµã: " << last_node_ptr->data << endl;
+    cout << "ä¸­åºçº¿ç´¢æœ€åŽä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹: " << last_node_ptr->data << endl;
 
-  cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }
 
 
 void TestNext() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|              Test InOrder ThreadTree Next Node            |"<<endl;
-  cout<<"|                  ²âÊÔÖÐÐòÏßË÷Ê÷ÏÂÒ»¸öÏßË÷½Úµã                 |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|              Test InOrder InorderThreadedBinaryTree Next Node            |"<<endl;
+    cout<<"|                  æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘ä¸‹ä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹                 |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
+    int count = 7;
 
-  ThreadTree<int> in_order_thread_tree;
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(in_order_thread_tree.Root());
+    ThreadedNode<int>* first_node_ptr = in_order_thread_tree.First(in_order_thread_tree.Root());
 
-  ThreadNode<int>* second_node_ptr = in_order_thread_tree.Next(first_node_ptr);
-  ThreadNode<int>* third_node_ptr = in_order_thread_tree.Next(second_node_ptr);
-  ThreadNode<int>* forth_node_ptr = in_order_thread_tree.Next(third_node_ptr);
+    ThreadedNode<int>* second_node_ptr = in_order_thread_tree.Next(first_node_ptr);
+    ThreadedNode<int>* third_node_ptr = in_order_thread_tree.Next(second_node_ptr);
+    ThreadedNode<int>* forth_node_ptr = in_order_thread_tree.Next(third_node_ptr);
 
-  cout << "ÖÐÐòÏßË÷Ê÷µÚ1¸öÏßË÷½Úµã: " << first_node_ptr->data << endl;
-  cout << "ÖÐÐòÏßË÷Ê÷µÚ2¸öÏßË÷½Úµã: " << second_node_ptr->data << endl;
-  cout << "ÖÐÐòÏßË÷Ê÷µÚ3¸öÏßË÷½Úµã: " << third_node_ptr->data << endl;
-  cout << "ÖÐÐòÏßË÷Ê÷µÚ4¸öÏßË÷½Úµã: " << forth_node_ptr->data << endl;
+    cout << "ä¸­åºçº¿ç´¢æ ‘ç¬¬1ä¸ªçº¿ç´¢èŠ‚ç‚¹: " << first_node_ptr->data << endl;
+    cout << "ä¸­åºçº¿ç´¢æ ‘ç¬¬2ä¸ªçº¿ç´¢èŠ‚ç‚¹: " << second_node_ptr->data << endl;
+    cout << "ä¸­åºçº¿ç´¢æ ‘ç¬¬3ä¸ªçº¿ç´¢èŠ‚ç‚¹: " << third_node_ptr->data << endl;
+    cout << "ä¸­åºçº¿ç´¢æ ‘ç¬¬4ä¸ªçº¿ç´¢èŠ‚ç‚¹: " << forth_node_ptr->data << endl;
 
-  cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }
 
 
 void TestPrior() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|             Test InOrder ThreadTree Prior Node            |"<<endl;
-  cout<<"|                  ²âÊÔÖÐÐòÏßË÷Ê÷Ç°Ò»¸öÏßË÷½Úµã                 |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|             Test InOrder InorderThreadedBinaryTree Prior Node            |"<<endl;
+    cout<<"|                  æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘å‰ä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹                 |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
+    int count = 7;
 
-  ThreadNode<int>* node_ptr_array[4];
-  ThreadTree<int> in_order_thread_tree;
+    ThreadedNode<int>* node_ptr_array[4];
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  node_ptr_array[0] = in_order_thread_tree.First(in_order_thread_tree.Root());
+    node_ptr_array[0] = in_order_thread_tree.First(in_order_thread_tree.Root());
 
-  for (int i = 1; i < 4; i++) {
-    node_ptr_array[i] = in_order_thread_tree.Next(node_ptr_array[i - 1]);
-  }
+    for (int i = 1; i < 4; i++) {
+        node_ptr_array[i] = in_order_thread_tree.Next(node_ptr_array[i - 1]);
+    }
 
-  for (int i = 3; i >=1; i--) {
-    ThreadNode<int>* prior_node_ptr = in_order_thread_tree.Prior(node_ptr_array[i]);
-    cout << "ÖÐÐòÏßË÷Ê÷µÚ" << i << "¸öÏßË÷½Úµã: " << prior_node_ptr->data << endl; // (i - 1) + 1 = i
-  }
+    for (int i = 3; i >=1; i--) {
+        ThreadedNode<int>* prior_node_ptr = in_order_thread_tree.Prior(node_ptr_array[i]);
+        cout << "ä¸­åºçº¿ç´¢æ ‘ç¬¬" << i << "ä¸ªçº¿ç´¢èŠ‚ç‚¹: " << prior_node_ptr->data << endl; // (i - 1) + 1 = i
+    }
 
-  cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }
 
 
 /*
- * ÖÐÐòÏßË÷¶þ²æÊ÷Parent
+ * ä¸­åºçº¿ç´¢äºŒå‰æ ‘Parent
  */
 void TestParent() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|             Test InOrder ThreadTree Parent Node           |"<<endl;
-  cout<<"|                     ²âÊÔÖÐÐòÏßË÷Ê÷¸¸½Úµã                     |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|             Test InOrder InorderThreadedBinaryTree Parent Node           |"<<endl;
+    cout<<"|                     æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘çˆ¶èŠ‚ç‚¹                     |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
+    int count = 7;
 
-  ThreadTree<int> in_order_thread_tree;
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  ThreadNode<int>* root_ptr = in_order_thread_tree.Root();
-  ThreadNode<int>* root_parent_ptr = in_order_thread_tree.Parent(root_ptr);
+    ThreadedNode<int>* root_ptr = in_order_thread_tree.Root();
+    ThreadedNode<int>* root_parent_ptr = in_order_thread_tree.Parent(root_ptr);
 
-  ThreadNode<int>* first_node_ptr = in_order_thread_tree.First(root_ptr);
-  ThreadNode<int>* first_parent_ptr = in_order_thread_tree.Parent(first_node_ptr);
-  ThreadNode<int>* first_parent_parent_ptr = in_order_thread_tree.Parent(first_parent_ptr);
+    ThreadedNode<int>* first_node_ptr = in_order_thread_tree.First(root_ptr);
+    ThreadedNode<int>* first_parent_ptr = in_order_thread_tree.Parent(first_node_ptr);
+    ThreadedNode<int>* first_parent_parent_ptr = in_order_thread_tree.Parent(first_parent_ptr);
 
-  if (root_parent_ptr != NULL) {
-    cout << "¸ù½ÚµãµÄ¸¸½Úµã: " << root_parent_ptr->data << endl;
-  } else {
-    cout<<"¸ù½ÚµãµÄ¸¸½ÚµãÎªNULL"<<endl;
-  }
+    if (root_parent_ptr != NULL) {
+        cout << "æ ¹èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹: " << root_parent_ptr->data << endl;
+    } else {
+        cout<<"æ ¹èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹ä¸ºNULL"<<endl;
+    }
 
-  cout << "µÚÒ»¸öÏßË÷½Úµã: " << first_node_ptr->data << endl;
-  cout << "µÚÒ»¸öÏßË÷½ÚµãµÄ¸¸½Úµã: " << first_parent_ptr->data << endl;
-  cout << "µÚÒ»¸öÏßË÷½ÚµãµÄ¸¸½ÚµãµÄ¸¸½Úµã: " << first_parent_parent_ptr->data << endl;
+    cout << "ç¬¬ä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹: " << first_node_ptr->data << endl;
+    cout << "ç¬¬ä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹: " << first_parent_ptr->data << endl;
+    cout << "ç¬¬ä¸€ä¸ªçº¿ç´¢èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹: " << first_parent_parent_ptr->data << endl;
 
-  cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }
 
 
 void TestInOrderTraverseOfInOrderThread() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|          Test InOrder ThreadTree InOrderTraverse          |"<<endl;
-  cout<<"|                    ²âÊÔÖÐÐòÏßË÷Ê÷ÖÐÐò±éÀú                     |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|          Test InOrder InorderThreadedBinaryTree InOrderTraverse          |"<<endl;
+    cout<<"|                    æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘ä¸­åºéåŽ†                     |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
-  ThreadTree<int> in_order_thread_tree;
+    int count = 7;
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  cout<<"ÖÐÐòÏßË÷Ê÷, ÖÐÐò±éÀú: "<<endl;
-  in_order_thread_tree.InOrderTraverse(visit);
+    cout<<"ä¸­åºçº¿ç´¢æ ‘, ä¸­åºéåŽ†: "<<endl;
+    in_order_thread_tree.InOrderTraverse(visit);
 
-  cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }
 
 
 void TestPreOrderTraverseOfInOrderThread() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|          Test InOrder ThreadTree PreOrderTraverse         |"<<endl;
-  cout<<"|                    ²âÊÔÖÐÐòÏßË÷Ê÷Ç°Ðò±éÀú                     |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|          Test InOrder InorderThreadedBinaryTree PreOrderTraverse         |"<<endl;
+    cout<<"|                    æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘å‰åºéåŽ†                     |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
-  ThreadTree<int> in_order_thread_tree;
+    int count = 7;
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  cout<<"ÖÐÐòÏßË÷Ê÷, Ç°Ðò±éÀú: "<<endl;
-  in_order_thread_tree.PreOrderTraverse(visit);
+    cout<<"ä¸­åºçº¿ç´¢æ ‘, å‰åºéåŽ†: "<<endl;
+    in_order_thread_tree.PreOrderTraverse(visit);
 
-  cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }
 
 
 void TestPostOrderTraverseOfInOrderThread() {
 
-  cout<<endl;
-  cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|          Test InOrder ThreadTree PostOrderTraverse        |"<<endl;
-  cout<<"|                    ²âÊÔÖÐÐòÏßË÷Ê÷ºóÐò±éÀú                     |"<<endl;
-  cout<<"|                                                           |"<<endl;
-  cout<<"|                             0                             |"<<endl;
-  cout<<"|                            / \\                            |"<<endl;
-  cout<<"|                           /   \\                           |"<<endl;
-  cout<<"|                          1     2                          |"<<endl;
-  cout<<"|                         / \\   /                           |"<<endl;
-  cout<<"|                        3   5 4                            |"<<endl;
-  cout<<"|                       /                                   |"<<endl;
-  cout<<"|                      6                                    |"<<endl<<endl;
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|          Test InOrder InorderThreadedBinaryTree PostOrderTraverse        |"<<endl;
+    cout<<"|                    æµ‹è¯•ä¸­åºçº¿ç´¢æ ‘åŽåºéåŽ†                     |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                             0                             |"<<endl;
+    cout<<"|                            / \\                            |"<<endl;
+    cout<<"|                           /   \\                           |"<<endl;
+    cout<<"|                          1     2                          |"<<endl;
+    cout<<"|                         / \\   /                           |"<<endl;
+    cout<<"|                        3   5 4                            |"<<endl;
+    cout<<"|                       /                                   |"<<endl;
+    cout<<"|                      6                                    |"<<endl<<endl;
 
-  int count = 7;
-  ThreadTree<int> in_order_thread_tree;
+    int count = 7;
+    InorderThreadedBinaryTree<int> in_order_thread_tree;
 
-  for (int i = 0 ; i < count; i++) {
-    in_order_thread_tree.Insert(i);
-  }
+    for (int i = 0 ; i < count; i++) {
+        in_order_thread_tree.Insert(i);
+    }
 
-  in_order_thread_tree.CreateInOrderThread();
+    in_order_thread_tree.CreateInOrderThread();
 
-  cout<<"ÖÐÐòÏßË÷Ê÷, ºóÐò±éÀú: "<<endl;
-  in_order_thread_tree.PostOrderTraverse(visit);
+    cout<<"ä¸­åºçº¿ç´¢æ ‘, åŽåºéåŽ†: "<<endl;
+    in_order_thread_tree.PostOrderTraverse(visit);
 
-  cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-  cout<<endl;
+    cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
+    cout<<endl;
 }

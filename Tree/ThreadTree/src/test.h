@@ -1,15 +1,15 @@
 //
-// Created by cyberdash@163.com(∂∂“Ù: cyberdash_yuan) on 2021/4/19.
+// Created by cyberdash@163.com(: cyberdash_yuan) on 2021/4/19.
 //
 
 #ifndef CYBER_DASH_THREAD_TREE_TEST_H
 #define CYBER_DASH_THREAD_TREE_TEST_H
 
 
-#include "thread_tree.h"
+#include "threaded_node.h"
 
 
-void visit(ThreadNode<int> *p);
+void visit(ThreadedNode<int> *p);
 
 void TestFirst();
 
