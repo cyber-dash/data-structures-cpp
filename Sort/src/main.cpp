@@ -29,5 +29,7 @@ int main() {
 
 	TestShellSort();
 
+	TestRadixSort();
+
 	return 0;
 }

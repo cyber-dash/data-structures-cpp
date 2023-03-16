@@ -38,4 +38,6 @@ void TestHeapSort();
 
 void TestShellSort();
 
+void TestRadixSort();
+
 #endif //CYBER_DASH_SORT_TEST_H

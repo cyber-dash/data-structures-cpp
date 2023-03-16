@@ -19,7 +19,7 @@ struct static_linked_list_node_t {
 
 template <typename info_t, typename DIGIT_TYPE>
 struct radix_static_linked_list_t {
-    static_linked_list_node_t elements[100];    //!< 元素的静态链表, elements[0]为头结点(不保存元素)
+    static_linked_list_node_t<info_t, DIGIT_TYPE> elements[100];    //!< 元素的静态链表, elements[0]为头结点(不保存元素)
     int number_of_digit;    //!< 基数关键字个数
     int length;             //!< 静态链表长度
 };
@@ -35,7 +35,7 @@ void DistributeIntoBuckets(radix_static_linked_list_t<info_t, DIGIT_TYPE>* stati
     /// &emsp; **for loop** 遍历基数数位 :\n
     /// &emsp;&emsp; 基数桶的首元素数组(队头数组)各项设置为0\n
     /// &emsp;&emsp; 基数桶的尾元素数组(队尾数组)各项设置为0\n
-    for (int j = 0; j < RADIX_10; j++) {
+    for (int j = 0; j < 10; j++) {
         digit_bucket_heads[j] = 0;
         digit_bucket_tails[j] = 0;
 	}
@@ -44,12 +44,12 @@ void DistributeIntoBuckets(radix_static_linked_list_t<info_t, DIGIT_TYPE>* stati
     int place_index = static_linked_list->number_of_digit - place_of_digit;
 
     /// ### 3 遍历静态链表, 执行分配 ###
-    static_linked_list_node_t* elements = static_linked_list->elements;
+    static_linked_list_node_t<info_t, DIGIT_TYPE>* elements = static_linked_list->elements;
     /// &emsp; **for loop** 遍历静态链表各元素 :\n
 	for (int i = elements[0].next; i != 0; i = elements[i].next) {
 
         /// &emsp;&emsp; 取第i个元素, 数位place_of_digit的数位值\n
-        int place_value = ord(static_linked_list->elements[i].key, place_index);
+        int place_value = (int)static_linked_list->elements[i].key[place_index] - 48; // todo: 只是搬移了代码, 之后再修整
 
         /// &emsp;&emsp; **if** 该数位对应的桶(队列)为空 :\n
         if (!digit_bucket_heads[place_value]) {
@@ -101,13 +101,13 @@ void CollectBuckets(static_linked_list_node_t<info_t, DIGIT_TYPE>* elements,
 
         /// &emsp;&emsp; 寻找下一个非空桶\n
         place_value++;
-        while (place_value < RADIX_10 && digit_bucket_heads[place_value] == 0) {
+        while (place_value < 10 && digit_bucket_heads[place_value] == 0) {
             place_value++;
         }
 
         /// &emsp;&emsp; **if** 找不到非空桶 : \n
         /// &emsp;&emsp;&emsp; 退出
-        if (place_value == RADIX_10) {
+        if (place_value == 10) {
             break;
         }
 
@@ -152,4 +152,18 @@ void RadixSort(radix_static_linked_list_t<info_t, DIGIT_TYPE>* static_linked_lis
         /// &emsp;&emsp; 对分完的桶, 进行收集
         CollectBuckets(static_linked_list->elements, digit_queue_heads, digit_queue_tails);
     }
+}
+
+
+template <typename info_t, typename DIGIT_TYPE>
+void RadixArrayOutput(static_linked_list_node_t<info_t, DIGIT_TYPE>* static_linked_list, int static_linked_list_length) {
+    /// 遍历静态链表, 打印keys
+    int index = 0;
+    for (int i = 0; i < static_linked_list_length; i++) {
+        index = static_linked_list[index].next;         //!< index更新为下一索引
+        // printf("%s ", static_linked_list[index].key);
+        cout << static_linked_list[index].key << " ";
+    }
+    // printf("\n");
+    cout << endl;
 }
