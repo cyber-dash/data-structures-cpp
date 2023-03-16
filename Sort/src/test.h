@@ -36,5 +36,6 @@ void TestQuickSort();
 /*! 测试堆排序 */
 void TestHeapSort();
 
+void TestShellSort();
 
 #endif //CYBER_DASH_SORT_TEST_H

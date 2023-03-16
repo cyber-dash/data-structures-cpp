@@ -27,5 +27,7 @@ int main() {
 
 	TestHeapSort();
 
+	TestShellSort();
+
 	return 0;
 }

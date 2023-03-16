@@ -12,9 +12,10 @@
 #include "heap_sort.h"
 #include "bubble_sort.h"
 #include "select_sort.h"
-#include "insert_sort.h"
+#include "insertion_sort.h"
 #include "merge_sort.h"
 #include "quick_sort.h"
+#include "shell_sort.h"
 #include "util.h"
 #include <iostream>
 
@@ -79,7 +80,7 @@ void TestInsertSort() {
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
-	InsertSort<int>(array, array_size);
+	InsertionSort<int>(array, array_size);
 
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
@@ -166,6 +167,30 @@ void TestHeapSort() {
 	PrintArray<int>(array, array_size);
 
 	HeapSort<int>(array, array_size);
+
+	cout << "排序后:" << endl;
+	PrintArray<int>(array, array_size);
+
+	cout << "------------------------- CyberDash -------------------------" << endl;
+}
+
+
+void TestShellSort() {
+	cout << endl;
+	cout << "|------------------------ CyberDash ------------------------|" << endl;
+	cout << "|                      Test Shell Sort                      |" << endl;
+	cout << "|                        测试希尔排序                        |" << endl;
+
+	int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
+	int array_size = sizeof(array) / sizeof(int);
+
+	cout << "排序前:" << endl;
+	PrintArray<int>(array, array_size);
+
+	int gaps[3] = { 3, 2, 1 };
+    int gaps_count = 3;
+
+	ShellSort<int>(array, gaps, array_size, gaps_count);
 
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
