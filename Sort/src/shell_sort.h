@@ -7,14 +7,12 @@ void GappedInsertionSort(TElement* elements, int gap, int length) {
             continue;
         }
 
-        // elements[0] = elements[i];
         TElement cur = elements[i];
         int j;
         for (j = i - gap; j >= 0 && cur < elements[j]; j -= gap) {
             elements[j + gap] = elements[j];
         }
 
-        // elements[j + gap] = elements[0];
         elements[j + gap] = cur;
     }
 }
