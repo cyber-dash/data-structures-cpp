@@ -39,31 +39,25 @@
   * &emsp;&emsp;&emsp; 当前有序区遍历元素与当前插入元素, 做交换\n
   * &emsp;&emsp;&emsp; 当前插入元素的数组索引更新\n
   * &emsp;&emsp; **else** (当前有序区遍历元素 > 当前插入元素) :\n
-  * &emsp;&emsp;&emsp; break跳出循环(已插入到对应的位置)\n
+  * &emsp;&emsp;&emsp; break跳出循环(已插入到对应的位置, 有序区完成扩展)\n
   */
 template<typename TElement>
 void InsertionSort(TElement* elements, int size) {
-     // for loop 无序区首元素的数组索引, 从1到size - 1
-    for (int cur_unsorted_region_first_index = 1;
+    for (int cur_unsorted_region_first_index = 1;                                               // for loop 无序区首元素的数组索引, 从1到size - 1
          cur_unsorted_region_first_index < size;
          cur_unsorted_region_first_index++)
     {
-        // 取无序区首元素作为插入元素
-        int cur_insert_element_index = cur_unsorted_region_first_index;
+        int cur_insert_element_index = cur_unsorted_region_first_index;                         // 取无序区首元素作为插入元素
 
-        // for loop 有序区从后向前遍历
-        for (int cur_sorted_region_index = cur_unsorted_region_first_index - 1;
+        for (int cur_sorted_region_index = cur_unsorted_region_first_index - 1;                 // for loop 有序区从后向前遍历
              cur_sorted_region_index >= 0;
              cur_sorted_region_index--)
         {
-            // if 当前有序区遍历元素 > 当前插入元素
-            if (elements[cur_sorted_region_index] > elements[cur_insert_element_index]) {
-                // 当前有序区遍历元素与当前插入元素, 做交换
-                Swap(elements + cur_insert_element_index, elements + cur_sorted_region_index);
-                // 当前插入元素的数组索引更新
-                cur_insert_element_index = cur_sorted_region_index;
-            } else {                        // else (当前有序区遍历元素 > 当前插入元素)
-                break;                      // break跳出循环(已插入到对应的位置)
+            if (elements[cur_sorted_region_index] > elements[cur_insert_element_index]) {       // if 当前有序区遍历元素 > 当前插入元素
+                Swap(elements + cur_insert_element_index, elements + cur_sorted_region_index);  // 当前有序区遍历元素与当前插入元素, 做交换
+                cur_insert_element_index = cur_sorted_region_index;                             // 当前插入元素的数组索引更新
+            } else {                                                                            // else (当前有序区遍历元素 > 当前插入元素)
+                break;                                                                          // break跳出循环(已插入到对应的位置, 有序区完成扩展)
             }
         }
     }

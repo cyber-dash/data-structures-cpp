@@ -53,27 +53,31 @@ void QuickSortRecursive(TElement* elements, int size) {
   *
   * <span style="color:#DF5A00">
   * 左右逼近:\n
-  * &emsp; 当pivot在左侧, 从右向左逼近: 如果右侧遍历至某元素, 不符合排序规则, 与pivot位置元素交换\n
-  * &emsp; 当pivot在右侧, 从左向右逼近: 如果左侧遍历至某元素, 不符合排序规则, 与pivot位置元素交换\n
+  * &emsp; WHEN: pivot在左侧, DO: 从右向左逼近: IF: 右侧遍历至某元素, 不符合排序规则, THEN: 与pivot位置元素交换\n
+  * &emsp; WHEN: pivot在右侧, DO: 从左向右逼近: IF: 左侧遍历至某元素, 不符合排序规则, THEN: 与pivot位置元素交换\n
   * </span>
   *
   * ---------------
-  * 声明并初始化pivot(轴), 等于left(数组左边界)\n
-  * **while loop** left <= right (左右边界还有向中间逼近的可能) :\n
+  * 声明并初始化pivot(轴), 等于left(数组左边界)\n\n
+  * **while loop** left <= right (左右边界还有向中间逼近的可能) :\n\n
+  * <span style="color:#bc8f8f">
   * &emsp; (右侧逼近)\n
+  * </span>
   * &emsp; **for loop** right>= pivot; right-- :\n
-  * &emsp;&emsp; **if** pivot位置元素 > right位置元素 :\n
-  * &emsp;&emsp;&emsp; 交换pivot和right位置元素\n
+  * &emsp;&emsp; **if** pivot位置元素 > right位置元素 :\n\n
+  * &emsp;&emsp;&emsp; 交换pivot和right位置元素\n\n
   * &emsp;&emsp;&emsp; left(左边界)修改为pivot + 1\n
-  * &emsp;&emsp;&emsp; pivot修改为right(右边界)\n
-  * &emsp;&emsp;&emsp; break跳出循环(本轮从右向左逼近结束)\n
+  * &emsp;&emsp;&emsp; pivot修改为right(右边界)\n\n
+  * &emsp;&emsp;&emsp; break跳出循环(本轮从右向左逼近结束)\n\n
+  * <span style="color:#bc8f8f">
   * &emsp; (左侧逼近)\n
-  * &emsp; **for loop** left <= pivot; right-- :\n
-  * &emsp;&emsp; **if** pivot位置元素 < left位置元素 :\n
-  * &emsp;&emsp;&emsp; 交换pivot和left位置元素\n
+  * </span>
+  * &emsp; **for loop** left <= pivot; left++ :\n
+  * &emsp;&emsp; **if** pivot位置元素 < left位置元素 :\n\n
+  * &emsp;&emsp;&emsp; 交换pivot和left位置元素\n\n
   * &emsp;&emsp;&emsp; right(右边界)修改为pivot - 1\n
-  * &emsp;&emsp;&emsp; pivot修改为left(左边界)\n
-  * &emsp;&emsp;&emsp; break跳出循环(本轮从左向右逼近结束)\n
+  * &emsp;&emsp;&emsp; pivot修改为left(左边界)\n\n
+  * &emsp;&emsp;&emsp; break跳出循环(本轮从左向右逼近结束)\n\n
   * 返回pivot\n
   */
 template<typename TElement>
@@ -86,19 +90,25 @@ int Partition(TElement* elements, int left, int right) {
         // (右侧逼近)
         for (; right >= pivot; right--) {                   // for loop right>= pivot; right--
             if (elements[pivot] > elements[right]) {        // if pivot位置元素 > right位置元素
+
                 Swap(elements + pivot, elements + right);   // 交换pivot和right位置元素
+
                 left = pivot + 1;                           // left(左边界)修改为pivot + 1
                 pivot = right;                              // pivot修改为right(右边界)
+
                 break;                                      // break跳出循环(本轮从右向左逼近结束)
             }
         }
 
         // (左侧逼近)
-        for (; left <= pivot; left++) {                     // for loop left <= pivot; right--
+        for (; left <= pivot; left++) {                     // for loop left <= pivot; left++
             if (elements[pivot] < elements[left]) {         // if pivot位置元素 < left位置元素
+
                 Swap(elements + left, elements + pivot);    // 交换pivot和left位置元素
+
                 right = pivot - 1;                          // right(右边界)修改为pivot - 1
                 pivot = left;                               // pivot修改为left(左边界)
+
                 break;                                      // break跳出循环(本轮从左向右逼近结束)
             }
         }

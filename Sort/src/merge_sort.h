@@ -151,48 +151,73 @@ void MergeSortInSubArrayRecursive(TElement* elements, TElement* caches, int left
  * ------------
  * ------------
  *
- * 调用sub_array_merge_sort_recursive实现归并排序
+ * 调用MergeSortInSubArrayRecursive
  *
  * ------------
  * + **1 构造缓存数组**\n
  * caches分配内存并初始化\n
  * **if** caches内存分配失败 :\n
- * &emsp; 抛出bad_alloc()\n
+ * &emsp; 抛出bad_alloc()\n\n
  * + **2 初始化左右边界**\n
  * left(左边界)初始化为0\n
- * right(右边界)初始化为size - 1\n
+ * right(右边界)初始化为size - 1\n\n
  * + **3 调用递归函数执行归并**\n
+ * 调用MergeSortInSubArrayRecursive\n
  */
 template<typename TElement>
 void MergeSortRecursive(TElement* elements, int size) {
 
     // ---------- 1 构造缓存数组 ----------
 
-    TElement* caches = new TElement[size];  // caches分配内存并初始化
-    if (!caches) {                          // if caches内存分配失败
-        throw bad_alloc();                  // 抛出bad_alloc()
+    TElement* caches = new TElement[size];                          // caches分配内存并初始化
+    if (!caches) {                                                  // if caches内存分配失败
+        throw bad_alloc();                                          // 抛出bad_alloc()
     }
 
     // ---------- 2 初始化左右边界 ----------
 
-    int left = 0;                           // left(左边界)初始化为0
-    int right = size - 1;                   // right(右边界)初始化为size - 1
+    int left = 0;                                                   // left(左边界)初始化为0
+    int right = size - 1;                                           // right(右边界)初始化为size - 1
 
     // ---------- 3 调用递归函数执行归并 ----------
 
-    MergeSortInSubArrayRecursive(elements, caches, left, right);
+    MergeSortInSubArrayRecursive(elements, caches, left, right);    // 调用MergeSortInSubArrayRecursive
 }
 
 
+/*!
+ * @brief **求下一趟归并的子数组数量**
+ * @param sub_array_count 当前子数组数量
+ * @return 下一趟的子数组数量
+ * @note
+ * 求下一趟归并的子数组数量
+ * ----------------------
+ * ----------------------
+ * 
+ * ----------------------
+ * + **1 求子数组数量除以2的余数**\n
+ * 声明变量next_turn_sub_array_count(下一趟的子数组数量)\n\n
+ * 初始化rem(余数) = sub_array_count % 2\n
+ * 初始化quotient(商) = sub_array_count / 2\n\n
+ * + **2 余数分情况计算**\n
+ * **if** rem等于0 :\n
+ * &emsp; next_turn_sub_array_count <-- quotient\n
+ * **else** (rem != 0) :\n
+ * &emsp; next_turn_sub_array_count <-- quotient + 1\n\n
+ * + **3 返回结果**\n
+ * 返回next_turn_sub_array_count\n
+ */
 int GetNextTurnSubArrayCount(int sub_array_count) {
 
-    int rem = sub_array_count % 2;
     int next_turn_sub_array_count;
 
+    int rem = sub_array_count % 2;
+    int quotient = sub_array_count / 2;
+
     if (rem == 0) {
-        next_turn_sub_array_count = sub_array_count / 2;
+        next_turn_sub_array_count = quotient;
     } else {
-        next_turn_sub_array_count = sub_array_count / 2 + 1;
+        next_turn_sub_array_count = quotient + 1;
     }
 
     return next_turn_sub_array_count;
@@ -222,9 +247,9 @@ int GetNextTurnSubArrayCount(int sub_array_count) {
  * &emsp; **for loop** 循环cur_merge_times次执行合并 :\n
  * &emsp;&emsp; 计算cur_left(本次合并的左边界)\n
  * &emsp;&emsp; 计算cur_mid(本次合并的中间分界)\n
- * &emsp;&emsp; (计算right_mid)(本次合并的中间分界)\n
+ * &emsp;&emsp; (计算cur_right)(本次合并的右边界)\n
  * &emsp;&emsp; **if** (2 * i + 2) * cur_sub_array_length - 1 > size - 1 :\n
- * &emsp;&emsp;&emsp; cur_right(本次合并的中间分界) <-- size - 1\n
+ * &emsp;&emsp;&emsp; cur_right(本次合并的右边界) <-- size - 1\n
  * &emsp;&emsp; **else** :\n
  * &emsp;&emsp;&emsp; cur_right(本次合并的右边界) <-- (2 * i + 2) * cur_sub_array_length - 1\n
  * &emsp;&emsp; 执行本次合并\n
@@ -255,10 +280,10 @@ void MergeSort(TElement* elements, int size) {
             int cur_left = 2 * i * cur_sub_array_length;                        // 计算cur_left(本次合并的左边界)
             int cur_mid = (2 * i + 1) * cur_sub_array_length - 1;               // 计算cur_mid(本次合并的中间分界)
 
-            // (计算right_mid)
+            // (计算cur_right)
             int cur_right;
             if ((2 * i + 2) * cur_sub_array_length - 1 > size - 1) {            // if (2 * i + 2) * cur_sub_array_length - 1 > size - 1
-                cur_right = size - 1;                                           // cur_right(本次合并的中间分界) <-- size - 1
+                cur_right = size - 1;                                           // cur_right(本次合并的右边界) <-- size - 1
             } else {                                                            // else
                 cur_right = (2 * i + 2) * cur_sub_array_length - 1;             // cur_right(本次合并的右边界) <-- (2 * i + 2) * cur_sub_array_length - 1
             }

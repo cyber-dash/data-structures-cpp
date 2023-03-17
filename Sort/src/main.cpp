@@ -15,7 +15,7 @@ int main() {
 
 	TestBubbleSort();
 
-	TestSelectSort();
+	TestSelectionSort();
 
 	TestInsertSort();
 

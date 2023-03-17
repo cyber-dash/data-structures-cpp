@@ -19,7 +19,7 @@
 void TestBubbleSort();
 
 /*! 测试选择排序 */
-void TestSelectSort();
+void TestSelectionSort();
 
 /*! 测试插入排序 */
 void TestInsertSort();

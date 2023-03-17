@@ -17,8 +17,8 @@
  * @param index 执行SiftDown的数组索引
  * @param heap_size 堆size
  */
-template<typename TValue>
-void MaxHeapSiftDown(TValue* heap_array, int index, int heap_size) {
+template<typename TElement>
+void MaxHeapSiftDown(TElement* heap_array, int index, int heap_size) {
     for (int child_index = 2 * index + 1;
          child_index < heap_size;
          index = child_index, child_index = child_index * 2 + 1)
@@ -44,8 +44,8 @@ void MaxHeapSiftDown(TValue* heap_array, int index, int heap_size) {
  * @param heap_array 数组
  * @param index 执行SiftUp的数组索引
  */
-template<typename TValue>
-void MaxHeapSiftUp(TValue* heap_array, int index) {
+template<typename TElement>
+void MaxHeapSiftUp(TElement* heap_array, int index) {
     for (int parent_index = (index - 1) / 2;
          parent_index >= 0;
          index = parent_index, parent_index = (index - 1) / 2)
@@ -64,8 +64,8 @@ void MaxHeapSiftUp(TValue* heap_array, int index) {
  * @param heap_array 数组
  * @param heap_size 数组长度
  */
-template<typename TValue>
-void BuildHeapBySiftDown(TValue* heap_array, int heap_size) {
+template<typename TElement>
+void BuildHeapBySiftDown(TElement* heap_array, int heap_size) {
     int pivot = (heap_size - 2) / 2;
     for (int i = pivot; i >= 0; i--) {
         MaxHeapSiftDown(heap_array, i, heap_size);
@@ -78,8 +78,8 @@ void BuildHeapBySiftDown(TValue* heap_array, int heap_size) {
  * @param heap_array 数组
  * @param heap_size 数组长度
  */
-template<typename TValue>
-void BuildHeapBySiftUp(TValue* heap_array, int heap_size) {
+template<typename TElement>
+void BuildHeapBySiftUp(TElement* heap_array, int heap_size) {
     int pivot = (heap_size - 2) / 2;
     for (int i = heap_size - 1; i > pivot; i--) {
         MaxHeapSiftUp(heap_array, i);
@@ -92,8 +92,8 @@ void BuildHeapBySiftUp(TValue* heap_array, int heap_size) {
  * @param heap_array 数组
  * @param length 数组长度
  */
-template<typename TValue>
-void HeapSort(TValue* heap_array, int length) {
+template<typename TElement>
+void HeapSort(TElement* heap_array, int length) {
 
     BuildHeapBySiftDown(heap_array, length);
 

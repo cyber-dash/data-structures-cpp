@@ -11,7 +11,7 @@
 #include "test.h"
 #include "heap_sort.h"
 #include "bubble_sort.h"
-#include "select_sort.h"
+#include "selection_sort.h"
 #include "insertion_sort.h"
 #include "merge_sort.h"
 #include "quick_sort.h"
@@ -46,7 +46,7 @@ void TestBubbleSort() {
 }
 
 
-void TestSelectSort() {
+void TestSelectionSort() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -59,7 +59,7 @@ void TestSelectSort() {
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
-	SelectSort<int>(array, array_size);
+	SelectionSort<int>(array, array_size);
 
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
