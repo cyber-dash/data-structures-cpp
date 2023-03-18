@@ -1,27 +1,22 @@
+ï»¿#define NUM_0_ASCII_CODE 48 //!< å­—ç¬¦'0'çš„ASCç 
+#define NUM_1_ASCII_CODE 49 //!< å­—ç¬¦'1'çš„ASCç 
 
-#define FALSE   0   //!< Âß¼­·Ç
-#define TRUE    1   //!< Âß¼­ÊÇ
-
-#define NUM_0_ASCII_CODE 48 //!< ×Ö·û'0'µÄASCÂë
-#define NUM_1_ASCII_CODE 49 //!< ×Ö·û'1'µÄASCÂë
-
-#define MAX_DIGIT_NUMBER 8                  //!< ¹Ø¼ü×ÖÏîÊıµÄ×î´óÖµ
+#define MAX_DIGIT_NUMBER 8                  //!< å…³é”®å­—é¡¹æ•°çš„æœ€å¤§å€¼
 
 int BUCKETS[10];
 
 template <typename info_t, typename DIGIT_TYPE>
-struct static_linked_list_node_t {
-    DIGIT_TYPE key[MAX_DIGIT_NUMBER];   //!< ¹Ø¼ü×Ö
-    info_t info;                        //!< ÆäËûÊı¾İÏî
-    int next;                           //!< ÏÂÒ»½áµãµÄË÷Òı
-}; 
+struct StaticLinkedListNode {
+    DIGIT_TYPE key[MAX_DIGIT_NUMBER];   //!< å…³é”®å­—
+    int next;                           //!< ä¸‹ä¸€ç»“ç‚¹çš„ç´¢å¼•
+};
 
 
 template <typename info_t, typename DIGIT_TYPE>
 struct radix_static_linked_list_t {
-    static_linked_list_node_t<info_t, DIGIT_TYPE> elements[100];    //!< ÔªËØµÄ¾²Ì¬Á´±í, elements[0]ÎªÍ·½áµã(²»±£´æÔªËØ)
-    int number_of_digit;    //!< »ùÊı¹Ø¼ü×Ö¸öÊı
-    int length;             //!< ¾²Ì¬Á´±í³¤¶È
+    StaticLinkedListNode<info_t, DIGIT_TYPE> elements[100];    //!< å…ƒç´ çš„é™æ€é“¾è¡¨, elements[0]ä¸ºå¤´ç»“ç‚¹(ä¸ä¿å­˜å…ƒç´ )
+    int number_of_digit;    //!< åŸºæ•°å…³é”®å­—ä¸ªæ•°
+    int length;             //!< é™æ€é“¾è¡¨é•¿åº¦
 };
 
 
@@ -31,136 +26,136 @@ void DistributeIntoBuckets(radix_static_linked_list_t<info_t, DIGIT_TYPE>* stati
                            int* digit_bucket_heads,
                            int* digit_bucket_tails)
 {
-    /// ### 1 ¸÷»ùÊıÍ°(¶ÓÁĞ)³õÊ¼»¯Îª¿Õ ###
-    /// &emsp; **for loop** ±éÀú»ùÊıÊıÎ» :\n
-    /// &emsp;&emsp; »ùÊıÍ°µÄÊ×ÔªËØÊı×é(¶ÓÍ·Êı×é)¸÷ÏîÉèÖÃÎª0\n
-    /// &emsp;&emsp; »ùÊıÍ°µÄÎ²ÔªËØÊı×é(¶ÓÎ²Êı×é)¸÷ÏîÉèÖÃÎª0\n
+    /// ### 1 å„åŸºæ•°æ¡¶(é˜Ÿåˆ—)åˆå§‹åŒ–ä¸ºç©º ###
+    /// &emsp; **for loop** éå†åŸºæ•°æ•°ä½ :\n
+    /// &emsp;&emsp; åŸºæ•°æ¡¶çš„é¦–å…ƒç´ æ•°ç»„(é˜Ÿå¤´æ•°ç»„)å„é¡¹è®¾ç½®ä¸º0\n
+    /// &emsp;&emsp; åŸºæ•°æ¡¶çš„å°¾å…ƒç´ æ•°ç»„(é˜Ÿå°¾æ•°ç»„)å„é¡¹è®¾ç½®ä¸º0\n
     for (int j = 0; j < 10; j++) {
         digit_bucket_heads[j] = 0;
         digit_bucket_tails[j] = 0;
-	}
+    }
 
-    /// ### 2 ÇóÊıÎ»ÔÚÔªËØÊı×éÖĞµÄË÷Òı###
+    /// ### 2 æ±‚æ•°ä½åœ¨å…ƒç´ æ•°ç»„ä¸­çš„ç´¢å¼•###
     int place_index = static_linked_list->number_of_digit - place_of_digit;
 
-    /// ### 3 ±éÀú¾²Ì¬Á´±í, Ö´ĞĞ·ÖÅä ###
-    static_linked_list_node_t<info_t, DIGIT_TYPE>* elements = static_linked_list->elements;
-    /// &emsp; **for loop** ±éÀú¾²Ì¬Á´±í¸÷ÔªËØ :\n
-	for (int i = elements[0].next; i != 0; i = elements[i].next) {
+    /// ### 3 éå†é™æ€é“¾è¡¨, æ‰§è¡Œåˆ†é… ###
+    StaticLinkedListNode<info_t, DIGIT_TYPE>* elements = static_linked_list->elements;
+    /// &emsp; **for loop** éå†é™æ€é“¾è¡¨å„å…ƒç´  :\n
+    for (int i = elements[0].next; i != 0; i = elements[i].next) {
 
-        /// &emsp;&emsp; È¡µÚi¸öÔªËØ, ÊıÎ»place_of_digitµÄÊıÎ»Öµ\n
-        int place_value = (int)static_linked_list->elements[i].key[place_index] - 48; // todo: Ö»ÊÇ°áÒÆÁË´úÂë, Ö®ºóÔÙĞŞÕû
+        /// &emsp;&emsp; å–ç¬¬iä¸ªå…ƒç´ , æ•°ä½place_of_digitçš„æ•°ä½å€¼\n
+        int place_value = (int)static_linked_list->elements[i].key[place_index] - 48; // todo: åªæ˜¯æ¬ç§»äº†ä»£ç , ä¹‹åå†ä¿®æ•´
 
-        /// &emsp;&emsp; **if** ¸ÃÊıÎ»¶ÔÓ¦µÄÍ°(¶ÓÁĞ)Îª¿Õ :\n
+        /// &emsp;&emsp; **if** è¯¥æ•°ä½å¯¹åº”çš„æ¡¶(é˜Ÿåˆ—)ä¸ºç©º :\n
         if (!digit_bucket_heads[place_value]) {
-            /// &emsp;&emsp;&emsp; ¸ÃÊıÎ»µÄÊı×éË÷Òıplace_indexÈë¶Ó(½øÍ°)\n
+            /// &emsp;&emsp;&emsp; è¯¥æ•°ä½çš„æ•°ç»„ç´¢å¼•place_indexå…¥é˜Ÿ(è¿›æ¡¶)\n
             digit_bucket_heads[place_value] = i;
-        } else {    /// &emsp;&emsp; **else** (Èç¹û¸ÃÊıÎ»¶ÔÓ¦µÄÍ°(¶ÓÁĞ)²»Îª¿Õ\n
-            /// &emsp;&emsp;&emsp; ¶ÓÎ²ÔªËØµÄnext, Ö¸Ïòplace_index(¼´¼ÓÈë¶ÓÎ²)\n
+        } else {    /// &emsp;&emsp; **else** (å¦‚æœè¯¥æ•°ä½å¯¹åº”çš„æ¡¶(é˜Ÿåˆ—)ä¸ä¸ºç©º\n
+            /// &emsp;&emsp;&emsp; é˜Ÿå°¾å…ƒç´ çš„next, æŒ‡å‘place_index(å³åŠ å…¥é˜Ÿå°¾)\n
             elements[digit_bucket_tails[place_value]].next = i;
         }
 
-        /// &emsp;&emsp; ¸üĞÂ¸ÃÊıÎ»¶ÓÎ²Êı×éÔªËØÖµ\n
+        /// &emsp;&emsp; æ›´æ–°è¯¥æ•°ä½é˜Ÿå°¾æ•°ç»„å…ƒç´ å€¼\n
         digit_bucket_tails[place_value] = i;
-	}
+    }
 }
 
 
 /*!
- * »ùÊıÅÅĞòÊÕ¼¯Í°
- * @param elements **¾²Ì¬Á´±íÔªËØÊı×é**
- * @param digit_bucket_heads **»ùÊıÍ°µÄÊ×ÔªËØÊı×é**(¶ÓÍ·Êı×é)
- * @param digit_bucket_tails **»ùÊıÍ°µÄÎ²ÔªËØÊı×é**(¶ÓÎ²Êı×é)
+ * åŸºæ•°æ’åºæ”¶é›†æ¡¶
+ * @param elements **é™æ€é“¾è¡¨å…ƒç´ æ•°ç»„**
+ * @param digit_bucket_heads **åŸºæ•°æ¡¶çš„é¦–å…ƒç´ æ•°ç»„**(é˜Ÿå¤´æ•°ç»„)
+ * @param digit_bucket_tails **åŸºæ•°æ¡¶çš„å°¾å…ƒç´ æ•°ç»„**(é˜Ÿå°¾æ•°ç»„)
  * @note
- * »ùÊıÅÅĞòÊÕ¼¯Í°
+ * åŸºæ•°æ’åºæ”¶é›†æ¡¶
  * ------------
  * ------------
- * digit×ÔĞ¡ÖÁ´ó, ½«digit_queue_heads[0 ... 9]ËùÖ¸¸÷Í°, ÒÀ´ÎÁ¬½Ó³ÉÒ»¸öÁ´±í
+ * digitè‡ªå°è‡³å¤§, å°†digit_queue_heads[0 ... 9]æ‰€æŒ‡å„æ¡¶, ä¾æ¬¡è¿æ¥æˆä¸€ä¸ªé“¾è¡¨
  */
 template <typename info_t, typename DIGIT_TYPE>
-void CollectBuckets(static_linked_list_node_t<info_t, DIGIT_TYPE>* elements,
+void CollectBuckets(StaticLinkedListNode<info_t, DIGIT_TYPE>* elements,
                     int* digit_bucket_heads,
                     int* digit_bucket_tails)
 {
 
-    /// ### 1 ÕÒµ½µÚÒ»¸ö·Ç¿ÕÍ°(¶ÓÁĞ) ###
-    /// &emsp; ±éÀúdigit_bucket_heads, ÕÒµ½µÚÒ»¸ö·Ç¿ÕÍ°\n
+    /// ### 1 æ‰¾åˆ°ç¬¬ä¸€ä¸ªéç©ºæ¡¶(é˜Ÿåˆ—) ###
+    /// &emsp; éå†digit_bucket_heads, æ‰¾åˆ°ç¬¬ä¸€ä¸ªéç©ºæ¡¶\n
     int place_value = 0;
     while (digit_bucket_heads[place_value] == 0) {
         place_value++;
     }
 
-    /// &emsp; elements[0].nextÖ¸ÏòµÚÒ»¸ö·Ç¿ÕÍ°µÄÊ×½áµã(µÚÒ»¸ö·Ç¿Õ¶ÓÁĞµÄ¶ÓÍ·)\n
+    /// &emsp; elements[0].nextæŒ‡å‘ç¬¬ä¸€ä¸ªéç©ºæ¡¶çš„é¦–ç»“ç‚¹(ç¬¬ä¸€ä¸ªéç©ºé˜Ÿåˆ—çš„é˜Ÿå¤´)\n
     elements[0].next = digit_bucket_heads[place_value];
-    /// &emsp; ±äÁ¿digit_bucket_tail±£´æµ±Ç°·Ç¿ÕÍ°µÄ×îºó1¸öÔªËØ
+    /// &emsp; å˜é‡digit_bucket_tailä¿å­˜å½“å‰éç©ºæ¡¶çš„æœ€å1ä¸ªå…ƒç´ 
     int digit_bucket_tail = digit_bucket_tails[place_value];
 
-    /// ### 2 Ö´ĞĞÍ°ÊÕ¼¯ ###
-    /// &emsp; **for loop** ÊıÎ»´Ó0µ½9 :\n
+    /// ### 2 æ‰§è¡Œæ¡¶æ”¶é›† ###
+    /// &emsp; **for loop** æ•°ä½ä»0åˆ°9 :\n
     while (place_value < 10) {
 
-        /// &emsp;&emsp; Ñ°ÕÒÏÂÒ»¸ö·Ç¿ÕÍ°\n
+        /// &emsp;&emsp; å¯»æ‰¾ä¸‹ä¸€ä¸ªéç©ºæ¡¶\n
         place_value++;
         while (place_value < 10 && digit_bucket_heads[place_value] == 0) {
             place_value++;
         }
 
-        /// &emsp;&emsp; **if** ÕÒ²»µ½·Ç¿ÕÍ° : \n
-        /// &emsp;&emsp;&emsp; ÍË³ö
+        /// &emsp;&emsp; **if** æ‰¾ä¸åˆ°éç©ºæ¡¶ : \n
+        /// &emsp;&emsp;&emsp; é€€å‡º
         if (place_value == 10) {
             break;
         }
 
-        /// &emsp;&emsp; Ç°Ò»·Ç¿ÕÍ°µÄ×îºóÒ»¸öÔªËØ(¶ÓÎ²ÔªËØ)elements[digit_bucket_tail]µÄnext, Ö¸Ïòµ±Ç°ÊıÎ»¶ÔÓ¦µÄ·Ç¿ÕÍ°µÄÊ×¸öÔªËØµÄË÷Òı(¶ÓÍ·)
+        /// &emsp;&emsp; å‰ä¸€éç©ºæ¡¶çš„æœ€åä¸€ä¸ªå…ƒç´ (é˜Ÿå°¾å…ƒç´ )elements[digit_bucket_tail]çš„next, æŒ‡å‘å½“å‰æ•°ä½å¯¹åº”çš„éç©ºæ¡¶çš„é¦–ä¸ªå…ƒç´ çš„ç´¢å¼•(é˜Ÿå¤´)
         elements[digit_bucket_tail].next = digit_bucket_heads[place_value];
-        /// &emsp;&emsp; ¸üĞÂdigit_bucket_tailÖµÎªµ±Ç°·Ç¿ÕÍ°µÄ×îºóÒ»¸öÔªËØµÄË÷Òı(¶ÓÎ²);
+        /// &emsp;&emsp; æ›´æ–°digit_bucket_tailå€¼ä¸ºå½“å‰éç©ºæ¡¶çš„æœ€åä¸€ä¸ªå…ƒç´ çš„ç´¢å¼•(é˜Ÿå°¾);
         digit_bucket_tail = digit_bucket_tails[place_value];
     }
 
-    /// &emsp; ×îºóÒ»¸ö·Ç¿ÕÍ°µÄ×îºóÒ»¸öÔªËØ(¶ÓÎ²ÔªËØ)µÄnextÖ¸Ïò0
+    /// &emsp; æœ€åä¸€ä¸ªéç©ºæ¡¶çš„æœ€åä¸€ä¸ªå…ƒç´ (é˜Ÿå°¾å…ƒç´ )çš„nextæŒ‡å‘0
     elements[digit_bucket_tail].next = 0;
 }
 
 
 /*!
- * <h1>»ùÊıÅÅĞò</h1>
- * @param static_linked_list **´ıÅÅĞò¾²Ì¬Á´±í**
+ * <h1>åŸºæ•°æ’åº</h1>
+ * @param static_linked_list **å¾…æ’åºé™æ€é“¾è¡¨**
  * @note
  */
 template <typename info_t, typename DIGIT_TYPE>
 void RadixSort(radix_static_linked_list_t<info_t, DIGIT_TYPE>* static_linked_list) {
-    int digit_queue_heads[10];  // »ùÊı¶ÓÁĞ¶ÓÍ·Êı×é
-    int digit_queue_tails[10];  // »ùÊı¶ÓÁĞ¶ÓÎ²Êı×é
+    int digit_queue_heads[10];  // åŸºæ•°é˜Ÿåˆ—é˜Ÿå¤´æ•°ç»„
+    int digit_queue_tails[10];  // åŸºæ•°é˜Ÿåˆ—é˜Ÿå°¾æ•°ç»„
 
-    /// ### 1 ³õÊ¼»¯static_linked_list¸÷ÔªËØµÄnext ###
-    /// &emsp; **for loop** ±éÀú¾²Ì¬Á´±í, Ë÷Òı·¶Î§[ 1 ... (length - 1) ] : \n
+    /// ### 1 åˆå§‹åŒ–static_linked_listå„å…ƒç´ çš„next ###
+    /// &emsp; **for loop** éå†é™æ€é“¾è¡¨, ç´¢å¼•èŒƒå›´[ 1 ... (length - 1) ] : \n
     for (int i = 0; i < static_linked_list->length; ++i) {
-        /// &emsp;&emsp; Ë÷ÒıiÔªËØµÄnext, ÉèÖÃÎªi + 1 \n
+        /// &emsp;&emsp; ç´¢å¼•iå…ƒç´ çš„next, è®¾ç½®ä¸ºi + 1 \n
         static_linked_list->elements[i].next = i + 1;
     }
 
-    /// &emsp; Ë÷ÒılengthÔªËØµÄnext, ÉèÖÃÎª0(¹¹³ÉÑ­»·¾²Ì¬Á´±í)
-    static_linked_list->elements[static_linked_list->length].next = 0; // ×îºóÒ»¸öÔªËØµÄnextÖ¸Ïò0
+    /// &emsp; ç´¢å¼•lengthå…ƒç´ çš„next, è®¾ç½®ä¸º0(æ„æˆå¾ªç¯é™æ€é“¾è¡¨)
+    static_linked_list->elements[static_linked_list->length].next = 0; // æœ€åä¸€ä¸ªå…ƒç´ çš„nextæŒ‡å‘0
 
-    /// ### 2 °´×îµÍÎ»ÓÅÏÈ(ÓÒ²à¸öÎ»¿ªÊ¼), ÒÀ´Î¶Ô¸÷¸öÎ»½øĞĞ·ÖÍ°ºÍÊÕ¼¯ ###
-    /// &emsp; **for loop** ´ÓÓÒ²à¿ªÊ¼, ±éÀú¸÷¸öÎ» :\n
+    /// ### 2 æŒ‰æœ€ä½ä½ä¼˜å…ˆ(å³ä¾§ä¸ªä½å¼€å§‹), ä¾æ¬¡å¯¹å„ä¸ªä½è¿›è¡Œåˆ†æ¡¶å’Œæ”¶é›† ###
+    /// &emsp; **for loop** ä»å³ä¾§å¼€å§‹, éå†å„ä¸ªä½ :\n
     for (int i = 1; i <= static_linked_list->number_of_digit; i++) {
 
-        /// &emsp;&emsp; ÓÒ²àµÚiÎ»×÷Îª»ùÊı, ½øĞĞ·ÖÍ° \n
+        /// &emsp;&emsp; å³ä¾§ç¬¬iä½ä½œä¸ºåŸºæ•°, è¿›è¡Œåˆ†æ¡¶ \n
         DistributeIntoBuckets(static_linked_list, i, digit_queue_heads, digit_queue_tails);
 
-        /// &emsp;&emsp; ¶Ô·ÖÍêµÄÍ°, ½øĞĞÊÕ¼¯
+        /// &emsp;&emsp; å¯¹åˆ†å®Œçš„æ¡¶, è¿›è¡Œæ”¶é›†
         CollectBuckets(static_linked_list->elements, digit_queue_heads, digit_queue_tails);
     }
 }
 
 
 template <typename info_t, typename DIGIT_TYPE>
-void RadixArrayOutput(static_linked_list_node_t<info_t, DIGIT_TYPE>* static_linked_list, int static_linked_list_length) {
-    /// ±éÀú¾²Ì¬Á´±í, ´òÓ¡keys
+void RadixArrayOutput(StaticLinkedListNode<info_t, DIGIT_TYPE>* static_linked_list, int static_linked_list_length) {
+    /// éå†é™æ€é“¾è¡¨, æ‰“å°keys
     int index = 0;
     for (int i = 0; i < static_linked_list_length; i++) {
-        index = static_linked_list[index].next;         //!< index¸üĞÂÎªÏÂÒ»Ë÷Òı
+        index = static_linked_list[index].next;         //!< indexæ›´æ–°ä¸ºä¸‹ä¸€ç´¢å¼•
         // printf("%s ", static_linked_list[index].key);
         cout << static_linked_list[index].key << " ";
     }

@@ -216,7 +216,7 @@ void TestRadixSort() {
     radix_static_linked_list.length = 9;        // 静态链表长度
 
     /// - 静态链表表头初始化
-    static_linked_list_node_t<int, char> element_zero;
+    StaticLinkedListNode<int, char> element_zero;
     element_zero.key[0] = 0;
     element_zero.key[1] = 0;
     element_zero.key[2] = 0;
@@ -232,7 +232,7 @@ void TestRadixSort() {
     /// &emsp; **for loop** 静态链表长度 : \n
     for (int i = 1; i <= radix_static_linked_list.length; i++) {
         /// &emsp;&emsp; 声明当前静态链表元素\n
-        static_linked_list_node_t<int, char> node;
+        StaticLinkedListNode<int, char> node;
 
         /// &emsp;&emsp; **for loop** 元素位数 :\n
         /// &emsp;&emsp;&emsp; 首位随机赋值'1' - '9' \n
@@ -261,7 +261,7 @@ void TestRadixSort() {
 
     /// ### 4 排序前静态链表打印 ###
     printf("排序前:\n");
-    RadixArrayOutput((static_linked_list_node_t<int, char>*)&radix_static_linked_list.elements,
+    RadixArrayOutput((StaticLinkedListNode<int, char>*)&radix_static_linked_list.elements,
                      radix_static_linked_list.length);
 
     /// ### 5 调用RadixSort执行基数排序 ###
@@ -269,7 +269,7 @@ void TestRadixSort() {
 
     /// ### 6 排序后静态链表打印 ###
     printf("排序后:\n");
-    RadixArrayOutput((static_linked_list_node_t<int, char>*)&radix_static_linked_list.elements,
+    RadixArrayOutput((StaticLinkedListNode<int, char>*)&radix_static_linked_list.elements,
                      radix_static_linked_list.length);
 
 
