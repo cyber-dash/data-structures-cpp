@@ -121,37 +121,68 @@ void CircularDoublyLinkedListTest::TestLength() {
 }
 
 
+/*!
+ * @brief **测试-双向链表-IsEmpty(是否为空)**
+ * @note
+ * 测试-双向链表-IsEmpty(是否为空)
+ * ----------------------------
+ * ----------------------------
+ *
+ * <span style="color:#d40000">
+ * |------------------------ CyberDash ------------------------|\n
+ * Test CircularDoublyLinkedList IsEmpty\n
+ * 测试双向链表是否为空\n\n
+ * Before inserting any string: \n
+ * The city_list is empty. \n\n
+ * After inserting "Beijing": \n
+ * The city_list isn't empty. \n
+ * -------------------------------------------------------------\n
+ * </span>
+ *
+ * ----------------------------
+ * + **1 初始化city_list(城市列表)**\n\n
+ * + **2 测试空链表IsEmpty()结果**\n
+ * 调用IsEmpty(), 结果为is_empty\n
+ * **if** is_empty == true :\n
+ * &emsp; 打印"is empty"的文本\n
+ * **else** \n
+ * &emsp; 打印"isn't empty"的文本\n\n
+ * + **3 测试非空链表IsEmpty()结果**\n
+ * 向city_list中插入北京"Beijing"\n\n
+ * 调用IsEmpty(), 结果为is_empty\n
+ * **if** is_empty == true :\n
+ * &emsp; 打印"is empty"的文本\n
+ * **else** \n
+ * &emsp; 打印"isn't empty"的文本\n
+ */
 void CircularDoublyLinkedListTest::TestEmpty() {
-
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test CircularDoublyLinkedList Empty               |" << endl;
-    cout << "|                      测试双向链表是否为空                   |" << endl << endl << endl;
+    cout << "|             Test CircularDoublyLinkedList Empty           |" << endl;
+    cout << "|                     测试双向链表是否为空                     |" << endl << endl << endl;
 
-    CircularDoublyLinkedList<string>* double_link;
-    double_link = new CircularDoublyLinkedList<string>();
+    CircularDoublyLinkedList<string>* city_list = new CircularDoublyLinkedList<string>();
 
-    cout << "Before insert any string:" << endl;
+    cout << "Before inserting any string:" << endl;
 
-    bool isEmpty = double_link->IsEmpty();
-    if (isEmpty) {
-        cout << "The seq_list is empty." << endl;
+    bool is_empty = city_list->IsEmpty();
+    if (is_empty) {
+        cout << "The city_list is empty." << endl;
+    } else {
+        cout << "The city_list isn't empty." << endl;
     }
-    else {
-        cout << "The seq_list isn't empty." << endl;
-    }
+    cout << endl;
 
     string BJ = "Beijing";
-    double_link->Insert(0, BJ);
+    city_list->Insert(0, BJ);
 
-    cout << "After insert the string \"Beijing\":" << endl;
+    cout << "After inserting \"Beijing\":" << endl;
 
-    isEmpty = double_link->IsEmpty();
-    if (isEmpty) {
-        cout << "The seq_list is empty." << endl;
-    }
-    else {
-        cout << "The seq_list isn't empty." << endl;
+    is_empty = city_list->IsEmpty();
+    if (is_empty) {
+        cout << "The city_list is empty." << endl;
+    } else {
+        cout << "The city_list isn't empty." << endl;
     }
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -162,7 +193,7 @@ void CircularDoublyLinkedListTest::TestSearch() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                Test CircularDoublyLinkedList Search               |" << endl;
+    cout << "|            Test CircularDoublyLinkedList Search               |" << endl;
     cout << "|                       测试双向链表查找                      |" << endl << endl << endl;
 
     CircularDoublyLinkedList<int>* double_list;
@@ -183,11 +214,10 @@ void CircularDoublyLinkedListTest::TestSearch() {
 
 
 void CircularDoublyLinkedListTest::TestGetNode() {
-
-    cout<<endl;
-    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|               Test CircularDoublyLinkedList Search               |"<<endl;
-    cout<<"|              测试双向循环链表获取结点(向next方向)              |"<<endl<<endl<<endl;
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|            Test CircularDoublyLinkedList GetNode          |" << endl;
+    cout << "|                    测试双向循环链表获取结点                   |" << endl << endl << endl;
 
     CircularDoublyLinkedList<int>* circular_doubly_linked_list = new CircularDoublyLinkedList<int>();
 
@@ -204,17 +234,16 @@ void CircularDoublyLinkedListTest::TestGetNode() {
     CircularDoublyLinkedNode<int>* pos7_node = circular_doubly_linked_list->GetNode(7);
     CircularDoublyLinkedNode<int>* pos0_node = circular_doubly_linked_list->GetNode(0);
 
-    cout << "pos1, node->data: " << pos1_node->data << endl;
-    cout << "pos4, node->data: " << pos4_node->data << endl;
-    cout << "pos7, node->data: " << pos7_node->data << endl;
-    cout << "pos0, node->data: " << pos0_node->data << endl;
+    cout << "Get position 1 node, node->data: " << pos1_node->data << endl;
+    cout << "Get position 4 node, node->data: " << pos4_node->data << endl;
+    cout << "Get position 7 node, node->data: " << pos7_node->data << endl;
+    cout << "Get position 0 node, node->data: " << pos0_node->data << endl;
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
 void CircularDoublyLinkedListTest::TestGetDataAndSetData() {
-
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|          Test CircularDoublyLinkedList Search And SetData        |" << endl;

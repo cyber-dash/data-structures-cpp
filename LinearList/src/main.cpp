@@ -15,6 +15,7 @@ using namespace std;
 
 int main() {
 
+    /*
 	SeqListTest::TestInsert();
 
 	SeqListTest::TestSize();
@@ -64,6 +65,7 @@ int main() {
 	CircularDoublyLinkedListTest::TestLength();
 
     CircularDoublyLinkedListTest::TestGetNode();
+    */
 
 	CircularDoublyLinkedListTest::TestEmpty();
 
