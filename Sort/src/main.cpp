@@ -31,5 +31,7 @@ int main() {
 
 	TestRadixSort();
 
+    TestRadixSortForArray();
+
 	return 0;
 }

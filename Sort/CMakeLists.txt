@@ -11,8 +11,8 @@ add_executable(main
         src/merge_sort.h
         src/quick_sort.h
         src/selection_sort.h
-        src/radix_sort.h
+        src/radix_sort_for_linked_list.h
         src/util.h
         src/main.cpp
         src/test.cpp
-        src/test.h)
+        src/test.h src/radix_sort.h src/radix_sort.h)
