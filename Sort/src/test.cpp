@@ -290,7 +290,7 @@ void TestRadixSortForArray() {
     cout << "排序前:" << endl;
     PrintArray<int>(array, array_size);
 
-    RadixSortForArray(array, array_size);
+    RadixSort(array, array_size);
 
     cout << "排序后:" << endl;
     PrintArray<int>(array, array_size);
