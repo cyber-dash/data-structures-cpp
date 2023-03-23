@@ -7,7 +7,8 @@
 
 
 #include <iostream>
-#include "min_heap.h"
+// #include "min_heap.h"
+#include <queue>
 
 
 using namespace std;
@@ -30,6 +31,11 @@ struct HuffmanTreeNode {
 };
 
 
+template<typename TWeight>
+bool operator < (const HuffmanTreeNode<TWeight>& node1, const HuffmanTreeNode<TWeight>& node2) {
+    return node1.weight > node2.weight;
+}
+
 template <class TWeight>
 class HuffmanTree {
 public:
@@ -48,25 +54,29 @@ protected:
 
 template <class TWeight>
 HuffmanTree<TWeight>::HuffmanTree(const TWeight* weight, int n) {
-    MinHeap<HuffmanTreeNode<TWeight> > hp;
+
+    std::priority_queue<HuffmanTreeNode<TWeight> > min_queue;
 
     for (int i = 0; i < n; i++) {
         HuffmanTreeNode<TWeight>* work = new HuffmanTreeNode<TWeight>(weight[i], NULL, NULL, NULL);
         work->parent = work;
-        hp.Insert(*work);
+
+        min_queue.push(*work);
     }
 
     HuffmanTreeNode<TWeight>* parent = NULL;
     for (int i = 0; i < n - 1; i++) {
-        HuffmanTreeNode<TWeight> temp;
 
-        hp.RemoveMin(temp);
+        HuffmanTreeNode<TWeight> temp = min_queue.top();
+        min_queue.pop();
         HuffmanTreeNode<TWeight>* first = temp.parent;
-        hp.RemoveMin(temp);
+
+        temp = min_queue.top();
+        min_queue.pop();
         HuffmanTreeNode<TWeight>* second = temp.parent;
 
         mergeTree(first, second, parent);
-        hp.Insert(*parent);
+        min_queue.push(*parent);
     }
 
     root_ = parent;
