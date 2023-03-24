@@ -46,7 +46,7 @@ public:
 
     unordered_map<TKey, string> GetHuffmanCode();
 
-	void PrintTree() { PrintSubTree_(root_); }
+	void PrintTree() { PrintSubTree_(root_); cout << endl; }
 
 protected:
 	HuffmanTreeNode<TKey, TWeight>* root_;
@@ -108,7 +108,7 @@ void HuffmanTree<TKey, TWeight>::MergeTree_(HuffmanTreeNode<TKey, TWeight>* ht1,
                                             HuffmanTreeNode<TKey, TWeight>* ht2,
                                             HuffmanTreeNode<TKey, TWeight>*& parent)
 {
-    TKey key(NULL);
+    TKey key;
     parent = new HuffmanTreeNode<TKey, TWeight>(key, ht1->weight + ht2->weight, ht1, ht2, NULL);
 
     parent->parent = parent;
@@ -136,8 +136,6 @@ template <typename TKey, typename TWeight>
 unordered_map<TKey, string> HuffmanTree<TKey, TWeight>::GetHuffmanCode() {
     unordered_map<TKey, string> huffmanCodes;
 
-    // TKey key(NULL);
-    // GetHuffmanCodeOfSubTree_(root_, "", huffmanCodes);
     GetHuffmanCodeOfSubTree_(root_, "", huffmanCodes);
 
     return huffmanCodes;
@@ -158,13 +156,11 @@ void HuffmanTree<TKey, TWeight>::GetHuffmanCodeOfSubTree_(HuffmanTreeNode<TKey, 
         return;
     }
 
-    string a("0");
-    // GetHuffmanCodeOfSubTree_(node->left_child, code + "0", huffmanCodes);
-    GetHuffmanCodeOfSubTree_(node->left_child, code + a, huffmanCodes);
+    string str_zero("0");
+    GetHuffmanCodeOfSubTree_(node->left_child, code + str_zero, huffmanCodes);
 
-    string b("1");
-    // GetHuffmanCodeOfSubTree_(node->right_child, code + "1", huffmanCodes);
-    GetHuffmanCodeOfSubTree_(node->right_child, code + b, huffmanCodes);
+    string str_one("1");
+    GetHuffmanCodeOfSubTree_(node->right_child, code + str_one, huffmanCodes);
 }
 
 
