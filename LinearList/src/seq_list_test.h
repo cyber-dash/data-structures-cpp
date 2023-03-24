@@ -35,8 +35,6 @@ public:
     static void TestEmpty();
     /*! @brief 测试搜索 */
     static void TestSearch();
-    /*! @brief 测试定位 */
-    static void TestLocate();
     /*! @brief 测试获取数据 */
     static void TestGetData();
     /*! @brief 测试设置数据 */
@@ -188,30 +186,6 @@ void SeqListTest::TestSearch() {
     int pos = seq_list.Search(num3);
 
     cout << "The pos of " << num3 << " is " << pos << endl;
-
-    cout << "-------------------------------------------------------------" << endl << endl;
-}
-
-
-void SeqListTest::TestLocate() {
-    cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList GetNodeByDirection                     " << endl;
-    cout << "                        测试顺序表Locate                       " << endl << endl << endl;
-
-    SeqList<double> seq_list(3);
-
-    double num1 = 1.1;
-    double num2 = 2.2;
-    double num3 = 3.3;
-
-    seq_list.Insert(0, num1);
-    seq_list.Insert(1, num2);
-    seq_list.Insert(2, num3);
-
-    int pos = seq_list.Locate(2);
-
-    cout << "The pos is: " << pos << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }

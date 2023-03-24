@@ -15,7 +15,6 @@ using namespace std;
 
 int main() {
 
-    /*
 	SeqListTest::TestInsert();
 
 	SeqListTest::TestSize();
@@ -38,6 +37,7 @@ int main() {
 
 	SeqListTest::TestIntersection();
 
+    /*
     DoublyLinkedListTest::TestInsert();
 
     DoublyLinkedListTest::TestRemove();
@@ -67,6 +67,7 @@ int main() {
     CircularDoublyLinkedListTest::TestGetNode();
     */
 
+    /*
 	CircularDoublyLinkedListTest::TestEmpty();
 
 	CircularDoublyLinkedListTest::TestSearch();
@@ -88,6 +89,7 @@ int main() {
     StaticLinkedListTest::TestSearch();
 
     StaticLinkedListTest::TestRemove();
+	*/
 
 	return 0;
 }

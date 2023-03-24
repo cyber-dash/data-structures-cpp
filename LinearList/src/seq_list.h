@@ -48,9 +48,6 @@ public:
     // 搜索
     int Search(TData& data) const;
 
-    // 定位
-    int Locate(int pos) const;
-
     // 获取位置pos的数据
     bool GetData(int pos, TData& data) const;
 
@@ -58,7 +55,7 @@ public:
     bool SetData(int pos, const TData& data);
 
     // 位置pos插入数据data
-    bool Insert(int pos, const TData& data);
+    bool Insert(int prev_pos, const TData& data);
 
     // 删除位置pos的数据
     bool Remove(int pos, TData& data);
@@ -224,40 +221,21 @@ int SeqList<TData>::Search(TData& data) const {
 
 
 /*!
- * @brief 定位
- * @tparam TData 类型模板参数
- * @param pos 第pos个
- * @return 位置pos
- * @note
- * pos是以1为起始, 不同于数组以0开始
- */
-template<class TData>
-int SeqList<TData>::Locate(int pos) const {
-    if (pos >= 1 && pos <= last_index_ + 1) {
-        return pos;
-    }
-    else {
-        return 0;
-    }
-}
-
-
-/*!
  * @brief 获取位置pos的数据
  * @tparam TData 类型模板参数
  * @param pos 位置pos
  * @param data 数据(用于保存数据项)
- * @return 是否获取成功
+ * @return 执行结果
  */
 template<class TData>
 bool SeqList<TData>::GetData(int pos, TData& data) const {
-    if (pos > 0 && pos <= last_index_ + 1) {
-        data = mem_data_[pos - 1];
-        return true;
-    }
-    else {
+    if (pos <= 0 || pos > last_index_ + 1) {
         return false;
     }
+
+    data = mem_data_[pos - 1];
+
+    return true;
 }
 
 
@@ -268,50 +246,61 @@ bool SeqList<TData>::GetData(int pos, TData& data) const {
  * @param data 数据
  * @return 是否设置成功
  */
-template<class TData>
+template<typename TData>
 bool SeqList<TData>::SetData(int pos, const TData& data) {
-    if (pos > 0 && pos <= last_index_ + 1) {
-        mem_data_[pos - 1] = data;
-        return true;
-    }
-    else {
+    if (pos <= 0 || pos > last_index_ + 1) {
         return false;
     }
+
+    mem_data_[pos - 1] = data;
+
+    return true;
 }
 
 
 /*!
- * @brief 插入结点
- * @param pos 位置pos
+ * @brief **插入结点**
+ * @param prev_pos 插入位置的前一位置
  * @param data 数据项值
- * @return 是否成功
+ * @return 执行结果
  * @note
  * 插入结点
  * -------
  * -------
  *
- * todo: 参数改为prev_pos
- *
- * -------
  * 区别于数组, 以1开始\n
  * 当pos为0时, 表示插入位置1
+ *
+ * -------
+ * + **1 非法情况判断**\n
+ * **if** last_index_等于size_ - 1 :\n
+ * &emsp; 返回false\n
+ * **if** prev_pos < 0 或者 prev_pos > last_index_ + 1 :\n
+ * &emsp; 返回false\n
+ * + **2 插入**\n
+ * **for loop** 遍历mem_data_数组索引, 从last_index_到prev_pos :\n
+ * &emsp; mem_data_[i + 1]等于mem_data_[i](前一位置元素)\n
+ * 参数data赋值给mem_data_[prev_pos]\n
+ * last_index_加1\n
+ * + **3 退出函数**\n
+ * 返回true\n
  */
 template<class TData>
-bool SeqList<TData>::Insert(int pos, const TData& data) {
+bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
 
     if (last_index_ == size_ - 1) {
         return false;
     }
 
-    if (pos < 0 || pos > last_index_ + 1) {
+    if (prev_pos < 0 || prev_pos > last_index_ + 1) {
         return false;
     }
 
-    for (int i = last_index_; i >= pos; i--) {
+    for (int i = last_index_; i >= prev_pos; i--) {
         mem_data_[i + 1] = mem_data_[i];
     }
 
-    mem_data_[pos] = data;
+    mem_data_[prev_pos] = data;
 
     last_index_++;
 
@@ -320,24 +309,43 @@ bool SeqList<TData>::Insert(int pos, const TData& data) {
 
 
 /*!
- * @brief 删除位置pos的数据
- * @tparam TData 类型模板参数
- * @param pos 位置pos
- * @param remove_data 被删除的数据项
- * @return 是否删除成功
+ * @brief **删除结点**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 删除结点
+ * ------
+ * ------
+ *
+ * ------
+ * + **1 非法情况判断**\n
+ * **if** last_index_等于-1 :\n
+ * &emsp; 返回false\n
+ * **if** deletion_pos < 1 或者 deletion_pos > Length() :\n
+ * &emsp; 返回false\n
+ * + **2 保存被删除元素的数据项**\n
+ * mem_data_[deletion_pos - 1]赋给参数data\n
+ * + **3 删除**\n
+ * **for loop** 遍历mem_data_索引deletion_pos到last_index_ :\n
+ * &emsp; mem_data_[i - 1] <--- mem_data_[i]\n
+ * last_index_减1\n
+ * + **4 退出函数**\n
+ * 返回true\n
  */
-template<class TData>
-bool SeqList<TData>::Remove(int deletion_pos, TData& remove_data) {
+template<typename TData>
+bool SeqList<TData>::Remove(int deletion_pos, TData& data) {
 
     if (last_index_ == -1) {
         return false;
     }
 
-    if (deletion_pos < 1 || deletion_pos > last_index_ + 1) {
+    if (deletion_pos < 1 || deletion_pos > this->Length()) {
         return false;
     }
 
-    remove_data = mem_data_[deletion_pos - 1];
+    data = mem_data_[deletion_pos - 1];
 
     for (int i = deletion_pos; i <= last_index_; i++) {
         mem_data_[i - 1] = mem_data_[i];
@@ -350,50 +358,85 @@ bool SeqList<TData>::Remove(int deletion_pos, TData& remove_data) {
 
 
 /*!
- * @brief 是否为空表
- * @tparam TData 类型模板参数
- * @return 是否为空
+ * @brief **判断是否为空表**
+ * @tparam TData 数据项类型模板参数
+ * @return 是否为空表
+ * @note
+ * 判断是否为空表
+ * -------------
+ * -------------
+ * 
+ * -------------
+ * **if** last_index_为-1 :\n
+ * &emsp; 返回true\n
+ * 返回false\n
  */
-template<class TData>
+template<typename TData>
 bool SeqList<TData>::IsEmpty() const {
     if (last_index_ == -1) {
         return true;
     }
-    else {
-        return false;
-    }
+
+    return false;
 }
 
 
 /*!
- * @brief 顺序表是否满
- * @tparam TData 类型模板参数
- * @return 是否满
+ * @brief **判断是否满表**
+ * @tparam TData 数据项类型模板参数
+ * @return 是否满表
+ * @note
+ * 判断是否满表
+ * -----------
+ * -----------
+ * 
+ * -----------
+ * **if** last_index_为size_ - 1 :\n
+ * &emsp; 返回true\n
+ * 返回false\n
  */
 template<class TData>
 bool SeqList<TData>::IsFull() const {
     if (last_index_ == size_ - 1) {
         return true;
     }
-    else {
-        return false;
-    }
+
+    return false;
 }
 
 
 /*!
- * @brief 赋值运算符重载函数
- * @tparam TData 类型模板参数
+ * @brief **重载=**
+ * @tparam TData 数据项类型模板参数
  * @param seq_list 顺序表
  * @return 顺序表引用
+ * @note
+ * 重载=
+ * ----
+ * ----
+ * 
+ * ----
+ * + **1 自身赋值处理**\n
+ * + **2 复制**\n
+ * size_复制\n
+ * 变量length, 取seq_list.Length()\n
+ * **for loop** 遍历seq_list :\n
+ * &emsp; 取seq_list当前元素数据项, 赋给curData\n
+ * &emsp; curData赋给this的当前位置元素\n
+ * + **3 退出函数**\n
+ * 返回*this\n
  */
 template<class TData>
 SeqList<TData>& SeqList<TData>::operator=(const SeqList<TData>& seq_list) {
 
-    this->size_ = seq_list.Size();
-    int p_length = seq_list.Length();
+    if (&seq_list == this) {
+        return *this;
+    }
 
-    for (int i = 0; i < p_length; i++) {
+    this->size_ = seq_list.Size();
+    int length = seq_list.Length();
+
+    for (int i = 0; i < length; i++) {
         int curData;
         seq_list.GetData(i, curData);
 
@@ -434,14 +477,13 @@ template<class TData>
 void SeqList<TData>::Print() {
 
     if (last_index_ == -1) {
-        cout << "顺序表为空表:" << endl;
-    }
-    else {
-        for (int i = 0; i <= last_index_; i++) {
-            cout << "#" << i + 1 << ":" << mem_data_[i] << endl;
-        }
+        cout << "顺序表为空表" << endl;
+        return;
     }
 
+    for (int i = 0; i <= last_index_; i++) {
+        cout << "#" << i + 1 << ":" << mem_data_[i] << endl;
+    }
 }
 
 
