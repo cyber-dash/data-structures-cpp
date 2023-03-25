@@ -18,7 +18,7 @@ public:
 private:
     ThreadedNode<T>* root_;
     // 子树创建后续线索
-    // void CreateSubPostOrderThread_(ThreadedNode<T>*& node, ThreadedNode<T>*& post_node);
+    // void CreateSubPostOrderThread_(ThreadedNode<TData>*& node, ThreadedNode<TData>*& post_node);
     // 子树创建后序线索
     void CreatePostOrderThread_(ThreadedNode<T>*& node, ThreadedNode<T>*& pre_node);
 };
@@ -61,12 +61,12 @@ void PostorderThreadedBinaryTree<T>::CreatePostOrderThread_(ThreadedNode<T>*& no
 
     if (node->left_child == NULL) {
         node->left_child = pre_node;
-        node->left_tag = IS_THREAD_NODE;
+        node->left_tag = THREADED_NODE_POINTER;
     }
 
     if (pre_node != NULL && pre_node->right_child == NULL) {
         pre_node->right_child = node;
-        pre_node->right_tag = IS_THREAD_NODE;
+        pre_node->right_tag = THREADED_NODE_POINTER;
     }
 
     pre_node = node;

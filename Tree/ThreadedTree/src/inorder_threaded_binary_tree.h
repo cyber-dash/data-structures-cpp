@@ -1,5 +1,5 @@
 /*!
- * @file thread_tree.h
+ * @file inorder_threaded_binary_tree.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 线索树
  * @version 0.2.1
@@ -8,8 +8,8 @@
  *  CyberDash计算机考研
  */
 
-#ifndef CYBER_DASH_THREAD_TREE_H
-#define CYBER_DASH_THREAD_TREE_H
+#ifndef CYBER_DASH_INORDER_THREADED_BINARY_TREE_H
+#define CYBER_DASH_INORDER_THREADED_BINARY_TREE_H
 
 
 #include <iostream>
@@ -24,9 +24,9 @@ using namespace std;
 
 /*!
  * @brief 线索树模板类
- * @tparam T 类型模板参数
+ * @tparam TData 类型模板参数
  */
-template <class T>
+template <typename TData>
 class InorderThreadedBinaryTree {
 public:
     InorderThreadedBinaryTree(): root_(NULL) {}
@@ -35,58 +35,55 @@ public:
      * @brief 获取根节点指针
      * @return 根结点指针
      */
-    ThreadedNode<T>* Root() { return root_; }
+    ThreadedNode<TData>* Root() { return root_; }
 
     /*!
      * @brief 插入结点
      * @param data 数据
      * @return 是否插入成功
      */
-    bool Insert(const T& data) { return Insert_(root_, data);}
-
-    // 我们是CyberDash
-    void CyberDashShow();
+    bool Insert(const TData& data) { return Insert_(root_, data);}
 
     /* 中序线索树 */
 
     // 创建中序线索
     void CreateInOrderThread();
     // 中序线索第一个线索结点
-    ThreadedNode<T>* First(ThreadedNode<T>* node);
+    ThreadedNode<TData>* First(ThreadedNode<TData>* node);
     // 求(node为根的)当前二叉树的最后一个线索节点的节点指针
-    ThreadedNode<T>* Last(ThreadedNode<T>* node);
+    ThreadedNode<TData>* Last(ThreadedNode<TData>* node);
     // 中序线索下一个线索结点
-    ThreadedNode<T>* Next(ThreadedNode<T>* node);
+    ThreadedNode<TData>* Next(ThreadedNode<TData>* node);
     // 中序线索前一个线索结点
-    ThreadedNode<T>* Prior(ThreadedNode<T>* node);
+    ThreadedNode<TData>* Prior(ThreadedNode<TData>* node);
     // 中序线索父结点
-    ThreadedNode<T>* Parent(ThreadedNode<T>* node_ptr) { return Parent_(node_ptr); }
+    ThreadedNode<TData>* Parent(ThreadedNode<TData>* node_ptr) { return Parent_(node_ptr); }
     // 中序线索二叉树中序遍历
-    void InOrderTraverse(void (*visit)(ThreadedNode<T>* node_ptr));
+    void InOrderTraverse(void (*visit)(ThreadedNode<TData>* node_ptr));
     // 中序线索二叉树前序遍历
-    void PreOrderTraverse(void (*visit)(ThreadedNode<T>* node_ptr));
+    void PreOrderTraverse(void (*visit)(ThreadedNode<TData>* node_ptr));
     // 中序线索二叉树后序遍历
-    void PostOrderTraverse(void (*visit)(ThreadedNode<T> *p));
+    void PostOrderTraverse(void (*visit)(ThreadedNode<TData> *p));
     // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
-    ThreadedNode<T>* FindFirstNodeForPostOrderTraverse(ThreadedNode<T>* node_ptr);
+    ThreadedNode<TData>* FindFirstNodeForPostOrderTraverse(ThreadedNode<TData>* node_ptr);
     //
-    void InsertRight(ThreadedNode<T>* s, ThreadedNode<T> *r);
+    void InsertRight(ThreadedNode<TData>* s, ThreadedNode<TData> *r);
     //
-    void InsertLeft(ThreadedNode<T>* s, ThreadedNode<T> *r);
+    void InsertLeft(ThreadedNode<TData>* s, ThreadedNode<TData> *r);
     //
-    void DeleteRight(ThreadedNode<T>* s);
+    void DeleteRight(ThreadedNode<TData>* s);
     //
-    void DeleteLeft(ThreadedNode<T>* s);
+    void DeleteLeft(ThreadedNode<TData>* s);
 
 
 protected:
-    ThreadedNode<T>* root_;
+    ThreadedNode<TData>* root_;
     // 子树创建中序线索
-    void CreateSubInOrderThread_(ThreadedNode<T>*& node, ThreadedNode<T>*& pre_node);
+    void CreateSubInOrderThread_(ThreadedNode<TData>*& node, ThreadedNode<TData>*& pre_node);
     // 父节点指针
-    ThreadedNode<T>* Parent_(ThreadedNode<T>* node);
+    ThreadedNode<TData>* Parent_(ThreadedNode<TData>* node);
     // 子树插入
-    bool Insert_(ThreadedNode<T>*& node, const T& data);
+    bool Insert_(ThreadedNode<TData>*& node, const TData& data);
 };
 
 
@@ -104,7 +101,7 @@ ThreadedNode<T>* InorderThreadedBinaryTree<T>::First(ThreadedNode<T>* node) {
 
     while (cur != NULL &&
            cur->left_child != NULL &&
-           cur->left_tag == IS_CHILD)
+           cur->left_tag == CHILD_POINTER)
     {
         cur = cur->left_child;
     }
@@ -129,7 +126,7 @@ ThreadedNode<T>* InorderThreadedBinaryTree<T>::Next(ThreadedNode<T>* node) {
 
     ThreadedNode<T>* right_child = node->right_child;
 
-    if (right_child != NULL && node->right_tag == IS_CHILD) {
+    if (right_child != NULL && node->right_tag == CHILD_POINTER) {
         return First(right_child);
     }
 
@@ -151,7 +148,7 @@ ThreadedNode<T>* InorderThreadedBinaryTree<T>::Last(ThreadedNode<T> *node) {
 
     while (cur != NULL &&
            cur->right_child != NULL &&
-           cur->right_tag == IS_CHILD)
+           cur->right_tag == CHILD_POINTER)
     {
         cur = cur->right_child;
     }
@@ -170,7 +167,7 @@ template <class T>
 ThreadedNode<T>* InorderThreadedBinaryTree<T>::Prior(ThreadedNode<T>* node) {
     ThreadedNode<T>* left_child = node->left_child;
 
-    if (node->left_tag == IS_CHILD) {
+    if (node->left_tag == CHILD_POINTER) {
         return Last(left_child);
     }
 
@@ -210,7 +207,7 @@ void InorderThreadedBinaryTree<T>::CreateInOrderThread() {
     // 最后一个线索节点, 收尾工作
     if (pre_node_ptr != NULL) {
         pre_node_ptr->right_child = NULL;
-        pre_node_ptr->right_tag = IS_THREAD_NODE;
+        pre_node_ptr->right_tag = THREADED_NODE_POINTER;
     }
 }
 
@@ -243,7 +240,7 @@ void InorderThreadedBinaryTree<T>::CreateSubInOrderThread_(ThreadedNode<T>*& nod
     // 则将node_ptr->left_child_指向pre_node_ptr, 加入线索树
     if (node->left_child == NULL) {
         node->left_child = pre_node;
-        node->left_tag = IS_THREAD_NODE;
+        node->left_tag = THREADED_NODE_POINTER;
     }
 
     // (利用right_child_)
@@ -251,7 +248,7 @@ void InorderThreadedBinaryTree<T>::CreateSubInOrderThread_(ThreadedNode<T>*& nod
     // 则前一节点的right_child_指向node_ptr, 加入线索树
     if (pre_node != NULL && pre_node->right_child == NULL) {
         pre_node->right_child = node;
-        pre_node->right_tag = IS_THREAD_NODE;
+        pre_node->right_tag = THREADED_NODE_POINTER;
     }
 
     pre_node = node; // pre_node_ptr节点后移
@@ -277,12 +274,12 @@ void InorderThreadedBinaryTree<T>::PreOrderTraverse(void (*visit)(ThreadedNode<T
     while (cur != NULL) {
         visit(cur);
 
-        if (cur->left_tag == IS_CHILD) { // 若有左子女, 则为前序后继
+        if (cur->left_tag == CHILD_POINTER) { // 若有左子女, 则为前序后继
             cur = cur->left_child;
-        } else if (cur->right_tag == IS_CHILD) { // 否则若有右子女, 则为前序后继
+        } else if (cur->right_tag == CHILD_POINTER) { // 否则若有右子女, 则为前序后继
             cur = cur->right_child;
         } else { // 对于叶子结点, 沿着中序后继线索, 走到一个有右子女结点的结点, 这个右子女结点就是当前结点的前序后继结点
-            while (cur != NULL && cur->right_tag == IS_THREAD_NODE) {
+            while (cur != NULL && cur->right_tag == THREADED_NODE_POINTER) {
                 cur = cur->right_child;
             }
 
@@ -316,7 +313,7 @@ void InorderThreadedBinaryTree<T>::PostOrderTraverse(void (*visit)(ThreadedNode<
 
     while ((cur_parent = Parent_(cur)) != NULL) {
         if (cur_parent->right_child == cur ||  // 当前结点是父节点的右孩子
-            cur_parent->right_tag == IS_THREAD_NODE) // 当前结点是父节点左孩子, 并且父节点没有右孩子
+            cur_parent->right_tag == THREADED_NODE_POINTER) // 当前结点是父节点左孩子, 并且父节点没有右孩子
         {
             cur = cur_parent;
         } else {
@@ -342,10 +339,10 @@ ThreadedNode<T>* InorderThreadedBinaryTree<T>::FindFirstNodeForPostOrderTraverse
 
     ThreadedNode<T>* cur = node_ptr;
 
-    while (cur->left_tag == IS_CHILD || cur->right_tag == IS_CHILD) {
-        if (cur->left_tag == IS_CHILD) {
+    while (cur->left_tag == CHILD_POINTER || cur->right_tag == CHILD_POINTER) {
+        if (cur->left_tag == CHILD_POINTER) {
             cur = cur->left_child;
-        } else if (cur->right_tag == IS_CHILD) {
+        } else if (cur->right_tag == CHILD_POINTER) {
             cur = cur->right_child;
         }
     }
@@ -374,7 +371,7 @@ ThreadedNode<T>* InorderThreadedBinaryTree<T>::Parent_(ThreadedNode<T>* node) {
     /* 尝试路径1 */
     // 遍历至最左子节点
     ThreadedNode<T>* left_side_child = node;
-    while (left_side_child->left_tag == IS_CHILD) {
+    while (left_side_child->left_tag == CHILD_POINTER) {
         left_side_child = left_side_child->left_child;
     }
 
@@ -396,7 +393,7 @@ ThreadedNode<T>* InorderThreadedBinaryTree<T>::Parent_(ThreadedNode<T>* node) {
     /* 尝试路径2 */
     // 遍历至最右子节点
     ThreadedNode<T>* right_side_child = node;
-    while (right_side_child->right_tag == IS_CHILD) {
+    while (right_side_child->right_tag == CHILD_POINTER) {
         right_side_child = right_side_child->right_child;
     }
 
@@ -472,12 +469,12 @@ void InorderThreadedBinaryTree<T>::InsertRight(ThreadedNode<T>* s, ThreadedNode<
     r->right_tag = s->right_tag;
 
     r->left_child = s;
-    r->left_tag = IS_THREAD_NODE;
+    r->left_tag = THREADED_NODE_POINTER;
 
     s->right_child = r;
-    s->right_tag = IS_CHILD;
+    s->right_tag = CHILD_POINTER;
 
-    if (r->right_tag == IS_CHILD) {
+    if (r->right_tag == CHILD_POINTER) {
         ThreadedNode<T> *temp;
         temp = First(r->right_child);
         temp->left_child = r;
@@ -581,4 +578,4 @@ void InorderThreadedBinaryTree<T>::DeleteLeft(ThreadedNode<T> *s) {
 
 
 
-#endif //CYBER_DASH_THREAD_TREE_H
+#endif // CYBER_DASH_INORDER_THREADED_BINARY_TREE_H

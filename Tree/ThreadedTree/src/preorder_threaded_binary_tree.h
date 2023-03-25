@@ -41,7 +41,7 @@ void PreorderThreadedBinaryTree<T>::CreatePreOrderThread() {
 template <class T>
 ThreadedNode<T> *PreorderThreadedBinaryTree<T>::PreOrderNext(ThreadedNode<T>* node_ptr) {
 
-    if (node_ptr->left_tag != IS_THREAD_NODE) {
+    if (node_ptr->left_tag != THREADED_NODE_POINTER) {
         return node_ptr->left_child;
     }
 
@@ -52,7 +52,7 @@ ThreadedNode<T> *PreorderThreadedBinaryTree<T>::PreOrderNext(ThreadedNode<T>* no
 template <class T>
 ThreadedNode<T> *PreorderThreadedBinaryTree<T>::PreOrderPrior(ThreadedNode<T> *current) {
 
-    if (current->left_tag == IS_THREAD_NODE) {
+    if (current->left_tag == THREADED_NODE_POINTER) {
         return current->left_child;
     }
 
@@ -88,7 +88,7 @@ void PreorderThreadedBinaryTree<T>::CreateSubPreOrderThread_(ThreadedNode<T>*& n
     // 则将node_ptr->left_child_指向pre_node_ptr, 加入线索树
     if (node->left_child == NULL) {
         node->left_child = pre_node;
-        node->left_tag = IS_THREAD_NODE;
+        node->left_tag = THREADED_NODE_POINTER;
     }
 
     // (利用right_child_)
@@ -96,14 +96,14 @@ void PreorderThreadedBinaryTree<T>::CreateSubPreOrderThread_(ThreadedNode<T>*& n
     // 则前一节点的right_child_指向node_ptr, 加入线索树
     if (pre_node != NULL && pre_node->right_child == NULL) {
         pre_node->right_child = node;
-        pre_node->right_tag = IS_THREAD_NODE;
+        pre_node->right_tag = THREADED_NODE_POINTER;
     }
 
     pre_node = node; // pre_node_ptr节点后移
 
     // 左子树分治
     // CreateSubPreOrderThread_(node_ptr->left_child_, pre_node_ptr); // 左子树遍历
-    if (node->left_tag == IS_CHILD) {
+    if (node->left_tag == CHILD_POINTER) {
         CreateSubPreOrderThread_(node->left_child, pre_node); // 左子树遍历
     }
 
