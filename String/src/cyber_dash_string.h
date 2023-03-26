@@ -321,9 +321,7 @@ int String::BruteForceMatch(const String& pattern, int offset) const {
 
 /*!
  * @brief **求模式串next数组**
- * @param pattern 模式串
- * @param pattern_len 模式串长度
- * @return next数组首地址
+ * @return next数组
  */
 int* String::KmpNext() const {
 
@@ -337,40 +335,14 @@ int* String::KmpNext() const {
 
     while (i < this->length_) {
 
-        /// 使用next[0]处理next[1]
-        /// 当模式串字符pattern[1]失配时, 必然从pattern[0]开始重新进行匹配, 因此next[1] = 0
-        /// 此处逻辑可以和下面的pattern[i] == pattern[starting_index]分支逻辑合并
-        /// 因此next[0] = -1
-        /// 其余部分则相同(代码可以合并)
+        // 其余部分则相同(代码可以合并)
         if (starting_index == -1) {
             i++;
             starting_index++;
             if (i < this->length_) {
                 next[i] = starting_index;
             }
-        } else {    /// 使用next[i]求next[i + 1]
-            /// 如果pattern[i]和pattern[starting_index]相同, 则左右两侧的相同字符串区域扩展
-            /// 示例
-            ///  a b c d 5 6 a b c d 7
-            ///  a b
-            ///              a b
-            ///                  ^
-            ///                  |
-            ///
-            ///
-            /// i == 8, starting_index == 2
-            /// pattern[8] == pattern[2] == 'c', 走if( == )分支:
-            ///     8++ -> 9,
-            ///     starting_index++ -> 3
-            ///     next[9] == pattern[3]
-            ///
-            ///
-            ///  a b c d 5 6 a b c d 7
-            ///  a b c
-            ///              a b c
-            ///                    ^
-            ///                    |
-            ///
+        } else {
             if (this->mem_data_[i] == this->mem_data_[starting_index]) {
                 i++;
                 starting_index++;
@@ -386,16 +358,65 @@ int* String::KmpNext() const {
 
 
 /*!
- * @brief 求模式串的next数组(CyberDash版本)
- * @param pattern 模式串第一个字符串的指针
- * @param pattern_len 模式串长度
- * @return next数组起始地址
+ * @brief **求next数组(CyberDash版本)**
+ * @return next数组
+ * @note
+ * 求next数组(CyberDash版本)
+ * -----------------------
+ * -----------------------
+ *
+ * 1. <span style="color:#003153">为什么next[0] = -1, next[1] = 0 ?</span>\n
+ *
+ * A. 当pattern[1]失配时, 必然从pattern[0]开始重新进行匹配, 因此next[1] = 0\n
+ * B. 如果: next[i] = x && pattern[i] = pattern[x], 则: next[i + 1] = x + 1\n
+ *
+ * 因此:\n
+ * &emsp;&emsp; 令next[1] = next[0] + 1 = 0\n
+ * 得:\n
+ * &emsp;&emsp; next[0] = -1\n\n
+ * 2. <span style="color:#003153">demo</span>\n
+ * 遍历至i = 8, 此时starting_index = 2, 即<span style="color:#FF8100">next[8] = 2</span>\n
+ * ```
+ * a b c d 5 6 a b c d 7
+ * a b
+ *             a b
+ *                 ^
+ *                 |
+ *                 |
+ *
+ * ```
+ * 由于: \n
+ * &emsp; pattern[i] == pattern[starting_index] = 'c'\n
+ * 因此: \n
+ * &emsp; i加1, i = 9;\n
+ * &emsp; starting_index加1, starting_index = 3\n
+ * &emsp; next[i] = starting_index, 即<span style="color:#D40000">next[9] = 3</span>\n
+ * ```
+ * a b c d 5 6 a b c d 7
+ * a b c
+ *             a b c
+ *                   ^
+ *                   |
+ *                   |
+ *
+ * ```
+ *
+ * -----------------------
+ * + **1 初始化next数组**\n
+ * + **2 模式串长度为1的情况处理**\n
+ * + **3 设置next[1]**\n
+ * + **4 完成next数组设置**\n
+ * + **5 返回next数组**\n
  */
 int* String::KmpNextByCyberDash() const {
 
     int* next = new int[this->length_];
-
     next[0] = -1;
+
+    if (length_ == 1) {
+        return next;
+    }
+
     next[1] = 0;
 
     int i = 1;
@@ -409,7 +430,7 @@ int* String::KmpNextByCyberDash() const {
         } else {
             if (starting_index == 0) {
                 i++;
-                next[i] = starting_index;
+                next[i] = 0;
             } else {
                 starting_index = next[starting_index];
             }
@@ -420,12 +441,8 @@ int* String::KmpNextByCyberDash() const {
 }
 
 
-/*!
- * @brief 打印next数组
- * @param next_arr next数组
- * @param next_arr_len
- */
- /*
+/*
+// 打印next数组
 void String::PrintNextArray(const int* next_arr, int next_arr_len) {
     /// 示例
     /// 模式字符串:  a b c d 5 6 a b c d 7
@@ -435,7 +452,7 @@ void String::PrintNextArray(const int* next_arr, int next_arr_len) {
     }
     cout << endl;
 }
-  */
+*/
 
 
 /*!
