@@ -6,21 +6,18 @@
  * @date 2021-07-29
  */
 
-#ifndef CYBER_DASH_YUAN_STRING_H
-#define CYBER_DASH_YUAN_STRING_H
+#ifndef CYBER_DASH_STRING_H
+#define CYBER_DASH_STRING_H
 
 
 #include <iostream>
-#include <ostream>
-#include <istream>
 #include <cstdlib>
-#include <string>
 
 
 using namespace std;
 
 
-const int DEFAULT_SIZE = 128;
+const size_t DEFAULT_SIZE = 128;
 
 
 /*!
@@ -33,11 +30,10 @@ const int DEFAULT_SIZE = 128;
  * -------
  */
 class String {
-
 public:
-    explicit String(int size = DEFAULT_SIZE);   // 构造函数(字符串长度)
+    explicit String(size_t size = DEFAULT_SIZE);   // 构造函数(字符串长度)
     explicit String(const char* mem_data);      // 构造函数
-    String(const String& str);              // 复制构造函数
+    String(const String& str);                  // 复制构造函数
     ~String() { delete[] mem_data_; }           // 析构函数
 
     int Length() const { return this->length_; }
@@ -55,15 +51,14 @@ public:
     friend bool operator>(const String& str1, const String& str2);  // 重载>
     friend bool operator>=(const String& str1, const String& str2); // 重载>=
 
-    int BruteForceMatch(String& pattern, int offset) const;     // BF字符串匹配
-    int KmpMatch(String& pattern, int offset) const;            // KMP字符串匹配查找
-    int KmpMatchByCyberDash(String& pattern, int offset) const; // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
+    int BruteForceMatch(const String& pattern, int offset) const;     // BF字符串匹配
+    int KmpMatch(const String& pattern, int offset) const;            // KMP字符串匹配查找
+    int KmpMatchByCyberDash(const String& pattern, int offset) const; // KMP字符串匹配查找(使用KMPNextByCyberDash生成next数组)
+
+    int* KmpNext() const;              // 求next数组
+    int* KmpNextByCyberDash() const;   // 求next数组()
 
 private:
-    static int* KmpNext(const char* pattern, int pattern_len);              // 求next数组
-    static int* KmpNextByCyberDash(const char* pattern, int pattern_len);   // 求next数组()
-    static void PrintNextArray(const int* next_arr, int next_arr_len);
-
     char* mem_data_; //!< 字符串数组
     int length_;     //!< 当前字符串长度
     size_t size_;    //!< 最大长度
@@ -74,7 +69,7 @@ private:
  * @brief **构造函数**
  * @param size 字符串最大长度
  */
-String::String(int size) {
+String::String(size_t size) {
 
     this->mem_data_ = new char[size + 1];
     if (!this->mem_data_) {
@@ -302,7 +297,7 @@ bool operator<=(const String& str1, const String& str2) {
  * @param offset 目标串的起始偏移量
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
  */
-int String::BruteForceMatch(String& pattern, int offset) const {
+int String::BruteForceMatch(const String& pattern, int offset) const {
 
     int match_offset = -1;
     int pattern_idx;
@@ -325,26 +320,22 @@ int String::BruteForceMatch(String& pattern, int offset) const {
 
 
 /*!
- * @brief 求模式串的next数组
- * @param pattern 模式串第一个字符串的指针
+ * @brief **求模式串next数组**
+ * @param pattern 模式串
  * @param pattern_len 模式串长度
- * @return next数组起始地址
+ * @return next数组首地址
  */
-int* String::KmpNext(const char* pattern, int pattern_len) {
-
-    // 分配next数组内存
-    int* next = new int[pattern_len];
-    if (!next) {
-        throw bad_alloc();
-    }
+int* String::KmpNext() const {
 
     /// 设置next[0] = -1
     int i = 0;
     int starting_index = -1;
 
-    next[0] = starting_index;
+    // 分配next数组内存
+    int* next = new int[this->length_];
+    next[i] = starting_index;
 
-    while (i < pattern_len) {
+    while (i < this->length_) {
 
         /// 使用next[0]处理next[1]
         /// 当模式串字符pattern[1]失配时, 必然从pattern[0]开始重新进行匹配, 因此next[1] = 0
@@ -354,7 +345,9 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
         if (starting_index == -1) {
             i++;
             starting_index++;
-            next[i] = starting_index;
+            if (i < this->length_) {
+                next[i] = starting_index;
+            }
         } else {    /// 使用next[i]求next[i + 1]
             /// 如果pattern[i]和pattern[starting_index]相同, 则左右两侧的相同字符串区域扩展
             /// 示例
@@ -378,7 +371,7 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
             ///                    ^
             ///                    |
             ///
-            if (pattern[i] == pattern[starting_index]) {
+            if (this->mem_data_[i] == this->mem_data_[starting_index]) {
                 i++;
                 starting_index++;
                 next[i] = starting_index;
@@ -398,12 +391,9 @@ int* String::KmpNext(const char* pattern, int pattern_len) {
  * @param pattern_len 模式串长度
  * @return next数组起始地址
  */
-int* String::KmpNextByCyberDash(const char* pattern, int pattern_len) {
+int* String::KmpNextByCyberDash() const {
 
-    int* next = new int[pattern_len];
-    if (!next) {
-        throw bad_alloc();
-    }
+    int* next = new int[this->length_];
 
     next[0] = -1;
     next[1] = 0;
@@ -411,8 +401,8 @@ int* String::KmpNextByCyberDash(const char* pattern, int pattern_len) {
     int i = 1;
     int starting_index = 0;
 
-    while (i < pattern_len) {
-        if (pattern[i] == pattern[starting_index]) {
+    while (i < length_) {
+        if (this->mem_data_[i] == this->mem_data_[starting_index]) {
             i++;
             starting_index++;
             next[i] = starting_index;
@@ -435,6 +425,7 @@ int* String::KmpNextByCyberDash(const char* pattern, int pattern_len) {
  * @param next_arr next数组
  * @param next_arr_len
  */
+ /*
 void String::PrintNextArray(const int* next_arr, int next_arr_len) {
     /// 示例
     /// 模式字符串:  a b c d 5 6 a b c d 7
@@ -444,52 +435,75 @@ void String::PrintNextArray(const int* next_arr, int next_arr_len) {
     }
     cout << endl;
 }
+  */
 
 
 /*!
- * @brief KMP字符串匹配查找
+ * @brief **KMP字符串匹配**
  * @param pattern 模式串
- * @param offset 目标串的起始偏移量
- * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
+ * @param offset 目标串偏移量
+ * @return 匹配位置索引
  * @note
+ * KMP字符串匹配
+ * ------------
+ * ------------
+ *
+ * 返回值为-1, 则为不匹配
+ *
+ * ------------
+ * + **1 生成模式串的next数组**\n
+ * pattern调用KmpNext, 获取next数组\n
+ * **if** next为NULL :\n
+ * &emsp; 抛出bad_alloc()\n\n
+ * + **2 使用next数组执行匹配**\n
+ * 初始化pattern_idx<span style="color:#FF8100">(模式串遍历索引)</span>为0\n
+ * 初始化target_idx<span style="color:#FF8100">(目标串遍历索引)</span>为offset\n\n
+ * **while loop** 模式串未遍历完 <b>&&</b> 目标串未遍历完 :\n
+ * &emsp; **if** 当前模式串字符 == 当前目标串字符 :\n
+ * &emsp;&emsp; pattern_idx向后移动1位\n
+ * &emsp;&emsp; target_idx向后移动1位\n
+ * &emsp; **else** (当前模式串字符 != 当前目标串字符) :\n
+ * &emsp;&emsp; **if** 模式串首个字符不匹配 :\n
+ * &emsp;&emsp;&emsp; target_idx向后移动1位\n
+ * &emsp;&emsp; **else** (模式串非首个字符不匹配) :\n
+ * &emsp;&emsp;&emsp; pattern_idx <--- next[pattern_idx]\n\n
+ * + **3 计算首字符匹配的索引**\n
+ * 初始化match_idx为-1\n
+ * **if** pattern_idx等于模式串长度(成功匹配) :\n
+ * &emsp; match_idx <--- target_idx - pattern.Length()\n\n
+ * + **4 返回结果**\n
+ * 返回match_idx\n
  */
-int String::KmpMatch(String& pattern, int offset) const {
+int String::KmpMatch(const String& pattern, int offset) const {
 
-    int pattern_len = pattern.Length();
-    int* next = KmpNext(pattern.mem_data_, pattern_len);
+    int* next = pattern.KmpNext();
     if (!next) {
         throw bad_alloc();
     }
 
-    cout<<"模式串: "<<pattern<<endl<<"对应的next数组: ";
-    PrintNextArray(next, pattern_len); // show the next array
+    int pattern_idx = 0;
+    int target_idx = offset;
 
-    int pattern_str_i = 0;      // 模式串起始位置
-    int target_str_i = offset;  // 目标串起始位置
-
-    while (pattern_str_i < pattern_len && target_str_i < this->length_) {
-        /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)相同, 则向后移位
-        if (pattern[pattern_str_i] == this->mem_data_[target_str_i]) {
-            pattern_str_i++;
-            target_str_i++;
-        } else {    /// 如果模式串字符(位置pattern_str_i)和目标串字符(位置target_str_i)不同
-            if (pattern_str_i == 0) {   // 如果是模式串第1个字符不匹配, 则目标串向后移位
-                target_str_i++;
-            } else {  // 如果不是模式串第1个字符不匹配, 则从模式串的next[pattern_str_i]开始执行下一趟匹配
-                pattern_str_i = next[pattern_str_i];
+    while (pattern_idx < pattern.Length() && target_idx < this->length_) {
+        if (pattern[pattern_idx] == this->mem_data_[target_idx]) {
+            pattern_idx++;
+            target_idx++;
+        } else {
+            if (pattern_idx == 0) {
+                target_idx++;
+            } else {
+                pattern_idx = next[pattern_idx];
             }
         }
     }
 
-    int match_pos;
+    int match_idx = -1;
 
-    if (pattern_str_i < pattern_len) {
-        match_pos = -1; // 不匹配
-    } else {
-        match_pos = target_str_i - pattern_len; // 算出目标串中匹配的第一个字符的(在目标串中的)位置
+    if (pattern_idx == pattern.Length()) {
+        match_idx = target_idx - pattern.Length();
     }
 
-    return match_pos;
+    return match_idx;
 }
 
 
@@ -500,38 +514,35 @@ int String::KmpMatch(String& pattern, int offset) const {
  * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
  * @note
  */
-int String::KmpMatchByCyberDash(String& pattern, int offset) const {
+int String::KmpMatchByCyberDash(const String& pattern, int offset) const {
 
-    int match_pos;
+    int match_idx;
 
-    int pattern_len = pattern.Length();
-    int* next = KmpNextByCyberDash(pattern.mem_data_, pattern_len);
-    // PrintNextArray(next, pattern_len);
+    int* next = pattern.KmpNextByCyberDash();
     if (!next) {
-        cerr << "next array allocation error" << endl;
-        return -2;
+        throw bad_alloc();
     }
 
-    int pattern_index = 0;
-    int target_str_index = offset;
+    int pattern_idx = 0;
+    int target_idx = offset;
 
-    while (pattern_index < pattern_len && target_str_index < length_) {
-        if (pattern_index == -1 || pattern[pattern_index] == mem_data_[target_str_index]) {
-            pattern_index++;
-            target_str_index++;
+    while (pattern_idx < pattern.Length() && target_idx < length_) {
+        if (pattern_idx == -1 || pattern[pattern_idx] == mem_data_[target_idx]) {
+            pattern_idx++;
+            target_idx++;
         } else {
-            pattern_index = next[pattern_index];
+            pattern_idx = next[pattern_idx];
         }
     }
 
-    if (pattern_index < pattern_len) {
-        match_pos = -1;
+    if (pattern_idx < pattern.Length()) {
+        match_idx = -1;
     } else {
-        match_pos = target_str_index - pattern_len;
+        match_idx = target_idx - pattern.Length();
     }
 
-    return match_pos;
+    return match_idx;
 }
 
 
-#endif // CYBER_DASH_YUAN_STRING_H
+#endif // CYBER_DASH_STRING_H
