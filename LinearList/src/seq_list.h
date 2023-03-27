@@ -240,9 +240,9 @@ bool SeqList<TData>::GetData(int pos, TData& data) const {
 
 
 /*!
- * @brief 设置位置pos的数据
- * @tparam TData 类型模板参数
- * @param pos 位置pos
+ * @brief 设置数据项
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
  * @param data 数据
  * @return 是否设置成功
  */
