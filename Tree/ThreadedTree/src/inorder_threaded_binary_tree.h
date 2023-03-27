@@ -43,7 +43,7 @@ public:
     /* 中序线索树 */
 
     // 创建中序线索
-    void CreateInorderThreadRecursive();
+    void CreateThreadRecursive();
     // 中序线索第一个线索结点
     ThreadedNode<TData>* First(ThreadedNode<TData>* subtree_root);
     // 求(node为根的)当前二叉树的最后一个线索节点的节点指针
@@ -63,12 +63,10 @@ public:
     // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
     ThreadedNode<TData>* GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* node);
 
-
-
 protected:
     ThreadedNode<TData>* root_;
     // 子树创建中序线索
-    void CreateInorderThreadInSubtreeRecursive_(ThreadedNode<TData>*& subtree_root, ThreadedNode<TData>*& pre_node);
+    void CreateThreadInSubtreeRecursive_(ThreadedNode<TData>*& subtree_root, ThreadedNode<TData>*& pre_node);
     // 父节点指针
     ThreadedNode<TData>* Parent_(ThreadedNode<TData>* node);
     // 子树插入
@@ -241,7 +239,7 @@ void InorderThreadedBinaryTree<TData>::InorderTraverse(void (*visit)(ThreadedNod
  * pre_node->right_tag属性, 设为THREADED_NODE_POINTER(线索结点指针)\n
  */
 template <typename TData>
-void InorderThreadedBinaryTree<TData>::CreateInorderThreadRecursive() {
+void InorderThreadedBinaryTree<TData>::CreateThreadRecursive() {
 
     if (root_ == NULL) {
         return;
@@ -249,7 +247,7 @@ void InorderThreadedBinaryTree<TData>::CreateInorderThreadRecursive() {
 
     ThreadedNode<TData>* pre_node = NULL;
 
-    CreateInorderThreadInSubtreeRecursive_(root_, pre_node);
+    CreateThreadInSubtreeRecursive_(root_, pre_node);
 
     // 最后一个线索节点, 收尾工作
     pre_node->right_child = NULL;
@@ -288,14 +286,14 @@ void InorderThreadedBinaryTree<TData>::CreateInorderThreadRecursive() {
  * 对右子树递归创建线索\n
  */
 template <typename TData>
-void InorderThreadedBinaryTree<TData>::CreateInorderThreadInSubtreeRecursive_(ThreadedNode<TData>*& subtree_root,
-                                                                              ThreadedNode<TData>*& pre_node) {
+void InorderThreadedBinaryTree<TData>::CreateThreadInSubtreeRecursive_(ThreadedNode<TData>*& subtree_root,
+                                                                       ThreadedNode<TData>*& pre_node) {
 
     if (subtree_root == NULL) {
         return;
     }
 
-    CreateInorderThreadInSubtreeRecursive_(subtree_root->left_child, pre_node);
+    CreateThreadInSubtreeRecursive_(subtree_root->left_child, pre_node);
 
     if (subtree_root->left_child == NULL) {
         subtree_root->left_child = pre_node;
@@ -309,7 +307,7 @@ void InorderThreadedBinaryTree<TData>::CreateInorderThreadInSubtreeRecursive_(Th
 
     pre_node = subtree_root;
 
-    CreateInorderThreadInSubtreeRecursive_(subtree_root->right_child, pre_node);
+    CreateThreadInSubtreeRecursive_(subtree_root->right_child, pre_node);
 }
 
 

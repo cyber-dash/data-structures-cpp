@@ -38,7 +38,7 @@ void TestFirst() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     ThreadedNode<int>* root_ptr = inorder_threaded_tree.Root();
 
@@ -75,7 +75,7 @@ void TestLast() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     ThreadedNode<int>* root_ptr = inorder_threaded_tree.Root();
 
@@ -112,7 +112,7 @@ void TestNext() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     ThreadedNode<int>* first_node_ptr = inorder_threaded_tree.First(inorder_threaded_tree.Root());
 
@@ -155,7 +155,7 @@ void TestPrior() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     node_ptr_array[0] = inorder_threaded_tree.First(inorder_threaded_tree.Root());
 
@@ -200,7 +200,7 @@ void TestParent() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     ThreadedNode<int>* root_ptr = inorder_threaded_tree.Root();
     ThreadedNode<int>* root_parent_ptr = inorder_threaded_tree.Parent(root_ptr);
@@ -247,7 +247,7 @@ void TestInOrderTraverseOfInOrderThread() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     cout<<"中序线索树, 中序遍历: "<<endl;
     inorder_threaded_tree.InorderTraverse(visit);
@@ -280,7 +280,7 @@ void TestPreOrderTraverseOfInOrderThread() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     cout<<"中序线索树, 前序遍历: "<<endl;
     inorder_threaded_tree.PreorderTraverse(visit);
@@ -313,7 +313,7 @@ void TestPostOrderTraverseOfInOrderThread() {
         inorder_threaded_tree.Insert(i);
     }
 
-    inorder_threaded_tree.CreateInorderThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();
 
     cout<<"中序线索树, 后序遍历: "<<endl;
     inorder_threaded_tree.PostOrderTraverse(visit);

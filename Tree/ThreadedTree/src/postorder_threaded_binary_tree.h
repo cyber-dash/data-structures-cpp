@@ -13,20 +13,18 @@
 #include "threaded_node.h"
 
 
-template <class T>
+template <typename TData>
 class PostorderThreadedBinaryTree {
 public:
     PostorderThreadedBinaryTree() : root_(NULL) {}
     // 创建前序线索
-    void CreatePostThread();
-    ThreadedNode<T>* PostOrderNext(ThreadedNode<T>* node_ptr);
-    ThreadedNode<T>* PostOrderPrior(ThreadedNode<T> *current);
+    void CreateThreadRecursive();
+    ThreadedNode<TData>* Next(ThreadedNode<TData>* node);
+    ThreadedNode<TData>* Pre(ThreadedNode<TData>* node);
 private:
-    ThreadedNode<T>* root_;
-    // 子树创建后续线索
-    // void CreateSubPostOrderThread_(ThreadedNode<TData>*& node, ThreadedNode<TData>*& post_node);
+    ThreadedNode<TData>* root_;
     // 子树创建后序线索
-    void CreatePostOrderThread_(ThreadedNode<T>*& node, ThreadedNode<T>*& pre_node);
+    void CreateThreadInSubtreeRecursive_(ThreadedNode<TData>*& node, ThreadedNode<TData>*& pre_node);
 };
 
 
@@ -35,17 +33,17 @@ private:
  * @tparam T
  */
 template <class T>
-void PostorderThreadedBinaryTree<T>::CreatePostThread() {
+void PostorderThreadedBinaryTree<T>::CreateThreadRecursive() {
     if (root_ == NULL) {
         return;
     }
 
     ThreadedNode<T>* pre_node_ptr = NULL;
 
-    CreatePostOrderThread_(root_, pre_node_ptr);
+    CreateThreadInSubtreeRecursive_(root_, pre_node_ptr);
 
     pre_node_ptr->right_child = NULL;
-    pre_node_ptr->right_tag = 1;
+    pre_node_ptr->right_tag = THREADED_NODE_POINTER;
 }
 
 
@@ -56,14 +54,14 @@ void PostorderThreadedBinaryTree<T>::CreatePostThread() {
  * @param pre_node
  */
 template <class T>
-void PostorderThreadedBinaryTree<T>::CreatePostOrderThread_(ThreadedNode<T>*& node, ThreadedNode<T>*& pre_node) {
+void PostorderThreadedBinaryTree<T>::CreateThreadInSubtreeRecursive_(ThreadedNode<T>*& node, ThreadedNode<T>*& pre_node) {
     if (node == NULL) {
         return;
     }
 
-    CreatePostOrderThread_(node->left_child, pre_node);
+    CreateThreadInSubtreeRecursive_(node->left_child, pre_node);
 
-    CreatePostOrderThread_(node->right_child, pre_node);
+    CreateThreadInSubtreeRecursive_(node->right_child, pre_node);
 
     if (node->left_child == NULL) {
         node->left_child = pre_node;
@@ -80,17 +78,17 @@ void PostorderThreadedBinaryTree<T>::CreatePostOrderThread_(ThreadedNode<T>*& no
 
 
 template <class T>
-ThreadedNode<T> *PostorderThreadedBinaryTree<T>::PostOrderNext(ThreadedNode<T> *current) {
-    if (current->right_tag == 1) {
-        return current->right_child;
+ThreadedNode<T> *PostorderThreadedBinaryTree<T>::Next(ThreadedNode<T>* node) {
+    if (node->right_tag == THREADED_NODE_POINTER) {
+        return node->right_child;
     }
 
-    ThreadedNode<T>* parent = Parent_(current);
+    ThreadedNode<T>* parent = Parent_(node);
     if (parent == NULL) {
         return NULL;
     }
 
-    if (parent->right_tag == 1 || parent->right_child == current) {
+    if (parent->right_tag == THREADED_NODE_POINTER || parent->right_child == node) {
         return parent;
     }
 
@@ -99,16 +97,16 @@ ThreadedNode<T> *PostorderThreadedBinaryTree<T>::PostOrderNext(ThreadedNode<T> *
 
 
 template <class T>
-ThreadedNode<T> *PostorderThreadedBinaryTree<T>::PostOrderPrior(ThreadedNode<T> *current) {
-    if (current->left_tag == 1) {
-        return current->left_child;
+ThreadedNode<T> *PostorderThreadedBinaryTree<T>::Pre(ThreadedNode<T>* node) {
+    if (node->left_tag == THREADED_NODE_POINTER) {
+        return node->left_child;
     }
 
-    if (current->right_tag == 1) {
-        return current->left_child;
+    if (node->right_tag == THREADED_NODE_POINTER) {
+        return node->left_child;
     }
 
-    return current->right_child;
+    return node->right_child;
 }
 
 #endif //MAIN_POSTORDER_THREADED_BINARY_TREE_H
