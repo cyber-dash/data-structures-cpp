@@ -1,11 +1,17 @@
-//
-// Created by svenlee on 2023/3/15.
-//
+﻿/*!
+ * @file preorder_threaded_binary_tree.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 前序线索树模板类
+ * @version 0.2.1
+ * @date 2021-05-13
+ */
 
 #ifndef MAIN_PREORDER_THREADED_BINARY_TREE_H
 #define MAIN_PREORDER_THREADED_BINARY_TREE_H
 
+
 #include "threaded_node.h"
+
 
 template <class T>
 class PreorderThreadedBinaryTree {

@@ -1,6 +1,10 @@
-﻿//
-// Created by alei_go@163.com(抖音: cyberdash_yuan) on 2020/11/1.
-//
+﻿/*!
+ * @file main.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 线索树演示
+ * @version 0.2.1
+ * @date 2021-05-13
+ */
 
 #include "test.h"
 

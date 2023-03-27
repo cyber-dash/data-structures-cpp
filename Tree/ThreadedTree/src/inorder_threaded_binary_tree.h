@@ -1,11 +1,9 @@
 /*!
  * @file inorder_threaded_binary_tree.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 线索树
+ * @brief 中序线索树模板类
  * @version 0.2.1
  * @date 2021-05-13
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_INORDER_THREADED_BINARY_TREE_H
@@ -64,14 +62,7 @@ public:
     void PostOrderTraverse(void (*visit)(ThreadedNode<TData> *p));
     // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
     ThreadedNode<TData>* GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* node);
-    //
-    void InsertRight(ThreadedNode<TData>* s, ThreadedNode<TData> *r);
-    //
-    void InsertLeft(ThreadedNode<TData>* s, ThreadedNode<TData> *r);
-    //
-    void DeleteRight(ThreadedNode<TData>* s);
-    //
-    void DeleteLeft(ThreadedNode<TData>* s);
+
 
 
 protected:
@@ -548,126 +539,6 @@ int Height(ThreadedNode<T>* node) {
 
     return (left_sub_tree_height < right_sub_tree_height) ?
            right_sub_tree_height + 1 : left_sub_tree_height + 1;
-}
-
-
-/**
- * @breif
- * @tparam T
- * @param s
- * @param r
- */
-template<class T>
-void InorderThreadedBinaryTree<T>::InsertRight(ThreadedNode<T>* s, ThreadedNode<T>* r) {
-    r->right_child = s->right_child;
-    r->right_tag = s->right_tag;
-
-    r->left_child = s;
-    r->left_tag = THREADED_NODE_POINTER;
-
-    s->right_child = r;
-    s->right_tag = CHILD_POINTER;
-
-    if (r->right_tag == CHILD_POINTER) {
-        ThreadedNode<T> *temp;
-        temp = First(r->right_child);
-        temp->left_child = r;
-    }
-}
-
-
-template<class T>
-void InorderThreadedBinaryTree<T>::InsertLeft(ThreadedNode<T> *s, ThreadedNode<T> *l) {
-    l->left_child = s->left_child;
-    l->left_tag = s->left_tag;
-    l->right_child = s;
-    l->right_tag = 1;
-
-    s->left_child = l;
-    s->left_tag = 0;
-
-    if (l->right_tag == 0) {
-        ThreadedNode<T> *temp;
-
-        temp = Last(l->left_child);
-        temp->right_child = l;
-    }
-}
-
-
-template<class T>
-void InorderThreadedBinaryTree<T>::DeleteRight(ThreadedNode<T> *s) {
-    ThreadedNode<T> *r = s->right_child;
-
-    if (r->right_tag == 1) {
-        if (r->left_tag == 1) {
-            /* r has neither right child nor left child */
-            s->right_child = r->right_child;
-            s->right_tag = 1;
-        } else {
-            /* r has no right child but has left child */
-            ThreadedNode<T> *la = Last(r->left_child);
-            la->right_child = r->right_child;
-            s->right_child = r->left_child;
-        }
-    } else {
-        if (r->left_tag == 1) {
-            /* r has right child but has no left child */
-            ThreadedNode<T> *fr = First(r->right_child);
-            fr->left_child = s;
-            s->right_child = r->right_child;
-        } else {
-            /* r has both right child and left child */
-            ThreadedNode<T> *fr = First(r->right_child);
-            ThreadedNode<T> *la = Last(r->left_child);
-
-            la->right_child = r->left_child;
-            la->right_tag = r->right_tag;
-
-            s->right_child = r->left_child;
-            fr->left_child = la;
-        }
-    }
-
-    delete r;
-}
-
-
-template<class T>
-void InorderThreadedBinaryTree<T>::DeleteLeft(ThreadedNode<T> *s) {
-    ThreadedNode<T> *l = s->left_child;
-
-    if (l->right_tag == 1) {
-        if (l->left_tag == 1) {
-            /* l has neither right child nor left child */
-            s->left_child = l->left_child;
-            s->left_tag = 1;
-        } else {
-            /* l has no right child but has left child */
-            ThreadedNode<T> *la = Last(l->left_child);
-            la->right_child = s;
-            s->left_child = l->left_child;
-        }
-    } else {
-        if (l->left_tag == 1) {
-            /* l has right child but has no left child */
-            ThreadedNode<T> *fr = First(l->right_child);
-            fr->left_child = l->left_child;
-            s->left_child = l->right_child;
-        } else {
-            /* l has both right child and left child */
-            ThreadedNode<T> *fr = First(l->right_child);
-            ThreadedNode<T> *la = Last(l->left_child);
-
-            la->right_child = l->right_child;
-            la->right_tag = l->right_tag;
-
-            s->left_child = l->left_child;
-            fr->left_child = la;
-        }
-    }
-
-    delete l;
 }
 
 

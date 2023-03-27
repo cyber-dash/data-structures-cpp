@@ -1,6 +1,10 @@
-//
-// Created by svenlee on 2023/3/14.
-//
+﻿/*!
+ * @file threaded_node.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 线索树结点模板结构体
+ * @version 0.2.1
+ * @date 2021-05-13
+ */
 
 #ifndef MAIN_THREADED_NODE_H
 #define MAIN_THREADED_NODE_H

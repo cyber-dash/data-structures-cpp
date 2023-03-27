@@ -1,9 +1,12 @@
-//
-// Created by cyberdash@163.com(抖音: cyberdash_yuan) on 2021/4/19.
-//
+﻿/*!
+ * @file test.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 线索树测试cpp文件
+ * @version 0.2.1
+ * @date 2021-05-13
+ */
 
 #include "inorder_threaded_binary_tree.h"
-
 
 
 void visit(ThreadedNode<int>* node_ptr) {
