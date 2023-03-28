@@ -56,7 +56,7 @@ public:
  * @brief 结点打印函数
  * @param node 二叉树结点
  */
-void visit(BinaryTreeNode<int>* node) {
+void VisitByCout(BinaryTreeNode<int>* node) {
     cout << node->data << " ";
 };
 
@@ -77,7 +77,8 @@ void BinaryTreeTest::TestCopyConstructor() {
 
     BinaryTree<int> binary_tree_2(binary_tree);
 
-    binary_tree_2.Print();
+    // binary_tree_2.Print();
+    cout << binary_tree_2;
 
     cout << endl << "------------------------- CyberDash -------------------------" << endl;
 }
@@ -225,11 +226,11 @@ void BinaryTreeTest::TestPreorderTraversal() {
     }
 
     cout << "前序遍历(递归):" << endl;
-    binary_tree.PreorderTraversalRecursive(visit);
+    binary_tree.PreorderTraversalRecursive(VisitByCout);
     cout << endl;
 
     cout << "前序遍历(非递归):" << endl;
-    binary_tree.PreorderTraversal(visit);
+    binary_tree.PreorderTraversal(VisitByCout);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -261,11 +262,11 @@ void BinaryTreeTest::TestInorderTraversal() {
     }
 
     cout << "中序遍历(递归):" << endl;
-    binary_tree.InorderTraversal(visit);
+    binary_tree.InorderTraversal(VisitByCout);
     cout << endl;
 
     cout << "中序遍历(非递归):" << endl;
-    binary_tree.InorderTraversal(visit);
+    binary_tree.InorderTraversal(VisitByCout);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -297,11 +298,11 @@ void BinaryTreeTest::TestPostorderTraversal() {
     }
 
     cout << "后序遍历(递归):" << endl;
-    binary_tree.PostorderTraversalRecursive(visit);
+    binary_tree.PostorderTraversalRecursive(VisitByCout);
     cout << endl;
 
     cout << "后序遍历(非递归):" << endl;
-    binary_tree.PostorderTraversal(visit);
+    binary_tree.PostorderTraversal(VisitByCout);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -333,7 +334,7 @@ void BinaryTreeTest::TestLevelOrderTraversal() {
         binary_tree.Insert(i);
     }
 
-    binary_tree.LevelOrderTraversal(visit);
+    binary_tree.LevelOrderTraversal(VisitByCout);
 
     cout << endl;
     cout << "------------------------- CyberDash -------------------------" << endl;
