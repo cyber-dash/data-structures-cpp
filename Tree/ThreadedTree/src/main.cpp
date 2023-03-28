@@ -14,29 +14,29 @@ using namespace std;
 
 int main() {
 
-    // 测试First
-    TestFirst();
+    // 测试中序线索树First
+    TestInorderThreadedTreeFirst();
 
-    // 测试Last
-    TestLast();
+    // 测试中序线索树Last
+    TestInorderThreadedTreeLast();
 
-    // 测试Next(中序)
-    TestNext();
+    // 测试中序线索树Next
+    TestInorderThreadedTreeNext();
 
-    // 测试Prior(中序)
-    TestPrior();
+    // 测试中序线索树Pre
+    TestInorderThreadedTreePre();
 
-    // 测试Parent(中序)
-    TestParent();
+    // 测试中序线索树Parent
+    TestInorderThreadedTreeParent();
 
     // 测试中序线索树中序遍历
-    TestInOrderTraverseOfInOrderThread();
+    TestInorderThreadedTreeInorderTraverse();
 
     // 测试中序线索树前序遍历
-    TestPreOrderTraverseOfInOrderThread();
+    TestInorderThreadedTreePreorderTraverse();
 
     // 测试中序线索树后序遍历
-    TestPostOrderTraverseOfInOrderThread();
+    TestInorderThreadedTreePostorderTraverse();
 
     return 0;
 }

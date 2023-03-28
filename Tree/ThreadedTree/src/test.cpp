@@ -14,11 +14,11 @@ void visit(ThreadedNode<int>* node_ptr) {
 };
 
 
-void TestFirst() {
+void TestInorderThreadedTreeFirst() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|              Test InOrder InorderThreadedBinaryTree First Node           |"<<endl;
+    cout<<"|             Test InorderThreadedBinaryTree First          |"<<endl;
     cout<<"|                  测试中序线索树第一个线索节点                 |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -30,32 +30,32 @@ void TestFirst() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
 
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
 
-    ThreadedNode<int>* root_ptr = inorder_threaded_tree.Root();
+    ThreadedNode<int>* root = inorder_threaded_tree.Root();
 
-    ThreadedNode<int>* first_node_ptr = inorder_threaded_tree.First(root_ptr);
+    ThreadedNode<int>* first = inorder_threaded_tree.First(root);
 
-    cout << "中序线索第一个线索节点 :" << first_node_ptr->data << endl;
+    cout << "中序线索第一个线索节点 :" << first->data << endl;
 
     cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
     cout<<endl;
 }
 
 
-void TestLast() {
+void TestInorderThreadedTreeLast() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|              Test InOrder InorderThreadedBinaryTree Last Node            |"<<endl;
+    cout<<"|              Test InorderThreadedBinaryTree Last          |"<<endl;
     cout<<"|                 测试中序线索树最后一个线索节点                 |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -67,32 +67,32 @@ void TestLast() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
 
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
 
-    ThreadedNode<int>* root_ptr = inorder_threaded_tree.Root();
+    ThreadedNode<int>* root = inorder_threaded_tree.Root();
 
-    ThreadedNode<int>* last_node_ptr = inorder_threaded_tree.Last(root_ptr);
+    ThreadedNode<int>* last_node = inorder_threaded_tree.Last(root);
 
-    cout << "中序线索最后一个线索节点: " << last_node_ptr->data << endl;
+    cout << "中序线索最后一个线索节点: " << last_node->data << endl;
 
     cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
     cout<<endl;
 }
 
 
-void TestNext() {
+void TestInorderThreadedTreeNext() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|              Test InOrder InorderThreadedBinaryTree Next Node            |"<<endl;
+    cout<<"|              Test InorderThreadedBinaryTree Next          |"<<endl;
     cout<<"|                  测试中序线索树下一个线索节点                 |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -104,37 +104,37 @@ void TestNext() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
 
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
 
-    ThreadedNode<int>* first_node_ptr = inorder_threaded_tree.First(inorder_threaded_tree.Root());
+    ThreadedNode<int>* first = inorder_threaded_tree.First(inorder_threaded_tree.Root());
 
-    ThreadedNode<int>* second_node_ptr = inorder_threaded_tree.Next(first_node_ptr);
-    ThreadedNode<int>* third_node_ptr = inorder_threaded_tree.Next(second_node_ptr);
-    ThreadedNode<int>* forth_node_ptr = inorder_threaded_tree.Next(third_node_ptr);
+    ThreadedNode<int>* second = inorder_threaded_tree.Next(first);
+    ThreadedNode<int>* third = inorder_threaded_tree.Next(second);
+    ThreadedNode<int>* forth = inorder_threaded_tree.Next(third);
 
-    cout << "中序线索树第1个线索节点: " << first_node_ptr->data << endl;
-    cout << "中序线索树第2个线索节点: " << second_node_ptr->data << endl;
-    cout << "中序线索树第3个线索节点: " << third_node_ptr->data << endl;
-    cout << "中序线索树第4个线索节点: " << forth_node_ptr->data << endl;
+    cout << "中序线索树第1个线索节点: " << first->data << endl;
+    cout << "中序线索树第2个线索节点: " << second->data << endl;
+    cout << "中序线索树第3个线索节点: " << third->data << endl;
+    cout << "中序线索树第4个线索节点: " << forth->data << endl;
 
     cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
     cout<<endl;
 }
 
 
-void TestPrior() {
+void TestInorderThreadedTreePre() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|             Test InOrder InorderThreadedBinaryTree Pre Node            |"<<endl;
+    cout<<"|             Test InorderThreadedBinaryTree Pre            |"<<endl;
     cout<<"|                  测试中序线索树前一个线索节点                 |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -146,26 +146,26 @@ void TestPrior() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
 
-    ThreadedNode<int>* node_ptr_array[4];
+    ThreadedNode<int>* nodes[4];
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
 
-    node_ptr_array[0] = inorder_threaded_tree.First(inorder_threaded_tree.Root());
+    nodes[0] = inorder_threaded_tree.First(inorder_threaded_tree.Root());
 
     for (int i = 1; i < 4; i++) {
-        node_ptr_array[i] = inorder_threaded_tree.Next(node_ptr_array[i - 1]);
+        nodes[i] = inorder_threaded_tree.Next(nodes[i - 1]);
     }
 
     for (int i = 3; i >=1; i--) {
-        ThreadedNode<int>* prior_node_ptr = inorder_threaded_tree.Pre(node_ptr_array[i]);
-        cout << "中序线索树第" << i << "个线索节点: " << prior_node_ptr->data << endl; // (i - 1) + 1 = i
+        ThreadedNode<int>* pre_node = inorder_threaded_tree.Pre(nodes[i]);
+        cout << "中序线索树第" << i << "个线索节点: " << pre_node->data << endl; // (i - 1) + 1 = i
     }
 
     cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
@@ -176,11 +176,11 @@ void TestPrior() {
 /*
  * 中序线索二叉树Parent
  */
-void TestParent() {
+void TestInorderThreadedTreeParent() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|             Test InOrder InorderThreadedBinaryTree Parent Node           |"<<endl;
+    cout<<"|            Test InorderThreadedBinaryTree Parent          |"<<endl;
     cout<<"|                     测试中序线索树父节点                     |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -192,43 +192,43 @@ void TestParent() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
 
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
 
-    ThreadedNode<int>* root_ptr = inorder_threaded_tree.Root();
-    ThreadedNode<int>* root_parent_ptr = inorder_threaded_tree.Parent(root_ptr);
+    ThreadedNode<int>* root = inorder_threaded_tree.Root();
+    ThreadedNode<int>* root_parent = inorder_threaded_tree.Parent(root);
 
-    ThreadedNode<int>* first_node_ptr = inorder_threaded_tree.First(root_ptr);
-    ThreadedNode<int>* first_parent_ptr = inorder_threaded_tree.Parent(first_node_ptr);
-    ThreadedNode<int>* first_parent_parent_ptr = inorder_threaded_tree.Parent(first_parent_ptr);
+    ThreadedNode<int>* first_node = inorder_threaded_tree.First(root);
+    ThreadedNode<int>* first_parent = inorder_threaded_tree.Parent(first_node);
+    ThreadedNode<int>* first_grand_parent = inorder_threaded_tree.Parent(first_parent);
 
-    if (root_parent_ptr != NULL) {
-        cout << "根节点的父节点: " << root_parent_ptr->data << endl;
+    if (root_parent != nullptr) {
+        cout << "根节点的父节点: " << root_parent->data << endl;
     } else {
         cout<<"根节点的父节点为NULL"<<endl;
     }
 
-    cout << "第一个线索节点: " << first_node_ptr->data << endl;
-    cout << "第一个线索节点的父节点: " << first_parent_ptr->data << endl;
-    cout << "第一个线索节点的父节点的父节点: " << first_parent_parent_ptr->data << endl;
+    cout << "第一个线索节点: " << first_node->data << endl;
+    cout << "第一个线索节点的父节点: " << first_parent->data << endl;
+    cout << "第一个线索节点的父节点的父节点: " << first_grand_parent->data << endl;
 
     cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
     cout<<endl;
 }
 
 
-void TestInOrderTraverseOfInOrderThread() {
+void TestInorderThreadedTreeInorderTraverse() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|          Test InOrder InorderThreadedBinaryTree InorderTraverse          |"<<endl;
+    cout<<"|          Test InorderThreadedTree InorderTraverse         |"<<endl;
     cout<<"|                    测试中序线索树中序遍历                     |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -240,10 +240,10 @@ void TestInOrderTraverseOfInOrderThread() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 
@@ -257,11 +257,11 @@ void TestInOrderTraverseOfInOrderThread() {
 }
 
 
-void TestPreOrderTraverseOfInOrderThread() {
+void TestInorderThreadedTreePreorderTraverse() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|          Test InOrder InorderThreadedBinaryTree PreorderTraverse         |"<<endl;
+    cout<<"|          Test InorderThreadedTree PreorderTraverse        |"<<endl;
     cout<<"|                    测试中序线索树前序遍历                     |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -273,10 +273,10 @@ void TestPreOrderTraverseOfInOrderThread() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 
@@ -290,11 +290,11 @@ void TestPreOrderTraverseOfInOrderThread() {
 }
 
 
-void TestPostOrderTraverseOfInOrderThread() {
+void TestInorderThreadedTreePostorderTraverse() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|          Test InOrder InorderThreadedBinaryTree PostOrderTraverse        |"<<endl;
+    cout<<"|          Test InorderThreadedTree PostorderTraverse       |"<<endl;
     cout<<"|                    测试中序线索树后序遍历                     |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
@@ -306,10 +306,10 @@ void TestPostOrderTraverseOfInOrderThread() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
-    int count = 7;
+    int node_count = 7;
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
-    for (int i = 0 ; i < count; i++) {
+    for (int i = 0 ; i < node_count; i++) {
         inorder_threaded_tree.Insert(i);
     }
 

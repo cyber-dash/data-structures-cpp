@@ -15,21 +15,21 @@
 
 void visit(ThreadedNode<int> *p);
 
-void TestFirst();
+void TestInorderThreadedTreeFirst();
 
-void TestLast();
+void TestInorderThreadedTreeLast();
 
-void TestNext();
+void TestInorderThreadedTreeNext();
 
-void TestPrior();
+void TestInorderThreadedTreePre();
 
-void TestParent();
+void TestInorderThreadedTreeParent();
 
-void TestInOrderTraverseOfInOrderThread();
+void TestInorderThreadedTreeInorderTraverse();
 
-void TestPreOrderTraverseOfInOrderThread();
+void TestInorderThreadedTreePreorderTraverse();
 
-void TestPostOrderTraverseOfInOrderThread();
+void TestInorderThreadedTreePostorderTraverse();
 
 
 #endif //CYBER_DASH_THREAD_TREE_TEST_H
