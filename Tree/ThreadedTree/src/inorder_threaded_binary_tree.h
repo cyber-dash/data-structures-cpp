@@ -19,28 +19,38 @@ using namespace std;
 
 
 /*!
- * @brief 线索树模板类
- * @tparam TData 类型模板参数
+ * @brief **中序线索树模板类**
+ * @tparam TData 数据项类型模板参数
  */
 template <typename TData>
 class InorderThreadedBinaryTree {
 public:
+    /*! @brief **默认构造函数** */
     InorderThreadedBinaryTree(): root_(NULL) {}
 
     /*!
-     * @brief 获取根节点指针
-     * @return 根结点指针
+     * @brief **获取根结点**
+     * @return 根结点
      */
     ThreadedNode<TData>* Root() { return root_; }
 
     /*!
-     * @brief 插入结点
-     * @param data 数据
-     * @return 是否插入成功
+     * @brief **插入结点**
+     * @param data 结点数据项
+     * @return 执行结果
+     * @note
+     * 插入结点
+     * ------
+     * ------
+     *
+     * <span style="color:#DF5A00">
+     * 注意: 本函数不涉及线索操作, 因此请在建立线索前调用此函数
+     * </span>
+     *
+     * ------
+     * 对root_调用InsertInSubTreeRecursive_
      */
-    bool Insert(const TData& data) { return InsertInSubTreeRecursive_(root_, data);}
-
-    /* 中序线索树 */
+    bool InsertRecursive(const TData& data) { return InsertInSubTreeRecursive_(root_, data);}
 
     // 创建中序线索
     void CreateThreadRecursive();
@@ -230,7 +240,7 @@ void InorderThreadedBinaryTree<TData>::InorderTraverse(void (*visit)(ThreadedNod
  * ---------------
  * + **1 空树处理**\n
  * **if** root_为NULL :\n
- * &emsp; return;\n\n
+ * &emsp; 退出函数\n\n
  * + **2 执行递归**\n
  * 初始化pre_node为NULL\n
  * 调用CreateInOrderSubThread_\n\n
@@ -241,17 +251,22 @@ void InorderThreadedBinaryTree<TData>::InorderTraverse(void (*visit)(ThreadedNod
 template <typename TData>
 void InorderThreadedBinaryTree<TData>::CreateThreadRecursive() {
 
-    if (root_ == NULL) {
-        return;
+    // ---------- 1 空树处理 ----------
+
+    if (root_ == NULL) {                                // if root_为NULL :
+        return;                                         // 退出函数
     }
 
-    ThreadedNode<TData>* pre_node = NULL;
+    // ---------- 2 执行递归 ----------
 
-    CreateThreadInSubtreeRecursive_(root_, pre_node);
+    ThreadedNode<TData>* pre_node = NULL;               // 初始化pre_node为NULL
 
-    // 最后一个线索节点, 收尾工作
-    pre_node->right_child = NULL;
-    pre_node->right_tag = THREADED_NODE_POINTER;
+    CreateThreadInSubtreeRecursive_(root_, pre_node);   // 调用CreateInOrderSubThread_
+
+    // ---------- 3 最后一个线索结点收尾工作 ----------
+
+    pre_node->right_child = NULL;                       // pre_node->right_child设为NULL
+    pre_node->right_tag = THREADED_NODE_POINTER;        // pre_node->right_tag属性, 设为THREADED_NODE_POINTER(线索结点指针)
 }
 
 
@@ -287,27 +302,37 @@ void InorderThreadedBinaryTree<TData>::CreateThreadRecursive() {
  */
 template <typename TData>
 void InorderThreadedBinaryTree<TData>::CreateThreadInSubtreeRecursive_(ThreadedNode<TData>*& subtree_root,
-                                                                       ThreadedNode<TData>*& pre_node) {
+                                                                       ThreadedNode<TData>*& pre_node)
+{
+    // ---------- 1 空子树处理 ----------
 
-    if (subtree_root == NULL) {
-        return;
+    if (subtree_root == NULL) {                                             // if 空子树 :
+        return;                                                             // 返回
     }
 
-    CreateThreadInSubtreeRecursive_(subtree_root->left_child, pre_node);
+    // ---------- 2 左子树递归 ----------
 
-    if (subtree_root->left_child == NULL) {
-        subtree_root->left_child = pre_node;
-        subtree_root->left_tag = THREADED_NODE_POINTER;
+    CreateThreadInSubtreeRecursive_(subtree_root->left_child, pre_node);    // 对左子树递归创建线索
+
+    // ---------- 3 创建线索 ----------
+
+    if (subtree_root->left_child == NULL) {                                 // if subtree_root->left_child为NULL :
+        subtree_root->left_child = pre_node;                                // subtree_root->left_child指向pre_node
+        subtree_root->left_tag = THREADED_NODE_POINTER;                     // subtree_root->left_tag属性, 设置为THREADED_NODE_POINTER(线索结点指针)
     }
 
-    if (pre_node != NULL && pre_node->right_child == NULL) {
-        pre_node->right_child = subtree_root;
-        pre_node->right_tag = THREADED_NODE_POINTER;
+    if (pre_node != NULL && pre_node->right_child == NULL) {                // if pre_node存在 && pre_node->right_child为NULL :
+        pre_node->right_child = subtree_root;                               // pre_node->right_child指向subtree_root
+        pre_node->right_tag = THREADED_NODE_POINTER;                        // pre_node->left_tag属性, 设置为THREADED_NODE_POINTER(线索结点指针)
     }
 
-    pre_node = subtree_root;
+    // ---------- 4 更新pre_node ----------
 
-    CreateThreadInSubtreeRecursive_(subtree_root->right_child, pre_node);
+    pre_node = subtree_root;                                                // pre_node = subtree_root;
+
+    // ---------- 5 右子树递归 ----------
+
+    CreateThreadInSubtreeRecursive_(subtree_root->right_child, pre_node);   // 对右子树递归创建线索
 }
 
 

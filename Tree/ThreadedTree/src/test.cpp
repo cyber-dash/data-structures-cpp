@@ -35,7 +35,7 @@ void TestInorderThreadedTreeFirst() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
@@ -72,7 +72,7 @@ void TestInorderThreadedTreeLast() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
@@ -93,7 +93,7 @@ void TestInorderThreadedTreeNext() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|              Test InorderThreadedBinaryTree Next          |"<<endl;
-    cout<<"|                  测试中序线索树下一个线索节点                 |"<<endl;
+    cout<<"|                   测试中序线索树下一个线索节点                 |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -109,13 +109,12 @@ void TestInorderThreadedTreeNext() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
 
     ThreadedNode<int>* first = inorder_threaded_tree.First(inorder_threaded_tree.Root());
-
     ThreadedNode<int>* second = inorder_threaded_tree.Next(first);
     ThreadedNode<int>* third = inorder_threaded_tree.Next(second);
     ThreadedNode<int>* forth = inorder_threaded_tree.Next(third);
@@ -152,7 +151,7 @@ void TestInorderThreadedTreePre() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
@@ -197,7 +196,7 @@ void TestInorderThreadedTreeParent() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
@@ -244,7 +243,7 @@ void TestInorderThreadedTreeInorderTraverse() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
@@ -277,7 +276,7 @@ void TestInorderThreadedTreePreorderTraverse() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();
@@ -310,7 +309,7 @@ void TestInorderThreadedTreePostorderTraverse() {
     InorderThreadedBinaryTree<int> inorder_threaded_tree;
 
     for (int i = 0 ; i < node_count; i++) {
-        inorder_threaded_tree.Insert(i);
+        inorder_threaded_tree.InsertRecursive(i);
     }
 
     inorder_threaded_tree.CreateThreadRecursive();

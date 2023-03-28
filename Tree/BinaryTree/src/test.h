@@ -205,7 +205,7 @@ void BinaryTreeTest::TestPreorderTraversal() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|              Test BinaryTree PreOrderTraversal            |" << endl;
+    cout << "|              Test BinaryTree PreorderTraversalRecursive            |" << endl;
     cout << "|                      测试二叉树前序遍历                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
@@ -225,11 +225,11 @@ void BinaryTreeTest::TestPreorderTraversal() {
     }
 
     cout << "前序遍历(递归):" << endl;
-    binary_tree.PreOrderTraversal(visit);
+    binary_tree.PreorderTraversalRecursive(visit);
     cout << endl;
 
     cout << "前序遍历(非递归):" << endl;
-    binary_tree.PreOrderTraversalNonRecursive(visit);
+    binary_tree.PreorderTraversal(visit);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -265,7 +265,7 @@ void BinaryTreeTest::TestInorderTraversal() {
     cout << endl;
 
     cout << "中序遍历(非递归):" << endl;
-    binary_tree.InorderTraversalNonRecursive(visit);
+    binary_tree.InorderTraversal(visit);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -277,7 +277,7 @@ void BinaryTreeTest::TestPostorderTraversal() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|              Test BinaryTree PostorderTraversal           |" << endl;
+    cout << "|              Test BinaryTree PostorderTraversalRecursive           |" << endl;
     cout << "|                      测试二叉树后序遍历                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
@@ -297,11 +297,11 @@ void BinaryTreeTest::TestPostorderTraversal() {
     }
 
     cout << "后序遍历(递归):" << endl;
-    binary_tree.PostorderTraversal(visit);
+    binary_tree.PostorderTraversalRecursive(visit);
     cout << endl;
 
     cout << "后序遍历(非递归):" << endl;
-    binary_tree.PostorderTraversalNonRecursive(visit);
+    binary_tree.PostorderTraversal(visit);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
