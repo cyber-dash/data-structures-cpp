@@ -29,7 +29,7 @@ struct BinaryTreeNode {
     /*! @brief **默认构造函数** */
     BinaryTreeNode() : left_child(NULL), right_child(NULL) {}
 
-    /*! @brief 构造函数(数据项/左右孩子) */
+    /*! @brief **构造函数(数据项/左右孩子)** */
     explicit BinaryTreeNode(TData data, BinaryTreeNode<TData>* left_child = NULL, BinaryTreeNode<TData>* right_child = NULL)
         : data(data), left_child(left_child), right_child(right_child) {}
 
@@ -277,8 +277,8 @@ protected:
     void PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_root);
 
     // 使用前序遍历和中序遍历结果, 创建二叉子树(递归)
-    bool CreateSubtreeByPreorderAndInorderList_(TData* preorder_list,
-                                                TData* inorder_list,
+    bool CreateSubtreeByPreorderAndInorderList_(TData* preorder_sub_list,
+                                                TData* inorder_sub_list,
                                                 int length,
                                                 BinaryTreeNode<TData>*& subtree_root);
 
@@ -299,7 +299,7 @@ protected:
  * ----------
  *
  * ----------
- * 对src_binary_tree.Root(), root_调用DuplicateSubTreeRecursive_\n
+ * 对src_binary_tree.Root()和root_, 调用DuplicateSubTreeRecursive_\n
  * **if** 调用失败 :\n
  * &emsp; 抛出logic_error\n
  */
@@ -924,82 +924,157 @@ void BinaryTree<TData>::PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_ro
 
 
 /*!
- * @brief 使用前序遍历和中序遍历结果, 创建二叉子树(递归)
- * @param preorder_list 前序遍历字符串
- * @param inorder_list 后序遍历字符串
- * @param length 字符串长度
+ * @brief **创建二叉子树by前序遍历子序列和中序遍历子序列(递归)**
+ * @tparam TData 数据项类型模板参数
+ * @param preorder_sub_list 前序遍历子序列
+ * @param inorder_sub_list 后序遍历子序列
+ * @param length 子序列长度
  * @param subtree_root 子树根结点
+ * @return 执行结果
+ * @note
+ * 创建二叉子树by前序遍历子序列和中序遍历子序列(递归)
+ * -----------------------------------------
+ * -----------------------------------------
+ *
+ * -----------------------------------------
+ * + **1 空子序列处理**\n
+ * **if** length == 0 :\n
+ * &emsp; 返回true\n\n
+ * + **2 中序序列找到轴, 并生成子树根结点**\n
+ * 初始化inorder_sub_list_pivot(中序遍历子序列轴)为0\n
+ * 初始化cur_subtree_root_data, 指向前序遍历序列首元素\n\n
+ * **while loop** cur_subtree_root_data != inorder_sub_list[inorder_sub_list_pivot] :\n
+ * &emsp; inorder_sub_list_pivot向后移动1个位置\n\n
+ * <span style="color:#DF5A00">
+ * 此时:\n
+ * &emsp; (preorder_sub_list[1, inorder_sub_list_pivot] / inorder_sub_list[0, inorder_sub_list_pivot - 1])为左子树;\n
+ * &emsp; inorder_sub_list[inorder_sub_list_pivot]为子树根结点;\n
+ * &emsp; (preorder_sub_list[inorder_sub_list_pivot + 1, length - 1]/inorder_sub_list[inorder_sub_list_pivot + 1, length - 1])为右子树;\n\n
+ * </span>
+ * 使用cur_subtree_root_data, 分配内存并初始化subtree_root\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 返回false\n\n
+ * + **3 递归构造左子树和右子树**\n
+ * 调用CreateSubtreeByPreorderAndInorderList_, 使用preorder_sub_list[1, inorder_sub_list_pivot] 和 inorder_sub_list[0, inorder_sub_list_pivot - 1], 构造sub_tree的左子树\n
+ * **if** 构造失败 :\n
+ * &emsp; 返回false\n\n
+ * 调用CreateSubtreeByPreorderAndInorderList_, 使用preorder_sub_list[inorder_sub_list_pivot + 1, length - 1] 和 inorder_sub_list[inorder_sub_list_pivot + 1, length - 1], 构造sub_tree的右子树\n
+ * 返回调用结果\n
  */
-template<class TData>
-bool BinaryTree<TData>::CreateSubtreeByPreorderAndInorderList_(TData* preorder_list,
-                                                               TData* inorder_list,
+template<typename TData>
+bool BinaryTree<TData>::CreateSubtreeByPreorderAndInorderList_(TData* preorder_sub_list,
+                                                               TData* inorder_sub_list,
                                                                int length,
                                                                BinaryTreeNode<TData>*& subtree_root)
 {
-    if (length == 0) {
-        return true;
+    // ---------- 1 空子序列处理 ----------
+
+    if (length == 0) {                                                              // if length == 0
+        return true;                                                                // 返回true
     }
 
-    int pivot = 0;
-    TData cur_root_data = *preorder_list;
+    // ---------- 2 中序序列找到轴, 并生成子树根结点 ----------
 
-    while (cur_root_data != inorder_list[pivot]) {
-        pivot++;
+    int inorder_sub_list_pivot = 0;                                                 // 初始化inorder_sub_list_pivot(中序遍历子序列轴)为0
+    TData cur_subtree_root_data = *preorder_sub_list;                               // 初始化cur_subtree_root_data, 指向前序遍历序列首元素
+
+    while (cur_subtree_root_data != inorder_sub_list[inorder_sub_list_pivot]) {     // while loop cur_subtree_root_data != inorder_sub_list[inorder_sub_list_pivot]
+        inorder_sub_list_pivot++;                                                   // inorder_sub_list_pivot向后移动1个位置
     }
 
-    subtree_root = new BinaryTreeNode<TData>(cur_root_data);
-    if (subtree_root == NULL) {
-        cerr << "存储分配错误!" << endl;
-        return false;
+    // 此时:
+    // (preorder_sub_list[1, inorder_sub_list_pivot] / inorder_sub_list[0, inorder_sub_list_pivot - 1])为左子树
+    // inorder_sub_list[inorder_sub_list_pivot]为子树根结点
+    // (preorder_sub_list[inorder_sub_list_pivot + 1, length - 1]/inorder_sub_list[inorder_sub_list_pivot + 1, length - 1])为右子树
+
+    subtree_root = new BinaryTreeNode<TData>(cur_subtree_root_data);                // 使用cur_subtree_root_data, 分配内存并初始化subtree_root
+    if (subtree_root == NULL) {                                                     // if 内存分配失败
+        return false;                                                               // 返回false
     }
 
-    bool res = CreateSubtreeByPreorderAndInorderList_(preorder_list + 1,
-                                                      inorder_list,
-                                                      pivot,
+    // ---------- 3 递归构造左子树和右子树 ----------
+
+    // 调用CreateSubtreeByPreorderAndInorderList_,
+    // 使用preorder_sub_list[1, inorder_sub_list_pivot] 和 inorder_sub_list[0, inorder_sub_list_pivot - 1],
+    // 构造sub_tree的左子树
+    bool res = CreateSubtreeByPreorderAndInorderList_(preorder_sub_list + 1,
+                                                      inorder_sub_list,
+                                                      inorder_sub_list_pivot,
                                                       subtree_root->left_child);
-    if (!res) {
-        return false;
+    if (!res) {                                                                     // if 构造失败
+        return false;                                                               // 返回false
     }
 
-    res = CreateSubtreeByPreorderAndInorderList_(preorder_list + pivot + 1,
-                                                 inorder_list + pivot + 1,
-                                                 length - pivot - 1,
+    // 调用CreateSubtreeByPreorderAndInorderList_,
+    // 使用preorder_sub_list[inorder_sub_list_pivot + 1, length - 1]/inorder_sub_list[inorder_sub_list_pivot + 1, length - 1],
+    // 构造sub_tree的右子树
+    res = CreateSubtreeByPreorderAndInorderList_(preorder_sub_list + inorder_sub_list_pivot + 1,
+                                                 inorder_sub_list + inorder_sub_list_pivot + 1,
+                                                 length - inorder_sub_list_pivot - 1,
                                                  subtree_root->right_child);
 
-    return res;
+    return res;                                                                     // 返回调用结果
 }
 
 
 /*!
- * @brief 判断两颗二叉树是否相同(递归)
- * @tparam TData 结点数据模板类型
- * @param root1 根节点a
+ * @brief **判断两颗二叉树是否相同(递归)**
+ * @tparam TData 数据项类型模板参数
+ * @param root1 根节点1
  * @param root2 根节点2
  * @return 是否相同
+ * @note
+ * 判断两颗二叉树是否相同(递归)
+ * -----------------------
+ * -----------------------
+ *
+ * -----------------------
+ * + **1 两个空树比较**\n
+ * **if** root1和root2都为NULL :\n
+ * &emsp; 返回 true\n\n
+ * + **2 递归**\n
+ * **if** root1不为NULL && root2不为NULL && root1->data == root2->data &&
+ *  Equal(root1->left_child, root2->left_child)和Equal(root1->right_child, root2->right_child)都返回true :\n
+ * &emsp; 返回true\n\n
+ * + **3 退出函数**\n
+ * 返回false\n
  */
-template<class TData>
+template<typename TData>
 bool BinaryTree<TData>::Equal(BinaryTreeNode<TData>* root1, BinaryTreeNode<TData>* root2) {
-    if (root1 == NULL && root2 == NULL) {
-        return true;
+    // ---------- 1 两个空树比较 ----------
+
+    if (root1 == NULL && root2 == NULL) {                                       // if root1和root2都为NULL
+        return true;                                                            // 返回 true
     }
 
-    if (root1 != NULL && root2 != NULL && root1->data == root2->data
-        && BinaryTree<TData>::Equal(root1->left_child, root2->left_child)
-        && BinaryTree<TData>::Equal(root1->right_child, root2->right_child))
+    // ---------- 2 递归 ----------
+
+    if (root1 != NULL && root2 != NULL && root1->data == root2->data            // if root1不为NULL && root2不为NULL && root1->data == root2->data &&
+        && BinaryTree<TData>::Equal(root1->left_child, root2->left_child)       // Equal(root1->left_child, root2->left_child)返回true
+        && BinaryTree<TData>::Equal(root1->right_child, root2->right_child))    // Equal(root1->right_child, root2->right_child)返回true
     {
-        return true;
+        return true;                                                            // 返回true
     }
 
-    return false;
+    // ---------- 3 退出函数 ----------
+
+    return false;                                                               // 返回false
 }
 
 
  /*!
-  * @brief 重载==
-  * @tparam TData 类型模板参数
+  * @brief **重载==**
+  * @tparam TData 数据项类型模板参数
   * @param binary_tree_1 二叉树1
   * @param binary_tree_2 二叉树2
-  * @return
+  * @return 结果
+  * @note
+  * 重载==
+  * -----
+  * -----
+  *
+  * -----
+  * 调用BinaryTree<TData>::Equal(binary_tree_1.Root(), binary_tree_2.Root()), 返回结果\n
   */
 template<typename TData>
 bool operator==(const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>& binary_tree_2) {
@@ -1007,16 +1082,23 @@ bool operator==(const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>&
 }
 
 
-template<typename TData>
-void VisitByCout(BinaryTreeNode<TData>* node) {
-    cout << node->data << ' ';
-}
-
+/*!
+ * @brief **重载&lt;&lt;**
+ * @tparam TData 数据项类型模板参数
+ * @param out 输出流
+ * @param binary_tree 二叉树
+ * @return 输出流
+ * @note
+ * 重载<<
+ * -----
+ * -----
+ *
+ * -----
+ * 调用binary_tree.Print()\n
+ */
 template<typename TData>
 ostream& operator<<(ostream& out, BinaryTree<TData>& binary_tree) {
-    out << "二叉树的前序遍历\n";
-    binary_tree.InorderTraversal(VisitByCout);
-    out << endl;
+    binary_tree.Print();
     return out;
 }
 

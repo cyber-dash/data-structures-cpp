@@ -56,7 +56,7 @@ public:
  * @brief 结点打印函数
  * @param node 二叉树结点
  */
-void VisitByCout(BinaryTreeNode<int>* node) {
+void VisitAndCout(BinaryTreeNode<int>* node) {
     cout << node->data << " ";
 };
 
@@ -226,11 +226,11 @@ void BinaryTreeTest::TestPreorderTraversal() {
     }
 
     cout << "前序遍历(递归):" << endl;
-    binary_tree.PreorderTraversalRecursive(VisitByCout);
+    binary_tree.PreorderTraversalRecursive(VisitAndCout);
     cout << endl;
 
     cout << "前序遍历(非递归):" << endl;
-    binary_tree.PreorderTraversal(VisitByCout);
+    binary_tree.PreorderTraversal(VisitAndCout);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -262,11 +262,11 @@ void BinaryTreeTest::TestInorderTraversal() {
     }
 
     cout << "中序遍历(递归):" << endl;
-    binary_tree.InorderTraversal(VisitByCout);
+    binary_tree.InorderTraversal(VisitAndCout);
     cout << endl;
 
     cout << "中序遍历(非递归):" << endl;
-    binary_tree.InorderTraversal(VisitByCout);
+    binary_tree.InorderTraversal(VisitAndCout);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -298,11 +298,11 @@ void BinaryTreeTest::TestPostorderTraversal() {
     }
 
     cout << "后序遍历(递归):" << endl;
-    binary_tree.PostorderTraversalRecursive(VisitByCout);
+    binary_tree.PostorderTraversalRecursive(VisitAndCout);
     cout << endl;
 
     cout << "后序遍历(非递归):" << endl;
-    binary_tree.PostorderTraversal(VisitByCout);
+    binary_tree.PostorderTraversal(VisitAndCout);
     cout << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -334,7 +334,7 @@ void BinaryTreeTest::TestLevelOrderTraversal() {
         binary_tree.Insert(i);
     }
 
-    binary_tree.LevelOrderTraversal(VisitByCout);
+    binary_tree.LevelOrderTraversal(VisitAndCout);
 
     cout << endl;
     cout << "------------------------- CyberDash -------------------------" << endl;
