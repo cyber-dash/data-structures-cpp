@@ -716,12 +716,29 @@ void BinaryTree<TData>::InorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData
 
 
 /**
- * @brief 子树中序遍历(非递归)
- * @tparam TData 节点数据模板类型
- * @param subtree_root 子树根节点指针
+ * @brief **子树中序遍历**
+ * @tparam TData 数据项类型模板参数
+ * @param subtree_root 子树根结点
  * @param visit 访问函数
+ * @note
+ * 子树中序遍历
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 声明backtrack_stack(回溯栈)\n
+ * 初始化cur_tree_node(当前二叉树结点), 指向subtree_root(子树根结点)\n\n
+ * **while loop** cur_tree_node不为NULL || 回溯栈不为空 :\n
+ * &emsp; **while loop** cur_tree_node不为NULL :\n
+ * &emsp;&emsp; cur_tree_node入栈\n
+ * &emsp;&emsp; cur_tree_node指向自身的左孩子\n
+ * &emsp; **if** 回溯栈不为空 :\n
+ * &emsp;&emsp; 取栈顶, 赋给cur_tree_node\n
+ * &emsp;&emsp; 栈顶出栈\n
+ * &emsp;&emsp; 访问cur_tree_node\n
+ * &emsp;&emsp; cur_tree_node指向自身右孩子\n
  */
-template<class TData>
+template<typename TData>
 void BinaryTree<TData>::InorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
                                                    void (*visit)(BinaryTreeNode<TData>*))
 {
@@ -772,24 +789,56 @@ template<typename TData>
 void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                               void (*visit)(BinaryTreeNode<TData>*))
 {
-    if (subtree_root == NULL) {
-        return;
+    // ---------- 1 空子树处理 ----------
+
+    if (subtree_root == NULL) {                                                 // if 空子树
+        return;                                                                 // 返回
     }
 
+    // ---------- 2 分治递归 ----------
+
+    // 对subtree_root->left_child递归调用PreorderTraversalOfSubtreeRecursive_
     PostorderTraversalOfSubtreeRecursive_(subtree_root->left_child, visit);
+    // 对subtree_root->right_child递归调用PreorderTraversalOfSubtreeRecursive_
     PostorderTraversalOfSubtreeRecursive_(subtree_root->right_child, visit);
 
-    visit(subtree_root);
+    visit(subtree_root);                                                        // 访问subtree_root
 }
 
 
 /**
- * @brief 子树后序遍历(非递归)
- * @tparam TData 节点数据模板类型
- * @param subtree_root 子树根节点指针
+ * @brief **子树后序遍历**
+ * @tparam TData 数据项类型模板参数
+ * @param subtree_root 子树根结点
  * @param visit 访问函数
+ * @note
+ * 子树后序遍历
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 声明backtrack_stack(回溯栈)\n
+ * 初始化cur_tree_node(当前二叉树结点), 指向subtree_root(子树根结点)\n\n
+ * **do**:\n
+ * &emsp; **while loop** cur_tree_node不为NULL :\n
+ * &emsp;&emsp; 使用cur_tree_node初始化栈结点stack_node(默认tag为LEFT_BACK_TRACKING)\n
+ * &emsp;&emsp; stack_node入栈\n
+ * &emsp;&emsp; cur_tree_node指向自身的左孩子\n
+ * &emsp; 初始化cur_tree_node_left_backtrack_unfinished(当前二叉树结点左侧回溯未完成)为true\n
+ * &emsp; **while loop** 初始化cur_tree_node_left_backtrack_unfinished && 回溯栈不为空 :\n
+ * &emsp;&emsp; 取回溯栈栈顶, 赋给cur_backtrack_node(当前回溯结点)\n
+ * &emsp;&emsp; 回溯栈栈顶出栈\n
+ * &emsp;&emsp; 取cur_backtrack_node.node, 给cur_tree_node\n
+ * &emsp;&emsp; **if** cur_backtrack_node的tag为左侧回溯 :\n
+ * &emsp;&emsp;&emsp; cur_backtrack_node的tag设为右侧回溯\n
+ * &emsp;&emsp;&emsp; cur_backtrack_node入栈\n
+ * &emsp;&emsp;&emsp; cur_tree_node指向自身右孩子\n
+ * &emsp;&emsp;&emsp; cur_tree_node_left_backtrack_unfinished设为false(表示左侧回溯完成)\n
+ * &emsp;&emsp; **else if** cur_backtrack_node的tag为右侧回溯 :\n
+ * &emsp;&emsp;&emsp; 访问cur_tree_node\n
+ * **while loop** 回溯栈不为空\n
  */
-template <class TData>
+template <typename TData>
 void BinaryTree<TData>::PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
                                                                  void (*visit)(BinaryTreeNode<TData>*))
 {
@@ -800,8 +849,8 @@ void BinaryTree<TData>::PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subt
     do {
         // 一直向左子树方向搜索(等于在做深度优先搜索DFS)
         while (cur_tree_node != NULL) {
-            PostorderBacktrackStackNode<TData> node(cur_tree_node);
-            backtrack_stack.push(node);
+            PostorderBacktrackStackNode<TData> stack_node(cur_tree_node);
+            backtrack_stack.push(stack_node);
             cur_tree_node = cur_tree_node->left_child;
         }
 
@@ -902,23 +951,29 @@ void BinaryTree<TData>::LevelOrderTraversalOfSubtree_(BinaryTreeNode<TData>* sub
 template<typename TData>
 void BinaryTree<TData>::PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_root) {
 
-    if (subtree_root == NULL) {
-        return;
+    // ---------- 1 空子树处理 ----------
+
+    if (subtree_root == NULL) {                                                     // if 空子树
+        return;                                                                     // 退出函数
     }
 
-    cout << subtree_root->data;
+    // ---------- 2 打印子树根结点 ----------
 
-    if (subtree_root->left_child != NULL || subtree_root->right_child != NULL) {
+    cout << subtree_root->data;                                                     // 打印subtree_root->data
 
-        cout << '(';
+    // ---------- 3 递归处理左右子树 ----------
 
-        this->PrintSubTreeRecursive_(subtree_root->left_child);
+    if (subtree_root->left_child != NULL || subtree_root->right_child != NULL) {    // if 存在left_child || 存在right_child
 
-        cout << ',';
+        cout << '(';                                                                // 打印'('
 
-        this->PrintSubTreeRecursive_(subtree_root->right_child);
+        this->PrintSubTreeRecursive_(subtree_root->left_child);                     // 对subtree_root->left_child递归调用PrintSubTreeRecursive_
 
-        cout << ')';
+        cout << ',';                                                                // 打印','
+
+        this->PrintSubTreeRecursive_(subtree_root->right_child);                    // 对subtree_root->right_child递归调用PrintSubTreeRecursive_
+
+        cout << ')';                                                                // 打印','
     }
 }
 
