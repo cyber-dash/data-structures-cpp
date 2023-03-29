@@ -12,4 +12,4 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
-add_executable(main src/link_stack.h src/main.cpp)
+add_executable(main src/linked_stack.h src/main.cpp)
