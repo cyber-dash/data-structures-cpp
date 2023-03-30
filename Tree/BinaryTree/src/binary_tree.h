@@ -615,21 +615,24 @@ BinaryTreeNode<TData>* BinaryTree<TData>::ParentInSubtree_(BinaryTreeNode<TData>
   * &emsp; 返回\n\n
   * + **2 分治递归**\n
   * 访问subtree_root\n\n
-  * 对subtree_root->left_child递归调用PreorderTraversalOfSubtreeRecursive_\n
-  * 对subtree_root->right_child递归调用PreorderTraversalOfSubtreeRecursive_\n
+  * 左子树递归\n
+  * 右子树递归\n
   */
-template<class TData>
+template<typename TData>
 void BinaryTree<TData>::PreorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
                                                              void (*visit)(BinaryTreeNode<TData>*))
 {
-    if (subtree_root == NULL) {
-        return;
+    // ---------- 1 空子树处理 ----------
+    if (subtree_root == NULL) {                                             // if 空子树
+        return;                                                             // 返回
     }
 
-    visit(subtree_root);
+    // ---------- 2 分治递归 ----------
 
-    PreorderTraversalOfSubtreeRecursive_(subtree_root->left_child, visit);
-    PreorderTraversalOfSubtreeRecursive_(subtree_root->right_child, visit);
+    visit(subtree_root);                                                    // 访问subtree_root
+
+    PreorderTraversalOfSubtreeRecursive_(subtree_root->left_child, visit);  // 左子树递归
+    PreorderTraversalOfSubtreeRecursive_(subtree_root->right_child, visit); // 右子树递归
 }
 
 
@@ -655,26 +658,26 @@ void BinaryTree<TData>::PreorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDat
  * &emsp; **if** cur存在左孩子 :\n
  * &emsp;&emsp; cur左孩子入栈\n
  */
-template<class TData>
+template<typename TData>
 void BinaryTree<TData>::PreorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
                                                     void (*visit)(BinaryTreeNode<TData>*))
 {
-    stack<BinaryTreeNode<TData>*> backtrack_stack;
-    backtrack_stack.push(subtree_root);
+    stack<BinaryTreeNode<TData>*> backtrack_stack;              // 声明backtrack_stack(回溯栈)
+    backtrack_stack.push(subtree_root);                         // subtree_root(子树根结点)入栈
 
-    while (!backtrack_stack.empty()) {
+    while (!backtrack_stack.empty()) {                          // while loop 回溯栈不为空
 
-        BinaryTreeNode<TData>* cur = backtrack_stack.top();
-        backtrack_stack.pop();
+        BinaryTreeNode<TData>* cur = backtrack_stack.top();     // 取栈顶, 赋给cur
+        backtrack_stack.pop();                                  // 栈顶出栈
 
-        visit(cur);
+        visit(cur);                                             // 访问cur
 
-        if (cur->right_child != NULL) {
-            backtrack_stack.push(cur->right_child);
+        if (cur->right_child != NULL) {                         // if cur存在右孩子
+            backtrack_stack.push(cur->right_child);             // cur右孩子入栈
         }
 
-        if (cur->left_child != NULL) {
-            backtrack_stack.push(cur->left_child);
+        if (cur->left_child != NULL) {                          // if cur存在左孩子
+            backtrack_stack.push(cur->left_child);              // cur左孩子入栈
         }
     }
 }
@@ -695,9 +698,9 @@ void BinaryTree<TData>::PreorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtr
  * **if** 空子树 :\n
  * &emsp; 返回\n\n
  * + **2 分治递归**\n
- * 对subtree_root->left_child递归调用PreorderTraversalOfSubtreeRecursive_\n
+ * 左子树递归\n
  * 访问subtree_root\n
- * 对subtree_root->right_child递归调用PreorderTraversalOfSubtreeRecursive_\n
+ * 右子树递归\n
  */
 template<class TData>
 void BinaryTree<TData>::InorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
@@ -781,8 +784,8 @@ void BinaryTree<TData>::InorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtre
  * **if** 空子树 :\n
  * &emsp; 返回\n\n
  * + **2 分治递归**\n
- * 对subtree_root->left_child递归调用PreorderTraversalOfSubtreeRecursive_\n
- * 对subtree_root->right_child递归调用PreorderTraversalOfSubtreeRecursive_\n
+ * 左子树递归\n
+ * 右子树递归\n
  * 访问subtree_root\n
  */
 template<typename TData>
@@ -797,10 +800,8 @@ void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDa
 
     // ---------- 2 分治递归 ----------
 
-    // 对subtree_root->left_child递归调用PreorderTraversalOfSubtreeRecursive_
-    PostorderTraversalOfSubtreeRecursive_(subtree_root->left_child, visit);
-    // 对subtree_root->right_child递归调用PreorderTraversalOfSubtreeRecursive_
-    PostorderTraversalOfSubtreeRecursive_(subtree_root->right_child, visit);
+    PostorderTraversalOfSubtreeRecursive_(subtree_root->left_child, visit);     // 左子树递归
+    PostorderTraversalOfSubtreeRecursive_(subtree_root->right_child, visit);    // 右子树递归
 
     visit(subtree_root);                                                        // 访问subtree_root
 }
@@ -820,6 +821,7 @@ void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDa
  * 声明backtrack_stack(回溯栈)\n
  * 初始化cur_tree_node(当前二叉树结点), 指向subtree_root(子树根结点)\n\n
  * **do**:\n
+ * &emsp; (一直向左子树方向搜索, 等于在做深度优先搜索DFS)\n
  * &emsp; **while loop** cur_tree_node不为NULL :\n
  * &emsp;&emsp; 使用cur_tree_node初始化栈结点stack_node(默认tag为LEFT_BACK_TRACKING)\n
  * &emsp;&emsp; stack_node入栈\n
@@ -834,46 +836,46 @@ void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDa
  * &emsp;&emsp;&emsp; cur_backtrack_node入栈\n
  * &emsp;&emsp;&emsp; cur_tree_node指向自身右孩子\n
  * &emsp;&emsp;&emsp; cur_tree_node_left_backtrack_unfinished设为false(表示左侧回溯完成)\n
- * &emsp;&emsp; **else if** cur_backtrack_node的tag为右侧回溯 :\n
+ * &emsp;&emsp; **else** (cur_backtrack_node的tag为右侧回溯) :\n
  * &emsp;&emsp;&emsp; 访问cur_tree_node\n
  * **while loop** 回溯栈不为空\n
  */
 template <typename TData>
 void BinaryTree<TData>::PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
-                                                                 void (*visit)(BinaryTreeNode<TData>*))
+                                                     void (*visit)(BinaryTreeNode<TData>*))
 {
-    stack<PostorderBacktrackStackNode<TData> > backtrack_stack;
+    stack<PostorderBacktrackStackNode<TData> > backtrack_stack;                                     // 声明backtrack_stack(回溯栈)
 
-    BinaryTreeNode<TData>* cur_tree_node = subtree_root;
+    BinaryTreeNode<TData>* cur_tree_node = subtree_root;                                            // 初始化cur_tree_node(当前二叉树结点), 指向subtree_root(子树根结点)
 
     do {
-        // 一直向左子树方向搜索(等于在做深度优先搜索DFS)
-        while (cur_tree_node != NULL) {
-            PostorderBacktrackStackNode<TData> stack_node(cur_tree_node);
-            backtrack_stack.push(stack_node);
-            cur_tree_node = cur_tree_node->left_child;
+        // (一直向左子树方向搜索, 等于在做深度优先搜索DFS)
+        while (cur_tree_node != NULL) {                                                             // while loop cur_tree_node不为NULL
+            PostorderBacktrackStackNode<TData> stack_node(cur_tree_node);                           // 使用cur_tree_node初始化栈结点stack_node(默认tag为LEFT_BACK_TRACKING)
+            backtrack_stack.push(stack_node);                                                       // stack_node入栈
+            cur_tree_node = cur_tree_node->left_child;                                              // cur_tree_node指向自身的左孩子
         }
 
-        bool cur_tree_node_left_backtrack_unfinished = true;
-        while (cur_tree_node_left_backtrack_unfinished && !backtrack_stack.empty()) {
+        bool cur_tree_node_left_backtrack_unfinished = true;                                        // 初始化cur_tree_node_left_backtrack_unfinished(当前二叉树结点左侧回溯未完成)为true
+        while (cur_tree_node_left_backtrack_unfinished && !backtrack_stack.empty()) {               // while loop 初始化cur_tree_node_left_backtrack_unfinished && 回溯栈不为空
 
-            PostorderBacktrackStackNode<TData> cur_backtrack_node = backtrack_stack.top();
-            backtrack_stack.pop();
+            PostorderBacktrackStackNode<TData> cur_backtrack_node = backtrack_stack.top();          // 取回溯栈栈顶, 赋给cur_backtrack_node(当前回溯结点)
+            backtrack_stack.pop();                                                                  // 回溯栈栈顶出栈
 
-            cur_tree_node = cur_backtrack_node.node;
+            cur_tree_node = cur_backtrack_node.node;                                                // 取cur_backtrack_node.node, 给cur_tree_node
 
-            if (cur_backtrack_node.tag == PostorderBacktrackStackNode<TData>::LEFT_BACK_TRACKING) {
-                cur_backtrack_node.tag = PostorderBacktrackStackNode<TData>::RIGHT_BACK_TRACKING;
-                backtrack_stack.push(cur_backtrack_node);
-                cur_tree_node = cur_tree_node->right_child;
+            if (cur_backtrack_node.tag == PostorderBacktrackStackNode<TData>::LEFT_BACK_TRACKING) { // if cur_backtrack_node的tag为左侧回溯
+                cur_backtrack_node.tag = PostorderBacktrackStackNode<TData>::RIGHT_BACK_TRACKING;   // cur_backtrack_node的tag设为右侧回溯
+                backtrack_stack.push(cur_backtrack_node);                                           // cur_backtrack_node入栈
+                cur_tree_node = cur_tree_node->right_child;                                         // cur_tree_node指向自身右孩子
 
-                cur_tree_node_left_backtrack_unfinished = false;
+                cur_tree_node_left_backtrack_unfinished = false;                                    // cur_tree_node_left_backtrack_unfinished设为false(表示左侧回溯完成)
 
-            } else if (cur_backtrack_node.tag == PostorderBacktrackStackNode<TData>::RIGHT_BACK_TRACKING) {
-                visit(cur_tree_node);
+            } else {                                                                                // else (cur_backtrack_node的tag为右侧回溯)
+                visit(cur_tree_node);                                                               // 访问cur_tree_node
             }
         }
-    } while (!backtrack_stack.empty());
+    } while (!backtrack_stack.empty());                                                             // while loop 回溯栈不为空
 }
 
 
