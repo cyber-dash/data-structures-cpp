@@ -16,6 +16,7 @@ using namespace std;
 
 int main() {
 
+    // 测试二叉树复制构造函数
 	BinaryTreeTest::TestCopyConstructor();
 
 	// 测试二叉树深度

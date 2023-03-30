@@ -200,11 +200,11 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Last(ThreadedNode<TData>*
  */
 template <typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Pre(ThreadedNode<TData>* node) {
-    if (node->left_tag == THREADED_NODE_POINTER) {
-        return node->left_child;
+    if (node->left_tag == THREADED_NODE_POINTER) {  // if node的left_tag属性, 是THREADED_NODE_POINTER(线索结点指针)
+        return node->left_child;                    // 返回node->left_child
     }
 
-    return Last(node->left_child);
+    return Last(node->left_child);                  // 返回Last(node->left_child)
 }
 
 

@@ -23,9 +23,6 @@ public:
     /*! @brief 测试二叉树深度 */
     static void TestHeight();
 
-    /*! @brief 测试LeftChild和RightChild */
-    // static void TestChild();
-
     /*! @brief 测试父节点函数Parent */
     static void TestParent();
 
@@ -61,6 +58,22 @@ void VisitAndCout(BinaryTreeNode<int>* node) {
 };
 
 
+/*!
+ * @brief **测试二叉树复制构造函数**
+ * @note
+ * 测试二叉树复制构造函数
+ * ------------------
+ * ------------------
+ *
+ * ------------------
+ * + **1 构造二叉树**\n
+ * **for loop** 循环7次 :\n
+ * &emsp; 插入i \n\n
+ * + **2 调用复制构造函数**\n
+ * 对binary_tree调用复制构造函数, 初始化binary_tree_2\n\n
+ * + **3 打印binary_tree_2**\n
+ * 打印\n
+ */
 void BinaryTreeTest::TestCopyConstructor() {
 
     cout << endl;
@@ -68,22 +81,43 @@ void BinaryTreeTest::TestCopyConstructor() {
     cout << "|              Test BinaryTree CopyConstructor              |" << endl;
     cout << "|                     测试二叉树复制构造函数                   |" << endl;
 
+    // ---------- 1 构造二叉树 ----------
+
     int num = 7;
     BinaryTree<int> binary_tree;
 
-    for (int i = 0; i < num; i++) {
-        binary_tree.InsertRecursive(i);
+    for (int i = 0; i < num; i++) {                 // for loop 循环7次
+        binary_tree.InsertRecursive(i);             // 插入i
     }
 
-    BinaryTree<int> binary_tree_2(binary_tree);
+    // ---------- 2 调用复制构造函数 ----------
 
-    // binary_tree_2.Print();
-    cout << binary_tree_2;
+    BinaryTree<int> binary_tree_2(binary_tree);     // 对binary_tree调用复制构造函数, 初始化binary_tree_2
+
+    // ---------- 3 打印binary_tree_2 ----------
+
+    cout << binary_tree_2;                          // 打印
 
     cout << endl << "------------------------- CyberDash -------------------------" << endl;
 }
 
 
+/*!
+ * @brief **测试二叉树高度**
+ * @note
+ * 测试二叉树高度
+ * ------------------
+ * ------------------
+ *
+ * ------------------
+ * + **1 构造二叉树**\n
+ * **for loop** 循环7次 :\n
+ * &emsp; 插入i \n\n
+ * + **2 获取高度**\n
+ * 调用Height(), 获取高度\n\n
+ * + **3 打印binary_tree_2**\n
+ * 打印高度\n
+ */
 void BinaryTreeTest::TestHeight() {
 
     cout << endl;
@@ -109,62 +143,38 @@ void BinaryTreeTest::TestHeight() {
 
     int height = binary_tree.Height();
 
-    cout << "二叉树深度: " << height << endl;
+    cout << "二叉树高度: " << height << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
     cout << endl;
 }
 
 
-void BinaryTreeTest::TestIsEmpty() {
-
-}
-
-
-/*
-void BinaryTreeTest::TestChild() {
-
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|            Test BinaryTree LeftChild & RightChild         |" << endl;
-    cout << "|                     测试二叉树左右孩子函数                   |" << endl;
-    cout << "|                                                           |" << endl;
-    cout << "|                             0                             |" << endl;
-    cout << "|                            / \\                            |" << endl;
-    cout << "|                           /   \\                           |" << endl;
-    cout << "|                          1     2                          |" << endl;
-    cout << "|                         / \\   /                           |" << endl;
-    cout << "|                        3   5 4                            |" << endl;
-    cout << "|                       /                                   |" << endl;
-    cout << "|                      6                                    |" << endl << endl;
-
-    int num = 7;
-    BinaryTree<int> binary_tree;
-
-    for (int i = 0; i < num; i++) {
-        binary_tree.InsertRecursive(i);
-    }
-
-    BinaryTreeNode<int>* node = binary_tree.Root();
-    BinaryTreeNode<int>* left_child = binary_tree.LeftChild(node);
-    BinaryTreeNode<int>* right_child = binary_tree.RightChild(node);
-
-    cout << "根节点: " << node->data << endl;
-    cout << "根节点左孩子: " << left_child->data << endl;
-    cout << "根节点右孩子: " << right_child->data << endl;
-
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << endl;
-}
-*/
-
-
+/*!
+ * @brief **测试二叉树父节点**
+ * @note
+ * 测试二叉树父节点
+ * -------------
+ * -------------
+ *
+ * -------------
+ * + **1 构造二叉树**\n
+ * **for loop** 循环7次 :\n
+ * &emsp; 插入i \n\n
+ * + **2 初始化测试结点**\n
+ * root指向根结点\n
+ * root_parent指向根结点的父节点\n
+ * node指向结点3\n
+ * node_parent指向结点3的父节点\n\n
+ * + **3 打印测试结点信息**\n
+ * 打印信息\n
+ */
 void BinaryTreeTest::TestParent() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                  Test BinaryTree Parent                   |" << endl;
-    cout << "|                       测试二叉树父节点                      |" << endl;
+    cout << "|                       测试二叉树父节点                       |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -185,9 +195,8 @@ void BinaryTreeTest::TestParent() {
     BinaryTreeNode<int>* root = binary_tree.Root();
     BinaryTreeNode<int>* root_parent = binary_tree.Parent(root);
 
-    // BinaryTreeNode<int>* target = binary_tree.LeftChild(binary_tree.LeftChild(root));
-    BinaryTreeNode<int>* target = root->left_child->left_child;
-    BinaryTreeNode<int>* target_parent = binary_tree.Parent(target);
+    BinaryTreeNode<int>* node = root->left_child->left_child;
+    BinaryTreeNode<int>* node_parent = binary_tree.Parent(node);
 
     if (root_parent == NULL) {
         cout << "根节点的父节点为NULL" << endl;
@@ -195,7 +204,7 @@ void BinaryTreeTest::TestParent() {
         cout << "根节点的父节点: " << root_parent->data << endl;
     }
 
-    cout << target->data << "的父节点： " << target_parent->data << endl;
+    cout << node->data << "的父节点： " << node_parent->data << endl;
 
     cout << "------------------------- CyberDash -------------------------" << endl;
     cout << endl;
@@ -243,7 +252,7 @@ void BinaryTreeTest::TestInorderTraversal() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|               Test BinaryTree InorderTraversal            |" << endl;
-    cout << "|                      测试二叉树中序遍历                     |" << endl;
+    cout << "|                       测试二叉树中序遍历                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
