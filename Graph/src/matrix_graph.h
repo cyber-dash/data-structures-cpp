@@ -103,13 +103,13 @@ private:
 
 
 /*!
- * @brief **构造函数(结点数上限/边权值上限)**
+ * @brief **构造函数(结点数上限, 边权值上限)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 结点数上限
  * @param max_weight 边权值上限
  * @note
- * 构造函数(结点数上限/边权值上限)
+ * 构造函数(结点数上限, 边权值上限)
  * ---------------------------
  * ---------------------------
  *
@@ -173,14 +173,14 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
 
 
 /*!
- * @brief **构造函数(图类型/结点数上限/边权值上限)**
+ * @brief **构造函数(图类型, 结点数上限, 边权值上限)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param type 图类型
  * @param max_vertex_count 结点数上限
  * @param max_weight 边权值上限
  * @note
- * 构造函数(图类型/结点数上限/边权值上限)
+ * 构造函数(图类型, 结点数上限, 边权值上限)
  * ---------------------------------
  * ---------------------------------
  *
@@ -236,7 +236,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
 
 
 /*!
- * @brief **构造函数(结点数上限/边权值上限/边vector/结点vector)**
+ * @brief **构造函数(结点数上限, 边权值上限, 边vector, 结点vector)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 结点数上限
@@ -244,11 +244,11 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
  * @param edges 边vector
  * @param vertices 结点vector
  * @note
- * 构造函数(结点数上限/边权值上限/边vector/结点vector)
- * ----------------------------------------
- * ----------------------------------------
+ * 构造函数(结点数上限, 边权值上限, 边vector, 结点vector)
+ * ------------------------------------------------
+ * ------------------------------------------------
  *
- * ----------------------------------------
+ * ------------------------------------------------
  * + **1** 设置部分成员变量\n
  *  - type_(**图类型**)设为UNDIRECTED(**无向**)\n
  *  - max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
@@ -746,6 +746,14 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
     // ---------- 2 执行插入 ----------
 
     this->vertices_.push_back(vertex);  // vertices_插入结点
+
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        this->degrees_.push_back(0);  // 度vector插入结点
+    } else {
+        this->in_degrees_.push_back(0);  // 入度vector插入结点
+        this->out_degrees_.push_back(0);  // 出度vector插入结点
+    }
+
     this->vertex_count_++;              // vertex_count_加1
 
     return true;
@@ -883,8 +891,8 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
 
     // 2.2 无向图处理
     if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // if 无向图
-        // 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵
-        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;
+        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;   // 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵
+        //todo: 度
     }
 
     // 2.3 edge_count_(边数)加1
@@ -964,10 +972,19 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
     // ---------- 4 vertices_执行删除 ----------
 
-    // vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素
-    this->vertices_[vertex_index] = this->vertices_[this->vertex_count_ - 1];
-    // vertices_删除索引vertex_count - 1位置元素
-    this->vertices_.erase(this->vertices_.begin() + this->vertex_count_ - 1);
+    this->vertices_[vertex_index] = this->vertices_[this->vertex_count_ - 1];   // vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素
+    this->vertices_.erase(this->vertices_.begin() + this->vertex_count_ - 1);   // vertices_删除索引vertex_count - 1位置元素
+
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        this->degrees_[vertex_index] = this->degrees_[this->vertex_count_ - 1];
+        this->degrees_.erase(this->degrees_.begin() + this->vertex_count_ - 1);
+    } else {
+        this->in_degrees_[vertex_index] = this->in_degrees_[this->vertex_count_ - 1];
+        this->in_degrees_.erase(this->in_degrees_.begin() + this->vertex_count_ - 1);
+
+        this->out_degrees_[vertex_index] = this->out_degrees_[this->vertex_count_ - 1];
+        this->out_degrees_.erase(this->out_degrees_.begin() + this->vertex_count_ - 1);
+    }
 
     // ---------- 5 vertex_count_(边数)减1 ----------
 

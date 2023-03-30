@@ -361,14 +361,17 @@ public:
     virtual int GetVertexIndex(const TVertex& vertex) const = 0;
 
 protected:
-    int max_vertex_count_{};    //!< 图结点数量上限
-    TWeight max_weight_;        //!< 边权值上限
-    int edge_count_{};          //!< 边数量
-    int vertex_count_{};        //!< 结点数量
-    int type_{};                //!< 1: 有向, 2: 无向
+    int max_vertex_count_{};                //!< 图结点数量上限
+    TWeight max_weight_;                    //!< 边权值上限
+    int edge_count_{};                      //!< 边数量
+    int vertex_count_{};                    //!< 结点数量
+    int type_{};                            //!< 1: 有向, 2: 无向
 
     vector<TVertex> vertices_;              //!< 结点vector
     vector<Edge<TVertex, TWeight> > edges_; //!< 边vector
+    vector<int> degrees_;                   //!< 度vector
+    vector<int> in_degrees_;                //!< 入度vector
+    vector<int> out_degrees_;               //!< 出度vector
 
     static const int DIRECTED = 1; //!< 有向
     static const int UNDIRECTED = 2; //!< 无向
