@@ -72,7 +72,7 @@ void BinaryTreeTest::TestCopyConstructor() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     BinaryTree<int> binary_tree_2(binary_tree);
@@ -104,7 +104,7 @@ void BinaryTreeTest::TestHeight() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     int height = binary_tree.Height();
@@ -142,7 +142,7 @@ void BinaryTreeTest::TestChild() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     BinaryTreeNode<int>* node = binary_tree.Root();
@@ -179,7 +179,7 @@ void BinaryTreeTest::TestParent() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     BinaryTreeNode<int>* root = binary_tree.Root();
@@ -222,7 +222,7 @@ void BinaryTreeTest::TestPreorderTraversal() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     cout << "前序遍历(递归):" << endl;
@@ -258,7 +258,7 @@ void BinaryTreeTest::TestInorderTraversal() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     cout << "中序遍历(递归):" << endl;
@@ -294,7 +294,7 @@ void BinaryTreeTest::TestPostorderTraversal() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     cout << "后序遍历(递归):" << endl;
@@ -331,7 +331,7 @@ void BinaryTreeTest::TestLevelOrderTraversal() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     binary_tree.LevelOrderTraversal(VisitAndCout);
@@ -362,7 +362,7 @@ void BinaryTreeTest::TestExist() {
     BinaryTree<int> binary_tree;
 
     for (int i = 0; i < num; i++) {
-        binary_tree.Insert(i);
+        binary_tree.InsertRecursive(i);
     }
 
     bool in_tree = binary_tree.Exist(5);
