@@ -29,7 +29,7 @@ struct BinaryTreeNode {
     /*! @brief **默认构造函数** */
     BinaryTreeNode() : left_child(NULL), right_child(NULL) {}
 
-    /*! @brief **构造函数(数据项/左右孩子)** */
+    /*! @brief **构造函数(数据项, 左右孩子)** */
     explicit BinaryTreeNode(TData data, BinaryTreeNode<TData>* left_child = NULL, BinaryTreeNode<TData>* right_child = NULL)
         : data(data), left_child(left_child), right_child(right_child) {}
 
@@ -42,6 +42,16 @@ struct BinaryTreeNode {
 /*!
  * @brief <b>(后序遍历)回溯栈结点模板类</b>
  * @tparam TData 数据项类型模板参数
+ * @note
+ * (后序遍历)回溯栈结点模板类
+ * ----------------------
+ * ----------------------
+ *
+ * <span style="color:#D40000;font-size:larger">
+ * 仅用于后序遍历\n\n 回溯栈需要记录栈内结点是从左子树回溯, 还是右子树回溯\n
+ * </span>
+ *
+ * ----------------------
  */
 template <typename TData>
 struct PostorderBacktrackStackNode {
@@ -52,6 +62,10 @@ struct PostorderBacktrackStackNode {
      * 构造函数(二叉树结点)
      * -----------------
      * -----------------
+     *
+     * <span style="color:#DF5A00;font-size:larger">
+     * 默认tag是左子树回溯
+     * </span>
      *
      * -----------------
      * 初始化node, tag设置为LEFT_BACK_TRACKING(左孩子回溯)
@@ -102,6 +116,10 @@ public:
      * ------
      * ------
      *
+     * <span style="color:#D40000;font-size:larger">
+     * I have bad news for you
+     * </span>
+     *
      * ------
      * 对root_调用RemoveSubtreeRecursive_
      */
@@ -129,8 +147,7 @@ public:
      * &emsp; 返回this->GetParentInSubtreeRecursive_(this->root_, node)\n
      */
     BinaryTreeNode<TData>* Parent(BinaryTreeNode<TData>* node) const {
-        return (this->root_ == NULL || this->root_ == node) ? NULL : this->GetParentInSubtreeRecursive_(this->root_,
-                                                                                                        node);
+        return (this->root_ == NULL || this->root_ == node) ? NULL : this->GetParentInSubtreeRecursive_(this->root_, node);
     }
 
     /*!
@@ -173,15 +190,15 @@ public:
     bool InsertRecursive(const TData& data) { return this->InsertInSubtreeRecursive_(this->root_, data); }
 
     /*!
-     * @brief **查询数据项是否存在**
+     * @brief **是否存在数据**
      * @param data 数据项
      * @return 是否存在
      * @note
-     * 查询数据项是否存在
-     * ---------------
-     * ---------------
+     * 是否存在数据
+     * ----------
+     * ----------
      *
-     * ---------------
+     * ----------
      * 调用ExistInSubTree_
      */
     bool Exist(TData data) { return this->ExistInSubTree_(this->root_, data); }
@@ -278,7 +295,7 @@ public:
 
     /*!
      * @brief **层序遍历**
-     * @param visit 结点访问函数
+     * @param Visit 结点访问函数
      * @note
      * 层序遍历
      * ------
@@ -287,8 +304,8 @@ public:
      * ------
      * 调用LevelOrderTraversalOfSubtree_
      */
-    void LevelOrderTraversal(void (*visit)(BinaryTreeNode<TData>*)) {
-        this->LevelOrderTraversalOfSubtree_(this->root_, visit);
+    void LevelOrderTraversal(void (*Visit)(BinaryTreeNode<TData>*)) {
+        this->LevelOrderTraversalOfSubtree_(this->root_, Visit);
     }
 
     /*!
@@ -297,6 +314,13 @@ public:
      * @param inorder_list 中序遍历列表
      * @param length 字符串长度
      * @return 执行结果
+     * @note
+     * 建树(by前序遍历和中序遍历)
+     * ----------------------
+     * ----------------------
+     *
+     * ----------------------
+     * 调用CreateSubtreeByPreorderAndInorderList_\n
      */
     bool CreateByPreorderAndInorderList(TData* preorder_list, TData* inorder_list, int length) {
         bool res = this->CreateSubtreeByPreorderAndInorderList_(preorder_list, inorder_list, length, this->root_);
@@ -353,7 +377,7 @@ protected:
     // 子树打印
     void PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_root);
 
-    // 使用前序遍历和中序遍历结果, 创建二叉子树(递归)
+    // 使用前序遍历和中序遍历结果, 创建子树(递归)
     bool CreateSubtreeByPreorderAndInorderList_(TData* preorder_sub_list,
                                                 TData* inorder_sub_list,
                                                 int length,
@@ -988,13 +1012,15 @@ void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDa
  * ----------
  * 声明backtrack_stack(回溯栈)\n
  * 初始化cur_tree_node(当前二叉树结点), 指向subtree_root(子树根结点)\n\n
- * **do**:\n
- * &emsp; (一直向左子树方向搜索, 等于在做深度优先搜索DFS)\n
+ * **do**:\n\n
+ * &emsp; <span style="color:#003153">(一直向左子树方向搜索, 等于在做深度优先搜索DFS)</span>\n
  * &emsp; **while loop** cur_tree_node不为NULL :\n
  * &emsp;&emsp; 使用cur_tree_node初始化栈结点stack_node(默认tag为LEFT_BACK_TRACKING)\n
  * &emsp;&emsp; stack_node入栈\n
- * &emsp;&emsp; cur_tree_node指向自身的左孩子\n
- * &emsp; 初始化cur_tree_node_left_backtrack_unfinished(当前二叉树结点左侧回溯未完成)为true\n
+ * &emsp;&emsp; cur_tree_node指向自身的左孩子\n\n
+ * &emsp; <span style="color:#003153">(标记当前结点尚未开始左侧回溯)</span>\n
+ * &emsp; 初始化cur_tree_node_left_backtrack_unfinished(当前二叉树结点左侧回溯未完成)为true\n\n
+ * &emsp; <span style="color:#003153">(分情况处理栈顶, 和维护回溯)</span>\n
  * &emsp; **while loop** 初始化cur_tree_node_left_backtrack_unfinished && 回溯栈不为空 :\n
  * &emsp;&emsp; 取回溯栈栈顶, 赋给cur_backtrack_node(当前回溯结点)\n
  * &emsp;&emsp; 回溯栈栈顶出栈\n
@@ -1005,7 +1031,7 @@ void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDa
  * &emsp;&emsp;&emsp; cur_tree_node指向自身右孩子\n
  * &emsp;&emsp;&emsp; cur_tree_node_left_backtrack_unfinished设为false(表示左侧回溯完成)\n
  * &emsp;&emsp; **else** (cur_backtrack_node的tag为右侧回溯) :\n
- * &emsp;&emsp;&emsp; 访问cur_tree_node\n
+ * &emsp;&emsp;&emsp; 访问cur_tree_node\n\n
  * **while loop** 回溯栈不为空\n
  */
 template <typename TData>
@@ -1149,7 +1175,7 @@ void BinaryTree<TData>::PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_ro
 
 
 /*!
- * @brief **创建二叉子树by前序遍历子序列和中序遍历子序列(递归)**
+ * @brief **创建子树by前序遍历子序列和中序遍历子序列(递归)**
  * @tparam TData 数据项类型模板参数
  * @param preorder_sub_list 前序遍历子序列
  * @param inorder_sub_list 后序遍历子序列
@@ -1157,11 +1183,15 @@ void BinaryTree<TData>::PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_ro
  * @param subtree_root 子树根结点
  * @return 执行结果
  * @note
- * 创建二叉子树by前序遍历子序列和中序遍历子序列(递归)
- * -----------------------------------------
- * -----------------------------------------
+ * 创建子树by前序遍历子序列和中序遍历子序列(递归)
+ * --------------------------------------
+ * --------------------------------------
  *
- * -----------------------------------------
+ * <span style="color:#038575;font-size:larger">中序 + 前序: 可以</span> <----- 本函数\n
+ * <span style="color:#038575;font-size:larger">中序 + 后序: 可以\n</span>
+ * <span style="color:#D40000;font-size:larger">前序 + 后序: 不可以\n</span>
+ *
+ * --------------------------------------
  * + **1 空子序列处理**\n
  * **if** length == 0 :\n
  * &emsp; 返回true\n\n

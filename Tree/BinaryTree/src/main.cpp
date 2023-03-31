@@ -22,9 +22,6 @@ int main() {
 	// 测试二叉树深度
 	BinaryTreeTest::TestHeight();
 
-	// 测试LeftChild和RightChild
-	// BinaryTreeTest::TestChild();
-
 	// 测试父节点函数Parent
 	BinaryTreeTest::TestParent();
 

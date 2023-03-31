@@ -22,15 +22,15 @@ using namespace std;
  * @brief 链表队列结点模板结构体
  * @tparam TData 数据项类型模板参数
  */
-template <class TData>
+template <typename TData>
 class LinkedNode {
 
 public:
     LinkedNode() : next_(NULL) {}
 
     /*!
-     * @brief 构造函数(下一结点指针)
-     * @param node 下一结点指针
+     * @brief **构造函数(下一结点)**
+     * @param node 下一结点
      */
     explicit LinkedNode(LinkedNode<TData>* node = NULL) : next_(node) {}
 
@@ -73,8 +73,8 @@ private:
 };
 
 
-template<class TData> class LinkedQueue;
-template<class TData> ostream& operator<< (ostream& os, const LinkedQueue<TData>& linked_queue);
+template<typename TData> class LinkedQueue;
+template<typename TData> ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue);
 
 /**
  * @brief 链表队列模板类
@@ -137,17 +137,17 @@ private:
 
 
 /*!
- * @brief 入队
- * @tparam TData 类型模板参数
- * @param data 数据
- * @return 是否成功
+ * @brief **入队**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项值
+ * @return 执行结果
  */
-template<class TData>
+template<typename TData>
 bool LinkedQueue<TData>::EnQueue(const TData& data) {
 
     LinkedNode<TData>* node = new LinkedNode<TData>(data);
     if (node == NULL) {
-        return false;
+        throw bad_alloc();
     }
 
     if (IsEmpty()) {
@@ -284,8 +284,16 @@ int LinkedQueue<TData>::Length() const {
 
 
 /*!
- * @brief 清空队列
- * @tparam TData 类型模板参数
+ * @brief **清空**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 清空
+ * ----
+ * ----
+ *
+ * ----
+ * **while loop** 当前队列不为NULL: \n
+ * &emsp; 队头出队\n
  */
 template<typename TData>
 void LinkedQueue<TData>::Clear() {

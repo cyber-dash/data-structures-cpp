@@ -41,18 +41,18 @@ bool operator < (const HuffmanTreeNode<TKey, TWeight>& node1, const HuffmanTreeN
 template <typename TKey, typename TWeight>
 class HuffmanTree {
 public:
-	HuffmanTree(const TKey keys[], const TWeight weights[], int n);
+	HuffmanTree(const TKey keys[], const TWeight weights[], int count);
 	~HuffmanTree() { ClearSubTree(root_); }
 
-    unordered_map<TKey, string> GetHuffmanCode();
+    unordered_map<TKey, string> GetHuffmanCodes();
 
 	void PrintTree() { PrintSubTree_(root_); cout << endl; }
 
 protected:
 	HuffmanTreeNode<TKey, TWeight>* root_;
-	void ClearSubTree(HuffmanTreeNode<TKey, TWeight>* t);
-	void MergeTree_(HuffmanTreeNode<TKey, TWeight>* ht1, HuffmanTreeNode<TKey, TWeight>* ht2, HuffmanTreeNode<TKey, TWeight>*& parent);
-	void PrintSubTree_(HuffmanTreeNode<TKey, TWeight>* t);
+	void ClearSubTree(HuffmanTreeNode<TKey, TWeight>* subtree_root);
+	void MergeTree_(HuffmanTreeNode<TKey, TWeight>* subtree_root_1, HuffmanTreeNode<TKey, TWeight>* subtree_root_2, HuffmanTreeNode<TKey, TWeight>*& new_subtree_root);
+	void PrintSubTree_(HuffmanTreeNode<TKey, TWeight>* subtree_root);
     void GetHuffmanCodeOfSubTree_(HuffmanTreeNode<TKey, TWeight>* node,
                                   string code,
                                   unordered_map<TKey, string>& huffmanCodes);
@@ -60,30 +60,30 @@ protected:
 
 
 template <typename TKey, typename TWeight>
-HuffmanTree<TKey, TWeight>::HuffmanTree(const TKey* keys, const TWeight* weights, int n) {
+HuffmanTree<TKey, TWeight>::HuffmanTree(const TKey* keys, const TWeight* weights, int count) {
 
-    std::priority_queue<HuffmanTreeNode<TKey, TWeight> > min_queue;
+    std::priority_queue<HuffmanTreeNode<TKey, TWeight> > min_priority_queue;
 
-    for (int i = 0; i < n; i++) {
-        HuffmanTreeNode<TKey, TWeight>* work = new HuffmanTreeNode<TKey, TWeight>(keys[i], weights[i], NULL, NULL, NULL);
-        work->parent = work;
+    for (int i = 0; i < count; i++) {
+        HuffmanTreeNode<TKey, TWeight>* node = new HuffmanTreeNode<TKey, TWeight>(keys[i], weights[i], NULL, NULL, NULL);
+        node->parent = node;
 
-        min_queue.push(*work);
+        min_priority_queue.push(*node);
     }
 
     HuffmanTreeNode<TKey, TWeight>* parent = NULL;
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < count - 1; i++) {
 
-        HuffmanTreeNode<TKey, TWeight> temp = min_queue.top();
-        min_queue.pop();
-        HuffmanTreeNode<TKey, TWeight>* first = temp.parent;
+        HuffmanTreeNode<TKey, TWeight> node = min_priority_queue.top();
+        min_priority_queue.pop();
+        HuffmanTreeNode<TKey, TWeight>* first = node.parent;
 
-        temp = min_queue.top();
-        min_queue.pop();
-        HuffmanTreeNode<TKey, TWeight>* second = temp.parent;
+        node = min_priority_queue.top();
+        min_priority_queue.pop();
+        HuffmanTreeNode<TKey, TWeight>* second = node.parent;
 
         MergeTree_(first, second, parent);
-        min_queue.push(*parent);
+        min_priority_queue.push(*parent);
     }
 
     root_ = parent;
@@ -91,54 +91,78 @@ HuffmanTree<TKey, TWeight>::HuffmanTree(const TKey* keys, const TWeight* weights
 
 
 template <typename TKey, typename TWeight>
-void HuffmanTree<TKey, TWeight>::ClearSubTree(HuffmanTreeNode<TKey, TWeight>* t) {
-    if (t == NULL) {
+void HuffmanTree<TKey, TWeight>::ClearSubTree(HuffmanTreeNode<TKey, TWeight>* subtree_root) {
+    if (subtree_root == NULL) {
         return;
     }
 
-    ClearSubTree(t->left_child);
-    ClearSubTree(t->right_child);
+    ClearSubTree(subtree_root->left_child);
+    ClearSubTree(subtree_root->right_child);
 
-    delete t;
+    delete subtree_root;
 }
 
 
 template <typename TKey, typename TWeight>
-void HuffmanTree<TKey, TWeight>::MergeTree_(HuffmanTreeNode<TKey, TWeight>* ht1,
-                                            HuffmanTreeNode<TKey, TWeight>* ht2,
-                                            HuffmanTreeNode<TKey, TWeight>*& parent)
+void HuffmanTree<TKey, TWeight>::MergeTree_(HuffmanTreeNode<TKey, TWeight>* subtree_root_1,
+                                            HuffmanTreeNode<TKey, TWeight>* subtree_root_2,
+                                            HuffmanTreeNode<TKey, TWeight>*& new_subtree_root)
 {
     TKey key;
-    parent = new HuffmanTreeNode<TKey, TWeight>(key, ht1->weight + ht2->weight, ht1, ht2, NULL);
+    new_subtree_root = new HuffmanTreeNode<TKey, TWeight>(key,
+                                                          subtree_root_1->weight + subtree_root_2->weight,
+                                                          subtree_root_1,
+                                                          subtree_root_2,
+                                                          NULL);
 
-    parent->parent = parent;
+    new_subtree_root->parent = new_subtree_root;
 
-    ht1->parent = ht2->parent = parent;
+    subtree_root_1->parent = new_subtree_root;
+    subtree_root_2->parent = new_subtree_root;
 }
 
 
 template <typename TKey, typename TWeight>
-void HuffmanTree<TKey, TWeight>::PrintSubTree_(HuffmanTreeNode<TKey, TWeight>* t) {
-    if (t == NULL) {
+void HuffmanTree<TKey, TWeight>::PrintSubTree_(HuffmanTreeNode<TKey, TWeight>* subtree_root) {
+    if (subtree_root == NULL) {
         return;
     }
 
-    cout << t->weight;
+    cout << subtree_root->weight;
     cout << '(';
-    PrintSubTree_(t->left_child);
+    PrintSubTree_(subtree_root->left_child);
     cout << ',';
-    PrintSubTree_(t->right_child);
+    PrintSubTree_(subtree_root->right_child);
     cout << ')';
 }
 
 
+/*!
+ * @brief **生成哈夫曼编码**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TWeight 权值类型模板参数
+ * @return 哈夫曼编码
+ * @note
+ * 生成哈夫曼编码
+ * ------------
+ * ------------
+ *
+ * <span style="color:#D40000;font-size:larger">
+ * 对根结点, 调用GetHuffmanCodeOfSubTree_, 编码以""作为起始
+ * </span>
+ *
+ * ------------
+ * 声明huffman_codes\n
+ * 调用GetHuffmanCodeOfSubTree_\n
+ * 返回huffman_codes\n
+ */
 template <typename TKey, typename TWeight>
-unordered_map<TKey, string> HuffmanTree<TKey, TWeight>::GetHuffmanCode() {
-    unordered_map<TKey, string> huffmanCodes;
+unordered_map<TKey, string> HuffmanTree<TKey, TWeight>::GetHuffmanCodes() {
+    unordered_map<TKey, string> huffman_codes;
 
-    GetHuffmanCodeOfSubTree_(root_, "", huffmanCodes);
+    GetHuffmanCodeOfSubTree_(root_, "", huffman_codes);
 
-    return huffmanCodes;
+    return huffman_codes;
 }
 
 
