@@ -350,7 +350,7 @@ void ChildSiblingTree<TData>::LevelOrderOfSubTree_(ChildSiblingNode<TData>* subt
     // ---------- 2 队列初始化 ----------
 
     queue<ChildSiblingNode<TData>*> node_queue;                    // 声明node_queue(结点队列)
-    node_queue.push(subtree_root);                              // 子树根结点入队
+    node_queue.push(subtree_root);                                 // 子树根结点入队
 
     // ---------- 3 使用队列进行遍历 ----------
 

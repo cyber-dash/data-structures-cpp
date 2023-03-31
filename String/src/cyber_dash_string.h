@@ -292,10 +292,16 @@ bool operator<=(const String& str1, const String& str2) {
 
 
 /*!
- * @brief BF字符串匹配
+ * @brief **BF字符串匹配**
  * @param pattern 模式串
  * @param offset 目标串的起始偏移量
- * @return 目标串中的匹配位置, -1为不匹配 / 其他为第一个匹配字符的数组索引值
+ * @return 匹配位置索引
+ * @note
+ * BF字符串匹配
+ * ----------
+ * ----------
+ *
+ * ----------
  */
 int String::BruteForceMatch(const String& pattern, int offset) const {
 

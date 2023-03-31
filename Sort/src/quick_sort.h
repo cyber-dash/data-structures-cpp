@@ -22,20 +22,21 @@
  * ------------
  * + **1 初始化左右边界**\n
  * left(左边界)设为0\n
- * right(右边界)设为size - 1\n
+ * right(右边界)设为size - 1\n\n
  * + **2 调用子数组递归函数排序**\n
+ * 调用QuickSortInSubArrayRecursive\n
  */
 template<typename TElement>
 void QuickSortRecursive(TElement* elements, int size) {
 
     // ---------- 1 初始化左右边界 ----------
 
-    int left = 0;           // left(左边界)设为0
-    int right = size - 1;   // right(右边界)设为size - 1
+    int left = 0;                                           // left(左边界)设为0
+    int right = size - 1;                                   // right(右边界)设为size - 1
 
     // ---------- 2 调用子数组递归函数排序 ----------
 
-    QuickSortInSubArrayRecursive(elements, left, right);
+    QuickSortInSubArrayRecursive(elements, left, right);    // 调用QuickSortInSubArrayRecursive
 }
 
 
