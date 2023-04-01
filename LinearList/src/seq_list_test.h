@@ -184,8 +184,9 @@ void SeqListTest::TestSearch() {
     seq_list.Insert(2, num3);
 
     int pos = seq_list.Search(num3);
-
     cout << "The pos of " << num3 << " is " << pos << endl;
+    pos = seq_list.Search(num1);
+    cout << "The pos of " << num1 << " is " << pos << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
