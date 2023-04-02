@@ -937,8 +937,16 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
     // ---------- 2 执行插入 ----------
 
     this->adjacency_list_[this->vertex_count_].starting_vertex = vertex;    // 邻接表索引vertex_count_元素的start_vertex设置为vertex
-    this->vertex_count_++;                                  // vertex_count_加1
     this->vertices_.push_back(vertex);                      // vertices插入vertex
+
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        this->degrees_.push_back(0);                            // 度vector插入结点
+    } else {
+        this->in_degrees_.push_back(0);                         // 入度vector插入结点
+        this->out_degrees_.push_back(0);                        // 出度vector插入结点
+    }
+
+    this->vertex_count_++;                                  // vertex_count_加1
 
     return true;
 }
@@ -1092,6 +1100,17 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
     this->vertices_[vertex_index] = this->vertices_[this->vertex_count_ - 1];
     // vertices_删除索引vertex_count - 1位置元素
     this->vertices_.erase(this->vertices_.begin() + this->vertex_count_ - 1);
+
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        this->degrees_[vertex_index] = this->degrees_[this->vertex_count_ - 1];
+        this->degrees_.erase(this->degrees_.begin() + this->vertex_count_ - 1);
+    } else {
+        this->in_degrees_[vertex_index] = this->in_degrees_[this->vertex_count_ - 1];
+        this->in_degrees_.erase(this->in_degrees_.begin() + this->vertex_count_ - 1);
+
+        this->out_degrees_[vertex_index] = this->out_degrees_[this->vertex_count_ - 1];
+        this->out_degrees_.erase(this->out_degrees_.begin() + this->vertex_count_ - 1);
+    }
 
     // ---------- 5 vertex_count_(边数)减1 ----------
     this->vertex_count_--;
@@ -1257,6 +1276,12 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
 
         // 起点所在的结点邻接项(adjacency_list_[ending_vertex_index])的first_adjacency, 指向该邻接项
         this->adjacency_list_[ending_vertex_index].first_adjacency = adjacency;
+
+        this->degrees_[starting_vertex_index]++;
+        this->degrees_[ending_vertex_index]++;
+    } else {
+        this->in_degrees_[ending_vertex_index]++;
+        this->out_degrees_[starting_vertex_index]++;
     }
 
     // ---------- 3 更新edge_count_ ----------
@@ -1420,6 +1445,12 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
 
         delete reverse_edge_temp;   // 释放reverse_temp
         reverse_edge_temp = NULL;
+
+        this->degrees_[starting_vertex_index]--;
+        this->degrees_[ending_vertex_index]--;
+    } else {
+        this->in_degrees_[ending_vertex_index]--;
+        this->out_degrees_[starting_vertex_index]--;
     }
 
     // ---------- 3 edge_count_调整 ----------

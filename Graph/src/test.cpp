@@ -64,11 +64,9 @@ void TestDirectedGraph() {
     int graph_type = 1; // 有向
     // 构造邻接表图
     AdjacencyListGraph<string, double> adj_list_graph(graph_type, 10, 1000, edges, vertices);
-    // cout << adj_list_graph << endl << endl;
 
     // 构造矩阵图
     MatrixGraph<string, double> matrix_graph(graph_type, 10, 1000, edges, vertices);
-    // cout << matrix_graph << endl << endl;
 
     cout << "##### 2 删除边(\"上海\", \"北京\") #####" << endl << endl;
     adj_list_graph.RemoveEdge("北京", "上海");
