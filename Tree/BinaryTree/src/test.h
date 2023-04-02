@@ -156,13 +156,13 @@ void BinaryTreeTest::TestHeight() {
 
 
 /*!
- * @brief **测试二叉树父节点**
+ * @brief **测试-二叉树-获取父节点**
  * @note
- * 测试二叉树父节点
- * -------------
- * -------------
+ * 测试-二叉树-获取父节点
+ * -------------------
+ * -------------------
  *
- * -------------
+ * -------------------
  * + **1 构造二叉树**\n
  * **for loop** 循环7次 :\n
  * &emsp; 插入i \n\n
@@ -223,6 +223,9 @@ void BinaryTreeTest::TestParent() {
 }
 
 
+/*!
+ * @brief 测试-二叉树-前序遍历
+ */
 void BinaryTreeTest::TestPreorderTraversal() {
 
     cout << endl;
