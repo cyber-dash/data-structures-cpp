@@ -739,22 +739,22 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
 
     // ---------- 1 判断合法性 ----------
 
-    if (this->vertex_count_ >= this->max_vertex_count_) {   // if 结点数 >= 结点数上限
-        return false;                                       // 返回false
+    if (this->vertex_count_ >= this->max_vertex_count_) {       // if 结点数 >= 结点数上限
+        return false;                                           // 返回false
     }
 
     // ---------- 2 执行插入 ----------
 
-    this->vertices_.push_back(vertex);  // vertices_插入结点
+    this->vertices_.push_back(vertex);                          // vertices_插入结点
 
     if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        this->degrees_.push_back(0);  // 度vector插入结点
+        this->degrees_.push_back(0);                            // 度vector插入结点
     } else {
-        this->in_degrees_.push_back(0);  // 入度vector插入结点
-        this->out_degrees_.push_back(0);  // 出度vector插入结点
+        this->in_degrees_.push_back(0);                         // 入度vector插入结点
+        this->out_degrees_.push_back(0);                        // 出度vector插入结点
     }
 
-    this->vertex_count_++;              // vertex_count_加1
+    this->vertex_count_++;                                      // vertex_count_加1
 
     return true;
 }
@@ -873,7 +873,7 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
             return false;   // 返回false
         }
     } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {  // else if 有向图
-        // if 邻接矩阵内存在该边
+        // is 邻接矩阵内存在该边
         if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight()) {
             return false;   // 返回false
         }
@@ -892,7 +892,12 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
     // 2.2 无向图处理
     if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // if 无向图
         this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;   // 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵
-        //todo: 度
+
+        this->degrees_[starting_vertex_index]++;
+        this->degrees_[ending_vertex_index]++;
+    } else {    // 有向图
+        this->in_degrees_[ending_vertex_index]++;
+        this->out_degrees_[starting_vertex_index]++;
     }
 
     // 2.3 edge_count_(边数)加1
@@ -1110,6 +1115,12 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
     // 2.2 无向图 (终点 ---> 起点)方向删除
     if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                               // if 无向图
         this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();    // 邻接矩阵内删除反向边
+
+        this->degrees_[starting_vertex_index]--;
+        this->degrees_[ending_vertex_index]--;
+    } else {
+        this->in_degrees_[ending_vertex_index]--;
+        this->out_degrees_[starting_vertex_index]--;
     }
 
     // ----------- 3 edge_count_(边数)减1 ----------
