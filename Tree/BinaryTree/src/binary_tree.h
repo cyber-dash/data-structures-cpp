@@ -373,7 +373,7 @@ protected:
     // 子树后序遍历
     void PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root, void (*visit)(BinaryTreeNode<TData>*));
     // 子树层序遍历
-    void LevelOrderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root, void (*visit)(BinaryTreeNode<TData>*));
+    void LevelOrderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root, void (*Visit)(BinaryTreeNode<TData>*));
     // 子树打印
     void PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_root);
 
@@ -632,14 +632,12 @@ bool BinaryTree<TData>::DuplicateSubTreeRecursive_(BinaryTreeNode<TData>* src_su
 
     // ---------- 3 分治递归 ----------
 
-    // 左子树递归复制
-    bool res = this->DuplicateSubTreeRecursive_(src_subtree_root->left_child, target_subtree_root->left_child);
+    bool res = this->DuplicateSubTreeRecursive_(src_subtree_root->left_child, target_subtree_root->left_child); // 左子树递归复制
     if (!res) {                                                                 // if 失败
         return false;                                                           // 返回false
     }
 
-    // 右子树递归复制
-    res = this->DuplicateSubTreeRecursive_(src_subtree_root->right_child, target_subtree_root->right_child);
+    res = this->DuplicateSubTreeRecursive_(src_subtree_root->right_child, target_subtree_root->right_child);    // 右子树递归复制
     if (!res) {                                                                 // if 失败
         return false;                                                           // 返回false
     }
@@ -684,8 +682,8 @@ int BinaryTree<TData>::HeightOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_
     int left_subtree_height = HeightOfSubtreeRecursive_(subtree_root->left_child);      // 左子树递归, 得到left_subtree_height(左子树高度)
     int right_subtree_height = HeightOfSubtreeRecursive_(subtree_root->right_child);    // 右子树递归, 得到left_subtree_height(右子树高度)
 
-    int subtree_height =                                                                // 计算subtree_height, 等于1 + 最高子树的高度
-        left_subtree_height < right_subtree_height ? (right_subtree_height + 1) : (left_subtree_height + 1);
+    // 计算subtree_height, 等于1 + 最高子树的高度
+    int subtree_height = (left_subtree_height < right_subtree_height ? right_subtree_height : left_subtree_height) + 1;
 
     // ---------- 3 返回结果 ----------
 
@@ -1077,7 +1075,7 @@ void BinaryTree<TData>::PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subt
  * @brief **子树层序遍历**
  * @tparam TData 数据项类型模板参数
  * @param subtree_root 子树根结点
- * @param visit 访问函数
+ * @param Visit 访问函数
  * @note
  * 子树层序遍历
  * ----------
@@ -1097,25 +1095,29 @@ void BinaryTree<TData>::PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subt
  * &emsp; **if** cur的右孩子不为NULL :\n
  * &emsp;&emsp; cur->right_child入队\n
  */
-template<class TData>
+template<typename TData>
 void BinaryTree<TData>::LevelOrderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
-                                                      void (*visit)(BinaryTreeNode<TData>*))
+                                                      void (*Visit)(BinaryTreeNode<TData>*))
 {
-    queue<BinaryTreeNode<TData>*> traversal_queue;
-    traversal_queue.push(subtree_root);
+    // ---------- 1 初始化遍历队列 ----------
 
-    while (!traversal_queue.empty()) {
-        BinaryTreeNode<TData>* cur = traversal_queue.front();
-        traversal_queue.pop();
+    queue<BinaryTreeNode<TData>*> traversal_queue;              // 声明traversal_queue
+    traversal_queue.push(subtree_root);                         // subtree_root入队
 
-        visit(cur);
+    // ---------- 2 遍历 ----------
 
-        if (cur->left_child != NULL) {
-            traversal_queue.push(cur->left_child);
+    while (!traversal_queue.empty()) {                          // while loop traversal_queue不为空
+        BinaryTreeNode<TData>* cur = traversal_queue.front();   // 取队头, 赋给cur
+        traversal_queue.pop();                                  // 队头出队
+
+        Visit(cur);                                             // 访问cur
+
+        if (cur->left_child != NULL) {                          // if cur的左孩子不为NULL
+            traversal_queue.push(cur->left_child);              // cur->left_child入队
         }
 
-        if (cur->right_child != NULL) {
-            traversal_queue.push(cur->right_child);
+        if (cur->right_child != NULL) {                         // if cur的右孩子不为NULL
+            traversal_queue.push(cur->right_child);             // cur->right_child入队
         }
     }
 }
@@ -1333,7 +1335,7 @@ bool BinaryTree<TData>::Equal(BinaryTreeNode<TData>* root1, BinaryTreeNode<TData
   */
 template<typename TData>
 bool operator==(const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>& binary_tree_2) {
-    return (BinaryTree<TData>::Equal(binary_tree_1.Root(), binary_tree_2.Root()));
+    return BinaryTree<TData>::Equal(binary_tree_1.Root(), binary_tree_2.Root());
 }
 
 
@@ -1347,6 +1349,8 @@ bool operator==(const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>&
  * 重载<<
  * -----
  * -----
+ *
+ * todo: 应该使用out, 有兴趣者自行实现:-)
  *
  * -----
  * 调用binary_tree.Print()\n

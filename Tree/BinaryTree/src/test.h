@@ -18,28 +18,28 @@
  */
 class BinaryTreeTest {
 public:
-    // 测试复制构造函数
+    // 测试-二叉树-复制构造函数
     static void TestCopyConstructor();
 
-    // 测试二叉树深度
+    // 测试-二叉树-高度
     static void TestHeight();
 
-    // 测试父节点函数Parent
+    // 测试-二叉树-获取父节点
     static void TestParent();
 
-    // 测试前序遍历
+    // 测试-二叉树-前序遍历
     static void TestPreorderTraversal();
 
-    // 测试中序遍历
+    // 测试-二叉树-中序遍历
     static void TestInorderTraversal();
 
-    // 测试后序遍历
+    // 测试-二叉树-后序遍历
     static void TestPostorderTraversal();
 
-    // 测试层序遍历
+    // 测试-二叉树-层序遍历
     static void TestLevelOrderTraversal();
 
-    // 测试查找是否在二叉树
+    // 测试-二叉树-是否存在结点
     static void TestExist();
 
     // 测试使用前序遍历和后序遍历结果创建二叉树
@@ -60,13 +60,13 @@ void VisitAndCout(BinaryTreeNode<int>* node) {
 
 
 /*!
- * @brief **测试二叉树复制构造函数**
+ * @brief **测试-二叉树-复制构造函数**
  * @note
- * 测试二叉树复制构造函数
- * ------------------
- * ------------------
+ * 测试-二叉树-复制构造函数
+ * ---------------------
+ * ---------------------
  *
- * ------------------
+ * ---------------------
  * + **1 构造二叉树**\n
  * **for loop** 循环7次 :\n
  * &emsp; 插入i \n\n
@@ -104,9 +104,9 @@ void BinaryTreeTest::TestCopyConstructor() {
 
 
 /*!
- * @brief **测试二叉树高度**
+ * @brief **测试-二叉树-高度**
  * @note
- * 测试二叉树高度
+ * 测试-二叉树-高度
  * ------------------
  * ------------------
  *
@@ -509,7 +509,7 @@ void BinaryTreeTest::TestCreateByPreorderAndInorderList() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|     Test BinaryTree TestCreateByPreorderAndInorderList    |" << endl;
-    cout << "|                 测试前序遍历与中序遍历生成二叉树              |" << endl << endl << endl;
+    cout << "|                测试前序遍历与中序遍历生成二叉树           |" << endl << endl << endl;
 
     // ---------- 1 初始化前序遍历和中序遍历序列 ----------
 
