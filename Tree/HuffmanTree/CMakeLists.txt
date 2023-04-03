@@ -8,4 +8,4 @@ add_executable(
         main
         src/main.cpp
         src/huffman_tree.h
-)
+        src/test.cpp src/test.h)

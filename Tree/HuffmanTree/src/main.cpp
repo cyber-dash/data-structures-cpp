@@ -1,23 +1,28 @@
-﻿//
-// Created by alei_go@163.com(: cyberdash_yuan) on 2020/11/1.
-//
+﻿/*!
+ * @file main.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 哈夫曼树演示
+ * @version 0.2.1
+ * @date 2023-04-03
+ */
 
-#include "huffman_tree.h"
+#include "test.h"
 
+
+/*!
+ * @brief **main函数**
+ * @return 0
+ * @note
+ * main函数
+ * -------
+ * -------
+ *
+ * -------
+ * 调用测试函数
+ */
 int main() {
-    string keys[] = { "蔡徐坤", "王一博", "肖战", "李现", "邓超" };
-	double weights[] = { 25, 4, 10, 5.373, 1.2 };
-    int size = 5;
 
-	HuffmanTree<string, double> huffman_tree(keys, weights, size);
-
-    huffman_tree.PrintTree();
-
-    unordered_map<string, string> huffman_codes = huffman_tree.GetHuffmanCodes();
-
-    for (unordered_map<string, string>::iterator iter = huffman_codes.begin(); iter != huffman_codes.end(); iter++) {
-        cout << iter->first << ": " << iter->second << endl;
-    }
+    TestHuffmanCode();
 
 	return 0;
 }
