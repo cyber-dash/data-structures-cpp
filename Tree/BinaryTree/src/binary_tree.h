@@ -1350,7 +1350,7 @@ bool operator==(const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>&
  * -----
  * -----
  *
- * todo: 应该使用out, 有兴趣者自行实现:-)
+ * 应该使用out, 有兴趣者自行实现:-)
  *
  * -----
  * 调用binary_tree.Print()\n

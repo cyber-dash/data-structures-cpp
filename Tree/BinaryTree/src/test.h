@@ -80,7 +80,16 @@ void BinaryTreeTest::TestCopyConstructor() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinaryTree CopyConstructor              |" << endl;
-    cout << "|                     测试二叉树复制构造函数                   |" << endl;
+    cout << "|                     测试二叉树复制构造函数                |" << endl;
+    cout << "|                                                           |" << endl;
+    cout << "|                             0                             |" << endl;
+    cout << "|                            / \\                            |" << endl;
+    cout << "|                           /   \\                           |" << endl;
+    cout << "|                          1     2                          |" << endl;
+    cout << "|                         / \\   /                           |" << endl;
+    cout << "|                        3   5 4                            |" << endl;
+    cout << "|                       /                                   |" << endl;
+    cout << "|                      6                                    |" << endl << endl;
 
     // ---------- 1 构造二叉树 ----------
 
@@ -124,7 +133,7 @@ void BinaryTreeTest::TestHeight() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                   Test BinaryTree Height                  |" << endl;
-    cout << "|                        测试二叉树高度                       |" << endl;
+    cout << "|                        测试二叉树高度                     |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -150,7 +159,7 @@ void BinaryTreeTest::TestHeight() {
 
     // ---------- 3 打印高度 ----------
 
-    cout << "二叉树高度: " << height << endl;        // 打印高度
+    cout << "二叉树高度: " << height << endl;         // 打印高度
 
     cout << "------------------------- CyberDash -------------------------" << endl << endl;
 }
@@ -180,7 +189,7 @@ void BinaryTreeTest::TestParent() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                  Test BinaryTree Parent                   |" << endl;
-    cout << "|                       测试二叉树父节点                       |" << endl;
+    cout << "|                       测试二叉树父节点                    |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -243,7 +252,7 @@ void BinaryTreeTest::TestPreorderTraversal() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinaryTree PreorderTraversal            |" << endl;
-    cout << "|                       测试二叉树前序遍历                     |" << endl;
+    cout << "|                       测试二叉树前序遍历                  |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -295,7 +304,7 @@ void BinaryTreeTest::TestInorderTraversal() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|               Test BinaryTree InorderTraversal            |" << endl;
-    cout << "|                       测试二叉树中序遍历                     |" << endl;
+    cout << "|                       测试二叉树中序遍历                  |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -346,7 +355,7 @@ void BinaryTreeTest::TestPostorderTraversal() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinaryTree PostorderTraversal           |" << endl;
-    cout << "|                      测试二叉树后序遍历                      |" << endl;
+    cout << "|                      测试二叉树后序遍历                   |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -398,7 +407,7 @@ void BinaryTreeTest::TestLevelOrderTraversal() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinaryTree LevelOrderTraversal          |" << endl;
-    cout << "|                      测试二叉树层序遍历                      |" << endl;
+    cout << "|                      测试二叉树层序遍历                   |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
@@ -446,7 +455,7 @@ void BinaryTreeTest::TestExist() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test BinaryTree Exist                  |" << endl;
-    cout << "|                     测试二叉树结点是否存在                   |" << endl;
+    cout << "|                     测试二叉树结点是否存在                |" << endl;
     cout << "|                                                           |" << endl;
     cout << "|                             0                             |" << endl;
     cout << "|                            / \\                            |" << endl;
