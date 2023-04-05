@@ -67,7 +67,7 @@ public:
     // 中序线索二叉树中序遍历
     void InorderTraverse(void (*visit)(ThreadedNode<TData>*));
     // 中序线索二叉树前序遍历
-    void PreorderTraverse(void (*visit)(ThreadedNode<TData>*));
+    void PreorderTraverse(void (*Visit)(ThreadedNode<TData>*));
     // 中序线索二叉树后序遍历
     void PostorderTraverse(void (*visit)(ThreadedNode<TData>*));
     // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
@@ -337,7 +337,7 @@ void InorderThreadedBinaryTree<TData>::CreateThreadInSubtreeRecursive_(ThreadedN
 /**
  * @brief **前序遍历**
  * @tparam TData 数据项类型模板参数
- * @param visit 访问函数
+ * @param Visit 访问函数
  * @note
  * 前序遍历
  * -------
@@ -367,23 +367,25 @@ void InorderThreadedBinaryTree<TData>::CreateThreadInSubtreeRecursive_(ThreadedN
  * &emsp;&emsp;&emsp; cur指向右孩子\n\n
  */
 template <typename TData>
-void InorderThreadedBinaryTree<TData>::PreorderTraverse(void (*visit)(ThreadedNode<TData>*)) {
-    ThreadedNode<TData>* cur = root_;
+void InorderThreadedBinaryTree<TData>::PreorderTraverse(void (*Visit)(ThreadedNode<TData>*)) {
+    ThreadedNode<TData>* cur = root_;                                           // 初始化cur(遍历指针), 指向root_
 
-    while (cur != NULL) {
-        visit(cur);
+    while (cur != NULL) {                                                       // while loop cur不为NULL
+        Visit(cur);                                                             // 访问cur
 
-        if (cur->left_tag == CHILD_POINTER) {
-            cur = cur->left_child;
-        } else if (cur->right_tag == CHILD_POINTER) {
-            cur = cur->right_child;
-        } else {
-            while (cur != NULL && cur->right_tag == THREADED_NODE_POINTER) {
-                cur = cur->right_child;
+        if (cur->left_tag == CHILD_POINTER) {                                   // if cur有左孩子
+            cur = cur->left_child;                                              // cur指向左孩子
+        } else if (cur->right_tag == CHILD_POINTER) {                           // else if cur有右孩子
+            cur = cur->right_child;                                             // cur指向右孩子
+        } else {                                                                // else (叶子结点)
+            // (使用中序线索回溯至第1个有右孩子的结点)
+            while (cur != NULL && cur->right_tag == THREADED_NODE_POINTER) {    // while loop cur不为NULL && cur->right_tag属性为THREADED_NODE_POINTER(线索结点指针)
+                cur = cur->right_child;                                         // cur指向右孩子
             }
 
-            if (cur != NULL) {
-                cur = cur->right_child;
+            // (cur移动)
+            if (cur != NULL) {                                                  // if cur不为NULL
+                cur = cur->right_child;                                         // cur指向右孩子
             }
         }
     }
