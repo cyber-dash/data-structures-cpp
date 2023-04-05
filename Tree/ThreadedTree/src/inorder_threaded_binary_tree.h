@@ -71,7 +71,7 @@ public:
     // 中序线索二叉树后序遍历
     void PostorderTraverse(void (*visit)(ThreadedNode<TData>*));
     // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
-    ThreadedNode<TData>* GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* node);
+    ThreadedNode<TData>* GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* subtree_root);
 
 protected:
     ThreadedNode<TData>* root_;
@@ -428,29 +428,58 @@ void InorderThreadedBinaryTree<TData>::PostorderTraverse(void (*visit)(ThreadedN
 
 
 /**
- * @brief 中序线索树后续遍历, 找到第一个遍历结点(以node_ptr为根)
- * @tparam TData
- * @param node
- * @return
+ * @brief **子树获取后序遍历首个遍历结点**
+ * @tparam TData 数据项类型模板参数
+ * @param subtree_root 子树根结点
+ * @return 首个遍历结点
  * @note
- * 重复下述过程, 直到叶结点为止:
- *    沿着左子树链一直找下去, 找到左孩子不再是做孩子指针的结点
- *    再找到该结点的右孩子, 以此结点为根的子树上,
+ * 子树获取后序遍历首个遍历结点
+ * ------------------------
+ * ------------------------
+ *
+ * 优先沿着左子树链找\n
+ * 左子树链没有, 则沿着右子树链找\n
+ * ```
+ * 示例:
+ *
+ *     a
+ *      \
+ *       b
+ *      /
+ *     d
+ *    / \
+ *   e   g
+ *    \
+ *     h
+ * ```
+ *
+ * <span style="color:#D40000;font-size:larger">
+ * 对结点a调用函数, 返回h\n
+ * </span>
+ *
+ * ------------------------
+ * 初始化cur(遍历指针)指向subtree_root\n\n
+ * **while loop** cur结点存在孩子结点 :\n
+ * &emsp; **if** cur存在左孩子 :\n
+ * &emsp;&emsp; cur指向cur->left_child\n
+ * &emsp; **else if** cur存在右孩子 :\n
+ * &emsp;&emsp; cur指向cur->right_child\n\n
+ * 返回cur\n
  */
 template<typename TData>
-ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* node) {
+ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* subtree_root) {
 
-    ThreadedNode<TData>* cur = node;
+    ThreadedNode<TData>* cur = subtree_root;                                        // 初始化cur(遍历指针)指向subtree_root
 
-    while (cur->left_tag == CHILD_POINTER || cur->right_tag == CHILD_POINTER) {
-        if (cur->left_tag == CHILD_POINTER) {
-            cur = cur->left_child;
-        } else if (cur->right_tag == CHILD_POINTER) {
-            cur = cur->right_child;
+    while (cur->left_tag == CHILD_POINTER || cur->right_tag == CHILD_POINTER) {     // while loop cur结点存在孩子结点
+        if (cur->left_tag == CHILD_POINTER) {                                       // if cur存在左孩子
+            cur = cur->left_child;                                                  // cur指向cur->left_child
+        } else if (cur->right_tag == CHILD_POINTER) {                               // else if cur存在右孩子
+            cur = cur->right_child;                                                 // cur指向cur->right_child
         }
     }
 
-    return cur;
+    return cur;                                                                     // 返回cur
 }
 
 
