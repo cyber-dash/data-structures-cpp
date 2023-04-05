@@ -180,7 +180,7 @@ void TestInorderThreadedTreeParent() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|            Test InorderThreadedBinaryTree Parent          |"<<endl;
-    cout<<"|                     测试中序线索树父节点                     |"<<endl;
+    cout<<"|                     测试中序线索树父节点                  |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -202,11 +202,17 @@ void TestInorderThreadedTreeParent() {
     inorder_threaded_tree.CreateThreadRecursive();
 
     ThreadedNode<int>* root = inorder_threaded_tree.Root();
+    ThreadedNode<int>* node_2 = root->right_child;
+    ThreadedNode<int>* node_4 = node_2->left_child;
     ThreadedNode<int>* root_parent = inorder_threaded_tree.Parent(root);
 
-    ThreadedNode<int>* first_node = inorder_threaded_tree.First(root);
-    ThreadedNode<int>* first_parent = inorder_threaded_tree.Parent(first_node);
-    ThreadedNode<int>* first_grand_parent = inorder_threaded_tree.Parent(first_parent);
+    ThreadedNode<int>* node_6 = inorder_threaded_tree.First(root);
+    ThreadedNode<int>* node_3 = inorder_threaded_tree.Parent(node_6);
+    ThreadedNode<int>* node_1 = inorder_threaded_tree.Parent(node_3);
+    ThreadedNode<int>* node_5 = node_1->right_child;
+    ThreadedNode<int>* node_5_parent = inorder_threaded_tree.Parent(node_5);
+    ThreadedNode<int>* node_4_parent = inorder_threaded_tree.Parent(node_4);
+    ThreadedNode<int>* node_2_parent = inorder_threaded_tree.Parent(node_2);
 
     if (root_parent != nullptr) {
         cout << "根节点的父节点: " << root_parent->data << endl;
@@ -214,12 +220,13 @@ void TestInorderThreadedTreeParent() {
         cout<<"根节点的父节点为NULL"<<endl;
     }
 
-    cout << "第一个线索节点: " << first_node->data << endl;
-    cout << "第一个线索节点的父节点: " << first_parent->data << endl;
-    cout << "第一个线索节点的父节点的父节点: " << first_grand_parent->data << endl;
+    cout << "结点6的父结点: " << node_3->data << endl;
+    cout << "结点3的父结点: " << node_1->data << endl;
+    cout << "结点5的父结点: " << node_5_parent->data << endl;
+    cout << "结点4的父结点: " << node_4_parent->data << endl;
+    cout << "结点2的父结点: " << node_2_parent->data << endl;
 
-    cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
-    cout<<endl;
+    cout << endl << "------------------------- CyberDash -------------------------" << endl << endl;
 }
 
 
@@ -315,7 +322,7 @@ void TestInorderThreadedTreePostorderTraverse() {
     inorder_threaded_tree.CreateThreadRecursive();
 
     cout<<"中序线索树, 后序遍历: "<<endl;
-    inorder_threaded_tree.PostOrderTraverse(visit);
+    inorder_threaded_tree.PostorderTraverse(visit);
 
     cout<<endl<<endl<<"------------------------- CyberDash -------------------------"<<endl;
     cout<<endl;

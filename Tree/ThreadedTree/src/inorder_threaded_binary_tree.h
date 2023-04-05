@@ -50,26 +50,26 @@ public:
      * ------
      * 对root_调用InsertInSubTreeRecursive_
      */
-    bool InsertRecursive(const TData& data) { return InsertInSubTreeRecursive_(root_, data);}
+    bool InsertRecursive(const TData& data) { return InsertInSubTreeRecursive_(root_, data); }
 
     // 创建中序线索
     void CreateThreadRecursive();
     // 中序线索第一个线索结点
     ThreadedNode<TData>* First(ThreadedNode<TData>* subtree_root);
-    // 求(node为根的)当前二叉树的最后一个线索节点的节点指针
+    // 获取子树最后一个线索结点
     ThreadedNode<TData>* Last(ThreadedNode<TData>* subtree_root);
-    // 中序线索下一个线索结点
+    // 获取下一个线索结点
     ThreadedNode<TData>* Next(ThreadedNode<TData>* node);
-    // 中序线索前一个线索结点
+    // 获取前一个线索结点
     ThreadedNode<TData>* Pre(ThreadedNode<TData>* node);
-    // 中序线索父结点
-    ThreadedNode<TData>* Parent(ThreadedNode<TData>* node_ptr) { return Parent_(node_ptr); }
+    // 获取父结点
+    ThreadedNode<TData>* Parent(ThreadedNode<TData>* node);
     // 中序线索二叉树中序遍历
-    void InorderTraverse(void (*visit)(ThreadedNode<TData>* node_ptr));
+    void InorderTraverse(void (*visit)(ThreadedNode<TData>*));
     // 中序线索二叉树前序遍历
-    void PreorderTraverse(void (*visit)(ThreadedNode<TData>* node_ptr));
+    void PreorderTraverse(void (*visit)(ThreadedNode<TData>*));
     // 中序线索二叉树后序遍历
-    void PostOrderTraverse(void (*visit)(ThreadedNode<TData> *p));
+    void PostorderTraverse(void (*visit)(ThreadedNode<TData>*));
     // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
     ThreadedNode<TData>* GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* node);
 
@@ -77,8 +77,6 @@ protected:
     ThreadedNode<TData>* root_;
     // 子树创建中序线索
     void CreateThreadInSubtreeRecursive_(ThreadedNode<TData>*& subtree_root, ThreadedNode<TData>*& pre_node);
-    // 父节点指针
-    ThreadedNode<TData>* Parent_(ThreadedNode<TData>* node);
     // 子树插入
     bool InsertInSubTreeRecursive_(ThreadedNode<TData>*& subtree_root, const TData& data);
 };
@@ -406,14 +404,14 @@ void InorderThreadedBinaryTree<TData>::PreorderTraverse(void (*visit)(ThreadedNo
  *    否则, 在当前结点的右子树(如果存在)上重复执行上面的操作
  */
 template <typename TData>
-void InorderThreadedBinaryTree<TData>::PostOrderTraverse(void (*visit)(ThreadedNode<TData>*)) {
+void InorderThreadedBinaryTree<TData>::PostorderTraverse(void (*visit)(ThreadedNode<TData>*)) {
 
     ThreadedNode<TData>* cur = GetFirstNodeForPostorderTraverse(root_);
     ThreadedNode<TData>* cur_parent;
 
     visit(cur); // 访问第一个结点
 
-    while ((cur_parent = Parent_(cur)) != NULL) {
+    while ((cur_parent = Parent(cur)) != NULL) {
         if (cur_parent->right_child == cur ||  // 当前结点是父节点的右孩子
             cur_parent->right_tag == THREADED_NODE_POINTER) // 当前结点是父节点左孩子, 并且父节点没有右孩子
         {
@@ -437,7 +435,7 @@ void InorderThreadedBinaryTree<TData>::PostOrderTraverse(void (*visit)(ThreadedN
  *    沿着左子树链一直找下去, 找到左孩子不再是做孩子指针的结点
  *    再找到该结点的右孩子, 以此结点为根的子树上,
  */
-template<class TData>
+template<typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* node) {
 
     ThreadedNode<TData>* cur = node;
@@ -455,24 +453,56 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::GetFirstNodeForPostorderT
 
 
 /*!
- * @brief 中序线索二叉树求父节点
- * @tparam TData 类型模板参数
- * @param node 结点指针
+ * @brief **求父节点**
+ * @tparam TData 数据项类型模板参数
+ * @param node 结点
  * @return 父结点
  * @note
- * 两条路径:
- *   1: 从当前结点走到树上层的一个中序前驱(不一定是直接前驱), 然后向右下找父节点
- *   2: 从当前结点走到书上层的一个中序后继(不一定是直接后继), 然后向左下找父节点
+ * 求父节点
+ * -------
+ * -------
+ *
+ * 两条路径:\n
+ * &emsp; 1: 从当前结点走到树(以当前结点为根结点)上层的一个中序前驱, 然后向右下找父节点\n
+ * &emsp; 2: 从当前结点走到树上层的一个中序后继, 然后向左下找父节点\n\n
+ * ```
+ * 示例:
+ *
+ *     a
+ *      \
+ *       b
+ *      /
+ *     d
+ *    / \
+ *   e   g
+ *  / \
+ * f   h
+ * ```
+ * <span style="color:#DF5A00;font-size:larger">
+ * 求e的parent\n\n
+ * </span>
+ *
+ * <span style="color:#D40000;font-size:larger">
+ * 左侧前驱路径:\n
+ * &emsp; 先遍历到f, 找f的前驱a, a不是e的父结点, 找a->right_child结点b, b也不是e的父结点, 因此左侧路径未找到e的父结点\n\n
+ * 右侧后继路径:\n
+ * &emsp; 先遍历到h, 找h的后继d, 返回d(d就是e的父结点)\n
+ * </span>
+ *
+ * -------
  */
-template <class TData>
-ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Parent_(ThreadedNode<TData>* node) {
+template <typename TData>
+ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Parent(ThreadedNode<TData>* node) {
+
+    if (!node) {
+        throw logic_error("NULL pointer");
+    }
 
     if (node == root_) {
         return NULL;
     }
 
     /* 尝试路径1 */
-    // 遍历至最左子节点
     ThreadedNode<TData>* left_side_child = node;
     while (left_side_child->left_tag == CHILD_POINTER) {
         left_side_child = left_side_child->left_child;
@@ -481,33 +511,22 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Parent_(ThreadedNode<TDat
     if (left_side_child->left_child != NULL) { // 如果等于NULL, 则寻找树上层的中序前驱失败, 路径1失败
         ThreadedNode<TData>* upper_level_pre_node = left_side_child->left_child; // 树上层的中序前驱
 
-        // 向右下找父节点
-        while (upper_level_pre_node != NULL &&
-               upper_level_pre_node->left_child != node &&
-               upper_level_pre_node->right_child != node) {
+        if (upper_level_pre_node != NULL && upper_level_pre_node->right_child != node) {
             upper_level_pre_node = upper_level_pre_node->right_child;
         }
 
-        if (upper_level_pre_node != NULL) { // 如果不等于NULL, 则找到父节点, 否则路径1失败
+        if (upper_level_pre_node != NULL && (upper_level_pre_node->left_child == node || upper_level_pre_node->right_child == node)) {
             return upper_level_pre_node;
         }
     }
 
     /* 尝试路径2 */
-    // 遍历至最右子节点
     ThreadedNode<TData>* right_side_child = node;
     while (right_side_child->right_tag == CHILD_POINTER) {
         right_side_child = right_side_child->right_child;
     }
 
     ThreadedNode<TData>* upper_level_post_node = right_side_child->right_child; // 树上层的中序后继
-
-    // 向左下找父节点
-    while (upper_level_post_node != NULL &&
-           upper_level_post_node->left_child != node &&
-           upper_level_post_node->right_child != node) {
-        upper_level_post_node = upper_level_post_node->left_child;
-    }
 
     return upper_level_post_node;
 }
@@ -546,13 +565,13 @@ bool InorderThreadedBinaryTree<TData>::InsertInSubTreeRecursive_(ThreadedNode<TD
 
 
 /*!
- * @brief 二叉子树的深度
- * @tparam T 类型模板参数
+ * @brief 二叉子树的高度
+ * @tparam TData 类型模板参数
  * @param node 二叉子树的根
- * @return 深度
+ * @return 高度
  */
-template<class T>
-int Height(ThreadedNode<T>* node) {
+template<typename TData>
+int Height(ThreadedNode<TData>* node) {
     if (node == NULL) {
         return 0;
     }
@@ -560,8 +579,7 @@ int Height(ThreadedNode<T>* node) {
     int left_sub_tree_height = Height(node->left_child);
     int right_sub_tree_height = Height(node->right_child);
 
-    return (left_sub_tree_height < right_sub_tree_height) ?
-           right_sub_tree_height + 1 : left_sub_tree_height + 1;
+    return (left_sub_tree_height < right_sub_tree_height ? right_sub_tree_height : left_sub_tree_height) + 1;
 }
 
 

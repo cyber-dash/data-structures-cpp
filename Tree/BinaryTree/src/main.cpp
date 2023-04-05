@@ -14,6 +14,10 @@
 using namespace std;
 
 
+/*!
+ * @brief **main函数**
+ * @return 0
+ */
 int main() {
 
     // 测试-二叉树-复制构造函数
