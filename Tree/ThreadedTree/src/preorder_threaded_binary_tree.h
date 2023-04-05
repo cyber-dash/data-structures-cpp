@@ -10,7 +10,11 @@
 #define MAIN_PREORDER_THREADED_BINARY_TREE_H
 
 
+#include <iostream>
 #include "threaded_node.h"
+
+
+using namespace std;
 
 
 template <typename TData>

@@ -6,8 +6,8 @@
  * @date 2021-05-13
  */
 
-#ifndef MAIN_POSTORDER_THREADED_BINARY_TREE_H
-#define MAIN_POSTORDER_THREADED_BINARY_TREE_H
+#ifndef CYBER_DASH_POSTORDER_THREADED_BINARY_TREE_H
+#define CYBER_DASH_POSTORDER_THREADED_BINARY_TREE_H
 
 
 #include "threaded_node.h"
@@ -109,4 +109,4 @@ ThreadedNode<T> *PostorderThreadedBinaryTree<T>::Pre(ThreadedNode<T>* node) {
     return node->right_child;
 }
 
-#endif //MAIN_POSTORDER_THREADED_BINARY_TREE_H
+#endif // CYBER_DASH_POSTORDER_THREADED_BINARY_TREE_H

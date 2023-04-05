@@ -495,7 +495,7 @@ template <typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Parent(ThreadedNode<TData>* node) {
 
     if (!node) {
-        throw logic_error("NULL pointer");
+        throw invalid_argument("NULL pointer");
     }
 
     if (node == root_) {
