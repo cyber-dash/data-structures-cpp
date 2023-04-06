@@ -16,8 +16,8 @@ using namespace std;
 
 /*!
  * @brief **哈夫曼树结点模板结构体**
- * @tparam TKey
- * @tparam TWeight
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TWeight 权值类型模板参数
  */
 template<typename TKey, typename TWeight>
 struct HuffmanTreeNode {
