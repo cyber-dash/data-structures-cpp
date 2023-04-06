@@ -38,7 +38,6 @@ void TestHuffmanCode() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test HuffmanCode                     |" << endl;
-    cout << "|                        测试哈夫曼编码                       |" << endl;
 
     // ---------- 1 构造哈夫曼树 ----------
 

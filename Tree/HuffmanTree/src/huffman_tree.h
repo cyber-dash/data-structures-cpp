@@ -59,7 +59,7 @@ protected:
                     HuffmanTreeNode<TKey, TWeight>*& new_subtree_root);
 	void PrintSubTree_(HuffmanTreeNode<TKey, TWeight>* subtree_root);
     void GetHuffmanCodeOfSubTree_(HuffmanTreeNode<TKey, TWeight>* node,
-                                  const string& code,
+                                  const string& prefix_code,
                                   unordered_map<TKey, string>& huffman_codes);
 };
 
@@ -153,27 +153,51 @@ void HuffmanTree<TKey, TWeight>::PrintSubTree_(HuffmanTreeNode<TKey, TWeight>* s
  * ------------
  *
  * <span style="color:#D40000;font-size:larger">
- * 对根结点, 调用GetHuffmanCodeOfSubTree_, 编码以""作为起始
+ * 对根结点, 调用GetHuffmanCodeOfSubTree_, 前缀码以""作为起始
  * </span>
  *
  * ------------
  * 声明huffman_codes\n
- * 调用GetHuffmanCodeOfSubTree_\n
+ * 调用GetHuffmanCodeOfSubTree_, 生成哈夫曼编码\n
  * 返回huffman_codes\n
  */
 template <typename TKey, typename TWeight>
 unordered_map<TKey, string> HuffmanTree<TKey, TWeight>::GetHuffmanCodes() {
-    unordered_map<TKey, string> huffman_codes;
+    unordered_map<TKey, string> huffman_codes;              // 声明huffman_codes
 
-    GetHuffmanCodeOfSubTree_(root_, "", huffman_codes);
+    GetHuffmanCodeOfSubTree_(root_, "", huffman_codes);     // 调用GetHuffmanCodeOfSubTree_, 生成哈夫曼编码
 
-    return huffman_codes;
+    return huffman_codes;                                   // 返回huffman_codes
 }
 
 
+/*!
+ * @brief **子树获取哈夫曼编码**
+ * @tparam TKey 关键字类型模板参数
+ * @tparam TWeight 权值类型模板参数
+ * @param node 结点
+ * @param prefix_code 前缀码
+ * @param huffman_codes 哈夫曼编码
+ * @note
+ * 子树获取哈夫曼编码
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * + **1 空结点处理**\n
+ * **if** node == NULL :\n
+ * &emsp; 退出函数\n\n
+ * + **2 叶子结点处理**\n
+ * **if** node为叶子结点 :\n
+ * &emsp; node->key的哈夫曼编码, 为prefix_code\n
+ * &emsp; 退出函数\n\n
+ * + **3 非叶子结点处理**\n
+ * 前缀码扩展0, 向左子树递归执行GetHuffmanCodeOfSubTree_\n
+ * 前缀码扩展1, 向右子树递归执行GetHuffmanCodeOfSubTree_\n
+ */
 template <typename TKey, typename TWeight>
 void HuffmanTree<TKey, TWeight>::GetHuffmanCodeOfSubTree_(HuffmanTreeNode<TKey, TWeight>* node,
-                                                          const string& code,
+                                                          const string& prefix_code,
                                                           unordered_map<TKey, string>& huffman_codes)
 {
     if (node == NULL) {
@@ -181,16 +205,16 @@ void HuffmanTree<TKey, TWeight>::GetHuffmanCodeOfSubTree_(HuffmanTreeNode<TKey, 
     }
 
     if (node->left_child == NULL && node->right_child == NULL) {
-        huffman_codes[node->key] = code;
+        huffman_codes[node->key] = prefix_code;
         return;
     }
 
     string str_zero("0");
-    GetHuffmanCodeOfSubTree_(node->left_child, code + str_zero, huffman_codes);
+    GetHuffmanCodeOfSubTree_(node->left_child, prefix_code + str_zero, huffman_codes);
 
     string str_one("1");
-    GetHuffmanCodeOfSubTree_(node->right_child, code + str_one, huffman_codes);
+    GetHuffmanCodeOfSubTree_(node->right_child, prefix_code + str_one, huffman_codes);
 }
 
 
-#endif //CYBER_DASH_HUFFMAN_TREE_H
+#endif // CYBER_DASH_HUFFMAN_TREE_H
