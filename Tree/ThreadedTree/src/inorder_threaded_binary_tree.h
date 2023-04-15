@@ -71,7 +71,7 @@ public:
     // 中序线索二叉树后序遍历
     void PostorderTraverse(void (*visit)(ThreadedNode<TData>*));
     // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
-    ThreadedNode<TData>* GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* subtree_root);
+    ThreadedNode<TData>* GetFirstNodeForPostorder(ThreadedNode<TData>* subtree_root);
 
 protected:
     ThreadedNode<TData>* root_;
@@ -393,36 +393,60 @@ void InorderThreadedBinaryTree<TData>::PreorderTraverse(void (*Visit)(ThreadedNo
 
 
 /**
- * @brief 后序遍历
+ * @brief **后序遍历**
  * @tparam TData 数据项类型模板参数
- * @param visit
+ * @param visit 结点访问函数
  * @note
- * 重复下述过程, 直到叶结点为止:
- *    从根出发, 沿着左子树链一直找下去, 找到左孩子不再是做孩子指针的结点
- *    再找到该结点的右孩子, 以此结点为根的子树上,
- * 接着, 从此结点开始后序遍历, 每次先找到当前节点的父节点
- *    如果当前结点是父节点的右孩子or虽然是这个父节点的左孩子, 但这个父节点没有右孩子
- *       则后序下的后继为该父节点
- *    否则, 在当前结点的右子树(如果存在)上重复执行上面的操作
+ * 后序遍历
+ * ------
+ * ------
+ *
+ * ------
+ * + **1 空树处理**\n
+ * **if** 空树 :\n
+ * &emsp; 退出函数\n\n
+ * + **2 访问后序遍历的第1个结点**\n
+ * 初始化cur, 指向后序遍历的第1个节点\n
+ * 初始化cur_parent, 指向cur的父节点\n\n
+ * 访问cur\n\n
+ * + **3 递归**\n
+ * **while loop** cur_parent不为NULL :\n
+ * &emsp; **if** cur是cur_parent的右孩子 <b>||</b> cur是cur_parent的左孩子, 并且cur_parent没有右孩子 :\n
+ * &emsp;&emsp; cur指向cur_parent\n
+ * &emsp; **else** (cur指向cur_parent的左孩子, 同时cur_parent存在右孩子)\n
+ * &emsp;&emsp; cur指向cur_parent->right_child的后序遍历首结点\n\n
+ * &emsp; 访问cur\n\n
+ * &emsp; cur_parent指向cur的父节点\n
  */
 template <typename TData>
 void InorderThreadedBinaryTree<TData>::PostorderTraverse(void (*visit)(ThreadedNode<TData>*)) {
+    // ---------- 1 空树处理 ----------
 
-    ThreadedNode<TData>* cur = GetFirstNodeForPostorderTraverse(root_);
-    ThreadedNode<TData>* cur_parent;
+    if (!root_) {                                                               // if 空树
+        return;                                                                 // 退出函数
+    }
 
-    visit(cur); // 访问第一个结点
+    // ---------- 2 访问后序遍历的第1个结点 ----------
 
-    while ((cur_parent = Parent(cur)) != NULL) {
-        if (cur_parent->right_child == cur ||  // 当前结点是父节点的右孩子
-            cur_parent->right_tag == THREADED_NODE_POINTER) // 当前结点是父节点左孩子, 并且父节点没有右孩子
-        {
-            cur = cur_parent;
-        } else {
-            cur = GetFirstNodeForPostorderTraverse(cur_parent->right_child);
+    ThreadedNode<TData>* cur = GetFirstNodeForPostorder(root_);   // 初始化cur, 指向后序遍历的第1个节点
+    ThreadedNode<TData>* cur_parent = Parent(cur);                        // 初始化cur_parent, 指向cur的父节点
+
+    visit(cur);                                                                 // 访问cur
+
+    // ---------- 3 递归 ----------
+
+    while (cur_parent != NULL) {            // while loop cur_parent不为NULL
+        // if cur是cur_parent的右孩子 || cur是cur_parent的左孩子, 并且cur_parent没有右孩子
+        if (cur_parent->right_child == cur || cur_parent->right_tag == THREADED_NODE_POINTER) {
+            cur = cur_parent;               // cur指向cur_parent
+        } else {                            // else (cur指向cur_parent的左孩子, 同时cur_parent存在右孩子)
+            // cur指向cur_parent->right_child的后序遍历首结点
+            cur = GetFirstNodeForPostorder(cur_parent->right_child);
         }
 
-        visit(cur);
+        visit(cur);                         // 访问cur
+
+        cur_parent = Parent(cur);     // cur_parent指向cur的父节点
     }
 }
 
@@ -467,7 +491,7 @@ void InorderThreadedBinaryTree<TData>::PostorderTraverse(void (*visit)(ThreadedN
  * 返回cur\n
  */
 template<typename TData>
-ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::GetFirstNodeForPostorderTraverse(ThreadedNode<TData>* subtree_root) {
+ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::GetFirstNodeForPostorder(ThreadedNode<TData>* subtree_root) {
 
     ThreadedNode<TData>* cur = subtree_root;                                        // 初始化cur(遍历指针)指向subtree_root
 
