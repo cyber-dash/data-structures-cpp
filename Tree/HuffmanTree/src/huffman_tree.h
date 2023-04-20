@@ -1,6 +1,11 @@
-﻿//
-// Created by alei_go@163.com(: cyberdash_yuan) on 2020/11/1.
-//
+﻿/*!
+ * @file huffman_tree.h
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief 哈夫曼树模板类文件
+ * @version 0.2.1
+ * @date 2023-04-03
+ */
+
 
 #ifndef CYBER_DASH_HUFFMAN_TREE_H
 #define CYBER_DASH_HUFFMAN_TREE_H
@@ -21,23 +26,27 @@ using namespace std;
  */
 template<typename TKey, typename TWeight>
 struct HuffmanTreeNode {
+    /*! @brief **默认构造函数** */
     HuffmanTreeNode(): key(TKey()), weight(TWeight()), left_child(NULL), right_child(NULL), parent(NULL) {}
 
+    /*! @brief **构造函数(关键字, 权值, 左孩子, 右孩子和父节点)** */
     HuffmanTreeNode(TKey key, TWeight weight, HuffmanTreeNode* left = NULL, HuffmanTreeNode* right = NULL, HuffmanTreeNode* parent = NULL)
         : key(key), weight(weight), left_child(left), right_child(right), parent(parent) {}
 
-    TKey key;
-    TWeight weight;
-    HuffmanTreeNode* left_child;
-    HuffmanTreeNode* right_child;
-    HuffmanTreeNode* parent;
+    TKey key;                       //!< **关键字**
+    TWeight weight;                 //!< **权值**
+    HuffmanTreeNode* left_child;    //!< **左孩子**
+    HuffmanTreeNode* right_child;   //!< **右孩子**
+    HuffmanTreeNode* parent;        //!< **父结点**
 };
 
 
 template<typename TKey, typename TWeight>
-bool operator<(const HuffmanTreeNode<TKey, TWeight>& node1, const HuffmanTreeNode<TKey, TWeight>& node2) {
-    return node1.weight > node2.weight;
-}
+struct Compare {
+    bool operator()(const HuffmanTreeNode<TKey, TWeight>& node1, const HuffmanTreeNode<TKey, TWeight>& node2) {
+        return node1.weight > node2.weight;
+    }
+};
 
 
 template <typename TKey, typename TWeight>
@@ -67,7 +76,7 @@ protected:
 template <typename TKey, typename TWeight>
 HuffmanTree<TKey, TWeight>::HuffmanTree(const TKey* keys, const TWeight* weights, int count) {
 
-    std::priority_queue<HuffmanTreeNode<TKey, TWeight> > min_priority_queue;
+    std::priority_queue<HuffmanTreeNode<TKey, TWeight>, vector<HuffmanTreeNode<TKey, TWeight> >, Compare<TKey, TWeight> > min_priority_queue;
 
     for (int i = 0; i < count; i++) {
         HuffmanTreeNode<TKey, TWeight>* node = new HuffmanTreeNode<TKey, TWeight>(keys[i], weights[i], NULL, NULL, NULL);
