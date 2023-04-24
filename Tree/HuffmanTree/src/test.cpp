@@ -54,7 +54,7 @@ void TestHuffmanCode() {
     // ---------- 2 进行哈夫曼编码 ----------
 
     // 调用GetHuffmanCodes, 进行哈夫曼编码
-    unordered_map<string, string> huffman_codes = huffman_tree.GetHuffmanCodes();
+    unordered_map<string, string> huffman_codes = huffman_tree.GenerateHuffmanCodes();
 
     // 打印哈夫曼编码结果
     for (unordered_map<string, string>::iterator iter = huffman_codes.begin(); iter != huffman_codes.end(); iter++) {

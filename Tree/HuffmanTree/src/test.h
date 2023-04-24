@@ -10,6 +10,7 @@
 #define CYBER_DASH_HUFFMAN_TREE_TEST_H
 
 
+// 测试-哈夫曼编码
 void TestHuffmanCode();
 
 
