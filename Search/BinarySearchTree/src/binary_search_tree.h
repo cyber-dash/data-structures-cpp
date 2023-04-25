@@ -320,13 +320,13 @@ protected:
  * --------------
  * + **1 空子树处理**\n
  * &emsp; **if** 空子树 :\n
- * &emsp;&emsp; 返回NULL\n
+ * &emsp;&emsp; 返回NULL\n\n
  * + **2 分治递归**\n
- * &emsp; 获取subtree_root_key<b>(子树根节点关键字)</b>\n
+ * &emsp; 获取subtree_root_key<b>(子树根节点关键字)</b>\n\n
  * &emsp; **if** 搜索关键字 < 子树根节点关键字 :\n
  * &emsp;&emsp; 对子树的左子树, 递归执行SearchInSubTree_, 返回结果\n
  * &emsp; **else if** 搜索关键字 > 子树根节点关键字 :\n
- * &emsp;&emsp; 对子树的右子树, 递归执行SearchInSubTree_, 返回结果\n
+ * &emsp;&emsp; 对子树的右子树, 递归执行SearchInSubTree_, 返回结果\n\n
  * &emsp; 返回子树根节点(根结点既是对应的结点)\n
  */
 template <typename TKey, typename TValue>
@@ -334,21 +334,21 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::SearchInSubTree_(BstNode<
 
     // ---------- 1 空子树处理 ----------
 
-    if (subtree_root == NULL) {                                     // if 空子树
-        return NULL;                                                // 返回NULL
+    if (subtree_root == NULL) {                                         // if 空子树
+        return NULL;                                                    // 返回NULL
     }
 
     // ---------- 2 分治递归 ----------
 
-    TKey subtree_root_key = subtree_root->Key();                    // 获取subtree_root_key(子树根节点关键字)
+    TKey subtree_root_key = subtree_root->Key();                        // 获取subtree_root_key(子树根节点关键字)
 
-    if (key < subtree_root_key) {                                   // if 搜索关键字 < 子树根节点关键字
-        return SearchInSubTree_(subtree_root->LeftChild(), key);    // 对子树的左子树, 递归执行SearchInSubTree_, 返回结果
-    } else if (key > subtree_root_key) {                            // else if 搜索关键字 > 子树根节点关键字
-        return SearchInSubTree_(subtree_root->RightChild(), key);   // 对子树的右子树, 递归执行SearchInSubTree_, 返回结果
+    if (key < subtree_root_key) {                                       // if 搜索关键字 < 子树根节点关键字
+        return SearchInSubTree_(subtree_root->LeftChild(), key);        // 对子树的左子树, 递归执行SearchInSubTree_, 返回结果
+    } else if (key > subtree_root_key) {                                // else if 搜索关键字 > 子树根节点关键字
+        return SearchInSubTree_(subtree_root->RightChild(), key);       // 对子树的右子树, 递归执行SearchInSubTree_, 返回结果
     }
 
-    return subtree_root;                                            // 返回子树根结点(根结点既是对应的结点)
+    return subtree_root;                                                // 返回子树根结点(根结点既是对应的结点)
 }
 
 
@@ -373,15 +373,14 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::SearchInSubTree_(BstNode<
  */
 template<typename TKey, typename TValue>
 bool BinarySearchTree<TKey, TValue>::Min(TValue& min_value) {
-    // 对根结点调用MinInSubTree_, 获取key最小的结点
-    BstNode<TKey, TValue>* node = this->MinInSubTree_(this->Root());
-    if (!node) {                                                        // if node为NULL
-        return false;                                                   // 返回false
+    BstNode<TKey, TValue>* node = this->MinInSubTree_(this->Root());        // 对根结点调用MinInSubTree_, 获取key最小的结点
+    if (!node) {                                                            // if node为NULL
+        return false;                                                       // 返回false
     }
 
-    min_value = node->Value();                                          // node的value_赋给min_value
+    min_value = node->Value();                                              // node的value_赋给min_value
 
-    return true;                                                        // 返回true
+    return true;                                                            // 返回true
 }
 
 
