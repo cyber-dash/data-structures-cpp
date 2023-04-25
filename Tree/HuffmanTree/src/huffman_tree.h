@@ -23,6 +23,16 @@ using namespace std;
  * @brief **哈夫曼树结点模板结构体**
  * @tparam TKey 关键字类型模板参数
  * @tparam TWeight 权值类型模板参数
+ * @note
+ * 哈夫曼树结点模板结构体
+ * ------------------
+ * ------------------
+ *
+ * <span style="color:#F58025;font-size:larger">
+ * 哈夫曼树的结点
+ * </span>
+ *
+ * ------------------
  */
 template<typename TKey, typename TWeight>
 struct HuffmanTreeNode {
@@ -45,6 +55,15 @@ struct HuffmanTreeNode {
  * @brief **比较仿函数**
  * @tparam TKey 关键字类型模板参数
  * @tparam TWeight 权值类型模板参数
+ * @note
+ * 比较仿函数
+ * --------
+ * --------
+ * <span style="color:#D40000;font-size:larger">
+ * 仿函数(Functor)不是函数, 看上去很像函数:-)
+ * </span>
+ *
+ * --------
  */
 template<typename TKey, typename TWeight>
 struct Compare {
@@ -59,7 +78,7 @@ struct Compare {
      * ----------
      *
      * <span style="color:#D40000;font-size:larger">
-     * 小顶堆(最小优先队列), 返回node1 > node2\n\n
+     * 小顶堆(最小优先队列), 返回node1 > node2  (本函数使用该规则)\n\n
      * </span>
      * <span style="color:#650000;font-size:larger">
      * 大顶堆(最大优先队列), 返回node1 < node2\n
@@ -79,6 +98,19 @@ struct Compare {
  * @brief **哈夫曼树模板类**
  * @tparam TKey 关键字类型模板参数
  * @tparam TWeight 权值类型模板参数
+ * @note
+ * 哈夫曼树模板类
+ * ------------
+ * ------------
+ *
+ * <span style="color:#F58025;font-size:larger">
+ * 1951年，霍夫曼在麻省理工学院（MIT）攻读博士学位，他和修读信息论课程的同学得选择是完成学期报告还是期末考试。\n
+ * 导师罗伯特·法诺（Robert Fano）出的学期报告题目是：寻找最有效的二进制编码。由于无法证明哪个已有编码是最有效的，\n
+ * 霍夫曼放弃对已有编码的研究，转向新的探索，最终发现了基于有序频率二叉树编码的想法，并很快证明了这个方法是最有效的。\n
+ * 霍夫曼使用自底向上的方法构建二叉树，避免了次优算法香农-范诺编码（Shannon–Fano coding）的最大弊端──自顶向下构建树。\n
+ * </span>
+ *
+ * ------------
  */
 template <typename TKey, typename TWeight>
 class HuffmanTree {
