@@ -141,34 +141,59 @@ private:
  * @tparam TData 数据项类型模板参数
  * @param data 数据项值
  * @return 执行结果
+ * @note
+ * 入队
+ * ---
+ * ---
+ *
+ * ---
+ * + **1 构造结点**\n
+ * node初始化并分配内存\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n\n
+ * + **2 入队**\n
+ * **if** 空队列 :\n
+ * &emsp; front_指向node\n
+ * &emsp; rear_指向node\n
+ * **else**\n
+ * &emsp; rear_->next指向node\n
+ * &emsp; rear_指向node\n\n
+ * + **3 退出函数**\n
+ * 返回true\n
  */
 template<typename TData>
 bool LinkedQueue<TData>::EnQueue(const TData& data) {
 
-    LinkedNode<TData>* node = new LinkedNode<TData>(data);
-    if (node == NULL) {
-        throw bad_alloc();
+    // ---------- 1 构造结点 ----------
+
+    LinkedNode<TData>* node = new LinkedNode<TData>(data);          // node初始化并分配内存
+    if (node == NULL) {                                             // if 内存分配失败
+        throw bad_alloc();                                          // 抛出bad_alloc()
     }
 
-    if (IsEmpty()) {
-        this->front_ = node;
-        this->rear_ = node;
-    } else {
-        this->rear_->SetNext(node);
-        this->rear_ = node;
+    // ---------- 2 入队 ----------
+
+    if (IsEmpty()) {                                                // if 空队列
+        this->front_ = node;                                        // front_指向node
+        this->rear_ = node;                                         // rear_指向node
+    } else {                                                        // else
+        this->rear_->SetNext(node);                                 // rear_->next指向node
+        this->rear_ = node;                                         // rear_指向node
     }
 
-    return true;
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
 /*!
- * @brief 出队(保存数据)
+ * @brief **出队**
  * @tparam TData 类型模板参数
  * @param data 数据(保存出队结点的数据项)
- * @return 是否出队成功
+ * @return 执行结果
  */
-template<class TData>
+template<typename TData>
 bool LinkedQueue<TData>::DeQueue(TData& data) {
 
     if (IsEmpty()) {
