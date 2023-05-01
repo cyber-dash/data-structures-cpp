@@ -22,28 +22,42 @@ using namespace std;
 /*!
  * @brief **顺序表模板类**
  * @tparam TData 数据项类型模板参数
+ * @note
+ * 顺序表模板类
+ * ----------
+ * ----------
+ *
+ * 使用数组mem_data_实现各函数
+ *
+ * ----------
  */
 template<typename TData>
-class SeqList : public LinearList<TData> {
+class SeqList: public LinearList<TData> {
 
 public:
-    // 默认构造函数
-    SeqList() : mem_data_(NULL), capacity_(0), last_index_(-1) {}
+    /*!
+     * @brief **默认构造函数**
+     */
+    SeqList(): mem_data_(NULL), capacity_(0), last_index_(-1) {}
 
-    // 构造函数(参数:顺序表总长度)
-    explicit SeqList(int size = 100);
+    // 构造函数(容量)
+    explicit SeqList(int capacity = 100);
 
-    // 复制构造函数(参数:顺序表)
+    // 复制构造函数
     SeqList(const SeqList<TData>& seq_list);
 
     // 析构函数
     ~SeqList() { delete[] mem_data_; }
 
     // 获取总长度
-    int Size() const;
+    /*!
+     * @brief **获取容量**
+     * @return 容量
+     */
+    int Capacity() const { return capacity_; }
 
     // 获取当前长度
-    int Length() const;
+    int Length() const { return last_index_ + 1; }
 
     // 搜索
     int Search(TData& data) const;
@@ -66,8 +80,8 @@ public:
     // 是否满
     bool IsFull() const;
 
-    // 调整顺序表的长度
-    int ResetCapacity(int new_size);
+    // 重制容量
+    bool ResetCapacity(int capacity);
 
     // 输入顺序表
     void Input();
@@ -92,19 +106,17 @@ private:
 
 
 /*!
- * @brief **构造函数(参数size) **
+ * @brief **构造函数(容量) **
  * @tparam TData 数据项类型模板参数
- * @param size 顺序表size
+ * @param capacity 顺序表size
  */
 template<class TData>
-SeqList<TData>::SeqList(int size) {
-    if (size < 0) {
-        throw out_of_range("size < 0");
+SeqList<TData>::SeqList(int capacity) : capacity_(capacity), last_index_(-1) {
+    if (capacity < 0) {
+        throw out_of_range("capacity < 0");
     }
 
-    this->capacity_ = size;
-    this->last_index_ = -1;
-    this->mem_data_ = new TData[size];
+    this->mem_data_ = new TData[capacity];
     if (!this->mem_data_) {
         throw bad_alloc();
     }
@@ -121,33 +133,47 @@ SeqList<TData>::SeqList(int size) {
  * ----------
  *
  * ----------
- * ### 1. 初始化 ###
- * ### 2. mem_data_分配内存 ###
- * ### 3. mem_data_内存赋值 ###
+ * + **1 初始化**
+ * capacity_初始化为seq_list的容量\n
+ * last_index_初始化为seq_list.Length() - 1\n
+ * **if** 容量为0 :\n
+ * &emsp; 退出函数\n\n
+ * + **2 mem_data_分配内存**
+ * mem_data_分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n\n
+ * + **3 mem_data_内存赋值**
+ * **for loop** 位置1到seq_list.Length() :\n
+ * &emsp; 声明变量cur_data\n
+ * seq_list位置pos的变量赋给cur_data\n\n
+ * cur_data赋给this->mem_data_[pos - 1]\n
  */
-template<class TData>
+template<typename TData>
 SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
 
-    // ----- 1. 初始化size_和last_index_
-    this->capacity_ = seq_list.Size();
-    this->last_index_ = seq_list.Length() - 1;
+    // ---------- 1 初始化 ----------
 
-    if (this->capacity_ == 0) {
-        return;
+    this->capacity_ = seq_list.Capacity();                      // capacity_初始化为seq_list的容量
+    this->last_index_ = seq_list.Length() - 1;              // last_index_初始化为seq_list.Length() - 1
+
+    if (this->capacity_ == 0) {                             // if 容量为0
+        return;                                             // 退出函数
     }
 
-    // ----- 2. this->mem_data_分配内存 -----
-    this->mem_data_ = new TData[this->Size()];
-    if (!this->mem_data_) {
-        throw bad_alloc();
+    // ---------- 2 mem_data_分配内存 ----------
+
+    this->mem_data_ = new TData[this->Capacity()];              // mem_data_分配内存并初始化
+    if (!this->mem_data_) {                                 // if 内存分配失败
+        throw bad_alloc();                                  // 抛出bad_alloc()
     }
 
-    // ----- 3. this->mem_data_内存赋值 -----
-    for (int i = 1; i <= this->last_index_ + 1; i++) {
-        TData cur_data;
-        seq_list.GetData(i, cur_data);
+    // ---------- 3 mem_data_内存赋值 ----------
 
-        this->mem_data_[i - 1] = cur_data;
+    for (int pos = 1; pos <= seq_list.Length(); pos++) {    // for loop 位置1到seq_list.Length()
+        TData cur_data;                                     // 声明变量cur_data
+        seq_list.GetData(pos, cur_data);                    // seq_list位置pos的变量赋给cur_data
+
+        this->mem_data_[pos - 1] = cur_data;                // cur_data赋给this->mem_data_[pos - 1]
     }
 }
 
@@ -155,7 +181,7 @@ SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
 /*!
  * @brief **重制容量**
  * @tparam TData 数据项类型模板参数
- * @param new_size 新的容量
+ * @param capacity 新的容量
  * @return 容量
  * @note
  * 重制容量
@@ -164,50 +190,64 @@ SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
  *
  * -------
  * + **1 非法容量处理**\n
+ * **if** 新容量 < 原有容量 :\n
+ * &emsp; 返回-1\n\n
  * + **2 分配新内存**\n
+ * new_mem_data分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n\n
  * + **3 将已有的数据赋值到新内存**\n
- * + **4 删除旧内存使用新内存**\n
- * + **5 退出函数**\n
+ * **for loop** 遍历原数据 :\n
+ * &emsp; mem_data[i]赋给new_mem_data[i]\n\n
+ * + **4 释放旧内存使用新内存**\n
+ * 释放mem_data_\n
+ * mem_data_指向new_mem_data\n\n
+ * + **5 容量调整**\n
+ * capacity_调整\n
+ * + **6 退出函数**\n
+ * 返回true\n
  */
 template<typename TData>
-int SeqList<TData>::ResetCapacity(int new_size) {
+bool SeqList<TData>::ResetCapacity(int capacity) {
 
     // ----------- 1 非法容量处理 -----------
 
-    if (new_size < Length()) {
-        return -1;
+    if (capacity < Length()) {                              // if 新容量 < 原有容量
+        return false;                                       // 返回-1
     }
 
     // ----------- 2 分配新内存 -----------
 
-    TData* new_mem_data = new TData[new_size];
-    if (new_mem_data == NULL) {
-        throw bad_alloc();
+    TData* new_mem_data = new TData[capacity];              // new_mem_data分配内存并初始化
+    if (new_mem_data == NULL) {                             // if 内存分配失败
+        throw bad_alloc();                                  // 抛出bad_alloc()
     }
 
     // ----------- 3 将已有的数据赋值到新内存 -----------
 
-    for (int i = 0; i < this->Length(); i++) {
-        new_mem_data[i] = mem_data_[i];
+    for (int i = 0; i < this->Length(); i++) {              // for loop 遍历原数据
+        new_mem_data[i] = mem_data_[i];                     // mem_data[i]赋给new_mem_data[i]
     }
 
-    // ----------- 4 使用新内存并调整 -----------
+    // ----------- 4 释放旧内存使用新内存 -----------
 
-    delete[] mem_data_;
-    mem_data_ = new_mem_data;
+    delete[] mem_data_;                                     // 释放mem_data_
+    mem_data_ = new_mem_data;                               // mem_data_指向new_mem_data
 
-    capacity_ = new_size;
+    // ----------- 5 容量调整 -----------
 
-    // ----------- 5 退出函数 -----------
+    capacity_ = capacity;                                   // capacity_调整
 
-    return new_size;
+    // ----------- 6 退出函数 -----------
+
+    return true;                                            // 返回true
 }
 
 
 /*!
  * @brief **搜索**
  * @tparam TData 数据项类型模板参数
- * @param data 待搜素数据项
+ * @param data 待搜索数据项
  * @return 位置
  * 搜索
  * ---
@@ -222,51 +262,92 @@ int SeqList<TData>::ResetCapacity(int new_size) {
 template<typename TData>
 int SeqList<TData>::Search(TData& data) const {
 
-    for (int i = 0; i <= last_index_; i++) {    // for loop** 遍历mem_data_
-        if (mem_data_[i] == data) {             // if 当前元素等于参数data
-            return i + 1;                       // 返回i + 1
+    for (int i = 0; i <= last_index_; i++) {                // for loop 遍历mem_data_
+        if (mem_data_[i] == data) {                         // if 当前元素等于参数data
+            return i + 1;                                   // 返回i + 1
         }
     }
 
-    return 0;                                   // 返回0
+    return 0;                                               // 返回0
 }
 
 
 /*!
- * @brief 获取位置pos的数据
- * @tparam TData 类型模板参数
- * @param pos 位置pos
- * @param data 数据(用于保存数据项)
- * @return 执行结果
- */
-template<class TData>
-bool SeqList<TData>::GetData(int pos, TData& data) const {
-    if (pos <= 0 || pos > last_index_ + 1) {
-        return false;
-    }
-
-    data = mem_data_[pos - 1];
-
-    return true;
-}
-
-
-/*!
- * @brief 设置数据项
+ * @brief **获取结点数据**
  * @tparam TData 数据项类型模板参数
  * @param pos 位置
- * @param data 数据
- * @return 是否设置成功
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 获取结点数据
+ * ----------
+ * ----------
+ *
+ * ----------
+ * + **1 非法位置判断**\n
+ * **if** pos <= 0 <b>||</b> pos > last_index_ + 1 :\n
+ * &emsp; 返回false\n\n
+ * + **2 赋值**\n
+ * mem_data_[pos - 1]赋给data\n\n
+ * + **3 退出函数**\n
+ * 返回true\n
+ */
+template<typename TData>
+bool SeqList<TData>::GetData(int pos, TData& data) const {
+
+    // ---------- 1 非法位置判断 ----------
+
+    if (pos <= 0 || pos > last_index_ + 1) {                    // if pos <= 0 || pos > last_index_ + 1
+        return false;                                           // 返回false
+    }
+
+    // ---------- 2 赋值 ----------
+
+    data = mem_data_[pos - 1];                                  // mem_data_[pos - 1]赋给data
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                // 返回true
+}
+
+
+/*!
+ * @brief **设置结点数据**
+ * @tparam TData 数据项类型模板参数
+ * @param pos 位置
+ * @param data 数据项
+ * @return 执行结果
+ * @note
+ * 设置结点数据
+ * ----------
+ * ----------
+ *
+ * ----------
+ * + **1 非法位置判断**\n
+ * **if** pos <= 0 <b>||</b> pos > last_index_ + 1 :\n
+ * &emsp; 返回false\n\n
+ * + **2 赋值**\n
+ * data赋给mem_data_[pos - 1]\n\n
+ * + **3 退出函数**\n
+ * 返回true\n
+ *
  */
 template<typename TData>
 bool SeqList<TData>::SetData(int pos, const TData& data) {
-    if (pos <= 0 || pos > last_index_ + 1) {
-        return false;
+
+    // ---------- 1 非法位置判断 ----------
+
+    if (pos <= 0 || pos > last_index_ + 1) {                    // if pos <= 0 <b>||</b> pos > last_index_ + 1
+        return false;                                           // 返回false
     }
 
-    mem_data_[pos - 1] = data;
+    // ---------- 2 赋值 ----------
 
-    return true;
+    mem_data_[pos - 1] = data;                                  // data赋给mem_data_[pos - 1]
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                // 返回true
 }
 
 
@@ -297,26 +378,32 @@ bool SeqList<TData>::SetData(int pos, const TData& data) {
  * + **3 退出函数**\n
  * 返回true\n
  */
-template<class TData>
+template<typename TData>
 bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
 
-    if (last_index_ == capacity_ - 1) {
-        return false;
+    // ---------- 1 非法情况判断 ----------
+
+    if (last_index_ == capacity_ - 1) {                                 // if last_index_等于size_ - 1
+        return false;                                                   // 返回false
     }
 
-    if (prev_pos < 0 || prev_pos > last_index_ + 1) {
-        return false;
+    if (prev_pos < 0 || prev_pos > last_index_ + 1) {                   // if prev_pos < 0 或者 prev_pos > last_index_ + 1
+        return false;                                                   // 返回false
     }
 
-    for (int i = last_index_; i >= prev_pos; i--) {
-        mem_data_[i + 1] = mem_data_[i];
+    // ---------- 2 插入 ----------
+
+    for (int i = last_index_; i >= prev_pos; i--) {                     // for loop 遍历mem_data_数组索引, 从last_index_到prev_pos
+        mem_data_[i + 1] = mem_data_[i];                                // mem_data_[i + 1]等于mem_data_[i](前一位置元素)
     }
 
-    mem_data_[prev_pos] = data;
+    mem_data_[prev_pos] = data;                                         // 参数data赋值给mem_data_[prev_pos]
 
-    last_index_++;
+    last_index_++;                                                      // last_index_加1
 
-    return true;
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                        // 返回true
 }
 
 
@@ -349,23 +436,31 @@ bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
 template<typename TData>
 bool SeqList<TData>::Remove(int deletion_pos, TData& data) {
 
-    if (last_index_ == -1) {
-        return false;
+    // ---------- 1 非法情况判断 ----------
+
+    if (last_index_ == -1) {                                            // if last_index_等于-1
+        return false;                                                   // 返回false
     }
 
-    if (deletion_pos < 1 || deletion_pos > this->Length()) {
-        return false;
+    if (deletion_pos < 1 || deletion_pos > this->Length()) {            // if deletion_pos < 1 或者 deletion_pos > Length()
+        return false;                                                   // 返回false
     }
 
-    data = mem_data_[deletion_pos - 1];
+    // ---------- 2 保存被删除元素的数据项 ----------
 
-    for (int i = deletion_pos; i <= last_index_; i++) {
-        mem_data_[i - 1] = mem_data_[i];
+    data = mem_data_[deletion_pos - 1];                                 // mem_data_[deletion_pos - 1]赋给参数data
+
+    // ---------- 3 删除 ----------
+
+    for (int i = deletion_pos; i <= last_index_; i++) {                 // for loop 遍历mem_data_索引deletion_pos到last_index_
+        mem_data_[i - 1] = mem_data_[i];                                // mem_data_[i - 1] <--- mem_data_[i]
     }
 
-    last_index_--;
+    last_index_--;                                                      // last_index_减1
 
-    return true;
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                        // 返回true
 }
 
 
@@ -385,11 +480,11 @@ bool SeqList<TData>::Remove(int deletion_pos, TData& data) {
  */
 template<typename TData>
 bool SeqList<TData>::IsEmpty() const {
-    if (last_index_ == -1) {
-        return true;
+    if (last_index_ == -1) {                                            // if last_index_为-1
+        return true;                                                    // 返回true
     }
 
-    return false;
+    return false;                                                       // 返回false
 }
 
 
@@ -407,13 +502,13 @@ bool SeqList<TData>::IsEmpty() const {
  * &emsp; 返回true\n
  * 返回false\n
  */
-template<class TData>
+template<typename TData>
 bool SeqList<TData>::IsFull() const {
-    if (last_index_ == capacity_ - 1) {
-        return true;
+    if (last_index_ == capacity_ - 1) {                                 // if last_index_为size_ - 1
+        return true;                                                    // 返回true
     }
 
-    return false;
+    return false;                                                       // 返回false
 }
 
 
@@ -429,81 +524,94 @@ bool SeqList<TData>::IsFull() const {
  * 
  * ----
  * + **1 自身赋值处理**\n
+ * **if** 自身赋值 :\n
+ * &emsp; 返回*this\n\n
  * + **2 复制**\n
  * size_复制\n
  * 变量length, 取seq_list.Length()\n
  * **for loop** 遍历seq_list :\n
  * &emsp; 取seq_list当前元素数据项, 赋给curData\n
- * &emsp; curData赋给this的当前位置元素\n
+ * &emsp; curData赋给this的当前位置元素\n\n
  * + **3 退出函数**\n
  * 返回*this\n
  */
-template<class TData>
+template<typename TData>
 SeqList<TData>& SeqList<TData>::operator=(const SeqList<TData>& seq_list) {
 
-    if (&seq_list == this) {
-        return *this;
+    // ---------- 1 自身赋值处理 ----------
+
+    if (&seq_list == this) {                                            // if 自身赋值
+        return *this;                                                   // 返回*this
     }
 
-    this->capacity_ = seq_list.Size();
-    int length = seq_list.Length();
+    // ---------- 2 复制 ----------
 
-    for (int i = 0; i < length; i++) {
+    this->capacity_ = seq_list.Capacity();                              // size_复制
+    int length = seq_list.Length();                                     // 变量length, 取seq_list.Length()
+
+    for (int i = 0; i < length; i++) {                                  // for loop 遍历seq_list
         int curData;
-        seq_list.GetData(i, curData);
+        seq_list.GetData(i, curData);                                   // 取seq_list当前元素数据项, 赋给curData
 
-        this->SetData(i, curData);
+        this->SetData(i, curData);                                      // curData赋给this的当前位置元素
     }
 
-    return *this;
+    // ---------- 3 退出函数 ----------
+
+    return *this;                                                       // 返回*this
 }
 
 
 /*!
- * @brief 获取总长度
- * @tparam TData 类型模板参数
- * @return 总长度
+ * @brief **打印**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 打印
+ * ---
+ * ---
+ *
+ * ---
+ * + **1 空表处理**\n
+ * **if** 空表 :\n
+ * &emsp; 打印"顺序表为空表"\n
+ * &emsp; 推出函数\n\n
+ * + **2 按顺序打印**\n
+ * **for loop** 遍历mem_data_的数据项部分 :\n
+ * &emsp; 打印当前元素\n
  */
-template<class TData>
-int SeqList<TData>::Size() const {
-    return capacity_;
-}
-
-
-/*!
- * @brief 获取当前长度
- * @tparam TData 类型模板参数
- * @return 当前长度
- */
-template<class TData>
-int SeqList<TData>::Length() const {
-    return last_index_ + 1;
-}
-
-
-/*!
- * @brief 打印顺序表
- * @tparam TData 类型模板参数
- */
-template<class TData>
+template<typename TData>
 void SeqList<TData>::Print() {
 
-    if (last_index_ == -1) {
-        cout << "顺序表为空表" << endl;
-        return;
+    // ---------- 1 空表处理 ----------
+
+    if (last_index_ == -1) {                                    // if 空表
+        cout << "顺序表为空表" << endl;                           // 打印"顺序表为空表"
+        return;                                                 // 退出函数
     }
 
-    for (int i = 0; i <= last_index_; i++) {
-        cout << "#" << i + 1 << ":" << mem_data_[i] << endl;
+    // ---------- 2 按顺序打印 ----------
+
+    for (int i = 0; i <= last_index_; i++) {                    // for loop 遍历mem_data_的数据项部分
+        cout << "#" << i + 1 << ":" << mem_data_[i] << endl;    // 打印当前元素
     }
 }
 
 
 /*!
- * @brief 排序
- * @tparam TData 类型模板参数
+ * @brief **排序**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 排序
+ * ---
+ * ---
+ *
+ * <span style="color:#FF8100">
+ * 冒泡排序
+ * </span>
+ *
+ * ---
  */
-template<class TData>
+template<typename TData>
 void SeqList<TData>::Sort() {
 
     int length = this->Length();

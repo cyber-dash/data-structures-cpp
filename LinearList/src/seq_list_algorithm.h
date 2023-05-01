@@ -16,7 +16,7 @@
 
 
  /*!
-  * @brief 顺序表求并集
+  * @brief **顺序表求并集**
   * @tparam TData 类型模板参数
   * @param seq_list_a 顺序表a(并运算后的表)
   * @param seq_list_b 顺序表b

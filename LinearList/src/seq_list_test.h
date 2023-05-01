@@ -25,6 +25,8 @@ class SeqListTest {
 public:
     /*! @brief 测试插入 */
     static void TestInsert();
+    /*! @brief 测试复制构造 */
+    static void TestCopyConstructor();
     /*! @brief 测试删除 */
     static void TestRemove();
     /*! @brief 测试总长度 */
@@ -70,6 +72,30 @@ void SeqListTest::TestInsert() {
 }
 
 
+void SeqListTest::TestCopyConstructor() {
+    cout << endl;
+    cout << "------------------------- CyberDash -------------------------" << endl;
+    cout << "                 Test SeqList CopyConstructor                " << endl;
+    cout << "                         测试复制构造                        " << endl << endl << endl;
+
+    SeqList<int> seq_list(3);
+
+    int num1 = 1;
+    int num2 = 2;
+    int num3 = 3;
+
+    seq_list.Insert(0, num1);
+    seq_list.Insert(1, num2);
+    seq_list.Insert(2, num3);
+
+    SeqList<int> seq_list_2 = seq_list;
+
+    seq_list_2.Print();
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
 void SeqListTest::TestRemove() {
     cout << endl;
     cout << "------------------------- CyberDash -------------------------" << endl;
@@ -99,12 +125,12 @@ void SeqListTest::TestRemove() {
 void SeqListTest::TestSize() {
     cout << endl;
     cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                      Test SeqList Size                      " << endl;
+    cout << "                      Test SeqList Capacity                      " << endl;
     cout << "                        测试顺序表Size                         " << endl << endl << endl;
 
     SeqList<double> seq_list(3);
 
-    cout << "seq_list size: " << seq_list.Size() << endl;
+    cout << "seq_list size: " << seq_list.Capacity() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
