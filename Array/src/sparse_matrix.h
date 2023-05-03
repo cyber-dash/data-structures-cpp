@@ -28,38 +28,52 @@ struct TriTuple {
     TValue value;    //!< 值
 
     /*!
-     * @brief **赋值运算符重载函数**
-     * @param tri_tuple 稀疏函数三元组数据
+     * @brief **重载=**
+     * @param tri_tuple 稀疏矩阵三元组元素
      * @return 当前对象的引用
      * @note
-     * 赋值运算符重载函数
-     * ---------------
-     * ---------------
+     * 重载=
+     * -----
+     * -----
+     *
+     * -----
+     * + **1 赋值自身处理**\n
+     * **if** 赋值自身 :\n
+     * &emsp; 返回*this\n\n
+     * + **2 赋值**\n
+     * row赋值\n
+     * col赋值\n
+     * value赋值\n\n
+     * 返回*this\n
      */
     TriTuple<TValue>& operator=(const TriTuple<TValue>& tri_tuple) {
-        if (&tri_tuple == this) {
-            return *this;
+
+        // ---------- 1 赋值自身处理 ----------
+
+        if (&tri_tuple == this) {                           // if 赋值自身
+            return *this;                                   // 返回*this
         }
 
-        row = tri_tuple.row;
-        col = tri_tuple.col;
-        value = tri_tuple.value;
+        // ---------- 2 赋值 ----------
 
-        return *this;
+        row = tri_tuple.row;                                // row赋值
+        col = tri_tuple.col;                                // col赋值
+        value = tri_tuple.value;                            // value赋值
+
+        return *this;                                       // 返回*this
     }
 };
 
 
-// 友元函数, << 和 >>
-template<class TValue> class SparseMatrix;
-template<class TValue> ostream& operator<< (ostream& out, SparseMatrix<TValue>& sparse_matrix);
-template<class TValue> istream& operator>> (istream& in, SparseMatrix<TValue>& sparse_matrix);
+template<typename TValue> class SparseMatrix;
+template<typename TValue> ostream& operator<< (ostream& out, SparseMatrix<TValue>& sparse_matrix); // 运算符<<
+template<typename TValue> istream& operator>> (istream& in, SparseMatrix<TValue>& sparse_matrix);  // 运算符>>
 
 
 /*!
  * @brief **稀疏矩阵模板类**
  */
-template<class TValue>
+template<typename TValue>
 class SparseMatrix {
 public:
 
@@ -358,66 +372,158 @@ istream& operator>>(istream& in, SparseMatrix<TValue>& sparse_matrix) {
 
 
 /*!
- * @brief **稀疏矩阵转置**
+ * @brief **生成转置稀疏矩阵**
  * @tparam TData 类型模板参数
  * @return 转置矩阵的地址
  * @note
- * 稀疏矩阵转置
- * ----------
- * ----------
+ * 生成转置稀疏矩阵
+ * -------------
+ * -------------
  *
  *   两个for循环 \n
  *   时间复杂度O(col^2*row)
  *
- * ----------
- *
+ * -------------
+ * + **1 初始化稀疏矩阵**\n
+ * trans_sparse_matrix分配内存并初始化\n
+ * 使用原矩阵cols_设置转置矩阵rows_\n
+ * 使用原矩阵rows_设置转置矩阵cols_\n
+ * 使用原矩阵size_设置转置矩阵size_\n\n
+ * + **2 size为0情况处理**\n
+ * **if** size_为0 :\n
+ * &emsp; 返回trans_sparse_matrix\n\n
+ * + **3 转置**\n
+ * 初始化cur_elements_index(转置矩阵elements数组遍历变量)为0\n
+ * **for loop** 遍历本数组cols_(列), 作为转置数组行(row) :\n
+ * &emsp; **for loop** 遍历本数组elements_ :\n
+ * &emsp;&emsp; **if** elements_[i](本数组当前elements_元素)的列号 == row :\n
+ * &emsp;&emsp;&emsp; trans_sparse_matrix->elements_[cur_elements_index](转置矩阵当前elements_元素)的行号 = row\n
+ * &emsp;&emsp;&emsp; 转置矩阵当前elements_元素的列号 = 本矩阵当前elements_元素的行号\n
+ * &emsp;&emsp;&emsp; 转置矩阵当前elements_元素的value = 本矩阵当前elements_元素的value\n
+ * &emsp;&emsp;&emsp; 转置矩阵当前elements_元素指向下一个\n\n
+ * + **4 退出函数**\n
+ * 返回返回trans_sparse_matrix\n
  */
-template<class TData>
+template<typename TData>
 SparseMatrix<TData>* SparseMatrix<TData>::Transpose() {
+
+    // ---------- 1 初始化稀疏矩阵 ----------
+
+    // trans_sparse_matrix分配内存并初始化
     SparseMatrix<TData>* trans_sparse_matrix = new SparseMatrix<TData>(this->MaxSize());
 
-    trans_sparse_matrix->SetRows(this->Cols());
-    trans_sparse_matrix->SetCols(this->Rows());
-    trans_sparse_matrix->SetSize(this->Size());
+    trans_sparse_matrix->SetRows(this->Cols());         // 使用原矩阵cols_设置转置矩阵rows_
+    trans_sparse_matrix->SetCols(this->Rows());         // 使用原矩阵rows_设置转置矩阵cols_
+    trans_sparse_matrix->SetSize(this->Size());         // 使用原矩阵size_设置转置矩阵size_
 
-    if (this->Size() == 0) {
-        return trans_sparse_matrix;
+    // ---------- 2 size为0情况处理 ----------
+
+    if (this->Size() == 0) {                            // if size_为0
+        return trans_sparse_matrix;                     // 返回trans_sparse_matrix
     }
 
-    int cur_elements_index = 0;
-    for (int row = 0; row < this->Cols(); row++) { // 用列号做扫描, 做Cols趟
-        for (int i = 0; i < this->Size(); i++) { // 在数组sparse_matrix_array_中找到列号为i的三元组
-            if (this->elements_[i].col == row) {
-                trans_sparse_matrix->elements_[cur_elements_index].row = row; // row等于col
-                trans_sparse_matrix->elements_[cur_elements_index].col = this->elements_[i].row; // col等于row
-                trans_sparse_matrix->elements_[cur_elements_index].value = this->elements_[i].value; // value
-                cur_elements_index++;
+    // ---------- 3 转置 ----------
+
+    int cur_elements_index = 0;                         // 初始化cur_elements_index(转置矩阵elements数组遍历变量)为0
+    for (int row = 0; row < this->Cols(); row++) {      // for loop 遍历本数组cols_(列), 作为转置数组行(row)
+        for (int i = 0; i < this->Size(); i++) {        // for loop 遍历本数组elements_
+            if (this->elements_[i].col == row) {        // if elements_[i](本数组当前elements_元素)的列号 == row
+                // trans_sparse_matrix->elements_[cur_elements_index](转置矩阵当前elements_元素)的行号 = row
+                trans_sparse_matrix->elements_[cur_elements_index].row = row;
+
+                // 转置矩阵当前elements_元素的列号 = 本矩阵当前elements_元素的行号
+                trans_sparse_matrix->elements_[cur_elements_index].col = this->elements_[i].row;
+
+                // 转置矩阵当前elements_元素的value = 本矩阵当前elements_元素的value
+                trans_sparse_matrix->elements_[cur_elements_index].value = this->elements_[i].value;
+
+                cur_elements_index++;                   // 转置矩阵当前elements_元素指向下一个
             }
         }
     }
 
-    return trans_sparse_matrix;
+    // ---------- 4 退出函数 ----------
+
+    return trans_sparse_matrix;                         // 返回返回trans_sparse_matrix
 }
 
 
 /*!
- * @brief 稀疏矩阵快速转置
- * @tparam TValue 类型模板参数
- * @return 转置矩阵的指针
+ * @brief **生成转置矩阵(快速转置)**
+ * @tparam TValue 值类型模板参数
+ * @return 转置矩阵
  * @note
+ * 生成转置矩阵(快速转置)
+ * -------------------
+ * -------------------
+ *
  *  空间换时间的思想\n\n
  *
- *  **row_size_arr**: 保存原矩阵各列分别有多少个元素, 对应转置矩阵的各行有多少个元素 \n
- *  **trans_pos_at_each_row_arr**: 执行转置时, 原矩阵各列(转置矩阵各行)的每一列(转置矩阵每一行)的任务执行数组 \n
+ *  **row_sizes**: 转置矩阵各行元素数量, 即 原矩阵各列元素数量\n
+ *  **iterator_positions**: 执行转置时, 原矩阵各列(转置矩阵各行)的每一列(转置矩阵每一行)的任务执行数组 \n
  *
  *  \n先初始化以上两个数组 \n\n
  *  遍历sparse_matrix_array_ \n
  *  对原矩阵三元组第i个元素, 进行转置矩阵三元组对应位置的赋值 \n
- *  赋值结束后, 更新trans_pos_at_each_row_arr[this->elements_[i].col]的值(下一次转置矩阵数组执行的位置, 向后挪一位) \n
+ *  赋值结束后, 更新iterator_positions[this->elements_[i].col]的值(下一次转置矩阵数组执行的位置, 向后挪一位) \n
+ *
+ * -------------------
+ * + **1 初始化辅助数组**\n
+ * row_sizes(转置矩阵各行元素数量)分配内存并初始化\n
+ * iterator_positions(转置矩阵各行在elements_数组的遍历位置)分配内存并初始化\n\n
+ * + **2 转置矩阵分配内存**\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()\n\n
+ * 本矩阵的cols_, 赋值给转置矩阵的rows_\n
+ * 本矩阵的rows_, 赋值给转置矩阵的cols_\n
+ * 本矩阵的size_, 赋值给转置矩阵的size_\n\n
+ * + **3 size为0情况处理**\n
+ * **if** size_为0 :\n
+ * &emsp; 返回trans_sparse_matrix\n\n
+ * + **4 构造row_sizes**\n
+ * **for loop** 遍历本矩阵elements_ :\n
+ * &emsp; cur_row(元素对应的转置矩阵行号)取elements_[i].col\n
+ * &emsp; row_sizes[cur_row]加1\n\n
+ * + **5 构造iterator_positions**\n
+ * \n
+ * ```
+ * 初始化转置数组的三元组数组elements_的分布
+ *
+ *
+ *                 elements_[ 0 ... 第1行的首元素的位置 ... 第i行的首个元素的位置 ... ]
+ *                            ^             ^                       ^
+ *                            |             |                       |
+ *            iterator_positions[0]   iterator_positions[1]   iterator_positions[i] ...
+ *
+ *
+ * 核心算法:
+ *
+ *    iterator_positions[i] = iterator_positions[i - 1] + row_sizes[i - 1];
+ *
+ * 即在三元组数组elements_上, 每行首个元素所在的位置, 等于上一行首个元素的位置 + 该行的所有元素数
+ *
+ * ```
+ * \n
+ * iterator_positions[0]初始化为0\n
+ * **for loop** 遍历本数组cols_(列), 作为转置数组行(row) :\n
+ * &emsp; iterator_positions[row] = iterator_positions[row - 1] + row_sizes[row - 1]\n\n
+ * + **6 快速转置**\n
+ * **for loop** 遍历本矩阵elements_ :\n
+ * &emsp; 声明row(当前元素在转置矩阵的行号), 取this->elements_[i].col\n
+ * &emsp; 声明cur_elements_index(转置矩阵当前遍历元素的索引), 取iterator_positions[row]\n\n
+ * &emsp; trans_sparse_matrix->elements_[cur_elements_index](转置矩阵当前遍历元素)的row(行号), 取当前矩阵元素的col(列号)\n
+ * &emsp; 转置矩阵当前遍历元素的col(列号), 取当前矩阵元素的row(行号)\n
+ * &emsp; 转置矩阵当前遍历元素的value, 取当前矩阵元素的value\n\n
+ * &emsp; iterator_positions[row\加1\n\n
+ * + **7 删除辅助数组**\n
+ * 释放iterator_positions\n
+ * 释放row_sizes\n\n
+ * + **8 退出函数**\n
+ * 返回trans_sparse_matrix\n
  */
-template<class TValue>
+template<typename TValue>
 SparseMatrix<TValue>* SparseMatrix<TValue>::FastTranspose() {
-    int* element_count_of_rows = new int[this->Cols()];
+    int* row_sizes = new int[this->Cols()];
     int* iterator_positions = new int[this->Cols()];
 
     SparseMatrix<TValue>* trans_sparse_matrix = new SparseMatrix<TValue>(this->MaxSize());
@@ -433,37 +539,30 @@ SparseMatrix<TValue>* SparseMatrix<TValue>::FastTranspose() {
         return trans_sparse_matrix;
     }
 
-    for (int i = 0; i < this->Cols(); i++) {
-        element_count_of_rows[i] = 0;
-    }
-
-    // 将转置数组每行有多少个元素, 保存到element_count_of_rows
     for (int i = 0; i < this->Size(); i++) {
-        element_count_of_rows[this->elements_[i].col]++;
+        int cur_row = this->elements_[i].col;
+        row_sizes[cur_row]++;
     }
 
-    // 初始化转置数组的三元组数组sparse_matrix_array的分布
+    // 初始化转置数组的三元组数组elements_的分布
     //
-    //           this->elements_[ 0 ... 第1行的首元素的位置 ... 第i行的首个元素的位置 ... ]
+    //                 elements_[ 0 ... 第1行的首元素的位置 ... 第i行的首个元素的位置 ... ]
     //                            ^             ^                       ^
     //                            |             |                       |
     //                iterator_positions[0]   iterator_positions[1]   iterator_positions[i] ...
     //
     // 核心算法:
-    //    iterator_positions[i] = iterator_positions[i - 1] + element_count_of_rows[i - 1];
+    //    iterator_positions[i] = iterator_positions[i - 1] + row_sizes[i - 1];
     // 即在三元组数组elements_上, 每行首个元素所在的位置, 等于上一行首个元素的位置 + 该行的所有元素数
     iterator_positions[0] = 0;
     for (int row = 1; row < this->Cols(); row++) {
-        iterator_positions[row] = iterator_positions[row - 1] + element_count_of_rows[row - 1];
+        iterator_positions[row] = iterator_positions[row - 1] + row_sizes[row - 1];
     }
 
     for (int i = 0; i < this->Size(); i++) {
-        // 转制后矩阵的当前行索引(等于原数组的列索引)
         int row = this->elements_[i].col;
-        // 当前稀疏矩阵的三元组数组的数组索引, 取iter_pos_arr[row];
         int cur_elements_index = iterator_positions[row];
 
-        // 转置矩阵元素的row/col于原数组互换, value相同
         trans_sparse_matrix->elements_[cur_elements_index].row = this->elements_[i].col;
         trans_sparse_matrix->elements_[cur_elements_index].col = this->elements_[i].row;
         trans_sparse_matrix->elements_[cur_elements_index].value = this->elements_[i].value;
@@ -473,7 +572,7 @@ SparseMatrix<TValue>* SparseMatrix<TValue>::FastTranspose() {
     }
 
     delete[] iterator_positions;
-    delete[] element_count_of_rows;
+    delete[] row_sizes;
 
     return trans_sparse_matrix;
 }
