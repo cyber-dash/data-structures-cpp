@@ -18,6 +18,16 @@
 using namespace std;
 
 
+/*!
+ * @brief **双向链表结点模板结构体**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 双向链表结点模板结构体
+ * -------------------
+ * -------------------
+ *
+ * -------------------
+ */
 template <typename TData>
 struct DoublyLinkedNode {
     /*!
@@ -37,9 +47,9 @@ struct DoublyLinkedNode {
     explicit DoublyLinkedNode(const TData& data, DoublyLinkedNode<TData>* next = NULL, DoublyLinkedNode<TData>* prev = NULL) :
         data(data), next(next), prev(prev) {}
 
-    TData data;                       //!< 数据项
-    DoublyLinkedNode<TData>* next;    //!< 下一结点
-    DoublyLinkedNode<TData>* prev;    //!< 上一结点
+    TData data;                       //!< **数据项**
+    DoublyLinkedNode<TData>* next;    //!< **下一结点**
+    DoublyLinkedNode<TData>* prev;    //!< **上一结点**
 };
 
 
@@ -93,6 +103,7 @@ public:
     int Length() const { return this->length_; }
 
 private:
+    // 子链表搜索(递归)
     DoublyLinkedNode<TData>* SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_first_element, const TData& data) const;
 
     DoublyLinkedNode<TData>* head_;     //!< **头结点**
@@ -238,14 +249,21 @@ template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_first_element,
                                                                             const TData& data) const
 {
-    if (sub_list_first_element == NULL) {
-        return NULL;
+    // ---------- 1 空链表处理 ----------
+
+    if (sub_list_first_element == NULL) {                                       // if 子链表首个结点为NULL
+        return NULL;                                                            // 返回NULL
     }
 
-    if (sub_list_first_element->data == data) {
-        return sub_list_first_element;
+    // ---------- 2 子链表首个元素结点既是搜索结点的处理 ----------
+
+    if (sub_list_first_element->data == data) {                                 // if 子链表首个元素结点的数据项 == data
+        return sub_list_first_element;                                          // 返回该结点(指针)
     }
 
+    // ---------- 3 递归搜索 ----------
+
+    // 对sub_list_first_element->next(子链表首个元素结点的下一结点)递归调用SearchInSubListRecursive_, 返回结果
     return SearchInSubListRecursive_(sub_list_first_element->next, data);
 }
 
@@ -253,8 +271,8 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(Doub
 /*!
  * @brief **插入结点**
  * @tparam TData 数据项类型模板参数
- * @param pos 插入位置的前一位置
- * @param data 插入数据项
+ * @param prev_pos 插入位置的前一位置
+ * @param data 数据项
  * @return 执行结果
  * @note
  * 插入结点
@@ -263,50 +281,55 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(Doub
  * 
  * -------
  * + **1 非法位置处理**\n
- * **if** pos > 链表长度 || pos < 0 :\n
+ * **if** prev_pos > 链表长度 || prev_pos < 0 :\n
  * &emsp; 返回false\n\n
  * + **2 构造插入结点**\n
  * 分配内存并初始化insertion_node(插入结点)\n
  * **if** 内存分配失败 :\n
  * &emsp; 返回false\n\n
  * + **3 插入**\n
- * <span style="color:#003153">3.1 遍历至pos位置(插入位置前一位置)\n</span>
- * 初始化cur(遍历指针)指向head_(头结点)\n
- * **while loop** pos > 0 :\n
- * &emsp; cur指向下一结点\n
- * &emsp; pos减1\n\n
- * <span style="color:#003153">3.2 插入\n</span>
+ * 获取prev_pos位置的结点prev_node(插入结点的前一结点)\n\n
  * 插入结点的next, 指向插入结点的前一结点的next\n
  * 插入结点的前一结点的next, 指向插入结点\n\n
  * 插入结点的下一结点的prev, 指向插入结点\n
  * 插入结点的prev, 指向插入结点的前一结点\n\n
- * <span style="color:#003153">3.3 调整长度\n</span>
+ * + **4 调整长度**\n
  * length_加1\n\n
- * + **4 返回**\n
+ * + **5 退出函数**\n
  * 返回true\n
  */
 template<typename TData>
 bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
-    if (prev_pos > length_ || prev_pos < 0) {
-        return false;
+
+    // ---------- 1 非法位置处理 ----------
+
+    if (prev_pos > length_ || prev_pos < 0) {                       // if prev_pos > 链表长度 || prev_pos < 0
+        return false;                                               // 返回false
     }
 
-    DoublyLinkedNode<TData>* insertion_node = new DoublyLinkedNode<TData>(data);
+    // ---------- 2 构造插入结点 ----------
+    DoublyLinkedNode<TData>* insertion_node = new DoublyLinkedNode<TData>(data);    // 分配内存并初始化insertion_node(插入结点)
     if (!insertion_node) {
-        return false;
+        return false;                                               // if 内存分配失败
     }
 
-    DoublyLinkedNode<TData>* prev_node = this->GetNode(prev_pos);
+    // ---------- 3 插入 ----------
 
-    insertion_node->next = prev_node->next;
-    prev_node->next = insertion_node;
+    DoublyLinkedNode<TData>* prev_node = this->GetNode(prev_pos);   // 获取prev_pos位置的结点prev_node(插入结点的前一结点)
 
-    insertion_node->next->prev = insertion_node;
-    insertion_node->prev = prev_node;
+    insertion_node->next = prev_node->next;                         // 插入结点的next, 指向插入结点的前一结点的next
+    prev_node->next = insertion_node;                               // 插入结点的前一结点的next, 指向插入结点
 
-    length_++;
+    insertion_node->next->prev = insertion_node;                    // 插入结点的下一结点的prev, 指向插入结点
+    insertion_node->prev = prev_node;                               // 插入结点的prev, 指向插入结点的前一结点
 
-    return true;
+    // ---------- 4 调整长度 ----------
+
+    length_++;                                                      // length_加1
+
+    // ---------- 5 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
@@ -333,16 +356,23 @@ bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
+    // ---------- 1 非法位置处理 ----------
+    // if pos < 1 || pos > 链表长度
+    // 返回NULL
     if (pos < 0 || pos > Length()) {
         return NULL;
     }
 
-    DoublyLinkedNode<TData>* cur = head_;
-    for (int i = 0; i < pos; i++) {
-        cur = cur->next;
+    // ---------- 2 遍历至pos位置结点 ----------
+
+    DoublyLinkedNode<TData>* cur = head_;                                   // 初始化cur(遍历指针), 指向head_->next
+    for (int i = 0; i < pos; i++) {                                         // for loop 1至pos
+        cur = cur->next;                                                    // cur指向cur的next结点
     }
 
-    return cur;
+    // ---------- 3 返回结果 ----------
+
+    return cur;                                                             // 返回cur
 }
 
 
