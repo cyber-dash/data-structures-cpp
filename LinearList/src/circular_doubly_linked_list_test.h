@@ -34,8 +34,6 @@ public:
     static void TestSearch();
     /*! @brief 测试链表定位 */
     static void TestGetNode();
-    /*! @brief 测试获取设置数据 */
-    static void TestGetDataAndSetData();
 };
 
 
@@ -193,8 +191,8 @@ void CircularDoublyLinkedListTest::TestSearch() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|            Test CircularDoublyLinkedList Search               |" << endl;
-    cout << "|                       测试双向链表查找                      |" << endl << endl << endl;
+    cout << "|            Test CircularDoublyLinkedList Search           |" << endl;
+    cout << "|                       测试双向链表查找                    |" << endl << endl << endl;
 
     CircularDoublyLinkedList<int>* double_list;
     double_list = new CircularDoublyLinkedList<int>();
@@ -240,30 +238,6 @@ void CircularDoublyLinkedListTest::TestGetNode() {
     cout << "Get position 0 node, node->data: " << pos0_node->data << endl;
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
-}
-
-
-void CircularDoublyLinkedListTest::TestGetDataAndSetData() {
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|          Test CircularDoublyLinkedList Search And SetData        |" << endl;
-    cout << "|                 测试双向循环链表获取/设置数据项                |" << endl << endl << endl;
-
-    CircularDoublyLinkedList<string>* city_list = new CircularDoublyLinkedList<string>();
-
-    city_list->Insert(0, "Beijing");        // 位置0后边, 插入"Beijing"
-    city_list->Insert(1, "Shanghai");       // 位置1后边, 插入"Shanghai"
-    city_list->Insert(2, "Guangzhou");      // 位置2后边, 插入"Guangzhou"
-    city_list->Insert(3, "Shenzhen");       // 位置3后边, 插入"Shenzhen"
-    city_list->Insert(4, "Suzhou");         // 位置4后边, 插入"Suzhou"
-    city_list->Insert(5, "Hangzhou");       // 位置5后边, 插入"Hangzhou"
-    city_list->Insert(6, "Chengdu");        // 位置6后边, 插入"Chengdu"
-
-    string city_name;
-    city_list->GetData(3, city_name);
-    cout << "The city_name: " << city_name;
-
-    cout << endl << "-------------------------------------------------------------" << endl << endl;
 }
 
 

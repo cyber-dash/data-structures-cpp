@@ -145,7 +145,7 @@ void CircularDoublyLinkedList<TData>::Clear() {
 
     // ---------- 2 调整长度 ----------
 
-    this->length_ = 0;                                                  // length_设置为0
+    this->length_ = 0;                                                      // length_设置为0
 }
 
 
@@ -184,16 +184,15 @@ CircularDoublyLinkedList<TData>::~CircularDoublyLinkedList() {
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const TData& data) {
-    CircularDoublyLinkedNode<TData>* cur = this->first_;    // 初始化cur(遍历指针), 指向first_(首个结点)
+    CircularDoublyLinkedNode<TData>* cur = this->first_;                // 初始化cur(遍历指针), 指向first_(首个结点)
 
-    // for loop 遍历链表每个结点, 从pos(位置)等于1开始, 每次遍历结束cur指向自身next
-    for (int pos = 1; pos <= this->Length(); pos++, cur = cur->next) {
-        if (cur->data == data) {                            // if cur->data等于参数data
-            return cur;                                     // 返回cur
+    for (int pos = 1; pos <= this->Length(); pos++, cur = cur->next) {  // for loop 遍历链表每个结点, 从pos(位置)等于1开始, 每次遍历结束cur指向自身next
+        if (cur->data == data) {                                        // if cur->data等于参数data
+            return cur;                                                 // 返回cur
         }
     }
 
-    return NULL;                                            // 返回NULL(没有对应结点)
+    return NULL;                                                        // 返回NULL(没有对应结点)
 }
 
 
@@ -231,25 +230,25 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirec
 
     // ---------- 1 非法步数处理 ----------
 
-    if (step < 0 || step >= length_) {              // if step < 0 || step >= 链表长度
-        return NULL;                                // 返回NULL
+    if (step < 0 || step >= length_) {                              // if step < 0 || step >= 链表长度
+        return NULL;                                                // 返回NULL
     }
 
     // ---------- 2 按方向遍历至pos位置 ----------
 
-    CircularDoublyLinkedNode<TData>* cur = first_;  // 初始化cur(遍历指针), 指向first_(首结点)
+    CircularDoublyLinkedNode<TData>* cur = first_;                  // 初始化cur(遍历指针), 指向first_(首结点)
 
-    for (int i = 1; i <= step; i++) {               // for loop 循环step次
-        if (direction == BACKWARD_DIRECTION) {      // if 向prev方向
-            cur = cur->prev;                        // cur指向cur->prev
-        } else {                                    // else (向next方向)
-            cur = cur->next;                        // cur指向cur->next
+    for (int i = 1; i <= step; i++) {                               // for loop 循环step次
+        if (direction == BACKWARD_DIRECTION) {                      // if 向prev方向
+            cur = cur->prev;                                        // cur指向cur->prev
+        } else {                                                    // else (向next方向)
+            cur = cur->next;                                        // cur指向cur->next
         }
     }
 
     // ---------- 3 返回结果 ----------
 
-    return cur;                                     // 返回cur
+    return cur;                                                     // 返回cur
 }
 
 
@@ -275,16 +274,15 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNode(int po
 
     // ---------- 1 pos为0情况处理 ----------
 
-    if (pos == 0) {                 // if pos等于0
-        return first_->prev;        // 返回first_->prev
+    if (pos == 0) {                                                                     // if pos等于0
+        return first_->prev;                                                            // 返回first_->prev
     }
 
     // ---------- 2 调用GetDataByDirection ----------
 
-    int step = pos - 1;             // 计算step = pos - 1
+    int step = pos - 1;                                                                 // 计算step = pos - 1
 
-    // 按照FORWARD_DIRECTION方向, 调用GetDataByDirection
-    return this->GetNodeByDirection(step, CircularDoublyLinkedList::FORWARD_DIRECTION);
+    return this->GetNodeByDirection(step, CircularDoublyLinkedList::FORWARD_DIRECTION); // next方向, 调用GetDataByDirection
 }
 
 
