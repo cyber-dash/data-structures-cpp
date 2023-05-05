@@ -11,7 +11,7 @@
 
 int main() {
 
-	TestGetSize();
+    TestLength();
 
 	TestEnQueue();
 
@@ -21,7 +21,7 @@ int main() {
 
 	TestIsEmpty();
 
-	TestOperatorCout();
+    TestPrint();
 
 	return 0;
 }

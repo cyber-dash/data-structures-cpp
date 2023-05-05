@@ -11,7 +11,7 @@
 
 
  /*! @brief 测试获取队列长度 */
-void TestGetSize();
+void TestLength();
 
 /*! @brief 测试入队 */
 void TestEnQueue();
@@ -26,7 +26,7 @@ void TestGetFrontAndGetRear();
 void TestIsEmpty();
 
 /*! @brief 测试重载<< */
-void TestOperatorCout();
+void TestPrint();
 
 
 #endif // CYBER_DASH_QUEUE_TEST_H

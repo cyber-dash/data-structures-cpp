@@ -1,7 +1,7 @@
 ﻿/**
  * @file linked_queue.h
  * @author cyberdash@163.com(抖音: cyberdash_yuan)
- * @brief 链表实现队列
+ * @brief 链式实现队列
  * @version 0.2.1
  * @date 2021-07-28
  */
@@ -19,7 +19,7 @@ using namespace std;
 
 
 /*!
- * @brief 链表队列结点模板结构体
+ * @brief **链式队列结点模板结构体**
  * @tparam TData 数据项类型模板参数
  */
 template <typename TData>
@@ -35,41 +35,39 @@ public:
     explicit LinkedNode(LinkedNode<TData>* node = NULL) : next_(node) {}
 
     /**
-     * @brief 构造函数(数据项&下一结点指针)
+     * @brief **构造函数(数据项,下一结点指针)**
      * @param data 数据项
-     * @param node 下一结点指针
+     * @param node 下一结点
      */
     explicit LinkedNode(const TData& data, LinkedNode<TData>* node = NULL) : data_(data), next_(node) {}
 
     /**
-     * @brief 获取当前结点值
-     * @return TData 类型模板参数
+     * @brief **获取数据项**
+     * @return 数据项
      */
     TData GetData() { return data_; }
 
     /*!
-     * @brief 设置当前结点值
+     * @brief **设置数据项**
      * @param data 输入的结点值
-     * @return 是否成功
      */
     void SetData(const TData& data) { data_ = data; }
 
     /*!
-     * @brief 获取下一结点
-     * @return LinkedNode<TData>* 返回下一结点
+     * @brief **获取下一结点**
+     * @return 返回下一结点
      */
     LinkedNode<TData>* Next() { return next_; }
 
     /*!
-     * @brief 设置下一结点
-     * @param node 下一结点指针
-     * @return 是否成功
+     * @brief **设置下一结点**
+     * @param node 下一结点
      */
     void SetNext(LinkedNode<TData>* const& node) { next_ = node; }
 
 private:
-    TData data_;                 //!< 结点数据项
-    LinkedNode<TData>* next_;    //!< 下一结点
+    TData data_;                 //!< **数据项**
+    LinkedNode<TData>* next_;    //!< **下一结点**
 };
 
 
@@ -77,17 +75,26 @@ template<typename TData> class LinkedQueue;
 template<typename TData> ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue);
 
 /**
- * @brief 链表队列模板类
- * @tparam TData 类型模板参数
+ * @brief **链式队列模板类**
+ * @tparam TData 数据项类型模板参数
  */
 template<typename TData>
 class LinkedQueue: public Queue<TData> {
 
 public:
-    /*! @brief 默认构造函数 */
+    /*! @brief **默认构造函数** */
     LinkedQueue() : front_(NULL), rear_(NULL) {}
 
-    /*! @brief 析构函数 */
+    /*!
+     * @brief **析构函数**
+     * @note
+     * 析构函数
+     * -------
+     * -------
+     *
+     * -------
+     * 调用Clear()
+     */
     ~LinkedQueue() { Clear(); }
 
     // 入队
@@ -120,19 +127,33 @@ public:
 private:
 
     /*!
-     * @brief 获取队头结点指针
-     * @return 队头结点指针
+     * @brief **获取队头结点**
+     * @return 队头结点
+     * @note
+     * 获取队头结点
+     * ----------
+     * ----------
+     *
+     * ----------
+     * 返回front_
      */
     LinkedNode<TData>* FrontNode_() const { return this->front_; }
 
     /*!
-     * @brief 获取队尾结点指针
-     * @return LinkedNode<TData>* 队尾结点指针
+     * @brief **获取队尾结点**
+     * @return 队尾结点
+     * @note
+     * 获取队尾结点
+     * ----------
+     * ----------
+     *
+     * ----------
+     * 返回rear_
      */
     LinkedNode<TData>* RearNode_() const { return this->rear_; }
 
-    LinkedNode<TData>* front_;    //!< 队头指针
-    LinkedNode<TData>* rear_;     //!< 队尾指针
+    LinkedNode<TData>* front_;    //!< **队头**
+    LinkedNode<TData>* rear_;     //!< **队尾**
 };
 
 
@@ -189,9 +210,27 @@ bool LinkedQueue<TData>::EnQueue(const TData& data) {
 
 /*!
  * @brief **出队**
- * @tparam TData 类型模板参数
- * @param data 数据(保存出队结点的数据项)
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
  * @return 执行结果
+ * @note
+ * 出队
+ * ---
+ * ---
+ *
+ * ---
+ * + **1 空队处理**\n
+ * **if** 空队 :\n
+ * &emsp; 返回false\n\n
+ * + **2 参数data赋值**\n
+ * 初始化temp, 指向front_(队头)\n
+ * 队头数据项赋给data\n\n
+ * + **3 出队操作**\n
+ * front_指向front_->next_\n
+ * 释放temp\n
+ * temp置NULL\n\n
+ * + **4 退出函数**\n
+ * 返回true\n
  */
 template<typename TData>
 bool LinkedQueue<TData>::DeQueue(TData& data) {
@@ -201,8 +240,8 @@ bool LinkedQueue<TData>::DeQueue(TData& data) {
     }
 
     LinkedNode<TData>* temp = front_;
-
     data = temp->GetData();
+
     this->front_ = this->front_->Next();
 
     delete temp;
@@ -213,12 +252,27 @@ bool LinkedQueue<TData>::DeQueue(TData& data) {
 
 
 /*!
- * @brief 出队(不保存数据)
- * @tparam TData 类型模板参数
- * @param data 数据(保存出队结点的数据项)
- * @return 是否出队成功
+ * @brief **出队(不保存数据项)**
+ * @tparam TData 数据项类型模板参数
+ * @return 执行结果
+ * @note
+ * 出队(不保存数据项)
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * + **1 空队处理**\n
+ * **if** 空队 :\n
+ * &emsp; 返回false\n\n
+ * + **2 出队操作**\n
+ * 初始化temp, 指向front_(队头)\n
+ * front_指向front_->next_\n
+ * 释放temp\n
+ * temp置NULL\n\n
+ * + **3 退出函数**\n
+ * 返回true\n
  */
-template<class TData>
+template<typename TData>
 bool LinkedQueue<TData>::DeQueue() {
 
     if (IsEmpty()) {
@@ -237,12 +291,25 @@ bool LinkedQueue<TData>::DeQueue() {
 
 
 /*!
- * @brief 获取队头数据
- * @tparam TData 类型模板参数
- * @param data 数据(用于保存队头数据项)
- * @return 是否成功
+ * @brief **获取队头数据**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 获取队头数据
+ * ----------
+ * ----------
+ *
+ * ----------
+ * + **1 空队处理**\n
+ * **if** 空队 :\n
+ * &emsp; 返回false\n\n
+ * + **2 保存队头数据**\n
+ * 队头数据项赋给data\n\n
+ * + **3 退出函数**\n
+ * 返回true\n
  */
-template<class TData>
+template<typename TData>
 bool LinkedQueue<TData>::Front(TData& data) const {
 
     if (IsEmpty()) {
@@ -256,12 +323,25 @@ bool LinkedQueue<TData>::Front(TData& data) const {
 
 
 /*!
- * @brief 获取队尾数据
- * @tparam TData 类型模板参数
- * @param data 数据(用于保存数据项)
- * @return 是否成功
+ * @brief **获取队尾数据**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 获取队尾数据
+ * ----------
+ * ----------
+ *
+ * ----------
+ * + **1 空队处理**\n
+ * **if** 空队 :\n
+ * &emsp; 返回false\n\n
+ * + **2 保存队尾数据**\n
+ * 队尾数据项赋给data\n\n
+ * + **3 退出函数**\n
+ * 返回true\n
  */
-template<class TData>
+template<typename TData>
 bool LinkedQueue<TData>::Rear(TData& data) const {
 
     if (IsEmpty()) {
@@ -275,25 +355,37 @@ bool LinkedQueue<TData>::Rear(TData& data) const {
 
 
 /*!
- * @brief 判断队列是否为空
- * @tparam TData 类型模板参数
+ * @brief **判断队列是否为空**
+ * @tparam TData 数据项类型模板参数
  * @return 是否为空
+ * @note
+ * 判断队列是否为空
+ * -------------
+ * -------------
+ *
+ * -------------
+ * 返回this->front_ == NULL
  */
 template<typename TData>
 bool LinkedQueue<TData>::IsEmpty() const {
-    if (this->front_ == NULL) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return this->front_ == NULL;
 }
 
 
 /*!
- * @brief 获取队列长度
- * @tparam TData 类型模板参数
+ * @brief **获取队列长度**
+ * @tparam TData 数据项类型模板参数
  * @return 队列长度
+ * @note
+ * 获取队列长度
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 初始化count(队列结点数量)为0\n\n
+ * **for loop** cur指向front_; cur != NULL; cur指向自身next :\n
+ * &emsp; count加1\n\n
+ * 返回count\n
  */
 template<typename TData>
 int LinkedQueue<TData>::Length() const {
@@ -313,10 +405,10 @@ int LinkedQueue<TData>::Length() const {
  * @tparam TData 数据项类型模板参数
  * @note
  * 清空
- * ----
- * ----
+ * ---
+ * ---
  *
- * ----
+ * ---
  * **while loop** 当前队列不为NULL: \n
  * &emsp; 队头出队\n
  */
@@ -329,11 +421,21 @@ void LinkedQueue<TData>::Clear() {
 
 
 /*!
- * @brief 重载<<(打印队列)
- * @tparam TData 类型模板参数
+ * @brief **重载<<**
+ * @tparam TData 数据项类型模板参数
  * @param os 输出流
- * @param linked_queue 链表队列
+ * @param linked_queue 链式队列
  * @return 输出流
+ * @note
+ * 重载<<
+ * -----
+ * -----
+ *
+ * -----
+ * 打印队列长度\n\n
+ * **for loop** 遍历队列 :\n
+ * &emsp; 打印当前结点数据项\n\n
+ * 返回os\n
  */
 template<typename TData>
 ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue) {
