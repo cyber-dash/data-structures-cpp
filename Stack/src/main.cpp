@@ -4,49 +4,18 @@
  * @brief 栈demo演示
  * @version 0.2.1
  * @date 2020-07-15
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
-#include <iostream>
-#include "linked_stack.h"
 #include "test.h"
-
-
-using namespace std;
 
 
 int main() {
 
     Test_LinkedStack_Push();
 
-    /*
-	LinkedStack<int> test_stack;
+    Test_LinkedStack_Pop();
 
-	// 操作 int 类型的栈
-	test_stack.Push(1);
-	test_stack.Push(2);
-	test_stack.Push(3);
-	test_stack.Push(4);
-
-	// test Top
-	int top_data;
-    test_stack.Top(top_data);
-	cout << "top_data: " << top_data << endl;
-
-	// test operator<<
-	cout << test_stack << endl;
-
-	// test Pop
-	int pop_data;
-	test_stack.Pop(pop_data);
-	test_stack.Pop(pop_data);
-	test_stack.Pop(pop_data);
-	cout << test_stack << endl;
-
-	test_stack.Pop(pop_data);
-	cout << test_stack << endl;
-     */
+    Test_LinkedStack_Top();
 
 	return 0;
 }
