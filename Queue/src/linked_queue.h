@@ -235,19 +235,27 @@ bool LinkedQueue<TData>::EnQueue(const TData& data) {
 template<typename TData>
 bool LinkedQueue<TData>::DeQueue(TData& data) {
 
-    if (IsEmpty()) {
-        return false;
+    // ---------- 1 空队处理 ----------
+
+    if (IsEmpty()) {                                                // if 空队
+        return false;                                               // 返回false
     }
 
-    LinkedNode<TData>* temp = front_;
-    data = temp->GetData();
+    // ---------- 2 参数data赋值 ----------
 
-    this->front_ = this->front_->Next();
+    LinkedNode<TData>* temp = front_;                               // 初始化temp, 指向front_(队头)
+    data = temp->GetData();                                         // 队头数据项赋给data
 
-    delete temp;
-    temp = NULL;
+    // ---------- 3 出队操作 ----------
 
-    return true;
+    this->front_ = this->front_->Next();                            // front_指向front_->next_
+
+    delete temp;                                                    // 释放temp
+    temp = NULL;                                                    // temp置NULL
+
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
@@ -275,18 +283,24 @@ bool LinkedQueue<TData>::DeQueue(TData& data) {
 template<typename TData>
 bool LinkedQueue<TData>::DeQueue() {
 
-    if (IsEmpty()) {
-        return false;
+    // ---------- 1 空队处理 ----------
+
+    if (IsEmpty()) {                                                // if 空队
+        return false;                                               // 返回false
     }
 
-    LinkedNode<TData>* temp = this->front_;
+    // ---------- 2 出队操作 ----------
 
-    this->front_ = this->front_->Next();
+    LinkedNode<TData>* temp = this->front_;                         // 初始化temp, 指向front_(队头)
 
-    delete temp;
-    temp = NULL;
+    this->front_ = this->front_->Next();                            // front_指向front_->next_
 
-    return true;
+    delete temp;                                                    // 释放temp
+    temp = NULL;                                                    // temp置NULL
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
@@ -312,13 +326,19 @@ bool LinkedQueue<TData>::DeQueue() {
 template<typename TData>
 bool LinkedQueue<TData>::Front(TData& data) const {
 
-    if (IsEmpty()) {
-        return false;
+    // ---------- 1 空队处理 ----------
+
+    if (IsEmpty()) {                                                // if 空队
+        return false;                                               // 返回false
     }
 
-    data = this->front_->GetData();
+    // ---------- 2 保存队头数据 ----------
 
-    return true;
+    data = this->front_->GetData();                                 // 队头数据项赋给data
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
@@ -344,13 +364,19 @@ bool LinkedQueue<TData>::Front(TData& data) const {
 template<typename TData>
 bool LinkedQueue<TData>::Rear(TData& data) const {
 
-    if (IsEmpty()) {
-        return false;
+    // ---------- 1 空队处理 ----------
+
+    if (IsEmpty()) {                                                // if 空队
+        return false;                                               // 返回false
     }
 
-    data = this->rear_->GetData();
+    // ---------- 2 保存队尾数据 ----------
 
-    return true;
+    data = this->rear_->GetData();                                  // 队尾数据项赋给data
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
@@ -390,13 +416,14 @@ bool LinkedQueue<TData>::IsEmpty() const {
 template<typename TData>
 int LinkedQueue<TData>::Length() const {
 
-    int count = 0;
+    int count = 0;                                                  // 初始化count(队列结点数量)为0
 
+    // for loop cur指向front_; cur != NULL; cur指向自身next
     for (LinkedNode<TData>* cur = this->front_; cur != NULL; cur = cur->Next()) {
-        count++;
+        count++;                                                    // count加1
     }
 
-    return count;
+    return count;                                                   // 返回count
 }
 
 
@@ -414,8 +441,8 @@ int LinkedQueue<TData>::Length() const {
  */
 template<typename TData>
 void LinkedQueue<TData>::Clear() {
-    while (!this->IsEmpty()) {
-        this->DeQueue();
+    while (!this->IsEmpty()) {                                      // while loop 当前队列不为NULL
+        this->DeQueue();                                            // 队头出队
     }
 }
 
@@ -440,16 +467,16 @@ void LinkedQueue<TData>::Clear() {
 template<typename TData>
 ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue) {
 
-    os << "The size of link queue: " << linked_queue.Length() << endl;
+    os<<"The size of link queue: "<<linked_queue.Length()<< endl;   // 打印队列长度
 
     LinkedNode<TData>* cur = linked_queue.FrontNode_();
 
-    for (int i = 1; cur != NULL; i++) {
-        os << i << ":" << cur->GetData() << endl;
+    for (int i = 1; cur != NULL; i++) {                             // for loop 遍历队列
+        os << i << ":" << cur->GetData() << endl;                   // 打印当前结点数据项
         cur = cur->Next();
     }
 
-    return os;
+    return os;                                                      // 返回os
 }
 
 
