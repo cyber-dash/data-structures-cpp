@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * @file main.cpp
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 栈demo演示
@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "linked_stack.h"
+#include "test.h"
 
 
 using namespace std;
@@ -17,6 +18,9 @@ using namespace std;
 
 int main() {
 
+    Test_LinkedStack_Push();
+
+    /*
 	LinkedStack<int> test_stack;
 
 	// 操作 int 类型的栈
@@ -42,6 +46,7 @@ int main() {
 
 	test_stack.Pop(pop_data);
 	cout << test_stack << endl;
+     */
 
 	return 0;
 }

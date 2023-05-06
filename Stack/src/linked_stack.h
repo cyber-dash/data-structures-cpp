@@ -1,11 +1,4 @@
-﻿/*!
- * @file linked_stack.h
- * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 链式栈模板类
- * @version 0.2.1
- * @date 2020-07-28
- */
-
+﻿
 #ifndef CYBER_DASH_LINKED_STACK_H
 #define CYBER_DASH_LINKED_STACK_H
 
