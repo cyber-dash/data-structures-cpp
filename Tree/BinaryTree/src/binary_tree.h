@@ -618,33 +618,35 @@ bool BinaryTree<TData>::DuplicateSubTreeRecursive_(BinaryTreeNode<TData>* src_su
 {
     // ---------- 1 空源子树处理 ----------
 
-    if (src_subtree_root == NULL) {                                             // if src_subtree_root(源子树根结点) == NULL
-        target_subtree_root = NULL;                                             // target_subtree_root(目标子树根结点) = NULL
-        return true;                                                            // 返回true
+    if (src_subtree_root == NULL) {                                                 // if src_subtree_root(源子树根结点) == NULL
+        target_subtree_root = NULL;                                                 // target_subtree_root(目标子树根结点) = NULL
+        return true;                                                                // 返回true
     }
 
     // ---------- 2 目标子树根结点处理 ----------
 
-    target_subtree_root = new BinaryTreeNode<TData>(src_subtree_root->data);    // target_subtree_root分配内存并初始化
-    if (!target_subtree_root) {                                                 // if 内存分配失败
-        return false;                                                           // 返回false
+    target_subtree_root = new BinaryTreeNode<TData>(src_subtree_root->data);        // target_subtree_root分配内存并初始化
+    if (!target_subtree_root) {                                                     // if 内存分配失败
+        return false;                                                               // 返回false
     }
 
     // ---------- 3 分治递归 ----------
 
-    bool res = this->DuplicateSubTreeRecursive_(src_subtree_root->left_child, target_subtree_root->left_child); // 左子树递归复制
-    if (!res) {                                                                 // if 失败
-        return false;                                                           // 返回false
+    bool res = this->DuplicateSubTreeRecursive_(src_subtree_root->left_child,       // 左子树递归复制
+                                                target_subtree_root->left_child);
+    if (!res) {                                                                     // if 失败
+        return false;                                                               // 返回false
     }
 
-    res = this->DuplicateSubTreeRecursive_(src_subtree_root->right_child, target_subtree_root->right_child);    // 右子树递归复制
-    if (!res) {                                                                 // if 失败
-        return false;                                                           // 返回false
+    res = this->DuplicateSubTreeRecursive_(src_subtree_root->right_child,           // 右子树递归复制
+                                           target_subtree_root->right_child);
+    if (!res) {                                                                     // if 失败
+        return false;                                                               // 返回false
     }
 
     // ---------- 4 退出函数 ----------
 
-    return true;                                                                // 返回true
+    return true;                                                                    // 返回true
 }
 
 
@@ -935,25 +937,25 @@ template<typename TData>
 void BinaryTree<TData>::InorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
                                                    void (*visit)(BinaryTreeNode<TData>*))
 {
-    stack<BinaryTreeNode<TData>*> backtrack_stack;      // 声明backtrack_stack(回溯栈)
-    BinaryTreeNode<TData>* cur = subtree_root;          // 初始化cur_tree_node(当前二叉树结点), 指向subtree_root(子树根结点)
+    stack<BinaryTreeNode<TData>*> backtrack_stack;                  // 声明backtrack_stack(回溯栈)
+    BinaryTreeNode<TData>* cur = subtree_root;                      // 初始化cur_tree_node(当前二叉树结点), 指向subtree_root(子树根结点)
 
-    while (cur != NULL || !backtrack_stack.empty()) {   // while loop cur_tree_node不为NULL || 回溯栈不为空
+    while (cur != NULL || !backtrack_stack.empty()) {               // while loop cur_tree_node不为NULL || 回溯栈不为空
 
         // (一直向左子树方向搜索, 等于在做深度优先搜索DFS)
-        while (cur != NULL) {                           // while loop cur_tree_node不为NULL
-            backtrack_stack.push(cur);                  // cur_tree_node入栈
-            cur = cur->left_child;                      // cur_tree_node指向自身的左孩子
+        while (cur != NULL) {                                       // while loop cur_tree_node不为NULL
+            backtrack_stack.push(cur);                              // cur_tree_node入栈
+            cur = cur->left_child;                                  // cur_tree_node指向自身的左孩子
         }
 
-        if (!backtrack_stack.empty()) {                 // if 回溯栈不为空
+        if (!backtrack_stack.empty()) {                             // if 回溯栈不为空
 
-            cur = backtrack_stack.top();                // 取栈顶, 赋给cur
-            backtrack_stack.pop();                      // 栈顶出栈
+            cur = backtrack_stack.top();                            // 取栈顶, 赋给cur
+            backtrack_stack.pop();                                  // 栈顶出栈
 
-            visit(cur);                                 // 访问cur
+            visit(cur);                                             // 访问cur
 
-            cur = cur->right_child;                     // cur指向自身右孩子
+            cur = cur->right_child;                                 // cur指向自身右孩子
         }
     }
 }
