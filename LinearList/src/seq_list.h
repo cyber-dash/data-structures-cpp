@@ -153,7 +153,7 @@ SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
 
     // ---------- 1 初始化 ----------
 
-    this->capacity_ = seq_list.Capacity();                      // capacity_初始化为seq_list的容量
+    this->capacity_ = seq_list.Capacity();                  // capacity_初始化为seq_list的容量
     this->last_index_ = seq_list.Length() - 1;              // last_index_初始化为seq_list.Length() - 1
 
     if (this->capacity_ == 0) {                             // if 容量为0
@@ -162,7 +162,7 @@ SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
 
     // ---------- 2 mem_data_分配内存 ----------
 
-    this->mem_data_ = new TData[this->Capacity()];              // mem_data_分配内存并初始化
+    this->mem_data_ = new TData[this->Capacity()];          // mem_data_分配内存并初始化
     if (!this->mem_data_) {                                 // if 内存分配失败
         throw bad_alloc();                                  // 抛出bad_alloc()
     }

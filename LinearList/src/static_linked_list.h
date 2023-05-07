@@ -96,7 +96,7 @@ public:
     // 打印
     void Print() const;
 
-    StaticLinkedListNode<TData>& operator[] (size_t index);
+    // StaticLinkedListNode<TData>& operator[] (size_t index);
 
     static const int NONE = -1;                //!< 表示该数组元素不在静态链表中使用
     static const int HEAD = 0;                 //!< 头结点的数组索引 
@@ -245,43 +245,40 @@ bool StaticLinkedList<TData>::GetIndexByPos_(int pos, int& index) const {
  * ---
  * + **1 空链表处理**\n
  * **if** 空链表 :\n
- * &emsp; 返回false\n
- * \n
+ * &emsp; 返回false\n\n
  * + **2 遍历链表搜索**\n
  * **for loop** 遍历链表的每个结点 :\n
  * &emsp; **if** 当前结点的data等于参数data :\n
  * &emsp;&emsp; cur_pos(当前位置)赋给pos\n
- * &emsp;&emsp; 返回true\n
- * \n
- * &emsp; cur_pos加1\n
- * \n
- * + **3 返回false**\n
+ * &emsp;&emsp; 返回true\n\n
+ * &emsp; cur_pos加1\n\n
+ * + **3 退出函数**\n
+ * 返回false\n
  */
 template<typename TData>
 bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
 
     // ---------- 1 空链表处理 ----------
 
-    if (length_ == 0) {                     // if 空链表
-        return false;                       // 返回false
+    if (length_ == 0) {                                                                     // if 空链表
+        return false;                                                                       // 返回false
     }
 
     // ---------- 2 遍历链表搜索 ----------
 
-    // for loop 遍历链表的每个结点
-    for (int cur_pos = 1, i = mem_data_[HEAD].next; i != HEAD; i = mem_data_[i].next) {
+    for (int cur_pos = 1, i = mem_data_[HEAD].next; i != HEAD; i = mem_data_[i].next) {     // for loop 遍历链表的每个结点
 
-        if (mem_data_[i].data == data) {    // if 当前结点的data等于参数data
-            pos = cur_pos;                  // cur_pos(当前位置)赋给pos
-            return true;                    // 返回true
+        if (mem_data_[i].data == data) {                                                    // if 当前结点的data等于参数data
+            pos = cur_pos;                                                                  // cur_pos(当前位置)赋给pos
+            return true;                                                                    // 返回true
         }
 
-        cur_pos++;                          // cur_pos加1
+        cur_pos++;                                                                          // cur_pos加1
     }
 
-    // ---------- 3 返回false ----------
+    // ---------- 3 退出函数 ----------
 
-    return false;
+    return false;                                                                           // 返回false
 }
 
 
@@ -306,28 +303,23 @@ bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
  * -------
  * + **1 非法位置处理**\n
  * **if** pos < 0 <b>||</b> pos大于链表长度 :\n
- * &emsp; 返回false\n
- * \n
+ * &emsp; 返回false\n\n
  * + **2 扩容处理**\n
  * **if** 链表长度等于容量 :\n
- * &emsp; 扩容1倍\n
- * \n
+ * &emsp; 扩容1倍\n\n
  * + **3 获取插入位置前一位置的数组索引**\n
  * 对pos调用GetIndexByPos_, 获取prev_index<b>(插入位置前一位置的数组索引)</b>\n
  * **if** 获取失败 :\n
- * &emsp; 返回false\n
- * \n
+ * &emsp; 返回false\n\n
  * + **4 获取插入位置的数组索引**\n
  * 调用GetInsertionIndex_, 获取insertion_index<b>(执行插入的索引)</b>\n
  * **if** 获取失败: \n
- * &emsp; 返回false\n
- * \n
+ * &emsp; 返回false\n\n
  * + **5 执行插入**\n
  * 插入位置数组元素的next, 指向pos位置数组元素的next\n
  * pos位置数组元素的next, 指向插入位置\n
- * 插入位置的data, 等于参数data\n
- * \n
- * 链表长度+1\n
+ * 插入位置的data, 等于参数data\n\n
+ * 链表长度+1\n\n
  * + **6 返回结果**\n
  * 返回true\n
  */
@@ -500,24 +492,19 @@ void StaticLinkedList<TData>::Print() const {
  * ---
  * + **1 容量数值增加**\n
  * 使用old_capacity保存旧链表的容量\n
- * capacity_增加数值\n
- * \n
+ * capacity_增加数值\n\n
  * + **2 开辟新内存**\n
  * 使用新容量, 初始化并分配内存\n
  * **if** 新内存分配失败 :\n
- * &emsp; 返回false\n
- * \n
+ * &emsp; 返回false\n\n
  * + **3 新内存赋值**\n
  * **for loop** 遍历原链表容量内的数组元素\n
- * &emsp; new_mem_data[i] = mem_data_[i]\n
- * \n
+ * &emsp; new_mem_data[i] = mem_data_[i]\n\n
  * **for loop** 遍历新链表新增容量的数组元素\n
- * &emsp; 每个元素的next设置为NONE(-1, 不在链表中)\n
- * \n
+ * &emsp; 每个元素的next设置为NONE(-1, 不在链表中)\n\n
  * + **4 使用新内存并释放旧内存**\n
  * 释放旧内存\n
- * 指向新内存\n
- * \n
+ * mem_data_指向新内存\n\n
  * + **5 退出函数**\n
  * 返回true\n
  */
@@ -526,35 +513,34 @@ bool StaticLinkedList<TData>::Extend_(int increased_capacity) {
 
     // ----------1 容量数值增加 ----------
 
-    int old_capacity = capacity_;                           // 使用old_capacity保存旧链表的容量
-    capacity_ += increased_capacity;                        // capacity_增加数值
+    int old_capacity = capacity_;                                                               // 使用old_capacity保存旧链表的容量
+    capacity_ += increased_capacity;                                                            // capacity_增加数值
 
     // ---------- 2 开辟新内存 ----------
 
-    // 使用新容量, 初始化并分配内存
-    StaticLinkedListNode<TData>* new_mem_data = new StaticLinkedListNode<TData>[capacity_ + 1];
-    if (!new_mem_data) {                                    // if 新内存分配失败
-        return false;                                       // 返回false
+    StaticLinkedListNode<TData>* new_mem_data = new StaticLinkedListNode<TData>[capacity_ + 1]; // 使用新容量, 初始化并分配内存
+    if (!new_mem_data) {                                                                        // if 新内存分配失败
+        return false;                                                                           // 返回false
     }
 
     // ---------- 3 新内存赋值 ----------
 
-    for (int i = HEAD; i <= old_capacity; i++) {            // for loop 遍历原链表容量内的数组元素
-        new_mem_data[i] = mem_data_[i];                     // new_mem_data[i] = mem_data_[i]
+    for (int i = HEAD; i <= old_capacity; i++) {                                                // for loop 遍历原链表容量内的数组元素
+        new_mem_data[i] = mem_data_[i];                                                         // new_mem_data[i] = mem_data_[i]
     }
 
-    for (int i = old_capacity + 1; i <= capacity_; i++) {   // for loop 遍历新链表新增容量的数组元素
-        new_mem_data[i].next = NONE;                        // 每个元素的next设置为NONE(-1, 不在链表中)
+    for (int i = old_capacity + 1; i <= capacity_; i++) {                                       // for loop 遍历新链表新增容量的数组元素
+        new_mem_data[i].next = NONE;                                                            // 每个元素的next设置为NONE(-1, 不在链表中)
     }
 
     // ---------- 4 使用新内存并释放旧内存 ----------
 
-    delete[] mem_data_;                                     // 释放旧内存
-    mem_data_ = new_mem_data;                               // 指向新内存
+    delete[] mem_data_;                                                                         // 释放旧内存
+    mem_data_ = new_mem_data;                                                                   // mem_data_指向新内存
 
     // ---------- 5 退出函数 ----------
 
-    return true;                                            // 返回true
+    return true;                                                                                // 返回true
 }
 
 
@@ -571,14 +557,12 @@ bool StaticLinkedList<TData>::Extend_(int increased_capacity) {
  * ------------------
  * + **1 非法情况处理**\n
  * **if** 链表长度等于容量 :\n
- * &emsp; 返回false\n
- * \n
+ * &emsp; 返回false\n\n
  * + **2 查找到插入位置并赋值**\n
  * **for loop** 从位置1遍历到位置length_ + 1 :\n
  * &emsp; **if** 当前位置的next等于NONE(-1, 未被链表使用) :\n
  * &emsp;&emsp; 当前位置的索引i, 赋给参数index\n
- * &emsp;&emsp; 返回true\n
- * \n
+ * &emsp;&emsp; 返回true\n\n
  * + **3 退出函数**\n
  * 返回false(失败情况处理)\n
  */
@@ -587,25 +571,26 @@ bool StaticLinkedList<TData>::GetInsertionIndex_(int& index) const {
 
     // ---------- 1 非法情况处理 ----------
 
-    if (length_ == capacity_) {                                     // if 链表长度等于容量
-        return false;                                               // 返回false
+    if (length_ == capacity_) {                                                 // if 链表长度等于容量
+        return false;                                                           // 返回false
     }
 
     // ---------- 2 查找到插入位置并赋值 ----------
 
-    for (int i = 1; i <= length_ + 1; i++) {                        // for loop 从位置1遍历到位置length_ + 1
-        if (mem_data_[i].next == StaticLinkedList<TData>::NONE) {   // if 当前位置的next等于NONE(-1, 未被链表使用)
-            index = i;                                              // 当前位置的索引i, 赋给参数index
-            return true;                                            // 返回true
+    for (int i = 1; i <= length_ + 1; i++) {                                    // for loop 从位置1遍历到位置length_ + 1
+        if (mem_data_[i].next == StaticLinkedList<TData>::NONE) {               // if 当前位置的next等于NONE(-1, 未被链表使用)
+            index = i;                                                          // 当前位置的索引i, 赋给参数index
+            return true;                                                        // 返回true
         }
     }
 
     // ---------- 3 退出函数 -----------
 
-    return false;                                                   //返回false(失败情况处理)
+    return false;                                                               // 返回false(失败情况处理)
 }
 
 
+/*
 template <typename TData>
 StaticLinkedListNode<TData>& StaticLinkedList<TData>::operator[] (size_t index) {
     if ((int)index > length_) {
@@ -614,6 +599,7 @@ StaticLinkedListNode<TData>& StaticLinkedList<TData>::operator[] (size_t index) 
 
     return this->mem_data_[index];
 }
+ */
 
 
 #endif // CYBER_DASH_STATIC_LINKED_LIST_H

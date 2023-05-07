@@ -16,6 +16,7 @@ using namespace std;
 int main() {
 
 	SeqListTest::TestInsert();
+
     SeqListTest::TestCopyConstructor();
 
 	SeqListTest::TestSize();
