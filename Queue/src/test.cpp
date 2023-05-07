@@ -10,7 +10,7 @@
 #include "linked_queue.h"
 
 
-void TestGetSize() {
+void TestLength() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -152,7 +152,7 @@ void TestIsEmpty() {
 }
 
 
-void TestOperatorCout() {
+void TestPrint() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test Operator <<                     |" << endl;
