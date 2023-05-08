@@ -188,15 +188,15 @@ SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& src_lin
  * -------
  *
  * -------
- * **I&nbsp;&nbsp; 清空链表**\n
- * **II&nbsp; 释放head_指针并置NULL**\n
+ * + **1 清空链表**\n
+ * + **2 释放head_指针并置NULL**\n
  */
 template<typename TData>
 SinglyLinkedList<TData>::~SinglyLinkedList() {
-    // ----- I 清空链表 -----
+    // ---------- 1 清空链表 ----------
     this->Clear();
 
-    // ----- II 释放head_指针并置NULL -----
+    // ---------- 2 释放head_指针并置NULL ----------
     delete this->head_;
     this->head_ = NULL;
 }
@@ -216,32 +216,33 @@ SinglyLinkedList<TData>::~SinglyLinkedList() {
  * -----------
  * **I&nbsp;&nbsp; 非法位置处理**\n
  * &emsp; **if** pos < 1 或者 pos > Length():\n
- * &emsp;&emsp; 返回false\n
+ * &emsp;&emsp; 返回false\n\n
  * **II&nbsp; 遍历至pos位置**\n
  * &emsp; 声明指针cur, 指向head_\n
  * &emsp; **while** pos > 0 (遍历pos次):\n
  * &emsp;&emsp; cur指向cur->next\n
- * &emsp;&emsp; pos减1\n
+ * &emsp;&emsp; pos减1\n\n
  * **III 获取数据项**\n
+ * cur->data赋给参数data\n
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::GetData(int pos, TData& data) const {
 
     // ---------- I 非法位置处理 ----------
-    if (pos < 1 || pos > this->Length()) {  // if pos < 1 或者 pos > Length():
-        return false;                       // 返回false
+    if (pos < 1 || pos > this->Length()) {                                          // if pos < 1 或者 pos > Length():
+        return false;                                                               // 返回false
     }
 
     // ---------- II 遍历至pos位置 ----------
-    LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_
+    LinkedNode<TData>* cur = this->head_;                                           // 声明遍历指针cur, 指向head_
 
-    while (pos > 0) {                       // while pos > 0 (遍历pos次):
-        cur = cur->next;                    // cur指向cur->next
-        pos--;                              // pos减1
+    while (pos > 0) {                                                               // while pos > 0 (遍历pos次):
+        cur = cur->next;                                                            // cur指向cur->next
+        pos--;                                                                      // pos减1
     }
 
     // ---------- III 获取数据项 ----------
-    data = cur->data;
+    data = cur->data;                                                               // cur->data赋给参数data
 
     return true;
 }
@@ -268,25 +269,26 @@ bool SinglyLinkedList<TData>::GetData(int pos, TData& data) const {
  * &emsp;&emsp; cur指向cur->next\n
  * &emsp;&emsp; pos减1\n
  * **III 设置数据项**\n
+ * data赋给cur->data\n
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::SetData(int pos, const TData& data) {
 
     // ----- I 非法位置处理 -----
-    if (pos < 1 || pos > Length()) {        // if pos < 1 或者 pos > Length():
-        return false;                       // 返回false
+    if (pos < 1 || pos > Length()) {                                                // if pos < 1 或者 pos > Length():
+        return false;                                                               // 返回false
     }
 
     // ----- II 遍历至插入位置 ------
-    LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_
+    LinkedNode<TData>* cur = this->head_;                                           // 声明指针cur, 指向head_
 
-    while (pos > 0) {                       // while pos > 0 (遍历pos次):
-        cur = cur->next;                    // cur指向cur->next
-        pos--;                              // pos减1
+    while (pos > 0) {                                                               // while pos > 0 (遍历pos次):
+        cur = cur->next;                                                            // cur指向cur->next
+        pos--;                                                                      // pos减1
     }
 
     // ----- III 设置数据项 -----
-    cur->data = data;
+    cur->data = data;                                                               // data赋给cur->data
 
     return true;
 }
@@ -317,17 +319,17 @@ bool SinglyLinkedList<TData>::SetData(int pos, const TData& data) {
 template<typename TData>
 void SinglyLinkedList<TData>::Clear() {
 
-    while (this->head_->next != NULL) {             // while first_->next存在 :
+    while (this->head_->next != NULL) {                                                 // while first_->next存在 :
 
         // ----- I first_->next指向head_->next->next -----
-        LinkedNode<TData>* cur = this->head_->next; // 声明指针cur, 指向head_->next
-        this->head_->next = cur->next;              // first_->next指向cur->next
+        LinkedNode<TData>* cur = this->head_->next;                                     // 声明指针cur, 指向head_->next
+        this->head_->next = cur->next;                                                  // first_->next指向cur->next
 
         // ----- II 删除head_->next -----
-        delete cur;                                 // 释放cur指向的结点
+        delete cur;                                                                     // 释放cur指向的结点
 
         // ----- III 调整链表长度 -----
-        this->length_--;                            // 链表长度减1
+        this->length_--;                                                                // 链表长度减1
     }
 }
 
@@ -412,30 +414,30 @@ template<typename TData>
 bool SinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
 
     // ----- I 非法位置处理 -----
-    if (prev_pos < 0 || prev_pos > Length()) {                        // if pos < 0 或者 pos > Length():
-        return false;                                       // 返回false
+    if (prev_pos < 0 || prev_pos > Length()) {                                          // if pos < 0 或者 pos > Length():
+        return false;                                                                   // 返回false
     }
 
     // ----- II 构造插入结点 -----
-    LinkedNode<TData>* node = new LinkedNode<TData>(data);  // 使用插入数据初始化结点
-    if (node == NULL) {                                     // if 结点为NULL(结点分配内存失败):
-        return false;                                       // 返回false
+    LinkedNode<TData>* node = new LinkedNode<TData>(data);                              // 使用插入数据初始化结点
+    if (node == NULL) {                                                                 // if 结点为NULL(结点分配内存失败):
+        return false;                                                                   // 返回false
     }
 
     // ----- III 遍历至插入位置 -----
-    LinkedNode<TData>* cur = this->head_;                   // 声明指针cur, 指向head_->next
-    while (prev_pos > 0) {                                       // while pos > 0 (遍历pos次):
-        cur = cur->next;                                    // cur指向cur->next
-        prev_pos--;                                              // pos减1
+    LinkedNode<TData>* cur = this->head_;                                               // 声明指针cur, 指向head_->next
+    while (prev_pos > 0) {                                                              // while pos > 0 (遍历pos次):
+        cur = cur->next;                                                                // cur指向cur->next
+        prev_pos--;                                                                     // pos减1
     }
 
     // ----- IV 执行插入 -----
-    node->next = cur->next;                                 // 待插入结点的next指向cur->next
-    cur->next = node;                                       // cur->next指向待插入结点
+    node->next = cur->next;                                                             // 待插入结点的next指向cur->next
+    cur->next = node;                                                                   // cur->next指向待插入结点
     // (此时待插入结点插入到cur后边)
 
     // ----- V 调整链表长度 -----
-    this->length_++;                                        // 链表长度加1
+    this->length_++;                                                                    // 链表长度加1
 
     return true;
 }
@@ -481,29 +483,29 @@ template<typename TData>
 bool SinglyLinkedList<TData>::Insert(int prev_pos, LinkedNode<TData>* node) {
 
     // ----- I 非法位置处理 -----
-    if (prev_pos < 0 || prev_pos > this->Length()) {  // if pos < 0 或者 pos > Length():
-        return false;                       // 返回false
+    if (prev_pos < 0 || prev_pos > this->Length()) {                                    // if pos < 0 或者 pos > Length():
+        return false;                                                                   // 返回false
     }
 
     // ----- II 插入空结点处理 -----
-    if (node == NULL) {                     // if 结点为NULL:
-        return false;                       // 返回false
+    if (node == NULL) {                                                                 // if 结点为NULL:
+        return false;                                                                   // 返回false
     }
 
     // ----- III 遍历至插入位置 -----
-    LinkedNode<TData>* cur = this->head_;   // 声明指针cur, 指向head_->next
-    while (prev_pos > 0) {                       // while pos > 0 (遍历pos次):
-        cur = cur->next;                    // cur指向cur->next
-        prev_pos--;                              // pos减1
+    LinkedNode<TData>* cur = this->head_;                                               // 声明指针cur, 指向head_->next
+    while (prev_pos > 0) {                                                              // while pos > 0 (遍历pos次):
+        cur = cur->next;                                                                // cur指向cur->next
+        prev_pos--;                                                                     // pos减1
     }
 
     // ----- IV 执行插入 -----
-    node->next = cur->next;                 // 待插入结点的next指向cur->next
-    cur->next = node;                       // cur->next指向待插入结点
+    node->next = cur->next;                                                             // 待插入结点的next指向cur->next
+    cur->next = node;                                                                   // cur->next指向待插入结点
     // (此时待插入结点插入到cur后边)
 
     // ----- V 调整链表长度 -----
-    this->length_++;                        // 链表长度加1
+    this->length_++;                                                                    // 链表长度加1
 
     return true;
 }
@@ -568,18 +570,18 @@ template<typename TData>
 LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) {
 
     // ----- I 初始化遍历指针 -----
-    LinkedNode<TData>* cur = this->head_->next; // 声明遍历指针cur, 并初始化指向head_->next
-    if (cur == NULL) {                          // if cur为NULL:
-        return NULL;                            // 返回NULL
+    LinkedNode<TData>* cur = this->head_->next;                                         // 声明遍历指针cur, 并初始化指向head_->next
+    if (cur == NULL) {                                                                  // if cur为NULL:
+        return NULL;                                                                    // 返回NULL
     }
 
     // ----- II 遍历链表进行搜索 -----
-    while (cur != NULL) {           // while cur不为NULL:
-        if (cur->data == data) {    // if cur->data等于搜索数据项:
-            break;                  // 搜索到相应数据, 跳出循环
+    while (cur != NULL) {                                                               // while cur不为NULL:
+        if (cur->data == data) {                                                        // if cur->data等于搜索数据项:
+            break;                                                                      // 搜索到相应数据, 跳出循环
         }
 
-        cur = cur->next;            // cur指向cur->next
+        cur = cur->next;                                                                // cur指向cur->next
     }
 
     // ----- III 返回搜索结果 -----
@@ -614,14 +616,14 @@ LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) {
 template<typename TData>
 LinkedNode<TData>* SinglyLinkedList<TData>::GetNode(int pos) {
     // ----- I 非法位置处理 -----
-    if (pos < 1 || pos > this->Length()) {  // if pos < 1 或者 pos > Length():
-        return NULL;                        //     返回NULL(范围[1, Length()])
+    if (pos < 1 || pos > this->Length()) {                                              // if pos < 1 或者 pos > Length():
+        return NULL;                                                                    //     返回NULL(范围[1, Length()])
     }
 
     // ----- II 遍历至pos位置的结点 -----
-    LinkedNode<TData>* cur = this->Head();  // 声明遍历指针cur, 并初始化指向Head()
-    for (int i = 1; i <= pos; i++) {        // for loop 循环pos次:
-        cur = cur->next;                    //     cur指向cur->next
+    LinkedNode<TData>* cur = this->Head();                                              // 声明遍历指针cur, 并初始化指向Head()
+    for (int i = 1; i <= pos; i++) {                                                    // for loop 循环pos次:
+        cur = cur->next;                                                                //     cur指向cur->next
     }
 
     // ----- III 返回cur -----
@@ -662,28 +664,28 @@ template<typename TData>
 bool SinglyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
 
     // ----- I 非法条件处理 -----
-    if (this->Length() == 0 || deletion_pos < 1 || deletion_pos > this->Length()) {   // if 空链表 或者 pos < 1 或者 pos > Length():
-        return false;                                               // 返回false
+    if (this->Length() == 0 || deletion_pos < 1 || deletion_pos > this->Length()) {     // if 空链表 或者 pos < 1 或者 pos > Length():
+        return false;                                                                   // 返回false
     }
 
     // ----- II 遍历至pos位置的前驱结点(pos - 1位置) -----
-    LinkedNode<TData>* cur = this->head_;   // 声明遍历指针cur, 并初始化指向Head()
-    for (int i = 1; i < deletion_pos; i++) {         // for loop 循环pos - 1次:
-        cur = cur->next;                    // cur指向cur->next
+    LinkedNode<TData>* cur = this->head_;                                               // 声明遍历指针cur, 并初始化指向Head()
+    for (int i = 1; i < deletion_pos; i++) {                                            // for loop 循环pos - 1次:
+        cur = cur->next;                                                                // cur指向cur->next
     }
 
     // ----- III 执行删除 -----
-    LinkedNode<TData>* temp = cur->next;    // 声明指针temp, 指向pos位置的待删除结点cur->next
-    cur->next = temp->next;                 // 待删除结点的前驱cur, 将其next指向待删除结点的后继
+    LinkedNode<TData>* temp = cur->next;                                                // 声明指针temp, 指向pos位置的待删除结点cur->next
+    cur->next = temp->next;                                                             // 待删除结点的前驱cur, 将其next指向待删除结点的后继
 
-    data = temp->data;                      // 待删除结点的数据项保存到参数data
+    data = temp->data;                                                                  // 待删除结点的数据项保存到参数data
 
     // 删除待删除结点
     delete temp;
     temp = NULL;
 
     // ----- IV 调整链表长度 -----
-    this->length_--;                        // 链表长度减1
+    this->length_--;                                                                    // 链表长度减1
 
     return true;
 }

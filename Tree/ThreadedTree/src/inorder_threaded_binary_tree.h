@@ -420,33 +420,32 @@ void InorderThreadedBinaryTree<TData>::PreorderTraverse(void (*Visit)(ThreadedNo
  */
 template <typename TData>
 void InorderThreadedBinaryTree<TData>::PostorderTraverse(void (*visit)(ThreadedNode<TData>*)) {
+
     // ---------- 1 空树处理 ----------
 
-    if (!root_) {                                                               // if 空树
-        return;                                                                 // 退出函数
+    if (!root_) {                                                                               // if 空树
+        return;                                                                                 // 退出函数
     }
 
     // ---------- 2 访问后序遍历的第1个结点 ----------
 
-    ThreadedNode<TData>* cur = GetFirstNodeForPostorder(root_);   // 初始化cur, 指向后序遍历的第1个节点
-    ThreadedNode<TData>* cur_parent = Parent(cur);                        // 初始化cur_parent, 指向cur的父节点
+    ThreadedNode<TData>* cur = GetFirstNodeForPostorder(root_);                                 // 初始化cur, 指向后序遍历的第1个节点
+    ThreadedNode<TData>* cur_parent = Parent(cur);                                              // 初始化cur_parent, 指向cur的父节点
 
-    visit(cur);                                                                 // 访问cur
+    visit(cur);                                                                                 // 访问cur
 
     // ---------- 3 递归 ----------
 
-    while (cur_parent != NULL) {            // while loop cur_parent不为NULL
-        // if cur是cur_parent的右孩子 || cur是cur_parent的左孩子, 并且cur_parent没有右孩子
-        if (cur_parent->right_child == cur || cur_parent->right_tag == THREADED_NODE_POINTER) {
-            cur = cur_parent;               // cur指向cur_parent
-        } else {                            // else (cur指向cur_parent的左孩子, 同时cur_parent存在右孩子)
-            // cur指向cur_parent->right_child的后序遍历首结点
-            cur = GetFirstNodeForPostorder(cur_parent->right_child);
+    while (cur_parent != NULL) {                                                                // while loop cur_parent不为NULL
+        if (cur_parent->right_child == cur || cur_parent->right_tag == THREADED_NODE_POINTER) { // if cur是cur_parent的右孩子 || cur是cur_parent的左孩子, 并且cur_parent没有右孩子
+            cur = cur_parent;                                                                   // cur指向cur_parent
+        } else {                                                                                // else (cur指向cur_parent的左孩子, 同时cur_parent存在右孩子)
+            cur = GetFirstNodeForPostorder(cur_parent->right_child);                            // cur指向cur_parent->right_child的后序遍历首结点
         }
 
-        visit(cur);                         // 访问cur
+        visit(cur);                                                                             // 访问cur
 
-        cur_parent = Parent(cur);     // cur_parent指向cur的父节点
+        cur_parent = Parent(cur);                                                               // cur_parent指向cur的父节点
     }
 }
 

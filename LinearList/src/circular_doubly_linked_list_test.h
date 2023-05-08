@@ -159,28 +159,34 @@ void CircularDoublyLinkedListTest::TestEmpty() {
     cout << "|             Test CircularDoublyLinkedList Empty           |" << endl;
     cout << "|                     测试双向链表是否为空                     |" << endl << endl << endl;
 
+    // ---------- 1 初始化city_list(城市列表) ----------
+
     CircularDoublyLinkedList<string>* city_list = new CircularDoublyLinkedList<string>();
+
+    // ---------- 2 测试空链表IsEmpty()结果 ----------
 
     cout << "Before inserting any string:" << endl;
 
-    bool is_empty = city_list->IsEmpty();
-    if (is_empty) {
-        cout << "The city_list is empty." << endl;
-    } else {
-        cout << "The city_list isn't empty." << endl;
+    bool is_empty = city_list->IsEmpty();                                                   // 调用IsEmpty(), 结果为is_empty
+    if (is_empty) {                                                                         // if is_empty == true
+        cout << "The city_list is empty." << endl;                                          // 打印"is empty"的文本
+    } else {                                                                                // else
+        cout << "The city_list isn't empty." << endl;                                       // 打印"isn't empty"的文本
     }
     cout << endl;
 
+    // ---------- 3 测试非空链表IsEmpty()结果 ----------
+
     string BJ = "Beijing";
-    city_list->Insert(0, BJ);
+    city_list->Insert(0, BJ);                                                               // 向city_list中插入北京"Beijing"
 
     cout << "After inserting \"Beijing\":" << endl;
 
-    is_empty = city_list->IsEmpty();
-    if (is_empty) {
-        cout << "The city_list is empty." << endl;
-    } else {
-        cout << "The city_list isn't empty." << endl;
+    is_empty = city_list->IsEmpty();                                                        // 调用IsEmpty(), 结果为is_empty
+    if (is_empty) {                                                                         // if is_empty == true
+        cout << "The city_list is empty." << endl;                                          // 打印"is empty"的文本
+    } else {                                                                                // else
+        cout << "The city_list isn't empty." << endl;                                       // 打印"isn't empty"的文本
     }
 
     cout << "-------------------------------------------------------------" << endl << endl;
