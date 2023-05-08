@@ -25,7 +25,6 @@ void TestDepth() {
   string gen_list_string6 = "E(B(#),D(B(#)));";
   string gen_list_string7 = "E(B(C(a)),D(a),G(#));";
 
-
   GenList<char> gen_list1;
   GenList<char> gen_list2;
 
@@ -108,7 +107,7 @@ void TestSimpleGenListDepth() {
     cout<<"|                Test SimpleGenList ToString                |"<<endl;
     cout<<"|                  测试(简单)广义表格式化字符串                 |"<<endl<<endl<<endl;
 
-    string str("(A,(),(B,(C)),())");
+    string str("(a,b,(c,d,(e)),())");
 
     SimpleGenList simple_gen_list;
 

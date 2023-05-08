@@ -26,10 +26,6 @@ public:
     SimpleGenListNode(): type(ATOM), data('\0'), next(nullptr), head(nullptr) {}
     explicit SimpleGenListNode(int type, char data = '\0'):
         type(type), next(nullptr), head(nullptr), data(data) {}
-        /*
-    SimpleGenListNode(int type, SimpleGenListNode* head, SimpleGenListNode* next, char data = '\0'):
-        type(type), next(next), head(head), data(data) {}
-         */
 
     /*!
      * @brief 复制构造函数
@@ -42,16 +38,30 @@ public:
         next = node.next;
     }
 
-    int type; //!< 类型
-    char data; //!< 数据
-    SimpleGenListNode* head; //!< 广义表首元素地址
-    SimpleGenListNode* next; //!< 下一元素节点指针
+    int type;                                       //!< 类型
+    char data;                                      //!< 数据
+    SimpleGenListNode* head;                              //!< 表头结点(如果type是LIST_HEAD类型)
+    SimpleGenListNode* next;                               //!< 下一结点
 
-    static const int ATOM = 1; //!< 元素节点类型
-    static const int LIST = 2; //!< 表类型
+    static const int ATOM = 1;                             //!< 原子结点类型
+    static const int LIST = 2;                        //!< 表结点类型
 };
 
 
+/*!
+ * @brief **简单广义表**
+ * @note
+ * 简单广义表
+ * --------
+ * --------
+ *
+ * 示例:\n
+ * (a,b,(c,d,(e)),())\n
+ *
+ * 只有表和原子结点, 无表名和引用
+ *
+ * --------
+ */
 class SimpleGenList {
 public:
 
@@ -68,7 +78,7 @@ private:
     // 使用char队列创建广义表(递归)
     void CreateByQueueRecursive_(queue<char>& char_queue, SimpleGenListNode*& node);
 
-    bool ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* cur);
+    bool ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* node);
 
     SimpleGenListNode* head_;
 };

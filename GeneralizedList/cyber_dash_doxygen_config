@@ -19,7 +19,7 @@
 
 # This tag specifies the encoding used for all characters in the config file
 # that follow. The default is UTF-8 which is also the encoding used for all text
-# before the first occurrence of this tag. Doxygen uses libiconv (or the iconv
+# before the head occurrence of this tag. Doxygen uses libiconv (or the iconv
 # built into libc) for the transcoding. See http://www.gnu.org/software/libiconv
 # for the list of possible encodings.
 # The default value is: UTF-8.
@@ -172,7 +172,7 @@ STRIP_FROM_INC_PATH    =
 SHORT_NAMES            = NO
 
 # If the JAVADOC_AUTOBRIEF tag is set to YES then doxygen will interpret the
-# first line (until the first dot) of a Javadoc-style comment as the brief
+# head line (until the head dot) of a Javadoc-style comment as the brief
 # description. If set to NO, the Javadoc-style will behave just like regular Qt-
 # style comments (thus requiring an explicit @brief command for a brief
 # description.)
@@ -180,8 +180,8 @@ SHORT_NAMES            = NO
 
 JAVADOC_AUTOBRIEF      = NO
 
-# If the QT_AUTOBRIEF tag is set to YES then doxygen will interpret the first
-# line (until the first dot) of a Qt-style comment as the brief description. If
+# If the QT_AUTOBRIEF tag is set to YES then doxygen will interpret the head
+# line (until the head dot) of a Qt-style comment as the brief description. If
 # set to NO, the Qt-style will behave just like regular Qt-style comments (thus
 # requiring an explicit \brief command for a brief description.)
 # The default value is: NO.
@@ -337,7 +337,7 @@ SIP_SUPPORT            = NO
 IDL_PROPERTY_SUPPORT   = YES
 
 # If member grouping is used in the documentation and the DISTRIBUTE_GROUP_DOC
-# tag is set to YES then doxygen will reuse the documentation of the first
+# tag is set to YES then doxygen will reuse the documentation of the head
 # member in the group (if any) for the other members of the group. By default
 # all members of a group must be documented explicitly.
 # The default value is: NO.
@@ -564,7 +564,7 @@ SORT_BRIEF_DOCS        = NO
 
 # If the SORT_MEMBERS_CTORS_1ST tag is set to YES then doxygen will sort the
 # (brief and detailed) documentation of class members so that constructors and
-# destructors are listed first. If set to NO the constructors will appear in the
+# destructors are listed head. If set to NO the constructors will appear in the
 # respective orders defined by SORT_BRIEF_DOCS and SORT_MEMBER_DOCS.
 # Note: If SORT_BRIEF_DOCS is set to NO this option is ignored for sorting brief
 # member documentation.
@@ -1663,7 +1663,7 @@ PAPER_TYPE             = a4
 EXTRA_PACKAGES         = CJKutf8
 
 # The LATEX_HEADER tag can be used to specify a personal LaTeX header for the
-# generated LaTeX document. The header should contain everything until the first
+# generated LaTeX document. The header should contain everything until the head
 # chapter. If it is left blank doxygen will generate a standard header. See
 # section "Doxygen usage" for information on how to let doxygen write the
 # default header to a separate file.

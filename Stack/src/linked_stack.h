@@ -266,17 +266,24 @@ bool LinkedStack<TData>::Pop(TData& data) {
  */
 template <typename TData>
 bool LinkedStack<TData>::Pop() {
-    if (IsEmpty()) {
-        return false;
+
+    // ---------- 1 空栈判断 ----------
+
+    if (IsEmpty()) {                                                            // if 空栈
+        return false;                                                           // 返回false
     }
 
-    LinkedNode<TData>* temp = this->top_;
-    this->top_ = this->top_->next;
+    // ---------- 2 出栈操作 ----------
 
-    delete temp;
-    temp = NULL;
+    LinkedNode<TData>* temp = this->top_;                                       // 初始化temp, 指向top_
+    this->top_ = this->top_->next;                                              // top_指向top_->next
 
-    return true;
+    delete temp;                                                                // 释放temp
+    temp = NULL;                                                                // temp置NULL
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                // 返回true
 }
 
 
