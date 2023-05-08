@@ -10,13 +10,13 @@
 #define CYBER_DASH_STACK_TEST_H
 
 
-/*! @brief 测试入栈 */
+// 测试-链式队列-入栈
 void Test_LinkedStack_Push();
 
-/*! @brief 测试出栈 */
+// 测试-链式队列-出栈
 void Test_LinkedStack_Pop();
 
-/*! @brief 测试取栈顶数据 */
+// 测试-链式队列-取栈顶
 void Test_LinkedStack_Top();
 
 

@@ -176,15 +176,22 @@ LinkedNode<TData>* LinkedStack<TData>::TopNode_() const {
  */
 template <typename TData>
 bool LinkedStack<TData>::Push(const TData& data) {
-    LinkedNode<TData>* node = new LinkedNode<TData>(data);
-    if (!node) {
-        throw bad_alloc();
+
+    // ---------- 1 生成结点 ----------
+
+    LinkedNode<TData>* node = new LinkedNode<TData>(data);                              // 分配内存并初始化node
+    if (!node) {                                                                        // if 内存分配失败
+        throw bad_alloc();                                                              // 抛出bad_alloc()
     }
 
-    node->next = this->top_;
-    this->top_ = node;
+    // ---------- 2 执行入栈 ----------
 
-    return true;
+    node->next = this->top_;                                                            // node->next指向top_
+    this->top_ = node;                                                                  // top_指向node
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                        // 返回true
 }
 
 
@@ -213,19 +220,26 @@ bool LinkedStack<TData>::Push(const TData& data) {
  */
 template <typename TData>
 bool LinkedStack<TData>::Pop(TData& data) {
-    if (IsEmpty()) {
-        return false;
+
+    // ---------- 1 空栈判断 ----------
+
+    if (IsEmpty()) {                                                            // if 空栈
+        return false;                                                           // 返回false
     }
 
-    LinkedNode<TData>* temp = this->top_;
-    this->top_ = this->top_->next;
+    // ---------- 2 出栈操作 ----------
 
-    data = temp->data;
+    LinkedNode<TData>* temp = this->top_;                                       // 初始化temp, 指向top_
+    this->top_ = this->top_->next;                                              // top_指向top_->next
 
-    delete temp;
-    temp = NULL;
+    data = temp->data;                                                          // temp->data赋给参数data
 
-    return true;
+    delete temp;                                                                // 释放temp
+    temp = NULL;                                                                // temp置NULL
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                // 返回true
 }
 
 
@@ -286,13 +300,20 @@ bool LinkedStack<TData>::Pop() {
  */
 template <typename TData>
 bool LinkedStack<TData>::Top(TData& data) const {
-    if (IsEmpty()) {
-        return false;
+
+    // ---------- 1 空栈处理 ----------
+
+    if (IsEmpty()) {                                                                // if 空栈
+        return false;                                                               // 返回false
     }
 
-    data = this->top_->data;
+    // ---------- 2 读栈顶数据项 ----------
 
-    return true;
+    data = this->top_->data;                                                        // top_->data赋给参数data
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                    // 返回true
 }
 
 
@@ -316,15 +337,15 @@ bool LinkedStack<TData>::Top(TData& data) const {
 template<typename TData>
 int LinkedStack<TData>::Length() const {
 
-    int length = 0;
-    LinkedNode<TData>* cur = this->top_;
+    int length = 0;                                                         // 初始化length(长度)为0
+    LinkedNode<TData>* cur = this->top_;                                    // 初始化cur(遍历指针), 指向top_
 
-    while (cur != NULL) {
-        length++;
-        cur = cur->next;
+    while (cur != NULL) {                                                   // while loop cur不为NULL
+        length++;                                                           // length加1
+        cur = cur->next;                                                    // cur指向cur->next
     }
 
-    return length;
+    return length;                                                          // 返回length
 }
 
 
@@ -367,12 +388,12 @@ bool LinkedStack<TData>::IsEmpty() const {
  */
 template<typename TData>
 void LinkedStack<TData>::Clear() {
-    while (this->top_ != NULL) {
-        LinkedNode<TData>* deletion_node = this->top_;
-        top_ = top_->next;
+    while (this->top_ != NULL) {                                                    // while loop top_不为NULL
+        LinkedNode<TData>* deletion_node = this->top_;                              // 初始化deletion_node, 指向top_
+        top_ = top_->next;                                                          // top_指向top_->next
 
-        delete deletion_node;
-        deletion_node = NULL;
+        delete deletion_node;                                                       // 释放deletion_node
+        deletion_node = NULL;                                                       // deletion_node置NULL
     }
 }
 
@@ -398,16 +419,16 @@ void LinkedStack<TData>::Clear() {
 template<typename TData>
 ostream& operator<<(ostream& os, const LinkedStack<TData>& stack) {
 
-    os << "栈中元素个数: " << stack.Length() << endl;
+    os << "栈中元素个数: " << stack.Length() << endl;                         // 打印栈元素个数
 
-    LinkedNode<TData>* cur = stack.TopNode_();
+    LinkedNode<TData>* cur = stack.TopNode_();                              // 初始化cur(遍历指针)指向栈顶
 
-    for (int i = 1; cur != NULL; i++) {
-        os << i << ":" << cur->data << endl;
-        cur = cur->next;
+    for (int i = 1; cur != NULL; i++) {                                     // for loop 使用cur遍历栈
+        os << i << ":" << cur->data << endl;                                // 打印cur->data
+        cur = cur->next;                                                    // cur指向cur->next
     }
 
-    return os;
+    return os;                                                              // 返回os
 }
 
 
