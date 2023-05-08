@@ -14,8 +14,8 @@ void TestDepth() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                 Test GeneralizedList Depth                |"<<endl;
-  cout<<"|                        测试广义表深度                       |"<<endl<<endl<<endl;
+  cout<<"|                 Test GeneralizedList SubGenListDepthRecursive_                |"<<endl;
+  cout<<"|                        测试-广义表-深度                       |"<<endl<<endl<<endl;
 
   string gen_list_string1 = "A(#);";
   string gen_list_string2 = "A(a);";
@@ -60,7 +60,7 @@ void TestLength() {
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
   cout<<"|                Test GeneralizedList Length                |"<<endl;
-  cout<<"|                        测试广义表长度                       |"<<endl<<endl<<endl;
+  cout<<"|                        测试-广义表-长度                       |"<<endl<<endl<<endl;
 
   string gen_list_string1 = "A(#);";
   string gen_list_string2 = "A(a);";
@@ -104,8 +104,8 @@ void TestSimpleGenListDepth() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                Test SimpleGenList ToString                |"<<endl;
-    cout<<"|                  测试(简单)广义表格式化字符串                 |"<<endl<<endl<<endl;
+    cout<<"|                  Test SimpleGenList Depth                 |"<<endl;
+    cout<<"|                     测试-简单广义表-深度                  |"<<endl<<endl<<endl;
 
     string str("(a,b,(c,d,(e)),())");
 
@@ -116,6 +116,35 @@ void TestSimpleGenListDepth() {
     string output_str = simple_gen_list.ToString();
 
     cout<<"广义表格式化字符串: "<<output_str<<endl;
+
+    int depth = simple_gen_list.Depth();
+
+    cout<<"广义表深度: "<<depth<<endl;
+
+    cout<<"-------------------------------------------------------------"<<endl<<endl;
+}
+
+
+void TestSimpleGenListLength() {
+
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                 Test SimpleGenList Length                 |"<<endl;
+    cout<<"|                     测试-简单广义表-长度                  |"<<endl<<endl<<endl;
+
+    string str("(a,b,(c,d,(e)),())");
+
+    SimpleGenList simple_gen_list;
+
+    simple_gen_list.CreateByString(str);
+
+    string output_str = simple_gen_list.ToString();
+
+    cout<<"广义表格式化字符串: "<<output_str<<endl;
+
+    int length = simple_gen_list.Length();
+
+    cout<<"广义表长度: "<<length<<endl;
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }

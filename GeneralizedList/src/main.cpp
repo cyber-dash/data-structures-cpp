@@ -13,12 +13,12 @@ using namespace std;
 
 
 int main() {
+    TestDepth();
 
-  TestDepth();
+    TestLength();
 
-  TestLength();
+    TestSimpleGenListDepth();
+    TestSimpleGenListLength();
 
-  TestSimpleGenListDepth();
-
-  return 0;
+    return 0;
 }

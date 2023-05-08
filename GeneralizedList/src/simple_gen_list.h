@@ -74,11 +74,18 @@ public:
     // 字符串格式化
     string ToString();
 
+    int Depth();
+    int Length();
+
+
 private:
     // 使用char队列创建广义表(递归)
     void CreateByQueueRecursive_(queue<char>& char_queue, SimpleGenListNode*& node);
 
     bool ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* node);
+
+    int SubGenListDepthRecursive_(SimpleGenListNode* node);
+    int SubGenListLengthRecursive_(SimpleGenListNode* node);
 
     SimpleGenListNode* head_;
 };

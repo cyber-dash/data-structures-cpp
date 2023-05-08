@@ -81,15 +81,17 @@ void SimpleGenList::CreateByString(const string& gen_list_string) {
  */
 bool SimpleGenList::ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* node) {
 
-    if (node->type != SimpleGenListNode::LIST) {
-        return false;
+    // ---------- 1 非法表头结点处理 ----------
+
+    if (node->type != SimpleGenListNode::LIST) {                    // if node不是LIST(表)类型
+        return false;                                               // 返回false
     }
 
-    // ----- 2 字符‘(’入队 -----
+    // ---------- 2 '('入队 ----------
     char_queue.push('(');
 
-    // ----- 3 构造表内元素 -----
-    SimpleGenListNode* cur = node->head;                           // 指向当前(子)广义表表头结点
+    // ---------- 3 递归处理表内结点 ----------
+    SimpleGenListNode* cur = node->head;                            // 指向当前(子)广义表表头结点
 
     while (cur) {                                                   // while cur != null
         if (cur->type == SimpleGenListNode::LIST) {                 // if cur结点为LIST类型
@@ -108,10 +110,13 @@ bool SimpleGenList::ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenList
         cur = cur->next;                                            // cur指向cur->next
     }
 
-    // ----- 4 子表遍历结束处理 -----
+    // ---------- 4 ')'入队 ----------
+
     char_queue.push(')');                                           // ')'入队
 
-    return true;
+    // ---------- 5 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
@@ -134,3 +139,68 @@ string SimpleGenList::ToString() {
 
     return str;
 }
+
+
+/*!
+ * @brief **求子表深度(递归)**
+ * @param node 子表结点
+ * @return 深度
+ * @note
+ * 求子表深度(递归)
+ * --------------
+ * --------------
+ *
+ * --------------
+ */
+int SimpleGenList::SubGenListDepthRecursive_(SimpleGenListNode* node) {
+
+    SimpleGenListNode* cur_node = node->head;
+
+    if (cur_node == NULL) {
+        return 1;
+    }
+
+    int max_sub_list_depth = 1; // 1为深度的最小可能值
+
+    while (cur_node != NULL) {
+
+        if (cur_node->type == SimpleGenListNode::LIST) {
+
+            int sub_list_depth = SubGenListDepthRecursive_(cur_node);
+            if (max_sub_list_depth < sub_list_depth) {
+                max_sub_list_depth = sub_list_depth;
+            }
+        }
+
+        cur_node = cur_node->next;
+    }
+
+    return max_sub_list_depth + 1;
+}
+
+
+int SimpleGenList::Depth() {
+    int depth = SubGenListDepthRecursive_(this->head_);
+
+    return depth;
+}
+
+
+int SimpleGenList::SubGenListLengthRecursive_(SimpleGenListNode* node) {
+
+    if (node == NULL) {
+        return 0;
+    }
+
+    int sub_list_length = SubGenListLengthRecursive_(node->next) + 1;
+
+    return sub_list_length;
+}
+
+
+int SimpleGenList::Length() {
+    int list_length = SubGenListLengthRecursive_(this->head_->head);
+
+    return list_length;
+}
+
