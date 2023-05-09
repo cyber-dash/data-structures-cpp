@@ -51,5 +51,8 @@ int main(int argc, char** argv) {
     // 测试弗洛伊德(Floyd-Warshall)最短路径
     TestFloyd();
 
+    // 测试拓扑排序
+    TestTopologicalSort();
+
     return 0;
 }

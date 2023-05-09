@@ -919,7 +919,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_v
  * -------
  * + **1 合法性检查**\n
  * &emsp; **if** 当前图结点数 >= 结点数上限 :\n
- * &emsp;&emsp; 返回false\n
+ * &emsp;&emsp; 返回false\n\n
  * + **2 执行插入**\n
  * &emsp; 邻接表索引vertex_count_元素的start_vertex设置为vertex\n
  * &emsp; vertex_count_加1\n

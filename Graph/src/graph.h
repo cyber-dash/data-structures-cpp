@@ -201,6 +201,8 @@ public:
      */
     virtual const vector<Edge<TVertex, TWeight> >& Edges() const { return this->edges_; }
 
+    virtual const vector<TVertex>& Vertices() const { return this->vertices_; }
+
     /*!
      * @brief **获取边(by边索引)**
      * @param index 边索引
@@ -291,6 +293,40 @@ public:
                                        const TVertex& neighbor_vertex,
                                        TVertex& next_neighbor) const = 0;
 
+
+    int GetVertexDegree(TVertex vertex) {
+       if (this->type_ == DIRECTED) {
+           return -1;
+       }
+
+       int vertex_index = GetVertexIndex(vertex);
+
+       return this->degrees_[vertex_index];
+    }
+
+
+    int GetVertexInDegree(const TVertex& vertex) const {
+        if (this->type_ == UNDIRECTED) {
+            return -1;
+        }
+
+        int vertex_index = GetVertexIndex(vertex);
+
+        return this->in_degrees_[vertex_index];
+    }
+
+
+    int GetVertexOutDegree(TVertex vertex) {
+        if (this->type_ == UNDIRECTED) {
+            return -1;
+        }
+
+        int vertex_index = GetVertexIndex(vertex);
+
+        return this->out_degrees_[vertex_index];
+    }
+
+
     /*!
      * @brief **插入结点**
      * @param vertex 结点
@@ -360,6 +396,8 @@ public:
      */
     virtual int GetVertexIndex(const TVertex& vertex) const = 0;
 
+    static const int DIRECTED = 1; //!< 有向
+    static const int UNDIRECTED = 2; //!< 无向
 protected:
     int max_vertex_count_{};                //!< 图结点数量上限
     TWeight max_weight_;                    //!< 边权值上限
@@ -372,9 +410,6 @@ protected:
     vector<int> degrees_;                   //!< 度vector
     vector<int> in_degrees_;                //!< 入度vector
     vector<int> out_degrees_;               //!< 出度vector
-
-    static const int DIRECTED = 1; //!< 有向
-    static const int UNDIRECTED = 2; //!< 无向
 };
 
 

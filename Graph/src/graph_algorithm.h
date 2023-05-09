@@ -124,6 +124,11 @@ void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 template<typename TVertex, typename TWeight>
 void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex, set<TVertex>& visited_vertex_set);
 
+template<typename TVertex, typename TWeight>
+bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
+                     const TVertex& vertex,
+                     vector<TVertex>& topology_sorted_list);
+
 
 // 图广度优先遍历
 template<typename TVertex, typename TWeight>

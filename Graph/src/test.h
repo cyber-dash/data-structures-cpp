@@ -59,6 +59,9 @@ void TestBellmanFord();
 /*! 测试Floyd最短路径 */
 void TestFloyd();
 
+
+void TestTopologicalSort();
+
 /*! 关于CyberDash */
 void TestCyberDashShow();
 

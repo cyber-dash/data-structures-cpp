@@ -758,3 +758,76 @@ void TestFloyd() {
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
+
+
+void TestTopologicalSort() {
+    cout<<endl;
+    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
+    cout<<"|                       Test TopologySort                       |"<<endl;
+    cout<<"|                         测试拓扑排序                    |"<<endl;
+    cout<<"|                                                           |"<<endl;
+    cout<<"|                           北京                             |"<<endl;
+    cout<<"|                           / \\                               |"<<endl;
+    cout<<"|                          /   \\                              |"<<endl;
+    cout<<"|                        0.1   0.12                          |"<<endl;
+    cout<<"|                        /       \\                            |"<<endl;
+    cout<<"|                       /         \\                           |"<<endl;
+    cout<<"|                    上海---0.01---广州                       |"<<endl;
+    cout<<"|                     / \\         / \\                         |"<<endl;
+    cout<<"|                    /   \\       /   \\                        |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
+    cout<<"|                  /       \\   /       \\                      |"<<endl;
+    cout<<"|                 /         \\ /         \\                     |"<<endl;
+    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<endl;
+
+
+    unsigned int edge_count = 9;
+
+    // 结点信息
+    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
+
+    // 边信息
+    vector<string> starting_vertices{ "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
+    vector<string> ending_vertices  { "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
+    vector<double> weights          {  0.1,   0.12,   0.01,  0.14,   0.13,  0.05,  0.17,   0.09,  0.11  };
+
+    vector<Edge<string, double> > edges;
+    for (unsigned int i = 0; i < edge_count; i++) {
+        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
+        edges.push_back(edge);
+    }
+
+    AdjacencyListGraph<string, double> adjacency_list_graph(1, 10, 1000, edges, vertices); // 构造邻接表图
+    MatrixGraph<string, double> matrix_graph(1, 10, 1000, edges, vertices);                // 构造矩阵图
+
+    cout<<endl<<"**邻接表图测试**"<<endl<<endl;
+
+    vector<string> topology_sorted_list;
+    bool res = TopologicalSort(adjacency_list_graph, vertices[0], topology_sorted_list);
+
+    if (res) {
+        for (auto iter = topology_sorted_list.begin(); iter != topology_sorted_list.end(); iter++) {
+            cout<<*iter<<' ';
+        }
+        cout<<endl;
+    } else {
+        cout<<"拓扑排序失败"<<endl;
+    }
+
+    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
+
+    topology_sorted_list.clear();
+    res = TopologicalSort(matrix_graph, vertices[0], topology_sorted_list);
+
+    if (res) {
+        for (auto iter = topology_sorted_list.begin(); iter != topology_sorted_list.end(); iter++) {
+            cout<<*iter<<' ';
+        }
+        cout<<endl;
+    } else {
+        cout<<"拓扑排序失败"<<endl;
+    }
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
