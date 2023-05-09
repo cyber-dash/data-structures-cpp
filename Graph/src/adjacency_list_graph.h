@@ -460,18 +460,18 @@ public:
     friend ostream& operator<< <>(ostream& out, AdjacencyListGraph<TVertex, TWeight>& graph_adjacency_list);
 
 private:
-    VertexAdjacencies<TVertex, TWeight>* adjacency_list_;    //!< 邻接表
+    VertexAdjacencies<TVertex, TWeight>* adjacency_list_;    //!< **邻接表**
 };
 
 
 /*!
- * @brief **构造函数(结点数上限/边权值上限)**
+ * @brief **构造函数(结点数上限,边权值上限)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param max_vertex_count 结点数上限
  * @param max_weight 边权值上限
  * @note
- * 构造函数(结点数上限/边权值上限)
+ * 构造函数(结点数上限,边权值上限)
  * --------------------------
  * --------------------------
  *
@@ -479,11 +479,13 @@ private:
  *
  * --------------------------
  * + **1 设置部分成员变量**\n
- *  - type_(**图类型**)设为UNDIRECTED(**无向**)\n
- *  - max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
- *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
+ *  type_(**图类型**)设为UNDIRECTED(**无向**)\n\n
+ *  max_vertex_count_(**结点数上限**)使用参数赋值\n
+ *  max_weight_(**边权值上限**)使用参数赋值\n\n
+ *  vertex_count_(**结点数量**)设为0\n
+ *  edge_count_(**边数量**)设为0\n\n
  * + **2 设置邻接表**\n
- *  分配邻接矩阵行内存\n
+ *  邻接表分配内存并初始化\n
  *  **if** 内存分配失败 :\n
  *  &emsp; 抛出bad_alloc()错误\n
  */
@@ -492,45 +494,44 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(unsigned int max_vertex
 
     // ----------- 1 设置部分成员变量 -----------
 
-    // type_(图类型)设为UNDIRECTED(无向)
-    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;
+    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;                                          // type_(图类型)设为UNDIRECTED(无向)
 
-    // max_vertex_count_(结点数上限)和max_weight_(边权值上限)使用参数赋值
-    this->max_vertex_count_ = max_vertex_count;
-    this->max_weight_ = max_weight;
+    this->max_vertex_count_ = max_vertex_count;                                                 // max_vertex_count_(结点数上限)使用参数赋值
+    this->max_weight_ = max_weight;                                                             // max_weight_(边权值上限)使用参数赋值
 
-    // vertex_count_(结点数量)和edge_count_(边数量)设为0
-    this->vertex_count_ = 0;
-    this->edge_count_ = 0;
+    this->vertex_count_ = 0;                                                                    // vertex_count_(结点数量)设为0
+    this->edge_count_ = 0;                                                                      // edge_count_(边数量)设为0
 
     // ---------- 2 设置邻接表 ----------
 
-    // 分配邻接矩阵行内存
-    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];
-    if (!this->adjacency_list_) {   // if 内存分配失败
-        throw bad_alloc();          // 抛出bad_alloc()错误
+    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];   // 邻接表分配内存并初始化
+    if (!this->adjacency_list_) {                                                               // if 内存分配失败
+        throw bad_alloc();                                                                      // 抛出bad_alloc()错误
     }
 }
 
 
 /*!
- * @brief **构造函数(结点数上限/边权值上限)**
+ * @brief **构造函数(图类型,结点数上限,边权值上限)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param type 图类型
  * @param max_vertex_count 结点数上限
  * @param max_weight 边权值上限
  * @note
- * 构造函数(图类型/结点数上限/边权值上限)
+ * 构造函数(图类型,结点数上限,边权值上限)
  * ---------------------------------
  * ---------------------------------
  *
  * ---------------------------------
  * + **1 设置部分成员变量**\n
- *  - type_(**图类型**), max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
- *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
+ *  type_(**图类型**)使用参数赋值\n\n
+ *  max_vertex_count_(**结点数上限**)使用参数赋值\n
+ *  max_weight_(**边权值上限**)使用参数赋值\n\n
+ *  vertex_count_(**结点数量**)设为0\n
+ *  edge_count_(**边数量**)设为0\n\n
  * + **2 设置邻接表**\n
- *  分配邻接矩阵行内存\n
+ *  邻接表分配内存并初始化\n
  *  **if** 内存分配失败 :\n
  *  &emsp; 抛出bad_alloc()错误\n
  */
@@ -539,21 +540,18 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type, unsigned int 
 
     // ---------- 1 设置部分成员变量 ----------
 
-    // type_(图类型), max_vertex_count_(结点数上限)和max_weight_(边权值上限)使用参数赋值
-    this->type_ = type;
-    this->max_vertex_count_ = max_vertex_count;
-    this->max_weight_ = max_weight;
+    this->type_ = type;                                                                         // type_(**图类型**)使用参数赋值
+    this->max_vertex_count_ = max_vertex_count;                                                 // max_vertex_count_(结点数上限)使用参数赋值
+    this->max_weight_ = max_weight;                                                             // max_weight_(边权值上限)使用参数赋值
 
-    // vertex_count_(结点数量)和edge_count_(边数量)设为0
-    this->vertex_count_ = 0;
-    this->edge_count_ = 0;
+    this->vertex_count_ = 0;                                                                    // vertex_count_(结点数量)设为0
+    this->edge_count_ = 0;                                                                      // edge_count_(边数量)设为0
 
     // ---------- 2 设置邻接表 ----------
 
-    // 分配邻接矩阵行内存
-    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];
-    if (!this->adjacency_list_) {   // if 内存分配失败
-        throw bad_alloc();          // 抛出bad_alloc()错误
+    this->adjacency_list_ = new VertexAdjacencies<TVertex, TWeight>[this->max_vertex_count_];   // 邻接表分配内存并初始化
+    if (!this->adjacency_list_) {                                                               // if 内存分配失败
+        throw bad_alloc();                                                                      // 抛出bad_alloc()错误
     }
 }
 
