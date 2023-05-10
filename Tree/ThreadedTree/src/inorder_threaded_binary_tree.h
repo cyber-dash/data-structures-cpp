@@ -70,11 +70,11 @@ public:
     void PreorderTraverse(void (*Visit)(ThreadedNode<TData>*));
     // 中序线索二叉树后序遍历
     void PostorderTraverse(void (*visit)(ThreadedNode<TData>*));
-    // 中序线索二叉子树, 找到后续遍历第一个结点(书中未实现)
+    // 子树获取后序遍历首个遍历结点
     ThreadedNode<TData>* GetFirstNodeForPostorder(ThreadedNode<TData>* subtree_root);
 
 protected:
-    ThreadedNode<TData>* root_;
+    ThreadedNode<TData>* root_;     //!< 根结点
     // 子树创建中序线索
     void CreateThreadInSubtreeRecursive_(ThreadedNode<TData>*& subtree_root, ThreadedNode<TData>*& pre_node);
     // 子树插入
@@ -95,7 +95,7 @@ protected:
  * -----------------
  * + **1 空子树处理**\n
  * **if** 空子树 :\n
- * &emsp; 抛出invalid_argument("NULL pointer")\n
+ * &emsp; 抛出invalid_argument("NULL pointer")\n\n
  * + **2 获取结点**\n
  * 初始化cur(遍历指针), 指向subtree_root\n\n
  * **while loop** cur存在左孩子 && cur->left_tag属性为CHILD_POINTER :\n
@@ -105,17 +105,23 @@ protected:
  */
 template <typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::First(ThreadedNode<TData>* subtree_root) {
-    if (!subtree_root) {
-        throw invalid_argument("NULL pointer");
+    // ---------- 1 空子树处理 ----------
+
+    if (!subtree_root) {                                                            // if 空子树
+        throw invalid_argument("NULL pointer");                                     // 抛出invalid_argument("NULL pointer")
     }
 
-    ThreadedNode<TData>* cur = subtree_root;
+    // ---------- 2 获取结点 ----------
 
-    while (cur->left_child != NULL && cur->left_tag == CHILD_POINTER) {
-        cur = cur->left_child;
+    ThreadedNode<TData>* cur = subtree_root;                                        // 初始化cur(遍历指针), 指向subtree_root
+
+    while (cur->left_child != NULL && cur->left_tag == CHILD_POINTER) {             // while loop cur存在左孩子 && cur->left_tag属性为CHILD_POINTER
+        cur = cur->left_child;                                                      // cur指向cur->left_child
     }
 
-    return cur;
+    // ---------- 3 返回结果 ----------
+
+    return cur;                                                                     // 返回cur
 }
 
 
@@ -136,11 +142,11 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::First(ThreadedNode<TData>
  */
 template <typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Next(ThreadedNode<TData>* node) {
-    if (node->right_tag == THREADED_NODE_POINTER) {
-        return node->right_child;
+    if (node->right_tag == THREADED_NODE_POINTER) {                         // if node的right_tag属性, 是THREADED_NODE_POINTER(线索结点指针)
+        return node->right_child;                                           // 返回node->right_child
     }
 
-    return First(node->right_child);
+    return First(node->right_child);                                        // 返回First(node->right_child)
 }
 
 
@@ -167,17 +173,24 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Next(ThreadedNode<TData>*
  */
 template <typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Last(ThreadedNode<TData>* subtree_root) {
-    if (!subtree_root) {
-        throw invalid_argument("NULL pointer");
+
+    // ---------- 1 空子树处理 ----------
+
+    if (!subtree_root) {                                                                // if 空子树
+        throw invalid_argument("NULL pointer");                                         // 抛出invalid_argument("NULL pointer")
     }
 
-    ThreadedNode<TData>* cur = subtree_root;
+    // ---------- 2 获取结点 ----------
 
-    while (cur->right_child != NULL && cur->right_tag == CHILD_POINTER) {
-        cur = cur->right_child;
+    ThreadedNode<TData>* cur = subtree_root;                                            // 初始化cur(遍历指针), 指向subtree_root
+
+    while (cur->right_child != NULL && cur->right_tag == CHILD_POINTER) {               // while loop cur存在右孩子 && cur->right_tag属性为CHILD_POINTER
+        cur = cur->right_child;                                                         // cur指向cur->right_child
     }
 
-    return cur;
+    // ---------- 3 返回结果 ----------
+
+    return cur;                                                                         // 返回cur
 }
 
 
@@ -198,11 +211,11 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Last(ThreadedNode<TData>*
  */
 template <typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Pre(ThreadedNode<TData>* node) {
-    if (node->left_tag == THREADED_NODE_POINTER) {  // if node的left_tag属性, 是THREADED_NODE_POINTER(线索结点指针)
-        return node->left_child;                    // 返回node->left_child
+    if (node->left_tag == THREADED_NODE_POINTER) {                  // if node的left_tag属性, 是THREADED_NODE_POINTER(线索结点指针)
+        return node->left_child;                                    // 返回node->left_child
     }
 
-    return Last(node->left_child);                  // 返回Last(node->left_child)
+    return Last(node->left_child);                                  // 返回Last(node->left_child)
 }
 
 
@@ -626,50 +639,90 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Parent(ThreadedNode<TData
  * @param subtree_root 子树根结点
  * @param data 数据项
  * @return 执行结果
+ * @note
+ * 子树插入(建立线索之前)
+ * ------------------
+ * ------------------
+ *
+ * ------------------
+ * + **1 空子树插入**\n
+ * **if** 空子树 :\n
+ * &emsp; 分配内存并初始化subtree_root(子树根结点)\n
+ * &emsp; **if** 内存分配失败 :\n
+ * &emsp;&emsp; 抛出bad_alloc()\n\n
+ * &emsp; 返回true\n\n
+ * + **2 非空子树插入**\n
+ * 获取left_subtree_height(左子树高度)\n
+ * 获取right_subtree_height(右子树高度)\n\n
+ * **if** 获取left_subtree_height > right_subtree_height :\n
+ * &emsp; 在右子树递归调用InsertInSubTreeRecursive_, 执行插入\n
+ * **else**\n
+ * &emsp; 在左子树递归调用InsertInSubTreeRecursive_, 执行插入\n
  */
 template<typename TData>
 bool InorderThreadedBinaryTree<TData>::InsertInSubTreeRecursive_(ThreadedNode<TData>*& subtree_root,
                                                                  const TData& data)
 {
 
-    if (subtree_root == NULL) {
-        subtree_root = new ThreadedNode<TData>(data);
-        if (!subtree_root) {
-            throw bad_alloc();
+    // ---------- 1 空子树插入 ----------
+
+    if (subtree_root == NULL) {                                                             // if 空子树
+        subtree_root = new ThreadedNode<TData>(data);                                       // 分配内存并初始化subtree_root(子树根结点)
+        if (!subtree_root) {                                                                // if 内存分配失败
+            throw bad_alloc();                                                              // 抛出bad_alloc()
         }
 
-        return true;
+        return true;                                                                        // 返回true
     }
 
-    int left_subtree_height = Height(subtree_root->left_child);
-    int right_subtree_height = Height(subtree_root->right_child);
+    // ---------- 2 非空子树插入 ----------
 
-    if (left_subtree_height > right_subtree_height) {
-        return InsertInSubTreeRecursive_(subtree_root->right_child, data);
-    } else {
-        return InsertInSubTreeRecursive_(subtree_root->left_child, data);
+    int left_subtree_height = HeightOfSubTree(subtree_root->left_child);                    // 获取left_subtree_height(左子树高度)
+    int right_subtree_height = HeightOfSubTree(subtree_root->right_child);                  // 获取right_subtree_height(右子树高度)
+
+    if (left_subtree_height > right_subtree_height) {                                       // if 获取left_subtree_height > right_subtree_height
+        return InsertInSubTreeRecursive_(subtree_root->right_child, data);                  // 在右子树递归调用InsertInSubTreeRecursive_, 执行插入
+    } else {                                                                                // else
+        return InsertInSubTreeRecursive_(subtree_root->left_child, data);                   // 在左子树递归调用InsertInSubTreeRecursive_, 执行插入
     }
 }
 
 
 /*!
- * @brief 二叉子树的高度
- * @tparam TData 类型模板参数
- * @param node 二叉子树的根
+ * @brief **求子树高度**
+ * @tparam TData 数据项类型模板参数
+ * @param subtree_root 子树根结点
  * @return 高度
+ * @note
+ * 求子树高度
+ * --------
+ * --------
+ *
+ * --------
+ * + **1 空树处理**\n
+ * **if** 空子树 :\n
+ * &emsp; 返回0\n
+ * + **2 非空树处理**\n
+ * 获取left_subtree_height(左子树高度)\n
+ * 获取right_subtree_height(右子树高度)\n\n
+ * 返回最高子树的高度加1\n
  */
 template<typename TData>
-int Height(ThreadedNode<TData>* node) {
-    if (node == NULL) {
-        return 0;
+int HeightOfSubTree(ThreadedNode<TData>* subtree_root) {
+
+    // ---------- 1 空树处理 ----------
+
+    if (subtree_root == NULL) {                                                                             // if 空子树
+        return 0;                                                                                           // 返回0
     }
 
-    int left_sub_tree_height = Height(node->left_child);
-    int right_sub_tree_height = Height(node->right_child);
+    // ---------- 2 非空树处理 ----------
 
-    return (left_sub_tree_height < right_sub_tree_height ? right_sub_tree_height : left_sub_tree_height) + 1;
+    int left_subtree_height = HeightOfSubTree(subtree_root->left_child);                                    // 获取left_subtree_height(左子树高度)
+    int right_subtree_height = HeightOfSubTree(subtree_root->right_child);                                  // 获取right_subtree_height(右子树高度)
+
+    return (left_subtree_height < right_subtree_height ? right_subtree_height : left_subtree_height) + 1;   // 返回最高子树的高度加1
 }
-
 
 
 #endif // CYBER_DASH_INORDER_THREADED_BINARY_TREE_H
