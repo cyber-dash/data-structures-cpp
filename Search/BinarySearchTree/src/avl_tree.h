@@ -565,7 +565,7 @@ int AvlTree<TKey, TValue>::RightRotate_(AvlNode<TKey, TValue>*& node) {
  *              /   \                                    /   \                                     /   \
  *          node2  node3                             pivot  node3                               node2  node
  *             / \                                     /                                         / \     \
- *            /   \             ----左旋1次---->       /               ----右旋1次---->           /   \     \
+ *            /   \             ----左旋1次---->      /               ----右旋1次---->          /   \     \
  *        node4  pivot                              node2                                   node4 node5  node3
  *                /                                 / \
  *               /                                 /   \
@@ -622,7 +622,7 @@ int AvlTree<TKey, TValue>::LeftRightRotate_(AvlNode<TKey, TValue>*& node) {
  *         /   \                                         /   \                                         /   \
  *      node2 node3                                  node2  pivot                                   node   node3
  *             / \                                             \                                     /     / \
- *            /   \             ----右旋1次---->                 \         ----左旋1次---->           /     /   \
+ *            /   \             ----右旋1次---->                \         ----左旋1次---->          /     /   \
  *        pivot  node4                                         node3                             node2  node5 node4
  *           \                                                  / \
  *            \                                                /   \
@@ -708,62 +708,60 @@ bool AvlTree<TKey, TValue>::RemoveRecursive(TKey key) {
 
 
 /*!
- * @brief **插入动作平衡(by回溯栈)**
+ * @brief **插入后平衡(by回溯栈)**
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值类型模板参数
  * @param backtrack_stack 回溯栈
  * @return 平衡后的子树根结点
  * @note
- * 插入动作平衡(by回溯栈)
- * -------------------
- * -------------------
+ * 插入后平衡(by回溯栈)
+ * -----------------
+ * -----------------
  *
- * -------------------
- * 声明并初始化cur_parent_node(当前父节点)为NULL\n
- * **while loop** 回溯栈不为空 :\n
+ * -----------------
+ * 声明并初始化cur_parent_node<b>(当前父节点)</b>为NULL\n\n
+ * **while loop** 回溯栈不为空 :\n\n
  * &emsp; 取栈顶, 赋给cur_parent_node\n
- * &emsp; 栈顶出栈\n
+ * &emsp; 栈顶出栈\n\n
  * &emsp; cur_parent_node更新平衡因子\n
  * &emsp; **if** cur_parent_node平衡 :\n
- * &emsp;&emsp; break(平衡结束, 跳出循环)\n
- * &emsp; **if** 平衡因子为1或者-1, 右子树高1或者左子树高1 :\n
+ * &emsp;&emsp; break <span style="color:#FF9900">(平衡结束, 跳出循环)</span>\n\n
+ * &emsp; **if** 平衡因子为1或者-1(右子树高1或者左子树高1) :\n
  * &emsp;&emsp; (不做任何操作)\n
- * &emsp; **else** (平衡因子为2或者-2, 右子树高2或者左子树高2) :\n
+ * &emsp; **else** ( 平衡因子为2或者-2(右子树高2或者左子树高2) ) :\n
  * &emsp;&emsp; 对cur_parent_node执行平衡\n
- * &emsp;&emsp; break(回溯栈内的结点, 都已经平衡, 可以自行证明验证)\n
- * &emsp; cur_parent_node更新高度\n
+ * &emsp;&emsp; break <span style="color:#FF9900">(回溯栈内的结点, 都已经平衡, 可以自行证明验证)</span>\n\n
+ * &emsp; cur_parent_node更新高度\n\n
  * 返回cur_parent_node\n
  */
 template<typename TKey, typename TValue>
 AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::InsertionBalanceByStack_(stack<AvlNode<TKey, TValue>*>& backtrack_stack) {
 
-    AvlNode<TKey, TValue>* cur_parent_node = NULL;  // 声明并初始化cur_parent_node(当前父节点)为NULL
+    AvlNode<TKey, TValue>* cur_parent_node = NULL;                                          // 声明并初始化cur_parent_node(当前父节点)为NULL
 
-    while (!backtrack_stack.empty()) {              // while loop 回溯栈不为空
+    while (!backtrack_stack.empty()) {                                                      // while loop 回溯栈不为空
 
-        cur_parent_node = backtrack_stack.top();    // 取栈顶, 赋给cur_parent_node
-        backtrack_stack.pop();                      // 栈顶出栈
+        cur_parent_node = backtrack_stack.top();                                            // 取栈顶, 赋给cur_parent_node
+        backtrack_stack.pop();                                                              // 栈顶出栈
 
-        cur_parent_node->UpdateBalanceFactor();     // cur_parent_node更新平衡因子
-
-        // if cur_parent_node平衡
-        if (cur_parent_node->BalanceFactor() == AvlNode<TKey, TValue>::BALANCED) {
-            break;                                  // break(平衡结束, 跳出循环)
+        cur_parent_node->UpdateBalanceFactor();                                             // cur_parent_node更新平衡因子
+        if (cur_parent_node->BalanceFactor() == AvlNode<TKey, TValue>::BALANCED) {          // if cur_parent_node平衡
+            break;                                                                          // break(平衡结束, 跳出循环)
         }
 
-        // if 平衡因子为1或者-1, 右子树高1或者左子树高1
-        if (cur_parent_node->BalanceFactor() == AvlNode<TKey, TValue>::RIGHT_HIGHER_1 ||
-            cur_parent_node->BalanceFactor() == AvlNode<TKey, TValue>::LEFT_HIGHER_1) {
-        } else {                                    // else (平衡因子为2或者-2, 右子树高2或者左子树高2)
-            this->Balance_(cur_parent_node);        // 对cur_parent_node执行平衡
-
-            break;                                  // break(回溯栈内的结点, 都已经平衡, 可以自行证明验证)
+        if (cur_parent_node->BalanceFactor() == AvlNode<TKey, TValue>::RIGHT_HIGHER_1 ||    // if 平衡因子为1或者-1, 右子树高1或者左子树高1
+            cur_parent_node->BalanceFactor() == AvlNode<TKey, TValue>::LEFT_HIGHER_1)
+        {
+                                                                                            // (不做任何操作)
+        } else {                                                                            // else (平衡因子为2或者-2, 右子树高2或者左子树高2)
+            this->Balance_(cur_parent_node);                                                // 对cur_parent_node执行平衡
+            break;                                                                          // break(回溯栈内的结点, 都已经平衡, 可以自行证明验证)
         }
 
-        cur_parent_node->UpdateHeight();            // cur_parent_node更新高度
+        cur_parent_node->UpdateHeight();                                                    // cur_parent_node更新高度
     }
 
-    return cur_parent_node;                         // 返回cur_parent_node
+    return cur_parent_node;                                                                 // 返回cur_parent_node
 }
 
 
@@ -779,67 +777,67 @@ AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::InsertionBalanceByStack_(stack<Avl
  * -------------------
  *
  * -------------------
- * 声明并初始化cur_parent_node(当前父节点)为NULL\n
- * **while loop** 回溯栈不为空 :\n
+ * 声明并初始化cur_parent_node(当前父节点)为NULL\n\n
+ * **while loop** 回溯栈不为空 :\n\n
  * &emsp; 取栈顶, 赋给cur_parent_node(当前父节点)\n
- * &emsp; 栈顶出栈\n
- * &emsp; 声明grand_parent_direction(祖父结点与父节点的关系)\n
+ * &emsp; 栈顶出栈\n\n
+ * &emsp; 声明grand_parent_direction(祖父结点与父节点的关系)\n\n
  * &emsp; **if** 回溯栈为不为空 :\n
- * &emsp;&emsp; 取栈顶, 赋给cur_grand_node(祖父结点)\n
+ * &emsp;&emsp; 取栈顶, 赋给cur_grand_node(祖父结点)\n\n
  * &emsp;&emsp; **if** 父节点是祖父结点的左孩子 :\n
  * &emsp;&emsp;&emsp; grand_parent_direction设置成-1(左)\n
  * &emsp;&emsp; **else if** 父节点是祖父结点的左孩子 :\n
- * &emsp;&emsp;&emsp; grand_parent_direction设置成1(右)\n
+ * &emsp;&emsp;&emsp; grand_parent_direction设置成1(右)\n\n
  * &emsp; cur_parent_node更新高度\n
  * &emsp; cur_parent_node更新平衡因子\n
- * &emsp; cur_parent_node进行平衡\n
+ * &emsp; cur_parent_node进行平衡\n\n
  * &emsp; **if** 回溯栈不为空 :\n
- * &emsp;&emsp; 取栈顶, 赋给cur_grand_node(祖父结点)\n
+ * &emsp;&emsp; 取栈顶, 赋给cur_grand_node(祖父结点)\n\n
  * &emsp;&emsp; **if** grand_parent_direction为-1(父节点是祖父结点的左孩子) :\n
  * &emsp;&emsp;&emsp; cur_parent_node设置成cur_grand_node的左孩子\n
  * &emsp;&emsp; **else** (grand_parent_direction为-1(父节点是祖父结点的左孩子)) :\n
- * &emsp;&emsp;&emsp; cur_parent_node设置成cur_grand_node的右孩子\n
+ * &emsp;&emsp;&emsp; cur_parent_node设置成cur_grand_node的右孩子\n\n
  * 返回cur_parent_node\n
  */
 template<typename TKey, typename TValue>
 AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::RemovalBalanceByStack_(stack<AvlNode<TKey, TValue>*>& backtrack_stack) {
 
-    AvlNode<TKey, TValue>* cur_parent_node = NULL;                          // 声明并初始化cur_parent_node(当前父节点)为NULL
+    AvlNode<TKey, TValue>* cur_parent_node = NULL;                              // 声明并初始化cur_parent_node(当前父节点)为NULL
 
-    while (!backtrack_stack.empty()) {                                      // while loop 回溯栈不为空
+    while (!backtrack_stack.empty()) {                                          // while loop 回溯栈不为空
 
-        cur_parent_node = backtrack_stack.top();                            // 取栈顶, 赋给cur_parent_node(当前父节点)
-        backtrack_stack.pop();                                              // 栈顶出栈
+        cur_parent_node = backtrack_stack.top();                                // 取栈顶, 赋给cur_parent_node(当前父节点)
+        backtrack_stack.pop();                                                  // 栈顶出栈
 
-        int grand_parent_direction;                                         // 声明grand_parent_direction(祖父结点与父节点的关系)
+        int grand_parent_direction;                                             // 声明grand_parent_direction(祖父结点与父节点的关系)
 
-        if (!backtrack_stack.empty()) {                                     // if 回溯栈为不为空
-            AvlNode<TKey, TValue>* cur_grand_node = backtrack_stack.top();  // 取栈顶, 赋给cur_grand_node(祖父结点)
+        if (!backtrack_stack.empty()) {                                         // if 回溯栈为不为空
+            AvlNode<TKey, TValue>* cur_grand_node = backtrack_stack.top();      // 取栈顶, 赋给cur_grand_node(祖父结点)
 
-            if (cur_grand_node->LeftChild() == cur_parent_node) {           // if 父节点是祖父结点的左孩子
-                grand_parent_direction = -1;                                // grand_parent_direction设置成-1(左)
-            } else if (cur_grand_node->RightChild() == cur_parent_node) {   // else if 父节点是祖父结点的左孩子
-                grand_parent_direction = 1;                                 // grand_parent_direction设置成1(右)
+            if (cur_grand_node->LeftChild() == cur_parent_node) {               // if 父节点是祖父结点的左孩子
+                grand_parent_direction = -1;                                    // grand_parent_direction设置成-1(左)
+            } else if (cur_grand_node->RightChild() == cur_parent_node) {       // else if 父节点是祖父结点的左孩子
+                grand_parent_direction = 1;                                     // grand_parent_direction设置成1(右)
             }
         }
 
-        cur_parent_node->UpdateHeight();                                    // cur_parent_node更新高度
-        cur_parent_node->UpdateBalanceFactor();                             // cur_parent_node更新平衡因子
+        cur_parent_node->UpdateHeight();                                        // cur_parent_node更新高度
+        cur_parent_node->UpdateBalanceFactor();                                 // cur_parent_node更新平衡因子
 
-        this->Balance_(cur_parent_node);                                    // cur_parent_node进行平衡
+        this->Balance_(cur_parent_node);                                        // cur_parent_node进行平衡
 
-        if (!backtrack_stack.empty()) {                                     // if 回溯栈不为空
-            AvlNode<TKey, TValue>* cur_grand_node = backtrack_stack.top();  // 取栈顶, 赋给cur_grand_node(祖父结点)
+        if (!backtrack_stack.empty()) {                                         // if 回溯栈不为空
+            AvlNode<TKey, TValue>* cur_grand_node = backtrack_stack.top();      // 取栈顶, 赋给cur_grand_node(祖父结点)
 
-            if (grand_parent_direction == -1) {                             // if grand_parent_direction为-1(父节点是祖父结点的左孩子)
-                cur_grand_node->SetLeftChild(cur_parent_node);              // cur_parent_node设置成cur_grand_node的左孩子
-            } else {                                                        // else (grand_parent_direction为-1(父节点是祖父结点的左孩子))
-                cur_grand_node->SetRightChild(cur_parent_node);             // cur_parent_node设置成cur_grand_node的右孩子
+            if (grand_parent_direction == -1) {                                 // if grand_parent_direction为-1(父节点是祖父结点的左孩子)
+                cur_grand_node->SetLeftChild(cur_parent_node);                  // cur_parent_node设置成cur_grand_node的左孩子
+            } else {                                                            // else (grand_parent_direction为-1(父节点是祖父结点的左孩子))
+                cur_grand_node->SetRightChild(cur_parent_node);                 // cur_parent_node设置成cur_grand_node的右孩子
             }
         }
     }
 
-    return cur_parent_node;                                                 // 返回cur_parent_node
+    return cur_parent_node;                                                     // 返回cur_parent_node
 }
 
 
@@ -1527,11 +1525,11 @@ bool AvlTree<TKey, TValue>::RemoveInSubTree_(AvlNode<TKey, TValue>*& subtree_roo
  * ------------
  * + **1 空树处理**\n
  * **if** 子树根结点为NULL :\n
- * &emsp; 返回\n
+ * &emsp; 退出函数\n\n
  * + **2 分治递归**\n
- * 访问结点\n
+ * 访问结点\n\n
  * **if** 子树为叶子类型(没有左右孩子): \n
- * &emsp; 返回\n
+ * &emsp; 退出函数\n\n
  * 打印'('\n
  * 递归调用PrintSubTreeRecursive_, 对左子树进行打印\n
  * 打印','\n
@@ -1775,11 +1773,11 @@ AvlNode<TKey, TValue>* AvlTree<TKey, TValue>::MaxInSubTree_(AvlNode<TKey, TValue
  * ---------------------
  * + **1 合法性判断**\n
  * &emsp; **if** node为NULL :\n
- * &emsp;&emsp; 返回NULL\n
+ * &emsp;&emsp; 返回NULL\n\n
  * + **2 查找结点**\n
- * &emsp; 初始化遍历指针cur, 指向结点的左孩子\n
+ * &emsp; 初始化遍历指针cur, 指向结点的左孩子\n\n
  * &emsp; **while loop** cur不为NULL <b>&&</b> cur存在右孩子 :\n
- * &emsp;&emsp; cur指向右孩子\n
+ * &emsp;&emsp; cur指向右孩子\n\n
  * &emsp; 返回cur\n
  */
 template<typename TKey, typename TValue>

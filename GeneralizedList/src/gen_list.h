@@ -1,12 +1,4 @@
-﻿/*!
- * @file gen_list.h
- * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 广义表模板类
- * @version 0.2.1
- * @date 2021-07-14
- */
-
-#ifndef CYBER_DASH_GENERALIZED_LIST_H
+﻿#ifndef CYBER_DASH_GENERALIZED_LIST_H
 #define CYBER_DASH_GENERALIZED_LIST_H
 
 
@@ -20,7 +12,6 @@
 using namespace std;
 
 
-//! 广义表模板类
 template<class T>
 class GenList {
 

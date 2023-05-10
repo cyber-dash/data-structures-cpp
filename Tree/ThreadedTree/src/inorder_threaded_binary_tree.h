@@ -217,12 +217,13 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Pre(ThreadedNode<TData>* 
  *
  * -------
  * **for loop** cur(遍历指针)指向First(root_); cur != NULL; cur指向下一线索结点 :\n
- * &emsp; visit(cur)\n
+ * &emsp; 访问cur指向的结点\n
  */
 template <typename TData>
 void InorderThreadedBinaryTree<TData>::InorderTraverse(void (*visit)(ThreadedNode<TData>* node)) {
+    // for loop cur(遍历指针)指向First(root_); cur != NULL; cur指向下一线索结点
     for (ThreadedNode<TData>* cur = First(root_); cur != NULL; cur = Next(cur)) {
-        visit(cur);
+        visit(cur);             // 访问cur指向的结点
     }
 }
 
@@ -537,52 +538,85 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::GetFirstNodeForPostorder(
  * </span>
  *
  * <span style="color:#D40000;font-size:larger">
- * 左侧前驱路径:\n
+ * 前驱路径:\n
  * &emsp; 先遍历到f, 找f的前驱a, a不是e的父结点, 找a->right_child结点b, b也不是e的父结点, 因此左侧路径未找到e的父结点\n\n
- * 右侧后继路径:\n
+ * 后继路径:\n
  * &emsp; 先遍历到h, 找h的后继d, 返回d(d就是e的父结点)\n
  * </span>
  *
  * -------
+ * + **1 空结点处理**\n
+ * **if** 空节点 :\n
+ * &emsp; 抛出invalid_argument错误\n\n
+ * + **2 根结点处理**\n
+ * **if** node为根结点 :\n
+ * &emsp; 返回NULL\n\n
+ * + **3 通过前驱寻找父节点**\n
+ * 初始化cur<span style="color:#DF5A00">(遍历指针)</span>指向node\n
+ * **while loop** cur->left_tag为孩子结点指针 :\n
+ * &emsp;cur指向自身左孩子\n\n
+ * 初始化upper_level_pre_node (上层前驱结点) 指向cur->left_child(指向上层前驱)\n\n
+ * **if** left_side_child->left_child不为NULL(此时存在前驱) :\n
+ * &emsp; **if** upper_level_pre_node->right_child不是node :\n
+ * &emsp;&emsp; upper_level_pre_node指向自身右孩子\n\n
+ * &emsp; **if** upper_level_pre_node不为NULL && upper_level_pre_node是node的父结点 :\n
+ * &emsp;&emsp; 返回upper_level_pre_node\n\n
+ * + **4 通过后继寻找父节点**\n
+ * cur指向node\n
+ * **while loop** cur->right_tag为孩子结点指针 :\n
+ * &emsp; cur指向自身右孩子\n\n
+ * upper_level_post_node (上层后继结点) 指向cur的右孩子(指向上层后继)\n\n
+ * 返回upper_level_post_node\n
  */
 template <typename TData>
 ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Parent(ThreadedNode<TData>* node) {
 
-    if (!node) {
-        throw invalid_argument("NULL pointer");
+    // ---------- 1 空结点处理 ----------
+
+    if (!node) {                                                                    // if 空节点
+        throw invalid_argument("NULL pointer");                                     // 抛出invalid_argument错误
     }
 
-    if (node == root_) {
-        return NULL;
+    // ---------- 2 根结点处理 ----------
+
+    if (node == root_) {                                                            // if node为根结点
+        return NULL;                                                                // 返回NULL
     }
 
-    /* 尝试路径1 */
-    ThreadedNode<TData>* left_side_child = node;
-    while (left_side_child->left_tag == CHILD_POINTER) {
-        left_side_child = left_side_child->left_child;
+    // ---------- 3 通过前驱寻找父节点 ----------
+
+    ThreadedNode<TData>* cur = node;                                                // 初始化cur(遍历指针)指向node
+    while (cur->left_tag == CHILD_POINTER) {                                        // while loop cur->left_tag为孩子结点指针
+        cur = cur->left_child;                                                      // cur指向自身左孩子
     }
 
-    if (left_side_child->left_child != NULL) { // 如果等于NULL, 则寻找树上层的中序前驱失败, 路径1失败
-        ThreadedNode<TData>* upper_level_pre_node = left_side_child->left_child; // 树上层的中序前驱
+    ThreadedNode<TData>* upper_level_pre_node = cur->left_child;                    // 初始化upper_level_pre_node (上层前驱结点) 指向cur->left_child(指向上层前驱)
 
-        if (upper_level_pre_node != NULL && upper_level_pre_node->right_child != node) {
-            upper_level_pre_node = upper_level_pre_node->right_child;
+    if (upper_level_pre_node != NULL) {                                             // if left_side_child->left_child不为NULL(此时存在前驱)
+
+        if (upper_level_pre_node->right_child != node) {                            // if upper_level_pre_node->right_child不是node
+            upper_level_pre_node = upper_level_pre_node->right_child;               // upper_level_pre_node指向自身右孩子
         }
 
-        if (upper_level_pre_node != NULL && (upper_level_pre_node->left_child == node || upper_level_pre_node->right_child == node)) {
-            return upper_level_pre_node;
+        if (upper_level_pre_node != NULL &&                                         // if upper_level_pre_node不为NULL && upper_level_pre_node是node的父结点
+            (upper_level_pre_node->left_child == node ||
+             upper_level_pre_node->right_child == node)
+           )
+        {
+            return upper_level_pre_node;                                            // 返回upper_level_pre_node
         }
     }
 
-    /* 尝试路径2 */
-    ThreadedNode<TData>* right_side_child = node;
-    while (right_side_child->right_tag == CHILD_POINTER) {
-        right_side_child = right_side_child->right_child;
+    // ---------- 4 通过后继寻找父节点 ----------
+
+    cur = node;                                                                     // cur指向node
+    while (cur->right_tag == CHILD_POINTER) {                                       // while loop cur->right_tag为孩子结点指针
+        cur = cur->right_child;                                                     // cur指向自身右孩子
     }
 
-    ThreadedNode<TData>* upper_level_post_node = right_side_child->right_child; // 树上层的中序后继
+    ThreadedNode<TData>* upper_level_post_node = cur->right_child;                  // upper_level_post_node (上层后继结点) 指向cur的右孩子(指向上层后继)
 
-    return upper_level_post_node;
+    return upper_level_post_node;                                                   // 返回upper_level_post_node
 }
 
 

@@ -19,17 +19,49 @@
 using namespace std;
 
 
+/*!
+ * @brief **简单广义表结点类**
+ */
 class SimpleGenListNode {
 public:
 
-    /*! @brief 构造函数 */
+    /*!
+     * @brief **默认构造函数**
+     * @note
+     * 默认构造函数
+     * ----------
+     * ----------
+     *
+     * ----------
+     * type为ATOM(原子类型)\n
+     * data为'\0'\n
+     * next和head均设置为nullptr\n
+     */
     SimpleGenListNode(): type(ATOM), data('\0'), next(nullptr), head(nullptr) {}
-    explicit SimpleGenListNode(int type, char data = '\0'):
-        type(type), next(nullptr), head(nullptr), data(data) {}
+
 
     /*!
-     * @brief 复制构造函数
-     * @param node 广义表节点
+     * @brief **构造函数(类型,data)**
+     * @note
+     * 构造函数(类型,data)
+     * -----------------
+     * -----------------
+     *
+     * -----------------
+     * type和data使用参数赋值\n
+     * next和head均设置为nullptr\n
+     */
+    explicit SimpleGenListNode(int type, char data = '\0'): type(type), next(nullptr), head(nullptr), data(data) {}
+
+    /*!
+     * @brief **复制构造函数**
+     * @param node 源广义表结点
+     * @note
+     * 复制构造函数
+     * ----------
+     * ----------
+     *
+     * ----------
      */
     SimpleGenListNode(const SimpleGenListNode& node) {
         type = node.type;
@@ -38,13 +70,13 @@ public:
         next = node.next;
     }
 
-    int type;                                       //!< 类型
-    char data;                                      //!< 数据
-    SimpleGenListNode* head;                              //!< 表头结点(如果type是LIST_HEAD类型)
-    SimpleGenListNode* next;                               //!< 下一结点
+    int type;                                             //!< **类型**
+    char data;                                            //!< **数据项**
+    SimpleGenListNode* head;                              //!< **表头结点(如果type是LIST_HEAD类型)**
+    SimpleGenListNode* next;                              //!< **下一结点**
 
-    static const int ATOM = 1;                             //!< 原子结点类型
-    static const int LIST = 2;                        //!< 表结点类型
+    static const int ATOM = 1;                            //!< **原子结点类型**
+    static const int LIST = 2;                            //!< **表结点类型**
 };
 
 
@@ -65,13 +97,22 @@ public:
 class SimpleGenList {
 public:
 
-    // 构造函数
-    SimpleGenList(): head_(nullptr) {};
+    /*!
+     * @brief **默认构造函数**
+     * @note
+     * 默认构造函数
+     * ----------
+     * ----------
+     *
+     * ----------
+     * 表头结点置为nullptr
+     */
+    SimpleGenList(): list_node_(nullptr) {};
 
     // 使用字符串创建广义表
     void CreateByString(const string& gen_list_string);
 
-    // 字符串格式化
+    // 生成字符串
     string ToString();
 
     int Depth();
@@ -79,7 +120,7 @@ public:
 
 
 private:
-    // 使用char队列创建广义表(递归)
+    // 使用队列创建广义表(递归)
     void CreateByQueueRecursive_(queue<char>& char_queue, SimpleGenListNode*& node);
 
     bool ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* node);
@@ -87,7 +128,7 @@ private:
     int SubGenListDepthRecursive_(SimpleGenListNode* node);
     int SubGenListLengthRecursive_(SimpleGenListNode* node);
 
-    SimpleGenListNode* head_;
+    SimpleGenListNode* list_node_;       //!< **表结点**
 };
 
 

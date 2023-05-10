@@ -1,12 +1,4 @@
-﻿/*!
- * @file gen_list_node.h
- * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 广义表结点模板类
- * @version 0.2.1
- * @date 2021-07-14
- */
-
-#ifndef CYBER_DASH_GEN_LIST_NODE_H
+﻿#ifndef CYBER_DASH_GEN_LIST_NODE_H
 #define CYBER_DASH_GEN_LIST_NODE_H
 
 
@@ -18,7 +10,6 @@ template<class T>
 class GenListNode;
 
 
-//! 广义表节点Union类型
 template<class T>
 union GenNodeUnion {
   int ref_count; //!< 引用计数
@@ -27,7 +18,6 @@ union GenNodeUnion {
 };
 
 
-//! 广义表数据项类(用于保存数据节点的信息)
 template<class T>
 class Item {
 public:
@@ -51,7 +41,6 @@ public:
 };
 
 
-//! 广义表结点
 template<class T>
 class GenListNode {
 
