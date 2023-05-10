@@ -374,7 +374,7 @@ int* String::KmpNext() const {
  * 1. <span style="color:#003153">为什么next[0] = -1, next[1] = 0 ?</span>\n
  *
  * A. 当pattern[1]失配时, 必然从pattern[0]开始重新进行匹配, 因此next[1] = 0\n
- * B. 如果: next[i] = x && pattern[i] = pattern[x], 则: next[i + 1] = x + 1\n
+ * B. 如果: next[i] == x && pattern[i] == pattern[x], 即pattern[i] == pattern[next[i]], 则: next[i + 1] = x + 1\n
  *
  * 因此:\n
  * &emsp;&emsp; 令next[1] = next[0] + 1 = 0\n
@@ -409,9 +409,16 @@ int* String::KmpNext() const {
  *
  * -----------------------
  * + **1 初始化next数组**\n
+ * next分配内存并初始化\n
+ * next[0] 设为 -1\n\n
  * + **2 模式串长度为1的情况处理**\n
+ * 直接返回next(next[0]已经设置完毕)\n\n
  * + **3 设置next[1]**\n
+ * next[1] 设为 0\n\n
  * + **4 完成next数组设置**\n
+ * 初始化i(模式串遍历索引)为1\n
+ * 初始化starting_index为0\n\n
+ * **while loop**
  * + **5 返回next数组**\n
  */
 int* String::KmpNextByCyberDash() const {
