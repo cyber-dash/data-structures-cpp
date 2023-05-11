@@ -19,5 +19,5 @@ int main() {
 
     TestKmpMatchCyberDash();
 
-  return 0;
+    return 0;
 }

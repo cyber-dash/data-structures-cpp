@@ -412,45 +412,67 @@ int* String::KmpNext() const {
  * next分配内存并初始化\n
  * next[0] 设为 -1\n\n
  * + **2 模式串长度为1的情况处理**\n
- * 直接返回next(next[0]已经设置完毕)\n\n
+ * **if** 模式串长度为1 :\n
+ * &emsp; 直接返回next <span style="color:#FF8100">(next[0]已经设置完毕)</span>\n\n
  * + **3 设置next[1]**\n
  * next[1] 设为 0\n\n
  * + **4 完成next数组设置**\n
- * 初始化i(模式串遍历索引)为1\n
+ * 初始化i <span style="color:#FF8100">(模式串遍历索引)</span>为1\n
  * 初始化starting_index为0\n\n
- * **while loop**
- * + **5 返回next数组**\n
+ * **while loop** 遍历模式串 :\n
+ * &emsp; **if** 索引i和索引starting_index两个位置的字符相同 :\n
+ * &emsp;&emsp; i向后移动1位\n
+ * &emsp;&emsp; starting_index向后移动1位\n
+ * &emsp;&emsp; next[i] <-- starting_index\n
+ * &emsp; **else**\n
+ * &emsp;&emsp; **if** starting_index == 0 <span style="color:#FF8100">(如果索引i字符发生失配,只能从头重新进行匹配)</span>:\n
+ * &emsp;&emsp;&emsp; i向后移动1位\n
+ * &emsp;&emsp;&emsp; next[i] <-- 0\n
+ * &emsp;&emsp; **else**\n
+ * &emsp;&emsp;&emsp; starting_index <-- next[starting_index]\n\n
+ * + **5 退出函数**\n
+ * 返回next数组\n
  */
 int* String::KmpNextByCyberDash() const {
 
-    int* next = new int[this->length_];
-    next[0] = -1;
+    // ---------- 1 初始化next数组 ----------
 
-    if (length_ == 1) {
-        return next;
+    int* next = new int[this->length_];                                     // next分配内存并初始化
+    next[0] = -1;                                                           // next[0] 设为 -1
+
+    // ---------- 2 模式串长度为1的情况处理 ----------
+
+    if (length_ == 1) {                                                     // if 模式串长度为1
+        return next;                                                        // 直接返回next(next[0]已经设置完毕)
     }
 
-    next[1] = 0;
+    // ---------- 3 设置next[1] ----------
 
-    int i = 1;
-    int starting_index = 0;
+    next[1] = 0;                                                            // next[1] 设为 0
 
-    while (i < length_) {
-        if (this->mem_data_[i] == this->mem_data_[starting_index]) {
-            i++;
-            starting_index++;
-            next[i] = starting_index;
-        } else {
-            if (starting_index == 0) {
-                i++;
-                next[i] = 0;
-            } else {
-                starting_index = next[starting_index];
+    // ---------- 4 完成next数组设置 ----------
+
+    int i = 1;                                                              // 初始化i(模式串遍历索引)为1
+    int starting_index = 0;                                                 // 初始化starting_index为0
+
+    while (i < length_) {                                                   // while loop 遍历模式串
+        if (this->mem_data_[i] == this->mem_data_[starting_index]) {        // if 索引i和索引starting_index两个位置的字符相同
+            i++;                                                            // i向后移动1位
+            starting_index++;                                               // starting_index向后移动1位
+            next[i] = starting_index;                                       // next[i] <-- starting_index
+        } else {                                                            // else
+            if (starting_index == 0) {                                      // if starting_index == 0 (如果索引i字符发生失配,只能从头重新进行匹配)
+                i++;                                                        // i向后移动1位
+                next[i] = 0;                                                // next[i] <-- 0
+            } else {                                                        // else
+                starting_index = next[starting_index];                      // starting_index <-- next[starting_index]
             }
         }
     }
 
-    return next;
+    // ---------- 5 退出函数 ----------
+
+    return next;                                                            // 返回next数组
 }
 
 
