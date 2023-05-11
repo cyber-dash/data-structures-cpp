@@ -60,7 +60,12 @@ void TestBellmanFord();
 void TestFloyd();
 
 
+// 测试拓扑排序
 void TestTopologicalSort();
+
+
+// 测试关键路径
+void TestCriticalPaths();
 
 /*! 关于CyberDash */
 void TestCyberDashShow();

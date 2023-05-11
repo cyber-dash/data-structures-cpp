@@ -54,5 +54,7 @@ int main(int argc, char** argv) {
     // 测试拓扑排序
     TestTopologicalSort();
 
+    TestCriticalPaths();
+
     return 0;
 }

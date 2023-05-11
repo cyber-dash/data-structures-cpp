@@ -916,37 +916,46 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_v
  *
  * -------
  * + **1 合法性检查**\n
- * &emsp; **if** 当前图结点数 >= 结点数上限 :\n
- * &emsp;&emsp; 返回false\n\n
+ * **if** 当前图结点数 >= 结点数上限 :\n
+ * &emsp; 返回false\n\n
  * + **2 执行插入**\n
- * &emsp; 邻接表索引vertex_count_元素的start_vertex设置为vertex\n
- * &emsp; vertex_count_加1\n
- * &emsp; vertices插入vertex\n
+ * 邻接表内, 索引vertex_count_元素的starting_vertex, 设置为vertex\n
+ * vertex_count_加1\n
+ * vertices插入vertex\n\n
+ * **if** 无向图 :\n
+ * &emsp; degrees_插入0 (新增结点度为0) \n
+ * **else** (有向图) :\n
+ * &emsp; in_degrees_插入0 (新增结点入度为0) \n
+ * &emsp; out_degrees_插入0 (新增结点出度为0) \n\n
+ * + **3 退出函数**\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
 
     // ---------- 1 合法性检查 ----------
 
-    if (this->vertex_count_ >= this->max_vertex_count_) {   // if 当前图结点数 >= 结点数上限
-        return false;                                       // 返回false
+    if (this->vertex_count_ >= this->max_vertex_count_) {                               // if 当前图结点数 >= 结点数上限
+        return false;                                                                   // 返回false
     }
 
     // ---------- 2 执行插入 ----------
 
-    this->adjacency_list_[this->vertex_count_].starting_vertex = vertex;    // 邻接表索引vertex_count_元素的start_vertex设置为vertex
-    this->vertices_.push_back(vertex);                      // vertices插入vertex
+    this->adjacency_list_[this->vertex_count_].starting_vertex = vertex;                // 邻接表内, 索引vertex_count_元素的starting_vertex, 设置为vertex
+    this->vertices_.push_back(vertex);                                                  // vertices插入vertex
 
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        this->degrees_.push_back(0);                            // 度vector插入结点
-    } else {
-        this->in_degrees_.push_back(0);                         // 入度vector插入结点
-        this->out_degrees_.push_back(0);                        // 出度vector插入结点
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                           // if 无向图
+        this->degrees_.push_back(0);                                                    // degrees_插入0 (新增结点度为0)
+    } else {                                                                            // else (有向图)
+        this->in_degrees_.push_back(0);                                                 // in_degrees_插入0 (新增结点入度为0)
+        this->out_degrees_.push_back(0);                                                // out_degrees_插入0 (新增结点出度为0)
     }
 
-    this->vertex_count_++;                                  // vertex_count_加1
+    this->vertex_count_++;                                                              // vertex_count_加1
 
-    return true;
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                        // 返回true
 }
 
 

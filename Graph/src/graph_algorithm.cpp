@@ -1189,3 +1189,40 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
     }
 }
 
+template<typename TVertex, typename TWeight>
+vector<TWeight> GetCriticalPath(const Graph<TVertex, TWeight>& graph, const TVertex& starting_vertex) {
+
+    set<int> visited_vertex_index_set;
+    queue<int> vertex_index_queue;
+
+    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);
+    vertex_index_queue.push(starting_vertex_index);                        // 索引0结点入队
+    visited_vertex_index_set.insert(starting_vertex_index);
+
+    vector<TWeight> critical_paths;
+
+    for (int i = 0; i < graph.VertexCount(); i++) {
+        // critical_paths[i] = TWeight();
+        critical_paths.push_back(TWeight());
+    }
+
+    while (!vertex_index_queue.empty()) {
+        int cur_start_index = vertex_index_queue.front();
+        vertex_index_queue.pop();
+
+        for (int cur_end_index = 0; cur_end_index < graph.VertexCount(); cur_end_index++) {
+            TWeight cur_weight;
+            bool res = graph.GetWeightByVertexIndex(cur_start_index, cur_end_index, cur_weight);
+            if (res && critical_paths[cur_start_index] + cur_weight > critical_paths[cur_end_index]) {
+                critical_paths[cur_end_index] = critical_paths[cur_start_index] + cur_weight;
+                if (visited_vertex_index_set.find(cur_end_index) == visited_vertex_index_set.end()) {
+                    vertex_index_queue.push(cur_end_index);
+                }
+
+                visited_vertex_index_set.insert(cur_end_index);
+            }
+        }
+    }
+
+    return critical_paths;
+}

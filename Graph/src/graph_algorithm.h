@@ -124,15 +124,17 @@ void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 template<typename TVertex, typename TWeight>
 void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex, set<TVertex>& visited_vertex_set);
 
-template<typename TVertex, typename TWeight>
-bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
-                     const TVertex& vertex,
-                     vector<TVertex>& topology_sorted_list);
-
 
 // 图广度优先遍历
 template<typename TVertex, typename TWeight>
 void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
+
+
+// 拓扑排序
+template<typename TVertex, typename TWeight>
+bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
+                     const TVertex& vertex,
+                     vector<TVertex>& topology_sorted_list);
 
 
 // 求图的连通分量
@@ -184,6 +186,11 @@ template<typename TVertex, typename TWeight>
 void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
                                      const vector<vector<TWeight> >& distance,
                                      const vector<vector<int> >& predecessor);
+
+
+// 求起点到各结点的关键路径
+template<typename TVertex, typename TWeight>
+vector<TWeight> GetCriticalPath(const Graph<TVertex, TWeight>& graph, const TVertex& starting_vertex);
 
 
 #endif // CYBER_DASH_GRAPH_ALGORITHM_H
