@@ -10,12 +10,15 @@
 #include "test.h"
 
 
+/*!
+ * @brief **测试-稀疏矩阵-构造函数**
+ */
 void TestSparseMatrixConstructor() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test SparseMatrixConstructor               |" << endl;
-    cout << "|                    测试队列稀疏矩阵构造函数                   |" << endl << endl << endl;
+    cout << "|                    测试-稀疏矩阵-构造函数                  |" << endl << endl << endl;
 
     SparseMatrix<int> sparse_matrix(100);
 
@@ -25,12 +28,15 @@ void TestSparseMatrixConstructor() {
 }
 
 
+/*!
+ * @brief **测试-稀疏矩阵-复制构造函数**
+ */
 void TestSparseMatrixCopyConstructor() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test SparseMatrix CopyConstructor            |" << endl;
-    cout << "|                   测试队列稀疏矩阵复制构造函数                 |" << endl << endl << endl;
+    cout << "|                  测试-稀疏矩阵-复制构造函数               |" << endl << endl << endl;
 
     SparseMatrix<int> sparse_matrix_1(100);
     sparse_matrix_1.SetRows(10);
@@ -49,29 +55,14 @@ void TestSparseMatrixCopyConstructor() {
 }
 
 
-void TestSparseMatrixInput() {
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test SparseMatrixInput                  |" << endl;
-    cout << "|                    测试队列稀疏矩阵输入构造                   |" << endl << endl << endl;
-
-    SparseMatrix<int> sparse_matrix(100);
-
-    cin >> sparse_matrix;
-
-    SparseMatrix<int>* trans_sparse_matrix = sparse_matrix.Transpose();
-
-    cout << *trans_sparse_matrix << endl;
-
-    cout << "-------------------------------------------------------------" << endl << endl;
-}
-
-
+/*!
+ * @brief **测试-稀疏矩阵-转置**
+ */
 void TestSparseMatrixTranspose() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test SparseMatrixTranspose                |" << endl;
-    cout << "|                     测试队列稀疏矩阵转置                     |" << endl << endl << endl;
+    cout << "|                Test SparseMatrix Transpose                |" << endl;
+    cout << "|                      测试-稀疏矩阵-转置                   |" << endl << endl << endl;
 
     SparseMatrix<double> sparse_matrix(100);
 
@@ -95,11 +86,14 @@ void TestSparseMatrixTranspose() {
 }
 
 
+/*!
+ * @brief **测试-稀疏矩阵-快速转置**
+ */
 void TestSparseMatrixFastTranspose() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|               Test SparseMatrixFastTranspose              |" << endl;
-    cout << "|                   测试队列稀疏矩阵(快速)转置                  |" << endl << endl << endl;
+    cout << "|               Test SparseMatrix FastTranspose             |" << endl;
+    cout << "|                   测试-稀疏矩阵-快速转置                  |" << endl << endl << endl;
 
     SparseMatrix<double> sparse_matrix(100);
 

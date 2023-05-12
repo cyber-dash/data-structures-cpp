@@ -12,16 +12,24 @@
 using namespace std;
 
 
+/*!
+ * @brief **main函数**
+ * @param argc
+ * @param argv
+ * @return 0
+ */
 int main(int argc, char** argv) {
 
+    /// 测试-稀疏矩阵-构造函数
     TestSparseMatrixConstructor();
 
+    /// 测试-稀疏矩阵-复制构造函数
     TestSparseMatrixCopyConstructor();
 
-    // TestSparseMatrixInput();
-
+    /// 测试-稀疏矩阵-转置
     TestSparseMatrixTranspose();
 
+    /// 测试-稀疏矩阵-快速转置
     TestSparseMatrixFastTranspose();
 
     return 0;
