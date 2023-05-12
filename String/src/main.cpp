@@ -9,14 +9,28 @@
 #include "test.h"
 
 
+/*!
+ * @brief main函数
+ * @return 0
+ * @note
+ * main函数
+ * -------
+ * -------
+ *
+ * -------
+ */
 int main() {
 
+    /// 测试-字符串-基本函数
     TestStringBaseFunctions();
 
+    /// 测试-字符串-BF算法
     TestBruteForceMatch();
 
+    /// 测试-字符串-KMP算法
     TestKmpMatch();
 
+    /// 测试-字符串-KMP算法(CyberDash版)
     TestKmpMatchCyberDash();
 
     return 0;

@@ -10,12 +10,16 @@
 #define CYBER_DASH_STRING_TEST_H
 
 
+// 测试-字符串-基本函数
 void TestStringBaseFunctions();
 
+// 测试-字符串-BF算法
 void TestBruteForceMatch();
 
+// 测试-字符串-KMP算法
 void TestKmpMatch();
 
+// 测试-字符串-KMP算法(CyberDash版)
 void TestKmpMatchCyberDash();
 
 
