@@ -559,6 +559,8 @@ SparseMatrix<TData>* SparseMatrix<TData>::Transpose() {
  * **if** size_为0 :\n
  * &emsp; 返回trans_sparse_matrix\n\n
  * + **4 构造row_sizes**\n
+ * **for loop** 遍历原矩阵列 (对应转置矩阵行) :\n
+ * &emsp; row_sizes[i] (转置矩阵当前行元素个数) 设为0\n\n
  * **for loop** 遍历本矩阵elements_ :\n
  * &emsp; cur_row(元素对应的转置矩阵行号)取elements_[i].col\n
  * &emsp; row_sizes[cur_row]加1\n\n
@@ -626,6 +628,10 @@ SparseMatrix<TValue>* SparseMatrix<TValue>::FastTranspose() {
 
     // ---------- 4 构造row_sizes ----------
 
+    for (int i = 0; i < this->Cols(); i++) {                                                    // for loop 遍历原矩阵列 (对应转置矩阵行)
+        row_sizes[i] = 0;                                                                       // row_sizes[i] (转置矩阵当前行元素个数) 设为0
+    }
+
     for (int i = 0; i < this->Size(); i++) {                                                    // for loop 遍历本矩阵elements_
         int cur_row = this->elements_[i].col;                                                   // cur_row(元素对应的转置矩阵行号)取elements_[i].col
         row_sizes[cur_row]++;                                                                   // row_sizes[cur_row]加1
@@ -664,8 +670,8 @@ SparseMatrix<TValue>* SparseMatrix<TValue>::FastTranspose() {
 
     // ---------- 7 删除辅助数组 ----------
 
-    delete[] iterator_positions;                                                                // 释放iterator_positions
-    delete[] row_sizes;                                                                         // 释放row_sizes
+    // delete[] iterator_positions;                                                                // 释放iterator_positions
+    // delete[] row_sizes;                                                                         // 释放row_sizes
 
     // ---------- 8 退出函数 ----------
 
