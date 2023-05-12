@@ -670,8 +670,8 @@ SparseMatrix<TValue>* SparseMatrix<TValue>::FastTranspose() {
 
     // ---------- 7 删除辅助数组 ----------
 
-    // delete[] iterator_positions;                                                                // 释放iterator_positions
-    // delete[] row_sizes;                                                                         // 释放row_sizes
+    delete[] iterator_positions;                                                                // 释放iterator_positions
+    delete[] row_sizes;                                                                         // 释放row_sizes
 
     // ---------- 8 退出函数 ----------
 
