@@ -29,10 +29,10 @@ using namespace std;
  * --------------
  *
  * <span style="color:#DF5A00">
- * 邻接项包含: 邻结点, 邻接边和下一邻接项\n
+ * 邻接项包含: 邻接结点, 邻接边和下一邻接项\n
  * 其中:\n
- * &emsp; 邻接点, 作为有向/无向边的终点存在, 因此命名为ending_vertex\n
- * &emsp; 邻接点索引, 与邻接点对应, 命名为ending_vertex_index\n
+ * &emsp; 邻接结点, 作为(有向/无向)边的终点存在, 因此命名为ending_vertex\n
+ * &emsp; 邻接结点索引, 与邻接结点对应, 命名为ending_vertex_index\n
  * </span>
  *
  * --------------
@@ -48,20 +48,20 @@ struct Adjacency {
    * ----------
    *
    * ----------
-   * 邻接点索引设置为-1\n
-   * 邻接点初始化为TVertex()\n
-   * 下一邻接项地址设为NULL\n
+   * 邻接结点索引, 初始化为-1\n
+   * 邻接结点, 初始化为TVertex()\n
+   * 下一邻接项地址, 初始化为NULL\n
    */
   Adjacency(): ending_vertex_index(-1), ending_vertex(TVertex()), weight(TWeight()), next(NULL) {};
 
   /*!
-   * @brief **构造函数(邻接点/邻接点索引/邻接边权重/下一邻接项)**
+   * @brief **构造函数(邻接结点,邻接结点索引,邻接边权重,下一邻接项)**
    * @note
-   * 构造函数(邻接点/邻接点索引/邻接边权重/下一邻接项)
-   * ----------------------------------------------
-   * ----------------------------------------------
+   * 构造函数(邻接结点,邻接结点索引,邻接边权重,下一邻接项)
+   * ---------------------------------------------
+   * ---------------------------------------------
    *
-   * ----------------------------------------------
+   * ---------------------------------------------
    */
   Adjacency(const TVertex& ending_vertex,
             int ending_vertex_index,
@@ -118,16 +118,16 @@ struct Adjacency {
  * @tparam TWeight 边权值类型模板参数
  * @note
  * 结点邻接项模板类
- * ---------------
- * ---------------
+ * --------------
+ * --------------
  *
  * <span style="color:#DF5A00">
  * 成员变量包括:\n
- * &emsp; 1个图结点, 作为边起点\n
- * &emsp; 1个邻接项指针(作为第1个邻接项)\n
+ * &emsp; 1个结点, 作为边起点\n
+ * &emsp; 1个邻接项指针(作为结点的第1个邻接项)\n
  * </span>
  *
- * ---------------
+ * --------------
  */
 template<typename TVertex, typename TWeight>
 class VertexAdjacencies {
@@ -141,35 +141,37 @@ public:
      * ----------
      *
      * ----------
-     * 起点初始化\n
-     * 第1邻接项指针设为NULL\n
+     * starting_vertex(起点), 初始化为TVertex()\n
+     * first_adjacency(第1个邻接项), 初始化为NULL\n
      */
     VertexAdjacencies(): starting_vertex(TVertex()), first_adjacency(NULL) {}
 
 
     /*!
-     * @brief **查找邻接项和它的前驱**
+     * @brief **查找邻接项和它的前驱邻接项**
      * @param vertex 结点
      * @param adjacency 邻接项保存变量
      * @param prior 前驱保存变量
      * @return 执行结果
      * @note
-     * 查找邻接项和它的前驱
-     * -----------------
-     * -----------------
+     * 查找邻接项和它的前驱邻接项
+     * ----------------------
+     * ----------------------
      *
-     * -----------------
-     * + **1 初始化前驱为NULL**\n
-     * + **2 查找对应的邻接项**\n
-     *  - 初始化遍历指针cur, 指向first_adjacency(第1个邻接项)\n
-     *  - 遍历查找\n
-     *  &emsp; **while** cur不为NULL and cur对应的邻接点不等于vertex :\n
-     *  &emsp;&emsp; prior(前驱)指向cur\n
-     *  &emsp;&emsp; cur指向cur->next(cur向后移动)\n
-     * + **3 查找结果处理**\n
-     * &emsp; **if** cur不为NULL(找到对应的邻接项) :\n
-     * &emsp;&emsp; cur的值赋给adjacency\n
-     * &emsp;&emsp; 返回true\n
+     * 查找参数vertex所在的邻接项, 和前驱
+     *
+     * ----------------------
+     * + **1 查找**\n
+     * 初始化prior(前驱邻接项)为NULL\n
+     * 初始化cur(邻接项遍历指针), 指向first_adjacency(第1个邻接项)\n\n
+     * **while loop** cur不为NULL && cur的邻接点不等于vertex :\n
+     * &emsp; prior(前驱)指向cur\n
+     * &emsp; cur向后移动1位\n\n
+     * + **2 查找结果处理**\n
+     * **if** cur不为NULL(找到对应的邻接项) :\n
+     * &emsp; cur的值赋给adjacency\n
+     * &emsp; 返回true\n\n
+     * 返回false\n
      */
     bool FindAdjacencyAndPrior(const TVertex& vertex,
                                Adjacency<TVertex, TWeight>*& adjacency,
@@ -177,82 +179,75 @@ public:
     {
         // ---------- 1 初始化前驱为NULL ----------
 
-        prior = NULL;
+        prior = NULL;                                                               // 初始化prior(前驱邻接项)为NULL
+        Adjacency<TVertex, TWeight>* cur = this->first_adjacency;                   // 初始化cur(邻接项遍历指针), 指向first_adjacency(第1个邻接项)
 
-        // ---------- 2 查找对应的邻接项 ----------
-
-        // 初始化遍历指针cur, 指向first_adjacency(第1个邻接项)
-        Adjacency<TVertex, TWeight>* cur = this->first_adjacency;
-
-        // 遍历查找
-        while (cur != NULL && cur->ending_vertex != vertex) {   // while cur不为NULL and cur对应的邻接点不等于vertex
-            prior = cur;        // prior(前驱)指向cur
-            cur = cur->next;    // cur指向cur->next(cur向后移动)
+        while (cur != NULL && cur->ending_vertex != vertex) {                       // while loop cur不为NULL && cur的邻接点不等于vertex
+            prior = cur;                                                            // prior(前驱)指向cur
+            cur = cur->next;                                                        // cur向后移动1位
         }
 
-        // ---------- 3 查找结果处理 ----------
+        // ---------- 2 查找结果处理 ----------
 
-        if (cur) {              // if cur不为NULL(找到对应的邻接项)
-            adjacency = cur;    // cur的值赋给adjacency
-            return true;        // 返回true
+        if (cur) {                                                                  // if cur不为NULL(找到对应的邻接项)
+            adjacency = cur;                                                        // cur的值赋给adjacency
+            return true;                                                            // 返回true
         }
 
-        return false;
+        return false;                                                               // 返回false
     }
 
 
     /*!
-     * @brief **查找邻接项和它的前驱(by结点索引)**
+     * @brief **查找邻接项和它的前驱邻接项(by结点索引)**
      * @param vertex_index 结点索引
      * @param adjacency 邻接项保存变量
      * @param prior 前驱保存变量
      * @return 执行结果
      * @note
-     * 查找邻接项和它的前驱(by结点索引)
-     * ----------------------------
-     * ----------------------------
+     * 查找邻接项和它的前驱邻接项(by结点索引)
+     * --------------------------------
+     * --------------------------------
      *
-     * ----------------------------
-     * + **1 初始化前驱为NULL**\n
-     * + **2 查找对应的邻接项**\n
-     *  - 初始化遍历指针cur, 指向first_adjacency(第1个邻接项)\n
-     *  - 遍历查找\n
-     *  &emsp; **while** cur不为NULL and cur对应的邻接点索引不等于vertex_index :\n
-     *  &emsp;&emsp; prior(前驱)指向cur\n
-     *  &emsp;&emsp; cur指向cur->next(cur向后移动)\n
-     * + **3 查找结果处理**\n
-     * &emsp; **if** cur不为NULL(找到对应的邻接项) :\n
-     * &emsp;&emsp; cur的值赋给adjacency\n
-     * &emsp;&emsp; 返回true\n
+     * 查找参数vertex_index对应的结点所在的邻接项, 和前驱
+     *
+     * --------------------------------
+     * + **1 查找**\n
+     * 初始化prior(前驱邻接项)为NULL\n
+     * 初始化cur(邻接项遍历指针), 指向first_adjacency(第1个邻接项)\n\n
+     * **while loop** cur不为NULL && cur的ending_vertex_index不等于vertex_index :\n
+     * &emsp; prior(前驱)指向cur\n
+     * &emsp; cur向后移动1位\n\n
+     * + **2 查找结果处理**\n
+     * **if** cur不为NULL(找到对应的邻接项) :\n
+     * &emsp; cur的值赋给adjacency\n
+     * &emsp; 返回true\n\n
+     * 返回false\n
      */
     bool FindAdjacencyAndPriorByIndex(int vertex_index,
                                       Adjacency<TVertex, TWeight>*& adjacency,
                                       Adjacency<TVertex, TWeight>*& prior)
     {
-        // ---------- 1 初始化前驱为NULL ----------
+        // ---------- 1 查找 ----------
 
-        prior = NULL;
+        prior = NULL;                                                               // 初始化prior(前驱邻接项)为NULL
+        Adjacency<TVertex, TWeight>* cur = this->first_adjacency;                   // 初始化cur(邻接项遍历指针), 指向first_adjacency(第1个邻接项)
 
-        // ---------- 2 查找对应的邻接项 ----------
-
-        // 初始化遍历指针cur, 指向first_adjacency(第1个邻接项)
-        Adjacency<TVertex, TWeight>* cur = this->first_adjacency;
-
-        // while cur不为NULL and cur对应的邻接点索引不等于vertex_index
-        while (cur != NULL && cur->ending_vertex_index != vertex_index) {
-            prior = cur;        // prior(前驱)指向cur
-            cur = cur->next;    // cur指向cur->next(cur向后移动)
+        while (cur != NULL && cur->ending_vertex_index != vertex_index) {           // while loop** cur不为NULL && cur的ending_vertex_index不等于vertex_index
+            prior = cur;                                                            // prior(前驱)指向cur
+            cur = cur->next;                                                        // cur向后移动1位
         }
 
-        // ---------- 3 查找结果处理 ----------
+        // ---------- 2 查找结果处理 ----------
 
-        if (cur) {              // if cur不为NULL(找到对应的邻接项)
-            adjacency = cur;    // cur的值赋给adjacency
-            return true;        // 返回true
+        if (cur) {                                                                  // if cur不为NULL(找到对应的邻接项)
+            adjacency = cur;                                                        // cur的值赋给adjacency
+            return true;                                                            // 返回true
         }
 
-        return false;
+        return false;                                                               // 返回false
     }
+
 
     /*!
      * @brief **查找邻接项**
@@ -381,8 +376,8 @@ public:
         this->starting_vertex = TVertex();  // starting_vertex设为TVertex()
     }
 
-    TVertex starting_vertex;                        //!< 起始结点
-    Adjacency<TVertex, TWeight>* first_adjacency;    //!< 第1个邻接项
+    TVertex starting_vertex;                                    //!< **起点**
+    Adjacency<TVertex, TWeight>* first_adjacency;               //!< **第1个邻接项**
 };
 
 
