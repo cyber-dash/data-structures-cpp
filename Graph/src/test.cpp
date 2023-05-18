@@ -878,13 +878,13 @@ void TestCriticalPaths() {
 
     cout<<endl<<"**邻接表图测试**"<<endl<<endl;
     vector<double> critical_paths = GetCriticalPath(adjacency_list_graph, starting_vertex);
-    for (int i = 0; i < critical_paths.size(); i++) {
+    for (unsigned int i = 0; i < critical_paths.size(); i++) {
         cout<<"北京 ---> "<<vertices[i]<<" 关键路径长度: "<<critical_paths[i]<<endl;
     }
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
     critical_paths = GetCriticalPath(matrix_graph, starting_vertex);
-    for (int i = 0; i < critical_paths.size(); i++) {
+    for (unsigned int i = 0; i < critical_paths.size(); i++) {
         cout<<"北京 ---> "<<vertices[i]<<" 关键路径长度: "<<critical_paths[i]<<endl;
     }
 
