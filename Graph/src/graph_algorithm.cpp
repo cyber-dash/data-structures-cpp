@@ -109,22 +109,20 @@ bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
 {
     set<TVertex> visited_vertex_set;
 
-    // vector<TVertex> vertices = graph.Vertices();
-
     if (graph.Type() == Graph<TVertex, TWeight>::UNDIRECTED) {
         TopologicalSortRecursive_(graph, vertex, visited_vertex_set, topology_sorted_list);
 
         return true;
-    } else {
-        int in_degree = graph.GetVertexInDegree(vertex);
-        if (in_degree > 0) {
-            return false;
-        }
-
-        TopologicalSortRecursive_(graph, vertex, visited_vertex_set, topology_sorted_list);
-
-        return true;
     }
+
+    int in_degree = graph.GetVertexInDegree(vertex);
+    if (in_degree > 0) {
+        return false;
+    }
+
+    TopologicalSortRecursive_(graph, vertex, visited_vertex_set, topology_sorted_list);
+
+    return true;
 }
 
 

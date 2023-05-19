@@ -997,19 +997,21 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  * &emsp; cur_adjacency指向自身的next\n\n
  * <span style="color:#E76600;font-weight:bold">(2.2 vertex对应的结点邻接项, 执行删除)</span>\n\n
  * adjacency_list_[vertex_index]调用Clear()\n\n
- * <span style="color:#FB1927;font-weight:bold">(2.3 索引vertex_count_ - 1对应结点的结点代替已删除的结点)</span>\n\n
- * 使用索引vertex_count_ - 1的结点邻接项, 替换索引vertex_index的结点邻接项\n
- * 索引vertex_count_ - 1的结点邻接项starting_vertex设为TVertex(), first_adjacency指向NULL\n\n
+ * <span style="color:#FB1927;font-weight:bold">(2.3 索引(vertex_count_ - 1)对应结点的结点邻接项代替已删除的结点邻接项)</span>\n\n
+ * 初始化replacement_vertex<span style="color:#283593;font-weight:bold">(替换结点)</span>, 使用索引(vertex_count_ - 1)的结点邻接项的starting_vertex\n
+ * 初始化cur_replacement_adjacency<span style="color:#283593;font-weight:bold">(当前替换邻接项指针)</span>, 使用索引(vertex_count_ - 1)的结点邻接项的first_adjacency\n\n
+ * adjacency_list_[vertex_index].starting_vertex进行替换\n
+ * adjacency_list_[vertex_index].first_adjacency进行替换\n\n
+ * 索引vertex_count_ - 1的结点邻接项的starting_vertex设为TVertex()\n
+ * 索引vertex_count_ - 1的结点邻接项的first_adjacency指向NULL\n\n
  * <span style="color:#FD5E0F;font-weight:bold">(2.4 调整后的索引vertex_index结点, 在其他结点邻接项的邻接项链表, 进行相应调整)</span>\n\n
- * 初始化substitute_vertex(替换结点)\n
- * 初始化cur_substitute_adjacency(当前替换邻接项指针)\n
- * **while loop** cur_substitute_adjacency存在 :\n
- * &emsp; 初始化update_vertex_adjacencies(待更新结点邻接项), 取当前替换项的终点所对应的结点邻接项\n
- * &emsp; 初始化update_adjacency(待更新邻接项)为NULL\n
- * &emsp; 在update_vertex_adjacencies中查找substitute_vertex, 将查找的结果赋给update_adjacency\n
+ * **while loop** cur_replacement_adjacency不为NULL :\n
+ * &emsp; 初始化cur_update_vertex_adjacencies<span style="color:#283593;font-weight:bold">(当前待更新结点邻接项)</span>, 取cur_replacement_adjacency的终点所对应的结点邻接项\n
+ * &emsp; 初始化cur_update_adjacency<span style="color:#283593;font-weight:bold">(当前待更新邻接项)</span>为NULL\n\n
+ * &emsp; 在cur_update_vertex_adjacencies中查找replacement_vertex, 将查找的结果赋给cur_update_adjacency\n
  * &emsp; **if** 执行成功 and 存在查找结果 :\n
- * &emsp;&emsp; 将update_adjacency的ending_vertex_index更新为vertex_index\n
- * &emsp;&emsp; cur_substitute_adjacency(当前替换邻接项)指向next(换下一替换邻接项执行流程)\n
+ * &emsp;&emsp; 将cur_update_adjacency的ending_vertex_index更新为vertex_index\n
+ * &emsp; cur_replacement_adjacency指向next\n\n
  * + **3 edges_执行删除**\n
  * &emsp; **for loop** 遍历edges_ :\n
  * &emsp;&emsp; **if** 当前边起点or当前边终点 为待删除节点 :\n
@@ -1017,7 +1019,8 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  * + **4 vertices_执行删除**\n
  * &emsp; vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素\n
  * &emsp; vertices_删除索引vertex_count - 1位置元素\n
- * + **5 vertex_count_(结点数)减1**\n
+ * + **5 度调整**\n
+ * + **6 vertex_count_(结点数)减1**\n
  * vertices_删除结点
  */
 template<typename TVertex, typename TWeight>
@@ -1025,64 +1028,98 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
     // ---------- 1 合法性检查 ----------
 
-    int vertex_index = this->GetVertexIndex(vertex);                                    // 获取结点的索引
-    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {                      // if 结点索引 < 0 or 结点索引 >= 结点数
-        return false;                                                                   // 返回false
+    int vertex_index = this->GetVertexIndex(vertex);                                                            // 获取结点的索引
+    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {                                              // if 结点索引 < 0 or 结点索引 >= 结点数
+        return false;                                                                                           // 返回false
     }
 
     // ---------- 2 邻接表调整 ----------
 
     // (2.1 其他结点邻接项的邻接项链表内, 删除涉及vertex的元素)
-    auto cur_adjacency = adjacency_list_[vertex_index].first_adjacency;                 // 初始化cur_adjacency(邻接项遍历指针), 指向vertex的首个邻接项
-    while (cur_adjacency) {                                                             // while loop 遍历指针不为NULL
-        Adjacency<TVertex, TWeight>* temp = NULL;                                       // 声明指针temp, 用于指向待删除邻接项
-        Adjacency<TVertex, TWeight>* prior = NULL;                                      // 声明指针prior, 用于指向待删除邻接项的前一邻接项
-        VertexAdjacencies<TVertex, TWeight>& cur_ending_vertex_adjacencies =            // 声明并初始化引用变量cur_vertex_adjacencies(当前邻接项的终点所对应的结点邻接项)
+    auto cur_adjacency = adjacency_list_[vertex_index].first_adjacency;                                         // 初始化cur_adjacency(邻接项遍历指针), 指向vertex的首个邻接项
+    while (cur_adjacency) {                                                                                     // while loop 遍历指针不为NULL
+        Adjacency<TVertex, TWeight>* temp = NULL;                                                               // 声明指针temp, 用于指向待删除邻接项
+        Adjacency<TVertex, TWeight>* prior = NULL;                                                              // 声明指针prior, 用于指向待删除邻接项的前一邻接项
+        VertexAdjacencies<TVertex, TWeight>& cur_ending_vertex_adjacencies =                                    // 声明并初始化引用变量cur_vertex_adjacencies(当前邻接项的终点所对应的结点邻接项)
             this->adjacency_list_[cur_adjacency->ending_vertex_index];
 
-        bool res = cur_ending_vertex_adjacencies.FindAdjacencyAndPrior(vertex, temp, prior);   // 在cur_vertex_adjacencies中, 查找vertex(待删除结点)所在的邻接项和它的前一邻接项
-        if (res) {                                                                      // if 查找到
-            if (prior == NULL) {                                                        // if 前驱为NULL(first_adjacency指向了待删除邻接项)
-                cur_ending_vertex_adjacencies.first_adjacency = temp->next;                    // cur_vertex_adjacencies的first_adjacency指向temp(待删除邻接项)的next
+        bool res = cur_ending_vertex_adjacencies.FindAdjacencyAndPrior(vertex, temp, prior);                    // 在cur_vertex_adjacencies中, 查找vertex(待删除结点)所在的邻接项和它的前一邻接项
+        if (res) {                                                                                              // if 查找到
+            if (prior == NULL) {                                                                                // if 前驱为NULL(first_adjacency指向了待删除邻接项)
+                cur_ending_vertex_adjacencies.first_adjacency = temp->next;                                     // cur_vertex_adjacencies的first_adjacency指向temp(待删除邻接项)的next
             } else {
-                prior->next = temp->next;                                               // 前驱的next指向待删除邻接项的next
+                prior->next = temp->next;                                                                       // 前驱的next指向待删除邻接项的next
             }
 
-            delete temp;                                                                // 释放待删除邻接项
+            delete temp;                                                                                        // 释放待删除邻接项
             temp = NULL;
         }
 
-        cur_adjacency = cur_adjacency->next;                                            // 邻接项遍历指针指向自身的next
+        cur_adjacency = cur_adjacency->next;                                                                    // 邻接项遍历指针指向自身的next
     }
 
     // (2.2 vertex对应的结点邻接项, 执行删除)
-    adjacency_list_[vertex_index].Clear();
+    // adjacency_list_[vertex_index].Clear();
+    Adjacency<TVertex, TWeight>* deletion_node = adjacency_list_[vertex_index].first_adjacency;     // 初始化deletion_node(待删除结点), 指向first_adjacency(第1个邻接项)
 
-    // (2.3 索引vertex_count_ - 1对应结点的结点代替已删除的结点)
-    // 使用索引vertex_count_ - 1的结点邻接项, 替换索引vertex_index的结点邻接项
-    adjacency_list_[vertex_index].starting_vertex = adjacency_list_[this->vertex_count_ - 1].starting_vertex;
-    adjacency_list_[vertex_index].first_adjacency = adjacency_list_[this->vertex_count_ - 1].first_adjacency;
+    while (deletion_node) {                                                 // deletion_node不为NULL
+        adjacency_list_[vertex_index].first_adjacency = deletion_node->next;                        // first_adjacency指向deletion_node->next
 
-    this->adjacency_list_[this->vertex_count_ - 1].starting_vertex = TVertex();         // 索引vertex_count_ - 1的结点邻接项starting_vertex设为TVertex()
-    this->adjacency_list_[this->vertex_count_ - 1].first_adjacency = NULL;              // 索引vertex_count_ - 1的结点邻接项first_adjacency指向NULL
-
-    // (2.4 调整后的索引vertex_index结点, 在其他结点邻接项的邻接项链表, 进行相应调整)
-    TVertex substitute_vertex = adjacency_list_[vertex_index].starting_vertex;          // 初始化substitute_vertex(替换结点)
-    auto cur_substitute_adjacency = adjacency_list_[vertex_index].first_adjacency;      // 初始化cur_substitute_adjacency(当前替换邻接项)
-
-    while (cur_substitute_adjacency) {                                                  // while loop 当前替换项存在
-
-        // 初始化update_vertex_adjacencies(待更新结点邻接项), 取当前替换项的终点所对应的结点邻接项
-        auto update_vertex_adjacencies = adjacency_list_[cur_substitute_adjacency->ending_vertex_index];
-        Adjacency<TVertex, TWeight>* update_adjacency = NULL;                           // 初始化update_adjacency(待更新邻接项)为NULL
-
-        // 在update_vertex_adjacencies中查找substitute_vertex, 将查找的结果赋给update_adjacency
-        bool res = update_vertex_adjacencies.FindAdjacency(substitute_vertex, update_adjacency);
-        if (res && update_adjacency != NULL) {                                          // if 执行成功 and 存在查找结果
-            update_adjacency->ending_vertex_index = vertex_index;                       // 将update_adjacency的ending_vertex_index更新为vertex_index
+        if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+            this->degrees_[deletion_node->ending_vertex_index]--;
+        } else {
+            this->in_degrees_[deletion_node->ending_vertex_index]--;
+            // this->out_degrees_[vertex_index]--;
         }
 
-        cur_substitute_adjacency = cur_substitute_adjacency->next;                      // cur_substitute_adjacency(当前替换邻接项)指向next(换下一替换邻接项执行流程)
+        delete deletion_node;                                               // 释放deletion_node
+        deletion_node = adjacency_list_[vertex_index].first_adjacency;                              // deletion_node指向first_adjacency
+    }
+
+    adjacency_list_[vertex_index].first_adjacency = NULL;                                           // first_adjacency设为NULL
+    adjacency_list_[vertex_index].starting_vertex = TVertex();                                      // starting_vertex设为TVertex()
+
+    // (2.3 索引vertex_count_ - 1对应结点的结点代替已删除的结点)
+    TVertex replacement_vertex = adjacency_list_[this->vertex_count_ - 1].starting_vertex;
+    auto cur_replacement_adjacency = adjacency_list_[this->vertex_count_ - 1].first_adjacency;
+
+    adjacency_list_[vertex_index].starting_vertex = replacement_vertex;
+    adjacency_list_[vertex_index].first_adjacency = cur_replacement_adjacency;
+
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+        this->degrees_[vertex_index] = this->degrees_[this->vertex_count_ - 1];
+        this->degrees_.erase(this->degrees_.begin() + this->vertex_count_ - 1);
+    } else {
+        this->in_degrees_[vertex_index] = this->in_degrees_[this->vertex_count_ - 1];
+        this->in_degrees_.erase(this->in_degrees_.begin() + this->vertex_count_ - 1);
+
+        this->out_degrees_[vertex_index] = this->out_degrees_[this->vertex_count_ - 1];
+        this->out_degrees_.erase(this->out_degrees_.begin() + this->vertex_count_ - 1);
+    }
+
+    this->adjacency_list_[this->vertex_count_ - 1].starting_vertex = TVertex();                                 // 索引(vertex_count_ - 1)的结点邻接项starting_vertex设为TVertex()
+    this->adjacency_list_[this->vertex_count_ - 1].first_adjacency = NULL;                                      // 索引(vertex_count_ - 1)的结点邻接项first_adjacency指向NULL
+
+    // (2.4 调整后的索引vertex_index结点, 在其他结点邻接项的邻接项链表, 进行相应调整)
+    while (cur_replacement_adjacency) {                                                                         // while loop cur_replacement_adjacency不为NULL
+
+        auto cur_update_vertex_adjacencies = adjacency_list_[cur_replacement_adjacency->ending_vertex_index];   // 初始化cur_update_vertex_adjacencies(当前待更新结点邻接项)
+        Adjacency<TVertex, TWeight>* cur_update_adjacency = NULL;                                               // 初始化cur_update_adjacency(当前待更新邻接项)为NULL
+
+        bool res = cur_update_vertex_adjacencies.FindAdjacency(replacement_vertex, cur_update_adjacency);       // 在cur_update_vertex_adjacencies中查找replacement_vertex, 将查找的结果赋给cur_update_adjacency
+        if (res && cur_update_adjacency != NULL) {                                                              // if 执行成功 and 存在查找结果
+            cur_update_adjacency->ending_vertex_index = vertex_index;                                           // 将cur_update_adjacency的ending_vertex_index更新为vertex_index
+
+            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+                // this->degrees_[deletion_node->ending_vertex_index]--;
+                // 前边已经操作完了
+            } else {
+                // this->in_degrees_[deletion_node->ending_vertex_index]--;
+                this->out_degrees_[cur_replacement_adjacency->ending_vertex_index]--;
+            }
+        }
+
+        cur_replacement_adjacency = cur_replacement_adjacency->next;                                            // cur_replacement_adjacency指向next
     }
 
     // ---------- 3 edges_执行删除 ----------
@@ -1099,18 +1136,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
     this->vertices_[vertex_index] = this->vertices_[this->vertex_count_ - 1];           // vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素
     this->vertices_.erase(this->vertices_.begin() + this->vertex_count_ - 1);           // vertices_删除索引vertex_count - 1位置元素
 
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        this->degrees_[vertex_index] = this->degrees_[this->vertex_count_ - 1];
-        this->degrees_.erase(this->degrees_.begin() + this->vertex_count_ - 1);
-    } else {
-        this->in_degrees_[vertex_index] = this->in_degrees_[this->vertex_count_ - 1];
-        this->in_degrees_.erase(this->in_degrees_.begin() + this->vertex_count_ - 1);
-
-        this->out_degrees_[vertex_index] = this->out_degrees_[this->vertex_count_ - 1];
-        this->out_degrees_.erase(this->out_degrees_.begin() + this->vertex_count_ - 1);
-    }
-
-    // ---------- 5 vertex_count_(边数)减1 ----------
+    // ---------- 6 vertex_count_(边数)减1 ----------
 
     this->vertex_count_--;
 

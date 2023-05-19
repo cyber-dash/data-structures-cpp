@@ -115,10 +115,12 @@ void TestBaseFunctions() {
     }
 
     // 构造邻接表图
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
+    AdjacencyListGraph<string, double> adjacency_list_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
 
     cout << "##### 1 邻接表图删除结点\"北京\" #####" << endl << endl;
     adjacency_list_graph.RemoveVertex("北京");
+    adjacency_list_graph.RemoveVertex("上海");
+    // adjacency_list_graph.RemoveVertex("深圳");
 
     cout << adjacency_list_graph << endl << endl << endl << endl;
 
