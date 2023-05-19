@@ -9,17 +9,38 @@
 #include "inorder_threaded_binary_tree.h"
 
 
-void visit(ThreadedNode<int>* node_ptr) {
-    cout << node_ptr->data << " ";
+/*!
+ * @brief **结点访问函数**
+ * @param node 结点
+ */
+void visit(ThreadedNode<int>* node) {
+    cout << node->data << " ";
 };
 
 
+/*!
+ * @brief **测试-中序线索树-首个线索结点**
+ * @note
+ * 测试-中序线索树-首个线索结点
+ * ------------------------
+ * ------------------------
+ *
+ * ------------------------
+ * + **1 构造线索树**\n
+ * 声明inorder_threaded_tree\n
+ * 插入整数0至6\n
+ * 调用CreateThreadRecursive构造线索\n\n
+ * + **2 打印线索树的首结点数据项**\n
+ * 获取根结点\n
+ * 对根结点调用First()\n
+ * 打印首结点数据项\n
+ */
 void TestInorderThreadedTreeFirst() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|             Test InorderThreadedBinaryTree First          |"<<endl;
-    cout<<"|                  测试中序线索树第一个线索节点                 |"<<endl;
+    cout<<"|                  测试-中序线索树-首个线索结点              |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -30,27 +51,47 @@ void TestInorderThreadedTreeFirst() {
     cout<<"|                       /                                   |"<<endl;
     cout<<"|                      6                                    |"<<endl<<endl;
 
+    // ---------- 1 构造线索树 ----------
+
     int node_count = 7;
 
-    InorderThreadedBinaryTree<int> inorder_threaded_tree;
+    InorderThreadedBinaryTree<int> inorder_threaded_tree;                               // 声明inorder_threaded_tree
 
-    for (int i = 0 ; i < node_count; i++) {
+    for (int i = 0 ; i < node_count; i++) {                                             // 插入整数0至6
         inorder_threaded_tree.InsertRecursive(i);
     }
 
-    inorder_threaded_tree.CreateThreadRecursive();
+    inorder_threaded_tree.CreateThreadRecursive();                                      // 调用CreateThreadRecursive构造线索
 
-    ThreadedNode<int>* root = inorder_threaded_tree.Root();
+    // ---------- 2 打印线索树的首结点数据项 ----------
 
-    ThreadedNode<int>* first = inorder_threaded_tree.First(root);
+    ThreadedNode<int>* root = inorder_threaded_tree.Root();                             // 获取根结点
+    ThreadedNode<int>* first = inorder_threaded_tree.First(root);                       // 对根结点调用First()
 
-    cout << "中序线索第一个线索节点 :" << first->data << endl;
+    cout << "中序线索第一个线索节点 :" << first->data << endl;                             // 打印首结点数据项
 
     cout<<endl<<"------------------------- CyberDash -------------------------"<<endl;
     cout<<endl;
 }
 
 
+/*!
+ * @brief **测试-中序线索树-最后的线索结点**
+ * @note
+ * 测试-中序线索树-最后的线索结点
+ * --------------------------
+ * --------------------------
+ *
+ * --------------------------
+ * + **1 构造线索树**\n
+ * 声明inorder_threaded_tree\n
+ * 插入整数0至6\n
+ * 调用CreateThreadRecursive构造线索\n\n
+ * + **2 打印线索树的最后的结点数据项**\n
+ * 获取根结点\n
+ * 对根结点调用Last()\n
+ * 打印最后的线索结点数据项\n
+ */
 void TestInorderThreadedTreeLast() {
 
     cout<<endl;
@@ -88,6 +129,23 @@ void TestInorderThreadedTreeLast() {
 }
 
 
+/*!
+ * @brief **测试-中序线索树-下一个线索结点**
+ * @note
+ * 测试-中序线索树-下一个线索结点
+ * --------------------------
+ * --------------------------
+ *
+ * --------------------------
+ * + **1 构造线索树**\n
+ * 声明inorder_threaded_tree\n
+ * 插入整数0至6\n
+ * 调用CreateThreadRecursive构造线索\n\n
+ * + **2 打印线索树的前4个结点的数据项**\n
+ * 获取根结点\n
+ * 对根结点调用Last()\n
+ * 打印最后的线索结点数据项\n
+ */
 void TestInorderThreadedTreeNext() {
 
     cout<<endl;

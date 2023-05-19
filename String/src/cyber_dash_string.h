@@ -136,10 +136,8 @@ String::String(const char* mem_data) {
 
     this->length_ = (int)str_len;
 
-    // 先全部置0
-    memset(this->mem_data_, 0, sizeof(char) * (this->size_ + 1));
-    // 再复制字符串内容
-    memcpy(this->mem_data_, mem_data, sizeof(char) * str_len);
+    memset(this->mem_data_, 0, sizeof(char) * (this->size_ + 1));       // 先全部置0
+    memcpy(this->mem_data_, mem_data, sizeof(char) * str_len);          // 再复制字符串内容
 }
 
 
@@ -169,24 +167,24 @@ String::String(const String& str) {
 
     // ---------- 1 自身函数处理 ----------
 
-    if (&str == this) {                                                         // if 复制自身
-        return;                                                                 // 退出函数
+    if (&str == this) {                                                                 // if 复制自身
+        return;                                                                         // 退出函数
     }
 
     // ---------- 2 复制 ----------
 
-    this->length_ = str.Length();                                               // 设置length_
-    this->size_ = str.Size();                                                   // 设置size_
+    this->length_ = str.Length();                                                       // 设置length_
+    this->size_ = str.Size();                                                           // 设置size_
 
-    this->mem_data_ = new char[str.Length() + 1];                               // mem_data_分配内存并初始化
-    if (!this->mem_data_) {                                                     // if 内存分配失败
-        throw bad_alloc();                                                      // 抛出bad_alloc()
+    this->mem_data_ = new char[str.Length() + 1];                                       // mem_data_分配内存并初始化
+    if (!this->mem_data_) {                                                             // if 内存分配失败
+        throw bad_alloc();                                                              // 抛出bad_alloc()
     }
 
-    for (int i = 0; i < str.Length(); i++) {                                    // for loop 遍历源字符串
-        this->mem_data_[i] = str[i];                                            // 设置mem_data_[i]
+    for (int i = 0; i < str.Length(); i++) {                                            // for loop 遍历源字符串
+        this->mem_data_[i] = str[i];                                                    // 设置mem_data_[i]
     }
-    this->mem_data_[this->Length()] = '\0';                                     // mem_data_[this->Length()]置'\0'
+    this->mem_data_[this->Length()] = '\0';                                             // mem_data_[this->Length()]置'\0'
 }
 
 
@@ -266,40 +264,40 @@ String& String::operator+=(String& str) {
 
     // ---------- 1 拼接空字符串处理 ----------
 
-    if (str.Length() == 0) {                                                // if 拼接空字符串
-        return *this;                                                       // 返回自身
+    if (str.Length() == 0) {                                                    // if 拼接空字符串
+        return *this;                                                           // 返回自身
     }
 
     // ---------- 2 执行 ----------
 
-    int new_length = this->Length() + str.Length();                         // 初始化new_length为字符串拼接后的长度
-    if ((int)this->Size() >= new_length) {                                  // if 当前字符串Size() >= 拼接后的字符串长度
-        for (int i = 0; i < str.Length(); i++) {                            // for loop 遍历str
-            this->mem_data_[i + this->Length()] = str[i];                   // mem_data_[i + this->Length()] = str[i]
+    int new_length = this->Length() + str.Length();                             // 初始化new_length为字符串拼接后的长度
+    if ((int)this->Size() >= new_length) {                                      // if 当前字符串Size() >= 拼接后的字符串长度
+        for (int i = 0; i < str.Length(); i++) {                                // for loop 遍历str
+            this->mem_data_[i + this->Length()] = str[i];                       // mem_data_[i + this->Length()] = str[i]
         }
-        this->mem_data_[new_length] = '\0';                                 // mem_data_[new_length]置'\0'
-    } else {                                                                // else
-        char* new_mem_data = new char[new_length + 1];                      // 分配内存并初始化new_mem_data(新的字符数组)
+        this->mem_data_[new_length] = '\0';                                     // mem_data_[new_length]置'\0'
+    } else {                                                                    // else
+        char* new_mem_data = new char[new_length + 1];                          // 分配内存并初始化new_mem_data(新的字符数组)
 
-        for (int i = 0; i < this->Length(); i++) {                          // for loop 遍历当前字符串
-            new_mem_data[i] = this->operator[](i);                          // 设置new_mem_data[i]
+        for (int i = 0; i < this->Length(); i++) {                              // for loop 遍历当前字符串
+            new_mem_data[i] = this->operator[](i);                              // 设置new_mem_data[i]
         }
 
-        for (int i = 0; i < str.Length(); i++) {                            // for loop 遍历str
-            new_mem_data[this->Length() + i] = str[i];                      // 设置new_mem_data[Length() + i]
+        for (int i = 0; i < str.Length(); i++) {                                // for loop 遍历str
+            new_mem_data[this->Length() + i] = str[i];                          // 设置new_mem_data[Length() + i]
         }
-        new_mem_data[new_length] = '\0';                                    // new_mem_data[new_length]置'\0'
+        new_mem_data[new_length] = '\0';                                        // new_mem_data[new_length]置'\0'
 
-        delete[] this->mem_data_;                                           // 释放this->mem_data_
-        this->mem_data_ = new_mem_data;                                     // this->mem_data_指向new_mem_data
+        delete[] this->mem_data_;                                               // 释放this->mem_data_
+        this->mem_data_ = new_mem_data;                                         // this->mem_data_指向new_mem_data
     }
 
-    this->length_ = new_length;                                             // 更新length_
-    this->size_ = new_length;                                               // 更新size_
+    this->length_ = new_length;                                                 // 更新length_
+    this->size_ = new_length;                                                   // 更新size_
 
     // ---------- 3 返回自身 ----------
 
-    return *this;                                                           // 返回*this
+    return *this;                                                               // 返回*this
 }
 
 
@@ -318,11 +316,11 @@ String& String::operator+=(String& str) {
  * 返回mem_data_[index]\n
  */
 char& String::operator[] (size_t index) {
-    if ((int)index >= Length()) {
-        throw exception("Out of Range");
+    if ((int)index >= Length()) {                                               // if 索引值 >= 字符串长度
+        throw exception("Out of Range");                                        // 抛出异常
     }
 
-    return this->mem_data_[index];
+    return this->mem_data_[index];                                              // 返回mem_data_[index]
 }
 
 
