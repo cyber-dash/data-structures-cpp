@@ -37,7 +37,7 @@ void TestBstClear();
 void TestAvlSearch();
 
 // AVL树_插入结点_测试
-void TestAVLInsert();
+void TestAvlInsert();
 
 // AVL树_插入结点和删除结点_测试
 void TestAvlInsertAndRemove();

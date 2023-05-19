@@ -27,14 +27,14 @@ int main()
 {
 	/// 测试插入
     TestBstInsert();
-    TestAVLInsert();
+    TestAvlInsert();
 
 	/// 测试删除
     TestBstRemove();
     TestAvlInsertAndRemove();
     TestAvlInsertAndRemoveRecursive();
 
-	/// 测试查询
+	/// 测试搜索
     TestBstSearch();
     TestAvlSearch();
 

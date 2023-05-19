@@ -374,19 +374,25 @@ ostream& operator<<(ostream& os, const String& str) {
  * -----
  *
  * -----
+ * **if** str1和str2的长度不同 :\n
+ * &emsp; 返回false\n\n
+ * **for loop** str1的长度 :\n
+ * &emsp; **if** 当前位置的str1[i] != str2[i] :
+ * &emsp;&emsp; 返回false\n\n
+ * 返回true\n
  */
 bool operator==(const String& str1, const String& str2) {
-    if (str1.Length() != str2.Length()) {
-        return false;
+    if (str1.Length() != str2.Length()) {                                               // if str1和str2的长度不同
+        return false;                                                                   // 返回false
     }
 
-    for (int i = 0; i < str1.Length(); i++) {
-        if (str1[i] != str2[i]) {
-            return false;
+    for (int i = 0; i < str1.Length(); i++) {                                           // for loop str1的长度
+        if (str1[i] != str2[i]) {                                                       // if 当前位置的str1[i] != str2[i]
+            return false;                                                               // 返回false
         }
     }
 
-    return true;
+    return true;                                                                        // 返回true
 }
 
 
@@ -589,7 +595,7 @@ int String::BruteForceMatch(const String& pattern, int offset) const {
  * next[0] 设为 -1\n\n
  * + **2 完成next数组设置**\n
  * **while loop** 遍历模式串 :\n
- * &emsp; **if** starting_index == -1 || 索引i和索引starting_index两个位置的字符相同 :\n
+ * &emsp; **if** starting_index == -1 <b>||</b> 索引i和索引starting_index两个位置的字符相同 :\n
  * &emsp;&emsp; i向后移动1位\n
  * &emsp;&emsp; starting_index向后移动1位\n
  * &emsp;&emsp; next[i] <-- starting_index\n

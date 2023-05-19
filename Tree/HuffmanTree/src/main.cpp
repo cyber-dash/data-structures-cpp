@@ -18,10 +18,10 @@
  * -------
  *
  * -------
- * 调用测试函数
  */
 int main() {
 
+    /// 测试-哈夫曼编码
     TestHuffmanCode();
 
 	return 0;

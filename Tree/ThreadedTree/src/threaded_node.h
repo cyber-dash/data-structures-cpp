@@ -13,8 +13,8 @@
 #include <cstddef>
 
 
-const int CHILD_POINTER = 0;
-const int THREADED_NODE_POINTER = 1;
+const int CHILD_POINTER = 0;                    //!< 子结点指针类型
+const int THREADED_NODE_POINTER = 1;            //!< 线索结点指针类型
 
 
 /*!
@@ -24,12 +24,12 @@ const int THREADED_NODE_POINTER = 1;
 template <typename TData>
 struct ThreadedNode {
 
-    int left_tag;
-    int right_tag;
+    int left_tag;                                //!< right_child的结点类型
+    int right_tag;                               //!< left_child的结点类型
 
-    ThreadedNode<TData>* left_child; //!< 左孩子
-    ThreadedNode<TData>* right_child; //!< 右孩子
-    TData data; //!< 数据项
+    ThreadedNode<TData>* left_child;             //!< 左孩子
+    ThreadedNode<TData>* right_child;            //!< 右孩子
+    TData data;                                  //!< 数据项
 
     explicit ThreadedNode(const TData& data):
         data(data),

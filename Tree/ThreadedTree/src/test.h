@@ -13,22 +13,30 @@
 #include "threaded_node.h"
 
 
-void visit(ThreadedNode<int> *p);
+void visit(ThreadedNode<int> *node);
 
+// 测试-中序线索树-获取子树首个线索节点
 void TestInorderThreadedTreeFirst();
 
+// 测试-中序线索树-获取子树最后一个线索节点
 void TestInorderThreadedTreeLast();
 
+// 测试-中序线索树-下一个线索节点
 void TestInorderThreadedTreeNext();
 
+// 测试-中序线索树-前一个线索节点
 void TestInorderThreadedTreePre();
 
+// 测试-中序线索树-父节点
 void TestInorderThreadedTreeParent();
 
+// 测试-中序线索树-中序遍历
 void TestInorderThreadedTreeInorderTraverse();
 
+// 测试-中序线索树-前序遍历
 void TestInorderThreadedTreePreorderTraverse();
 
+// 测试-中序线索树-后序遍历
 void TestInorderThreadedTreePostorderTraverse();
 
 

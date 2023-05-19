@@ -19,13 +19,13 @@ void visit(ThreadedNode<int>* node) {
 
 
 /*!
- * @brief **测试-中序线索树-首个线索结点**
+ * @brief **测试-中序线索树-获取子树首个线索节点**
  * @note
- * 测试-中序线索树-首个线索结点
- * ------------------------
- * ------------------------
+ * 测试-中序线索树-获取子树首个线索节点
+ * -------------------------------
+ * -------------------------------
  *
- * ------------------------
+ * -------------------------------
  * + **1 构造线索树**\n
  * 声明inorder_threaded_tree\n
  * 插入整数0至6\n
@@ -40,7 +40,7 @@ void TestInorderThreadedTreeFirst() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|             Test InorderThreadedBinaryTree First          |"<<endl;
-    cout<<"|                  测试-中序线索树-首个线索结点              |"<<endl;
+    cout<<"|                测试-中序线索树-获取子树首个线索节点         |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -76,13 +76,13 @@ void TestInorderThreadedTreeFirst() {
 
 
 /*!
- * @brief **测试-中序线索树-最后的线索结点**
+ * @brief **测试-中序线索树-获取子树最后一个线索节点**
  * @note
- * 测试-中序线索树-最后的线索结点
- * --------------------------
- * --------------------------
+ * 测试-中序线索树-获取子树最后一个线索节点
+ * -----------------------------------
+ * -----------------------------------
  *
- * --------------------------
+ * -----------------------------------
  * + **1 构造线索树**\n
  * 声明inorder_threaded_tree\n
  * 插入整数0至6\n
@@ -97,7 +97,7 @@ void TestInorderThreadedTreeLast() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|              Test InorderThreadedBinaryTree Last          |"<<endl;
-    cout<<"|                 测试中序线索树最后一个线索节点                 |"<<endl;
+    cout<<"|              测试-中序线索树-获取子树最后一个线索节点       |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -151,7 +151,7 @@ void TestInorderThreadedTreeNext() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|              Test InorderThreadedBinaryTree Next          |"<<endl;
-    cout<<"|                   测试中序线索树下一个线索节点                 |"<<endl;
+    cout<<"|                   测试-中序线索树-下一个线索节点            |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -187,12 +187,15 @@ void TestInorderThreadedTreeNext() {
 }
 
 
+/*!
+ * @brief **测试-中序线索树-前一个线索节点**
+ */
 void TestInorderThreadedTreePre() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|             Test InorderThreadedBinaryTree Pre            |"<<endl;
-    cout<<"|                  测试中序线索树前一个线索节点                 |"<<endl;
+    cout<<"|                  测试-中序线索树-前一个线索节点                 |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -230,15 +233,15 @@ void TestInorderThreadedTreePre() {
 }
 
 
-/*
- * 中序线索二叉树Parent
+/*!
+ * @brief **测试-中序线索树-父节点**
  */
 void TestInorderThreadedTreeParent() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|            Test InorderThreadedBinaryTree Parent          |"<<endl;
-    cout<<"|                     测试中序线索树父节点                  |"<<endl;
+    cout<<"|                     测试-中序线索树-父节点                  |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -288,12 +291,15 @@ void TestInorderThreadedTreeParent() {
 }
 
 
+/*!
+ * @brief **测试-中序线索树-中序遍历**
+ */
 void TestInorderThreadedTreeInorderTraverse() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|          Test InorderThreadedTree InorderTraverse         |"<<endl;
-    cout<<"|                    测试中序线索树中序遍历                     |"<<endl;
+    cout<<"|                    测试-中序线索树-中序遍历               |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -321,12 +327,15 @@ void TestInorderThreadedTreeInorderTraverse() {
 }
 
 
+/*!
+ * @brief **测试-中序线索树-前序遍历**
+ */
 void TestInorderThreadedTreePreorderTraverse() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|          Test InorderThreadedTree PreorderTraverse        |"<<endl;
-    cout<<"|                    测试中序线索树前序遍历                     |"<<endl;
+    cout<<"|                    测试-中序线索树-前序遍历                |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;
@@ -354,12 +363,15 @@ void TestInorderThreadedTreePreorderTraverse() {
 }
 
 
+/*!
+ * @brief **测试-中序线索树-后序遍历**
+ */
 void TestInorderThreadedTreePostorderTraverse() {
 
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|          Test InorderThreadedTree PostorderTraverse       |"<<endl;
-    cout<<"|                    测试中序线索树后序遍历                     |"<<endl;
+    cout<<"|                    测试-中序线索树-后序遍历                     |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                             0                             |"<<endl;
     cout<<"|                            / \\                            |"<<endl;

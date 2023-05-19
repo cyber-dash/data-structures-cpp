@@ -115,10 +115,12 @@ void TestBaseFunctions() {
     }
 
     // 构造邻接表图
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
+    AdjacencyListGraph<string, double> adjacency_list_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
 
     cout << "##### 1 邻接表图删除结点\"北京\" #####" << endl << endl;
     adjacency_list_graph.RemoveVertex("北京");
+    adjacency_list_graph.RemoveVertex("上海");
+    // adjacency_list_graph.RemoveVertex("深圳");
 
     cout << adjacency_list_graph << endl << endl << endl << endl;
 
@@ -878,13 +880,13 @@ void TestCriticalPaths() {
 
     cout<<endl<<"**邻接表图测试**"<<endl<<endl;
     vector<double> critical_paths = GetCriticalPath(adjacency_list_graph, starting_vertex);
-    for (int i = 0; i < critical_paths.size(); i++) {
+    for (unsigned int i = 0; i < critical_paths.size(); i++) {
         cout<<"北京 ---> "<<vertices[i]<<" 关键路径长度: "<<critical_paths[i]<<endl;
     }
 
     cout<<endl<<"**矩阵图测试**"<<endl<<endl;
     critical_paths = GetCriticalPath(matrix_graph, starting_vertex);
-    for (int i = 0; i < critical_paths.size(); i++) {
+    for (unsigned int i = 0; i < critical_paths.size(); i++) {
         cout<<"北京 ---> "<<vertices[i]<<" 关键路径长度: "<<critical_paths[i]<<endl;
     }
 
