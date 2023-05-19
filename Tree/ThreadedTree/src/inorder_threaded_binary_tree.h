@@ -234,9 +234,8 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Pre(ThreadedNode<TData>* 
  */
 template <typename TData>
 void InorderThreadedBinaryTree<TData>::InorderTraverse(void (*visit)(ThreadedNode<TData>* node)) {
-    // for loop cur(遍历指针)指向First(root_); cur != NULL; cur指向下一线索结点
-    for (ThreadedNode<TData>* cur = First(root_); cur != NULL; cur = Next(cur)) {
-        visit(cur);             // 访问cur指向的结点
+    for (ThreadedNode<TData>* cur = First(root_); cur != NULL; cur = Next(cur)) {       // for loop cur(遍历指针)指向First(root_); cur != NULL; cur指向下一线索结点
+        visit(cur);                                                                     // 访问cur指向的结点
     }
 }
 
