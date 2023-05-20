@@ -961,21 +961,27 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
             continue;
         }
 
-        /*
         TWeight weight;
-        bool res = this->GetWeightByVertexIndex(i, vertex_index, weight);
-        if (!res) {
+        bool res = this->GetWeightByVertexIndex(vertex_index, i, weight);
+        if (res) {
             if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
                 this->degrees_[i]--;
             } else {
                 this->in_degrees_[i]--;
-                // this->out_degrees_[vertex_index]--;
             }
         }
-         */
 
-        this->adjacency_matrix_[i][vertex_index] = this->adjacency_matrix_[i][this->vertex_count_ - 1];         // 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素
+        res = this->GetWeightByVertexIndex(i, vertex_index, weight);
+        if (res) {
+            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+                // this->degrees_[i]--;
+            } else {
+                this->out_degrees_[i]--;
+            }
+        }
+
         this->adjacency_matrix_[vertex_index][i] = this->adjacency_matrix_[this->vertex_count_ - 1][i];         // 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素
+        this->adjacency_matrix_[i][vertex_index] = this->adjacency_matrix_[i][this->vertex_count_ - 1];         // 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素
     }
 
     // ---------- 3 edges_执行删除 ----------

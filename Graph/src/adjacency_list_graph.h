@@ -1054,7 +1054,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
             }
 
             if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-
+                this->degrees_[i]--;
+            } else {
+                this->out_degrees_[i]--;
             }
 
             delete deletion_adjacency;
@@ -1069,10 +1071,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
         adjacency_list_[vertex_index].first_adjacency = deletion_node->next;                                    // first_adjacency指向deletion_node->next
 
         if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-            this->degrees_[deletion_node->ending_vertex_index]--;
+            // this->degrees_[deletion_node->ending_vertex_index]--;  // 前面已经执行过
         } else {
             this->in_degrees_[deletion_node->ending_vertex_index]--;
-            // this->out_degrees_[vertex_index]--;
         }
 
         delete deletion_node;                                                                                   // 释放deletion_node

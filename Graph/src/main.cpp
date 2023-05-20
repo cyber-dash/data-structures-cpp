@@ -15,10 +15,11 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-    TestDirectedGraph();
+    // TestDirectedGraph();
 
     TestBaseFunctions();
 
+    /*
     // 测试矩阵图打印矩阵
     TestMatrixGraphPrintMatrix();
 
@@ -53,6 +54,7 @@ int main(int argc, char** argv) {
     TestTopologicalSort();
 
     TestCriticalPaths();
+     */
 
     return 0;
 }
