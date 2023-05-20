@@ -1053,6 +1053,10 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
                 prior->next = deletion_adjacency->next;
             }
 
+            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
+
+            }
+
             delete deletion_adjacency;
             deletion_adjacency = NULL;
         }

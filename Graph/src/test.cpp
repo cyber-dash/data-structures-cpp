@@ -148,13 +148,38 @@ void TestBaseFunctions() {
     cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
 
     // 构造矩阵图
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
-    cout << "##### 3 矩阵图删除结点\"上海\" #####" << endl << endl;
-    matrix_graph.RemoveVertex("上海");
+    MatrixGraph<string, double> matrix_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
+    cout << "##### 3 矩阵有向图删除结点\"北京\" #####" << endl << endl;
+    matrix_directed_graph.RemoveVertex("北京");
+    cout << matrix_directed_graph << endl << endl;
+    matrix_directed_graph.RemoveVertex("上海");
+    cout << matrix_directed_graph << endl << endl;
+    matrix_directed_graph.RemoveVertex("深圳");
+    cout << matrix_directed_graph << endl << endl;
+    matrix_directed_graph.RemoveVertex("广州");
+    cout << matrix_directed_graph << endl << endl;
+    matrix_directed_graph.RemoveVertex("成都");
+    cout << matrix_directed_graph << endl << endl;
+    matrix_directed_graph.RemoveVertex("杭州");
+    cout << matrix_directed_graph << endl << endl;
 
-    cout << matrix_graph << endl;
+    // 构造矩阵无向图
+    MatrixGraph<string, double> matrix_undirected_graph(Graph<string, double>::UNDIRECTED, 10, 1000, edges, vertices);
+    cout << "##### 3 矩阵无向图删除结点 #####" << endl << endl;
+    matrix_undirected_graph.RemoveVertex("北京");
+    cout << matrix_undirected_graph << endl << endl;
+    matrix_undirected_graph.RemoveVertex("上海");
+    cout << matrix_undirected_graph << endl << endl;
+    matrix_undirected_graph.RemoveVertex("深圳");
+    cout << matrix_undirected_graph << endl << endl;
+    matrix_undirected_graph.RemoveVertex("广州");
+    cout << matrix_undirected_graph << endl << endl;
+    matrix_undirected_graph.RemoveVertex("成都");
+    cout << matrix_undirected_graph << endl << endl;
+    matrix_undirected_graph.RemoveVertex("杭州");
+    cout << matrix_undirected_graph << endl << endl;
 
-    cout<<"-------------------------------------------------------------"<<endl;
+    cout << "-------------------------------------------------------------" << endl;
 }
 
 
