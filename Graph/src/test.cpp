@@ -114,19 +114,42 @@ void TestBaseFunctions() {
         edges.push_back(edge);
     }
 
-    // 构造邻接表图
-    AdjacencyListGraph<string, double> adjacency_list_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
+    // 构造邻接表有向图
+    AdjacencyListGraph<string, double> adjacency_list_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
 
-    cout << "##### 1 邻接表图删除结点\"北京\" #####" << endl << endl;
-    adjacency_list_graph.RemoveVertex("北京");
-    adjacency_list_graph.RemoveVertex("上海");
-    // adjacency_list_graph.RemoveVertex("深圳");
+    cout << "##### 1 邻接表有向图删除结点\"北京\" #####" << endl << endl;
+    adjacency_list_directed_graph.RemoveVertex("北京");
+    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
+    adjacency_list_directed_graph.RemoveVertex("上海");
+    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
+    adjacency_list_directed_graph.RemoveVertex("深圳");
+    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
+    adjacency_list_directed_graph.RemoveVertex("广州");
+    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
+    adjacency_list_directed_graph.RemoveVertex("成都");
+    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
+    adjacency_list_directed_graph.RemoveVertex("杭州");
+    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
 
-    cout << adjacency_list_graph << endl << endl << endl << endl;
+    AdjacencyListGraph<string, double> adjacency_list_undirected_graph(Graph<string, double>::UNDIRECTED, 10, 1000, edges, vertices);
+
+    cout << "##### 1 邻接表无向图删除结点\"北京\" #####" << endl << endl;
+    adjacency_list_undirected_graph.RemoveVertex("北京");
+    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
+    adjacency_list_undirected_graph.RemoveVertex("上海");
+    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
+    adjacency_list_undirected_graph.RemoveVertex("深圳");
+    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
+    adjacency_list_undirected_graph.RemoveVertex("广州");
+    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
+    adjacency_list_undirected_graph.RemoveVertex("成都");
+    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
+    adjacency_list_undirected_graph.RemoveVertex("杭州");
+    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
 
     // 构造矩阵图
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
-    cout << "##### 2 矩阵图删除结点\"上海\" #####" << endl << endl;
+    cout << "##### 3 矩阵图删除结点\"上海\" #####" << endl << endl;
     matrix_graph.RemoveVertex("上海");
 
     cout << matrix_graph << endl;
