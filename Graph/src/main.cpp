@@ -19,7 +19,6 @@ int main(int argc, char** argv) {
 
     TestBaseFunctions();
 
-    /*
     // 测试矩阵图打印矩阵
     TestMatrixGraphPrintMatrix();
 
@@ -54,7 +53,6 @@ int main(int argc, char** argv) {
     TestTopologicalSort();
 
     TestCriticalPaths();
-     */
 
     return 0;
 }
