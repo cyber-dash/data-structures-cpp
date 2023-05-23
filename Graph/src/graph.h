@@ -407,9 +407,9 @@ protected:
 
     vector<TVertex> vertices_;              //!< 结点vector
     vector<Edge<TVertex, TWeight> > edges_; //!< 边vector
-    vector<int> degrees_;                   //!< 度vector
-    vector<int> in_degrees_;                //!< 入度vector
-    vector<int> out_degrees_;               //!< 出度vector
+    vector<int> degrees_;                   //!< 度vector(无向图使用)
+    vector<int> in_degrees_;                //!< 入度vector(有向图使用)
+    vector<int> out_degrees_;               //!< 出度vector(有向图使用)
 };
 
 
