@@ -728,11 +728,24 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
  *
  * -------
  * - **1** 判断合法性\n
+ * \n
  * **if** 结点数 >= 结点数上限 :\n
  * &emsp; 返回false\n
+ * \n
  * - **2** 执行插入\n
- * &emsp; vertices_插入结点\n
- * &emsp; vertex_count_加1\n
+ * \n
+ * vertices_插入结点\n
+ * \n
+ * **if** 无向图 :\n
+ * &emsp; degrees_插入0(vertex的度初始化为0)\n
+ * **else** (无向图)\n
+ * &emsp; in_degrees_插入0(vertex的入度初始化为0)\n
+ * &emsp; out_degrees_插入0(vertex的出度初始化为0)\n
+ * \n
+ * vertex_count_加1\n
+ * \n
+ * - **3** 退出函数\n\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
