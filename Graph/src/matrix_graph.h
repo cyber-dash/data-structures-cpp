@@ -185,51 +185,55 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
  * ---------------------------------
  *
  * ---------------------------------
- * + **1** 设置部分成员变量\n
- *  - type_(**图类型**)和max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
- *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
- * + **2** 设置邻接矩阵\n
- *  - **2.1** 分配邻接矩阵行内存\n
- *  **if** 内存分配失败 :\n
- *  &emsp; 抛出bad_alloc()错误\n
- *  - **2.2** 分配邻接矩阵每行的内存, 并初始化\n
- *  **for loop** 遍历adjacency_matrix_ :\n
- *  &emsp; 分配矩阵当前行的内存\n
- *  &emsp; **if** 内存分配失败 :\n
- *  &emsp;&emsp; 抛出bad_alloc()错误\n
- *  &emsp; **for loop** 遍历当前行 :\n
- *  &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
+ * + **1** 设置部分成员变量\n\n
+ * type_(**图类型**)使用参数赋值\n\n
+ * max_vertex_count_(**结点数上限**)使用参数赋值\n
+ * max_weight_(**边权值上限**)使用参数赋值\n\n
+ * vertex_count_(**结点数量**)设为0\n
+ * edge_count_(**边数量**)设为0\n\n
+ * + **2** 设置邻接矩阵\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
+ * adjacency_matrix_分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()错误\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.2 分配邻接矩阵每行的内存, 并初始化 )</span>\n
+ * **for loop** 遍历adjacency_matrix_ :\n
+ * &emsp; 分配矩阵当前行的内存\n
+ * &emsp; **if** 内存分配失败 :\n
+ * &emsp;&emsp; 抛出bad_alloc()错误\n
+ * &emsp; **for loop** 遍历当前行 :\n
+ * &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeight max_weight) {
 
     // ---------- 1 设置部分成员变量 ----------
 
-    // type_(**图类型**)和max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值
-    this->type_ = type;
-    this->max_weight_ = max_weight;
-    this->max_vertex_count_ = max_vertex_count;
+    this->type_ = type;                                                                         // type_(图类型)使用参数赋值
 
-    this->vertex_count_ = 0;
-    this->edge_count_ = 0;
+    this->max_weight_ = max_weight;                                                             // max_vertex_count_(结点数上限)使用参数赋值
+    this->max_vertex_count_ = max_vertex_count;                                                 // max_weight_(边权值上限)使用参数赋值
+
+    this->vertex_count_ = 0;                                                                    // vertex_count_(结点数量)设为0
+    this->edge_count_ = 0;                                                                      // edge_count_(边数量)设为0
 
     // ---------- 2 设置邻接矩阵 ----------
 
-    // 2.1 分配邻接矩阵行内存
-    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
-    if (!this->adjacency_matrix_) {     //if 内存分配失败
-        throw bad_alloc();              // 抛出bad_alloc()错误
+    // ( 2.1 分配邻接矩阵内存 )
+    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];                            // adjacency_matrix_分配内存并初始化
+    if (!this->adjacency_matrix_) {                                                             //if 内存分配失败
+        throw bad_alloc();                                                                      // 抛出bad_alloc()错误
     }
 
-    // 2.2 分配邻接矩阵每行的内存, 并初始化
-    for (int row = 0; row < this->max_vertex_count_; row++) {   // for loop 遍历adjacency_matrix_
-        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];    // 分配矩阵当前行的内存
-        if (!this->adjacency_matrix_[row]) {                                    // if 内存分配失败
-            throw bad_alloc();                                                  // 抛出bad_alloc()错误
+    // ( 2.2 分配邻接矩阵每行的内存, 并初始化 )
+    for (int row = 0; row < this->max_vertex_count_; row++) {                                   // for loop 遍历adjacency_matrix_
+        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];                    // 分配矩阵当前行的内存
+        if (!this->adjacency_matrix_[row]) {                                                    // if 内存分配失败
+            throw bad_alloc();                                                                  // 抛出bad_alloc()错误
         }
 
-        for (int col = 0; col < this->max_vertex_count_; col++) {   // for loop 遍历当前行
-            this->adjacency_matrix_[row][col] = TWeight();          // 对当前矩阵元素adjacency_matrix_[row][col]初始化
+        for (int col = 0; col < this->max_vertex_count_; col++) {                               // for loop 遍历当前行
+            this->adjacency_matrix_[row][col] = TWeight();                                      // 对当前矩阵元素adjacency_matrix_[row][col]初始化
         }
     }
 }
@@ -250,27 +254,30 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
  *
  * ------------------------------------------------
  * + **1** 设置部分成员变量\n
- *  - type_(**图类型**)设为UNDIRECTED(**无向**)\n
- *  - max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
- *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
- * + **2** 设置邻接矩阵\n
- *  - **2.1** 分配邻接矩阵行内存\n
- *  **if** 内存分配失败 :\n
- *  &emsp; 抛出bad_alloc()错误\n
- *  - **2.2** 分配邻接矩阵每行的内存, 并初始化\n
- *  **for loop** 遍历矩阵行:\n
- *  &emsp; 分配矩阵当前行的内存\n
- *  &emsp; **if** 内存分配失败 :\n
- *  &emsp;&emsp; 抛出bad_alloc()错误\n
- *  &emsp; **for loop** 遍历当前行 :\n
- *  &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
- * + **3** 插入结点和边\n
- *  - **3.1** 使用vertices插入结点\n
- *  **for loop** 遍历vertices :\n
- *  &emsp; 调用InsertVertex, 插入当前节点vertices[i]\n
- *  - **3.2** 使用edges插入边\n
- *  **for loop** 遍历vertices :\n
- *  &emsp; 调用InsertEdge, 插入当前边edges[i]\n
+ * type_(**图类型**)设为UNDIRECTED(**无向**)\n\n
+ * max_vertex_count_(**结点数上限**)使用参数赋值\n
+ * max_weight_(**边权值上限**)使用参数赋值\n\n
+ * vertex_count_(**结点数量**)设为0\n
+ * edge_count_(**边数量**)设为0\n\n
+ * + **2** 设置邻接矩阵\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
+ * adjacency_matrix_分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()错误\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.2 分配邻接矩阵每行的内存, 并初始化 )</span>\n
+ * **for loop** 遍历adjacency_matrix_ :\n
+ * &emsp; 分配矩阵当前行的内存\n
+ * &emsp; **if** 内存分配失败 :\n
+ * &emsp;&emsp; 抛出bad_alloc()错误\n
+ * &emsp; **for loop** 遍历当前行 :\n
+ * &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n\n
+ * + **3** 插入结点和边\n\n
+ * ( 3.1 使用vertices插入结点 )\n
+ * **for loop** 遍历vertices :\n
+ * &emsp; 调用InsertVertex, 插入当前节点vertices[i]\n\n
+ * ( 3.2 使用edges插入边 )\n
+ * **for loop** 遍历vertices :\n
+ * &emsp; 调用InsertEdge, 插入当前边edges[i]\n
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
@@ -280,54 +287,50 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
 {
     // ---------- 1 设置部分成员变量 ----------
 
-    // type_(图类型)设为UNDIRECTED(无向)
-    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;
+    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;                                          // type_(图类型)设为UNDIRECTED(无向)
 
-    // max_vertex_count_(结点数上限)和max_weight_(边权值上限)使用参数赋值
-    this->max_weight_ = max_weight;
-    this->max_vertex_count_ = max_vertex_count;
+    this->max_weight_ = max_weight;                                                             // max_vertex_count_(结点数上限)使用参数赋值
+    this->max_vertex_count_ = max_vertex_count;                                                 // max_weight_(边权值上限)使用参数赋值
 
-    // vertex_count_(结点数量)和edge_count_(边数量)设为0
-    this->vertex_count_ = 0;
-    this->edge_count_ = 0;
+    this->vertex_count_ = 0;                                                                    // vertex_count_(结点数量)设为0
+    this->edge_count_ = 0;                                                                      // edge_count_(边数量)设为0
 
     // ---------- 2 设置邻接矩阵 ----------
 
-    // 2.1 分配邻接矩阵行内存
-    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
-    if (!this->adjacency_matrix_) {     // if 内存分配失败
-        throw bad_alloc();              // 抛出bad_alloc()错误
+    // ( 2.1 分配邻接矩阵内存 )
+    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];                            // adjacency_matrix_分配内存并初始化
+    if (!this->adjacency_matrix_) {                                                             //if 内存分配失败
+        throw bad_alloc();                                                                      // 抛出bad_alloc()错误
     }
 
-    // 2.2 分配邻接矩阵每行的内存, 并初始化
-    for (int row = 0; row < this->max_vertex_count_; row++) {   // for loop 遍历矩阵行
-        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];    // 分配矩阵当前行的内存
-        if (!this->adjacency_matrix_) {                                         // if 内存分配失败
-            throw bad_alloc();                                                  // 抛出bad_alloc()错误
+    // ( 2.2 分配邻接矩阵每行的内存, 并初始化 )
+    for (int row = 0; row < this->max_vertex_count_; row++) {                                   // for loop 遍历adjacency_matrix_
+        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];                    // 分配矩阵当前行的内存
+        if (!this->adjacency_matrix_[row]) {                                                    // if 内存分配失败
+            throw bad_alloc();                                                                  // 抛出bad_alloc()错误
         }
 
-        for (int col = 0; col < this->max_vertex_count_; col++) {   // for loop 遍历当前行
-            this->adjacency_matrix_[row][col] = TWeight();          // 对当前矩阵元素adjacency_matrix_[row][col]初始化
+        for (int col = 0; col < this->max_vertex_count_; col++) {                               // for loop 遍历当前行
+            this->adjacency_matrix_[row][col] = TWeight();                                      // 对当前矩阵元素adjacency_matrix_[row][col]初始化
         }
     }
 
     // ---------- 3 插入结点和边----------
 
-    // 3.1 将vertices插入
-    for (unsigned int i = 0; i < vertices.size(); i++) {            // for loop 遍历vertices
-        this->InsertVertex(vertices[i]);                            // 调用InsertVertex, 插入当前节点vertices[i]
+    // ( 3.1 将vertices插入 )
+    for (unsigned int i = 0; i < vertices.size(); i++) {                                        // for loop 遍历vertices
+        this->InsertVertex(vertices[i]);                                                        // 调用InsertVertex, 插入当前节点vertices[i]
     }
 
-    // 3.1 将edges插入
-    for (unsigned int i = 0; i < edges.size(); i++) {               // for loop 遍历vertices
-        // 调用InsertEdge, 插入当前边edges[i]
-        this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);
+    // ( 3.1 将edges插入 )
+    for (unsigned int i = 0; i < edges.size(); i++) {                                           // for loop 遍历vertices
+        this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);    // 调用InsertEdge, 插入当前边edges[i]
     }
 }
 
 
 /*!
- * @brief **构造函数(图类型/结点数上限/边权值上限/边vector/结点vector)**
+ * @brief **构造函数(图类型, 结点数上限, 边权值上限, 边vector, 结点vector)**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param type 图类型
@@ -346,27 +349,31 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
  * </span>
  *
  * ----------------------------------------------
- * + **1** 设置部分成员变量\n
- *  - type_(**图类型**), max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
- *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
- * + **2** 设置邻接矩阵\n
- *  - **2.1** 分配邻接矩阵行内存\n
- *  **if** 内存分配失败 :\n
- *  &emsp; 抛出bad_alloc()错误\n
- *  - **2.2** 分配邻接矩阵每行的内存, 并初始化\n
- *  **for loop** 遍历adjacency_matrix_ :\n
- *  &emsp; 分配矩阵当前行的内存\n
- *  &emsp; **if** 内存分配失败 :\n
- *  &emsp;&emsp; 抛出bad_alloc()错误\n
- *  &emsp; **for loop** 遍历当前行 :\n
- *  &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
- * + **3** 插入结点和边\n
- *  - **3.1** 使用vertices插入结点\n
- *  **for loop** 遍历vertices :\n
- *  &emsp; 调用InsertVertex, 插入当前节点vertices[i]\n
- *  - **3.2** 使用edges插入边\n
- *  **for loop** 遍历vertices :\n
- *  &emsp; 调用InsertEdge, 插入当前边edges[i]\n
+ * + **1** 设置部分成员变量\n\n
+ * type_(**图类型**)使用参数赋值\n\n
+ * max_vertex_count_(**结点数上限**)使用参数赋值\n
+ * max_weight_(**边权值上限**)使用参数赋值\n\n
+ * vertex_count_(**结点数量**)设为0\n
+ * edge_count_(**边数量**)设为0\n\n
+ * + **2** 设置邻接矩阵\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
+ * adjacency_matrix_分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()错误\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.2 分配邻接矩阵每行的内存, 并初始化 )</span>\n
+ * **for loop** 遍历adjacency_matrix_ :\n
+ * &emsp; 分配矩阵当前行的内存\n
+ * &emsp; **if** 内存分配失败 :\n
+ * &emsp;&emsp; 抛出bad_alloc()错误\n
+ * &emsp; **for loop** 遍历当前行 :\n
+ * &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n\n
+ * + **3** 插入结点和边\n\n
+ * ( 3.1 使用vertices插入结点 )\n
+ * **for loop** 遍历vertices :\n
+ * &emsp; 调用InsertVertex, 插入当前节点vertices[i]\n\n
+ * ( 3.2 使用edges插入边 )\n
+ * **for loop** 遍历vertices :\n
+ * &emsp; 调用InsertEdge, 插入当前边edges[i]\n
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
@@ -377,46 +384,44 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
 {
     // ---------- 1 设置部分成员变量 ----------
 
-    // type_(图类型), max_vertex_count_(结点数上限)和max_weight_(边权值上限)使用参数赋值
-    this->type_ = type;
-    this->max_weight_ = max_weight;
-    this->max_vertex_count_ = max_vertex_count;
+    this->type_ = type;                                                                         // type_(图类型)使用参数赋值
 
-    // vertex_count_(结点数量)和edge_count_(边数量)设为0
-    this->vertex_count_ = 0;
-    this->edge_count_ = 0;
+    this->max_weight_ = max_weight;                                                             // max_vertex_count_(结点数上限)使用参数赋值
+    this->max_vertex_count_ = max_vertex_count;                                                 // max_weight_(边权值上限)使用参数赋值
+
+    this->vertex_count_ = 0;                                                                    // vertex_count_(结点数量)设为0
+    this->edge_count_ = 0;                                                                      // edge_count_(边数量)设为0
 
     // ---------- 2 设置邻接矩阵 ----------
 
-    // 2.1 分配邻接矩阵行内存
-    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
-    if (!this->adjacency_matrix_) {     // if 内存分配失败
-        throw bad_alloc();              // 抛出bad_alloc()错误
+    // ( 2.1 分配邻接矩阵内存 )
+    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];                            // adjacency_matrix_分配内存并初始化
+    if (!this->adjacency_matrix_) {                                                             //if 内存分配失败
+        throw bad_alloc();                                                                      // 抛出bad_alloc()错误
     }
 
-    // 2.2 分配邻接矩阵每行的内存, 并初始化
-    for (int row = 0; row < this->max_vertex_count_; row++) {   // for loop 遍历矩阵行
-        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];    // 分配矩阵当前行的内存
-        if (!this->adjacency_matrix_) {                                         // if 内存分配失败
-            throw bad_alloc();                                                  // 抛出bad_alloc()错误
+    // ( 2.2 分配邻接矩阵每行的内存, 并初始化 )
+    for (int row = 0; row < this->max_vertex_count_; row++) {                                   // for loop 遍历adjacency_matrix_
+        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];                    // 分配矩阵当前行的内存
+        if (!this->adjacency_matrix_[row]) {                                                    // if 内存分配失败
+            throw bad_alloc();                                                                  // 抛出bad_alloc()错误
         }
 
-        for (int col = 0; col < this->max_vertex_count_; col++) {   // for loop 遍历当前行
-            this->adjacency_matrix_[row][col] = TWeight();          // 对当前矩阵元素adjacency_matrix_[row][col]初始化
+        for (int col = 0; col < this->max_vertex_count_; col++) {                               // for loop 遍历当前行
+            this->adjacency_matrix_[row][col] = TWeight();                                      // 对当前矩阵元素adjacency_matrix_[row][col]初始化
         }
     }
 
-    // ---------- 3 插入结点和边 ----------
+    // ---------- 3 插入结点和边----------
 
-    // 3.1 将vertices插入
-    for (unsigned int i = 0; i < vertices.size(); i++) {            // for loop 遍历vertices
-        this->InsertVertex(vertices[i]);                            // 调用InsertVertex, 插入当前节点vertices[i]
+    // ( 3.1 将vertices插入 )
+    for (unsigned int i = 0; i < vertices.size(); i++) {                                        // for loop 遍历vertices
+        this->InsertVertex(vertices[i]);                                                        // 调用InsertVertex, 插入当前节点vertices[i]
     }
 
-    // 3.1 将edges插入
-    for (unsigned int i = 0; i < edges.size(); i++) {               // for loop 遍历vertices
-        // 调用InsertEdge, 插入当前边edges[i]
-        this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);
+    // ( 3.1 将edges插入 )
+    for (unsigned int i = 0; i < edges.size(); i++) {                                           // for loop 遍历vertices
+        this->InsertEdge(edges[i].starting_vertex, edges[i].ending_vertex, edges[i].weight);    // 调用InsertEdge, 插入当前边edges[i]
     }
 }
 
@@ -435,24 +440,17 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
  * </span>
  *
  * -------
- * - **1** 释放邻接矩阵的每行的内存\n
  * **for loop** 遍历adjacency_matrix_各行 :\n
  * &emsp; delete[]当前行\n
- * - **2** 释放邻接矩阵行内存\n
  * delete[] adjacency_matrix_\n
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
-
-    // ---------- 1 释放邻接矩阵的每行的内存 ----------
-
-    for (int row = 0; row < this->vertex_count_; row++) {
-        delete[] this->adjacency_matrix_[row];
+    for (int row = 0; row < this->vertex_count_; row++) {                                       // for loop 遍历adjacency_matrix_各行
+        delete[] this->adjacency_matrix_[row];                                                  // delete[]当前行
     }
 
-    // ---------- 2 释放邻接矩阵行内存 ----------
-
-    delete[] this->adjacency_matrix_;
+    delete[] this->adjacency_matrix_;                                                           // delete[] adjacency_matrix_
 }
 
 
@@ -603,49 +601,53 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
  * --------------------
  *
  * --------------------
- * - **1** 判断合法性\n
+ * + **1 判断合法性**\n\n
  * 获取结点的索引\n
  * **if** 结点索引 < 0 :\n
- * &emsp; 返回false\n
- * - **2** 遍历结点找到第一个相邻结点\n
+ * &emsp; 返回false\n\n
+ * + **2 遍历结点找到第一个相邻结点**\n\n
  * **for loop** 遍历结点 :\n
  * &emsp; 获取当前索引(i)对应的结点\n
  * &emsp; **if** 当前索引无对应结点 :\n
- * &emsp;&emsp; continue\n
- * &emsp; 获取 结点--->当前结点 的边权值\n
+ * &emsp;&emsp; continue\n\n
+ * &emsp; 获取 结点--->当前结点 的边权值\n\n
  * &emsp; **if** 边权值存在(边存在) :\n
  * &emsp;&emsp; 当前结点赋给参数first_neighbor\n
- * &emsp;&emsp; 返回true
+ * &emsp;&emsp; 返回true\n\n
+ * + **3 退出函数**\n\n
+ * 返回false\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) const {
 
     // ---------- 1 判断合法性 ----------
 
-    int vertex_index = GetVertexIndex(vertex);  // 获取结点的索引
-    if (vertex_index < 0) {                     // if 结点索引 < 0
-        return false;                           // 返回false
+    int vertex_index = GetVertexIndex(vertex);                                                  // 获取结点的索引
+    if (vertex_index < 0) {                                                                     // if 结点索引 < 0
+        return false;                                                                           // 返回false
     }
 
     // ---------- 2 遍历结点找到第一个相邻结点 ----------
 
-    for (int i = 0; i < this->vertex_count_; i++) {     // for loop 遍历结点
+    for (int i = 0; i < this->vertex_count_; i++) {                                             // for loop 遍历结点
         TWeight weight;
         TVertex cur_vertex;
 
-        bool res = GetVertexByIndex(i, cur_vertex);     // 获取当前索引(i)对应的结点
-        if (!res) {                                     // if 当前索引无对应结点
-            continue;                                   // continue
+        bool res = GetVertexByIndex(i, cur_vertex);                                             // 获取当前索引(i)对应的结点
+        if (!res) {                                                                             // if 当前索引无对应结点
+            continue;                                                                           // continue
         }
 
-        res = GetWeight(vertex, cur_vertex, weight);    // 获取 结点--->当前结点 的边权值
-        if (res) {                                      // if 边权值存在(边存在)
-            first_neighbor = cur_vertex;                // 当前结点赋给参数first_neighbor
-            return true;                                // 返回true
+        res = GetWeight(vertex, cur_vertex, weight);                                            // 获取 结点--->当前结点 的边权值
+        if (res) {                                                                              // if 边权值存在(边存在)
+            first_neighbor = cur_vertex;                                                        // 当前结点赋给参数first_neighbor
+            return true;                                                                        // 返回true
         }
     }
 
-    return false;
+    // ---------- 3 退出函数 ----------
+
+    return false;                                                                               // 返回false
 }
 
 
