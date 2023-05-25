@@ -180,17 +180,17 @@ void TopologicalSortRecursive_(const Graph<TVertex, TWeight>& graph,
  * ------------
  *
  * ------------
- * + **1 起点插入已访问结点集合**\n
- * &emsp; 声明visited_vertex_set(已访问结点集合)\n
- * &emsp; 插入起点\n\n
- * + **2 起点入队**\n
- * &emsp; 声明vertex_queue(结点队列)\n
+ * + **1 初始化visited_vertex_set(已访问结点集合)**\n\n
+ * &emsp; 声明visited_vertex_set\n
+ * &emsp; 插入vertex(起点)\n\n
+ * + **2 初始化visited_queue(结点队列)**\n\n
+ * &emsp; 声明vertex_queue\n
  * &emsp; 起点入队\n\n
- * + **3 使用队列进行遍历**\n
+ * + **3 使用队列进行遍历**\n\n
  * &emsp; **while loop** 队列不为空 :\n
- * &emsp;&emsp; 取队头\n
+ * &emsp;&emsp; 取front_vertex(队头)\n
  * &emsp;&emsp; 队头出队\n\n
- * &emsp;&emsp; 取队头结点的首个neighbor_vertex(邻接点)\n\n
+ * &emsp;&emsp; 获取neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)\n\n
  * &emsp;&emsp; **while loop** 存在neighbor_vertex :\n\n
  * &emsp;&emsp;&emsp; **if** neighbor_vertex未被访问 :\n
  * &emsp;&emsp;&emsp;&emsp; 访问neighbor_vertex\n
@@ -205,37 +205,38 @@ void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
 
     cout<<"访问结点: "<<vertex<<endl;
 
-    // ---------- 1 起点插入已遍历结点集合 ----------
+    // ---------- 1 初始化visited_vertex_set(已遍历结点集合) ----------
 
-    set<TVertex> visited_vertex_set;    // 声明已遍历结点集合
-    visited_vertex_set.insert(vertex);  // 插入起点
+    set<TVertex> visited_vertex_set;                                                                // 声明visited_vertex_set
+    visited_vertex_set.insert(vertex);                                                              // 插入vertex(起点)
 
-    // ---------- 2 起点入队 ----------
+    // ---------- 2 初始化visited_queue(结点队列) ----------
 
-    queue<TVertex> vertex_queue;        // 声明结点队列
-    vertex_queue.push(vertex);          // 起点入队
+    queue<TVertex> vertex_queue;                                                                    // 声明vertex_queue
+    vertex_queue.push(vertex);                                                                      // 起点入队
 
     // ---------- 3 使用队列进行遍历结点 ----------
-    while (!vertex_queue.empty()) {                     // while loop 队列不为空
-        TVertex front_vertex = vertex_queue.front();    // 取队头
-        vertex_queue.pop();                             // 队头出队
 
-        // 对队头结点调用GetFirstNeighborVertex, 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)
+    while (!vertex_queue.empty()) {                                                                 // while loop 队列不为空
+        TVertex front_vertex = vertex_queue.front();                                                // 取front_vertex(队头)
+        vertex_queue.pop();                                                                         // 队头出队
+
         TVertex neighbor_vertex;
-        bool new_neighbor_exists = graph.GetFirstNeighborVertex(front_vertex, neighbor_vertex);
-        while (new_neighbor_exists) {                                                   // while loop 存在新邻接点
+        bool new_neighbor_exists = graph.GetFirstNeighborVertex(front_vertex, neighbor_vertex);     // 获取neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)
+        while (new_neighbor_exists) {                                                               // while loop 存在新邻接点
 
-            if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) { // if 该新邻接点未被访问
-                cout<<"访问结点: "<<neighbor_vertex<<endl;           // 访问新邻接点
-                visited_vertex_set.insert(neighbor_vertex);         // 该结点插入visited_vertex_set(已访问结点集合)
-                vertex_queue.push(neighbor_vertex);                 // 该结点入队
+            if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {             // if 该新邻接点未被访问
+                cout<<"访问结点: "<<neighbor_vertex<<endl;                                           // 访问新邻接点
+                visited_vertex_set.insert(neighbor_vertex);                                         // 该结点插入visited_vertex_set(已访问结点集合)
+                vertex_queue.push(neighbor_vertex);                                                 // 该结点入队
             }
 
-            // 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
             TVertex next_neighbor_vertex;
-            new_neighbor_exists = graph.GetNextNeighborVertex(front_vertex, neighbor_vertex, next_neighbor_vertex);
-            if (new_neighbor_exists) {                  // if 下一新邻接点存在
-                neighbor_vertex = next_neighbor_vertex; // 更新neighbor_vertex
+            new_neighbor_exists = graph.GetNextNeighborVertex(front_vertex,                         // 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
+                                                              neighbor_vertex,
+                                                              next_neighbor_vertex);
+            if (new_neighbor_exists) {                                                              // if 下一新邻接点存在
+                neighbor_vertex = next_neighbor_vertex;                                             // 更新neighbor_vertex
             }
         }
     }
