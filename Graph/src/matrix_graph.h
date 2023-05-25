@@ -602,17 +602,19 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
  *
  * --------------------
  * + **1 判断合法性**\n\n
- * 获取结点的索引\n
+ * 获取结点索引\n
  * **if** 结点索引 < 0 :\n
  * &emsp; 返回false\n\n
- * + **2 遍历结点找到第一个相邻结点**\n\n
- * **for loop** 遍历结点 :\n
- * &emsp; 获取当前索引(i)对应的结点\n
+ * + **2 遍历找到第一个相邻结点**\n\n
+ * **for loop** 遍历结点索引 :\n
+ * &emsp; 声明weight(边权值)\n
+ * &emsp; 声明cur_vertex(当前结点)\n\n
+ * &emsp; 获取i(当前结点索引)对应的结点\n
  * &emsp; **if** 当前索引无对应结点 :\n
  * &emsp;&emsp; continue\n\n
- * &emsp; 获取 结点--->当前结点 的边权值\n\n
- * &emsp; **if** 边权值存在(边存在) :\n
- * &emsp;&emsp; 当前结点赋给参数first_neighbor\n
+ * &emsp; 获取邻接边(vertex ---> cur_vertex)的权值\n\n
+ * &emsp; **if** weight存在(即边存在) :\n
+ * &emsp;&emsp; cur_vertex赋给参数first_neighbor\n
  * &emsp;&emsp; 返回true\n\n
  * + **3 退出函数**\n\n
  * 返回false\n
@@ -622,23 +624,23 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
 
     // ---------- 1 判断合法性 ----------
 
-    int vertex_index = GetVertexIndex(vertex);                                                  // 获取结点的索引
+    int vertex_index = GetVertexIndex(vertex);                                                  // 获取结点索引
     if (vertex_index < 0) {                                                                     // if 结点索引 < 0
         return false;                                                                           // 返回false
     }
 
     // ---------- 2 遍历结点找到第一个相邻结点 ----------
 
-    for (int i = 0; i < this->vertex_count_; i++) {                                             // for loop 遍历结点
-        TWeight weight;
-        TVertex cur_vertex;
+    for (int i = 0; i < this->vertex_count_; i++) {                                             // for loop 遍历结点索引
+        TWeight weight;                                                                         // 声明weight(边权值)
+        TVertex cur_vertex;                                                                     // 声明cur_vertex(当前结点)
 
         bool res = GetVertexByIndex(i, cur_vertex);                                             // 获取当前索引(i)对应的结点
         if (!res) {                                                                             // if 当前索引无对应结点
             continue;                                                                           // continue
         }
 
-        res = GetWeight(vertex, cur_vertex, weight);                                            // 获取 结点--->当前结点 的边权值
+        res = GetWeight(vertex, cur_vertex, weight);                                            // 获取邻接边(vertex ---> cur_vertex)的权值
         if (res) {                                                                              // if 边权值存在(边存在)
             first_neighbor = cur_vertex;                                                        // 当前结点赋给参数first_neighbor
             return true;                                                                        // 返回true
@@ -665,20 +667,24 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
  * -----------------------------------
  *
  * -----------------------------------
- * - **1** 判断合法性\n
- * 获取结点的索引\n
- * 获取相邻某结点的索引\n
+ * + **1 判断合法性**\n\n
+ * 获取vertex_index(结点索引)\n
+ * 获取neighbor_vertex_index(相邻某结点的结点索引)\n
  * **if** 结点索引 < 0 || 某相邻结点索引 < 0 :\n
- * &emsp; 返回false\n
- * - **2** 遍历结点找到下一个相邻结点\n
- * **for loop** 遍历结点索引, 从neighbor_vertex_index到vertex_count_(不包含) :\n
- * &emsp; 获取当前索引(i)对应的结点\n
+ * &emsp; 返回false\n\n
+ * + **2 遍历结点找到下一个相邻结点**\n
+ * **for loop** 遍历结点索引, 从(neighbor_vertex_index + 1)到(vertex_count_ - 1) :\n
+ * &emsp; 声明weight(边权值)\n
+ * &emsp; 声明cur_vertex(当前结点)\n\n
+ * &emsp; 获取i(当前索引)对应的结点\n
  * &emsp; **if** 当前索引无对应结点 :\n
- * &emsp;&emsp; continue\n
- * &emsp; 获取 结点--->当前结点 的边权值\n
+ * &emsp;&emsp; continue\n\n
+ * &emsp; 获取边(vertex ---> cur_vertex)的权值\n
  * &emsp; **if** 边权值存在(边存在) :\n
- * &emsp;&emsp; 当前结点赋给参数next_neighbor_vertex\n
- * &emsp;&emsp; 返回true\n
+ * &emsp;&emsp; cur_vertex赋给参数next_neighbor_vertex\n
+ * &emsp;&emsp; 返回true\n\n
+ * + **3 退出函数**\n
+ * 返回false\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
@@ -687,33 +693,34 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
 {
     // ---------- 1 判断合法性 -----------
 
-    int vertex_index = GetVertexIndex(vertex);                      // 获取结点的索引
-    int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);    // 获取相邻某结点的索引
+    int vertex_index = GetVertexIndex(vertex);                                                      // 获取vertex_index(结点索引)
+    int neighbor_vertex_index = GetVertexIndex(neighbor_vertex);                                    // 获取neighbor_vertex_index(相邻某结点的结点索引)
 
-    if (vertex_index < 0 || neighbor_vertex_index < 0) {            // if 结点索引 < 0 || 某相邻结点索引 < 0
-        return false;                                               // 返回false
+    if (vertex_index < 0 || neighbor_vertex_index < 0) {                                            // if 结点索引 < 0 || 某相邻结点索引 < 0
+        return false;                                                                               // 返回false
     }
 
     // ---------- 2 遍历结点找到下一个相邻结点 ----------
 
-    // for loop 遍历结点索引, 从neighbor_vertex_index到vertex_count_(不包含)
-    for (int i = neighbor_vertex_index + 1; i < this->vertex_count_; i++) {
-        TWeight weight;
-        TVertex cur_vertex;
+    for (int i = neighbor_vertex_index + 1; i < this->vertex_count_; i++) {                         // for loop 遍历结点索引, 从(neighbor_vertex_index + 1)到(vertex_count_ - 1)
+        TWeight weight;                                                                             // 声明weight(边权值)
+        TVertex cur_vertex;                                                                         // 声明cur_vertex(当前结点)
 
-        bool res = GetVertexByIndex(i, cur_vertex);     // 获取当前索引(i)对应的结点
-        if (!res) {                                     // if 当前索引无对应结点
-            continue;                                   // continue
+        bool res = GetVertexByIndex(i, cur_vertex);                                                 // 获取i(当前索引)对应的结点
+        if (!res) {                                                                                 // if 当前索引无对应结点
+            continue;                                                                               // continue
         }
 
-        res = GetWeight(vertex, cur_vertex, weight);    // 获取 结点--->当前结点 的边权值
-        if (res) {                                      // if 边权值存在(边存在)
-            next_neighbor_vertex = cur_vertex;          // 当前结点赋给参数next_neighbor_vertex
-            return true;                                // 返回true
+        res = GetWeight(vertex, cur_vertex, weight);                                                // 获取边(vertex ---> cur_vertex)的权值
+        if (res) {                                                                                  // if 边权值存在(边存在)
+            next_neighbor_vertex = cur_vertex;                                                      // cur_vertex赋给参数next_neighbor_vertex
+            return true;                                                                            // 返回true
         }
     }
 
-    return false;
+    // ---------- 3 退出函数 ----------
+
+    return false;                                                                                   // 返回false
 }
 
 
@@ -729,23 +736,17 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
  * -------
  *
  * -------
- * - **1** 判断合法性\n
- * \n
+ * - **1** 判断合法性\n\n
  * **if** 结点数 >= 结点数上限 :\n
- * &emsp; 返回false\n
- * \n
- * - **2** 执行插入\n
- * \n
- * vertices_插入结点\n
- * \n
+ * &emsp; 返回false\n\n
+ * - **2** 执行插入\n\n
+ * vertices_插入结点\n\n
  * **if** 无向图 :\n
  * &emsp; degrees_插入0(vertex的度初始化为0)\n
  * **else** (无向图)\n
  * &emsp; in_degrees_插入0(vertex的入度初始化为0)\n
- * &emsp; out_degrees_插入0(vertex的出度初始化为0)\n
- * \n
- * vertex_count_加1\n
- * \n
+ * &emsp; out_degrees_插入0(vertex的出度初始化为0)\n\n
+ * vertex_count_加1\n\n
  * - **3** 退出函数\n\n
  * 返回true\n
  */
@@ -754,24 +755,26 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
 
     // ---------- 1 判断合法性 ----------
 
-    if (this->vertex_count_ >= this->max_vertex_count_) {       // if 结点数 >= 结点数上限
-        return false;                                           // 返回false
+    if (this->vertex_count_ >= this->max_vertex_count_) {                                           // if 结点数 >= 结点数上限
+        return false;                                                                               // 返回false
     }
 
     // ---------- 2 执行插入 ----------
 
-    this->vertices_.push_back(vertex);                          // vertices_插入结点
+    this->vertices_.push_back(vertex);                                                              // vertices_插入结点
 
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        this->degrees_.push_back(0);                            // 度vector插入结点
-    } else {
-        this->in_degrees_.push_back(0);                         // 入度vector插入结点
-        this->out_degrees_.push_back(0);                        // 出度vector插入结点
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                       // if 无向图
+        this->degrees_.push_back(0);                                                                // degrees_插入0(vertex的度初始化为0)
+    } else {                                                                                        // else (无向图)
+        this->in_degrees_.push_back(0);                                                             // in_degrees_插入0(vertex的入度初始化为0)
+        this->out_degrees_.push_back(0);                                                            // out_degrees_插入0(vertex的出度初始化为0)
     }
 
-    this->vertex_count_++;                                      // vertex_count_加1
+    this->vertex_count_++;                                                                          // vertex_count_加1
 
-    return true;
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                                    // 返回true
 }
 
 
@@ -822,13 +825,14 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  * &emsp;&emsp; 返回false;\n\n
  * + **2 执行插入**\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.1 该边(starting_vertex ---> ending_vertex)插入 )</span>\n
- * 插入邻接矩阵\n
+ * 插入邻接矩阵\n\n
+ * 生成边(starting_vertex ---> ending_vertex)\n
  * 插入edges_\n\n
- * <span style="color:#E76600;font-weight:bold">( 2.2 无向图处理 )</span>\n
+ * <span style="color:#E76600;font-weight:bold">( 2.2 如果无向图/网, 边(ending_vertex --> starting_vertex)插入edges_和邻接表 )</span>\n
  * **if** 无向图 :\n
  * &emsp; 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.3 边数加1 )</span>\n
- * edge_count_(边数)加1\n\n
+ * edge_count_加1\n\n
  * + **3 度处理**\n\n
  * **if** 无向图 :\n
  * &emsp; 边起点的度加1\n
@@ -892,44 +896,34 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
         }
     }
 
-    // ---------- 1.3 邻接矩阵检查 ----------
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {       // if 无向图
-        // if 邻接矩阵内存在该边or反向边
-        if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight() ||
+    // ( 1.3 邻接矩阵检查 )
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                           // if 无向图
+        if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight() ||         // if 邻接矩阵内存在该边or反向边
             this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] != TWeight())
         {
-            return false;   // 返回false
+            return false;                                                                               // 返回false
         }
-    } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {  // else if 有向图
-        // is 邻接矩阵内存在该边
-        if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight()) {
-            return false;   // 返回false
+    } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {                                      // else if 有向图
+        if (this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] != TWeight()) {         // is 邻接矩阵内存在该边
+            return false;                                                                               // 返回false
         }
     }
 
     // ---------- 2 执行插入 ----------
 
-    // 2.1 边(starting_vertex ---> ending_vertex) 插入
-    // 插入邻接矩阵
-    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = weight;
+    // ( 2.1 边(starting_vertex ---> ending_vertex) 插入 )
+    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = weight;                       // 插入邻接矩阵
 
-    // 插入edges_
-    Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);
-    this->edges_.push_back(edge);
+    Edge<TVertex, TWeight> edge(starting_vertex, ending_vertex, weight);                                // 生成边(starting_vertex ---> ending_vertex)
+    this->edges_.push_back(edge);                                                                       // 插入edges_
 
-    // 2.2 无向图处理
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {   // if 无向图
-        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;   // 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵
-
-        this->degrees_[starting_vertex_index]++;
-        this->degrees_[ending_vertex_index]++;
-    } else {    // 有向图
-        this->in_degrees_[ending_vertex_index]++;
-        this->out_degrees_[starting_vertex_index]++;
+    // ( 2.2 如果无向图/网, 边(ending_vertex --> starting_vertex)插入edges_和邻接表 )
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                           // if 无向图
+        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = weight;                   // 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵
     }
 
-    // 2.3 edge_count_(边数)加1
-    this->edge_count_++;
+    // ( 2.3 边数加1 )
+    this->edge_count_++;                                                                                // edge_count_加1
 
     // ---------- 3 度处理 ----------
 
@@ -963,16 +957,31 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
  * </span>
  *
  * -------
- * + **1 判断删除合理性**\n
- * &emsp; 获取待删除结点的索引\n
- * &emsp; **if** 结点索引 < 0 or 结点索引 >= vertex_count_ :\n
- * &emsp;&emsp; 返回false\n
- * + **2 邻接矩阵执行删除**\n
- * &emsp; (用索引vertex_count_ - 1结点, 替换待删除结点)\n
- * &emsp; **for loop** 遍历结点索引 :\n
- * &emsp;&emsp; 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素\n
- * &emsp;&emsp; 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素\n
- * &emsp;&emsp; edge_count_(边数)减1\n
+ * + **1 合法性判断**\n\n
+ * &emsp; 获取vertex_index(待删除结点的索引)\n
+ * &emsp; **if** vertex_index < 0 or vertex_index >= vertex_count_ :\n
+ * &emsp;&emsp; 返回false\n\n
+ * + **2 邻接矩阵执行删除**\n\n
+ * (用索引vertex_count_ - 1结点, 替换待删除结点)\n
+ * **for loop** 遍历结点索引 :\n
+ * &emsp; **if** i(当前结点索引) == vertex_index :\n
+ * &emsp;&emsp; continue\n\n
+ * &emsp; 声明weight(边权值)\n\n
+ * &emsp; 获取边(vertex ---> 当前遍历结点)的weight\n
+ * &emsp; **if** 边(vertex ---> 当前遍历结点)存在 :\n
+ * &emsp;&emsp; **if** 无向图 :\n
+ * &emsp;&emsp;&emsp; 当前结点的度减1\n
+ * &emsp;&emsp; **else** (有向图)\n
+ * &emsp;&emsp;&emsp; 当前结点的入度减1\n\n
+ * &emsp; 获取边(当前遍历结点 ---> vertex)的weight\n
+ * &emsp; **if** 边(当前遍历结点 ---> vertex)存在 :\n
+ * &emsp;&emsp; **if** 无向图 :\n
+ * &emsp;&emsp;&emsp; do nothing\n
+ * &emsp;&emsp; **else** (有向图)\n
+ * &emsp;&emsp;&emsp; 当前结点的出度减1\n\n
+ * &emsp; 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素\n
+ * &emsp; 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素\n\n
+ * &emsp; edge_count_(边数)减1\n
  * + **3 edges_执行删除**\n
  * &emsp; **for loop** 遍历edges_ :\n
  * &emsp;&emsp; **if** 当前边起点or当前边终点 为待删除节点 :\n
@@ -988,8 +997,8 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
     // ---------- 1 判断删除合理性 ----------
 
-    int vertex_index = GetVertexIndex(vertex);                      // 获取待删除结点的索引
-    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {  // if 结点索引 < 0 or 结点索引 >= vertex_count_
+    int vertex_index = GetVertexIndex(vertex);                      // 获取vertex_index(待删除结点的索引)
+    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {  // if vertex_index < 0 or vertex_index >= vertex_count_
         return false;                                               // 返回false
     }
 
@@ -1001,7 +1010,8 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
             continue;
         }
 
-        TWeight weight;
+        TWeight weight; // 声明weight(边权值)
+
         bool res = this->GetWeightByVertexIndex(vertex_index, i, weight);
         if (res) {
             if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
@@ -1014,7 +1024,7 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
         res = this->GetWeightByVertexIndex(i, vertex_index, weight);
         if (res) {
             if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-                // this->degrees_[i]--;
+                // do nothing                                                         // 无向图的情况, 由于上面已经执行过, 因此此处不做任何操作
             } else {
                 this->out_degrees_[i]--;
             }
@@ -1023,6 +1033,8 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
         this->adjacency_matrix_[vertex_index][i] = this->adjacency_matrix_[this->vertex_count_ - 1][i];         // 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素
         this->adjacency_matrix_[i][vertex_index] = this->adjacency_matrix_[i][this->vertex_count_ - 1];         // 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素
     }
+
+    this->vertex_count_--;
 
     // ---------- 3 edges_执行删除 ----------
 
@@ -1053,8 +1065,6 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
     // ---------- 5 vertex_count_(边数)减1 ----------
 
-    // 注意: 通过此操作, 缩小了邻接矩阵的访问范围, 等于对邻接矩阵做了删除相关的操作
-    this->vertex_count_--;
 
     return true;
 }
