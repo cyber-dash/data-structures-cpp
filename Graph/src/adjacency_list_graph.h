@@ -1220,6 +1220,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
  * &emsp; **if** adjacency为NULL :\n
  * &emsp;&emsp; 返回false\n\n
  * &emsp; 终点对应的邻接表项(adjacency_list_[ending_vertex_index])的first_adjacency, 指向该邻接项\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.3 边数加1 )</span>\n
  * edge_count_加1\n\n
  * + **3 度处理**\n\n
  * **if** 无向图 :\n
@@ -1322,7 +1323,10 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
         this->adjacency_list_[ending_vertex_index].first_adjacency = adjacency;                         // 终点所在的邻接表项(adjacency_list_[ending_vertex_index])的first_adjacency, 指向该邻接项
     }
 
+    // ( 2.3 边数加1 )
     this->edge_count_++;                                                                                // 边的数量+1
+
+    // ---------- 3 度处理 ----------
 
     if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                           // if 无向图
         this->degrees_[starting_vertex_index]++;                                                        // 边起点的度加1

@@ -118,55 +118,55 @@ private:
  * </span>
  *
  * ---------------------------
- * + **1** 设置部分成员变量\n
- *  - type_(**图类型**)设为UNDIRECTED(**无向**)\n
- *  - max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值\n
- *  - vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0\n
- * + **2** 设置邻接矩阵\n
- *  - **2.1** 分配邻接矩阵行内存\n
- *  **if** 内存分配失败 :\n
- *  &emsp; 抛出bad_alloc()错误\n
- *  - **2.2** 分配邻接矩阵每行的内存, 并初始化\n
- *  **for loop** 遍历adjacency_matrix_ :\n
- *  &emsp; 分配矩阵当前行的内存\n
- *  &emsp; **if** 内存分配失败 :\n
- *  &emsp;&emsp; 抛出bad_alloc()错误\n
- *  &emsp; **for loop** 遍历当前行 :\n
- *  &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
+ * + **1** 设置部分成员变量\n\n
+ * type_(**图类型**)设为UNDIRECTED(**无向**)\n\n
+ * max_vertex_count_(**结点数上限**)使用参数赋值\n
+ * max_weight_(**边权值上限**)使用参数赋值\n\n
+ * vertex_count_(**结点数量**)设为0\n
+ * edge_count_(**边数量**)设为0\n\n
+ * + **2** 设置邻接矩阵\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
+ * adjacency_matrix_分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()错误\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.2 分配邻接矩阵每行的内存, 并初始化 )</span>\n
+ * **for loop** 遍历adjacency_matrix_ :\n
+ * &emsp; 分配矩阵当前行的内存\n
+ * &emsp; **if** 内存分配失败 :\n
+ * &emsp;&emsp; 抛出bad_alloc()错误\n
+ * &emsp; **for loop** 遍历当前行 :\n
+ * &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight) {
 
     // ---------- 1 设置部分成员变量 ----------
 
-    // type_(**图类型**)设为UNDIRECTED(**无向**)
-    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;
+    this->type_ = Graph<TVertex, TWeight>::UNDIRECTED;                                          // type_(图类型)设为UNDIRECTED(无向)
 
-    // max_vertex_count_(**结点数上限**)和max_weight_(**边权值上限**)使用参数赋值
-    this->max_weight_ = max_weight;
-    this->max_vertex_count_ = max_vertex_count;
+    this->max_weight_ = max_weight;                                                             // max_vertex_count_(结点数上限)使用参数赋值
+    this->max_vertex_count_ = max_vertex_count;                                                 // max_weight_(边权值上限)使用参数赋值
 
-    // vertex_count_(**结点数量**)和edge_count_(**边数量**)设为0
-    this->vertex_count_ = 0;
-    this->edge_count_ = 0;
+    this->vertex_count_ = 0;                                                                    // vertex_count_(结点数量)设为0
+    this->edge_count_ = 0;                                                                      // edge_count_(边数量)设为0
 
     // ---------- 2 设置邻接矩阵 ----------
 
-    // 2.1 分配邻接矩阵行内存
-    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];
-    if (!this->adjacency_matrix_) {     //if 内存分配失败
-        throw bad_alloc();              // 抛出bad_alloc()错误
+    // ( 2.1 分配邻接矩阵内存 )
+    this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];                            // adjacency_matrix_分配内存并初始化
+    if (!this->adjacency_matrix_) {                                                             //if 内存分配失败
+        throw bad_alloc();                                                                      // 抛出bad_alloc()错误
     }
 
-    // 2.2 分配邻接矩阵每行的内存, 并初始化
-    for (int row = 0; row < this->max_vertex_count_; row++) {   // for loop 遍历adjacency_matrix_
-        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];    // 分配矩阵当前行的内存
-        if (!this->adjacency_matrix_[row]) {                                    // if 内存分配失败
-            throw bad_alloc();                                                  // 抛出bad_alloc()错误
+    // ( 2.2 分配邻接矩阵每行的内存, 并初始化 )
+    for (int row = 0; row < this->max_vertex_count_; row++) {                                   // for loop 遍历adjacency_matrix_
+        this->adjacency_matrix_[row] = new TWeight[this->max_vertex_count_];                    // 分配矩阵当前行的内存
+        if (!this->adjacency_matrix_[row]) {                                                    // if 内存分配失败
+            throw bad_alloc();                                                                  // 抛出bad_alloc()错误
         }
 
-        for (int col = 0; col < this->max_vertex_count_; col++) {   // for loop 遍历当前行
-            this->adjacency_matrix_[row][col] = TWeight();          // 对当前矩阵元素adjacency_matrix_[row][col]初始化
+        for (int col = 0; col < this->max_vertex_count_; col++) {                               // for loop 遍历当前行
+            this->adjacency_matrix_[row][col] = TWeight();                                      // 对当前矩阵元素adjacency_matrix_[row][col]初始化
         }
     }
 }
@@ -787,92 +787,105 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  * -----
  *
  * -----
- * + **1** 检查插入合法性\n
- *  - **1.1** 结点检查和相关处理\n
- *  &emsp; 获取起点索引\n
- *  &emsp; 获取终点索引\n
- *  &emsp; **if** 起点索引 < 0 :\n
- *  &emsp;&emsp; 插入起点\n
- *  &emsp;&emsp; **if** 插入失败 :\n
- *  &emsp;&emsp;&emsp; 返回false\n
- *  &emsp;&emsp; 使用新插入的起点获取起点索引\n
- *  &emsp; **if** 终点索引 < 0 :\n
- *  &emsp;&emsp; 插入终点\n
- *  &emsp;&emsp; **if** 插入失败 :\n
- *  &emsp;&emsp;&emsp; 返回false\n
- *  &emsp;&emsp; 使用新插入的终点获取终点索引\n
- *  &emsp; **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引 等于 终点索引 :\n
- *  &emsp;&emsp; 返回false\n
- *  - **1.2** 边检查\n
- *  &emsp; **for loop** 遍历edges_ :\n
- *  &emsp;&emsp; **if** 无向图 :\n
- *  &emsp;&emsp;&emsp; **if** 边(起点--->终点) or 反向边(终点--->起点) 存在 :\n
- *  &emsp;&emsp;&emsp;&emsp; 返回false\n
- *  &emsp;&emsp; **if** 有向图 :\n
- *  &emsp;&emsp;&emsp; **if** 边(起点--->终点) 存在 :\n
- *  &emsp;&emsp;&emsp;&emsp; 返回false\n
- *  - **1.3** 邻接矩阵检查\n
- *  &emsp; **if** 无向图 :\n
- *  &emsp;&emsp; **if** 邻接矩阵内存在该边or反向边 :\n
- *  &emsp;&emsp;&emsp; 返回false;\n
- *  &emsp; **else if** 有向图 :\n
- *  &emsp;&emsp; **if** 邻接矩阵内存在该边 :\n
- *  &emsp;&emsp;&emsp; 返回false;\n
- * + **2** 执行插入\n
- *  - **2.1** 该边(starting_vertex ---> ending_vertex)插入\n
- *   * 插入邻接矩阵\n
- *   * 插入edges_\n
- *  - **2.2** 无向图处理\n
- *  &emsp; **if** 无向图 :\n
- *  &emsp;&emsp; 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵\n
- *  - **2.3** edge_count_(边数)加1\n
+ * + **1** 检查插入合法性\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.1 结点检查和相关处理 )</span>\n
+ * 获取starting_vertex_index(起点的结点索引)\n
+ * 获取ending_vertex_index(终点的结点索引)\n\n
+ * **if** starting_vertex_index < 0 :\n
+ * &emsp; 插入起点\n
+ * &emsp; **if** 插入失败 :\n
+ * &emsp;&emsp; 返回false\n
+ * &emsp; 重新获取starting_vertex_index\n\n
+ * **if** ending_vertex_index < 0 :\n
+ * &emsp; 插入终点\n
+ * &emsp; **if** 插入失败 :\n
+ * &emsp;&emsp; 返回false\n
+ * &emsp; 重新获取ending_vertex_index\n\n
+ * **if** starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index :\n
+ * &emsp; 返回false\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.2 边检查 )</span>\n
+ * **for loop** 遍历edges_ :\n
+ * &emsp; **if** 无向图 :\n
+ * &emsp;&emsp;&emsp; **if** 边(起点 ---> 终点) or 反向边(终点 ---> 起点) 存在 :\n
+ * &emsp;&emsp;&emsp;&emsp; 返回false\n
+ * &emsp; **else** (有向图) \n
+ * &emsp;&emsp;&emsp; **if** 边(起点 ---> 终点) 存在 :\n
+ * &emsp;&emsp;&emsp;&emsp; 返回false\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.3 邻接矩阵检查 )</span>\n
+ * **if** 无向图 :\n
+ * &emsp; **if** 邻接矩阵内存在该边or反向边 :\n
+ * &emsp;&emsp; 返回false;\n
+ * **else** (有向图) \n
+ * &emsp; **if** 邻接矩阵内存在该边 :\n
+ * &emsp;&emsp; 返回false;\n\n
+ * + **2 执行插入**\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.1 该边(starting_vertex ---> ending_vertex)插入 )</span>\n
+ * 插入邻接矩阵\n
+ * 插入edges_\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.2 无向图处理 )</span>\n
+ * **if** 无向图 :\n
+ * &emsp; 反向边(ending_vertex ---> starting_vertex)插入邻接矩阵\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.3 边数加1 )</span>\n
+ * edge_count_(边数)加1\n\n
+ * + **3 度处理**\n\n
+ * **if** 无向图 :\n
+ * &emsp; 边起点的度加1\n
+ * &emsp; 边终点的度加1\n
+ * **else**\n
+ * &emsp; 边起点的出度加1\n
+ * &emsp; 边终点的入度加1\n\n
+ * + **4 退出函数**\n\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
                                                const TVertex& ending_vertex,
                                                const TWeight& weight)
 {
-    // ---------- 1 检查插入合法性 ---------
+    // ---------- 1 合法性检查和相关处理 ---------
 
-    // 1.1 结点检查和相关处理
-    int starting_vertex_index = GetVertexIndex(starting_vertex);        // 获取起点索引
-    int ending_vertex_index = GetVertexIndex(ending_vertex);            // 获取终点索引
+    // ( 1.1 结点检查和相关处理 )
+    int starting_vertex_index = GetVertexIndex(starting_vertex);                                        // 获取起点索引
+    int ending_vertex_index = GetVertexIndex(ending_vertex);                                            // 获取终点索引
 
-    if (starting_vertex_index < 0) {                                    // if 起点索引 < 0
-        bool res = this->InsertVertex(starting_vertex);                 // 插入起点
-        if (!res) {                                                     // if 插入失败
-            return false;                                               // 返回false
+    if (starting_vertex_index < 0) {                                                                    // if 起点索引 < 0
+        bool res = this->InsertVertex(starting_vertex);                                                 // 插入起点
+        if (!res) {                                                                                     // if 插入失败
+            return false;                                                                               // 返回false
         }
 
-        starting_vertex_index = this->GetVertexIndex(starting_vertex);  // 使用新插入的起点获取起点索引
+        starting_vertex_index = this->GetVertexIndex(starting_vertex);                                  // 使用新插入的起点获取起点索引
     }
 
-    if (ending_vertex_index < 0) {                                      // if 终点索引 < 0
-        bool res = this->InsertVertex(ending_vertex);                   // 插入终点
-        if (!res) {                                                     // if 插入失败
-            return false;                                               // 返回false
+    if (ending_vertex_index < 0) {                                                                      // if 终点索引 < 0
+        bool res = this->InsertVertex(ending_vertex);                                                   // 插入终点
+        if (!res) {                                                                                     // if 插入失败
+            return false;                                                                               // 返回false
         }
 
-        ending_vertex_index = this->GetVertexIndex(ending_vertex);      // 使用新插入的终点获取终点索引
+        ending_vertex_index = this->GetVertexIndex(ending_vertex);                                      // 使用新插入的终点获取终点索引
     }
 
-    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引 等于 终点索引
-    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index) {
-        return false;                                                   // 返回false
+    if (starting_vertex_index < 0 || ending_vertex_index < 0 ||                                         // if 起点索引 < 0 || 终点索引 < 0 || 起点索引 等于 终点索引
+        starting_vertex_index == ending_vertex_index)
+    {
+        return false;                                                                                   // 返回false
     }
 
-    // ---------- 1.2 边检查 ----------
-    for (unsigned int i = 0; i < this->edges_.size(); i++) {            // for loop 遍历edges_
-        if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {       // if 无向图
-            // if 边(起点--->终点) or 反向边(终点--->起点) 存在
-            if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
-                (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex)) {
-                return false;   // 返回false
+    // ( 1.2 边检查 )
+    for (unsigned int i = 0; i < this->edges_.size(); i++) {                                            // for loop 遍历edges_
+        if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                       // if 无向图
+            if ((this->edges_[i].starting_vertex == starting_vertex &&                                  // if 边(起点--->终点) or 反向边(终点--->起点) 存在
+                 this->edges_[i].ending_vertex == ending_vertex) ||
+                (this->edges_[i].starting_vertex == ending_vertex &&
+                 this->edges_[i].ending_vertex == starting_vertex)) {
+                return false;                                                                           // 返回false
             }
-        } else if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {  // if 有向图
-            // if 边(起点--->终点) 存在
-            if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
-                return false;   // 返回false
+        } else {                                                                                        // else 有向图
+            if (this->edges_[i].starting_vertex == starting_vertex &&                                   // if 边(起点--->终点) 存在
+                this->edges_[i].ending_vertex == ending_vertex)
+            {
+                return false;                                                                           // 返回false
             }
         }
     }
@@ -916,7 +929,19 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
     // 2.3 edge_count_(边数)加1
     this->edge_count_++;
 
-    return true;
+    // ---------- 3 度处理 ----------
+
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                           // if 无向图
+        this->degrees_[starting_vertex_index]++;                                                        // 边起点的度加1
+        this->degrees_[ending_vertex_index]++;                                                          // 边终点的度加1
+    } else {                                                                                            // else (有向图)
+        this->in_degrees_[ending_vertex_index]++;                                                       // 边终点的入度加1
+        this->out_degrees_[starting_vertex_index]++;                                                    // 边起点的出度加1
+    }
+
+    // ---------- 4 更新edge_count_ ----------
+
+    return true;                                                                                        // 返回true
 }
 
 
