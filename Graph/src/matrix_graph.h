@@ -465,26 +465,30 @@ MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
  * -----------------
  *
  * -----------------
- * - **1** 判断合法性\n
+ * - **1 判断合法性**\n\n
  * **if** 结点索引 < 0 或者 结点索引 >= 图结点数 :\n
- * &emsp; 返回false\n
- * - **2** 获取结点\n
- * vertices_[vertex_index]赋给参数vertex\n
+ * &emsp; 返回false\n\n
+ * - **2 获取结点**\n\n
+ * vertices_[vertex_index]赋给参数vertex\n\n
+ * - **3 返回结果**\n\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& vertex) const {
 
     // ---------- 1 判断合法性 ----------
 
-    if (vertex_index < 0 && vertex_index >= this->vertex_count_) {  // if 结点索引 < 0 或者 结点索引 >= 图结点数
-        return false;                                               // 返回false
+    if (vertex_index < 0 && vertex_index >= this->vertex_count_) {                              // if 结点索引 < 0 或者 结点索引 >= 图结点数
+        return false;                                                                           // 返回false
     }
 
     // ---------- 2 获取结点 ----------
 
-    vertex = this->vertices_[vertex_index];                         // vertices_[vertex_index]赋给参数vertex
+    vertex = this->vertices_[vertex_index];                                                     // vertices_[vertex_index]赋给参数vertex
 
-    return true;
+    // ---------- 3 返回结果 ----------
+
+    return true;                                                                                // 返回true
 }
 
 
@@ -504,15 +508,17 @@ bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& 
  * 对于无向图, 起点/终点只是为了表达需要, 并不表示方向
  *
  * ----------------
- * - **1** 判断合法性\n
- * 获取起点索引starting_vertex_index\n
- * 获取终点索引ending_vertex_index\n
+ * - **1 判断合法性**\n\n
+ * 获取starting_vertex_index(起点索引)\n
+ * 获取ending_vertex_index(终点索引)\n\n
  * **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :\n
- * &emsp; 返回false\n
- * - **2** 获取边权值\n
- * 调用GetWeightByVertexIndex\n
- * **if** 执行结果为false :\n
- * &emsp; 返回false\n
+ * &emsp; 返回false\n\n
+ * - **2 获取边权值**\n\n
+ * 获取边(starting_vertex ---> ending_vertex)权值, 赋给参数weight\n
+ * **if** 获取失败 :\n
+ * &emsp; 返回false\n\n
+ * - **3 返回结果**\n\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
@@ -521,25 +527,25 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
 {
     // ---------- 1 判断合法性 ----------
 
-    int starting_vertex_index = GetVertexIndex(starting_vertex);    // 获取起点索引starting_vertex_index
-    int ending_vertex_index = GetVertexIndex(ending_vertex);        // 获取终点索引ending_vertex_index
+    int starting_vertex_index = GetVertexIndex(starting_vertex);                                                // 获取starting_vertex_index(起点索引)
+    int ending_vertex_index = GetVertexIndex(ending_vertex);                                                    // 获取ending_vertex_index(终点索引)
 
-    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :
-    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
+    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index || // if 条件错误
         adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
     {
-        return false;   // 返回false
+        return false;                                                                                           // 返回false
     }
 
     // ---------- 2 获取边权值 ----------
 
-    // 调用GetWeightByVertexIndex
-    bool res = GetWeightByVertexIndex(starting_vertex_index, ending_vertex_index, weight);
-    if (!res) {             // if 执行结果为false
-        return false;       // 返回false
+    bool res = GetWeightByVertexIndex(starting_vertex_index, ending_vertex_index, weight);                      // 获取边(starting_vertex ---> ending_vertex)权值, 赋给参数weight
+    if (!res) {                                                                                                 // if 获取失败
+        return false;                                                                                           // 返回false
     }
 
-    return true;
+    // ---------- 3 返回结果 ----------
+
+    return true;                                                                                                // 返回true
 }
 
 
@@ -557,12 +563,14 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
  * -------------------
  *
  * -------------------
- * - **1** 判断合法性\n
+ * - **1** 判断合法性\n\n
  * **if** 起点索引 < 0 <b>||</b> 终点索引 < 0 <b>||</b> 起点索引等于终点索引 <b>||</b> 起点索引 >= 结点数
  * <b>||</b> 终点索引 >= 结点数 <b>||</b> 邻接矩阵内对应元素为初始值 :\n
- * &emsp; 返回false\n
- * - **2** 获取边权值\n
+ * &emsp; 返回false\n\n
+ * - **2** 获取边权值\n\n
  * adjacency_matrix_<b>[</b>starting_vertex_index<b>][</b>ending_vertex_index<b>]</b>赋给参数weight\n
+ * - **3 返回结果**\n\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_index,
@@ -571,20 +579,21 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
 {
     // ---------- 1 判断合法性 ----------
 
-    // if 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 起点索引 >= 结点数 || 终点索引 >= 结点数 || 邻接矩阵内对应元素为初始值
-    if (starting_vertex_index < 0 || ending_vertex_index < 0 || starting_vertex_index == ending_vertex_index ||
+    if (starting_vertex_index < 0 || ending_vertex_index < 0 ||                                         // if 条件错误
+        starting_vertex_index == ending_vertex_index ||
         starting_vertex_index >= this->vertex_count_ || ending_vertex_index >= this->vertex_count_ ||
         adjacency_matrix_[starting_vertex_index][ending_vertex_index] == TWeight())
     {
-        return false;   // 返回false
+        return false;                                                                                   // 返回false
     }
 
     // ---------- 2 获取边权值 ----------
 
-    // adjacency_matrix_[starting_vertex_index][ending_vertex_index]赋给参数weight
-    weight = adjacency_matrix_[starting_vertex_index][ending_vertex_index];
+    weight = adjacency_matrix_[starting_vertex_index][ending_vertex_index];                             // adjacency_matrix_[starting_vertex_index][ending_vertex_index]赋给weight
 
-    return true;
+    // ---------- 3 返回结果 ----------
+
+    return true;                                                                                        // 返回true
 }
 
 
@@ -1336,13 +1345,13 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
  */
 template<typename TVertex, typename TWeight>
 int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
-    for (int i = 0; i < this->vertex_count_; i++) {     // for loop 遍历结点索引
-        if (this->vertices_[i] == vertex) {             // if i(当前索引)对应的结点等于vertex
-            return i;                                   // 返回i
+    for (int i = 0; i < this->vertex_count_; i++) {                                             // for loop 遍历结点索引
+        if (this->vertices_[i] == vertex) {                                                     // if i(当前索引)对应的结点等于vertex
+            return i;                                                                           // 返回i
         }
     }
 
-    return -1;  // 返回-1(如果没有找到对应索引)
+    return -1;                                                                                  // 返回-1(如果没有找到对应索引)
 }
 
 
@@ -1362,9 +1371,9 @@ int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
  */
 template<typename TVertex, typename TWeight>
 void MatrixGraph<TVertex, TWeight>::PrintMatrix() {
-    for (int row = 0; row < this->vertex_count_; row++) {                   // for loop 遍历行索引
-        for (int col = 0; col < this->vertex_count_; col++) {               // for loop 遍历列索引
-            cout << setw(5) << this->adjacency_matrix_[row][col] << "  ";   // 打印adjacency_matrix_[row][col](当前矩阵元素)
+    for (int row = 0; row < this->vertex_count_; row++) {                                       // for loop 遍历行索引
+        for (int col = 0; col < this->vertex_count_; col++) {                                   // for loop 遍历列索引
+            cout << setw(5) << this->adjacency_matrix_[row][col] << "  ";                       // 打印adjacency_matrix_[row][col](当前矩阵元素)
         }
         cout<<endl;
     }
