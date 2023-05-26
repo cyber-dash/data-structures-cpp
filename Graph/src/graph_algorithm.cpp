@@ -586,16 +586,16 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
  * </span>
  *
  * ------------------------
- * + **1 初始化**\n
- *  - **1.1 distance数组(起点到各点的最短路径长度)初始化**\n
- *  &emsp; 获取starting_vertex_index(起点索引)\n
- *  &emsp; **for loop** 遍历结点 :\n
- *  &emsp;&emsp; 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值(不存在最短路径)\n
- *  &emsp; 路径(起点 ---> 起点)的最短路径, 长度设为0\n
- *  - **1.2 min_priority_queue(最短路径的最小优先队列)初始化**\n
- *  &emsp; 路径(起点 ---> 起点)入队\n
- *  - **1.3 predecessor数组(最短路径终点的前驱结点索引)初始化**\n
- *  路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1\n
+ * + **1 初始化**\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.1 distance数组(起点到各点的最短路径长度)初始化 )</span>\n
+ * 获取starting_vertex_index(起点索引)\n
+ * **for loop** 遍历结点 :\n
+ * &emsp; 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值(不存在最短路径)\n\n
+ * 路径(起点 ---> 起点)的最短路径, 长度设为0\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.2 min_priority_queue(最短路径的最小优先队列)初始化 )</span>\n
+ * 路径(起点 ---> 起点)入队\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.3 predecessor数组(最短路径终点的前驱结点索引)初始化 )</span>\n
+ * 路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1\n\n
  * + **2 贪心** &emsp;&emsp;&emsp;<span style="color:#d40000">两层对结点的循环, 故时间复杂度: O(V^2)</span>\n
  * **while loop** 最短路径的最小优先队列不为空 :\n
  * &emsp; min_priority_queue队头出队, 赋给cur_min_path(从起点开始到各个结点, 当前最短的路径)\n
@@ -619,43 +619,39 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
 {
     // ---------- 1 初始化 ----------
 
-    // 1.1 distance数组(起点到各点的最短路径长度)初始化
-    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);  // 获取starting_vertex_index(起点索引)
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点
-        distance[i] = graph.MaxWeight();                        // 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值(不存在最短路径)
+    // ( 1.1 distance数组(起点到各点的最短路径长度)初始化 )
+    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);                                  // 获取starting_vertex_index(起点索引)
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {                                            // for loop 遍历结点
+        distance[i] = graph.MaxWeight();                                                                // 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值(不存在最短路径)
     }
-    distance[starting_vertex_index] = 0;                        // 路径(起点 ---> 起点)的最短路径, 长度设为0
+    distance[starting_vertex_index] = 0;                                                                // 路径(起点 ---> 起点)的最短路径, 长度设为0
 
-    // 1.2 min_priority_queue(最短路径的最小优先队列)初始化
+    // ( 1.2 min_priority_queue(最短路径的最小优先队列)初始化 )
     MinPriorityQueue<Path<TVertex, TWeight> > min_priority_queue;
     Path<TVertex, TWeight> cur_path(starting_vertex, starting_vertex, 0);
-    min_priority_queue.Enqueue(cur_path);       // 路径(起点 ---> 起点)入队
+    min_priority_queue.Enqueue(cur_path);                                                               // 路径(起点 ---> 起点)入队
 
-    // 1.3 predecessor数组(最短路径终点的前驱结点索引)初始化
-    predecessor[starting_vertex_index] = -1;    // 路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1
+    // ( 1.3 predecessor数组(最短路径终点的前驱结点索引)初始化 )
+    predecessor[starting_vertex_index] = -1;                                                            // 路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1
 
     // ---------- 2 贪心 ----------
 
-    while (min_priority_queue.Size() != 0) {    // while loop 最短路径的最小优先队列不为空
+    while (min_priority_queue.Size() != 0) {                                                            // while loop 最短路径的最小优先队列不为空
 
-        // min_priority_queue队头出队, 赋给cur_min_path(从起点开始到各个结点, 当前最短的路径)
         Path<TVertex, TWeight> cur_min_path;
-        min_priority_queue.Dequeue(cur_min_path);
+        min_priority_queue.Dequeue(cur_min_path);                                                       // min_priority_queue队头出队, 赋给cur_min_path(从起点开始到各个结点, 当前最短的路径)
 
-        // 获取cur_min_path的终点索引, 赋给cur_min_path_ending_vertex_index
-        int cur_min_path_ending_vertex_index = graph.GetVertexIndex(cur_min_path.ending_vertex);
+        int cur_min_path_ending_vertex_index = graph.GetVertexIndex(cur_min_path.ending_vertex);        // 获取cur_min_path的终点索引, 赋给cur_min_path_ending_vertex_index
 
-        for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点
+        for (unsigned int i = 0; i < graph.VertexCount(); i++) {                                        // for loop 遍历结点
 
-            // 获取当前结点cur_vertex
             TVertex cur_vertex;
-            graph.GetVertexByIndex(i, cur_vertex);
+            graph.GetVertexByIndex(i, cur_vertex);                                                      // 获取当前结点cur_vertex
 
-            // 获取 边(cur_min_path.ending_vertex ---> cur_vertex) (即: 当前最短的路径的终点 ---> 当前遍历结点)
             TWeight weight;
-            bool get_weight_done = graph.GetWeight(cur_min_path.ending_vertex, cur_vertex, weight);
-            if (!get_weight_done) {     // if 边(cur_min_path.ending_vertex ---> cur_vertex)不存在
-                continue;               // continue(不做处理)
+            bool get_weight_done = graph.GetWeight(cur_min_path.ending_vertex, cur_vertex, weight);     // 获取 边(cur_min_path.ending_vertex ---> cur_vertex) (即: 当前最短的路径的终点 ---> 当前遍历结点)
+            if (!get_weight_done) {                                                                     // if 边(cur_min_path.ending_vertex ---> cur_vertex)不存在
+                continue;                                                                               // continue(不做处理)
             }
 
             // --- 松弛操作 ---
@@ -670,17 +666,12 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
             //   更新distance[i]和predecessor[i]
             //   生成new_min_distance_path, 进入最小优先队列
 
-            // if 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值 < 路径(起点 ---> 当前遍历结点)
-            if (distance[cur_min_path_ending_vertex_index] + weight < distance[i]) {
-                // 路径(起点 ---> 当前遍历结点) = 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值
-                distance[i] = distance[cur_min_path_ending_vertex_index] + weight;
-                // 路径(起点 ---> 当前遍历结点), 当前遍历结点的前一结点索引设为cur_min_path_ending_vertex_index
-                predecessor[i] = cur_min_path_ending_vertex_index;
+            if (distance[cur_min_path_ending_vertex_index] + weight < distance[i]) {                    // if 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值 < 路径(起点 ---> 当前遍历结点)
+                distance[i] = distance[cur_min_path_ending_vertex_index] + weight;                      // 路径(起点 ---> 当前遍历结点) = 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值
+                predecessor[i] = cur_min_path_ending_vertex_index;                                      // 路径(起点 ---> 当前遍历结点), 当前遍历结点的前一结点索引设为cur_min_path_ending_vertex_index
 
-                // 生成路径new_min_distance_path(起点 ---> 当前遍历结点)
-                Path<TVertex, TWeight> new_min_distance_path(starting_vertex, cur_vertex, distance[i]);
-                // 将new_min_distance_path插入min_priority_queue(路径的最小优先队列)
-                min_priority_queue.Enqueue(new_min_distance_path);
+                Path<TVertex, TWeight> new_min_distance_path(starting_vertex, cur_vertex, distance[i]); // 生成路径new_min_distance_path(起点 ---> 当前遍历结点)
+                min_priority_queue.Enqueue(new_min_distance_path);                                      // 将new_min_distance_path插入min_priority_queue(路径的最小优先队列)
             }
         }
     }

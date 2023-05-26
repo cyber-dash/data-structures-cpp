@@ -27,7 +27,7 @@ template<typename TElement>
 class MinHeap {
 public:
   explicit MinHeap(int capacity = DEFAULT_CAPACITY);
-  MinHeap(TElement elements[], int capacity);
+  MinHeap(TElement* elements, int capacity);
   ~MinHeap() { delete[] elements_; }
 
   bool Insert(const TElement& element);
@@ -123,47 +123,49 @@ MinHeap<TElement>::MinHeap(int capacity) {
 
 
 /*!
- * @brief **构造函数(元素数组/容量)**
+ * @brief **构造函数(元素数组, 容量)**
  * @tparam TElement 元素类型模板参数
  * @param elements 元素数组首地址
  * @param capacity 容量
  * @note
- * 构造函数(元素数组/容量)
+ * 构造函数(元素数组, 容量)
  * --------------------
  * --------------------
  *
  * --------------------
- * + **1 初始化**\n
- * &emsp; 设置capacity_(容量)\n
- * &emsp; 设置size_(当前堆大小)为0\n
- * &emsp; elements_分配内存\n
- * &emsp; **if** 内存分配失败 :\n
- * &emsp;&emsp; 抛出bad_alloc()错误\n
- * &emsp; **for loop** 遍历capacity :\n
- * &emsp;&emsp; elements_[i]赋值\n
- * + **2 建堆**\n
- * &emsp; **for loop** 从索引(size_ - 2) / 2 到 0 :\n
- * &emsp;&emsp; 对i(当前索引)执行SiftDown_;\n
+ * + **1 初始化**\n\n
+ * 设置capacity_<span style="color:#283593;font-weight:bold">(容量)</span>\n
+ * 设置size_<span style="color:#283593;font-weight:bold">(当前堆大小)</span>为0\n\n
+ * elements_分配内存\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()错误\n\n
+ * **for loop** 遍历capacity :\n
+ * &emsp; elements_[i]赋值\n\n
+ * + **2 建堆**\n\n
+ * **for loop** 从索引(size_ - 2) / 2 到 0 :\n
+ * &emsp; 对i<span style="color:#283593;font-weight:bold">(当前索引)</span>执行SiftDown_;\n
  */
 template <typename TElement>
 MinHeap<TElement>::MinHeap(TElement* elements, int capacity) {
+
     // ---------- 1 初始化 ----------
 
-    capacity_ = (capacity > DEFAULT_CAPACITY) ? capacity : DEFAULT_CAPACITY;    // 设置capacity_(容量)
-    size_ = 0;                              // 设置size_(当前堆大小)为0
-    elements_ = new TElement[capacity_];    // elements_分配内存
-    if (elements_ == NULL) {    // if 内存分配失败
-        throw bad_alloc();      // 抛出bad_alloc()错误
+    capacity_ = (capacity > DEFAULT_CAPACITY) ? capacity : DEFAULT_CAPACITY;                // 设置capacity_(容量)
+    size_ = 0;                                                                              // 设置size_(当前堆大小)为0
+
+    elements_ = new TElement[capacity_];                                                    // elements_分配内存
+    if (elements_ == NULL) {                                                                // if 内存分配失败
+        throw bad_alloc();                                                                  // 抛出bad_alloc()错误
     }
 
-    for (int i = 0; i < capacity; i++) {    // for loop 遍历capacity
-        elements_[i] = elements[i];         // elements_[i]赋值
+    for (int i = 0; i < capacity; i++) {                                                    // for loop 遍历capacity
+        elements_[i] = elements[i];                                                         // elements_[i]赋值
     }
 
     // ----------- 2 建堆 ----------
 
-    for (int i = (size_ - 2) / 2; i >= 0; i--) {    // for loop 从索引(size_ - 2) / 2 到 0
-        SiftDown_(i);                          // 对i(当前索引)执行SiftDown_
+    for (int i = (size_ - 2) / 2; i >= 0; i--) {                                            // for loop 从索引(size_ - 2) / 2 到 0
+        SiftDown_(i);                                                                       // 对i(当前索引)执行SiftDown_
     }
 }
 
