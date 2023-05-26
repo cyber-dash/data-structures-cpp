@@ -1124,14 +1124,24 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
  * &emsp; 获取边(ending_vertex ---> starting_vertex)的权值\n
  * &emsp; **if** 权值不存在(即边不存在) :\n
  * &emsp;&emsp; 返回false\n\n
- * + **2 edges_和邻接矩阵执行删除**\n
- *  - 2.1 (起点 ---> 终点)方向删除\n
- *   * 邻接矩阵内删除\n
- *   * edges_内删除\n
- *  - 2.2 无向图 (终点 ---> 起点)方向删除\n
- *  &emsp; **if** 无向图 :\n
- *  &emsp;&emsp; 邻接矩阵内删除反向边\n
- * + **3 edge_count_(边数)减1**\n
+ * + **2 edges_和邻接矩阵执行删除**\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.1 (起点 ---> 终点)方向删除 )</span>\n
+ * 邻接矩阵内删除\n
+ * edges_内删除\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.2 无向图 (终点 ---> 起点)方向删除 )</span>\n
+ * **if** 无向图 :\n
+ * &emsp; 邻接矩阵内删除反向边\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.3 边总数减1 )</span>\n
+ * edge_count_减1\n\n
+ * + **3 度调整**\n\n
+ * **if** 无向图 :\n
+ * &emsp; 边起点的度减1\n
+ * &emsp; 边终点的度减1\n
+ * **else** (有向图) :\n
+ * &emsp; 边终点的入度减1\n
+ * &emsp; 边起点的出度减1\n\n
+ * + **4 退出函数**\n\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {

@@ -1413,15 +1413,14 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
  * &emsp; reversed_target_adjacency置NULL\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.3 边总数减1 )</span>\n
  * edge_count_减1\n\n
- * + **3 度调整**\n
+ * + **3 度调整**\n\n
  * **if** 无向图 :\n
  * &emsp; 边起点的度减1\n
  * &emsp; 边终点的度减1\n
  * **else** (有向图) :\n
  * &emsp; 边终点的入度减1\n
- * &emsp; 边起点的出度减1\n
- * \n
- * + **4 退出函数**\n
+ * &emsp; 边起点的出度减1\n\n
+ * + **4 退出函数**\n\n
  * 返回true\n
  */
 template<typename TVertex, typename TWeight>
