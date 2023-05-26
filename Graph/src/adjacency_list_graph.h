@@ -1464,7 +1464,6 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
         return false;                                                                                           // 返回false
     }
 
-
     // ---------- 2 在edges和adjacency_list_做删除 ----------
 
     // (2.1 边(starting_vertex --> ending_vertex)做删除)

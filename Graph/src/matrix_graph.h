@@ -1096,35 +1096,34 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
  * -----
  *
  * -----
- * + **1 检查合法性**\n
- *  - **1.1 检查结点**\n
- *  &emsp; 获取起点索引and终点索引\n
- *  &emsp; **if** 起点索引 < 0 || 终点索引 < 0 :\n
- *  &emsp;&emsp; 返回false\n
- *  - **1.2 检查边**\n
- *  &emsp; 待删除边索引变量remove_edge_index, 初始化为-1\n
- *  &emsp; **if** 有向图 :\n
- *  &emsp;&emsp; **for loop** 遍历edges_ :\n
- *  &emsp;&emsp;&emsp; **if** this->edges_[i](当前边)的起点和结点, 与参数起点和结点相同 :\n
- *  &emsp;&emsp;&emsp;&emsp; 将i(当前边索引)赋给remove_edge_index\n
- *  &emsp;&emsp;&emsp;&emsp; break(找到待删除边, 结束循环);\n
- *  &emsp; **else if** 无向图 :\n
- *  &emsp;&emsp; **for loop** 遍历edges_ :\n
- *  &emsp;&emsp;&emsp; **if** this->edges_[i](当前边)或者反向边的起点和结点, 与参数起点和结点相同 :\n
- *  &emsp;&emsp;&emsp;&emsp; 将i(当前边索引)赋给remove_edge_index\n
- *  &emsp;&emsp;&emsp;&emsp; break(找到待删除边, 结束循环);\n
- *  &emsp; **if** remove_edge_index为-1(说明没有找到待删除边) :\n
- *  &emsp;&emsp; 返回false\n
- *  - **1.3 检查邻接矩阵**\n
- *   * 检查 边(starting_vertex ---> ending_vertex) :\n
- *   &emsp; 调用GetWeight读取临界数组中的边信息\n
- *   &emsp; **if** GetWeight返回false :\n
- *   &emsp;&emsp; 返回false\n
- *   * 如果无向图, 检查 边(starting_vertex ---> ending_vertex) :\n
- *   &emsp;**if** 无向图: \n
- *   &emsp;&emsp; 调用GetWeight读取临界数组中的边信息\n
- *   &emsp;&emsp; **if** GetWeight返回false :\n
- *   &emsp;&emsp;&emsp; 返回false\n
+ * + **1 合法性检查**\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.1 检查待删除边的起点和终点 )</span>\n
+ * 获取起点索引和终点索引\n
+ * **if** 起点索引 < 0 <b>||</b> 终点索引 < 0 :\n
+ * &emsp; 返回false\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.2 检查vertices_ )</span>\n
+ * 初始化target_edge_index(待删除边索引)为-1\n
+ * **if** 有向图 :\n
+ * &emsp; **for** 遍历edges_ :\n
+ * &emsp;&emsp; **if** 当前边的起点等于参数起点 <b>&&</b> 当前边的终点等于参数终点 :\n
+ * &emsp;&emsp;&emsp; i<b>(当前边索引)</b>赋给target_edge_index\n
+ * &emsp;&emsp;&emsp; 退出循环(找到待删除边索引)\n
+ * **else** (无向图) :\n
+ * &emsp; **for loop** 遍历edges_ :\n
+ * &emsp;&emsp; **if** <b>(</b>当前边的起点等于参数起点 <b>&&</b> 当前边的终点等于参数终点<b>)</b> <b>||</b>
+ * <b>(</b>当前边的起点等于参数终点 <b>&&</b> 当前边的终点等于参数起点<b>)</b> :\n
+ * &emsp;&emsp;&emsp; i<b>(当前边索引)</b>赋给target_edge_index\n
+ * &emsp;&emsp;&emsp; 退出循环(找到待删除边索引)\n\n
+ * **if** target_edge_index等于-1(edges_内无此边) :\n
+ * &emsp; 返回false\n\n
+ * <span style="color:#FF9900;font-weight:bold">( 1.3 检查邻接矩阵 )</span>\n
+ * 获取边(starting_vertex ---> ending_vertex)的权值\n
+ * **if** 权值不存在(即边不存在) :\n
+ * &emsp; 返回false\n\n
+ * **if** 无向图: \n
+ * &emsp; 获取边(ending_vertex ---> starting_vertex)的权值\n
+ * &emsp; **if** 权值不存在(即边不存在) :\n
+ * &emsp;&emsp; 返回false\n\n
  * + **2 edges_和邻接矩阵执行删除**\n
  *  - 2.1 (起点 ---> 终点)方向删除\n
  *   * 邻接矩阵内删除\n
@@ -1137,80 +1136,84 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
 
-    // ---------- 1 检查合法性 ----------
+    // ---------- 1 合法性检查 ----------
 
-    // 1.1 检查结点
-    // 获取起点索引and终点索引
-    int starting_vertex_index = GetVertexIndex(starting_vertex);
-    int ending_vertex_index = GetVertexIndex(ending_vertex);
-    if (starting_vertex_index < 0 || ending_vertex_index < 0) {     // if 起点索引 < 0 || 终点索引 < 0
-        return false;                                               // 返回false
+    // (1.1 检查待删除边的起点和终点)
+    int starting_vertex_index = this->GetVertexIndex(starting_vertex);                                          // 获取起点索引和终点索引
+    int ending_vertex_index = this->GetVertexIndex(ending_vertex);
+    if (starting_vertex_index < 0 || ending_vertex_index < 0) {                                                 // if 起点索引 < 0 || 终点索引 < 0
+        return false;                                                                                           // 返回false
     }
 
-    // 1.2 检查边
-    int remove_edge_index = -1;     // 待删除边索引变量remove_edge_index, 初始化为-1
-    if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {             // if 有向图
-        for (unsigned int i = 0; i < this->edges_.size(); i++) {        // for loop 遍历edges_
-            // if this->edges_[i](当前边)的起点和结点, 与参数起点和结点相同
-            if (this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) {
-                remove_edge_index = (int)i;      // 将i(当前边索引)赋给remove_edge_index
-                break;                           // break(找到待删除边, 结束循环)
+    // (1.2 检查vertices_)
+    int target_edge_index = -1;                                                                                 // 初始化target_edge_index(待删除边索引)为-1
+    if (this->type_ == Graph<TVertex, TWeight>::DIRECTED) {                                                     // if 有向图
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {                                                // for 遍历边vector
+            if (this->edges_[i].starting_vertex == starting_vertex &&                                           // if 当前边的起点等于参数起点 && 当前边的终点等于参数终点
+                this->edges_[i].ending_vertex == ending_vertex)
+            {
+                target_edge_index = (int)i;                                                                     // i(当前边索引)赋给target_edge_index
+                break;                                                                                          // 退出循环(找到待删除边索引)
             }
         }
-    } else if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {    // else if 无向图
-        for (unsigned int i = 0; i < this->edges_.size(); i++) {        // for loop 遍历edges_
-            // if this->edges_[i](当前边)或者反向边的起点和结点, 与参数起点和结点相同
+    } else {                                                                                                    // else (无向图)
+        for (unsigned int i = 0; i < this->edges_.size(); i++) {                                                // for loop 遍历边vector
+
+            // if (当前边的起点等于参数起点 && 当前边的终点等于参数终点) || (当前边的起点等于参数终点 && 当前边的终点等于参数起点)
             if ((this->edges_[i].starting_vertex == starting_vertex && this->edges_[i].ending_vertex == ending_vertex) ||
                 (this->edges_[i].starting_vertex == ending_vertex && this->edges_[i].ending_vertex == starting_vertex))
             {
-                remove_edge_index = (int)i;      // 将i(当前边索引)赋给remove_edge_index
-                break;                           // break(找到待删除边, 结束循环)
+                target_edge_index = (int)i;                                                                     // i(当前边索引)赋给target_edge_index
+                break;                                                                                          // 退出循环
             }
         }
     }
 
-    if (remove_edge_index == -1) {  // if remove_edge_index为-1(说明没有找到待删除边)
-        return false;               // 返回false
+    if (target_edge_index == -1) {                                                                              // if target_edge_index等于-1(edges_内无此边)
+        return false;                                                                                           // 返回false
     }
 
-    // 1.3 检查邻接矩阵
-    // 检查 边(starting_vertex ---> ending_vertex)
-    TWeight weight;
-    bool res = GetWeight(starting_vertex, ending_vertex, weight);   // 调用GetWeight读取临界数组中的边信息
-    if (!res) {                                                     // if GetWeight返回false
-        return false;                                               // 返回false
+    // ( 1.3 检查邻接矩阵 )
+    TWeight weight;                                                                                             // 声明weight(边权值)
+    bool res = GetWeight(starting_vertex, ending_vertex, weight);                                               // 获取边(starting_vertex ---> ending_vertex)的权值
+    if (!res) {                                                                                                 // if 权值不存在(即边不存在)
+        return false;                                                                                           // 返回false
     }
 
-    // 如果无向图, 检查 边(starting_vertex ---> ending_vertex)
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {       // if 无向图
-        res = GetWeight(ending_vertex, starting_vertex, weight);    // 调用GetWeight读取临界数组中的边信息
-        if (!res) {                                                 // if GetWeight返回false
-            return false;                                           // 返回false
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                                   // if 无向图
+        res = GetWeight(ending_vertex, starting_vertex, weight);                                                // 获取边(ending_vertex ---> starting_vertex)的权值
+        if (!res) {                                                                                             // if 权值不存在(即边不存在)
+            return false;                                                                                       // 返回false
         }
     }
 
     // ------ 2 在edges和邻接矩阵做删除 ------
 
     // 2.1 (起点 ---> 终点)方向删除
-    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = TWeight();        // 邻接矩阵内删除
-    this->edges_.erase(this->edges_.begin() + remove_edge_index);                           // edges_内删除
+    this->adjacency_matrix_[starting_vertex_index][ending_vertex_index] = TWeight();                            // 邻接矩阵内删除
+    this->edges_.erase(this->edges_.begin() + target_edge_index);                                               // edges_内删除
 
     // 2.2 无向图 (终点 ---> 起点)方向删除
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                               // if 无向图
-        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();    // 邻接矩阵内删除反向边
-
-        this->degrees_[starting_vertex_index]--;
-        this->degrees_[ending_vertex_index]--;
-    } else {
-        this->in_degrees_[ending_vertex_index]--;
-        this->out_degrees_[starting_vertex_index]--;
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                                   // if 无向图
+        this->adjacency_matrix_[ending_vertex_index][starting_vertex_index] = TWeight();                        // 邻接矩阵内删除反向边
     }
 
-    // ----------- 3 edge_count_(边数)减1 ----------
+    // (2.3 边总数减1)
+    this->edge_count_--;                                                                                        // edge_count_减1
 
-    this->edge_count_--;
+    // ----------- 3 度调整 ----------
 
-    return true;
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                                   // if 无向图
+        this->degrees_[starting_vertex_index]--;                                                                // 边起点的度减1
+        this->degrees_[ending_vertex_index]--;                                                                  // 边终点的度减1
+    } else {                                                                                                    // else (有向图)
+        this->in_degrees_[ending_vertex_index]--;                                                               // 边终点的入度减1
+        this->out_degrees_[starting_vertex_index]--;                                                            // 边起点的出度减1
+    }
+
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                                                                // 返回true
 }
 
 
