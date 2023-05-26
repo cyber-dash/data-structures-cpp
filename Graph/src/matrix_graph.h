@@ -976,57 +976,69 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
  * &emsp; 获取边(当前遍历结点 ---> vertex)的weight\n
  * &emsp; **if** 边(当前遍历结点 ---> vertex)存在 :\n
  * &emsp;&emsp; **if** 无向图 :\n
- * &emsp;&emsp;&emsp; do nothing\n
+ * &emsp;&emsp;&emsp; do nothing (无向图的情况, 2.1已经执行过, 因此此处不做任何操作)\n
  * &emsp;&emsp; **else** (有向图)\n
  * &emsp;&emsp;&emsp; 当前结点的出度减1\n\n
  * &emsp; 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素\n
  * &emsp; 将邻接矩阵位置[vertex_index][i]的元素, 替换为位置[vertex_count_ - 1][i]的元素\n\n
- * &emsp; edge_count_(边数)减1\n
- * + **3 edges_执行删除**\n
- * &emsp; **for loop** 遍历edges_ :\n
- * &emsp;&emsp; **if** 当前边起点or当前边终点 为待删除节点 :\n
- * &emsp;&emsp;&emsp; 删除当前边\n
- * + **4 vertices_执行删除**\n
- * &emsp; vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素\n
- * &emsp; vertices_删除索引vertex_count - 1位置元素\n
- * + **5 vertex_count_(结点数)减1**\n
- * &emsp; **注意**: 通过此操作, 缩小了邻接矩阵的访问范围, 等于对邻接矩阵做了删除相关的操作\n
+ * + **3 度调整**\n\n
+ * **if** 无向图 :\n
+ * &emsp; degrees_[vertex_index], 替换为索引(vertex_count_ - 1)结点的度\n
+ * &emsp; 删除索引(vertex_count_ - 1)结点的度\n
+ * **else** (有向图)\n
+ * &emsp; in_degrees_[vertex_index], 替换为索引(vertex_count_ - 1)结点的入度\n
+ * &emsp; 删除索引(vertex_count_ - 1)结点的入度\n\n
+ * &emsp; out_degrees_[vertex_index], 替换为索引(vertex_count_ - 1)结点的出度\n
+ * &emsp; 删除索引(vertex_count_ - 1)结点的出度\n\n
+ * + **4 edges_执行删除**\n\n
+ * **for loop** 遍历edges_ :\n
+ * &emsp; **if** 当前边起点or当前边终点 为待删除节点 :\n
+ * &emsp;&emsp; 删除当前边\n
+ * &emsp;&emsp; 边数减1\n
+ * &emsp; **else**\n
+ * &emsp;&emsp; 遍历指针向后移动1位\n
+ * + **5 vertices_执行删除**\n\n
+ * vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素\n
+ * vertices_删除索引vertex_count - 1位置元素\n
+ * vertex_count_(结点数)减1**\n
+ * + **6 退出函数**\n\n
+ * 返回true\n
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
 
     // ---------- 1 判断删除合理性 ----------
 
-    int vertex_index = GetVertexIndex(vertex);                      // 获取vertex_index(待删除结点的索引)
-    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {  // if vertex_index < 0 or vertex_index >= vertex_count_
-        return false;                                               // 返回false
+    int vertex_index = GetVertexIndex(vertex);                                                                  // 获取vertex_index(待删除结点的索引)
+    if (vertex_index < 0 || vertex_index >= this->vertex_count_) {                                              // if vertex_index < 0 or vertex_index >= vertex_count_
+        return false;                                                                                           // 返回false
     }
 
     // ---------- 2 邻接矩阵执行删除 ----------
 
     // (用索引vertex_count_ - 1结点, 替换待删除结点)
     for (int i = 0; i < this->vertex_count_; i++) {                                                             // for loop 遍历结点索引
-        if (i == vertex_index) {
-            continue;
+        if (i == vertex_index) {                                                                                //if i(当前结点索引) == vertex_index
+            continue;                                                                                           // continue
         }
 
-        TWeight weight; // 声明weight(边权值)
+        TWeight weight;                                                                                         // 声明weight(边权值)
 
-        bool res = this->GetWeightByVertexIndex(vertex_index, i, weight);
-        if (res) {
-            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-                this->degrees_[i]--;
-            } else {
-                this->in_degrees_[i]--;
+        bool res = this->GetWeightByVertexIndex(vertex_index, i, weight);                                       // 获取边(vertex ---> 当前遍历结点)的weight
+        if (res) {                                                                                              // if 边(vertex ---> 当前遍历结点)存在
+            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                           // if 无向图
+                this->degrees_[i]--;                                                                            // 当前结点的度减1
+            } else {                                                                                            // else (有向图)
+                this->in_degrees_[i]--;                                                                         // 当前结点的入度减1
             }
         }
 
-        res = this->GetWeightByVertexIndex(i, vertex_index, weight);
-        if (res) {
-            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-                // do nothing                                                         // 无向图的情况, 由于上面已经执行过, 因此此处不做任何操作
-            } else {
-                this->out_degrees_[i]--;
+        res = this->GetWeightByVertexIndex(i, vertex_index, weight);                                            // 获取边(当前遍历结点 ---> vertex)的weight
+        if (res) {                                                                                              // if 边(当前遍历结点 ---> vertex)存在
+            if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                           // if 无向图
+                // do nothing                                                                                   // 无向图的情况, 由于上面已经执行过, 因此此处不做任何操作
+            } else {                                                                                            // else (有向图)
+                this->out_degrees_[i]--;                                                                        // 当前结点的出度减1
             }
         }
 
@@ -1034,39 +1046,40 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
         this->adjacency_matrix_[i][vertex_index] = this->adjacency_matrix_[i][this->vertex_count_ - 1];         // 将邻接矩阵位置[i][vertex_index]的元素, 替换为位置[i][vertex_count_ - 1]的元素
     }
 
-    this->vertex_count_--;
+    // ---------- 3 度调整 ----------
 
-    // ---------- 3 edges_执行删除 ----------
+    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {                                                   // if 无向图
+        this->degrees_[vertex_index] = this->degrees_[this->vertex_count_ - 1];                                 // degrees_[vertex_index], 替换为索引(vertex_count_ - 1)结点的度
+        this->degrees_.erase(this->degrees_.begin() + this->vertex_count_ - 1);                                 // 删除索引(vertex_count_ - 1)结点的度
+    } else {                                                                                                    // else (有向图)
+        this->in_degrees_[vertex_index] = this->in_degrees_[this->vertex_count_ - 1];                           // in_degrees_[vertex_index], 替换为索引(vertex_count_ - 1)结点的入度
+        this->in_degrees_.erase(this->in_degrees_.begin() + this->vertex_count_ - 1);                           // 删除索引(vertex_count_ - 1)结点的入度
+
+        this->out_degrees_[vertex_index] = this->out_degrees_[this->vertex_count_ - 1];                         // out_degrees_[vertex_index], 替换为索引(vertex_count_ - 1)结点的出度
+        this->out_degrees_.erase(this->out_degrees_.begin() + this->vertex_count_ - 1);                         // 删除索引(vertex_count_ - 1)结点的出度
+    }
+
+    // ---------- 4 edges_执行删除 ----------
 
     for (auto iter = this->edges_.begin(); iter != this->edges_.end();) {                                       // for loop 遍历edges_
         if (iter->ending_vertex == vertex || iter->starting_vertex == vertex) {                                 // if 当前边起点or当前边终点 为待删除节点
             iter = this->edges_.erase(iter);                                                                    // 删除当前边
-            this->edge_count_--;                                                                                // edge_count_(边数)减1
-        } else {
-            iter++;
+            this->edge_count_--;                                                                                // 边数减1
+        } else {                                                                                                // else
+            iter++;                                                                                             // 遍历指针向后移动1位
         }
     }
 
-    // ---------- 4 vertices_执行删除 ----------
+    // ---------- 5 vertices_执行删除 ----------
 
-    this->vertices_[vertex_index] = this->vertices_[this->vertex_count_ - 1];   // vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素
-    this->vertices_.erase(this->vertices_.begin() + this->vertex_count_ - 1);   // vertices_删除索引vertex_count - 1位置元素
+    this->vertices_[vertex_index] = this->vertices_[this->vertex_count_ - 1];                                   // vertices_的索引vertex_index位置元素, 替换为索引vertex_count_ - 1位置元素
+    this->vertices_.erase(this->vertices_.begin() + this->vertex_count_ - 1);                                   // vertices_删除索引vertex_count - 1位置元素
 
-    if (this->type_ == Graph<TVertex, TWeight>::UNDIRECTED) {
-        this->degrees_[vertex_index] = this->degrees_[this->vertex_count_ - 1];
-        this->degrees_.erase(this->degrees_.begin() + this->vertex_count_ - 1);
-    } else {
-        this->in_degrees_[vertex_index] = this->in_degrees_[this->vertex_count_ - 1];
-        this->in_degrees_.erase(this->in_degrees_.begin() + this->vertex_count_ - 1);
+    this->vertex_count_--;                                                                                      // vertex_count_减1
 
-        this->out_degrees_[vertex_index] = this->out_degrees_[this->vertex_count_ - 1];
-        this->out_degrees_.erase(this->out_degrees_.begin() + this->vertex_count_ - 1);
-    }
+    // ---------- 6 退出函数 ----------
 
-    // ---------- 5 vertex_count_(边数)减1 ----------
-
-
-    return true;
+    return true;                                                                                                // 返回true
 }
 
 
