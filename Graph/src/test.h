@@ -17,22 +17,17 @@
 #include <iostream>
 
 
+// 测试-图-基础函数
 void TestBaseFunctions();
 
-/*!
- * @brief 测试有向网
- */
 void TestDirectedGraph();
 
-/*!
- * @brief 测试优先队列(最小)
- */
 void TestMinPriorityQueue();
 
-/*! 测试矩阵图的矩阵 */
+// 测试矩阵图的矩阵
 void TestMatrixGraphPrintMatrix();
 
-/*! 测试使用结点索引获取结点 */
+// 测试使用结点索引获取结点
 void TestGetVertexByIndex();
 
 /*! 测试DFS */

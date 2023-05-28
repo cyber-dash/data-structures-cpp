@@ -77,6 +77,28 @@ void TestDirectedGraph() {
 }
 
 
+/*!
+ * @brief **测试-图-基础函数**
+ * @note
+ * 测试-图-基础函数
+ * --------------
+ * --------------
+ *
+ *
+ * --------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试基础函数**\n\n
+ * 构造adjacency_list_directed_graph(邻接表有向图)\n
+ * 依次删除1个城市, 然后打印图\n\n
+ * 构造adjacency_list_undirected_graph(邻接表无向图)\n
+ * 依次删除1个城市, 然后打印图\n\n
+ * 构造matrix_directed_graph(矩阵有向图)\n
+ * 依次删除1个城市, 然后打印图\n\n
+ * 构造matrix_undirected_graph(矩阵无向图)\n
+ * 依次删除1个城市, 然后打印图\n\n
+ */
 void TestBaseFunctions() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
@@ -98,26 +120,32 @@ void TestBaseFunctions() {
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
-    unsigned int edge_count = 9;
+    // ---------- 1 初始化图的基本信息 ----------
 
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
-    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
-    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
-    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+    // 初始化边信息
+    unsigned int edge_count = 9;
 
-    vector<Edge<string, double> > edges;
+    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };  // 初始化起点数组
+    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };     // 初始化终点数组
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };                           // 初始化边权值数组
+
+    vector<Edge<string, double> > edges;                                                                     // 声明边vector
+    // 构造边vector
     for (unsigned int i = 0; i < edge_count; i++) {
         Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
         edges.push_back(edge);
     }
 
-    // 构造邻接表有向图
+    // ---------- 2 测试基础函数 ----------
+
+    // 构造adjacency_list_directed_graph(邻接表有向图)
     AdjacencyListGraph<string, double> adjacency_list_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
 
-    cout << "##### 1 邻接表有向图删除结点\"北京\" #####" << endl << endl;
+    // 依次删除1个城市, 然后打印图
+    cout << "##### 1 邻接表有向图删除结点 #####" << endl << endl;
     adjacency_list_directed_graph.RemoveVertex("北京");
     cout << adjacency_list_directed_graph << endl << endl << endl << endl;
     adjacency_list_directed_graph.RemoveVertex("上海");
@@ -131,9 +159,11 @@ void TestBaseFunctions() {
     adjacency_list_directed_graph.RemoveVertex("杭州");
     cout << adjacency_list_directed_graph << endl << endl << endl << endl;
 
+    // 构造adjacency_list_undirected_graph(邻接表无向图)
     AdjacencyListGraph<string, double> adjacency_list_undirected_graph(Graph<string, double>::UNDIRECTED, 10, 1000, edges, vertices);
 
-    cout << "##### 1 邻接表无向图删除结点\"北京\" #####" << endl << endl;
+    // 依次删除1个城市, 然后打印图
+    cout << "##### 2 邻接表无向图删除结点 #####" << endl << endl;
     adjacency_list_undirected_graph.RemoveVertex("北京");
     cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
     adjacency_list_undirected_graph.RemoveVertex("上海");
@@ -147,9 +177,11 @@ void TestBaseFunctions() {
     adjacency_list_undirected_graph.RemoveVertex("杭州");
     cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
 
-    // 构造矩阵图
+    // 构造matrix_directed_graph(矩阵有向图)
     MatrixGraph<string, double> matrix_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
-    cout << "##### 3 矩阵有向图删除结点\"北京\" #####" << endl << endl;
+
+    // 依次删除1个城市, 然后打印图
+    cout << "##### 3 矩阵有向图删除结点 #####" << endl << endl;
     matrix_directed_graph.RemoveVertex("北京");
     cout << matrix_directed_graph << endl << endl;
     matrix_directed_graph.RemoveVertex("上海");
@@ -163,9 +195,11 @@ void TestBaseFunctions() {
     matrix_directed_graph.RemoveVertex("杭州");
     cout << matrix_directed_graph << endl << endl;
 
-    // 构造矩阵无向图
+    // 构造matrix_undirected_graph(矩阵无向图)
     MatrixGraph<string, double> matrix_undirected_graph(Graph<string, double>::UNDIRECTED, 10, 1000, edges, vertices);
-    cout << "##### 3 矩阵无向图删除结点 #####" << endl << endl;
+
+    // 依次删除1个城市, 然后打印图
+    cout << "##### 4 矩阵无向图删除结点 #####" << endl << endl;
     matrix_undirected_graph.RemoveVertex("北京");
     cout << matrix_undirected_graph << endl << endl;
     matrix_undirected_graph.RemoveVertex("上海");

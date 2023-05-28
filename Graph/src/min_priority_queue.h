@@ -14,7 +14,7 @@
 
 
 /*!
- * 最小优先队列
+ * @brief **最小优先队列**
  * @tparam TElement 队列元素类型模板参数
  */
 template <typename TElement>
@@ -32,11 +32,11 @@ public:
     MinPriorityQueue(): min_heap_() {}
 
     /*!
-     * @brief **构造函数(元素数组首地址和堆size)**
+     * @brief **构造函数(元素数组首地址, 堆size)**
      * @param elements 元素数组首地址
      * @param size 堆size
      * @note
-     * 构造函数(元素数组首地址和堆size)
+     * 构造函数(元素数组首地址, 堆size)
      * ----------------------------
      * ----------------------------
      *
