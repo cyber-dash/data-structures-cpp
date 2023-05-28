@@ -974,26 +974,26 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
  * predecessor[i]表示: 最短路径中, 索引i结点的前一结点\n
  *
  * --------------------
- * 打印一段文本\n
+ * 打印一段文本\n\n
  * 获取起点索引\n
- * 声明inverted_predecessors(反向前驱数组), 并分配内存\n
- * **for loop** 遍历结点索引(当前索引作为路径终点索引) :\n
- * &emsp; **if** 起点索引 等于 终点索引 :\n
- * &emsp;&emsp; continue\n
+ * 声明inverted_predecessors(反向前驱数组), 并分配内存\n\n
+ * **for loop** 遍历结点索引(当前索引作为路径终点索引) :\n\n
+ * &emsp; **if** 起点索引 == 终点索引 :\n
+ * &emsp;&emsp; continue\n\n
  * &emsp; 初始化cur_predecessor_index(最短路径当前结点的前驱结点索引)为ending_vertex_index(终点索引)\n
- * &emsp; 初始化i(inverted_predecessors的数组索引)为0\n
+ * &emsp; 初始化i(inverted_predecessors的数组索引)为0\n\n
  * &emsp; **while loop** 当前结点的前驱结点 不等于 起点 :\n
  * &emsp;&emsp; inverted_predecessors[i]被赋值为当前结点的前驱结点\n
  * &emsp;&emsp; cur_predecessor_index更新为predecessor[cur_predecessor_index](向前驱方向进行)\n
- * &emsp;&emsp; i++(填充inverted_predecessors的下一个位置的内容)\n
- * &emsp;&emsp; 获取当前终点的索引\n
- * &emsp;&emsp; 打印一段文本\n
- * &emsp;&emsp; (使用inverted_predecessors数组打印出路径, 对inverted_predecessor数组从后向前, 依次打印)\n
- * &emsp;&emsp; **while loop** i > 0 :\n
- * &emsp;&emsp;&emsp; i--\n
- * &emsp;&emsp;&emsp; 获取inverted_predecessors[i]对应的结点, 赋给cur_vertex\n
- * &emsp;&emsp;&emsp; 打印cur_vertex\n
- * &emsp; 打印一段文本\n
+ * &emsp;&emsp; i++(填充inverted_predecessors的下一个位置的内容)\n\n
+ * &emsp; 获取当前终点的索引\n
+ * &emsp; 打印一段文本\n\n
+ * &emsp; (使用inverted_predecessors数组打印出路径, 对inverted_predecessor数组从后向前, 依次打印)\n
+ * &emsp; **while loop** i > 0 :\n
+ * &emsp;&emsp; i--\n
+ * &emsp;&emsp; 获取inverted_predecessors[i]对应的结点, 赋给cur_vertex\n
+ * &emsp;&emsp; 打印cur_vertex\n\n
+ * &emsp; 打印一段文本\n\n
  * 释放inverted_predecessors\n
  */
 template<typename TVertex, typename TWeight>
@@ -1002,48 +1002,48 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
                                    TWeight distance[],
                                    const int predecessor[])
 {
-    cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;
+    cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;                // 打印一段文本
 
-    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);
+    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);                              // 获取起点索引
 
-    // 用于存放以某个结点为终点的最短路径经过的结点
-    int* inverted_predecessors = new int[graph.VertexCount()];
+    int* inverted_predecessors = new int[graph.VertexCount()];                                      // 声明inverted_predecessors(反向前驱数组), 并分配内存
 
-    // 分别显示starting_vertex到各个结点的最短路径
-    for (unsigned int ending_vertex_index = 0; ending_vertex_index < graph.VertexCount(); ending_vertex_index++) {
-        if (ending_vertex_index == starting_vertex_index) {
-            continue;
+    for (unsigned int ending_vertex_index = 0;                                                      // for loop 遍历结点索引(当前索引作为路径终点索引)
+         ending_vertex_index < graph.VertexCount();
+         ending_vertex_index++)
+    {
+        if (ending_vertex_index == starting_vertex_index) {                                         // if 起点索引 == 终点索引
+            continue;                                                                               // continue
         }
 
-        // 构造"以索引starting_vertex_idx结点(staring_vertex)为起点, 索引cur_ending_vertex_idx结点为终点"的最短路径
-        int cur_predecessor_index = (int)ending_vertex_index;
-        int i = 0; // 最短路径结点倒序索引
+        int cur_predecessor_index = (int)ending_vertex_index;                                       // 初始化cur_predecessor_index(最短路径当前结点的前驱结点索引)为ending_vertex_index(终点索引)
+        int i = 0;                                                                                  // 初始化i(inverted_predecessors的数组索引)为0
 
-        while (cur_predecessor_index != starting_vertex_index) {
-            inverted_predecessors[i] = cur_predecessor_index;
-            cur_predecessor_index = predecessor[cur_predecessor_index];
-            i++;
+        while (cur_predecessor_index != starting_vertex_index) {                                    // while loop 当前结点的前驱结点 不等于 起点
+            inverted_predecessors[i] = cur_predecessor_index;                                       // inverted_predecessors[i]被赋值为当前结点的前驱结点
+            cur_predecessor_index = predecessor[cur_predecessor_index];                             // cur_predecessor_index更新为predecessor[cur_predecessor_index](向前驱方向进行)
+            i++;                                                                                    // i++(填充inverted_predecessors的下一个位置的内容)
         }
 
         TVertex ending_vertex;
-        graph.GetVertexByIndex(ending_vertex_index, ending_vertex);
+        graph.GetVertexByIndex(ending_vertex_index, ending_vertex);                                 // 获取当前终点的索引
 
-        cout << "起始点(" << starting_vertex << ")到结点(" << ending_vertex << ")的最短路径为:";
+        cout << "起始点(" << starting_vertex << ")到结点(" << ending_vertex << ")的最短路径为:";        // 打印一段文本
         cout << starting_vertex << " ";
 
-        // 使用inverted_predecessor数组打印出路径, 对inverted_predecessor数组从后向前, 依次打印
-        while (i > 0) {
-            i--;
+        // (使用inverted_predecessors数组打印出路径, 对inverted_predecessor数组从后向前, 依次打印)
+        while (i > 0) {                                                                             // while loop i > 0
+            i--;                                                                                    // i减1
             TVertex cur_vertex;
-            graph.GetVertexByIndex(inverted_predecessors[i], cur_vertex);
-            cout << cur_vertex << " ";
+            graph.GetVertexByIndex(inverted_predecessors[i], cur_vertex);                           // 获取inverted_predecessors[i]对应的结点, 赋给cur_vertex
+            cout << cur_vertex << " ";                                                              // 打印cur_vertex
         }
 
         cout << ", ";
-        cout << "最短路径长度为:" << distance[ending_vertex_index] << endl;
+        cout << "最短路径长度为:" << distance[ending_vertex_index] << endl;                           // 打印一段文本
     }
 
-    delete[] inverted_predecessors;
+    delete[] inverted_predecessors;                                                                 // 释放inverted_predecessors
 }
 
 
