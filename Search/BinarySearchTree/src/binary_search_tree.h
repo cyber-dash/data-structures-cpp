@@ -535,14 +535,14 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(BstNode<TKey, TValue>*& su
  * ------------
  *
  * ------------
- * + **1 空树处理**\n
+ * + **1 空树处理**\n\n
  * **if** 空子树 :\n
  * &emsp; 返回\n\n
- * + **2 分治递归**\n
+ * + **2 分治递归**\n\n
  * 对左子树执行ClearSubTree_\n
  * 对右子树执行ClearSubTree_\n\n
- * + **3 释放根结点**\n
- * delete subtree_root\n
+ * + **3 重置根结点**\n\n
+ * 释放subtree_root\n
  * subtree_root置空\n
  */
 template <typename TKey, typename TValue>
@@ -559,9 +559,9 @@ void BinarySearchTree<TKey, TValue>::ClearSubTree_(BstNode<TKey, TValue>*& subtr
     ClearSubTree_(subtree_root->LeftChild());                                       // 对左子树执行ClearSubTree_
     ClearSubTree_(subtree_root->RightChild());                                      // 对右子树执行ClearSubTree_
 
-    // ---------- 3 释放根结点 ----------
+    // ---------- 3 重置根结点 ----------
 
-    delete subtree_root;                                                            // delete subtree_root
+    delete subtree_root;                                                            // 释放subtree_root
     subtree_root = NULL;                                                            // subtree_root置空
 }
 
@@ -640,17 +640,17 @@ void BinarySearchTree<TKey, TValue>::PrintSubTreeRecursive_(BstNode<TKey, TValue
  * </span>
  *
  * -------
- * + **1 源子树空树处理**\n
+ * + **1 源子树空树处理**\n\n
  * **if** 源子树为空树 :\n
  * &emsp; 返回NULL\n\n
- * + **2 生成新树根结点**\n
+ * + **2 生成新树根结点**\n\n
  * 声明new_bst_root(新二叉搜索树根结点), 并分配内存\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n\n
- * + **3 左右子树分治递归复制**\n
+ * + **3 左右子树分治递归复制**\n\n
  * 左子树递归调用CopySubTreeRecursive_, 生成新左子树\n
  * 右子树递归调用CopySubTreeRecursive_, 生成新右子树\n\n
- * + **4 返回新树根结点**\n
+ * + **4 退出函数**\n\n
  * 返回new_bst_root\n
  */
 template <typename TKey, typename TValue>
@@ -675,7 +675,7 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(con
     new_bst_root->SetLeftChild(CopySubTreeRecursive_(src_bst_root->left_child_));           // 左子树递归调用CopySubTreeRecursive_, 生成新左子树
     new_bst_root->SetRightChild(CopySubTreeRecursive_(src_bst_root->right_child_));         // 右子树递归调用CopySubTreeRecursive_, 生成新右子树
 
-    // ---------- 4 返回新树根结点 ----------
+    // ---------- 4 退出函数 ----------
 
     return new_bst_root;                                                                    // 返回new_bst_root
 }
@@ -693,14 +693,14 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(con
  * -----------------------
  *
  * -----------------------
- * + **1 空子树处理**\n
+ * + **1 空子树处理**\n\n
  * **if** 子树根结点为NULL :\n
  * &emsp; 返回NULL\n\n
- * + **2 向左遍历**\n
+ * + **2 向左遍历**\n\n
  * 声明并初始化cur指向子树根结点\n
  * **while loop** cur不为NULL <b>&&</b> cur的左孩子不为NULL :\n
  * &emsp; cur指向自身左孩子\n\n
- * + **3 返回结果**\n
+ * + **3 返回结果**\n\n
  * 返回cur\n
  */
 template <typename TKey, typename TValue>
@@ -731,21 +731,21 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MinInSubTree_(BstNode<TKe
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值类型模板参数
  * @param subtree_root 子树根结点
- * @return 最大节点指针
+ * @return 关键字最大结点(指针)
  * @note
  * 获取(子树中)关键字最大结点
  * -----------------------
  * -----------------------
  *
  * -----------------------
- * + **1 空子树处理**\n
+ * + **1 空子树处理**\n\n
  * **if** 子树根结点为NULL :\n
  * &emsp; 返回NULL\n
- * + **2 向右遍历**\n
+ * + **2 向右遍历**\n\n
  * 声明并初始化cur指向子树根结点\n
  * **while loop** cur不为NULL <b>&&</b> cur的右孩子不为NULL :\n
  * &emsp; cur指向自身右孩子\n
- * + **3 返回结果**\n
+ * + **3 返回结果**\n\n
  * 返回cur\n
  */
 template <typename TKey, typename TValue>
@@ -781,12 +781,12 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MaxInSubTree_(BstNode<TKe
  * ------
  *
  * ------
- * + **1 复制自身处理**\n
+ * + **1 复制自身处理**\n\n
  * **if** 复制自身 :\n
  * &emsp; 返回*this\n\n
- * + **2 复制**\n
+ * + **2 复制**\n\n
  * 对src_bst的根结点调用CopySubTreeRecursive_, 返回值赋给root_\n\n
- * + **3 退出函数**\n
+ * + **3 退出函数**\n\n
  * 返回*this\n
  */
 template<typename TKey, typename TValue>
@@ -822,8 +822,8 @@ BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const 
  * -------------------
  * 对根结点调用MaxInSubTree_, 获取key最大的结点\n
  * **if** node为NULL :\n
- * &emsp; 返回false\n
- * node的value_赋给max_value\n
+ * &emsp; 返回false\n\n
+ * node的value_赋给max_value\n\n
  * 返回true\n
  */
 template<typename TKey, typename TValue>
@@ -851,10 +851,10 @@ bool BinarySearchTree<TKey, TValue>::Max(TValue& max_value) {
  * -------
  *
  * -------
- * + **1 空树处理**\n
+ * + **1 空树处理**\n\n
  * **if** 空子树 :\n
  * &emsp; 返回0\n\n
- * + **2 分治递归**\n
+ * + **2 分治递归**\n\n
  * 取left_subtree_height(左子树高度)\n
  * 取right_subtree_height(右子树高度)\n\n
  * **if** left_subtree_height < right_subtree_height :\n
@@ -900,11 +900,12 @@ int BinarySearchTree<TKey, TValue>::HeightOfSubtreeRecursive_(BstNode<TKey, TVal
  * ---------------------
  * + **1 合法性判断**\n
  * &emsp; **if** node为NULL :\n
- * &emsp;&emsp; 返回NULL\n
+ * &emsp;&emsp; 返回NULL\n\n
  * + **2 查找结点**\n
  * &emsp; 初始化遍历指针cur, 指向结点的右孩子\n
  * &emsp; **while loop** cur不为NULL <b>&&</b> cur存在左孩子 :\n
- * &emsp;&emsp; cur指向左孩子\n
+ * &emsp;&emsp; cur指向左孩子\n\n
+ * + **3 退出函数**\n\n
  * &emsp; 返回cur\n
  */
 template<typename TKey, typename TValue>
@@ -922,6 +923,8 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::NextNode_(BstNode<TKey, T
     while (cur && cur->LeftChild()) {                                   // while loop cur不为NULL && cur存在右孩子 :
         cur = cur->LeftChild();                                         // cur指向右孩子
     }
+
+    // ---------- 3 退出函数 ----------
 
     return cur;                                                         // 返回cur
 }

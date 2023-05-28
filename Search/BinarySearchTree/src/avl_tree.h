@@ -146,12 +146,12 @@ public:
      * -------
      * 获取left_height(左子树高度)\n
      * 获取right_height(右子树高度)\n
-     * 取left_height最大值, 加1赋给height_\n
+     * 取子树高度最大值, 加1赋给height_\n
      */
     void UpdateHeight() {
-        int left_height = LeftChild() ? LeftChild()->Height() : 0;
-        int right_height = RightChild() ? RightChild()->Height() : 0;
-        this->height_ = (left_height > right_height ? left_height : right_height) + 1;
+        int left_height = LeftChild() ? LeftChild()->Height() : 0;                          // 获取left_height(左子树高度)
+        int right_height = RightChild() ? RightChild()->Height() : 0;                       // 获取right_height(右子树高度)
+        this->height_ = (left_height > right_height ? left_height : right_height) + 1;      // 取子树高度最大值, 加1赋给height_
     }
 
     /*!
@@ -169,9 +169,9 @@ public:
      * 取right_height - left_height赋给balance_factor_\n
      */
     void UpdateBalanceFactor() {
-        int left_height = LeftChild() ? LeftChild()->Height() : 0;
-        int right_height = RightChild() ? RightChild()->Height() : 0;
-        this->balance_factor_ = right_height - left_height;
+        int left_height = LeftChild() ? LeftChild()->Height() : 0;                          // 获取left_height(左子树高度)
+        int right_height = RightChild() ? RightChild()->Height() : 0;                       // 获取right_height(右子树高度)
+        this->balance_factor_ = right_height - left_height;                                 // 取right_height - left_height赋给balance_factor_
     }
 
     static const int RIGHT_HIGHER_2 = 2;    //!< **左子树比右子树矮2**
@@ -184,8 +184,8 @@ protected:
     TKey key_;                              //!< 关键字
     TValue value_;                          //!< 值
 
-    AvlNode<TKey, TValue>* left_child_;     //!< 左孩子
-    AvlNode<TKey, TValue>* right_child_;    //!< 右孩子
+    AvlNode<TKey, TValue>* left_child_;     //!< 左孩子结点(指针)
+    AvlNode<TKey, TValue>* right_child_;    //!< 右孩子结点(指针)
 
     int height_;                            //!< 高度
     int balance_factor_;                    //!< 平衡因子
@@ -984,12 +984,12 @@ bool AvlTree<TKey, TValue>::InsertInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
  * </span>
  *
  * ----------
- * + **1 重复插入检查与回溯栈初始化**\n
+ * + **1 重复插入检查与回溯栈初始化**\n\n
  * 声明backtrack_stack(回溯栈)\n
  * 检查是否重复插入, 并将沿途检查的各点入栈\n
  * **if** 重复插入 :\n
  * &emsp; 返回false\n\n
- * + **2 插入结点**\n
+ * + **2 插入结点**\n\n
  * (2.1 初始化插入结点)\n
  * 初始化new_node(待插入结点)\n
  * **if** new失败 :\n
@@ -1001,9 +1001,9 @@ bool AvlTree<TKey, TValue>::InsertInSubTreeRecursive_(AvlNode<TKey, TValue>*& su
  * (2.3 非空子树插入结点)\n
  * 取栈顶, 作为插入结点的父结点(parent_node)\n
  * **if** 插入结点key < 父结点key :\n
- * &emsp;&emsp; 插入结点为父结点的左孩子\n
+ * &emsp; 插入结点为父结点的左孩子\n
  * **else** (插入结点key > 父结点key) :\n
- * &emsp;&emsp; 插入结点为父结点的右孩子\n
+ * &emsp; 插入结点为父结点的右孩子\n
  * 对回溯栈内的结点做平衡, 返回最终的平衡结点balance_node\n\n
  * + **3 回溯栈处理结束后的补充处理**\n
  * **if** 回溯栈为空 :\n
