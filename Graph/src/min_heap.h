@@ -30,6 +30,7 @@ public:
   MinHeap(TElement* elements, int capacity);
   ~MinHeap() { delete[] elements_; }
 
+  // 插入
   bool Insert(const TElement& element);
   bool Pop(TElement& element);
   bool Top(TElement& element);
@@ -105,19 +106,19 @@ private:
  * ------------
  *
  * ------------
- * 设置capacity_(容量)\n
- * 设置size_(当前堆大小)为0\n
+ * 设置capacity_(容量)\n\n
+ * 设置size_(当前堆大小)为0\n\n
  * elements_分配内存\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()错误\n
  */
 template <typename TElement>
 MinHeap<TElement>::MinHeap(int capacity) {
-    capacity_ = (capacity > DEFAULT_CAPACITY) ? capacity : DEFAULT_CAPACITY;    // 设置capacity_(容量)
-    size_ = 0;                              // 设置size_(当前堆大小)为0
-    elements_ = new TElement[capacity_];    // elements_分配内存
-    if (elements_ == NULL) {    // if 内存分配失败
-        throw bad_alloc();      // 抛出bad_alloc()错误
+    capacity_ = (capacity > DEFAULT_CAPACITY) ? capacity : DEFAULT_CAPACITY;                // 设置capacity_(容量)
+    size_ = 0;                                                                              // 设置size_(当前堆大小)为0
+    elements_ = new TElement[capacity_];                                                    // elements_分配内存
+    if (elements_ == NULL) {                                                                // if 内存分配失败
+        throw bad_alloc();                                                                  // 抛出bad_alloc()错误
     }
 }
 
@@ -180,27 +181,25 @@ MinHeap<TElement>::MinHeap(TElement* elements, int capacity) {
  * -------
  *
  * -------
- * **for loop** 遍历索引index的后代结点 :\n
+ * **for loop** 遍历索引index的后代结点 :\n\n
  * &emsp; **if** child_index(当前左孩子结点索引) + 1 < 堆大小 && 左孩子节点元素 > 右孩子结点元素 :\n
- * &emsp;&emsp; child_index调整为右孩子结点索引(自加1), 此时child_index元素为孩子结点中最小孩子元素\n
+ * &emsp;&emsp; child_index调整为右孩子结点索引(自加1), 此时child_index元素为孩子结点中最小孩子元素\n\n
  * &emsp; **if** index(当前结点索引)元素 <= 最小孩子元素 :\n
- * &emsp;&emsp; 跳出循环\n
+ * &emsp;&emsp; 跳出循环\n\n
  * &emsp; 交换(当前结点, 最小孩子结点)\n
  */
-template <class TElement>
+template <typename TElement>
 void MinHeap<TElement>::SiftDown_(int index) {
-    // for loop 遍历索引index的后代结点
-    for (int child_index = 2 * index + 1; child_index < size_; index = child_index, child_index = child_index * 2 + 1) {
-        // if child_index(当前左孩子结点索引) + 1 < 堆大小 && 左孩子节点元素 > 右孩子结点元素
-        if (child_index + 1 < size_ && elements_[child_index] > elements_[child_index + 1]) {
-            child_index++;  // child_index调整为右孩子结点索引(自加1), 此时child_index元素为孩子结点中最小孩子元素
+    for (int child_index = 2 * index + 1; child_index < size_; index = child_index, child_index = child_index * 2 + 1) {    // for loop 遍历索引index的后代结点
+        if (child_index + 1 < size_ && elements_[child_index] > elements_[child_index + 1]) {                               // if 当前左孩子结点索引 + 1 < 堆大小 && 左孩子节点元素 > 右孩子结点元素
+            child_index++;                                                                                                  // child_index调整为右孩子结点索引(自加1)( 此时child_index元素为孩子结点中最小孩子元素)
         }
 
-        if (elements_[index] <= elements_[child_index]) {   // if index(当前结点索引)元素 <= 最小孩子元素
-          break;    // 跳出循环
+        if (elements_[index] <= elements_[child_index]) {                                                                   // if index(当前结点索引)元素 <= 最小孩子元素
+          break;                                                                                                            // 跳出循环
         }
 
-        Swap_(elements_[index], elements_[child_index]);    // 交换(当前结点, 最小孩子结点)
+        Swap_(elements_[index], elements_[child_index]);                                                                    // 交换(当前结点, 最小孩子结点)
     }
 }
 
@@ -215,20 +214,19 @@ void MinHeap<TElement>::SiftDown_(int index) {
  * -------
  *
  * -------
- * **for loop** 遍历索引index的祖先结点 :\n
+ * **for loop** 遍历索引index的祖先结点 :\n\n
  * &emsp; **if** 当前父节点元素 <= 当前结点元素 :\n
- * &emsp;&emsp; 退出循环\n
+ * &emsp;&emsp; 退出循环\n\n
  * &emsp; 交换(当前父节点, 当前结点)\n
  */
 template <typename TElement>
 void MinHeap<TElement>::SiftUp_(int index) {
-    // for loop 遍历索引index的祖先结点
-    for (int parent_index = (index - 1) / 2; parent_index >= 0; index = parent_index, parent_index = (index - 1) / 2) {
-        if (elements_[parent_index] <= elements_[index]) {      // if 当前父节点元素 <= 当前结点元素
-            break;                                              // 退出循环
+    for (int parent_index = (index - 1) / 2; parent_index >= 0; index = parent_index, parent_index = (index - 1) / 2) { // for loop 遍历索引index的祖先结点
+        if (elements_[parent_index] <= elements_[index]) {                                                              // if 当前父节点元素 <= 当前结点元素
+            break;                                                                                                      // 退出循环
         }
 
-        Swap_(elements_[parent_index], elements_[index]); // 交换(当前父节点, 当前结点)
+        Swap_(elements_[parent_index], elements_[index]);                                                               // 交换(当前父节点, 当前结点)
     }
 }
 
@@ -265,33 +263,37 @@ void MinHeap<TElement>::Swap_(TElement& element1, TElement& element2) {
  * ---
  *
  * ---
- * + **1 合法性判断**\n
+ * + **1 合法性判断**\n\n
  * **if** 堆满 :\n
- * &emsp; 返回false(无法插入)\n
- * + **2 数组末尾插入元素**\n
- * elements_[size_]元素赋值element\n
- * + **3 调整堆**\n
+ * &emsp; 返回false(无法插入)\n\n
+ * + **2 数组末尾插入元素**\n\n
+ * elements_[size_]元素赋值element\n\n
+ * + **3 调整堆**\n\n
  * 对索引size_位置元素(即element_[size_])执行SiftUp_\n
- * 堆size加1\n
+ * 堆size加1\n\n
+ * + **4 退出函数**\n\n
+ * 返回true\n
  */
 template <typename TElement>
 bool MinHeap<TElement>::Insert(const TElement& element) {
     // ---------- 1 合法性判断 ----------
 
-    if (size_ == capacity_) {   // if 堆满
-        return false;           //  返回false(无法插入)
+    if (size_ == capacity_) {                                                               // if 堆满
+        return false;                                                                       //  返回false(无法插入)
     }
 
     // ---------- 2 数组末尾插入元素 ----------
 
-    elements_[size_] = element; // elements_[size_]元素赋值element
+    elements_[size_] = element;                                                             // elements_[size_]元素赋值element
 
     // ---------- 3 调整堆 ----------
 
-    SiftUp_(size_);  // 对索引size_位置元素(即element_[size_])执行SiftUp_
-    size_++;                // 堆size加1
+    SiftUp_(size_);                                                                         // 对索引size_位置元素(即element_[size_])执行SiftUp_
+    size_++;                                                                                // 堆size加1
 
-    return true;
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                                            // 返回true
 }
 
 
@@ -316,29 +318,33 @@ bool MinHeap<TElement>::Insert(const TElement& element) {
  * 堆size_减1\n
  * + **4 调整堆**\n
  * 对堆顶执行SiftDown_\n
+ * + **5 退出函数**\n\n
+ * 返回true\n
  */
 template <typename TElement>
 bool MinHeap<TElement>::Pop(TElement& element) {
     // ---------- 1 合法性判断 ----------
 
-    if (!size_) {       // if 空堆
-        return false;   //  返回false
+    if (!size_) {                                                   // if 空堆
+        return false;                                               //  返回false
     }
 
     // ---------- 2 保存堆顶 ----------
 
-    element = elements_[0]; // element保存堆顶值
+    element = elements_[0];                                         // element保存堆顶值
 
     // ---------- 3 替换堆顶 ----------
 
-    elements_[0] = elements_[size_ - 1];    // elements_[size_ - 1](最后一个元素)替换elements_[0]
-    size_--;                                // 堆size_减1
+    elements_[0] = elements_[size_ - 1];                            // elements_[size_ - 1](最后一个元素)替换elements_[0]
+    size_--;                                                        // 堆size_减1
 
     // ---------- 4 调整堆 ----------
 
-    SiftDown_(0);   // 对堆顶执行SiftDown_
+    SiftDown_(0);                                                   // 对堆顶执行SiftDown_
 
-    return true;
+    // ---------- 5 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 
@@ -353,25 +359,29 @@ bool MinHeap<TElement>::Pop(TElement& element) {
  * -------
  *
  * -------
- * + **1 合法性判断**\n
+ * + **1 合法性判断**\n\n
  * **if** 空堆 :\n
- * &emsp; 返回false\n
- * + **2 堆顶赋值**\n
- * element保存堆顶值\n
+ * &emsp; 返回false\n\n
+ * + **2 堆顶赋值**\n\n
+ * element保存堆顶值\n\n
+ * + **3 退出函数**\n\n
+ * 返回true\n
  */
 template <typename TElement>
 bool MinHeap<TElement>::Top(TElement& element) {
     // ---------- 1 合法性判断 ----------
 
-    if (!size_) {       // if 空堆
-        return false;   // 返回false
+    if (!size_) {                                                   // if 空堆
+        return false;                                               // 返回false
     }
 
     // ---------- 2 堆顶赋值 ----------
 
-    element = elements_[0]; // element保存堆顶值
+    element = elements_[0];                                         // element保存堆顶值
 
-    return true;
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                    // 返回true
 }
 
 

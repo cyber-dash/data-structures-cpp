@@ -588,12 +588,12 @@ int String::BruteForceMatch(const String& pattern, int offset) const {
  * ```
  *
  * ---------
- * + **1 初始化**\n
+ * + **1 初始化**\n\n
  * 初始化i(模式化遍历索引)为0\n
  * starting_index为-1\n
  * next分配内存并初始化\n
  * next[0] 设为 -1\n\n
- * + **2 完成next数组设置**\n
+ * + **2 完成next数组设置**\n\n
  * **while loop** 遍历模式串 :\n
  * &emsp; **if** starting_index == -1 <b>||</b> 索引i和索引starting_index两个位置的字符相同 :\n
  * &emsp;&emsp; i向后移动1位\n
@@ -601,7 +601,7 @@ int String::BruteForceMatch(const String& pattern, int offset) const {
  * &emsp;&emsp; next[i] <-- starting_index\n
  * &emsp; **else**\n
  * &emsp;&emsp; starting_index <-- next[starting_index]\n\n
- * + **3 退出函数**\n
+ * + **3 退出函数**\n\n
  * 返回next数组\n
  */
 int* String::KmpNext() const {
