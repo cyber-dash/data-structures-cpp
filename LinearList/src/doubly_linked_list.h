@@ -121,14 +121,14 @@ private:
  * -----------
  * 
  * -----------
- * + **1 初始化头结点和尾结点**\n
+ * + **1 初始化头结点和尾结点**\n\n
  * head_分配内存并初始化\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n\n
  * tail_分配内存并初始化\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n\n
- * + **2 初始化头结点和尾结点**\n
+ * + **2 初始化头结点和尾结点**\n\n
  * head_的next(下一结点), 指向tail_\n
  * head_的prev(前一结点), 为NULL\n\n
  * tail_的next(下一结点), 为NULL\n
@@ -192,12 +192,12 @@ DoublyLinkedList<TData>::~DoublyLinkedList() {
  * ----
  * **for loop** 遍历指针cur, 从head_->next遍历到最后一个结点 :\n
  * &emsp; **if** 当前结点data等于参数data :\n
- * &emsp;&emsp; 返回cur\n
+ * &emsp;&emsp; 返回cur\n\n
  * return NULL(未搜索到时返回NULL)\n
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::Search(const TData& data) const {
-    for (DoublyLinkedNode<TData>* cur = head_->next; cur != NULL; cur = cur->next) {    // for loop** 遍历指针cur, 从head_->next遍历到最后一个结点
+    for (DoublyLinkedNode<TData>* cur = head_->next; cur != NULL; cur = cur->next) {    // for loop 遍历指针cur, 从head_->next遍历到最后一个结点
         if (cur->data == data) {                                                        // if 当前结点data等于参数data
             return cur;                                                                 // 返回cur
         }
@@ -241,13 +241,13 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchRecursive(const TData &d
  * --------------
  * 
  * --------------
- * + **1 空链表处理**\n
+ * + **1 空链表处理**\n\n
  * **if** 子链表首个结点为NULL :\n
  * &emsp; 返回NULL\n\n
- * + **2 子链表首个元素结点既是搜索结点的处理**\n
+ * + **2 子链表首个元素结点既是搜索结点的处理**\n\n
  * **if** 子链表首个元素结点的数据项 == data :\n
  * &emsp; 返回该结点(指针)\n\n
- * + **3 递归搜索**\n
+ * + **3 递归搜索**\n\n
  * 对sub_list_first_element->next(子链表首个元素结点的下一结点)递归调用SearchInSubListRecursive_, 返回结果\n
  */
 template<typename TData>
@@ -268,8 +268,7 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(Doub
 
     // ---------- 3 递归搜索 ----------
 
-    // 对sub_list_first_element->next(子链表首个元素结点的下一结点)递归调用SearchInSubListRecursive_, 返回结果
-    return SearchInSubListRecursive_(sub_list_first_element->next, data);
+    return SearchInSubListRecursive_(sub_list_first_element->next, data);       // 对sub_list_first_element->next(子链表首个元素结点的下一结点)递归调用SearchInSubListRecursive_, 返回结果
 }
 
 
@@ -285,22 +284,22 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(Doub
  * -------
  * 
  * -------
- * + **1 非法位置处理**\n
+ * + **1 非法位置处理**\n\n
  * **if** prev_pos > 链表长度 || prev_pos < 0 :\n
  * &emsp; 返回false\n\n
- * + **2 构造插入结点**\n
+ * + **2 构造插入结点**\n\n
  * 分配内存并初始化insertion_node(插入结点)\n
  * **if** 内存分配失败 :\n
  * &emsp; 返回false\n\n
- * + **3 插入**\n
+ * + **3 插入**\n\n
  * 获取prev_pos位置的结点prev_node(插入结点的前一结点)\n\n
  * 插入结点的next, 指向插入结点的前一结点的next\n
  * 插入结点的前一结点的next, 指向插入结点\n\n
  * 插入结点的下一结点的prev, 指向插入结点\n
  * 插入结点的prev, 指向插入结点的前一结点\n\n
- * + **4 调整长度**\n
+ * + **4 调整长度**\n\n
  * length_加1\n\n
- * + **5 退出函数**\n
+ * + **5 退出函数**\n\n
  * 返回true\n
  */
 template<typename TData>
@@ -349,23 +348,23 @@ bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * -------
  *
  * -------
- * + **1 非法位置处理**\n
+ * + **1 非法位置处理**\n\n
  * **if** pos < 1 || pos > 链表长度 :\n
- * &emsp; 返回NULL\n
- * + **2 遍历至pos位置结点**\n
+ * &emsp; 返回NULL\n\n
+ * + **2 遍历至pos位置结点**\n\n
  * 初始化cur(遍历指针), 指向head_->next\n
  * **for loop** 1至pos :\n
- * &emsp; cur指向cur的next结点\n
- * + **3 返回结果**\n
+ * &emsp; cur指向cur的next结点\n\n
+ * + **3 返回结果**\n\n
  * 返回cur\n
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
+
     // ---------- 1 非法位置处理 ----------
-    // if pos < 1 || pos > 链表长度
-    // 返回NULL
-    if (pos < 0 || pos > Length()) {
-        return NULL;
+
+    if (pos < 0 || pos > Length()) {                                        // if pos < 1 || pos > 链表长度
+        return NULL;                                                        // 返回NULL
     }
 
     // ---------- 2 遍历至pos位置结点 ----------
@@ -393,16 +392,16 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
  * -----------
  *
  * -----------
- * + **1 非法位置处理**\n
+ * + **1 非法位置处理**\n\n
  * **if** pos < 1 || pos > 链表长度 :\n
- * &emsp; 返回NULL\n
- * + **2 遍历至pos位置结点**\n
+ * &emsp; 返回NULL\n\n
+ * + **2 遍历至pos位置结点**\n\n
  * 初始化cur(遍历指针), 指向head_->next\n
  * **for loop** 1至pos :\n
- * &emsp; cur指向cur的next结点\n
- * + **3 取值**\n
- * 取cur->data值, 赋给参数data\n
- * + **4 退出函数**\n
+ * &emsp; cur指向cur的next结点\n\n
+ * + **3 取值**\n\n
+ * 取cur->data值, 赋给参数data\n\n
+ * + **4 退出函数**\n\n
  * 返回true\n
  */
 template<typename TData>
@@ -443,16 +442,16 @@ bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
  * --------
  *
  * --------
- * + **1 非法位置处理**\n
+ * + **1 非法位置处理**\n\n
  * **if** pos < 1 || pos > 链表长度 :\n
- * &emsp; 返回NULL\n
- * + **2 遍历至pos位置结点**\n
+ * &emsp; 返回NULL\n\n
+ * + **2 遍历至pos位置结点**\n\n
  * 初始化cur(遍历指针), 指向head_(头结点)\n
  * **for loop** 1至pos :\n
- * &emsp; cur指向cur的next结点\n
- * + **3 赋值**\n
- * data赋给cur->data\n
- * + **4 退出函数**\n
+ * &emsp; cur指向cur的next结点\n\n
+ * + **3 赋值**\n\n
+ * data赋给cur->data\n\n
+ * + **4 退出函数**\n\n
  * 返回true\n
  */
 template<typename TData>
@@ -493,24 +492,23 @@ bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
  * -------
  *
  * -------
- * + **1 非法位置处理**\n
+ * + **1 非法位置处理**\n\n
  * **if** pos < 0 || pos > 链表长度 :\n
  * &emsp; 返回false\n\n
- * + **2 遍历到待删除结点**\n
- * 调用GetNode获取待删除结点(指针)deletion_node\n\n
- * + **3 删除**\n
- * 初始化deletion_node指向待删除结点\n
+ * + **2 遍历到待删除结点**\n\n
+ * 调用GetNode获取待删除结点(指针)target_node\n\n
+ * + **3 删除**\n\n
  * <span style="color:#003153">3.1 调整指针\n</span>
  * 待删除结点的next(下一结点), 指向待删除结点的prev(前一结点)\n
  * 待删除结点的prev(前一结点), 指向待删除结点的next(下一结点)\n\n
  * <span style="color:#003153">3.2 取待删除结点的数据项\n</span>
  * 取待删除结点的data, 赋给参数data\n\n
  * <span style="color:#003153">3.3 释放内存\n</span>
- * 释放deletion_node\n
- * deletion_node置NULL\n\n
- * + **4 长度调整**\n
+ * 释放target_node\n
+ * target_node置NULL\n\n
+ * + **4 长度调整**\n\n
  * length_减1\n\n
- * + **5 退出函数**\n
+ * + **5 退出函数**\n\n
  * 返回true\n
  */
 template<typename TData>
@@ -524,20 +522,20 @@ bool DoublyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
 
     // ---------- 2 遍历到待删除结点 ----------
 
-    DoublyLinkedNode<TData>* deletion_node = this->GetNode(deletion_pos);                   // 调用GetNode获取待删除结点(指针)deletion_node
+    DoublyLinkedNode<TData>* target_node = this->GetNode(deletion_pos);                     // 调用GetNode获取待删除结点(指针)target_node
 
     // ----------3 删除 ----------
 
     // (3.1 调整指针)
-    deletion_node->next->prev = deletion_node->prev;                                        // 待删除结点的next(下一结点), 指向待删除结点的prev(前一结点)
-    deletion_node->prev->next = deletion_node->next;                                        // 待删除结点的prev(前一结点), 指向待删除结点的next(下一结点)
+    target_node->next->prev = target_node->prev;                                            // 待删除结点的next(下一结点), 指向待删除结点的prev(前一结点)
+    target_node->prev->next = target_node->next;                                            // 待删除结点的prev(前一结点), 指向待删除结点的next(下一结点)
 
     // (3.2 取待删除结点的数项)
-    data = deletion_node->data;                                                             // 取待删除结点的data, 赋给参数data
+    data = target_node->data;                                                               // 取待删除结点的data, 赋给参数data
 
     // (3.3 释放内存)
-    delete deletion_node;                                                                   // 释放deletion_node
-    deletion_node = NULL;                                                                   // deletion_node置NULL
+    delete target_node;                                                                     // 释放target_node
+    target_node = NULL;                                                                     // target_node置NULL
 
     // ---------- 4 长度调整 ----------
 
@@ -579,16 +577,16 @@ void DoublyLinkedList<TData>::Clear() {
  * ---
  *
  * ---
- * + **1 空链表处理**\n
+ * + **1 空链表处理**\n\n
  * **if** 空链表 :\n
  * &emsp; 打印"Empty list"\n
  * &emsp; 退出函数\n\n
- * + **2 打印**\n
- * 初始化cur(遍历指针), 指向head_->next\n
+ * + **2 打印**\n\n
+ * 初始化cur(遍历指针), 指向head_->next\n\n
  * **for loop** 位置从1到length_ :\n
- * &emsp; 打印当前结点的data\n
+ * &emsp; 打印当前结点的data\n\n
  * &emsp; **if** 不是最后一个结点: \n
- * &emsp;&emsp; 打印 "<-->"\n
+ * &emsp;&emsp; 打印 "<-->"\n\n
  * &emsp; cur指向cur->next\n
  */
 template<typename TData>

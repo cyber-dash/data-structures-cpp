@@ -120,32 +120,32 @@ private:
  * </span>
  *
  * ---
- * + **1 释放结点内存**\n
+ * + **1 释放结点内存**\n\n
  * **while** first_(首元素结点)不为NULL:\n\n
  * &emsp; <span style="color:#003153">(首结点调整)\n</span>
- * &emsp; 声明cur_deletion_node(本轮删除的结点), 指向first_\n
+ * &emsp; 声明cur_target_node(本轮删除的结点), 指向first_\n
  * &emsp; first_指向cur->next\n\n
- * &emsp; 释放cur_deletion_node指向的结点\n
- * &emsp; cur_deletion_node置NULL\n\n
- * + **2 调整长度**\n
+ * &emsp; 释放cur_target_node指向的结点\n
+ * &emsp; cur_target_node置NULL\n\n
+ * + **2 调整长度**\n\n
  * length_设置为0\n
  */
 template<typename TData>
 void CircularDoublyLinkedList<TData>::Clear() {
     // ---------- 1 释放结点内存 ----------
 
-    while (first_ != NULL) {                                                // while first_(首元素结点)不为NULL
+    while (first_ != NULL) {                                                                            // while first_(首元素结点)不为NULL
         // (删除当前首结点)
-        CircularDoublyLinkedNode<TData>* cur_deletion_node = this->first_;  // 声明cur_deletion_node(本轮删除的结点), 指向first_
-        first_ = cur_deletion_node->next;                                   // first_指向cur->next
+        CircularDoublyLinkedNode<TData>* cur_target_node = this->first_;                                // 声明cur_target_node(本轮删除的结点), 指向first_
+        first_ = cur_target_node->next;                                                                 // first_指向cur->next
 
-        delete cur_deletion_node;                                           // 释放cur_deletion_node指向的结点
-        cur_deletion_node = NULL;                                           // deletion_node置NULL
+        delete cur_target_node;                                                                         // 释放cur_target_node指向的结点
+        cur_target_node = NULL;                                                                         // target_node置NULL
     }
 
     // ---------- 2 调整长度 ----------
 
-    this->length_ = 0;                                                      // length_设置为0
+    this->length_ = 0;                                                                                  // length_设置为0
 }
 
 
@@ -176,23 +176,23 @@ CircularDoublyLinkedList<TData>::~CircularDoublyLinkedList() {
  * ---
  *
  * ---
- * 初始化cur(遍历指针), 指向first_(首个结点)\n
+ * 初始化cur(遍历指针), 指向first_(首个结点)\n\n
  * **for loop** 遍历链表每个结点, 从pos(位置)等于1开始, 每次遍历结束cur指向自身next :\n
  * **if** cur->data等于参数data :\n
- * &emsp; 返回cur\n
+ * &emsp; 返回cur\n\n
  * 返回NULL(没有对应结点)\n
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const TData& data) {
-    CircularDoublyLinkedNode<TData>* cur = this->first_;                // 初始化cur(遍历指针), 指向first_(首个结点)
+    CircularDoublyLinkedNode<TData>* cur = this->first_;                                        // 初始化cur(遍历指针), 指向first_(首个结点)
 
-    for (int pos = 1; pos <= this->Length(); pos++, cur = cur->next) {  // for loop 遍历链表每个结点, 从pos(位置)等于1开始, 每次遍历结束cur指向自身next
-        if (cur->data == data) {                                        // if cur->data等于参数data
-            return cur;                                                 // 返回cur
+    for (int pos = 1; pos <= this->Length(); pos++, cur = cur->next) {                          // for loop 遍历链表每个结点, 从pos(位置)等于1开始, 每次遍历结束cur指向自身next
+        if (cur->data == data) {                                                                // if cur->data等于参数data
+            return cur;                                                                         // 返回cur
         }
     }
 
-    return NULL;                                                        // 返回NULL(没有对应结点)
+    return NULL;                                                                                // 返回NULL(没有对应结点)
 }
 
 
@@ -212,17 +212,17 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
  * </span>
  *
  * --------------
- * + **1 非法步数处理** \n
+ * + **1 非法步数处理** \n\n
  * **if** step < 0 || step >= 链表长度 :\n
- * &emsp; 返回NULL\n
- * + **2 按方向遍历至pos位置** \n
- * 初始化cur(遍历指针), 指向first_(首结点) \n
+ * &emsp; 返回NULL\n\n
+ * + **2 按方向遍历至pos位置** \n\n
+ * 初始化cur(遍历指针), 指向first_(首结点) \n\n
  * **for loop** 循环step次 :\n
  * &emsp; **if** 向prev方向 :\n
  * &emsp;&emsp; cur指向cur->prev\n
  * &emsp; **else** (向next方向) :\n
- * &emsp;&emsp; cur指向cur->next\n
- * + **3 返回结果** \n
+ * &emsp;&emsp; cur指向cur->next\n\n
+ * + **3 返回结果** \n\n
  * 返回cur\n
  */
 template<typename TData>
@@ -230,25 +230,25 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirec
 
     // ---------- 1 非法步数处理 ----------
 
-    if (step < 0 || step >= length_) {                              // if step < 0 || step >= 链表长度
-        return NULL;                                                // 返回NULL
+    if (step < 0 || step >= length_) {                                                  // if step < 0 || step >= 链表长度
+        return NULL;                                                                    // 返回NULL
     }
 
     // ---------- 2 按方向遍历至pos位置 ----------
 
-    CircularDoublyLinkedNode<TData>* cur = first_;                  // 初始化cur(遍历指针), 指向first_(首结点)
+    CircularDoublyLinkedNode<TData>* cur = first_;                                      // 初始化cur(遍历指针), 指向first_(首结点)
 
-    for (int i = 1; i <= step; i++) {                               // for loop 循环step次
-        if (direction == BACKWARD_DIRECTION) {                      // if 向prev方向
-            cur = cur->prev;                                        // cur指向cur->prev
-        } else {                                                    // else (向next方向)
-            cur = cur->next;                                        // cur指向cur->next
+    for (int i = 1; i <= step; i++) {                                                   // for loop 循环step次
+        if (direction == BACKWARD_DIRECTION) {                                          // if 向prev方向
+            cur = cur->prev;                                                            // cur指向cur->prev
+        } else {                                                                        // else (向next方向)
+            cur = cur->next;                                                            // cur指向cur->next
         }
     }
 
     // ---------- 3 返回结果 ----------
 
-    return cur;                                                     // 返回cur
+    return cur;                                                                         // 返回cur
 }
 
 
@@ -262,10 +262,10 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirec
  * -------------------
  *
  * -------------------
- * + **1 pos为0情况处理**\n
+ * + **1 pos为0情况处理**\n\n
  * **if** pos等于0 :\n
- * &emsp; 返回first_->prev\n
- * + **2 调用GetDataByDirection**\n
+ * &emsp; 返回first_->prev\n\n
+ * + **2 调用GetDataByDirection**\n\n
  * 计算step = pos - 1\n
  * 按照FORWARD_DIRECTION方向, 调用GetDataByDirection\n
  */
@@ -299,23 +299,23 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNode(int po
  * 在pos位置之后的位置插入
  *
  * -------
- * + **1 非法位置判断**\n
+ * + **1 非法位置判断**\n\n
  * **if** prev_pos < 0 || prev_pos > 链表长度 :\n
- * &emsp; 返回false\n
- * + **2 构造插入结点**\n
+ * &emsp; 返回false\n\n
+ * + **2 构造插入结点**\n\n
  * 分配内存并初始化插入结点\n
  * **if** 内存分配失败 :\n
- * &emsp; 抛出bad_alloc()\n
- * + **3 空链表插入**\n
+ * &emsp; 抛出bad_alloc()\n\n
+ * + **3 空链表插入**\n\n
  * **if** 空链表 :\n
- * &emsp; first_指向insertion_node\n
+ * &emsp; first_指向insertion_node\n\n
  * &emsp; insertion_node->next指向自身\n
  * &emsp; insertion_node->prev指向自身\n
- * &emsp; 链表长度设置为1\n
- * &emsp; 返回true\n
- * + **4 插入**\n
+ * &emsp; 链表长度设置为1\n\n
+ * &emsp; 返回true\n\n
+ * + **4 插入**\n\n
  * <span style="color:#003153">4.1 获取prev_node(指向插入位置前一位置结点的指针)\n</span>
- * 调用GetNode获取prev_node\n
+ * 调用GetNode获取prev_node\n\n
  * <span style="color:#003153">4.2 插入\n</span>
  * 插入结点的next, 指向插入结点的前一结点的next\n
  * 插入结点的前一结点的next, 指向插入结点\n\n
@@ -323,10 +323,10 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNode(int po
  * 插入结点的prev, 指向插入结点的前一结点\n\n
  * <span style="color:#003153">4.3 插入结点作为首结点的情况\n</span>
  * **if** prev_pos为0(插入结点作为首结点) :\n
- * &emsp; first_指向新插入的结点\n
+ * &emsp; first_指向新插入的结点\n\n
  * <span style="color:#003153">4.4 调整长度\n</span>
  * length_加1\n\n
- * + **5 返回**\n
+ * + **5 返回**\n\n
  * 返回true\n
  */
 template<typename TData>
@@ -334,53 +334,52 @@ bool CircularDoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
 
     // ---------- 1 非法位置判断 ----------
 
-    if (prev_pos < 0 || prev_pos > length_) {                               // if prev_pos < 0 || prev_pos > 链表长度
-        return false;                                                       // 返回false
+    if (prev_pos < 0 || prev_pos > length_) {                                                       // if prev_pos < 0 || prev_pos > 链表长度
+        return false;                                                                               // 返回false
     }
 
     // ---------- 2 构造插入结点 ----------
 
-    // 分配内存并初始化插入结点
-    CircularDoublyLinkedNode<TData>* insertion_node = new CircularDoublyLinkedNode<TData>(data);
-    if (insertion_node == NULL) {                                           // if 内存分配失败
-        throw bad_alloc();                                                  // 抛出bad_alloc()
+    CircularDoublyLinkedNode<TData>* insertion_node = new CircularDoublyLinkedNode<TData>(data);    // 分配内存并初始化插入结点
+    if (insertion_node == NULL) {                                                                   // if 内存分配失败
+        throw bad_alloc();                                                                          // 抛出bad_alloc()
     }
 
     // ---------- 3 空链表插入 ----------
 
-    if (first_ == NULL) {                                                   // if 空链表
-        first_ = insertion_node;                                            // first_指向insertion_node
+    if (first_ == NULL) {                                                                           // if 空链表
+        first_ = insertion_node;                                                                    // first_指向insertion_node
 
-        insertion_node->next = insertion_node;                              // insertion_node->next指向自身
-        insertion_node->prev = insertion_node;                              // insertion_node->prev指向自身
+        insertion_node->next = insertion_node;                                                      // insertion_node->next指向自身
+        insertion_node->prev = insertion_node;                                                      // insertion_node->prev指向自身
 
-        this->length_ = 1;                                                  // 链表长度设置为1
+        this->length_ = 1;                                                                          // 链表长度设置为1
 
-        return true;                                                        // 返回true
+        return true;                                                                                // 返回true
     }
 
     // ---------- 4 插入 ----------
 
     // -- 4.1 获取prev_node(指向插入位置前一位置结点的指针) --
-    CircularDoublyLinkedNode<TData>* prev_node = this->GetNode(prev_pos);   // 调用GetNode获取prev_node
+    CircularDoublyLinkedNode<TData>* prev_node = this->GetNode(prev_pos);                           // 调用GetNode获取prev_node
 
     // -- 4.2 插入 --
-    insertion_node->next = prev_node->next;                                 // 插入结点的next, 指向插入结点的前一结点的next
-    prev_node->next = insertion_node;                                       // 插入结点的前一结点的next, 指向插入结点
-    insertion_node->next->prev = insertion_node;                            // 插入结点的下一结点的prev, 指向插入结点
-    insertion_node->prev = prev_node;                                       // 插入结点的prev, 指向插入结点的前一结点
+    insertion_node->next = prev_node->next;                                                         // 插入结点的next, 指向插入结点的前一结点的next
+    prev_node->next = insertion_node;                                                               // 插入结点的前一结点的next, 指向插入结点
+    insertion_node->next->prev = insertion_node;                                                    // 插入结点的下一结点的prev, 指向插入结点
+    insertion_node->prev = prev_node;                                                               // 插入结点的prev, 指向插入结点的前一结点
 
     // -- 4.3 插入结点作为首结点的情况 --
-    if (prev_pos == 0) {                                                    // if prev_pos为0(插入结点作为首结点)
-        first_ = insertion_node;                                            // first_指向新插入的结点
+    if (prev_pos == 0) {                                                                            // if prev_pos为0(插入结点作为首结点)
+        first_ = insertion_node;                                                                    // first_指向新插入的结点
     }
 
     // -- 4.4 调整长度 --
-    this->length_++;                                                        // length_加1
+    this->length_++;                                                                                // length_加1
 
     // ---------- 5 返回 ----------
 
-    return true;                                                            // 返回true
+    return true;                                                                                    // 返回true
 }
 
 
@@ -401,32 +400,32 @@ bool CircularDoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * **if** first_为NULL :\n
  * &emsp; 返回false\n\n
  * + **2 获取结点指针**\n
- * 调用GetNodeByDirection, 获取deletion_node(指向待删除结点的指针)\n
- * **if** deletion_node为NULL :\n
+ * 调用GetNodeByDirection, 获取target_node(指向待删除结点的指针)\n
+ * **if** target_node为NULL :\n
  * &emsp; 返回false\n\n
- * + **3 只有1个结点的情况处理**\n
+ * + **3 只有1个结点的情况处理**\n\n
  * **if** 链表长度为1 :\n
- * &emsp; deletion_node的data赋给参数data\n
- * &emsp; 释放deletion_node\n
- * &emsp; deletion_node置NULL\n
- * &emsp; length_设为0\n
- * &emsp; 返回true\n
- * + **4 删除**\n
- * <span style="color:#003153">4.1 如果删除首结点, first_调整\n</span>
+ * &emsp; target_node的data赋给参数data\n\n
+ * &emsp; 释放target_node\n
+ * &emsp; target_node置NULL\n\n
+ * &emsp; length_设为0\n\n
+ * &emsp; 返回true\n\n
+ * + **4 删除**\n\n
+ * <span style="color:#FF7638">4.1 如果删除首结点, first_调整\n</span>
  * **if** 删除首结点 :\n
  * &emsp; **if** next方向 :\n
- * &emsp;&emsp; first_指向deletion_node->next\n
+ * &emsp;&emsp; first_指向target_node->next\n
  * &emsp; **else if** next方向 :\n
- * &emsp;&emsp; first_指向deletion_node->next\n\n
- * <span style="color:#003153">4.2 删除操作\n</span>
- * deletion_node的下一结点的prev, 指向deletion_node的前一结点\n
- * deletion_node的前一结点的prev, 指向deletion_node的下一结点\n
- * deletion_node的data, 赋给参数data\n\n
- * 释放deletion_node\n
- * deletion_node置为NULL\n\n
- * <span style="color:#003153">4.4 调整长度\n</span>
+ * &emsp;&emsp; first_指向target_node->next\n\n
+ * <span style="color:#FF7638">4.2 删除操作\n</span>
+ * target_node的下一结点的prev, 指向target_node的前一结点\n
+ * target_node的前一结点的prev, 指向target_node的下一结点\n\n
+ * target_node的data, 赋给参数data\n\n
+ * 释放target_node\n
+ * target_node置为NULL\n\n
+ * <span style="color:#FF7638">4.3 调整长度\n</span>
  * 链表长度减1\n\n
- * + **5 返回结果**\n
+ * + **5 返回结果**\n\n
  * 返回true\n
  */
 template<typename TData>
@@ -434,57 +433,56 @@ bool CircularDoublyLinkedList<TData>::RemoveByDirection(int step, TData &data, i
 
     // --------- 1 非法情况处理 ---------
 
-    if (first_ == NULL) {                                   // if first_为NULL
-        return false;                                       // 返回false
+    if (first_ == NULL) {                                                                       // if first_为NULL
+        return false;                                                                           // 返回false
     }
 
     // --------- 2 获取结点指针 ---------
 
-    // 调用GetNodeByDirection, 获取deletion_node(指向待删除结点的指针)
-    CircularDoublyLinkedNode<TData>* deletion_node = GetNodeByDirection(step, direction);
-    if (deletion_node == NULL) {                            // if deletion_node为NULL
-        return false;                                       // 返回false
+    CircularDoublyLinkedNode<TData>* target_node = GetNodeByDirection(step, direction);         // 调用GetNodeByDirection, 获取target_node(指向待删除结点的指针)
+    if (target_node == NULL) {                                                                  // if target_node为NULL
+        return false;                                                                           // 返回false
     }
 
     // --------- 3 只有1个结点的情况处理 ---------
 
-    if (length_ == 1) {                                     // if 链表长度为1
-        data = deletion_node->data;                         // deletion_node的data赋给参数data
+    if (length_ == 1) {                                                                         // if 链表长度为1
+        data = target_node->data;                                                               // target_node的data赋给参数data
 
-        delete deletion_node;                               // 释放deletion_node
-        this->first_ = NULL;                                // deletion_node置NULL
+        delete target_node;                                                                     // 释放target_node
+        this->first_ = NULL;                                                                    // target_node置NULL
 
-        length_ = 0;                                        // length_设为0
+        length_ = 0;                                                                            // length_设为0
 
-        return true;                                        // 返回true
+        return true;                                                                            // 返回true
     }
 
     // --------- 4 删除 ---------
 
-    // -- 4.1 如果删除首结点, first_调整 --
-    if (deletion_node == first_) {                          // if 删除首结点
-        if (direction == FORWARD_DIRECTION) {               // if next方向
-            first_ = deletion_node->next;                   // first_指向deletion_node->next
-        } else if (direction == BACKWARD_DIRECTION) {       // else if next方向
-            first_ = deletion_node->prev;                   // first_指向deletion_node->next
+    // ( 4.1 如果删除首结点, first_调整 )
+    if (target_node == first_) {                                                                // if 删除首结点
+        if (direction == FORWARD_DIRECTION) {                                                   // if next方向
+            first_ = target_node->next;                                                         // first_指向target_node->next
+        } else if (direction == BACKWARD_DIRECTION) {                                           // else if next方向
+            first_ = target_node->prev;                                                         // first_指向target_node->next
         }
     }
 
-    // -- 4.2 删除操作 --
-    deletion_node->next->prev = deletion_node->prev;        // deletion_node的下一结点的prev, 指向deletion_node的前一结点
-    deletion_node->prev->next = deletion_node->next;        // deletion_node的前一结点的prev, 指向deletion_node的下一结点
+    // ( 4.2 删除操作 )
+    target_node->next->prev = target_node->prev;                                                // target_node的下一结点的prev, 指向target_node的前一结点
+    target_node->prev->next = target_node->next;                                                // target_node的前一结点的prev, 指向target_node的下一结点
 
-    data = deletion_node->data;                             // deletion_node的data, 赋给参数data
+    data = target_node->data;                                                                   // target_node的data, 赋给参数data
 
-    delete deletion_node;                                   // 释放deletion_node
-    deletion_node = NULL;                                   // deletion_node置为NULL
+    delete target_node;                                                                         // 释放target_node
+    target_node = NULL;                                                                         // target_node置为NULL
 
-    // -- 4.4 调整长度 --
-    this->length_--;                                        // 链表长度减1
+    // ( 4.3 调整长度 )
+    this->length_--;                                                                            // 链表长度减1
 
     // --------- 5 返回结果 ---------
 
-    return true;                                            // 返回true
+    return true;                                                                                // 返回true
 }
 
 
@@ -505,11 +503,9 @@ bool CircularDoublyLinkedList<TData>::RemoveByDirection(int step, TData &data, i
  */
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
-    // 初始化step等于deletion_pos - 1
-    int step = deletion_pos - 1;
+    int step = deletion_pos - 1;                                                                    // 初始化step等于deletion_pos - 1
 
-    // 调用RemoveByDirection, 返回执行结果
-    return this->RemoveByDirection(step, data, CircularDoublyLinkedList::FORWARD_DIRECTION);
+    return this->RemoveByDirection(step, data, CircularDoublyLinkedList::FORWARD_DIRECTION);        // 调用RemoveByDirection, 返回执行结果
 }
 
 
@@ -589,16 +585,16 @@ bool CircularDoublyLinkedList<TData>::GetData(int pos, TData& data) const {
  * ----------
  *
  * ----------
- * + **1 非法情况处理**\n
+ * + **1 非法情况处理**\n\n
  * **if** pos < 1 || pos > 链表长度 :\n
  * &emsp; 返回false\n\n
- * + **2 遍历至pos位置结点**\n
+ * + **2 遍历至pos位置结点**\n\n
  * 初始化cur(遍历指针), 指向首结点\n
  * **for loop** 遍历pos - 1次 :\n
  * &emsp; cur指向cur->next\n\n
- * + **3 赋值**\n
+ * + **3 赋值**\n\n
  * 参数data赋给cur->data\n\n
- * + **4 退出函数**\n
+ * + **4 退出函数**\n\n
  * 返回true\n
  */
 template<typename TData>
