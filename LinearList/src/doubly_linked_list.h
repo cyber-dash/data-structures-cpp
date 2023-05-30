@@ -288,7 +288,7 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(Doub
  * **if** prev_pos > 链表长度 || prev_pos < 0 :\n
  * &emsp; 返回false\n\n
  * + **2 构造插入结点**\n\n
- * 分配内存并初始化insertion_node(插入结点)\n
+ * 分配内存并初始化new_node(插入结点)\n
  * **if** 内存分配失败 :\n
  * &emsp; 返回false\n\n
  * + **3 插入**\n\n
@@ -312,8 +312,8 @@ bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
     }
 
     // ---------- 2 构造插入结点 ----------
-    DoublyLinkedNode<TData>* insertion_node = new DoublyLinkedNode<TData>(data);    // 分配内存并初始化insertion_node(插入结点)
-    if (!insertion_node) {
+    DoublyLinkedNode<TData>* new_node = new DoublyLinkedNode<TData>(data);          // 分配内存并初始化new_node(插入结点)
+    if (!new_node) {
         return false;                                                               // if 内存分配失败
     }
 
@@ -321,11 +321,11 @@ bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
 
     DoublyLinkedNode<TData>* prev_node = this->GetNode(prev_pos);                   // 获取prev_pos位置的结点prev_node(插入结点的前一结点)
 
-    insertion_node->next = prev_node->next;                                         // 插入结点的next, 指向插入结点的前一结点的next
-    prev_node->next = insertion_node;                                               // 插入结点的前一结点的next, 指向插入结点
+    new_node->next = prev_node->next;                                               // 插入结点的next, 指向插入结点的前一结点的next
+    prev_node->next = new_node;                                                     // 插入结点的前一结点的next, 指向插入结点
 
-    insertion_node->next->prev = insertion_node;                                    // 插入结点的下一结点的prev, 指向插入结点
-    insertion_node->prev = prev_node;                                               // 插入结点的prev, 指向插入结点的前一结点
+    new_node->next->prev = new_node;                                                // 插入结点的下一结点的prev, 指向插入结点
+    new_node->prev = prev_node;                                                     // 插入结点的prev, 指向插入结点的前一结点
 
     // ---------- 4 调整长度 ----------
 
@@ -512,17 +512,17 @@ bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
  * 返回true\n
  */
 template<typename TData>
-bool DoublyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
+bool DoublyLinkedList<TData>::Remove(int target_pos, TData& data) {
 
     // ---------- 1 非法位置处理 ----------
 
-    if (deletion_pos > Length() || deletion_pos < 1) {                                      // if pos < 0 || pos > 链表长度
+    if (target_pos > Length() || target_pos < 1) {                                          // if pos < 0 || pos > 链表长度
         return false;                                                                       // 返回false
     }
 
     // ---------- 2 遍历到待删除结点 ----------
 
-    DoublyLinkedNode<TData>* target_node = this->GetNode(deletion_pos);                     // 调用GetNode获取待删除结点(指针)target_node
+    DoublyLinkedNode<TData>* target_node = this->GetNode(target_pos);                       // 调用GetNode获取待删除结点(指针)target_node
 
     // ----------3 删除 ----------
 

@@ -422,19 +422,19 @@ bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
  * + **1 非法情况判断**\n
  * **if** last_index_等于-1 :\n
  * &emsp; 返回false\n
- * **if** deletion_pos < 1 或者 deletion_pos > Length() :\n
+ * **if** target_pos < 1 或者 target_pos > Length() :\n
  * &emsp; 返回false\n
  * + **2 保存被删除元素的数据项**\n
- * mem_data_[deletion_pos - 1]赋给参数data\n
+ * mem_data_[target_pos - 1]赋给参数data\n
  * + **3 删除**\n
- * **for loop** 遍历mem_data_索引deletion_pos到last_index_ :\n
+ * **for loop** 遍历mem_data_索引target_pos到last_index_ :\n
  * &emsp; mem_data_[i - 1] <--- mem_data_[i]\n
  * last_index_减1\n
  * + **4 退出函数**\n
  * 返回true\n
  */
 template<typename TData>
-bool SeqList<TData>::Remove(int deletion_pos, TData& data) {
+bool SeqList<TData>::Remove(int target_pos, TData& data) {
 
     // ---------- 1 非法情况判断 ----------
 
@@ -442,17 +442,17 @@ bool SeqList<TData>::Remove(int deletion_pos, TData& data) {
         return false;                                                   // 返回false
     }
 
-    if (deletion_pos < 1 || deletion_pos > this->Length()) {            // if deletion_pos < 1 或者 deletion_pos > Length()
+    if (target_pos < 1 || target_pos > this->Length()) {                // if target_pos < 1 或者 target_pos > Length()
         return false;                                                   // 返回false
     }
 
     // ---------- 2 保存被删除元素的数据项 ----------
 
-    data = mem_data_[deletion_pos - 1];                                 // mem_data_[deletion_pos - 1]赋给参数data
+    data = mem_data_[target_pos - 1];                                   // mem_data_[target_pos - 1]赋给参数data
 
     // ---------- 3 删除 ----------
 
-    for (int i = deletion_pos; i <= last_index_; i++) {                 // for loop 遍历mem_data_索引deletion_pos到last_index_
+    for (int i = target_pos; i <= last_index_; i++) {                   // for loop 遍历mem_data_索引target_pos到last_index_
         mem_data_[i - 1] = mem_data_[i];                                // mem_data_[i - 1] <--- mem_data_[i]
     }
 

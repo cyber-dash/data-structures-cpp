@@ -82,7 +82,7 @@ public:
     // 插入(结点)
     bool Insert(int prev_pos, LinkedNode<TData>* node);
     // 删除(结点)元素
-    bool Remove(int deletion_pos, TData& data);
+    bool Remove(int target_pos, TData& data);
     // 判断是否为空链表
     bool IsEmpty() const;
     // 打印链表
@@ -193,11 +193,9 @@ SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& src_lin
  */
 template<typename TData>
 SinglyLinkedList<TData>::~SinglyLinkedList() {
-    // ---------- 1 清空链表 ----------
-    this->Clear();
+    this->Clear();                                                          // 清空链表
 
-    // ---------- 2 释放head_指针并置NULL ----------
-    delete this->head_;
+    delete this->head_;                                                     // 释放head_指针并置NULL
     this->head_ = NULL;
 }
 
@@ -322,13 +320,16 @@ void SinglyLinkedList<TData>::Clear() {
     while (this->head_->next != NULL) {                                                 // while first_->next存在 :
 
         // ----- I first_->next指向head_->next->next -----
+
         LinkedNode<TData>* cur = this->head_->next;                                     // 声明指针cur, 指向head_->next
         this->head_->next = cur->next;                                                  // first_->next指向cur->next
 
         // ----- II 删除head_->next -----
+
         delete cur;                                                                     // 释放cur指向的结点
 
         // ----- III 调整链表长度 -----
+
         this->length_--;                                                                // 链表长度减1
     }
 }
@@ -357,16 +358,18 @@ template<typename TData>
 void SinglyLinkedList<TData>::Print() {
 
     // ----- I 空链表打印 -----
-    if (this->head_->next == NULL) {        // if first_->next为NULL:
-        cout<<"Empty list"<<endl;           // 打印Empty list
+
+    if (this->head_->next == NULL) {                                                    // if first_->next为NULL:
+        cout<<"Empty list"<<endl;                                                       // 打印Empty list
         return;
     }
 
     // ----- II 非空链表打印 -----
-    LinkedNode<TData>* cur = Head()->next;  // 声明遍历指针cur, 并初始化指向head_->next
-    while (cur != NULL) {                   // while cur不为NULL:
-        cout << cur->data << " ";           // 屏幕打印cur指向结点的数据项
-        cur = cur->next;                    // cur指向下一结点cur->next
+
+    LinkedNode<TData>* cur = Head()->next;                                              // 声明遍历指针cur, 并初始化指向head_->next
+    while (cur != NULL) {                                                               // while cur不为NULL:
+        cout << cur->data << " ";                                                       // 屏幕打印cur指向结点的数据项
+        cur = cur->next;                                                                // cur指向下一结点cur->next
     }
 
     cout << endl;
@@ -661,16 +664,16 @@ LinkedNode<TData>* SinglyLinkedList<TData>::GetNode(int pos) {
  * &emsp; 链表长度减1\n
  */
 template<typename TData>
-bool SinglyLinkedList<TData>::Remove(int deletion_pos, TData& data) {
+bool SinglyLinkedList<TData>::Remove(int target_pos, TData& data) {
 
     // ----- I 非法条件处理 -----
-    if (this->Length() == 0 || deletion_pos < 1 || deletion_pos > this->Length()) {     // if 空链表 或者 pos < 1 或者 pos > Length():
+    if (this->Length() == 0 || target_pos < 1 || target_pos > this->Length()) {         // if 空链表 或者 pos < 1 或者 pos > Length():
         return false;                                                                   // 返回false
     }
 
     // ----- II 遍历至pos位置的前驱结点(pos - 1位置) -----
     LinkedNode<TData>* cur = this->head_;                                               // 声明遍历指针cur, 并初始化指向Head()
-    for (int i = 1; i < deletion_pos; i++) {                                            // for loop 循环pos - 1次:
+    for (int i = 1; i < target_pos; i++) {                                              // for loop 循环pos - 1次:
         cur = cur->next;                                                                // cur指向cur->next
     }
 

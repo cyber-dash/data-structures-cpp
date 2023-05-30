@@ -127,15 +127,13 @@ private:
  * ------------
  *
  * ------------
- * + **1 初始化成员变量**\n
+ * + **1 初始化成员变量**\n\n
  * capacity_(容量)使用参数进行初始化\n
- * length_(当前长度)初始化为0\n
- * \n
+ * length_(当前长度)初始化为0\n\n
  * mem_data_分配内存并初始化, capacity_ + 1个元素, 首元素为头结点\n
  * **if** mem_data_内存分配失败 :\n
- * &emsp; 抛出bad_alloc()异常\n
- * \n
- * + **2 初始化结点**\n
+ * &emsp; 抛出bad_alloc()异常\n\n
+ * + **2 初始化结点**\n\n
  * HEAD结点的next指向HEAD<b>(0, 自身)</b>\n
  * **for loop** 数组索引从1到capacity :\n
  * &emsp; 当前数组元素的next值为NONE<b>(-1, 表示该数组元素不在静态链表中使用)</b>\n
