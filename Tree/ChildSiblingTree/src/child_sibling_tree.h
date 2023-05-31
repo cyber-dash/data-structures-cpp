@@ -279,10 +279,10 @@ void ChildSiblingTree<TData>::PreOrderOfSubTreeRecursive_(ChildSiblingNode<TData
  * ----------------
  *
  * ----------------
- * + **1 空树处理**\n
+ * + **1 空树处理**\n\n
  * **if** 空树 :\n
- * &emsp; 返回\n
- * + **2 递归**\n
+ * &emsp; 返回\n\n
+ * + **2 递归**\n\n
  * 对长子结点递归后根遍历\n
  * 访问当前子树根结点\n
  * 对下一兄弟结点递归后根遍历\n
@@ -318,17 +318,17 @@ void ChildSiblingTree<TData>::PostOrderOfSubTreeRecursive_(ChildSiblingNode<TDat
  * ----------
  *
  * ----------
- * + **1 空树处理**\n
+ * + **1 空树处理**\n\n
  * **if** 空树 :\n
- * &emsp; 返回\n
- * + **2 队列初始化**\n
+ * &emsp; 返回\n\n
+ * + **2 队列初始化**\n\n
  * 声明node_queue(结点队列)\n
- * 子树根结点入队\n
- * + **3 使用队列进行遍历**\n
+ * 子树根结点入队\n\n
+ * + **3 使用队列进行遍历**\n\n
  * **while loop** 队列不为空 :\n
  * &emsp; 取队头结点front_node\n
- * &emsp; 队头出队\n
- * &emsp; 访问结点\n
+ * &emsp; 队头出队\n\n
+ * &emsp; 访问结点\n\n
  * &emsp; **while loop** 遍历front_node的所有孩子结点 :\n
  * &emsp;&emsp; 当前孩子结点入队\n
  */
@@ -415,14 +415,14 @@ int ChildSiblingTree<TData>::NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData
  * -----------------------------
  *
  * -----------------------------
- * + **1 空树处理**\n
+ * + **1 空树处理**\n\n
  * **if** 空树 :\n
- * &emsp; 返回0\n
- * + **2 递归**\n
+ * &emsp; 返回0\n\n
+ * + **2 递归**\n\n
  * 求self_height, 自身(以node为根结点的子树)的高度\n
  * 求max_younger_sibling_height, 所有弟弟子树的最大的高度\n
- * 取max_height, 为MAX(self_height, max_younger_sibling_height)\n
- * + **3 返回结果**\n
+ * 取max_height, 为MAX(self_height, max_younger_sibling_height)\n\n
+ * + **3 返回结果**\n\n
  * 返回max_height\n
  */
 template <typename TData>
@@ -458,30 +458,26 @@ int ChildSiblingTree<TData>::MaxHeightWithYoungerSiblingTreesRecursive_(ChildSib
  * ----------------------------------
  *
  * ----------------------------------
- * + **1 建树结束处理**\n
+ * + **1 建树结束处理**\n\n
  * **if** 当前字符为'\0' :\n
- * &emsp; 返回(建树完成)\n
- * \n
- * + **2 某子树结束处理**\n
+ * &emsp; 返回(建树完成)\n\n
+ * + **2 某子树结束处理**\n\n
  * **if** 当前字符为')' :\n
  * &emsp; str向后移动1位(处理下一个兄弟结点)\n
- * &emsp; 返回(当前子树建树完成)\n
- * \n
- * + **3 新子树根结点开始处理**\n
+ * &emsp; 返回(当前子树建树完成)\n\n
+ * + **3 新子树根结点开始处理**\n\n
  * **if** 当前字符为'(' :\n
- * &emsp; str向后移动1位(处理下一个兄弟结点)\n
- * \n
- * + **4 创建新子树根结点**\n
+ * &emsp; str向后移动1位(处理下一个兄弟结点)\n\n
+ * + **4 创建新子树根结点**\n\n
  * **if** int类型 :\n
  * &emsp; 进行转换\n
  * **else if** char类型 :\n
- * &emsp; 用*转换进行赋值\n
- * str向后移动1位(处理下一个兄弟结点)\n
- * \n
+ * &emsp; 用*转换进行赋值\n\n
+ * str向后移动1位(处理下一个兄弟结点)\n\n
  * 初始化subtree_root(子树根结点)并分配内存\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n\n
- * + **5 对长子结点和兄弟节点递归构造子树**\n
+ * + **5 对长子结点和兄弟节点递归构造子树**\n\n
  * 对first_child递归创建子树\n
  * 对next_sibling递归创建子树\n
  */
@@ -540,16 +536,16 @@ void ChildSiblingTree<TData>::CreateSubTreeByPreorderStrRecursive_(ChildSiblingN
  * ------------
  *
  * ------------
- * + **1 空树处理**\n
+ * + **1 空树处理**\n\n
  * **if** 空树 :\n
- * &emsp; 返回\n
- * + **2 打印'('和子树根结点**\n
+ * &emsp; 返回\n\n
+ * + **2 打印'('和子树根结点**\n\n
  * 打印'('\n
- * 打印子树根结点\n
- * + **3 递归打印所有孩子结点的子树**\n
+ * 打印子树根结点\n\n
+ * + **3 递归打印所有孩子结点的子树**\n\n
  * **for loop** 子树根结点的所有孩子结点 :\n
- * &emsp; 递归打印以当前孩子结点为根结点的子树\n
- * + **4 打印')'**\n
+ * &emsp; 递归打印以当前孩子结点为根结点的子树\n\n
+ * + **4 打印')'**\n\n
  */
 template <typename TData>
 void ChildSiblingTree<TData>::PrintSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root) {

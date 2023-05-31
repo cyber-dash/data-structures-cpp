@@ -17,22 +17,22 @@
 using namespace std;
 
 
-// 测试CreateByPreorderStr
+// 测试-子女兄弟树-建树
 void TestChildSiblingTreeCreateTreeByStr();
 
-// 测试高度
-void TestChildSiblingTreeHeight();
+// 测试-子女兄弟树-高度
+void TestChildSiblingTreeHeightRecursive();
 
-// 测试结点数量
+// 测试-子女兄弟树-结点数量
 void TestChildSiblingTreeNodeCount();
 
-// 测试先根遍历
+// 测试-子女兄弟树-前根遍历
 void TestChildSiblingTreePreorder();
 
-// 测试后根遍历
+// 测试-子女兄弟树-后根遍历
 void TestChildSiblingTreePostOrder();
 
-// 测试层序遍历
+// 测试-子女兄弟树-层序遍历
 void TestChildSiblingTreeLevelOrder();
 
 

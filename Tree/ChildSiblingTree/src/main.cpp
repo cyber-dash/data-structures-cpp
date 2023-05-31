@@ -12,24 +12,28 @@
 using namespace std;
 
 
+/*!
+ * @brief main函数
+ * @return 0
+ */
 int main() {
 
-    // 测试CreateByPreorderStr
+    /// **测试-子女兄弟树-建树**
 	TestChildSiblingTreeCreateTreeByStr();
 
-    // 测试高度
-    TestChildSiblingTreeHeight();
+    /// **测试-子女兄弟树-高度**
+    TestChildSiblingTreeHeightRecursive();
 
-    // 测试结点数量
+    /// **测试-子女兄弟树-结点数量**
 	TestChildSiblingTreeNodeCount();
 
-    // 测试后根遍历
+    /// **测试-子女兄弟树-后根遍历**
 	TestChildSiblingTreePostOrder();
 
-    // 测试先根遍历
+    /// **测试-子女兄弟树-前根遍历**
     TestChildSiblingTreePreorder();
 
-    // 测试层序遍历
+    /// **测试-子女兄弟树-层序遍历**
 	TestChildSiblingTreeLevelOrder();
 
 	return 0;
