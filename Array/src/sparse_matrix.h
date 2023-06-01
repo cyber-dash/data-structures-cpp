@@ -246,12 +246,12 @@ bool SparseMatrix<TValue>::Element(int row, int col, TValue& value) {
  * 设置某位置(如果该位置有元素, 则替换)
  *
  * -------
- * + **1 非法位置处理**\n
+ * + **1 非法位置处理**\n\n
  * **if** row >= 当前矩阵行数 || col >= 单签矩阵列数 : \n
  * &emsp; 返回false\n\n
  * **if** 当前非0元素个数 == 容量 || 当前非0元素个数 == 行数 * 列数 :\n
  * &emsp; 返回false\n\n
- * + **2 获取该位置在elements_数组中对应的索引**\n
+ * + **2 获取该位置在elements_数组中对应的索引**\n\n
  * 初始化index(位置在elements_数组的索引)为-1\n
  * **for loop** 遍历elements_数组 :\n
  * &emsp; **if** elements_[i](当前元素)的行号 == 参数行号 :\n
@@ -261,11 +261,11 @@ bool SparseMatrix<TValue>::Element(int row, int col, TValue& value) {
  * &emsp; **else if** 当前元素的行号 > 参数行号\n
  * &emsp;&emsp; index = i\n
  * &emsp;&emsp; 退出循环(找到索引值)\n\n
- * + **3 更新非0元素的情况处理**\n
+ * + **3 更新非0元素的情况处理**\n\n
  * **if** index != -1 && 当前elements_元素的行号列号等于参数行号列号 :\n
  * &emsp; 当前elements_元素更新value\n
  * &emsp; 返回true\n\n
- * + **4 插入新元素的情况处理**\n
+ * + **4 插入新元素的情况处理**\n\n
  * **if** index为-1(elements_尾部做扩展) :\n
  * &emsp; index值改为this->Size()\n\n
  * elements[this->size]的行号更新\n
@@ -273,10 +273,13 @@ bool SparseMatrix<TValue>::Element(int row, int col, TValue& value) {
  * elements[this->size]的值更新\n\n
  * **for loop** elements数组索引 this->Size() 到 index :\n
  * &emsp; 相邻元素交换\n\n
- * + **5 更新size**\n
+ * + **5 更新size**\n\n
  * size_加1\n\n
- * + **6 退出函数**\n
+ * + **6 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TValue>
 bool SparseMatrix<TValue>::SetElement(int row, int col, TValue value) {
@@ -373,15 +376,18 @@ void Swap(TriTuple<TValue>* a, TriTuple<TValue>* b) {
  * ```
  *
  * ------
- * + **1 打印基本项**\n
+ * + **1 打印基本项**\n\n
  * 打印行数\n
  * 打印列数\n\n
- * + **2 打印非零元素**\n
+ * + **2 打印非零元素**\n\n
  * 打印非零元素个数\n\n
  * **for loop** 遍历elements_数组 :\n
  * &emsp; 打印当前非零元素的信息\n\n
- * + **3 退出函数**\n
+ * + **3 退出函数**\n\n
  * 返回out\n
+ *
+ *
+ * -------------------
  */
 template<typename TData>
 ostream& operator<<(ostream& out, SparseMatrix<TData>& sparse_matrix) {
@@ -488,6 +494,9 @@ istream& operator>>(istream& in, SparseMatrix<TValue>& sparse_matrix) {
  * &emsp;&emsp;&emsp; 转置矩阵当前elements_元素指向下一个\n\n
  * + **4 退出函数**\n
  * 返回返回trans_sparse_matrix\n
+ *
+ *
+ * -------------------
  */
 template<typename TData>
 SparseMatrix<TData>* SparseMatrix<TData>::Transpose() {
@@ -546,26 +555,26 @@ SparseMatrix<TData>* SparseMatrix<TData>::Transpose() {
  * </span>
  *
  * -------------------
- * + **1 初始化辅助数组**\n
+ *
+ * + **1 初始化辅助数组**\n\n
  * row_sizes(转置矩阵各行元素数量)分配内存并初始化\n
  * iterator_positions(转置矩阵各行在elements_数组的遍历位置)分配内存并初始化\n\n
- * + **2 转置矩阵分配内存**\n
+ * + **2 转置矩阵分配内存**\n\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n\n
  * 本矩阵的cols_, 赋值给转置矩阵的rows_\n
  * 本矩阵的rows_, 赋值给转置矩阵的cols_\n
  * 本矩阵的size_, 赋值给转置矩阵的size_\n\n
- * + **3 size为0情况处理**\n
+ * + **3 size为0情况处理**\n\n
  * **if** size_为0 :\n
  * &emsp; 返回trans_sparse_matrix\n\n
- * + **4 构造row_sizes**\n
+ * + **4 构造row_sizes**\n\n
  * **for loop** 遍历原矩阵列 (对应转置矩阵行) :\n
  * &emsp; row_sizes[i] (转置矩阵当前行元素个数) 设为0\n\n
  * **for loop** 遍历本矩阵elements_ :\n
  * &emsp; cur_row(元素对应的转置矩阵行号)取elements_[i].col\n
  * &emsp; row_sizes[cur_row]加1\n\n
- * + **5 构造iterator_positions**\n
- * \n
+ * + **5 构造iterator_positions**\n\n
  * ```
  * 初始化转置数组的三元组数组elements_的分布
  *
@@ -587,7 +596,7 @@ SparseMatrix<TData>* SparseMatrix<TData>::Transpose() {
  * iterator_positions[0]初始化为0\n
  * **for loop** 遍历本数组cols_(列), 作为转置数组行(row) :\n
  * &emsp; iterator_positions[row] = iterator_positions[row - 1] + row_sizes[row - 1]\n\n
- * + **6 快速转置**\n
+ * + **6 快速转置**\n\n
  * **for loop** 遍历本矩阵elements_ :\n
  * &emsp; 声明row(当前元素在转置矩阵的行号), 取this->elements_[i].col\n
  * &emsp; 声明cur_elements_index(转置矩阵当前遍历元素的索引), 取iterator_positions[row]\n\n
@@ -595,11 +604,14 @@ SparseMatrix<TData>* SparseMatrix<TData>::Transpose() {
  * &emsp; 设置转置矩阵当前elements_元素的列号\n
  * &emsp; 设置转置矩阵当前elements_元素的value\n\n
  * &emsp; iterator_positions[row]加1(表示向后挪1位)\n\n
- * + **7 删除辅助数组**\n
+ * + **7 删除辅助数组**\n\n
  * 释放iterator_positions\n
  * 释放row_sizes\n\n
- * + **8 退出函数**\n
+ * + **8 退出函数**\n\n
  * 返回trans_sparse_matrix\n
+ *
+ *
+ * -------------------
  */
 template<typename TValue>
 SparseMatrix<TValue>* SparseMatrix<TValue>::FastTranspose() {

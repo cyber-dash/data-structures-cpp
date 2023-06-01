@@ -167,23 +167,31 @@ public:
      * 对root_调用PrintSubTreeRecursive_
      */
     void PrintRecursive() { this->PrintSubTreeRecursive_(this->root_); }
+
 private:
     ChildSiblingNode<TData>* root_; //!< 根结点
 
     // 子树删除(递归)
     void RemoveSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root);
+
     // 子树先根遍历(递归)
     void PreOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root, void (*visit)(ChildSiblingNode<TData>*));
+
     // 子树后根遍历(递归)
     void PostOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root, void (*visit)(ChildSiblingNode<TData>*));
+
     // 子树层序遍历
     void LevelOrderOfSubTree_(ChildSiblingNode<TData>* subtree_root, void (*visit)(ChildSiblingNode<TData>*));
+
     // 使用字符串创建子女兄弟树
     void CreateSubTreeByPreorderStrRecursive_(ChildSiblingNode<TData>*&, TData*& str);
+
     // 子树节点数量(递归)
     int NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root);
+
     // 子树深度(递归)
     int MaxHeightWithYoungerSiblingTreesRecursive_(ChildSiblingNode<TData>* subtree_root);
+
     // 子树打印(递归)
     void PrintSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root);
 };

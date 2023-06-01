@@ -29,6 +29,9 @@
  * -----------------
  * 声明已访问结点集合visited_vertex_set\n\n
  * 对vertex(遍历起点)调用DfsOnVertexRecursive\n
+ *
+ *
+ * -----------------
  */
 template<typename TVertex, typename TWeight>
 void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
@@ -66,6 +69,9 @@ void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * &emsp; 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists\n
  * &emsp; **if** 下一新邻接点存在 :\n
  * &emsp;&emsp; 更新neighbor_vertex\n\n
+ *
+ *
+ * --------------------
  */
 template<typename TVertex, typename TWeight>
 void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex, set<TVertex>& visited_vertex_set) {
@@ -198,6 +204,9 @@ void TopologicalSortRecursive_(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp;&emsp; 获取下一邻接点\n
  * &emsp;&emsp;&emsp; **if** 下一邻接点存在 :\n
  * &emsp;&emsp;&emsp;&emsp; 用下一邻接点更新neighbor_vertex\n
+ *
+ *
+ * ------------
  */
 template<typename TVertex, typename TWeight>
 void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
@@ -273,6 +282,9 @@ void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * &emsp; 连通分量数量+1\n\n
  * + **退出函数**\n\n
  * 返回连通分量数量\n
+ *
+ *
+ * ----------
  */
 template<typename TVertex, typename TWeight>
 int Components(const Graph<TVertex, TWeight>& graph) {
@@ -362,6 +374,9 @@ int Components(const Graph<TVertex, TWeight>& graph) {
  * &emsp;&emsp; 将cur_edge的起点所在的并查集, 与cur_edge终点所在的并查集合并\n
  * &emsp;&emsp; cur_edge插入到min_span_tree<span style="color:#008040;font-weight:bold">(最小生成树增加1条边)</span>\n\n
  * &emsp;&emsp; 循环计数加1\n
+ *
+ *
+ * -------------------
  */
 template<typename TVertex, typename TWeight>
 void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree) {
@@ -474,6 +489,9 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
  * &emsp;&emsp;&emsp; 获取next_neighbor_vertex<span style="color:#283593;font-weight:bold">(下一邻接结点)</span>, 并将执行结果赋给new_neighbor_exists\n\n
  * &emsp;&emsp;&emsp; **if** 下一邻接结点存在 :\n
  * &emsp;&emsp;&emsp;&emsp; 下一邻接结点赋给cur_neighbor_vertex\n
+ *
+ *
+ * ----------------
  */
 template<typename TVertex, typename TWeight>
 bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree) {
@@ -612,6 +630,9 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
  * &emsp;&emsp;&emsp; 路径(起点 ---> 当前遍历结点)中  , 当前遍历结点的前一结点的索引, 设为cur_min_path_ending_vertex_index\n\n
  * &emsp;&emsp;&emsp; 生成路径new_min_distance_path(起点 ---> 当前遍历结点)\n
  * &emsp;&emsp;&emsp; 将new_min_distance_path插入min_priority_queue(路径的最小优先队列)\n
+ *
+ *
+ * ------------------------
  */
 template<typename TVertex, typename TWeight>
 void Dijkstra(const Graph<TVertex, TWeight>& graph,
@@ -766,6 +787,9 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp; 跳出循环<span style="color:#008040;font-weight:bold">(发现负权回路)</span>\n\n
  * + **4 退出函数**\n\n
  * 返回negative_weight_cycle_exists\n
+ *
+ *
+ * ---------------------------
  */
 template<typename TVertex, typename TWeight>
 bool BellmanFord(const Graph<TVertex, TWeight>& graph,
@@ -903,6 +927,9 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp;&emsp; **if** 路径(start ---> intermediate) + 路径(intermediate ---> end) < 路径(start ---> end) :\n
  * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end) <= 路径(start ---> intermediate) + 路径(intermediate ---> end)\n
  * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)终点的前一结点, 修改为路径(intermediate ---> end)终点的前一结点\n
+ *
+ *
+ * --------------------------------
  */
 template<typename TVertex, typename TWeight>
 void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& distance, vector<vector<int> >& predecessor) {
@@ -995,6 +1022,9 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
  * &emsp;&emsp; 打印cur_vertex\n\n
  * &emsp; 打印一段文本\n\n
  * 释放inverted_predecessors\n
+ *
+ *
+ * --------------------
  */
 template<typename TVertex, typename TWeight>
 void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
@@ -1080,6 +1110,9 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * + **3 打印结点**\n\n
  * 获取终点\n
  * 打印终点\n
+ *
+ *
+ * -----------------------------------
  */
 template<typename TVertex, typename TWeight>
 bool PrintSsspInMsspRecursive(const Graph<TVertex, TWeight>& graph,
@@ -1145,6 +1178,9 @@ bool PrintSsspInMsspRecursive(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp; 对i(当前路径起点索引)和j(当前路径终点索引)调用PrintSsspInMsspRecursive\n
  * &emsp;&emsp; **if** 存在最短路径 :\n
  * &emsp;&emsp;&emsp; 打印最短路径长度\n
+ *
+ *
+ * ---------------------------------
  */
 template<typename TVertex, typename TWeight>
 void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,

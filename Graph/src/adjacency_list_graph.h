@@ -51,6 +51,9 @@ struct Adjacency {
    * 邻接结点索引, 初始化为-1\n
    * 邻接结点, 初始化为TVertex()\n
    * 下一邻接项地址, 初始化为NULL\n
+   *
+   *
+   * ----------
    */
   Adjacency(): ending_vertex_index(-1), ending_vertex(TVertex()), weight(TWeight()), next(NULL) {};
 
@@ -143,6 +146,9 @@ public:
      * ----------
      * starting_vertex(起点), 初始化为TVertex()\n
      * first_adjacency(第1个邻接项), 初始化为NULL\n
+     *
+     *
+     * ----------
      */
     AdjacencyListItem(): starting_vertex(TVertex()), first_adjacency(NULL) {}
 
@@ -479,15 +485,18 @@ private:
  *
  * --------------------------
  * + **1 设置部分成员变量**\n
- *  type_(**图类型**)设为UNDIRECTED(**无向**)\n\n
- *  max_vertex_count_(**结点数上限**)使用参数赋值\n
- *  max_weight_(**边权值上限**)使用参数赋值\n\n
- *  vertex_count_(**结点数量**)设为0\n
- *  edge_count_(**边数量**)设为0\n\n
+ * type_(**图类型**)设为UNDIRECTED(**无向**)\n\n
+ * max_vertex_count_(**结点数上限**)使用参数赋值\n
+ * max_weight_(**边权值上限**)使用参数赋值\n\n
+ * vertex_count_(**结点数量**)设为0\n
+ * edge_count_(**边数量**)设为0\n\n
  * + **2 设置邻接表**\n
- *  邻接表分配内存并初始化\n
- *  **if** 内存分配失败 :\n
- *  &emsp; 抛出bad_alloc()错误\n
+ * 邻接表分配内存并初始化\n
+ * **if** 内存分配失败 :\n
+ * &emsp; 抛出bad_alloc()错误\n
+ *
+ *
+ * --------------------------
  */
 template<typename TVertex, typename TWeight>
 AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(unsigned int max_vertex_count, TWeight max_weight) {
@@ -1056,6 +1065,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  * vertex_count_减1\n\n
  * + **6 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
@@ -1244,6 +1256,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
  * &emsp; 边终点的入度加1\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -----
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
@@ -1551,6 +1566,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
  * 第一个邻接项的ending_vertex赋给first_neighbor\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ---------------
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex,
