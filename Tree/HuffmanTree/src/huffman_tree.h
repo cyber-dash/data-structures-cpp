@@ -154,12 +154,15 @@ protected:
 
     // 子树清空(递归)
 	void ClearSubTreeRecursive_(HuffmanTreeNode<TKey, TWeight>* subtree_root);
+
     // 合并子树
 	void MergeSubTree_(HuffmanTreeNode<TKey, TWeight>* subtree_root_1,
                        HuffmanTreeNode<TKey, TWeight>* subtree_root_2,
                        HuffmanTreeNode<TKey, TWeight>*& new_subtree_root);
+
     // 打印子树(递归)
 	void PrintSubTreeRecursive_(HuffmanTreeNode<TKey, TWeight>* subtree_root);
+
     // 子树生成哈夫曼编码
     void GenerateHuffmanCodeOfSubTreeRecursive_(HuffmanTreeNode<TKey, TWeight>* node,
                                                 const string& current_prefix_code,
@@ -201,33 +204,30 @@ HuffmanTree<TKey, TWeight>::HuffmanTree(const TKey* keys, const TWeight* weights
 
     // ---------- 1 初始化最小优先队列 ----------
 
-    // 声明min_priority_queue(最小优先队列)
-    std::priority_queue<HuffmanTreeNode<TKey, TWeight>*, vector<HuffmanTreeNode<TKey, TWeight>*>, Compare<TKey, TWeight> > min_priority_queue;
+    std::priority_queue<HuffmanTreeNode<TKey, TWeight>*, vector<HuffmanTreeNode<TKey, TWeight>*>, Compare<TKey, TWeight> > min_priority_queue;  // 声明min_priority_queue(最小优先队列)
 
-    for (int i = 0; i < count; i++) {                                           // for loop 遍历关键字数组和权值数组
-        // node(哈夫曼树结点)分配内存并初始化
-        HuffmanTreeNode<TKey, TWeight>* node = new HuffmanTreeNode<TKey, TWeight>(keys[i], weights[i], NULL, NULL, NULL);
+    for (int i = 0; i < count; i++) {                                                                                       // for loop 遍历关键字数组和权值数组
+        HuffmanTreeNode<TKey, TWeight>* node = new HuffmanTreeNode<TKey, TWeight>(keys[i], weights[i], NULL, NULL, NULL);   // node(哈夫曼树结点)分配内存并初始化
 
-        // node入队min_priority_queue
-        min_priority_queue.push(node);
+        min_priority_queue.push(node);                                                                                      // node入队min_priority_queue
     }
 
     // ---------- 2 使用最小优先队列构造哈夫曼树 ----------
 
-    HuffmanTreeNode<TKey, TWeight>* cur_parent = NULL;                          // 初始化cur_parent为NULL
-    for (int i = 0; i < count - 1; i++) {                                       // for loop 遍历count - 1次
+    HuffmanTreeNode<TKey, TWeight>* cur_parent = NULL;                                                                      // 初始化cur_parent为NULL
+    for (int i = 0; i < count - 1; i++) {                                                                                   // for loop 遍历count - 1次
 
-        HuffmanTreeNode<TKey, TWeight>* first = min_priority_queue.top();       // min_priority_queue队头, 赋值给first
-        min_priority_queue.pop();                                               // 队头出队
+        HuffmanTreeNode<TKey, TWeight>* first = min_priority_queue.top();                                                   // min_priority_queue队头, 赋值给first
+        min_priority_queue.pop();                                                                                           // 队头出队
 
-        HuffmanTreeNode<TKey, TWeight>* second = min_priority_queue.top();      // min_priority_queue队头, 赋值给second
-        min_priority_queue.pop();                                               // 队头出队
+        HuffmanTreeNode<TKey, TWeight>* second = min_priority_queue.top();                                                  // min_priority_queue队头, 赋值给second
+        min_priority_queue.pop();                                                                                           // 队头出队
 
-        MergeSubTree_(first, second, cur_parent);                               // 使用first和second建子树, 该子树根结点为cur_parent
-        min_priority_queue.push(cur_parent);                                    // cur_parent入队min_priority_queue
+        MergeSubTree_(first, second, cur_parent);                                                                           // 使用first和second建子树, 该子树根结点为cur_parent
+        min_priority_queue.push(cur_parent);                                                                                // cur_parent入队min_priority_queue
     }
 
-    root_ = cur_parent;                                                         // cur_parent赋值root_
+    root_ = cur_parent;                                                                                                     // cur_parent赋值root_
 }
 
 
@@ -257,19 +257,19 @@ void HuffmanTree<TKey, TWeight>::ClearSubTreeRecursive_(HuffmanTreeNode<TKey, TW
 
     // ---------- 1 空树处理 ----------
 
-    if (subtree_root == NULL) {                                         // if 空树
-        return;                                                         // 退出函数
+    if (subtree_root == NULL) {                                                         // if 空树
+        return;                                                                         // 退出函数
     }
 
     // ---------- 2 递归 ----------
 
-    ClearSubTreeRecursive_(subtree_root->left_child);                   // 对左孩子调用ClearSubTreeRecursive_
-    ClearSubTreeRecursive_(subtree_root->right_child);                  // 对右孩子调用ClearSubTreeRecursive_
+    ClearSubTreeRecursive_(subtree_root->left_child);                                   // 对左孩子调用ClearSubTreeRecursive_
+    ClearSubTreeRecursive_(subtree_root->right_child);                                  // 对右孩子调用ClearSubTreeRecursive_
 
     // ---------- 3 释放根结点 ----------
 
-    delete subtree_root;                                                // delete subtree_root
-    subtree_root = NULL;                                                // subtree_root置空
+    delete subtree_root;                                                                // delete subtree_root
+    subtree_root = NULL;                                                                // subtree_root置空
 }
 
 
@@ -336,18 +336,18 @@ void HuffmanTree<TKey, TWeight>::PrintSubTreeRecursive_(HuffmanTreeNode<TKey, TW
 
     // ---------- 1 空树处理 ----------
 
-    if (subtree_root == NULL) {                                     // if 空树
-        return;                                                     // 退出函数
+    if (subtree_root == NULL) {                                                 // if 空树
+        return;                                                                 // 退出函数
     }
 
     // ---------- 2 递归 ----------
 
-    cout << subtree_root->weight;                                   // 打印子树根结点的weight
-    cout << '(';                                                    // 打印'('
-    PrintSubTreeRecursive_(subtree_root->left_child);               // 对左子树调用PrintSubTreeRecursive_
-    cout << ',';                                                    // 打印','
-    PrintSubTreeRecursive_(subtree_root->right_child);              // 对右子树调用PrintSubTreeRecursive_
-    cout << ')';                                                    // 打印')'
+    cout << subtree_root->weight;                                               // 打印子树根结点的weight
+    cout << '(';                                                                // 打印'('
+    PrintSubTreeRecursive_(subtree_root->left_child);                           // 对左子树调用PrintSubTreeRecursive_
+    cout << ',';                                                                // 打印','
+    PrintSubTreeRecursive_(subtree_root->right_child);                          // 对右子树调用PrintSubTreeRecursive_
+    cout << ')';                                                                // 打印')'
 }
 
 
@@ -413,28 +413,24 @@ void HuffmanTree<TKey, TWeight>::GenerateHuffmanCodeOfSubTreeRecursive_(HuffmanT
 {
     // ---------- 1 空结点处理 ----------
 
-    if (node == NULL) {                                             // if node == NULL
-        return;                                                     // 退出函数
+    if (node == NULL) {                                                                                         // if node == NULL
+        return;                                                                                                 // 退出函数
     }
 
     // ---------- 2 叶子结点处理 ----------
 
-    if (node->left_child == NULL && node->right_child == NULL) {    // if node为叶子结点
-        huffman_codes[node->key] = current_prefix_code;             // current_prefix_code即为node->key的哈夫曼编码
-        return;                                                     // 退出函数
+    if (node->left_child == NULL && node->right_child == NULL) {                                                // if node为叶子结点
+        huffman_codes[node->key] = current_prefix_code;                                                         // current_prefix_code即为node->key的哈夫曼编码
+        return;                                                                                                 // 退出函数
     }
 
     // ---------- 3 非叶子结点处理 ----------
 
-    // current_prefix_code扩展0
-    string str_zero("0");
-    // 向左子树递归执行GenerateHuffmanCodeOfSubTreeRecursive_
-    GenerateHuffmanCodeOfSubTreeRecursive_(node->left_child, current_prefix_code + str_zero, huffman_codes);
+    string str_zero("0");                                                                                       // current_prefix_code扩展0
+    GenerateHuffmanCodeOfSubTreeRecursive_(node->left_child, current_prefix_code + str_zero, huffman_codes);    // 向左子树递归执行GenerateHuffmanCodeOfSubTreeRecursive_
 
-    // current_prefix_code扩展1
-    string str_one("1");
-    // 向右子树递归执行GenerateHuffmanCodeOfSubTreeRecursive_
-    GenerateHuffmanCodeOfSubTreeRecursive_(node->right_child, current_prefix_code + str_one, huffman_codes);
+    string str_one("1");                                                                                        // current_prefix_code扩展1
+    GenerateHuffmanCodeOfSubTreeRecursive_(node->right_child, current_prefix_code + str_one, huffman_codes);    // 向右子树递归执行GenerateHuffmanCodeOfSubTreeRecursive_
 }
 
 
