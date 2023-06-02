@@ -26,12 +26,6 @@ public:
     // 线性表尾
     bool Tail(GenList<T> &tail_list);
 
-    // 殷书中, 使用了一段线性结构保存线性表的名称(大写字母),
-    // 书中使用数组, 本代码使用vector, 因此在复制时, 需要将这部分vector也复制, 并做相应的数据指向
-    // 这种方式本身, 对复制操作就比较不友好，如果优化, 则结点元素与书中的结构不太相同
-    // 因此, 目前不再对此进行进一步实现。
-    //
-    // 未来如果实现它, 也只可能会在其他版本(或其他代码)中实现此功能
     void CopyFrom(GenList<T> &src_gen_list);
 
     // 长度
@@ -96,7 +90,7 @@ private:
 };
 
 
-/*!
+/*
  * @brief 构造函数(无参数)
  * @tparam T 类型模板参数
  */
@@ -109,7 +103,7 @@ GenList<T>::GenList() {
 }
 
 
-/*!
+/*
  * @brief 线性表头结点
  * @tparam T 类型模板参数
  * @param item 数据变量(存储表头数据)
@@ -127,7 +121,7 @@ bool GenList<T>::Head(Item<T> &item) {
 }
 
 
-/*!
+/*
  * @brief 线性表尾
  * @tparam T 类型模板参数
  * @param tail_list 广义表变量(存储表尾)
@@ -146,15 +140,14 @@ bool GenList<T>::Tail(GenList<T> &tail_list) {
 }
 
 
-/*!
+/*
  *
  * @tparam T
  * @param src_gen_list
  * @note
- * CyberDash批注:
- * 殷人昆版本中, 使用了一段线性结构保存线性表的名称(大写字母),
- * 原书中使用数组, 本代码使用vector, 因此在复制时, 需要将这部分vector也复制, 并做相应的数据指向
- * 这种方式本身, 对复制操作就比较不友好，如果优化, 则结点元素与书中的结构不太相同
+ * 使用了一段线性结构保存线性表的名称(大写字母),
+ * 本代码使用vector, 因此在复制时, 需要将这部分vector也复制, 并做相应的数据指向
+ * 这种方式本身, 对复制操作就比较不友好，需要考虑优化
  * 因此, 目前不再对此进行进一步实现。
  *
  * 未来如果实现它, 也只可能会在其他版本(或其他代码)中实现此功能
@@ -195,7 +188,7 @@ GenListNode<T> *GenList<T>::Copy_(GenListNode<T> *&ref_type_node) {
 }
 
 
-/*!
+/*
  * @brief 获取子表长度(递归)
  * @tparam T 参数模板类型
  * @param un_ref_type_node 非引用类型(type为1或2)结点指针
@@ -213,7 +206,7 @@ int GenList<T>::SubGenListLengthRecursive_(GenListNode<T> *un_ref_type_node) {
 }
 
 
-/*!
+/*
  * @brief 获取长度
  * @tparam T 参数模板类型
  * @return 长度
@@ -226,7 +219,7 @@ int GenList<T>::Length() {
 }
 
 
-/*!
+/*
  * @brief 获取深度
  * @tparam T 参数模板类型
  * @return 深度
@@ -237,7 +230,7 @@ int GenList<T>::Depth() {
 }
 
 
-/*!
+/*
  * @brief 获取子表深度(递归)
  * @tparam T 类型模板参数
  * @param ref_type_node 子表的引用类型(type为0)结点指针
@@ -271,7 +264,7 @@ int GenList<T>::SubGenListDepthRecursive_(GenListNode<T> *ref_type_node) {
 }
 
 
-/*!
+/*
  * @brief 左括号处理函数
  * @tparam T 类型模板参数
  * @param char_queue 字符队列
@@ -286,7 +279,7 @@ void GenList<T>::LeftBracketHandler_(queue<T> &char_queue) {
 }
 
 
-/*!
+/*
  * @brief '#'对应的右括号处理
  * @tparam T 类型模板参数
  * @param char_queue
@@ -301,7 +294,7 @@ void GenList<T>::PassRightBracketAfterSharpChar(queue<T> &char_queue) {
 }
 
 
-/*!
+/*
  * @brief 判断是否是表名(大写字母)
  * @tparam T 类型模板参数
  * @param chr 线性表字符串中的某个字符
@@ -313,7 +306,7 @@ bool GenList<T>::IsGenListNameChar_(T chr) {
 }
 
 
-/*!
+/*
  * @brief 判断是否是线性表的起始字符, 大写字母或者'('
  * @tparam T 线性表节点数据类型
  * @param chr 线性表字符串中的某个字符
@@ -325,7 +318,7 @@ bool GenList<T>::IsGenListBeginChar_(T chr) {
 }
 
 
-/*!
+/*
  * @brief 使用char队列创建广义表(递归)
  * @tparam T 类型模板参数
  * @param char_queue char队列
@@ -398,7 +391,7 @@ void GenList<T>::CreateGenListByQueueRecursive(queue<T> &char_queue, GenListNode
 }
 
 
-/*!
+/*
  * @brief 使用字符串创建广义表
  * @tparam T 模板节点类型
  * @param gen_list_string 广义表字符串
@@ -426,7 +419,7 @@ void GenList<T>::CreateListByString(string gen_list_string) {
 }
 
 
-/*!
+/*
  * @brief 输入广义表(重载标准输入)
  * @tparam T 类型模板参数
  * @param in 输入流
@@ -447,7 +440,7 @@ istream &operator>>(istream &in, GenList<T> &gen_list) {
 }
 
 
-/*!
+/*
  * @brief 查找已经被引用的结点
  * @tparam T 类型模板参数
  * @param chr 字符
@@ -473,7 +466,7 @@ GenListNode<T> *GenList<T>::FindReferredNodePtr_(T chr) {
 }
 
 
-/*!
+/*
  * @brief 新建元素结点
  * @tparam T 类型模板参数
  * @param chr 字符
@@ -490,7 +483,7 @@ GenListNode<T> *GenList<T>::NewElemTypeNode_(T chr) {
 }
 
 
-/*!
+/*
  * @brief 新建子表节点
  * @tparam T 类型模板参数
  * @return 结点地址
@@ -515,14 +508,13 @@ string GenList<T>::ToString() {
 }
 
 
-/*!
+/*
  * @brief 子表的字符化(递归)
  * @tparam T
  * @param ref_type_node
  * @param char_vec
  * @note
- * Yin书的实现感觉比较追求结构复杂但又没实现全, 缺点两头有, 优点很难体会, 纯属费力不讨好:-(
- * 本代码是照着它的算法实现的, 我很想改改:-(
+ * 这个实现感觉比较追求结构复杂但又没实现全, 缺点两头有, 优点很难体会, 纯属费力不讨好:-(
  */
 template<class T>
 void GenList<T>::SubGenToStringRecursive_(GenListNode<T> *ref_type_node, vector<T> &char_vec) {

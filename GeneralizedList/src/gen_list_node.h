@@ -21,14 +21,14 @@ union GenNodeUnion {
 template<class T>
 class Item {
 public:
-  /*!
+  /*
    * @brief 构造函数
    */
   Item(): type(GenListNode<T>::REF_TYPE) {
     this->union_info.ref_count = 0;
   }
 
-  /*!
+  /*
    * @brief 复制构造函数
    * @param item 节点数据
    */
@@ -46,10 +46,10 @@ class GenListNode {
 
 public:
 
-  /*! @brief 构造函数(空表) */
+  /* @brief 构造函数(空表) */
   GenListNode(): type(GenListNode<T>::REF_TYPE), next(NULL) { union_info.ref_count = 0; }
 
-  /*!
+  /*
    * @brief 构造函数(使用结点)
    * @param node 广义表节点(引用)
    */

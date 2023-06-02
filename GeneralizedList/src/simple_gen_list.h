@@ -53,6 +53,7 @@ public:
      */
     explicit SimpleGenListNode(int type, char data = '\0'): type(type), next(nullptr), head(nullptr), data(data) {}
 
+
     /*!
      * @brief **复制构造函数**
      * @param node 源广义表结点

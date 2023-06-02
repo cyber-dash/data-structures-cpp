@@ -100,6 +100,9 @@ void TestLength() {
 }
 
 
+/*!
+ * @brief **测试-简单广义表-深度**
+ */
 void TestSimpleGenListDepth() {
 
     cout<<endl;
@@ -125,6 +128,9 @@ void TestSimpleGenListDepth() {
 }
 
 
+/*!
+ * @brief **测试-简单广义表-长度**
+ */
 void TestSimpleGenListLength() {
 
     cout<<endl;

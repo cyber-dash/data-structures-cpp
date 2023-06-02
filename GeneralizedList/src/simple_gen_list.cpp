@@ -19,10 +19,10 @@
  * --------------------
  *
  * --------------------
- * + **1 空表处理**\n
+ * + **1 空表处理**\n\n
  * **if** 空队列 :\n
  * &emsp; 退出函数\n\n
- * + **2 递归建表**\n
+ * + **2 递归建表**\n\n
  * 取队头字符, 赋给chr\n
  * 队头出队\n\n
  * **if** chr为'(':\n
@@ -37,6 +37,9 @@
  * **else if** chr是')' :\n
  * &emsp; **if** node不为NULL <span style="color:#FD5E0F">(如果node为NULL, 则表示当前子表为空表, 字符串为"()", 不做处理)</span>:\n
  * &emsp;&emsp; node->next置为nullptr\n\n
+ *
+ *
+ * --------------------
  */
 void SimpleGenList::CreateByQueueRecursive_(queue<char>& char_queue, SimpleGenListNode*& node) {
 
@@ -83,6 +86,9 @@ void SimpleGenList::CreateByQueueRecursive_(queue<char>& char_queue, SimpleGenLi
  * &emsp; 当前字符入队\n\n
  * + **2 建表**\n
  * 对list_node_调用CreateByQueueRecursive_\n
+ *
+ *
+ * -----------------
  */
 void SimpleGenList::CreateByString(const string& gen_list_string) {
 
@@ -133,6 +139,9 @@ void SimpleGenList::CreateByString(const string& gen_list_string) {
  * ')'入队char_queue\n\n
  * + **5 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ------------------
  */
 bool SimpleGenList::ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* node) {
 
@@ -184,26 +193,46 @@ bool SimpleGenList::ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenList
  * --------
  *
  * --------
+ * + **1 构造字符队列**\n\n
+ * 声明str(最终字符串)\n
+ * 声明char_queue(字符队列)\n\n
+ * 对list_node_调用ToCharQueueRecursive_, 生成char_queue\n
+ * **if** 生成失败 :\n
+ * &emsp; 抛出错误\n\n
+ * + **2 构造字符串**\n\n
+ * **while loop** char_queue不为空 :\n
+ * &emsp; 取char_queue队头, 赋给chr\n
+ * &emsp; chr添加到str末尾\n\n
+ * &emsp; char_queue队头出队\n\n
+ * + **3 退出函数**\n\n
+ * 返回str\n
  *
+ *
+ * --------
  */
 string SimpleGenList::ToString() {
-    string str;
+    // ---------- 1 构造字符队列 ----------
 
-    queue<char> char_queue;
+    string str;                                                                 // 声明str(最终字符串)
+    queue<char> char_queue;                                                     // 声明char_queue(字符队列)
 
-    bool res = ToCharQueueRecursive_(char_queue, list_node_);
-    if (!res) {
-        throw exception("error in ToCharQueueRecursive_");
+    bool res = ToCharQueueRecursive_(char_queue, list_node_);                   // 对list_node_调用ToCharQueueRecursive_, 生成char_queue
+    if (!res) {                                                                 // if 生成失败
+        throw exception("error in ToCharQueueRecursive_");                      // 抛出错误
     }
 
-    while (!char_queue.empty()) {
-        char chr = char_queue.front();
-        str.push_back(chr);
+    // ---------- 2 构造字符串 ----------
 
-        char_queue.pop();
+    while (!char_queue.empty()) {                                               // while loop char_queue不为空
+        char chr = char_queue.front();                                          // 取char_queue队头, 赋给chr
+        str.push_back(chr);                                                     // chr添加到str末尾
+
+        char_queue.pop();                                                       // char_queue队头出队
     }
 
-    return str;
+    // ---------- 3 退出函数 ----------
+
+    return str;                                                                 // 返回str
 }
 
 
@@ -231,6 +260,9 @@ string SimpleGenList::ToString() {
  * &emsp; cur指向cur->next\n\n
  * + **3 返回深度**\n
  * 返回更新max_sub_list_depth + 1\n
+ *
+ *
+ * -------------
  */
 int SimpleGenList::SubGenListDepthRecursive_(SimpleGenListNode* node) {
 
@@ -274,6 +306,9 @@ int SimpleGenList::SubGenListDepthRecursive_(SimpleGenListNode* node) {
  *
  * -----
  * 对list_node_调用SubGenListDepthRecursive_
+ *
+ *
+ * -----
  */
 int SimpleGenList::Depth() {
     int depth = SubGenListDepthRecursive_(this->list_node_);
@@ -299,6 +334,9 @@ int SimpleGenList::Depth() {
  * 递归调用SubGenListLengthRecursive_求长度\n\n
  * + **3 返回结果**\n
  * 返回长度\n
+ *
+ *
+ * -------------
  */
 int SimpleGenList::SubGenListLengthRecursive_(SimpleGenListNode* node) {
 
@@ -328,6 +366,9 @@ int SimpleGenList::SubGenListLengthRecursive_(SimpleGenListNode* node) {
  *
  * -----
  * 对list_head_->head调用SubGenListLengthRecursive_
+ *
+ *
+ * -----
  */
 int SimpleGenList::Length() {
     int list_length = SubGenListLengthRecursive_(this->list_node_->head);
