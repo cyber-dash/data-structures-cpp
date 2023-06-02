@@ -1551,10 +1551,10 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
  * @return 执行结果
  * @note
  * 获取第一个相邻结点
- * ---------------
- * ---------------
  *
- * ---------------
+ * <hr>
+ * Hello
+ * <hr>
  * + **1 合法性判断**\n\n
  * 获取vertex_index(vertex的结点索引)\n
  * **if** 获取vertex_index < 0 :\n
@@ -1568,7 +1568,7 @@ bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_ve
  * 返回true\n
  *
  *
- * ---------------
+ * <hr>
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex,

@@ -1108,8 +1108,11 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * &emsp; **if** 执行结果失败 :\n
  * &emsp;&emsp; 返回false\n\n
  * + **3 打印结点**\n\n
- * 获取终点\n
- * 打印终点\n
+ * 声明ending_vertex(终点)\n
+ * 获取ending_vertex\n
+ * 打印终点\n\n
+ * + **4 退出函数**\n\n
+ * 返回true\n
  *
  *
  * -----------------------------------
@@ -1122,33 +1125,33 @@ bool PrintSsspInMsspRecursive(const Graph<TVertex, TWeight>& graph,
 {
     // ---------- 1 合法性校验 ----------
 
-    // if predecessor[starting_vertex_index][ending_vertex_index]为-1, 即起点到结点不存在最短路径
-    if (predecessor[starting_vertex_index][ending_vertex_index] == -1) {
-        cout << "没有路径" << endl;                                         // 打印"没有路径"
-        return false;                                                      // 返回false
+    if (predecessor[starting_vertex_index][ending_vertex_index] == -1) {                                // if 终点的前一结点索引为-1, 即起点到结点不存在最短路径
+        cout << "没有路径" << endl;                                                                      // 打印"没有路径"
+        return false;                                                                                   // 返回false
     }
 
     // ---------- 2 递归执行 ----------
 
-    if (starting_vertex_index != ending_vertex_index) {     // if 起点索引 不等于 终点索引
-        // 对最短路径中的(起点索引)starting_vertex_index和(终点的前一结点索引)predecessor[starting_vertex_index][ending_vertex_index], 调用PrintSsspInMsspRecursive
-        bool res = PrintSsspInMsspRecursive(graph,
+    if (starting_vertex_index != ending_vertex_index) {                                                 // if 起点索引 不等于 终点索引
+        bool res = PrintSsspInMsspRecursive(graph,                                                      // 对最短路径中的起点索引和终点的前一结点索引, 调用PrintSsspInMsspRecursive
                                             predecessor,
                                             starting_vertex_index,
                                             predecessor[starting_vertex_index][ending_vertex_index]);
-        if (!res) {         // if 执行结果失败
-            return false;   // 返回false
+        if (!res) {                                                                                     // if 执行结果失败
+            return false;                                                                               // 返回false
         }
     }
 
     // ---------- 3 打印结点 ----------
 
-    TVertex ending_vertex;
-    graph.GetVertexByIndex(ending_vertex_index, ending_vertex);     // 获取终点
+    TVertex ending_vertex;                                                                              // 声明ending_vertex(终点)
+    graph.GetVertexByIndex(ending_vertex_index, ending_vertex);                                         // 获取ending_vertex
 
-    cout << ending_vertex << " ";                                   // 打印终点
+    cout << ending_vertex << " ";                                                                       // 打印ending_vertex
 
-    return true;
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                                                        // 返回true
 }
 
 
@@ -1213,6 +1216,7 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
         cout<<endl;
     }
 }
+
 
 template<typename TVertex, typename TWeight>
 vector<TWeight> GetCriticalPath(const Graph<TVertex, TWeight>& graph, const TVertex& starting_vertex) {
