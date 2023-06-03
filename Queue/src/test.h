@@ -29,4 +29,22 @@ void TestIsEmpty();
 void TestPrint();
 
 
+/*! @brief 测试获取队列长度 */
+void Test_CircularQueue_Length();
+
+/*! @brief 测试入队 */
+void Test_CircularQueue_EnQueue();
+
+/*! @brief 测试出队 */
+void Test_CircularQueue_DeQueue();
+
+/*! @brief 测试获取队列头/尾节点 */
+void Test_CircularQueue_GetFrontAndGetRear();
+
+/*! @brief 测试队列是否为空 */
+void Test_CircularQueue_IsEmpty();
+
+/*! @brief 测试重载<< */
+void Test_CircularQueue_Print();
+
 #endif // CYBER_DASH_QUEUE_TEST_H

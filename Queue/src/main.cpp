@@ -22,7 +22,8 @@
  */
 int main() {
 
-    TestLength();   // 测试-链式队列-长度
+    /*
+    TestLength();
 
 	TestEnQueue();
 
@@ -33,6 +34,19 @@ int main() {
 	TestIsEmpty();
 
     TestPrint();
+     */
+
+    Test_CircularQueue_Length();
+
+    Test_CircularQueue_EnQueue();
+
+    Test_CircularQueue_DeQueue();
+
+    Test_CircularQueue_GetFrontAndGetRear();
+
+    Test_CircularQueue_IsEmpty();
+
+    Test_CircularQueue_Print();
 
 	return 0;
 }

@@ -6,8 +6,8 @@
  * @date 2021-07-28
  */
 
-#ifndef CYBER_DASH_LINK_QUEUE_H
-#define CYBER_DASH_LINK_QUEUE_H
+#ifndef CYBER_DASH_LINKED_QUEUE_H
+#define CYBER_DASH_LINKED_QUEUE_H
 
 
 #include <cstdlib>
@@ -480,4 +480,4 @@ ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue) {
 }
 
 
-#endif //CYBER_DASH_LINK_QUEUE_H
+#endif //CYBER_DASH_LINKED_QUEUE_H

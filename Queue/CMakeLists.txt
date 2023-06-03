@@ -13,4 +13,4 @@ else()
 endif()
 
 
-add_executable(main src/linked_queue.h src/main.cpp src/test.cpp src/test.h)
+add_executable(main src/linked_queue.h src/main.cpp src/test.cpp src/test.h src/circular_queue.h src/circular_queue.h src/double_ended_queue.h)

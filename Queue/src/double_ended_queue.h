@@ -1,0 +1,8 @@
+﻿//
+// Created by fenix on 2023/6/3.
+//
+
+#ifndef CYBER_DASH_DOUBLE_ENDED_QUEUE_H
+#define CYBER_DASH_DOUBLE_ENDED_QUEUE_H
+
+#endif // CYBER_DASH_DOUBLE_ENDED_QUEUE_H
