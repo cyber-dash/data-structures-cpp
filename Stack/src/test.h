@@ -19,5 +19,15 @@ void Test_LinkedStack_Pop();
 // 测试-链式队列-取栈顶
 void Test_LinkedStack_Top();
 
+// 测试-顺序队列-入栈
+void Test_SeqStack_Push();
+
+// 测试-顺序队列-出栈
+void Test_SeqStack_Pop();
+
+// 测试-顺序队列-取栈顶
+void Test_SeqStack_Top();
+
+
 
 #endif // CYBER_DASH_STACK_TEST_H

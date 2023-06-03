@@ -8,6 +8,7 @@
 
 #include "test.h"
 #include "linked_stack.h"
+#include "seq_stack.h"
 
 
 void Test_LinkedStack_Push() {
@@ -58,6 +59,71 @@ void Test_LinkedStack_Top() {
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test LinkedStack Top                   |" << endl;
     cout << "|                     测试-链式队列-取栈顶                     |" << endl << endl << endl;
+
+    LinkedStack<int> test_stack;
+
+    test_stack.Push(1);
+    test_stack.Push(2);
+    test_stack.Push(3);
+    test_stack.Push(4);
+
+    int top_data;
+    test_stack.Top(top_data);
+
+    cout << "top_data: " << top_data << endl;
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+void Test_SeqStack_Push() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                     Test SeqStack Push                    |" << endl;
+    cout << "|                      测试-顺序队列-入栈                  |" << endl << endl << endl;
+
+    SeqStack<int> test_stack;
+
+    test_stack.Push(1);
+    test_stack.Push(2);
+    test_stack.Push(3);
+    test_stack.Push(4);
+
+    cout << test_stack << endl;
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+void Test_SeqStack_Pop() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                     Test SeqStack Pop                     |" << endl;
+    cout << "|                      测试-顺序队列-出栈                      |" << endl << endl << endl;
+
+    SeqStack<int> test_stack;
+
+    test_stack.Push(1);
+    test_stack.Push(2);
+    test_stack.Push(3);
+    test_stack.Push(4);
+
+    int pop_data;
+
+    test_stack.Pop(pop_data);
+    test_stack.Pop(pop_data);
+    test_stack.Pop(pop_data);
+
+    cout << test_stack << endl;
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+void Test_SeqStack_Top() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                     Test SeqStack Top                     |" << endl;
+    cout << "|                     测试-顺序队列-取栈顶                     |" << endl << endl << endl;
 
     LinkedStack<int> test_stack;
 

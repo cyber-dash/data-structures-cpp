@@ -17,5 +17,11 @@ int main() {
 
     Test_LinkedStack_Top();
 
+    Test_SeqStack_Push();
+
+    Test_SeqStack_Pop();
+
+    Test_SeqStack_Top();
+
 	return 0;
 }

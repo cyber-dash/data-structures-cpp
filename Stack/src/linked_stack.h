@@ -112,7 +112,7 @@ public:
 private:
 
     // 获取栈顶结点指针
-    LinkedNode<TData>* TopNode_() const;
+    // LinkedNode<TData>* TopNode_() const;
     LinkedNode<TData>* top_;     //!< **栈顶结点指针**
 };
 
@@ -148,10 +148,12 @@ LinkedStack<TData>::~LinkedStack() {
  * --------------
  * 返回top_
  */
+ /*
 template<typename TData>
 LinkedNode<TData>* LinkedStack<TData>::TopNode_() const {
     return top_;
 }
+  */
 
 
 /*!
@@ -428,10 +430,10 @@ ostream& operator<<(ostream& os, const LinkedStack<TData>& stack) {
 
     os << "栈中元素个数: " << stack.Length() << endl;                         // 打印栈元素个数
 
-    LinkedNode<TData>* cur = stack.TopNode_();                              // 初始化cur(遍历指针)指向栈顶
+    LinkedNode<TData>* cur = stack.top_;                                    // 初始化cur(遍历指针)指向栈顶
 
     for (int i = 1; cur != NULL; i++) {                                     // for loop 使用cur遍历栈
-        os << i << ":" << cur->data << endl;                                // 打印cur->data
+        os << cur->data << endl;                                // 打印cur->data
         cur = cur->next;                                                    // cur指向cur->next
     }
 
