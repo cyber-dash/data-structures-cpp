@@ -131,13 +131,21 @@ bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
 }
 
 
+/*!
+ * @brief **拓扑排序(递归)**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight
+ * @param graph
+ * @param vertex
+ * @param visited_vertex_set
+ * @param topology_sorted_list
+ */
 template<typename TVertex, typename TWeight>
 void TopologicalSortRecursive_(const Graph<TVertex, TWeight>& graph,
-                               // const TVertex& vertex,
                                TVertex vertex,
                                set<TVertex>& visited_vertex_set,
-                               vector<TVertex>& topology_sorted_list
-                               ) {
+                               vector<TVertex>& topology_sorted_list)
+{
 
     // ---------- 1 起点插入已遍历结点集合 ----------
     visited_vertex_set.insert(vertex);
@@ -1218,17 +1226,55 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
 }
 
 
+/*!
+ * @brief **关键路径**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
+ * @param starting_vertex 起点
+ * @return 起点索引到各结点索引的关键路径数组
+ * @note
+ * 关键路径
+ *
+ * <hr>
+ *
+ * <hr>
+ * + **1 初始化**\n\n
+ * 声明critical_paths(起点索引到各结点索引的关键路径数组)\n
+ * 声明visited_vertex_index_set(已访问结点索引的集合)\n
+ * 声明vertex_index_queue(结点索引队列)\n\n
+ * 初始化starting_vertex_index(起点的结点索引)\n\n
+ * 将starting_vertex_index插入visited_vertex_index_set\n
+ * 将starting_vertex_index插入vertex_index_queue\n\n
+ * **for loop** 遍历图的结点索引 :\n
+ * &emsp; critical_paths各元素值初始化\n\n
+ * + **2 BFS**\n\n
+ * **while loop** vertex_index_queue不为空 :\n
+ * &emsp; 获取队头, 作为cur_start_index(当前起点)\n
+ * &emsp; 队头出队\n\n
+ * &emsp;&emsp; **for loop** 遍历图结点索引, 作为cur_end_index(当前终点) :\n
+ * &emsp;&emsp;&emsp; 声明cur_weight(当前边权重)\n
+ * &emsp;&emsp;&emsp; 获取边(cur_start_index ---> cur_end_index)的权重, 赋给cur_weight\n
+ * &emsp;&emsp;&emsp; **if** 存在边 && 参数起点到当前边起点的关键路径距离 + 当前边权重(边长) > 参数起点到当前边终点的关键路径距离 :\n
+ * &emsp;&emsp;&emsp;&emsp; 当前边终点入队\n\n
+ * &emsp;&emsp;&emsp; cur_end_index插入到visited_vertex_index_set\n\n
+ * + **3 退出函数**\n\n
+ * 返回critical_paths\n
+ *
+ *
+ * <hr>
+ */
 template<typename TVertex, typename TWeight>
 vector<TWeight> GetCriticalPath(const Graph<TVertex, TWeight>& graph, const TVertex& starting_vertex) {
 
+    vector<TWeight> critical_paths;
     set<int> visited_vertex_index_set;
     queue<int> vertex_index_queue;
 
     int starting_vertex_index = graph.GetVertexIndex(starting_vertex);
-    vertex_index_queue.push(starting_vertex_index);                        // 索引0结点入队
-    visited_vertex_index_set.insert(starting_vertex_index);
 
-    vector<TWeight> critical_paths;
+    visited_vertex_index_set.insert(starting_vertex_index);
+    vertex_index_queue.push(starting_vertex_index);
 
     for (unsigned int i = 0; i < graph.VertexCount(); i++) {
         critical_paths.push_back(TWeight());

@@ -23,7 +23,7 @@ class CircularQueue: public Queue<TData> {
 
 public:
     /*! @brief **默认构造函数** */
-    CircularQueue(int capacity = 20) : capacity_(capacity), front_index_(-1), rear_index_(-1) {
+    CircularQueue(int capacity = 20) : capacity_(capacity), front_(-1), rear_(-1) {
         this->mem_data_ = new TData[this->capacity_];
         if (!this->mem_data_) {
             throw bad_alloc();
@@ -65,12 +65,23 @@ public:
 private:
     TData* mem_data_;
     int capacity_;
-    int front_index_;
-    int rear_index_;
+    int front_;
+    int rear_;
 };
 
 
-// 入队
+/*!
+ * @brief **入队**
+ * @tparam TData  数据项类型模板参数
+ * @param data 数据项值
+ * @return 执行结果
+ * @note
+ * 入队
+ * <hr>
+ *
+ * <hr>
+ * + **1**
+ */
 template<typename TData>
 bool CircularQueue<TData>::EnQueue(const TData& data) {
     if (IsFull()) {
@@ -78,16 +89,16 @@ bool CircularQueue<TData>::EnQueue(const TData& data) {
     }
 
     if (Length() == 0) {
-        this->front_index_ = 0;
-        this->rear_index_ = 0;
+        this->front_ = 0;
+        this->rear_ = 0;
 
         this->mem_data_[0] = data;
 
         return true;
     }
 
-    this->rear_index_ = (this->rear_index_ + 1 + this->capacity_) % this->capacity_;
-    this->mem_data_[this->rear_index_] = data;
+    this->rear_ = (this->rear_ + 1 + this->capacity_) % this->capacity_;
+    this->mem_data_[this->rear_] = data;
 
     return true;
 }
@@ -102,14 +113,14 @@ bool CircularQueue<TData>::DeQueue(TData& data) {
     }
 
     if (Length() == 1) {
-        this->front_index_ = -1;
-        this->rear_index_ = -1;
+        this->front_ = -1;
+        this->rear_ = -1;
 
         return true;
     }
 
-    data = this->mem_data_[this->front_index_];
-    front_index_ = (front_index_ + 1 + capacity_) % capacity_;
+    data = this->mem_data_[this->front_];
+    front_ = (front_ + 1 + capacity_) % capacity_;
 
     return true;
 }
@@ -123,13 +134,13 @@ bool CircularQueue<TData>::DeQueue() {
     }
 
     if (Length() == 1) {
-        this->front_index_ = -1;
-        this->rear_index_ = -1;
+        this->front_ = -1;
+        this->rear_ = -1;
 
         return true;
     }
 
-    front_index_ = (front_index_ + 1 + capacity_) % capacity_;
+    front_ = (front_ + 1 + capacity_) % capacity_;
 
     return true;
 }
@@ -142,7 +153,7 @@ bool CircularQueue<TData>::Front(TData& data) const {
         return false;
     }
 
-    data = this->mem_data_[front_index_];
+    data = this->mem_data_[front_];
 
     return true;
 }
@@ -155,7 +166,7 @@ bool CircularQueue<TData>::Rear(TData& data) const {
         return false;
     }
 
-    data = this->mem_data_[rear_index_];
+    data = this->mem_data_[rear_];
 
     return true;
 }
@@ -175,19 +186,19 @@ bool CircularQueue<TData>::IsFull() const {
 // 获取队列长度
 template<typename TData>
 int CircularQueue<TData>::Length() const {
-    if (this->rear_index_ == -1 && this->front_index_ == -1) {
+    if (this->rear_ == -1 && this->front_ == -1) {
         return 0;
     }
 
-    return (rear_index_ - front_index_ + 1 + capacity_) % capacity_;
+    return (rear_ - front_ + 1 + capacity_) % capacity_;
 }
 
 
 // 清空队列
 template<typename TData>
 void CircularQueue<TData>::Clear() {
-    this->rear_index_ = -1;
-    this->front_index_ = -1;
+    this->rear_ = -1;
+    this->front_ = -1;
 }
 
 
@@ -197,7 +208,7 @@ ostream& operator<<(ostream& os, const CircularQueue<TData>& circular_queue) {
     os << "The size of link queue: " << circular_queue.Length() << endl;   // 打印队列长度
 
     for (int i = 0; i < circular_queue.Length(); i++) {                             // for loop 遍历队列
-        int actual_index = (circular_queue.front_index_ + i + circular_queue.capacity_) % circular_queue.capacity_;
+        int actual_index = (circular_queue.front_ + i + circular_queue.capacity_) % circular_queue.capacity_;
         os <<  circular_queue.mem_data_[actual_index] << endl;                   // 打印当前结点数据项
     }
 
