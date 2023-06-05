@@ -133,7 +133,7 @@ void Bfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 // 拓扑排序
 template<typename TVertex, typename TWeight>
 bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
-                     const TVertex& vertex,
+                     const TVertex& starting_vertex,
                      vector<TVertex>& topology_sorted_list);
 
 

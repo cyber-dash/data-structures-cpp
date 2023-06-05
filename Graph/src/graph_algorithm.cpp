@@ -107,75 +107,119 @@ void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& v
 }
 
 
+/*!
+ * @brief **拓扑排序**
+ * @tparam TVertex 结点类型模板参数
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
+ * @param starting_vertex 起点
+ * @param topology_sorted_list 拓扑排序列表
+ * @return 执行结果
+ * @note
+ * 拓扑排序
+ * ------
+ * ------
+ *
+ * DFS的方式
+ *
+ * ------
+ * <p>
+ * 声明visited_vertex_set(已访问结点集合)\n\n
+ * **if** 有向图 :\n
+ * &emsp; 获取起点入度\n
+ * &emsp; **if** 入度 > 0 :\n
+ * &emsp;&emsp; 返回false\n\n
+ * 对起点调用TopologicalSortRecursive_\n\n
+ * 返回true\n
+ * </p>
+ * <hr>
+ */
 template<typename TVertex, typename TWeight>
 bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
-                     const TVertex& vertex,
+                     const TVertex& starting_vertex,
                      vector<TVertex>& topology_sorted_list)
 {
-    set<TVertex> visited_vertex_set;
+    set<TVertex> visited_vertex_set;                                                                // 声明visited_vertex_set(已访问结点集合)
 
-    if (graph.Type() == Graph<TVertex, TWeight>::UNDIRECTED) {
-        TopologicalSortRecursive_(graph, vertex, visited_vertex_set, topology_sorted_list);
-
-        return true;
+    if (graph.Type() == Graph<TVertex, TWeight>::DIRECTED) {                                        // if 有向图
+        int in_degree = graph.GetVertexInDegree(starting_vertex);                                   // 获取起点入度
+        if (in_degree > 0) {                                                                        // if** 入度 > 0
+            return false;                                                                           // 返回false
+        }
     }
 
-    int in_degree = graph.GetVertexInDegree(vertex);
-    if (in_degree > 0) {
-        return false;
-    }
+    TopologicalSortRecursive_(graph, starting_vertex, visited_vertex_set, topology_sorted_list);    // 对起点调用TopologicalSortRecursive_
 
-    TopologicalSortRecursive_(graph, vertex, visited_vertex_set, topology_sorted_list);
-
-    return true;
+    return true;                                                                                    // 返回true
 }
 
 
 /*!
  * @brief **拓扑排序(递归)**
  * @tparam TVertex 结点类型模板参数
- * @tparam TWeight
- * @param graph
- * @param vertex
- * @param visited_vertex_set
- * @param topology_sorted_list
+ * @tparam TWeight 边权值类型模板参数
+ * @param graph 图
+ * @param starting_vertex 起点
+ * @param visited_vertex_set 已访问结点集合
+ * @param topology_sorted_list 拓扑排序列表
+ * @note
+ * 拓扑排序(递归)
+ * ------------
+ * ------------
+ *
+ * DFS的方式
+ *
+ * ------------
+ * <p>
+ * + **1 起点插入已遍历结点集合**\n\n
+ * 将starting_vertex插入到visited_vertex_set\n
+ * 将starting_vertex插入到topology_sorted_list\n\n
+ * + **2 遍历起点的邻接点, 执行递归**\n\n
+ * ( 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点) )\n
+ * 声明neighbor_vertex(新邻结点)\n
+ * 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists(是否存在新邻结点)\n\n
+ * ( 2.2 遍历执行递归 )\n
+ * **while loop** 存在新邻接点 :\n
+ * &emsp; **if** 新邻接点不在visit_vertex_set(已访问结点集合)中 :\n
+ * &emsp;&emsp; 对新邻接点调用DfsOnVertexRecursive(递归)\n\n
+ * &emsp; 声明next_neighbor_vertex(下一邻接点)\n
+ * &emsp; 获取next_neighbor_vertex, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists\n\n
+ * &emsp; **if** 下一新邻接点存在 :\n
+ * &emsp;&emsp; 更新neighbor_vertex\n
+ * </p>
+ * <hr>
  */
 template<typename TVertex, typename TWeight>
 void TopologicalSortRecursive_(const Graph<TVertex, TWeight>& graph,
-                               TVertex vertex,
+                               TVertex starting_vertex,
                                set<TVertex>& visited_vertex_set,
                                vector<TVertex>& topology_sorted_list)
 {
 
     // ---------- 1 起点插入已遍历结点集合 ----------
-    visited_vertex_set.insert(vertex);
-    topology_sorted_list.push_back(vertex);
+
+    visited_vertex_set.insert(starting_vertex);                                                             // 将starting_vertex插入到visited_vertex_set
+    topology_sorted_list.push_back(starting_vertex);                                                        // 将starting_vertex插入到topology_sorted_list
 
     // ---------- 2 遍历起点的邻接点, 执行递归 ----------
 
     // 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)
-    TVertex neighbor_vertex;
-    // 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists
-    bool new_neighbor_exists = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);
+    TVertex neighbor_vertex;                                                                                // 声明neighbor_vertex(新邻结点)
+    bool new_neighbor_exists = graph.GetFirstNeighborVertex(starting_vertex, neighbor_vertex);              // 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists
 
     // 2.2 遍历执行递归
-    while (new_neighbor_exists) {                   // while loop 存在新邻接点
-        // if 新邻接点不在visit_vertex_set(已访问结点集合)中
-        if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
-            // 对新邻接点调用DfsOnVertexRecursive(递归)
-            // DfsOnVertexRecursive(graph, neighbor_vertex, visited_vertex_set);
-            TopologicalSortRecursive_(graph,
-                                      neighbor_vertex,
-                                      visited_vertex_set,
-                                      topology_sorted_list);
+    while (new_neighbor_exists) {                                                                           // while loop 存在新邻接点
+        if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {                         // if 新邻接点不在visit_vertex_set(已访问结点集合)中
+            TopologicalSortRecursive_(graph, neighbor_vertex, visited_vertex_set, topology_sorted_list);    // 对新邻接点调用DfsOnVertexRecursive(递归)
         }
 
-        // 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
-        TVertex next_neighbor_vertex;
-        new_neighbor_exists = graph.GetNextNeighborVertex(vertex, neighbor_vertex, next_neighbor_vertex);
+        TVertex next_neighbor_vertex;                                                                       // 声明next_neighbor_vertex(下一邻结点)
+        new_neighbor_exists = graph.GetNextNeighborVertex(starting_vertex,                                  // 获取next_neighbor_vertex, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
+                                                          neighbor_vertex,
+                                                          next_neighbor_vertex);
 
-        if (new_neighbor_exists) {                  // if 下一新邻接点存在
-            neighbor_vertex = next_neighbor_vertex; // 更新neighbor_vertex
+        if (new_neighbor_exists) {                                                                          // if 下一新邻接点存在
+            neighbor_vertex = next_neighbor_vertex;                                                         // 更新neighbor_vertex
         }
     }
 }
@@ -1235,10 +1279,9 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * @return 起点索引到各结点索引的关键路径数组
  * @note
  * 关键路径
- *
- * <hr>
- *
- * <hr>
+ * -------
+ * -------
+ * <p>
  * + **1 初始化**\n\n
  * 声明critical_paths(起点索引到各结点索引的关键路径数组)\n
  * 声明visited_vertex_index_set(已访问结点索引的集合)\n
@@ -1260,43 +1303,45 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp;&emsp; cur_end_index插入到visited_vertex_index_set\n\n
  * + **3 退出函数**\n\n
  * 返回critical_paths\n
- *
- *
+ * </p>
  * <hr>
  */
 template<typename TVertex, typename TWeight>
 vector<TWeight> GetCriticalPath(const Graph<TVertex, TWeight>& graph, const TVertex& starting_vertex) {
+    // ---------- 1 初始化 ----------
 
-    vector<TWeight> critical_paths;
-    set<int> visited_vertex_index_set;
-    queue<int> vertex_index_queue;
+    vector<TWeight> critical_paths;                                                                     // 声明critical_paths(起点索引到各结点索引的关键路径数组)
+    set<int> visited_vertex_index_set;                                                                  // 声明visited_vertex_index_set(已访问结点索引的集合)
+    queue<int> vertex_index_queue;                                                                      // 声明vertex_index_queue(结点索引队列)
 
-    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);
+    int starting_vertex_index = graph.GetVertexIndex(starting_vertex);                                  // 初始化starting_vertex_index(起点的结点索引)
+    visited_vertex_index_set.insert(starting_vertex_index);                                             // 将starting_vertex_index插入visited_vertex_index_set
+    vertex_index_queue.push(starting_vertex_index);                                                     // 将starting_vertex_index插入vertex_index_queue
 
-    visited_vertex_index_set.insert(starting_vertex_index);
-    vertex_index_queue.push(starting_vertex_index);
-
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {
-        critical_paths.push_back(TWeight());
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {                                            // for loop 遍历图的结点索引 :
+        critical_paths.push_back(TWeight());                                                            // critical_paths各元素值初始化
     }
 
-    while (!vertex_index_queue.empty()) {
-        int cur_start_index = vertex_index_queue.front();
-        vertex_index_queue.pop();
+    // ---------- 2 BFS ----------
+    while (!vertex_index_queue.empty()) {                                                               // while loop vertex_index_queue不为空 :
+        int cur_start_index = vertex_index_queue.front();                                               // 获取队头, 作为cur_start_index(当前起点)
+        vertex_index_queue.pop();                                                                       // 队头出队
 
-        for (int cur_end_index = 0; cur_end_index < int(graph.VertexCount()); cur_end_index++) {
-            TWeight cur_weight;
-            bool res = graph.GetWeightByVertexIndex(cur_start_index, cur_end_index, cur_weight);
+        for (int cur_end_index = 0; cur_end_index < int(graph.VertexCount()); cur_end_index++) {        // for loop 遍历图结点索引, 作为cur_end_index(当前终点)
+            TWeight cur_weight;                                                                         // 声明cur_weight(当前边权重)
+            bool res = graph.GetWeightByVertexIndex(cur_start_index, cur_end_index, cur_weight);        // 获取边(cur_start_index ---> cur_end_index)的权重, 赋给cur_weight
             if (res && critical_paths[cur_start_index] + cur_weight > critical_paths[cur_end_index]) {
                 critical_paths[cur_end_index] = critical_paths[cur_start_index] + cur_weight;
-                if (visited_vertex_index_set.find(cur_end_index) == visited_vertex_index_set.end()) {
-                    vertex_index_queue.push(cur_end_index);
+                if (visited_vertex_index_set.find(cur_end_index) == visited_vertex_index_set.end()) {   // if 存在边 && 参数起点到当前边起点的关键路径距离 + 当前边权重(边长) > 参数起点到当前边终点的关键路径距离
+                    vertex_index_queue.push(cur_end_index);                                             // 当前边终点入队
                 }
 
-                visited_vertex_index_set.insert(cur_end_index);
+                visited_vertex_index_set.insert(cur_end_index);                                         // cur_end_index插入到visited_vertex_index_set
             }
         }
     }
 
-    return critical_paths;
+    // ---------- 3 退出函数 ----------
+
+    return critical_paths;                                                                                  // 返回critical_paths
 }
