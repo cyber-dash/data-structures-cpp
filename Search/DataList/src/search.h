@@ -36,6 +36,9 @@
  * **if** i == 列表长度 :\n
  * &emsp; 返回-1\n\n
  * 返回i\n
+ *
+ *
+ * -------
  */
 template<typename Element>
 int SequentialSearch(Element* elements, int size, Element element) {
@@ -75,7 +78,7 @@ int SequentialSearch(Element* elements, int size, Element element) {
  * -------
  * -------
  *
- * 数组必须是升序的
+ * 数组必须是排序好的, 本实现使用升序
  *
  * -------
  * + **1 初始化左右边界**\n\n
@@ -92,26 +95,35 @@ int SequentialSearch(Element* elements, int size, Element element) {
  * &emsp;&emsp; 返回mid\n\n
  * + **3 退出函数**\n\n
  * 返回-1\n
+ *
+ *
+ * -------
  */
 template<typename Element>
 int BinarySearch(Element* elements, int size, Element element) {
 
-    int left = 0;
-    int right = size - 1;
+    // ---------- 1 初始化左右边界 ----------
 
-    while (left <= right) {
-        int mid = (left + right) / 2;
+    int left = 0;                                                                               // 初始化left(左边界)为0
+    int right = size - 1;                                                                       // 初始化right(右边界)为size - 1
 
-        if (element > elements[mid]) {
-            left = mid + 1;
-        } else if (element < elements[mid]) {
-            right = mid - 1;
-        } else {
-            return mid;
+    // ---------- 2 查找 ----------
+
+    while (left <= right) {                                                                     // while loop 左边界 <= 右边界
+        int mid = (left + right) / 2;                                                           // 取mid
+
+        if (element > elements[mid]) {                                                          // if 查找元素 > 中间元素
+            left = mid + 1;                                                                     // 左边界改为mid + 1
+        } else if (element < elements[mid]) {                                                   // else if 查找元素 < 中间元素
+            right = mid - 1;                                                                    // 右边界改为mid - 1
+        } else {                                                                                // else
+            return mid;                                                                         // 返回mid
         }
     }
 
-    return -1;
+    // ---------- 3 退出函数 ----------
+
+    return -1;                                                                                  // 返回-1
 }
 
 

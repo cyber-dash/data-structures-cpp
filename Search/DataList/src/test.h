@@ -10,6 +10,7 @@
 #define CYBER_DASH_SEARCH_DATA_LIST_TEST_H
 
 
+// 测试-线性表搜索-顺序搜索和二分搜索
 void TestSearch();
 
 
