@@ -459,8 +459,8 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
         int cur_starting_vertex_index = graph.GetVertexIndex(cur_edge.starting_vertex);             // 取cur_starting_vertex_index(当前边的起点索引)
         int cur_ending_vertex_index = graph.GetVertexIndex(cur_edge.ending_vertex);                 // 取cur_ending_vertex_index(当前边终点索引)
 
-        int cur_starting_vertex_root_index = disjoint_set.Find(cur_ending_vertex_index);            // 取cur_starting_vertex_root_index(当前边的起点所在并查集的根结点索引)
-        int cur_ending_vertex_root_index = disjoint_set.Find(cur_starting_vertex_index);            // 取cur_ending_vertex_root_index(当前边的终点所在并查集的根结点索引)
+        int cur_starting_vertex_root_index = disjoint_set.FindRecursive(cur_ending_vertex_index);            // 取cur_starting_vertex_root_index(当前边的起点所在并查集的根结点索引)
+        int cur_ending_vertex_root_index = disjoint_set.FindRecursive(cur_starting_vertex_index);            // 取cur_ending_vertex_root_index(当前边的终点所在并查集的根结点索引)
 
         if (cur_starting_vertex_root_index != cur_ending_vertex_root_index) {                       // if 当前边起点和当前边终点, 不在一个并查集
             disjoint_set.Union(cur_starting_vertex_root_index, cur_ending_vertex_root_index);       // 将cur_edge的起点所在的并查集, 与cur_edge终点所在的并查集合并

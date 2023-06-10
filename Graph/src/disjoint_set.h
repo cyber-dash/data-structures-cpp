@@ -32,22 +32,22 @@ public:
      * -------
      * 释放parent_
      */
-    ~DisjointSet() { delete[] parent_; }
+    ~DisjointSet() { delete[] parents_; }
 
     // 合并
     void Union(int node1, int node2);
 
     // 查找
-    int Find(int index);
+    int FindRecursive(int index);
 
     // 合并集合(Weighted)
     void WeightedUnion(int node1, int node2);
 
     // 查找(非递归)
-    int FindNonRecursive(int index);
+    int Find(int index);
 private:
     int size_;     //!< 大小
-    int* parent_;  //!< 父节点数组
+    int* parents_;  //!< 父节点数组
 };
 
 
