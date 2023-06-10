@@ -26,14 +26,45 @@ template<typename TData>
 class CircularQueue: public Queue<TData> {
 
 public:
-    /*! @brief **默认构造函数** */
+    /*!
+     * @brief **构造函数**
+     * @param capacity 容量(队列最大长度)
+     * @note
+     * 构造函数
+     * -------
+     * -------
+     *
+     * 默认容量20
+     *
+     * -------
+     * capacity_使用参数capacity, front(队头索引)初始化为-1, rear(队尾索引)初始化为-1\n\n
+     * mem_data_分配内存\n
+     * **if** 内存分配失败 :\n
+     * &emsp; 抛出bad_alloc()\n
+     *
+     *
+     * -------
+     */
     CircularQueue(int capacity = 20) : capacity_(capacity), front_(-1), rear_(-1) {
+        // capacity_使用参数capacity, front(队头索引)初始化为-1, rear(队尾索引)初始化为-1
+
         this->mem_data_ = new TData[this->capacity_];
         if (!this->mem_data_) {
             throw bad_alloc();
         }
     }
 
+
+    /*!
+     * @brief **析构函数**
+     * @note
+     * 析构函数
+     * -------
+     * -------
+     *
+     * -------
+     * 释放this->mem_data_
+     */
     ~CircularQueue() { delete[] this->mem_data_; }
 
     // 入队
@@ -67,10 +98,10 @@ public:
     friend ostream& operator<< <>(ostream& os, const CircularQueue<TData>& seq_queue);
 
 private:
-    TData* mem_data_;
-    int capacity_;
-    int front_;
-    int rear_;
+    TData* mem_data_;               //!< 元素数组
+    int capacity_;                  //!< 容量
+    int front_;                     //!< 队头索引
+    int rear_;                      //!< 队尾索引
 };
 
 
@@ -81,85 +112,187 @@ private:
  * @return 执行结果
  * @note
  * 入队
- * <hr>
+ * ---
+ * ---
  *
- * <hr>
- * + **1**
+ * ---
+ * + **1 合法性判断**\n\n
+ * **if** 容量已满 :\n
+ * &emsp; 返回false\n\n
+ * + **2 空队的特殊处理**\n\n
+ * **if** 空队 :\n
+ * &emsp; front_置为0\n\n
+ * + **3 入队操作**\n\n
+ * rear_值更新\n
+ * mem_data_[rear_]的值设为参数data\n\n
+ * + **4 退出函数**\n\n
+ * 返回true\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 bool CircularQueue<TData>::EnQueue(const TData& data) {
-    if (IsFull()) {
-        return false;
+
+    // ---------- 1 合法性判断 ----------
+
+    if (IsFull()) {                                                                         // if 容量已满
+        return false;                                                                       // 返回false
     }
 
-    if (Length() == 0) {
-        this->front_ = 0;
-        this->rear_ = 0;
+    // ---------- 2 空队的特殊处理 ----------
 
-        this->mem_data_[0] = data;
-
-        return true;
+    if (Length() == 0) {                                                                    // if 空队
+        this->front_ = 0;                                                                   // front_置为0
     }
 
-    this->rear_ = (this->rear_ + 1 + this->capacity_) % this->capacity_;
-    this->mem_data_[this->rear_] = data;
+    // ---------- 3 入队操作 ----------
 
-    return true;
+    this->rear_ = (this->rear_ + 1 + this->capacity_) % this->capacity_;                    // rear_值更新
+    this->mem_data_[this->rear_] = data;                                                    // mem_data_[rear_]的值设为参数data
+
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                                            // 返回true
 }
 
 
-// 出队(保存数据)
+/*!
+ * @brief **出队(保存数据)**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 出队(保存数据)
+ * ------------
+ * ------------
+ *
+ * ------------
+ * + **1 合法性判断**\n\n
+ * **if** 空队:\n
+ * &emsp; 返回false\n\n
+ * + **2 长度为1的队列的特殊处理**\n\n
+ * **if** 队列长度为1 :\n
+ * &emsp; rear_置为0\n\n
+ * + **3 出队操作**\n\n
+ * mem_data_[front_]赋给参数data\n
+ * front_值更新\n\n
+ * + **4 退出函数**\n\n
+ * 返回true\n
+ *
+ *
+ * ------------
+ */
 template<typename TData>
 bool CircularQueue<TData>::DeQueue(TData& data) {
 
-    if (IsEmpty()) {
-        return false;
+    // ---------- 1 合法性判断 ----------
+
+    if (IsEmpty()) {                                                                        // if 空队
+        return false;                                                                       // 返回false
     }
 
-    if (Length() == 1) {
-        this->front_ = -1;
-        this->rear_ = -1;
+    // ---------- 2 长度为1的队列的特殊处理 ----------
 
-        return true;
+    if (Length() == 1) {                                                                    // if 队列长度为1
+        this->rear_ = -1;                                                                   // rear_置为0
     }
 
-    data = this->mem_data_[this->front_];
-    front_ = (front_ + 1 + capacity_) % capacity_;
+    // ---------- 3 出队操作 ----------
 
-    return true;
+    data = this->mem_data_[this->front_];                                                   // mem_data_[front_]赋给参数data
+    front_ = (front_ + 1 + capacity_) % capacity_;                                          // front_值更新
+
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                                            // 返回true
 }
 
 
-// 出队(不保存数据)
+/*!
+ * @brief **出队(不保存数据)**
+ * @tparam TData 数据项类型模板参数
+ * @return 执行结果
+ * @note
+ * 出队(不保存数据)
+ * --------------
+ * --------------
+ *
+ * --------------
+ * + **1 合法性判断**\n\n
+ * **if** 空队:\n
+ * &emsp; 返回false\n\n
+ * + **2 长度为1的队列的特殊处理**\n\n
+ * **if** 队列长度为1 :\n
+ * &emsp; rear_置为0\n\n
+ * + **3 出队操作**\n\n
+ * front_值更新\n\n
+ * + **4 退出函数**\n\n
+ * 返回true\n
+ *
+ *
+ * ------------
+ */
 template<typename TData>
 bool CircularQueue<TData>::DeQueue() {
-    if (IsEmpty()) {
-        return false;
+
+    // ---------- 1 合法性判断 ----------
+
+    if (IsEmpty()) {                                                                        // if 空队
+        return false;                                                                       // 返回false
     }
 
-    if (Length() == 1) {
-        this->front_ = -1;
-        this->rear_ = -1;
+    // ---------- 2 长度为1的队列的特殊处理 ----------
 
-        return true;
+    if (Length() == 1) {                                                                    // if 队列长度为1
+        this->rear_ = -1;                                                                   // rear_置为0
     }
 
-    front_ = (front_ + 1 + capacity_) % capacity_;
+    // ---------- 3 出队操作 ----------
 
-    return true;
+    front_ = (front_ + 1 + capacity_) % capacity_;                                          // front_值更新
+
+    // ---------- 4 退出函数 ----------
+
+    return true;                                                                            // 返回true
 }
 
 
-// 获取队头数据
+/*!
+ * @brief **获取队头数据**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 获取队头数据
+ * ----------
+ * ----------
+ *
+ * ----------
+ * + **1 非法情况处理**\n\n
+ * **if** 空队 :\n
+ * &emsp; 返回false\n\n
+ * + **2 取队头数据**\n\n
+ * mem_data_[front_]赋给data\n\n
+ * + **3 退出函数**\n\n
+ * 返回false\n
+ */
 template<typename TData>
 bool CircularQueue<TData>::Front(TData& data) const {
-    if (IsEmpty()) {
-        return false;
+
+    // ---------- 1 非法情况处理 ----------
+
+    if (IsEmpty()) {                                                                        // if 空队
+        return false;                                                                       // 返回false
     }
 
-    data = this->mem_data_[front_];
+    // ---------- 2 取队头数据 ----------
 
-    return true;
+    data = this->mem_data_[front_];                                                         // mem_data_[front_]赋给data
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                            // 返回false
 }
 
 
@@ -175,17 +308,20 @@ bool CircularQueue<TData>::Rear(TData& data) const {
     return true;
 }
 
+
 // 判断队列是否为空
 template<typename TData>
 bool CircularQueue<TData>::IsEmpty() const {
     return this->Length() == 0;
 }
 
+
 // 判断队列是否为空
 template<typename TData>
 bool CircularQueue<TData>::IsFull() const {
     return this->Length() == capacity_;
 }
+
 
 // 获取队列长度
 template<typename TData>

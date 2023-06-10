@@ -4,9 +4,6 @@
  * @brief 并查集.h文件
  * @version 0.2.1
  * @date 2021-02-21
- *
- * @copyright Copyright (c) 2021
- *  CyberDash计算机考研
  */
 
 #ifndef CYBER_DASH_DISJOINT_SET_H
@@ -30,24 +27,24 @@ public:
      * -------
      *
      * -------
-     * 释放parent_
+     * 释放parents_
      */
     ~DisjointSet() { delete[] parents_; }
 
     // 合并
     void Union(int node1, int node2);
 
-    // 查找
+    // 查找(递归)
     int FindRecursive(int index);
 
     // 合并集合(Weighted)
     void WeightedUnion(int node1, int node2);
 
-    // 查找(非递归)
+    // 查找
     int Find(int index);
 private:
-    int size_;     //!< 大小
-    int* parents_;  //!< 父节点数组
+    int size_;                //!< 大小
+    int* parents_;            //!< 父节点数组
 };
 
 

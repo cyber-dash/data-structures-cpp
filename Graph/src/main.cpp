@@ -69,6 +69,7 @@ int main(int argc, char** argv) {
     // 测试拓扑排序
     TestTopologicalSort();
 
+    // 关键路径
     TestCriticalPaths();
 
     return 0;
