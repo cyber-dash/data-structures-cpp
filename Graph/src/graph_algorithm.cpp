@@ -61,6 +61,7 @@ void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * vertex插入到visited_vertex_set\n\n
  * + **2 遍历vertex(起点)的邻接点, 执行递归**\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点) )</span>\n
+ * 声明neighbor_vertex(新邻结点)\n
  * 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.2 遍历执行递归 )</span>\n
  * **while loop** 存在新邻接点 :\n\n
@@ -79,29 +80,26 @@ void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& v
     cout << "访问结点: " << vertex << endl;
 
     // ---------- 1 起点插入已遍历结点集合 ----------
-    visited_vertex_set.insert(vertex);
+
+    visited_vertex_set.insert(vertex);                                                                      // vertex插入到visited_vertex_set
 
     // ---------- 2 遍历起点的邻接点, 执行递归 ----------
 
-    // 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点)
-    TVertex neighbor_vertex;
-    // 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists
-    bool new_neighbor_exists = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);
+    // ( 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点) )
+    TVertex neighbor_vertex;                                                                                // 声明neighbor_vertex(新邻结点)
+    bool new_neighbor_exists = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);                       // 调用GetFirstNeighborVertex, 初始化neighbor_vertex和new_neighbor_exists
 
-    // 2.2 遍历执行递归
-    while (new_neighbor_exists) {                   // while loop 存在新邻接点
-        // if 新邻接点不在visit_vertex_set(已访问结点集合)中
-        if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {
-            // 对新邻接点调用DfsOnVertexRecursive(递归)
-            DfsOnVertexRecursive(graph, neighbor_vertex, visited_vertex_set);
+    // ( 2.2 遍历执行递归 )
+    while (new_neighbor_exists) {                                                                           // while loop 存在新邻接点
+        if (visited_vertex_set.find(neighbor_vertex) == visited_vertex_set.end()) {                         // if 新邻接点不在visit_vertex_set(已访问结点集合)中
+            DfsOnVertexRecursive(graph, neighbor_vertex, visited_vertex_set);                               // 对新邻接点调用DfsOnVertexRecursive(递归)
         }
 
-        // 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
-        TVertex next_neighbor_vertex;
-        new_neighbor_exists = graph.GetNextNeighborVertex(vertex, neighbor_vertex, next_neighbor_vertex);
+        TVertex next_neighbor_vertex;                                                                       // 声明next_neighbor_vertex(下一新邻结点)
+        new_neighbor_exists = graph.GetNextNeighborVertex(vertex, neighbor_vertex, next_neighbor_vertex);   // 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists
 
-        if (new_neighbor_exists) {                  // if 下一新邻接点存在
-            neighbor_vertex = next_neighbor_vertex; // 更新neighbor_vertex
+        if (new_neighbor_exists) {                                                                          // if 下一新邻接点存在
+            neighbor_vertex = next_neighbor_vertex;                                                         // 更新neighbor_vertex
         }
     }
 }
@@ -143,7 +141,7 @@ bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
 
     if (graph.Type() == Graph<TVertex, TWeight>::DIRECTED) {                                        // if 有向图
         int in_degree = graph.GetVertexInDegree(starting_vertex);                                   // 获取起点入度
-        if (in_degree > 0) {                                                                        // if** 入度 > 0
+        if (in_degree > 0) {                                                                        // if 入度 > 0
             return false;                                                                           // 返回false
         }
     }
@@ -536,7 +534,9 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
  * &emsp;&emsp; 取cur_mst_vertex的首个邻接结点, 赋给cur_neighbor_vertex, 执行结果赋值给new_neighbor_exists<span style="color:#283593;font-weight:bold">(存在新的邻接结点)</span>\n\n
  * &emsp;&emsp; **while loop** 存在新的邻接结点 :\n
  * &emsp;&emsp;&emsp; **if** cur_neighbor_vertex不在最小生成树结点集合中 :\n
- * &emsp;&emsp;&emsp;&emsp; 获取 边(cur_mst_vertex --- cur_neighbor_vertex), 赋给cur_edge\n
+ * &emsp;&emsp;&emsp;&emsp; 声明cur_weight(当前边权重)\n
+ * &emsp;&emsp;&emsp;&emsp; 获取 边(cur_mst_vertex ---> cur_neighbor_vertex) 的权重, 赋给cur_weight\n\n
+ * &emsp;&emsp;&emsp;&emsp; 使用 边(cur_mst_vertex --- cur_neighbor_vertex) 生成cur_edge\n
  * &emsp;&emsp;&emsp;&emsp; cur_edge入队到min_priority_queue\n\n
  * &emsp;&emsp;&emsp; 获取next_neighbor_vertex<span style="color:#283593;font-weight:bold">(下一邻接结点)</span>, 并将执行结果赋给new_neighbor_exists\n\n
  * &emsp;&emsp;&emsp; **if** 下一邻接结点存在 :\n
@@ -582,28 +582,24 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
             TVertex cur_neighbor_vertex;                                                                    // 声明cur_neighbor_vertex(当前邻接结点)
             bool new_neighbor_exists = graph.GetFirstNeighborVertex(cur_mst_vertex, cur_neighbor_vertex);   // 取cur_mst_vertex的首个邻接结点, 赋给cur_neighbor_vertex, 执行结果赋值给new_neighbor_exists(存在新的邻接结点)
 
-            while (new_neighbor_exists) {   // while loop 存在新的邻接结点
+            while (new_neighbor_exists) {                                                                   // while loop 存在新的邻接结点
 
-                // if cur_neighbor_vertex(当前新的邻接结点)不在最小生成树结点集合中
-                if (mst_vertex_set.find(cur_neighbor_vertex) == mst_vertex_set.end()) {
+                if (mst_vertex_set.find(cur_neighbor_vertex) == mst_vertex_set.end()) {                     // if cur_neighbor_vertex(当前新的邻接结点)不在最小生成树结点集合中
 
-                    TWeight cur_weight;
-                    graph.GetWeight(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
+                    TWeight cur_weight;                                                                     // 声明cur_weight(当前边权重)
+                    graph.GetWeight(cur_mst_vertex, cur_neighbor_vertex, cur_weight);                       // 获取 边(cur_mst_vertex ---> cur_neighbor_vertex) 的权重, 赋给cur_weight
 
-                    // 获取 边(cur_mst_vertex --- cur_neighbor_vertex)
-                    Edge<TVertex, TWeight> cur_edge(cur_mst_vertex, cur_neighbor_vertex, cur_weight);
+                    Edge<TVertex, TWeight> cur_edge(cur_mst_vertex, cur_neighbor_vertex, cur_weight);       // 使用 边(cur_mst_vertex --- cur_neighbor_vertex) 生成cur_edge
 
-                    // 将其入队到min_priority_queue(最小优先队列)
-                    min_priority_queue.Enqueue(cur_edge);
+                    min_priority_queue.Enqueue(cur_edge);                                                   // 将其入队到min_priority_queue(最小优先队列)
                 }
 
-                // 获取next_neighbor_vertex(下一邻接结点), 并将执行结果赋给new_neighbor_exists
                 TVertex next_neighbor_vertex;
-                new_neighbor_exists = graph.GetNextNeighborVertex(cur_mst_vertex,
+                new_neighbor_exists = graph.GetNextNeighborVertex(cur_mst_vertex,                           // 获取next_neighbor_vertex(下一邻接结点), 并将执行结果赋给new_neighbor_exists
                                                                   cur_neighbor_vertex,
                                                                   next_neighbor_vertex);
-                if (new_neighbor_exists) {                      // if 下一邻接结点存在
-                    cur_neighbor_vertex = next_neighbor_vertex; // 下一邻接结点赋给cur_neighbor_vertex
+                if (new_neighbor_exists) {                                                                  // if 下一邻接结点存在
+                    cur_neighbor_vertex = next_neighbor_vertex;                                             // 下一邻接结点赋给cur_neighbor_vertex
                 }
             }
         }
@@ -1242,26 +1238,26 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
                                      const vector<vector<TWeight> >& distance,
                                      const vector<vector<int> >& predecessor)
 {
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {        // for loop 遍历结点索引i
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {                                            // for loop 遍历结点索引i
 
         TVertex cur_starting_vertex;
-        graph.GetVertexByIndex(i, cur_starting_vertex);             // 获取i对应的结点, 作为当前路径起点
+        graph.GetVertexByIndex(i, cur_starting_vertex);                                                 // 获取i对应的结点, 作为当前路径起点
 
-        cout << "--- 从起始点(" << cur_starting_vertex << ")到其他各顶点的最短路径 ---" << endl;   // 打印一段文字
+        cout << "--- 从起始点(" << cur_starting_vertex << ")到其他各顶点的最短路径 ---" << endl;             // 打印一段文字
 
-        for (unsigned int j = 0; j < graph.VertexCount(); j++) {    // for loop 遍历结点索引j
-            if (i == j) {   // if i等于j(代表起点与终点重合)
+        for (unsigned int j = 0; j < graph.VertexCount(); j++) {                                        // for loop 遍历结点索引j
+            if (i == j) {                                                                               // if i等于j(代表起点与终点重合)
                 continue;
             }
 
             TVertex ending_vertex;
-            graph.GetVertexByIndex(j, ending_vertex);   // 获取j对应的结点, 作为当前路径终点
+            graph.GetVertexByIndex(j, ending_vertex);                                                   // 获取j对应的结点, 作为当前路径终点
 
             cout << "起始点(" << cur_starting_vertex << ")到结点(" << ending_vertex << ")的最短路径为: ";   // 打印一段文字
 
-            bool res = PrintSsspInMsspRecursive(graph, predecessor, i, j); // 对i(当前路径起点索引)和j(当前路径终点索引)调用PrintSsspInMsspRecursive
-            if (res) {                                                     // if 存在最短路径
-                cout << ", 最短路径长度为: " << distance[i][j] << endl;      // 打印最短路径长度
+            bool res = PrintSsspInMsspRecursive(graph, predecessor, i, j);                              // 对i(当前路径起点索引)和j(当前路径终点索引)调用PrintSsspInMsspRecursive
+            if (res) {                                                                                  // if 存在最短路径
+                cout << ", 最短路径长度为: " << distance[i][j] << endl;                                   // 打印最短路径长度
             }
         }
 
@@ -1343,5 +1339,5 @@ vector<TWeight> GetCriticalPath(const Graph<TVertex, TWeight>& graph, const TVer
 
     // ---------- 3 退出函数 ----------
 
-    return critical_paths;                                                                                  // 返回critical_paths
+    return critical_paths;                                                                              // 返回critical_paths
 }

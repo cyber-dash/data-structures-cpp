@@ -103,7 +103,7 @@ void TestBaseFunctions() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|                  Test Graph BaseFunctions                 |"<<endl;
-    cout<<"|                        测试图基础函数                       |"<<endl;
+    cout<<"|                       测试-图-基础函数                   |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                         北京                               |"<<endl;
     cout<<"|                         / \\                               |"<<endl;
@@ -255,7 +255,23 @@ void TestMinPriorityQueue() {
 }
 
 
-// 测试矩阵图的矩阵
+/*!
+ * @brief **测试-矩阵图-打印矩阵**
+ * @note
+ * 测试-矩阵图-打印矩阵
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * 构造无向矩阵图\n\n
+ * + **2 打印矩阵**\n\n
+ *
+ *
+ * -----------------
+ */
 void TestMatrixGraphPrintMatrix() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;

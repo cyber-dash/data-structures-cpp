@@ -1,14 +1,18 @@
-﻿//
-// Created by fenix on 2023/6/3.
-//
+﻿/**
+ * @file circular_queue.h
+ * @author cyberdash@163.com(抖音: cyberdash_yuan)
+ * @brief 循环队列
+ * @version 0.2.1
+ * @date 2021-07-28
+ */
 
-#ifndef CYBER_DASH_SEQ_QUEUE_H
-#define CYBER_DASH_SEQ_QUEUE_H
+#ifndef CYBER_DASH_CIRCULAR_QUEUE_H
+#define CYBER_DASH_CIRCULAR_QUEUE_H
 
 
 #include <cstdlib>
-#include "queue.h"
 #include <iostream>
+#include "queue.h"
 
 
 using namespace std;
@@ -216,4 +220,4 @@ ostream& operator<<(ostream& os, const CircularQueue<TData>& circular_queue) {
 }
 
 
-#endif // CYBER_DASH_SEQ_QUEUE_H
+#endif // CYBER_DASH_CIRCULAR_QUEUE_H

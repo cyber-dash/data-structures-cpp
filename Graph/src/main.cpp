@@ -18,15 +18,24 @@ using namespace std;
  * @param argc
  * @param argv
  * @return 0
+ * @note
+ * main函数
+ * -------
+ * -------
+ *
+ * -------
+ * 测试-图-基础函数\n
+ * 测试-矩阵图-打印矩阵\n
+ *
+ *
+ * -------
  */
 int main(int argc, char** argv) {
 
-    // TestDirectedGraph();
-
-    /// 测试-图-基础函数
+    // 测试-图-基础函数
     TestBaseFunctions();
 
-    // 测试矩阵图打印矩阵
+    // 测试-矩阵图-打印矩阵
     TestMatrixGraphPrintMatrix();
 
     // 测试由结点索引获取结点
