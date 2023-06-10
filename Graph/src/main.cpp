@@ -26,6 +26,7 @@ using namespace std;
  * -------
  * 测试-图-基础函数\n
  * 测试-矩阵图-打印矩阵\n
+ * 测试-图-深度优先遍历(递归)\n
  *
  *
  * -------
@@ -41,8 +42,8 @@ int main(int argc, char** argv) {
     // 测试由结点索引获取结点
     TestGetVertexByIndex();
 
-    // 测试深度优先遍历
-    TestDFS();
+    // 测试-图-深度优先遍历(递归)
+    TestDfsRecursive();
 
     // 测试广度优先遍历
     TestBFS();
