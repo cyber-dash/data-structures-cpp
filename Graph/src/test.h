@@ -31,7 +31,7 @@ void TestMatrixGraphPrintMatrix();
 void TestGetVertexByIndex();
 
 /*! 测试DFS */
-void TestDFS();
+void TestDfsRecursive();
 
 /*! 测试BFS */
 void TestBFS();

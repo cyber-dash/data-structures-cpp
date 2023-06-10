@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * @file test.cpp
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 图测试.cpp文件
@@ -217,44 +217,6 @@ void TestBaseFunctions() {
 }
 
 
-void TestMinPriorityQueue() {
-    cout<<endl;
-    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                   Test MinPriorityQueue                   |"<<endl;
-    cout<<"|                       测试最小优先队列                      |"<<endl;
-
-    int arr[5] = { 3, 1, 4, 1, 5 };
-
-    MinPriorityQueue<int> min_priority_queue(arr, 5);
-
-    int item;
-
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-
-    min_priority_queue.Enqueue(9);
-    min_priority_queue.Enqueue(2);
-    min_priority_queue.Enqueue(6);
-
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-    min_priority_queue.Dequeue(item);
-    cout<<item<<endl;
-
-    cout<<"-------------------------------------------------------------"<<endl;
-}
-
-
 /*!
  * @brief **测试-矩阵图-打印矩阵**
  * @note
@@ -293,12 +255,13 @@ void TestMatrixGraphPrintMatrix() {
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
+    // ---------- 1 初始化图的基本信息 ----------
     unsigned int edge_count = 9;
 
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
+    // 初始化边信息
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
@@ -309,7 +272,10 @@ void TestMatrixGraphPrintMatrix() {
         edges.push_back(edge);
     }
 
+    // 构造无向矩阵图
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
+
+    // ---------- 2 打印矩阵 ----------
 
     matrix_graph.PrintMatrix();
 
@@ -317,12 +283,29 @@ void TestMatrixGraphPrintMatrix() {
 }
 
 
-// 测试使用结点索引获取结点
+/*!
+ * @brief **测试-图-使用结点索引获取结点**
+ * @note
+ * 测试-图-使用结点索引获取结点
+ * ------------------------
+ * ------------------------
+ *
+ * ------------------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * 构造无向矩阵图\n\n
+ * + **2 测试邻接表图**\n\n
+ * + **3 测试矩阵图**\n\n
+ *
+ *
+ * ------------------------
+ */
 void TestGetVertexByIndex() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|                Test Graph GetVertexByIndex                |"<<endl;
-    cout<<"|                    测试使用结点索引获取结点                   |"<<endl;
+    cout<<"|                 测试-图-使用结点索引获取结点              |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                         北京                               |"<<endl;
     cout<<"|                         / \\                               |"<<endl;
@@ -338,24 +321,28 @@ void TestGetVertexByIndex() {
     cout<<"|               /         \\ /         \\                     |"<<endl;
     cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
+    // ---------- 1 初始化图的基本信息 ----------
 
     unsigned int edge_count = 9;
 
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
+    // 初始化边信息
     vector<Edge<string, double> > edges;
     for (unsigned int i = 0; i < edge_count; i++) {
         Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
         edges.push_back(edge);
     }
 
+    // 构造无向矩阵图
     vector<string> graph_vertices(vertices.size());
+
+    // ---------- 2 测试邻接表图 ----------
 
     // 构造邻接表图
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
@@ -365,7 +352,6 @@ void TestGetVertexByIndex() {
         adjacency_list_graph.GetVertexByIndex(i, graph_vertices[i]);
     }
 
-    // adjacency_list_graph.RemoveEdge("北京", "上海");
     adjacency_list_graph.RemoveEdge("上海", "北京");
     adjacency_list_graph.RemoveEdge("北京", "广州");
     adjacency_list_graph.RemoveVertex("北京");
@@ -373,18 +359,10 @@ void TestGetVertexByIndex() {
     adjacency_list_graph.RemoveVertex("广州");
     adjacency_list_graph.RemoveVertex("深圳");
     adjacency_list_graph.RemoveVertex("杭州");
-    // adjacency_list_graph.RemoveVertex("成都");
 
     cout << adjacency_list_graph << endl;
-    // 打印结点
-    /*
-    cout<<"**邻接表图**"<<endl;
-    for (int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
-        string cur_vertex;
-        adjacency_list_graph.GetVertexByIndex(i, cur_vertex);
-        cout << "索引" << i << "结点: " << cur_vertex << endl;
-    }
-     */
+
+    // ---------- 3 测试矩阵图 ----------
 
     // 构造矩阵图
     MatrixGraph<string, double> matrix_graph(10, 10000, edges, vertices);
@@ -405,12 +383,29 @@ void TestGetVertexByIndex() {
 }
 
 
-// 测试DFS
-void TestDFS() {
+/*!
+ * @brief **测试-图-深度优先遍历(递归)**
+ * @note
+ * 测试-图-深度优先遍历(递归)
+ * -----------------------
+ * -----------------------
+ *
+ * -----------------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * 构造无向矩阵图\n\n
+ * + **2 测试邻接表图深度优先遍历**\n\n
+ * + **3 测试矩阵图深度优先遍历**\n\n
+ *
+ *
+ * -----------------------
+ */
+void TestDfsRecursive() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                       Test Graph DfsRecursive                      |"<<endl;
-    cout<<"|                      测试图深度优先遍历                      |"<<endl;
+    cout<<"|                  Test Graph DfsRecursive                  |"<<endl;
+    cout<<"|                   测试-图-深度优先遍历(递归)             |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                           北京                               |"<<endl;
     cout<<"|                           / \\                               |"<<endl;
@@ -427,30 +422,36 @@ void TestDFS() {
     cout<<"|              杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
     cout<<endl;
 
+    // ---------- 1 初始化图的基本信息 ----------
+
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     unsigned int edge_count = 9;
 
-    // 结点信息
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
 
+    // 初始化边信息
     vector<Edge<string, double> > edges;
     for (unsigned int i = 0; i < edge_count; i++) {
         Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
         edges.push_back(edge);
     }
 
-    // 构造邻接表图
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
+    // ---------- 2 测试邻接表图深度优先遍历 ----------
 
     cout<<"**邻接表图**"<<endl;
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
+
     DfsRecursive(adjacency_list_graph, vertices[0]);
 
+    // ---------- 3 测试矩阵图深度优先遍历 ----------
+
     cout<<endl<<"**矩阵图**"<<endl;
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
+
     DfsRecursive(matrix_graph, vertices[0]);
 
     cout<<"-------------------------------------------------------------"<<endl;
