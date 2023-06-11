@@ -11,22 +11,22 @@
 
 
  /*! @brief 测试获取队列长度 */
-void TestLength();
+void Test_LinkedQueue_Length();
 
 /*! @brief 测试入队 */
-void TestEnQueue();
+void Test_LinkedQueue_EnQueue();
 
 /*! @brief 测试出队 */
-void TestDeQueue();
+void Test_LinkedQueue_DeQueue();
 
 /*! @brief 测试获取队列头/尾节点 */
-void TestGetFrontAndGetRear();
+void Test_LinkedQueue_GetFrontAndGetRear();
 
 /*! @brief 测试队列是否为空 */
-void TestIsEmpty();
+void Test_LinkedQueue_IsEmpty();
 
 /*! @brief 测试重载<< */
-void TestPrint();
+void Test_LinkedQueue_Print();
 
 
 void Test_CircularQueue_Length();

@@ -169,13 +169,14 @@ bool CircularQueue<TData>::EnQueue(const TData& data) {
  * + **1 合法性判断**\n\n
  * **if** 空队:\n
  * &emsp; 返回false\n\n
- * + **2 长度为1的队列的特殊处理**\n\n
+ * + **2 取队尾值和索引处理**\n\n
+ * mem_data_[front_]赋给参数data\n\n
  * **if** 队列长度为1 :\n
- * &emsp; rear_置为0\n\n
- * + **3 出队操作**\n\n
- * mem_data_[front_]赋给参数data\n
+ * &emsp; front_置为-1\n
+ * &emsp; rear_置为-1\n
+ * **else**\n
  * front_值更新\n\n
- * + **4 退出函数**\n\n
+ * + **3 退出函数**\n\n
  * 返回true\n
  *
  *
@@ -190,16 +191,16 @@ bool CircularQueue<TData>::DeQueue(TData& data) {
         return false;                                                                       // 返回false
     }
 
-    // ---------- 2 长度为1的队列的特殊处理 ----------
-
-    if (Length() == 1) {                                                                    // if 队列长度为1
-        this->rear_ = -1;                                                                   // rear_置为0
-    }
-
-    // ---------- 3 出队操作 ----------
+    // ---------- 2 取队尾值和索引处理 ----------
 
     data = this->mem_data_[this->front_];                                                   // mem_data_[front_]赋给参数data
-    front_ = (front_ + 1 + capacity_) % capacity_;                                          // front_值更新
+
+    if (Length() == 1) {                                                                    // if 队列长度为1
+        this->front_ = -1;                                                                  // front_置为-1
+        this->rear_ = -1;                                                                   // rear_置为-1
+    } else {
+        front_ = (front_ + 1 + capacity_) % capacity_;                                      // front_值更新
+    }
 
     // ---------- 4 退出函数 ----------
 
@@ -208,24 +209,26 @@ bool CircularQueue<TData>::DeQueue(TData& data) {
 
 
 /*!
- * @brief **出队(不保存数据)**
+ * @brief **出队(保存数据)**
  * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
  * @return 执行结果
  * @note
- * 出队(不保存数据)
- * --------------
- * --------------
+ * 出队(保存数据)
+ * ------------
+ * ------------
  *
- * --------------
+ * ------------
  * + **1 合法性判断**\n\n
  * **if** 空队:\n
  * &emsp; 返回false\n\n
- * + **2 长度为1的队列的特殊处理**\n\n
+ * + **2 取队尾值和索引处理**\n\n
  * **if** 队列长度为1 :\n
- * &emsp; rear_置为0\n\n
- * + **3 出队操作**\n\n
+ * &emsp; front_置为-1\n
+ * &emsp; rear_置为-1\n
+ * **else**\n
  * front_值更新\n\n
- * + **4 退出函数**\n\n
+ * + **3 退出函数**\n\n
  * 返回true\n
  *
  *
@@ -243,14 +246,13 @@ bool CircularQueue<TData>::DeQueue() {
     // ---------- 2 长度为1的队列的特殊处理 ----------
 
     if (Length() == 1) {                                                                    // if 队列长度为1
-        this->rear_ = -1;                                                                   // rear_置为0
+        this->front = -1;                                                                   // front_置为-1
+        this->rear_ = -1;                                                                   // rear_置为-1
+    } else {
+        front_ = (front_ + 1 + capacity_) % capacity_;                                      // front_值更新
     }
 
-    // ---------- 3 出队操作 ----------
-
-    front_ = (front_ + 1 + capacity_) % capacity_;                                          // front_值更新
-
-    // ---------- 4 退出函数 ----------
+    // ---------- 3 退出函数 ----------
 
     return true;                                                                            // 返回true
 }

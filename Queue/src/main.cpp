@@ -22,21 +22,18 @@
  */
 int main() {
 
-    /*
-    TestLength();
+    Test_LinkedQueue_Length();
 
-	TestEnQueue();
+    Test_LinkedQueue_EnQueue();
 
-	TestDeQueue();
+    Test_LinkedQueue_DeQueue();
 
-	TestGetFrontAndGetRear();
+    Test_LinkedQueue_GetFrontAndGetRear();
 
-	TestIsEmpty();
+    Test_LinkedQueue_IsEmpty();
 
-    TestPrint();
-     */
+    Test_LinkedQueue_Print();
 
-    /*
     Test_CircularQueue_Length();
 
     Test_CircularQueue_EnQueue();
@@ -48,7 +45,6 @@ int main() {
     Test_CircularQueue_IsEmpty();
 
     Test_CircularQueue_Print();
-     */
 
     Test_DoubleEndedQueue_Length();
 

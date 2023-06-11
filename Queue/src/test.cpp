@@ -24,7 +24,7 @@
  * + **2 数据入队队列**\n
  * + **3 打印队列长度**\n
  */
-void TestLength() {
+void Test_LinkedQueue_Length() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -73,7 +73,7 @@ void TestLength() {
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
  */
-void TestEnQueue() {
+void Test_LinkedQueue_EnQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test Queue Enqueue                     |" << endl;
@@ -107,7 +107,7 @@ void TestEnQueue() {
  * + **3 队头出队**\n
  * + **4 打印队列**\n
  */
-void TestDeQueue() {
+void Test_LinkedQueue_DeQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test Queue Dequeue                     |" << endl;
@@ -147,7 +147,7 @@ void TestDeQueue() {
  * + **2 数据入队队列**\n
  * + **3 打印队头/队尾数据**\n
  */
-void TestGetFrontAndGetRear() {
+void Test_LinkedQueue_GetFrontAndGetRear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                  Test Queue Front & Rear                  |" << endl;
@@ -188,7 +188,7 @@ void TestGetFrontAndGetRear() {
  * + **2 数据入队队列**\n
  * + **3 清空**\n
  */
-void TestIsEmpty() {
+void Test_LinkedQueue_IsEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                     Test Queue Clear                      |" << endl;
@@ -233,7 +233,7 @@ void TestIsEmpty() {
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
  */
-void TestPrint() {
+void Test_LinkedQueue_Print() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test Operator <<                     |" << endl;
@@ -370,6 +370,12 @@ void Test_CircularQueue_DeQueue() {
     cout << "double_queue dequeue." << endl << endl;
 
     double frontData;
+    double_queue.DeQueue(frontData);
+
+    cout << double_queue;
+
+    double_queue.DeQueue(frontData);
+    double_queue.DeQueue(frontData);
     double_queue.DeQueue(frontData);
 
     cout << double_queue;
@@ -600,21 +606,28 @@ void Test_DoubleEndedQueue_DeQueue() {
     cout << "|                 Test DoubleEndedQueue Dequeue                |" << endl;
     cout << "|                        测试队列出队                        |" << endl << endl << endl;
 
-    DoubleEndedQueue<double> double_queue;
+
+    CircularQueue<double> double_queue;
 
     cout << "double_queue enqueue 4 numbers." << endl;
 
-    double_queue.PushBack(1.1);
-    double_queue.PushBack(2.2);
-    double_queue.PushBack(3.3);
-    double_queue.PushBack(4.4);
+    double_queue.EnQueue(1.1);
+    double_queue.EnQueue(2.2);
+    double_queue.EnQueue(3.3);
+    double_queue.EnQueue(4.4);
 
     cout << double_queue << endl;
 
     cout << "double_queue dequeue." << endl << endl;
 
     double frontData;
-    double_queue.PopFront(frontData);
+    double_queue.DeQueue(frontData);
+
+    cout << double_queue;
+
+    double_queue.DeQueue(frontData);
+    double_queue.DeQueue(frontData);
+    double_queue.DeQueue(frontData);
 
     cout << double_queue;
 
