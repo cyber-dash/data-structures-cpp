@@ -741,3 +741,46 @@ void Test_DoubleEndedQueue_Print() {
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
+
+
+/*!
+ * @brief **测试-循环队列-队尾出队和队头入队**
+ * @note
+ * 测试-循环队列-队尾出队和队头入队
+ * ---------------------------
+ * ---------------------------
+ *
+ * ---------------------------
+ * + **1 声明队列**\n
+ * + **2 数据入队队列并打印**\n
+ * + **3 部分元素出队并打印**\n
+ */
+void Test_DoubleEndedQueue_PushAndPop() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                      Test Operator <<                     |" << endl;
+    cout << "|                      测试队列operator<<                    |" << endl << endl << endl;
+
+    DoubleEndedQueue<int> int_queue;
+
+    int_queue.PushBack(4);
+    int_queue.PushBack(3);
+    int_queue.PushBack(2);
+    int_queue.PushBack(1);
+    int_queue.PushFront(4);
+    int_queue.PushFront(3);
+    int_queue.PushFront(2);
+    int_queue.PushFront(1);
+
+    cout << int_queue;
+
+    int_queue.PopFront();
+    int_queue.PopFront();
+    int_queue.PopBack();
+    int_queue.PopBack();
+
+    cout << endl;
+    cout << int_queue;
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}

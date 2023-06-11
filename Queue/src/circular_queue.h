@@ -1,4 +1,4 @@
-﻿/**
+﻿/*!
  * @file circular_queue.h
  * @author cyberdash@163.com(抖音: cyberdash_yuan)
  * @brief 循环队列
@@ -46,8 +46,6 @@ public:
      * -------
      */
     CircularQueue(int capacity = 20) : capacity_(capacity), front_(-1), rear_(-1) {
-        // capacity_使用参数capacity, front(队头索引)初始化为-1, rear(队尾索引)初始化为-1
-
         this->mem_data_ = new TData[this->capacity_];
         if (!this->mem_data_) {
             throw bad_alloc();
@@ -276,6 +274,9 @@ bool CircularQueue<TData>::DeQueue() {
  * mem_data_[front_]赋给data\n\n
  * + **3 退出函数**\n\n
  * 返回false\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool CircularQueue<TData>::Front(TData& data) const {
@@ -296,45 +297,137 @@ bool CircularQueue<TData>::Front(TData& data) const {
 }
 
 
-// 获取队尾数据
+/*!
+ * @brief **获取队尾数据**
+ * @tparam TData 数据项类型模板参数
+ * @param data 数据项保存变量
+ * @return 执行结果
+ * @note
+ * 获取队尾数据
+ * ----------
+ * ----------
+ *
+ * ----------
+ * + **1 非法操作处理**\n\n
+ * **if** 空队 :\n
+ * &emsp; 返回false\n\n
+ * + **2 获取队尾数据**\n\n
+ * mem_data_[rear_]赋给参数data\n\n
+ * + **3 退出函数**\n\n
+ * 返回true\n
+ *
+ *
+ * -------
+ */
 template<typename TData>
 bool CircularQueue<TData>::Rear(TData& data) const {
-    if (IsEmpty()) {
-        return false;
+
+    // ---------- 1 非法操作处理 ----------
+
+    if (IsEmpty()) {                                                                        // if 空队
+        return false;                                                                       // 返回false
     }
 
-    data = this->mem_data_[rear_];
+    // ---------- 2 获取队尾数据 ----------
 
-    return true;
+    data = this->mem_data_[rear_];                                                          // mem_data_[rear_]赋给参数data
+
+    // ---------- 3 退出函数 ----------
+
+    return true;                                                                            // 返回true
 }
 
 
-// 判断队列是否为空
+/*!
+ * @brief **判断是否为空**
+ * @tparam TData 数据项类型模板参数
+ * @return 是否为空
+ * @note
+ * 判断是否为空
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 返回Length() == 0
+ *
+ *
+ * -------
+ */
 template<typename TData>
 bool CircularQueue<TData>::IsEmpty() const {
     return this->Length() == 0;
 }
 
 
-// 判断队列是否为空
+/*!
+ * @brief **判断是否满队**
+ * @tparam TData 数据项类型模板参数
+ * @return 是否满队
+ * @note
+ * 判断是否满队
+ * ----------
+ * ----------
+ *
+ * ----------
+ * 返回Length() == capacity_
+ *
+ *
+ * -------
+ */
 template<typename TData>
 bool CircularQueue<TData>::IsFull() const {
     return this->Length() == capacity_;
 }
 
 
-// 获取队列长度
+/*!
+ * @brief **获取长度**
+ * @tparam TData 数据项类型模板参数
+ * @return 长度
+ * @note
+ * 获取长度
+ * -------
+ * -------
+ *
+ * -------
+ * + **1 空队情况**\n\n
+ * **if** rear_和front_都为-1 :\n
+ * &emsp; 返回0\n\n
+ * + **2 非空队情况**\n\n
+ * 返回(rear_ - front_ + 1 + capacity_) % capacity_\n
+ *
+ *
+ * -------
+ */
 template<typename TData>
 int CircularQueue<TData>::Length() const {
-    if (this->rear_ == -1 && this->front_ == -1) {
-        return 0;
+
+    // ---------- 1 空队情况 ----------
+
+    if (this->rear_ == -1 && this->front_ == -1) {                                          // if rear_和front_都为-1
+        return 0;                                                                           // 返回0
     }
 
-    return (rear_ - front_ + 1 + capacity_) % capacity_;
+    // ---------- 2 非空队情况 ----------
+
+    return (rear_ - front_ + 1 + capacity_) % capacity_;                                    // 返回(rear_ - front_ + 1 + capacity_) % capacity_
 }
 
 
-// 清空队列
+/*!
+ * @brief **清空**
+ * @tparam TData 数据项类型模板参数
+ * @note
+ * 清空
+ * ---
+ * ---
+ *
+ * ---
+ * rear_和front_都设为-1
+ *
+ *
+ * -------
+ */
 template<typename TData>
 void CircularQueue<TData>::Clear() {
     this->rear_ = -1;
@@ -342,17 +435,38 @@ void CircularQueue<TData>::Clear() {
 }
 
 
+/*!
+ * @brief **重载<<**
+ * @tparam TData 数据项类型模板参数
+ * @param os 输出流
+ * @param circular_queue 循环队列
+ * @return 输出流(引用)
+ * @note
+ * 重载<<
+ * -----
+ * -----
+ *
+ * -----
+ * 打印队列长度\n\n
+ * **for loop** 遍历队列: \n
+ * &emsp; 获取当前结点的数组索引\n
+ * &emsp; 打印当前结点的数据项\n\n
+ * 返回os\n
+ *
+ *
+ * -------
+ */
 template<typename TData>
 ostream& operator<<(ostream& os, const CircularQueue<TData>& circular_queue) {
 
-    os << "The size of link queue: " << circular_queue.Length() << endl;   // 打印队列长度
+    os << "The size of link queue: " << circular_queue.Length() << endl;                                        // 打印队列长度
 
-    for (int i = 0; i < circular_queue.Length(); i++) {                             // for loop 遍历队列
-        int actual_index = (circular_queue.front_ + i + circular_queue.capacity_) % circular_queue.capacity_;
-        os <<  circular_queue.mem_data_[actual_index] << endl;                   // 打印当前结点数据项
+    for (int i = 0; i < circular_queue.Length(); i++) {                                                         // for loop 遍历队列
+        int actual_index = (circular_queue.front_ + i + circular_queue.capacity_) % circular_queue.capacity_;   // 获取当前结点的数组索引
+        os <<  circular_queue.mem_data_[actual_index] << endl;                                                  // 打印当前结点数据项
     }
 
-    return os;                                                      // 返回os
+    return os;                                                                                                  // 返回os
 }
 
 

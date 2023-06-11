@@ -1,4 +1,4 @@
-﻿/**
+﻿/*!
  * @file linked_queue.h
  * @author cyberdash@163.com(抖音: cyberdash_yuan)
  * @brief 链式实现队列
@@ -149,6 +149,9 @@ private:
      *
      * ----------
      * 返回rear_
+     *
+     *
+     * -------
      */
     LinkedNode<TData>* RearNode_() const { return this->rear_; }
 
@@ -181,6 +184,9 @@ private:
  * &emsp; rear_指向node\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool LinkedQueue<TData>::EnQueue(const TData& data) {
@@ -231,6 +237,9 @@ bool LinkedQueue<TData>::EnQueue(const TData& data) {
  * temp置NULL\n\n
  * + **4 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool LinkedQueue<TData>::DeQueue(TData& data) {
@@ -279,6 +288,9 @@ bool LinkedQueue<TData>::DeQueue(TData& data) {
  * temp置NULL\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool LinkedQueue<TData>::DeQueue() {
@@ -322,6 +334,9 @@ bool LinkedQueue<TData>::DeQueue() {
  * 队头数据项赋给data\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool LinkedQueue<TData>::Front(TData& data) const {
@@ -360,6 +375,9 @@ bool LinkedQueue<TData>::Front(TData& data) const {
  * 队尾数据项赋给data\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool LinkedQueue<TData>::Rear(TData& data) const {
@@ -391,6 +409,9 @@ bool LinkedQueue<TData>::Rear(TData& data) const {
  *
  * -------------
  * 返回this->front_ == NULL
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool LinkedQueue<TData>::IsEmpty() const {
@@ -412,6 +433,9 @@ bool LinkedQueue<TData>::IsEmpty() const {
  * **for loop** cur指向front_; cur != NULL; cur指向自身next :\n
  * &emsp; count加1\n\n
  * 返回count\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 int LinkedQueue<TData>::Length() const {
@@ -438,6 +462,9 @@ int LinkedQueue<TData>::Length() const {
  * ---
  * **while loop** 当前队列不为NULL: \n
  * &emsp; 队头出队\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 void LinkedQueue<TData>::Clear() {
@@ -463,6 +490,9 @@ void LinkedQueue<TData>::Clear() {
  * **for loop** 遍历队列 :\n
  * &emsp; 打印当前结点数据项\n\n
  * 返回os\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 ostream& operator<<(ostream& os, const LinkedQueue<TData>& linked_queue) {

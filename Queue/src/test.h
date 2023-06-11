@@ -54,5 +54,8 @@ void Test_DoubleEndedQueue_IsEmpty();
 
 void Test_DoubleEndedQueue_Print();
 
+// 测试-循环队列-队尾出队和队头入队
+void Test_DoubleEndedQueue_PushAndPop();
+
 
 #endif // CYBER_DASH_QUEUE_TEST_H

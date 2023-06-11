@@ -36,6 +36,7 @@ int main() {
     TestPrint();
      */
 
+    /*
     Test_CircularQueue_Length();
 
     Test_CircularQueue_EnQueue();
@@ -47,6 +48,7 @@ int main() {
     Test_CircularQueue_IsEmpty();
 
     Test_CircularQueue_Print();
+     */
 
     Test_DoubleEndedQueue_Length();
 
@@ -59,6 +61,8 @@ int main() {
     Test_DoubleEndedQueue_IsEmpty();
 
     Test_DoubleEndedQueue_Print();
+
+    Test_DoubleEndedQueue_PushAndPop();
 
     return 0;
 }
