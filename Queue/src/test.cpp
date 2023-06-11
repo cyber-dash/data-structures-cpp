@@ -23,13 +23,16 @@
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列长度**\n
+ *
+ *
+ * ---------------
  */
 void Test_LinkedQueue_Length() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                     Test Queue Length                     |" << endl;
-    cout << "|                        测试队列Size                        |" << endl << endl << endl;
+    cout << "|                   Test LinkedQueue Length                 |" << endl;
+    cout << "|                     测试-链式队列-长度                    |" << endl << endl << endl;
 
     // ---------- 1 声明队列 ----------
 
@@ -49,13 +52,13 @@ void Test_LinkedQueue_Length() {
     };
 
     for (int i = 0; i < 12; i++) {
-        cout << "Old memory enqueue: " << old_memory[i] << endl;
+        cout << "old_memory_queue enqueue: " << old_memory[i] << endl;
         old_memory_queue.EnQueue(old_memory[i]);
     }
 
     // ---------- 3 打印队列长度 ----------
 
-    cout << endl << "Old memory queue length: " << old_memory_queue.Length() << endl;
+    cout << endl << "队列old_memory_queue的长度: " << old_memory_queue.Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -72,14 +75,21 @@ void Test_LinkedQueue_Length() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
+ *
+ *
+ * ---------------
  */
 void Test_LinkedQueue_EnQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                    Test Queue Enqueue                     |" << endl;
-    cout << "|                        测试队列入队                        |" << endl << endl << endl;
+    cout << "|                  Test LinkedQueue Enqueue                 |" << endl;
+    cout << "|                     测试-链式队列-入队                    |" << endl << endl << endl;
+
+    // ---------- 1 声明队列 ----------
 
     LinkedQueue<int> int_queue;
+
+    // ---------- 2 数据入队队列 ----------
 
     cout << "Enqueue 4 integers." << endl << endl;
 
@@ -87,6 +97,8 @@ void Test_LinkedQueue_EnQueue() {
     int_queue.EnQueue(2);
     int_queue.EnQueue(3);
     int_queue.EnQueue(4);
+
+    // ---------- 3 打印队列 ----------
 
     cout << int_queue;
 
@@ -106,16 +118,23 @@ void Test_LinkedQueue_EnQueue() {
  * + **2 数据入队队列**\n
  * + **3 队头出队**\n
  * + **4 打印队列**\n
+ *
+ *
+ * ---------------
  */
 void Test_LinkedQueue_DeQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                    Test Queue Dequeue                     |" << endl;
-    cout << "|                        测试队列出队                        |" << endl << endl << endl;
+    cout << "|                  Test LinkedQueue Dequeue                 |" << endl;
+    cout << "|                     测试-链式队列-出队                    |" << endl << endl << endl;
+
+    // ---------- 1 声明队列 ----------
 
     LinkedQueue<double> double_queue;
 
-    cout << "double_queue enqueue 4 numbers." << endl;
+    // ---------- 2 数据入队队列 ----------
+
+    cout << "double_queue入队4个数: 1.1, 2.2, 3.3, 4.4" << endl << endl;
 
     double_queue.EnQueue(1.1);
     double_queue.EnQueue(2.2);
@@ -124,10 +143,14 @@ void Test_LinkedQueue_DeQueue() {
 
     cout << double_queue << endl;
 
-    cout << "double_queue dequeue." << endl << endl;
+    // ---------- 3 队头出队 ----------
+
+    cout << "double_queue队头出队" << endl << endl;
 
     double frontData;
     double_queue.DeQueue(frontData);
+
+    // ---------- 4 打印队列 ----------
 
     cout << double_queue;
 

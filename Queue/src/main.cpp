@@ -28,6 +28,7 @@ int main() {
 
     Test_LinkedQueue_DeQueue();
 
+    /*
     Test_LinkedQueue_GetFrontAndGetRear();
 
     Test_LinkedQueue_IsEmpty();
@@ -59,6 +60,7 @@ int main() {
     Test_DoubleEndedQueue_Print();
 
     Test_DoubleEndedQueue_PushAndPop();
+     */
 
     return 0;
 }
