@@ -111,8 +111,6 @@ public:
 
 private:
 
-    // 获取栈顶结点指针
-    // LinkedNode<TData>* TopNode_() const;
     LinkedNode<TData>* top_;     //!< **栈顶结点指针**
 };
 
@@ -134,26 +132,6 @@ template<typename TData>
 LinkedStack<TData>::~LinkedStack() {
     Clear();
 }
-
-
-/*!
- * @brief **获取栈顶结点指针**
- * @tparam TData 数据项类型模板参数
- * @return 栈顶结点指针
- * @note
- * 获取栈顶结点指针
- * --------------
- * --------------
- *
- * --------------
- * 返回top_
- */
- /*
-template<typename TData>
-LinkedNode<TData>* LinkedStack<TData>::TopNode_() const {
-    return top_;
-}
-  */
 
 
 /*!
@@ -398,11 +376,11 @@ bool LinkedStack<TData>::IsEmpty() const {
 template<typename TData>
 void LinkedStack<TData>::Clear() {
     while (this->top_ != NULL) {                                                    // while loop top_不为NULL
-        LinkedNode<TData>* deletion_node = this->top_;                              // 初始化deletion_node, 指向top_
+        LinkedNode<TData>* target = this->top_;                                     // 初始化deletion_node, 指向top_
         top_ = top_->next;                                                          // top_指向top_->next
 
-        delete deletion_node;                                                       // 释放deletion_node
-        deletion_node = NULL;                                                       // deletion_node置NULL
+        delete target;                                                              // 释放deletion_node
+        target = NULL;                                                              // deletion_node置NULL
     }
 }
 
@@ -433,7 +411,7 @@ ostream& operator<<(ostream& os, const LinkedStack<TData>& stack) {
     LinkedNode<TData>* cur = stack.top_;                                    // 初始化cur(遍历指针)指向栈顶
 
     for (int i = 1; cur != NULL; i++) {                                     // for loop 使用cur遍历栈
-        os << cur->data << endl;                                // 打印cur->data
+        os << cur->data << endl;                                            // 打印cur->data
         cur = cur->next;                                                    // cur指向cur->next
     }
 
