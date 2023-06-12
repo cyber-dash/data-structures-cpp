@@ -103,21 +103,21 @@ void TestBaseFunctions() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|                  Test Graph BaseFunctions                 |"<<endl;
-    cout<<"|                       测试-图-基础函数                   |"<<endl;
+    cout<<"|                     测试-图-基础函数                      |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                         北京                               |"<<endl;
-    cout<<"|                         / \\                               |"<<endl;
-    cout<<"|                        /   \\                              |"<<endl;
-    cout<<"|                      0.1   0.12                           |"<<endl;
-    cout<<"|                      /       \\                            |"<<endl;
-    cout<<"|                     /         \\                           |"<<endl;
-    cout<<"|                  上海---0.01---广州                        |"<<endl;
-    cout<<"|                   / \\         / \\                         |"<<endl;
-    cout<<"|                  /   \\       /   \\                        |"<<endl;
-    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
-    cout<<"|                /       \\   /       \\                      |"<<endl;
-    cout<<"|               /         \\ /         \\                     |"<<endl;
-    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
     // ---------- 1 初始化图的基本信息 ----------
@@ -145,72 +145,40 @@ void TestBaseFunctions() {
     AdjacencyListGraph<string, double> adjacency_list_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
 
     // 依次删除1个城市, 然后打印图
-    cout << "##### 1 邻接表有向图删除结点 #####" << endl << endl;
+    cout << "---------- 1 邻接表有向图删除结点 ----------" << endl << endl;
     adjacency_list_directed_graph.RemoveVertex("北京");
-    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
     adjacency_list_directed_graph.RemoveVertex("上海");
-    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
     adjacency_list_directed_graph.RemoveVertex("深圳");
-    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
-    adjacency_list_directed_graph.RemoveVertex("广州");
-    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
-    adjacency_list_directed_graph.RemoveVertex("成都");
-    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
-    adjacency_list_directed_graph.RemoveVertex("杭州");
-    cout << adjacency_list_directed_graph << endl << endl << endl << endl;
+    cout << adjacency_list_directed_graph << endl << endl;
 
     // 构造adjacency_list_undirected_graph(邻接表无向图)
     AdjacencyListGraph<string, double> adjacency_list_undirected_graph(Graph<string, double>::UNDIRECTED, 10, 1000, edges, vertices);
 
     // 依次删除1个城市, 然后打印图
-    cout << "##### 2 邻接表无向图删除结点 #####" << endl << endl;
+    cout << "---------- 2 邻接表无向图删除结点 ----------" << endl << endl;
     adjacency_list_undirected_graph.RemoveVertex("北京");
-    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
     adjacency_list_undirected_graph.RemoveVertex("上海");
-    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
     adjacency_list_undirected_graph.RemoveVertex("深圳");
-    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
-    adjacency_list_undirected_graph.RemoveVertex("广州");
-    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
-    adjacency_list_undirected_graph.RemoveVertex("成都");
-    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
-    adjacency_list_undirected_graph.RemoveVertex("杭州");
-    cout << adjacency_list_undirected_graph << endl << endl << endl << endl;
+    cout << adjacency_list_undirected_graph << endl << endl;
 
     // 构造matrix_directed_graph(矩阵有向图)
     MatrixGraph<string, double> matrix_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
 
     // 依次删除1个城市, 然后打印图
-    cout << "##### 3 矩阵有向图删除结点 #####" << endl << endl;
+    cout << "---------- 3 矩阵有向图删除结点 ----------" << endl << endl;
     matrix_directed_graph.RemoveVertex("北京");
-    cout << matrix_directed_graph << endl << endl;
     matrix_directed_graph.RemoveVertex("上海");
-    cout << matrix_directed_graph << endl << endl;
     matrix_directed_graph.RemoveVertex("深圳");
-    cout << matrix_directed_graph << endl << endl;
-    matrix_directed_graph.RemoveVertex("广州");
-    cout << matrix_directed_graph << endl << endl;
-    matrix_directed_graph.RemoveVertex("成都");
-    cout << matrix_directed_graph << endl << endl;
-    matrix_directed_graph.RemoveVertex("杭州");
     cout << matrix_directed_graph << endl << endl;
 
     // 构造matrix_undirected_graph(矩阵无向图)
     MatrixGraph<string, double> matrix_undirected_graph(Graph<string, double>::UNDIRECTED, 10, 1000, edges, vertices);
 
     // 依次删除1个城市, 然后打印图
-    cout << "##### 4 矩阵无向图删除结点 #####" << endl << endl;
+    cout << "---------- 4 矩阵无向图删除结点 ----------" << endl << endl;
     matrix_undirected_graph.RemoveVertex("北京");
-    cout << matrix_undirected_graph << endl << endl;
     matrix_undirected_graph.RemoveVertex("上海");
-    cout << matrix_undirected_graph << endl << endl;
     matrix_undirected_graph.RemoveVertex("深圳");
-    cout << matrix_undirected_graph << endl << endl;
-    matrix_undirected_graph.RemoveVertex("广州");
-    cout << matrix_undirected_graph << endl << endl;
-    matrix_undirected_graph.RemoveVertex("成都");
-    cout << matrix_undirected_graph << endl << endl;
-    matrix_undirected_graph.RemoveVertex("杭州");
     cout << matrix_undirected_graph << endl << endl;
 
     cout << "-------------------------------------------------------------" << endl;
@@ -237,22 +205,22 @@ void TestBaseFunctions() {
 void TestMatrixGraphPrintMatrix() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                      Test PrintMatrix                     |"<<endl;
-    cout<<"|                       测试矩阵图的矩阵                      |"<<endl;
+    cout<<"|                Test MatrixGraph PrintMatrix               |"<<endl;
+    cout<<"|                    测试-矩阵图-打印矩阵                   |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                         北京                               |"<<endl;
-    cout<<"|                         / \\                               |"<<endl;
-    cout<<"|                        /   \\                              |"<<endl;
-    cout<<"|                      0.1   0.12                           |"<<endl;
-    cout<<"|                      /       \\                            |"<<endl;
-    cout<<"|                     /         \\                           |"<<endl;
-    cout<<"|                  上海---0.01---广州                        |"<<endl;
-    cout<<"|                   / \\         / \\                         |"<<endl;
-    cout<<"|                  /   \\       /   \\                        |"<<endl;
-    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
-    cout<<"|                /       \\   /       \\                      |"<<endl;
-    cout<<"|               /         \\ /         \\                     |"<<endl;
-    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
     // ---------- 1 初始化图的基本信息 ----------
@@ -277,107 +245,8 @@ void TestMatrixGraphPrintMatrix() {
 
     // ---------- 2 打印矩阵 ----------
 
+    cout << "打印矩阵:" << endl << endl;
     matrix_graph.PrintMatrix();
-
-    cout<<"-------------------------------------------------------------"<<endl;
-}
-
-
-/*!
- * @brief **测试-图-使用结点索引获取结点**
- * @note
- * 测试-图-使用结点索引获取结点
- * ------------------------
- * ------------------------
- *
- * ------------------------
- * + **1 初始化图的基本信息**\n\n
- * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
- * 初始化边信息\n\n
- * 构造无向矩阵图\n\n
- * + **2 测试邻接表图**\n\n
- * + **3 测试矩阵图**\n\n
- *
- *
- * ------------------------
- */
-void TestGetVertexByIndex() {
-    cout<<endl;
-    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                Test Graph GetVertexByIndex                |"<<endl;
-    cout<<"|                 测试-图-使用结点索引获取结点              |"<<endl;
-    cout<<"|                                                           |"<<endl;
-    cout<<"|                         北京                               |"<<endl;
-    cout<<"|                         / \\                               |"<<endl;
-    cout<<"|                        /   \\                              |"<<endl;
-    cout<<"|                      0.1   0.12                           |"<<endl;
-    cout<<"|                      /       \\                            |"<<endl;
-    cout<<"|                     /         \\                           |"<<endl;
-    cout<<"|                  上海---0.01---广州                        |"<<endl;
-    cout<<"|                   / \\         / \\                         |"<<endl;
-    cout<<"|                  /   \\       /   \\                        |"<<endl;
-    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
-    cout<<"|                /       \\   /       \\                      |"<<endl;
-    cout<<"|               /         \\ /         \\                     |"<<endl;
-    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
-    cout<<endl;
-    // ---------- 1 初始化图的基本信息 ----------
-
-    unsigned int edge_count = 9;
-
-    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
-    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
-
-    vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
-    vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
-    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
-
-    // 初始化边信息
-    vector<Edge<string, double> > edges;
-    for (unsigned int i = 0; i < edge_count; i++) {
-        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
-        edges.push_back(edge);
-    }
-
-    // 构造无向矩阵图
-    vector<string> graph_vertices(vertices.size());
-
-    // ---------- 2 测试邻接表图 ----------
-
-    // 构造邻接表图
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
-
-    // 按照索引值读取邻接表图各结点
-    for (unsigned int i = 0; i < adjacency_list_graph.VertexCount(); i++) {
-        adjacency_list_graph.GetVertexByIndex(i, graph_vertices[i]);
-    }
-
-    adjacency_list_graph.RemoveEdge("上海", "北京");
-    adjacency_list_graph.RemoveEdge("北京", "广州");
-    adjacency_list_graph.RemoveVertex("北京");
-    adjacency_list_graph.RemoveVertex("上海");
-    adjacency_list_graph.RemoveVertex("广州");
-    adjacency_list_graph.RemoveVertex("深圳");
-    adjacency_list_graph.RemoveVertex("杭州");
-
-    cout << adjacency_list_graph << endl;
-
-    // ---------- 3 测试矩阵图 ----------
-
-    // 构造矩阵图
-    MatrixGraph<string, double> matrix_graph(10, 10000, edges, vertices);
-    matrix_graph.RemoveVertex("北京");
-
-    // 按照索引值读取矩阵图各结点
-    for (unsigned int i = 0; i < matrix_graph.VertexCount(); i++) {
-        matrix_graph.GetVertexByIndex(i, graph_vertices[i]);
-    }
-
-    // 打印结点
-    cout<<endl<<"**矩阵图**"<<endl;
-    for (unsigned int i = 0; i < matrix_graph.VertexCount(); i++) {
-        cout << "索引" << i << "结点: " << graph_vertices[i] << endl;
-    }
 
     cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -394,9 +263,12 @@ void TestGetVertexByIndex() {
  * + **1 初始化图的基本信息**\n\n
  * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
  * 初始化边信息\n\n
- * 构造无向矩阵图\n\n
  * + **2 测试邻接表图深度优先遍历**\n\n
+ * 构造adjacency_list_graph(邻接表无向图)\n
+ * 以"北京"为起点进行深度优先遍历\n\n
  * + **3 测试矩阵图深度优先遍历**\n\n
+ * 构造matrix_graph(矩阵无向图)\n
+ * 以"北京"为起点进行深度优先遍历\n
  *
  *
  * -----------------------
@@ -405,21 +277,21 @@ void TestDfsRecursive() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|                  Test Graph DfsRecursive                  |"<<endl;
-    cout<<"|                   测试-图-深度优先遍历(递归)             |"<<endl;
+    cout<<"|                 测试-图-深度优先遍历(递归)                |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                               |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                           |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05   0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
     // ---------- 1 初始化图的基本信息 ----------
@@ -431,7 +303,7 @@ void TestDfsRecursive() {
 
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
-    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };
 
     // 初始化边信息
     vector<Edge<string, double> > edges;
@@ -442,50 +314,70 @@ void TestDfsRecursive() {
 
     // ---------- 2 测试邻接表图深度优先遍历 ----------
 
-    cout<<"**邻接表图**"<<endl;
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
-
-    DfsRecursive(adjacency_list_graph, vertices[0]);
+    cout<<"---------- 邻接表图 ----------"<<endl;
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造adjacency_list_graph(邻接表无向图)
+    DfsRecursive(adjacency_list_graph, vertices[0]);                                    // "北京"为起点进行深度优先遍历
 
     // ---------- 3 测试矩阵图深度优先遍历 ----------
 
-    cout<<endl<<"**矩阵图**"<<endl;
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
-
-    DfsRecursive(matrix_graph, vertices[0]);
+    cout<<endl<<"---------- 矩阵图 ----------"<<endl;
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造matrix_graph(矩阵无向图)
+    DfsRecursive(matrix_graph, vertices[0]);                                            // 以"北京"为起点进行深度优先遍历
 
     cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
-// 测试BFS
+/*!
+ * @brief **测试-图-广度优先遍历**
+ * @note
+ * 测试-图-广度优先遍历
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ *
+ *
+ * -----------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试邻接表图广度优先遍历**\n\n
+ * 构造adjacency_list_undirected_graph(邻接表无向图)\n
+ * 以"北京"为起点进行bfs遍历\n\n
+ * + **3 测试矩阵图广度优先遍历**\n\n
+ * 构造matrix_undirected_graph(矩阵无向图)\n
+ * 以"北京"为起点进行bfs遍历\n
+ */
 void TestBFS() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                          Test Bfs                         |"<<endl;
-    cout<<"|                       测试广度优先遍历                      |"<<endl;
+    cout<<"|                       Test Graph Bfs                      |"<<endl;
+    cout<<"|                    测试-图-广度优先遍历                   |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                               |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                           |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05   0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
+
+    // ---------- 1 初始化图的基本信息 ----------
 
     unsigned int edge_count = 9;
 
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
+    // 初始化边信息
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
@@ -496,16 +388,17 @@ void TestBFS() {
         edges.push_back(edge);
     }
 
-    // 构造邻接表图
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
-    // 构造矩阵图
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
+    // ---------- 2 测试邻接表图广度优先遍历 ----------
 
-    cout<<"**邻接表图**"<<endl;
-    Bfs(adjacency_list_graph, vertices[0]);
+    cout<<"---------- 邻接表图 ----------"<<endl;
+    AdjacencyListGraph<string, double> adjacency_list_undirected_graph(10, 1000, edges, vertices);  // 构造adjacency_list_undirected_graph(邻接表无向图)
+    Bfs(adjacency_list_undirected_graph, vertices[0]);                                              // 以"北京"为起点进行bfs遍历
 
-    cout<<endl<<"**矩阵图**"<<endl;
-    Bfs(matrix_graph, vertices[0]);
+    // ---------- 3 测试矩阵图广度优先遍历 ----------
+
+    cout<<endl<<"---------- 矩阵图 ----------"<<endl;
+    MatrixGraph<string, double> matrix_undirected_graph(10, 1000, edges, vertices);                 // 构造matrix_undirected_graph(矩阵无向图)
+    Bfs(matrix_undirected_graph, vertices[0]);                                                      // 以"北京"为起点进行bfs遍历
 
     cout<<"-------------------------------------------------------------"<<endl;
 }
@@ -515,13 +408,13 @@ void TestComponents() {
 
   cout<<endl;
   cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-  cout<<"|                      Test Components                      |"<<endl;
-  cout<<"|                        测试连通分量                         |"<<endl;
-  cout<<"|  节点:                                                     |"<<endl;
+  cout<<"|                   Test Graph Components                   |"<<endl;
+  cout<<"|                      测试-图-连通分量                     |"<<endl;
+  cout<<"|  节点:                                                    |"<<endl;
   cout<<"|    0, 1, 2, 3                                             |"<<endl;
   cout<<"|  边:                                                      |"<<endl;
-  cout<<"|    0-1权值: 0.8                                            |"<<endl<<endl;
-  cout<<"|    2-3权值: 7.3                                            |"<<endl<<endl;
+  cout<<"|    0-1权值: 0.8                                           |"<<endl;
+  cout<<"|    2-3权值: 7.3                                           |"<<endl<<endl;
 
   AdjacencyListGraph<int, double> adjacency_list_graph(10, 10000);
 
@@ -543,46 +436,73 @@ void TestComponents() {
   matrix_graph.InsertEdge(0, 1, 0.8);
   matrix_graph.InsertEdge(2, 3, 7.3);
 
-  cout<<"**邻接表图测试**"<<endl;
+  cout<<"---------- 邻接表图 ----------"<<endl;
   Components(adjacency_list_graph);
 
-  cout<<endl<<"**矩阵图测试**"<<endl;
+  cout<<"---------- 矩阵图 ----------"<<endl;
   Components(matrix_graph);
 
   cout<<"-------------------------------------------------------------"<<endl;
 }
 
 
+/*!
+ * @brief **测试-图-最小生成树Kruskal**
+ * @note
+ * 测试-图-最小生成树Kruskal
+ * ----------------------
+ * ----------------------
+ *
+ * ----------------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试邻接表图Kruskal**\n\n
+ * 构造adjacency_list_undirected_graph(邻接表无向图)\n
+ * 初始化adj_min_span_tree(邻接表图的最小生成树)\n\n
+ * 调用Kruskal求最小生成树\n
+ * 打印最小生成树\n\n
+ * + **3 测试矩阵图Kruskal**\n\n
+ * 构造matrix_undirected_graph(矩阵无向图)\n
+ * 初始化matrix_min_span_tree(矩阵图的最小生成树)\n\n
+ * 调用Kruskal求最小生成树\n
+ * 打印最小生成树\n\n
+ *
+ *
+ * -------------------
+ */
 void TestKruskal() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                        Test Kruskal                       |"<<endl;
-    cout<<"|                       测试Kruskal算法                      |"<<endl;
+    cout<<"|                     Test Graph Kruskal                    |"<<endl;
+    cout<<"|                  测试-图-最小生成树Kruskal                |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                               |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                           |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
+
+    // ---------- 1 初始化图的基本信息 ----------
 
     unsigned int edge_count = 9;
 
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
+    // 初始化边信息
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
-    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };
 
     vector<Edge<string, double> > edges;
     for (unsigned int i = 0; i < edge_count; i++) {
@@ -590,54 +510,84 @@ void TestKruskal() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
+    // ---------- 2 测试邻接表图Kruskal ----------
 
-    MinimumSpanTree<string, double> min_span_tree_adj(100);
-    MinimumSpanTree<string, double> min_span_tree_matrix(100);
+    cout<<"---------- 邻接表图 ----------"<<endl;
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);     // 构造adjacency_list_undirected_graph(邻接表无向图)
+    MinimumSpanTree<string, double> adj_min_span_tree(100);                                 // 初始化adj_min_span_tree(邻接表图的最小生成树)
+    Kruskal(adjacency_list_graph, adj_min_span_tree);                                       // 调用Kruskal求最小生成树
+    adj_min_span_tree.Print();                                                              // 打印最小生成树
 
-    cout << "**邻接表图测试**" << endl;
-    Kruskal(adjacency_list_graph, min_span_tree_adj);
-    min_span_tree_adj.Print();
+    // ---------- 3 测试矩阵图Kruskal ----------
 
-    cout << endl << "**矩阵图测试**" << endl;
-    Kruskal(matrix_graph, min_span_tree_matrix);
+    cout<<endl<<"---------- 邻接表图 ----------"<<endl;
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                    // 构造matrix_undirected_graph(矩阵无向图)
+    MinimumSpanTree<string, double> matrix_min_span_tree(100);                              // 初始化matrix_min_span_tree(邻接表图的最小生成树)
 
-    min_span_tree_matrix.Print();
+    Kruskal(matrix_graph, matrix_min_span_tree);                                            // 调用Kruskal求最小生成树
+    matrix_min_span_tree.Print();                                                           // 打印最小生成树
+
     cout << "-------------------------------------------------------------" << endl;
 }
 
 
+/*!
+ * @brief **测试-图-最小生成树Prim**
+ * @note
+ * 测试-图-最小生成树Prim
+ * -------------------
+ * -------------------
+ *
+ * -------------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试邻接表图Prim**\n\n
+ * 构造adjacency_list_undirected_graph(邻接表无向图)\n
+ * 初始化adj_min_span_tree(邻接表图的最小生成树)\n\n
+ * 调用Prim求最小生成树\n
+ * 打印最小生成树\n\n
+ * + **3 测试矩阵图Prim**\n\n
+ * 构造matrix_undirected_graph(矩阵无向图)\n
+ * 初始化matrix_min_span_tree(矩阵图的最小生成树)\n\n
+ * 调用Prim求最小生成树\n
+ * 打印最小生成树\n\n
+ *
+ *
+ * -------------------
+ */
 void TestPrim() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                         Test Prim                         |"<<endl;
-    cout<<"|                        测试Prim算法                        |"<<endl;
+    cout<<"|                      Test Graph Prim                      |"<<endl;
+    cout<<"|                   测试-图-最小生成树Prim                  |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                             |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                          |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
+
+    // ---------- 1 初始化图的基本信息 ----------
 
     unsigned int edge_count = 9;
 
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
+    // 初始化边信息
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
-    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
+    vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };
 
     vector<Edge<string, double> > edges;
     for (unsigned int i = 0; i < edge_count; i++) {
@@ -645,20 +595,26 @@ void TestPrim() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造邻接表图
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造矩阵图
+    // ---------- 2 测试邻接表图Prim ----------
 
-    cout<<endl<<"**邻接表图测试**"<<endl;
-    MinimumSpanTree<string, double> min_span_tree_adj(100);
-    Prim(adjacency_list_graph, min_span_tree_adj);
-    min_span_tree_adj.Print();
+    cout<<"---------- 邻接表图 ----------"<<endl;
 
-    cout<<endl<<"**矩阵图测试**"<<endl;
-    MinimumSpanTree<string, double> min_span_tree_matrix(100);
-    Prim(matrix_graph, min_span_tree_matrix);
-    min_span_tree_matrix.Print();
+    AdjacencyListGraph<string, double> adjacency_list_undirected_graph(10, 1000, edges, vertices);  // 构造adjacency_list_undirected_graph(邻接表无向图)
+    MinimumSpanTree<string, double> adj_min_span_tree(100);                                         // 初始化adj_min_span_tree(邻接表图的最小生成树)
+    Prim(adjacency_list_undirected_graph, adj_min_span_tree);                                       // 调用Prim求最小生成树
+    adj_min_span_tree.Print();                                                                      // 打印最小生成树
 
-    cout<<"-------------------------------------------------------------"<<endl<<endl;
+    // ---------- 3 测试矩阵图Prim ----------
+
+    cout<<endl<<"---------- 邻接表图 ----------"<<endl;
+
+    MatrixGraph<string, double> matrix_undirected_graph(10, 1000, edges, vertices);                 // 构造matrix_undirected_graph(矩阵无向图)
+    MinimumSpanTree<string, double> matrix_min_span_tree(100);                                      // 初始化matrix_min_span_tree(邻接表图的最小生成树)
+
+    Prim(matrix_undirected_graph, matrix_min_span_tree);                                            // 调用Prim求最小生成树
+    matrix_min_span_tree.Print();                                                                   // 打印最小生成树
+
+    cout<<endl<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 

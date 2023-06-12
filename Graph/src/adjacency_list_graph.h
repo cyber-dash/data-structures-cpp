@@ -1704,27 +1704,31 @@ istream& operator>>(istream& in, AdjacencyListGraph<TVertex, TWeight>& adjacency
  * ----------
  *
  * ----------
- * + **1 打印基本信息**\n
- *  - **1.1 打印结点信息**\n
- *  &emsp; 打印文本\n
- *  &emsp; **for loop** 遍历结点索引 :\n
- *  &emsp;&emsp; 获取当前结点\n
- *  &emsp;&emsp; 打印当前结点\n
- *  - **1.2 打印边信息**\n
- *  &emsp; 打印文本\n
- *  &emsp; **for loop** 遍历边索引 :\n
- *  &emsp;&emsp; 获取当前边\n
- *  &emsp;&emsp; 打印当前边\n
- * + **2 打印邻接表信息**\n
+ * + **1 打印基本信息**\n\n
+ * 1.1 打印结点信息**\n
+ * &emsp; 打印文本\n
+ * &emsp; **for loop** 遍历结点索引 :\n
+ * &emsp;&emsp; 获取当前结点\n
+ * &emsp;&emsp; 打印当前结点\n\n
+ * **1.2 打印边信息**\n
+ * &emsp; 打印文本\n
+ * &emsp; **for loop** 遍历边索引 :\n
+ * &emsp;&emsp; 获取当前边\n
+ * &emsp;&emsp; 打印当前边\n\n
+ * + **2 打印邻接表信息**\n\n
  * **for loop** 遍历结点索引 :\n
- * &emsp; 获取i<b>(当前索引)</b>对应的结点cur_vertex\n
- * &emsp; 打印一条文本\n
+ * &emsp; 声明cur_vertex(当前索引i对应的结点)\n
+ * &emsp; 获取i<b>(当前索引)</b>对应的结点cur_vertex\n\n
+ * &emsp; 打印一条文本\n\n
  * &emsp; 声明遍历指针cur_vertex_adjacency, 指向结点cur_vertex的首个邻接项\n
  * &emsp; **while loop** cur_vertex_adjacency不为NULL :\n
  * &emsp;&emsp; 打印当前邻接项的终点\n
  * &emsp;&emsp; **if** 当前邻接项的next不为NULL(不是最后一项) :\n
  * &emsp;&emsp;&emsp; 打印"--->"\n
  * &emsp;&emsp; cur_vertex_adjacency指向next\n
+ *
+ *
+ * ----------
  */
 template<typename TVertex, typename TWeight>
 ostream& operator<<(ostream& out, AdjacencyListGraph<TVertex, TWeight>& graph) {
@@ -1732,42 +1736,41 @@ ostream& operator<<(ostream& out, AdjacencyListGraph<TVertex, TWeight>& graph) {
     // ---------- 1 打印基本信息 ----------
 
     // ----- 1.1 打印结点信息 -----
-    out << "--- 基本信息 ---" << endl;
-    out << "结点数量: " << graph.VertexCount() << endl;          // 打印文本
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点索引
+    out << "# 基本信息 #" << endl;
+    out << "结点数量: " << graph.VertexCount() << endl;                                                  // 打印文本
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {                                            // for loop 遍历结点索引
         TVertex cur_vertex;
-        graph.GetVertexByIndex(i, cur_vertex);                  // 获取当前结点
-        out << cur_vertex << " ";                               // 打印当前结点
+        graph.GetVertexByIndex(i, cur_vertex);                                                          // 获取当前结点
+        out << cur_vertex << " ";                                                                       // 打印当前结点
     }
-    cout << endl << endl;
+    cout << endl;
 
     // ----- 1.2 打印边信息 -----
-    out << "边数量: " << graph.EdgeCount() << endl;              // 打印文本
-    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {      // for loop 遍历边索引
-        Edge<TVertex, TWeight> cur_edge = graph.GetEdge(i);     // 获取当前边
-        // 打印当前边
-        out << "(" << cur_edge.starting_vertex << ", " << cur_edge.ending_vertex << "), 权重: " << cur_edge.weight << endl;
+    out << "边数量: " << graph.EdgeCount() << endl;                                                      // 打印文本
+    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {                                              // for loop 遍历边索引
+        Edge<TVertex, TWeight> cur_edge = graph.GetEdge(i);                                             // 获取当前边
+        out << "(" << cur_edge.starting_vertex << ", "                                                  // 打印当前边
+            << cur_edge.ending_vertex << "), 权重: " << cur_edge.weight << endl;
     }
     cout << endl;
 
     // ---------- 2 打印邻接表信息 ----------
 
-    out << "--- 邻接表信息 ---" << endl;
+    out << "# 邻接表信息 #" << endl;
 
-    for (unsigned int i = 0; i < graph.VertexCount(); i++) {    // for loop 遍历结点索引
-        TVertex cur_vertex;
-        graph.GetVertexByIndex(i, cur_vertex);                  // 获取i(当前索引)对应的结点cur_vertex
+    for (unsigned int i = 0; i < graph.VertexCount(); i++) {                                            // for loop 遍历结点索引
+        TVertex cur_vertex;                                                                             // 声明cur_vertex
+        graph.GetVertexByIndex(i, cur_vertex);                                                          // 获取i(当前索引)对应的结点cur_vertex
 
-        out << cur_vertex << "的邻接结点: ";                     // 打印一条文本
+        out << cur_vertex << "的邻接结点: ";                                                             // 打印一条文本
 
-        // 声明遍历指针cur_vertex_adjacency, 指向结点cur_vertex的首个邻接项
-        Adjacency<TVertex, TWeight>* cur_vertex_adjacency = graph.adjacency_list_[i].first_adjacency;
-        while (cur_vertex_adjacency) {                          // while loop cur_vertex_adjacency不为NULL
-            out << cur_vertex_adjacency->ending_vertex;         // 打印当前邻接项的终点
-            if (cur_vertex_adjacency->next) {                   // if 当前邻接项的next不为NULL(不是最后一项)
-                out << "-->";                                   // 打印"--->"
+        Adjacency<TVertex, TWeight>* cur_vertex_adjacency = graph.adjacency_list_[i].first_adjacency;   // 声明遍历指针cur_vertex_adjacency, 指向结点cur_vertex的首个邻接项
+        while (cur_vertex_adjacency) {                                                                  // while loop cur_vertex_adjacency不为NULL
+            out << cur_vertex_adjacency->ending_vertex;                                                 // 打印当前邻接项的终点
+            if (cur_vertex_adjacency->next) {                                                           // if 当前邻接项的next不为NULL(不是最后一项)
+                out << "-->";                                                                           // 打印"--->"
             }
-            cur_vertex_adjacency = cur_vertex_adjacency->next;  // cur_vertex_adjacency指向next
+            cur_vertex_adjacency = cur_vertex_adjacency->next;                                          // cur_vertex_adjacency指向next
         }
 
         out << endl;

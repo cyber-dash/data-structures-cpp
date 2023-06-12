@@ -1,6 +1,6 @@
 ﻿/*!
  * @file test.cpp
- * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @author CyberDash计算机考研(抖音id:cyberdash_yuan), cyberdash@163.com
  * @brief 测试cpp文件
  * @version 0.2.1
  * @date 2021-05-29

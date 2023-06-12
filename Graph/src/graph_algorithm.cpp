@@ -362,7 +362,7 @@ int Components(const Graph<TVertex, TWeight>& graph) {
             continue;                                                                       // continue(不再处理)
         }
 
-        cout << "Component" << count << ":" << endl;
+        cout << "连通分量" << count << " :" << endl;
 
         DfsOnVertexRecursive(graph, vertex, visited_vertex_set);                            // 使用DfsOnVertexRecursive对vertex进行遍历
 

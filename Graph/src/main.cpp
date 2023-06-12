@@ -39,9 +39,6 @@ int main(int argc, char** argv) {
     // 测试-矩阵图-打印矩阵
     TestMatrixGraphPrintMatrix();
 
-    // 测试由结点索引获取结点
-    TestGetVertexByIndex();
-
     // 测试-图-深度优先遍历(递归)
     TestDfsRecursive();
 
@@ -57,6 +54,7 @@ int main(int argc, char** argv) {
     // 测试克努斯卡尔(Kruskal)最小生成树
     TestKruskal();
 
+    /*
     // 测试迪杰斯特拉(Dijkstra)最短路径
     TestDijkstra();
 
@@ -71,6 +69,7 @@ int main(int argc, char** argv) {
 
     // 关键路径
     TestCriticalPaths();
+     */
 
     return 0;
 }

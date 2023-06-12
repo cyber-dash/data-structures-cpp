@@ -1288,7 +1288,7 @@ template<typename TVertex, typename TWeight>
 ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
 
     // ---------- 1 打印图的各种信息 ----------
-    out << "--- 基本信息 ---" << endl;
+    out << "# 基本信息 #" << endl;
 
     // 1.1 打印结点信息
     out << "结点数量: " << graph.VertexCount() << endl;
@@ -1297,7 +1297,7 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
         graph.GetVertexByIndex(i, vertex);
         out << vertex << " ";
     }
-    cout << endl << endl;
+    cout << endl;
 
     // 1.2 打印边信息
     out << "边数量: " << graph.EdgeCount() << endl;
@@ -1308,7 +1308,7 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
     cout << endl;
 
     // ---------- 2 打印邻接矩阵信息 ----------
-    out << "--- 邻接矩阵信息 ---" << endl;
+    out << "# 邻接矩阵信息 #" << endl;
     for (unsigned int row = 0; row < graph.VertexCount(); row++) {
         for (unsigned int col = 0; col < graph.VertexCount(); col++) {
 
