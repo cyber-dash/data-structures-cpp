@@ -74,7 +74,7 @@ int SequentialSearch(Element* elements, int size, Element element) {
  * @param element 查找元素
  * @return 数组索引
  * @note
- * 顺序查找
+ * 二分查找
  * -------
  * -------
  *
