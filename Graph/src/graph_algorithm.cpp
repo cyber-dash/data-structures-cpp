@@ -1080,7 +1080,7 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
                                    TWeight distance[],
                                    const int predecessor[])
 {
-    cout << "--- 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ---" << endl;                // 打印一段文本
+    cout << "### 从起始点(" << starting_vertex << ")到其他各顶点的最短路径 ###" << endl;                // 打印一段文本
 
     int starting_vertex_index = graph.GetVertexIndex(starting_vertex);                              // 获取起点索引
 

@@ -15,75 +15,12 @@
 using namespace std;
 
 
-void TestDirectedGraph() {
-    cout<<endl;
-    cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                    Test Directed Graph                    |"<<endl;
-    cout<<"|                         测试有向图                          |"<<endl;
-    cout<<"|                                                           |"<<endl;
-    cout<<"|                         北京                               |"<<endl;
-    cout<<"|                         / \\                               |"<<endl;
-    cout<<"|                        /   \\                              |"<<endl;
-    cout<<"|                      0.1   0.12                           |"<<endl;
-    cout<<"|                      /       \\                            |"<<endl;
-    cout<<"|                     /         \\                           |"<<endl;
-    cout<<"|                  上海---0.01---广州                        |"<<endl;
-    cout<<"|                   / \\         / \\                         |"<<endl;
-    cout<<"|                  /   \\       /   \\                        |"<<endl;
-    cout<<"|               0.13  0.14   0.05   0.17                    |"<<endl;
-    cout<<"|                /       \\   /       \\                      |"<<endl;
-    cout<<"|               /         \\ /         \\                     |"<<endl;
-    cout<<"|            杭州 --0.09-- 深圳 --0.11-- 成都                 |"<<endl;
-    cout<<endl;
-
-    unsigned int edge_count = 18;
-
-    // 结点信息
-    vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
-
-    // 边信息
-    vector<string> starting_vertices{
-        "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳",
-        "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都",
-    };
-    vector<string> ending_vertices{
-        "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都",
-        "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳",
-    };
-    vector<double> weights{
-        0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11,
-        0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11,
-    };    // 边权重数组
-
-    vector<Edge<string, double> > edges;
-    for (unsigned int i = 0; i < edge_count; i++) {
-        Edge<string, double> edge(starting_vertices[i], ending_vertices[i], weights[i]);
-        edges.push_back(edge);
-    }
-
-    int graph_type = 1; // 有向
-    // 构造邻接表图
-    AdjacencyListGraph<string, double> adj_list_graph(graph_type, 10, 1000, edges, vertices);
-
-    // 构造矩阵图
-    MatrixGraph<string, double> matrix_graph(graph_type, 10, 1000, edges, vertices);
-
-    cout << "##### 2 删除边(\"上海\", \"北京\") #####" << endl << endl;
-    adj_list_graph.RemoveEdge("北京", "上海");
-    matrix_graph.RemoveEdge("北京", "上海");
-
-    cout << adj_list_graph << endl;
-    cout << matrix_graph << endl;
-}
-
-
 /*!
  * @brief **测试-图-基础函数**
  * @note
  * 测试-图-基础函数
  * --------------
  * --------------
- *
  *
  * --------------
  * + **1 初始化图的基本信息**\n\n
@@ -98,6 +35,9 @@ void TestDirectedGraph() {
  * 依次删除1个城市, 然后打印图\n\n
  * 构造matrix_undirected_graph(矩阵无向图)\n
  * 依次删除1个城市, 然后打印图\n\n
+ *
+ *
+ * --------------
  */
 void TestBaseFunctions() {
     cout<<endl;
@@ -688,7 +628,7 @@ void TestDijkstra() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|                       Test Dijkstra                       |"<<endl;
-    cout<<"|                     测试Dijkstra最短路径                    |"<<endl;
+    cout<<"|                  测试-图-最短路径Dijkstra                 |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                           北京                            |"<<endl;
     cout<<"|                           / \\                             |"<<endl;
@@ -705,10 +645,14 @@ void TestDijkstra() {
     cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
+    // ---------- 1 初始化图的基本信息 ----------
+
     unsigned int edge_count = 9;
 
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
+    // 初始化边信息
     vector<string> starting_vertices{ "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{   "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };
@@ -719,51 +663,92 @@ void TestDijkstra() {
         edges.push_back(edge);
     }
 
-    cout<<"---------- 邻接表图 ----------"<<endl;
-    AdjacencyListGraph<string, double> adjacency_list_undirected_graph(10, 1000, edges, vertices);
-    double adjacency_list_graph_min_distances[10];
-    int adjacency_list_graph_predecessors[10];
+    // ---------- 2 测试邻接表图Dijkstra ----------
 
+    cout << "---------- 邻接表图 ----------" << endl;
+
+    AdjacencyListGraph<string, double> adjacency_list_undirected_graph(10, 1000, edges, vertices);      // 构造adjacency_list_undirected_graph(邻接表无向图)
+    double adjacency_list_graph_min_distances[10];                                                      // 声明adjacency_list_graph_min_distances(邻接表图最短路径数组)
+    int adjacency_list_graph_predecessors[10];                                                          // 声明adjacency_list_graph_predecessors(最短路径前驱结点数组)
+
+    // 调用Dijkstra函数, 求"北京"到其他各点的最短路径
     Dijkstra(adjacency_list_undirected_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
+    // 调用PrintSingleSourceShortestPath打印"北京"到各城市的最短路径
     PrintSingleSourceShortestPath(adjacency_list_undirected_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
-    cout<<"---------- 矩阵图 ----------"<<endl;
-    MatrixGraph<string, double> matrix_undirected_graph(1, 10, 1000, edges, vertices);
-    double matrix_graph_min_distances[10];
-    int matrix_graph_predecessors[10];
+    // ---------- 3 测试矩阵图Dijkstra ----------
 
+    cout << endl << endl << "---------- 矩阵图 ----------" << endl;
+
+    MatrixGraph<string, double> matrix_undirected_graph(1, 10, 1000, edges, vertices);                  // 构造matrix_undirected_graph(矩阵无向图)
+    double matrix_graph_min_distances[10];                                                              // 声明matrix_graph_min_distances(邻接表图最短路径数组)
+    int matrix_graph_predecessors[10];                                                                  // 声明matrix_graph_predecessors(最短路径前驱结点数组)
+
+    // 调用Dijkstra函数, 求"北京"到其他各点的最短路径
     Dijkstra(matrix_undirected_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
+    // 调用PrintSingleSourceShortestPath打印"北京"到各城市的最短路径
     PrintSingleSourceShortestPath(matrix_undirected_graph, vertices[0], matrix_graph_min_distances, matrix_graph_predecessors);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
+/*!
+ * @brief **测试-图-最短路径BellmanFord**
+ * @note
+ * 测试-图-最短路径BellmanFord
+ * ------------------------
+ * ------------------------
+ *
+ * ------------------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试邻接表图BellmanFord**\n\n
+ * 构造adjacency_list_undirected_graph(邻接表无向图)\n
+ * 声明adjacency_list_graph_min_distances(邻接表图最短路径数组)\n
+ * 声明adjacency_list_graph_predecessors(最短路径前驱结点数组)\n\n
+ * 调用BellmanFord函数, 求"北京"到其他各点的最短路径\n
+ * 调用PrintSingleSourceShortestPath打印"北京"到各城市的最短路径\n\n
+ * + **3 测试矩阵图BellmanFord**\n\n
+ * 构造matrix_undirected_graph(矩阵无向图)\n
+ * 声明matrix_graph_min_distances(邻接表图最短路径数组)\n
+ * 声明matrix_graph_predecessors(最短路径前驱结点数组)\n\n
+ * 调用BellmanFord函数, 求"北京"到其他各点的最短路径\n
+ * 调用PrintSingleSourceShortestPath打印"北京"到各城市的最短路径\n\n
+ *
+ *
+ * ------------------------
+ */
 void TestBellmanFord() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                      Test BellmanFord                     |"<<endl;
-    cout<<"|                    测试BellmanFord最短路径                  |"<<endl;
+    cout<<"|                  Test Graph BellmanFord                   |"<<endl;
+    cout<<"|                测试-图-最短路径BellmanFord                  |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                             |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                          |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
+
+    // ---------- 1 初始化图的基本信息 ----------
 
     unsigned int edge_count = 9;
 
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
+    // 初始化边信息
     vector<string> starting_vertices{ "北京",  "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices{ "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights{ 0.1, 0.12, 0.01, 0.14, 0.13, 0.05, 0.17, 0.09, 0.11 };    // 边权重数组
@@ -774,55 +759,94 @@ void TestBellmanFord() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);
+    // ---------- 2 测试邻接表图BellmanFord ----------
 
-    double adjacency_list_graph_min_distances[10];
-    int adjacency_list_graph_predecessors[10];
+    cout << "---------- 邻接表图 ----------" << endl;
 
+    AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices);     // 构造adjacency_list_undirected_graph(邻接表无向图)
+
+    double adjacency_list_graph_min_distances[10];                                          // 声明adjacency_list_graph_min_distances(邻接表图最短路径数组)
+    int adjacency_list_graph_predecessors[10];                                              // 声明adjacency_list_graph_predecessors(最短路径前驱结点数组)
+
+    // 调用BellmanFord函数, 求"北京"到其他各点的最短路径
     BellmanFord(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
+    // 调用PrintSingleSourceShortestPath打印"北京"到各城市的最短路径
     PrintSingleSourceShortestPath(adjacency_list_graph, vertices[0], adjacency_list_graph_min_distances, adjacency_list_graph_predecessors);
 
-    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);
+    // ---------- 3 测试矩阵图BellmanFord ----------
 
-    double matrix_graph_min_dists[10];
-    int matrix_graph_predecessors[10];
+    cout << endl << endl << "---------- 矩阵图 ----------" << endl;
 
+    MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                    // 构造matrix_undirected_graph(矩阵无向图)
+
+    double matrix_graph_min_dists[10];                                                      // 声明matrix_graph_min_distances(邻接表图最短路径数组)
+    int matrix_graph_predecessors[10];                                                      // 声明matrix_graph_predecessors(最短路径前驱结点数组)
+
+    // 调用BellmanFord函数, 求"北京"到其他各点的最短路径
     BellmanFord(matrix_graph, vertices[0], matrix_graph_min_dists, matrix_graph_predecessors);
+    // 调用PrintSingleSourceShortestPath打印"北京"到各城市的最短路径
     PrintSingleSourceShortestPath(matrix_graph, vertices[0], matrix_graph_min_dists, matrix_graph_predecessors);
 
     cout<<"-------------------------------------------------------------"<<endl<<endl;
 }
 
 
-/*! 测试Floyd最短路径 */
+/*!
+ * @brief **测试-图-最短路径Floyd**
+ * @note
+ * 测试-图-最短路径Floyd
+ * ------------------
+ * ------------------
+ *
+ * ------------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试邻接表有向图Floyd**\n\n
+ * 构造adjacency_list_directed_graph(邻接表有向图)\n\n
+ * 初始化adj_list_min_distances(邻接表最短路径二维向量)\n
+ * 初始化adj_list_predecessors(最短路径前驱结点二维向量)\n\n
+ * 调用Floyd执行弗洛伊德算法\n
+ * 打印多源最短路径\n\n
+ * + **3 测试矩阵有向图Floyd**\n\n
+ * 构造matrix_directed_graph(矩阵有向图)\n\n
+ * 初始化matrix_min_distances(矩阵最短路径二维向量)\n
+ * 初始化matrix_predecessors(最短路径前驱结点二维向量)\n\n
+ * 调用Floyd执行弗洛伊德算法\n
+ * 打印多源最短路径\n\n
+ *
+ *
+ * ------------------
+ */
 void TestFloyd() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
     cout<<"|                    Test Floyd-Warshall                    |"<<endl;
-    cout<<"|                     测试弗洛伊德最短路径                     |"<<endl;
+    cout<<"|                   测试-图-最短路径Floyd                   |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                             |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                          |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
-    unsigned int edge_count = 9;
+    // ---------- 1 初始化图的基本信息 ----------
 
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
+    // 初始化边信息
+    unsigned int edge_count = 9;
+
     vector<string> starting_vertices{ "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices  { "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights          {  0.1,   0.12,   0.01,  0.14,   0.13,  0.05,  0.17,   0.09,  0.11  };
@@ -833,72 +857,76 @@ void TestFloyd() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(1, 10, 1000, edges, vertices); // 构造邻接表图
-    MatrixGraph<string, double> matrix_graph(1, 10, 1000, edges, vertices);                // 构造矩阵图
+    // ---------- 2 测试邻接表有向图Floyd ----------
 
-    cout<<endl<<"**邻接表图测试**"<<endl<<endl;
+    cout << "---------- 邻接表图 ----------" << endl;
 
-    // 邻接表图distance
-    vector<vector<double> > adjacency_list_graph_distances(adjacency_list_graph.VertexCount(),
-                                                           vector<double>(adjacency_list_graph.VertexCount()));
-    // 邻接表图predecessor
-    vector<vector<int> > adjacency_list_graph_predecessors(adjacency_list_graph.VertexCount(),
-                                                           vector<int>(adjacency_list_graph.VertexCount()));
+    // 构造adjacency_list_directed_graph(邻接表有向图)
+    AdjacencyListGraph<string, double> adjacency_list_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
 
-    // 执行弗洛伊德算法
-    Floyd(adjacency_list_graph, adjacency_list_graph_distances, adjacency_list_graph_predecessors);
+    // 初始化adj_list_min_distances(邻接表最短路径二维向量)
+    vector<vector<double> > adj_list_min_distances(adjacency_list_directed_graph.VertexCount(),
+                                                   vector<double>(adjacency_list_directed_graph.VertexCount()));
+    // 初始化adj_list_predecessors(最短路径前驱结点二维向量)
+    vector<vector<int> > adj_list_predecessors(adjacency_list_directed_graph.VertexCount(),
+                                               vector<int>(adjacency_list_directed_graph.VertexCount()));
 
-    // 打印多源(MSSP)最短路径
-    PrintMultipleSourceShortestPath(adjacency_list_graph,
-                                    adjacency_list_graph_distances,
-                                    adjacency_list_graph_predecessors);
-
-    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-
-    // matrix_graph_min_distances
-    vector<vector<double> > matrix_graph_min_distances(matrix_graph.VertexCount(),
-                                                       vector<double>(matrix_graph.VertexCount()));
-    // matrix_graph_predecessors
-    vector<vector<int> > matrix_graph_predecessors(matrix_graph.VertexCount(),
-                                                   vector<int>(matrix_graph.VertexCount()));
-
-    for (unsigned int i = 0; i < matrix_graph.VertexCount(); i++) {
-        for (unsigned int j = 0; j < matrix_graph.VertexCount(); j++) {
-            matrix_graph_predecessors[i][j] = -1;
-        }
-    }
-
-    // 执行弗洛伊德算法
-    Floyd(matrix_graph, matrix_graph_min_distances, matrix_graph_predecessors);
+    // 调用Floyd执行弗洛伊德算法
+    Floyd(adjacency_list_directed_graph, adj_list_min_distances, adj_list_predecessors);
 
     // 打印多源最短路径
-    PrintMultipleSourceShortestPath(matrix_graph,
-                                    matrix_graph_min_distances,
-                                    matrix_graph_predecessors);
+    PrintMultipleSourceShortestPath(adjacency_list_directed_graph,
+                                    adj_list_min_distances,
+                                    adj_list_predecessors);
+
+    // ---------- 3 测试矩阵有向图Floyd ----------
+
+    cout << endl << endl << "---------- 矩阵图 ----------" << endl;
+
+    // 构造matrix_directed_graph(矩阵有向图)
+    MatrixGraph<string, double> matrix_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);                // 构造矩阵图
+
+    // 初始化matrix_min_distances(矩阵最短路径二维向量)
+    vector<vector<double> > matrix_min_distances(matrix_directed_graph.VertexCount(),
+                                                 vector<double>(matrix_directed_graph.VertexCount()));
+    // 初始化matrix_predecessors(最短路径前驱结点二维向量)
+    vector<vector<int> > matrix_predecessors(matrix_directed_graph.VertexCount(),
+                                             vector<int>(matrix_directed_graph.VertexCount()));
+
+    // 调用Floyd执行弗洛伊德算法
+    Floyd(matrix_directed_graph, matrix_min_distances, matrix_predecessors);
+
+    // 打印多源最短路径
+    PrintMultipleSourceShortestPath(matrix_directed_graph,
+                                    matrix_min_distances,
+                                    matrix_predecessors);
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
+/*!
+ * @brief **测试-图-拓扑排序**
+ */
 void TestTopologicalSort() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                       Test TopologySort                       |"<<endl;
-    cout<<"|                         测试拓扑排序                    |"<<endl;
+    cout<<"|                  Test Graph TopologySort                  |"<<endl;
+    cout<<"|                      测试-图-拓扑排序                     |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                             |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                          |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
 
@@ -953,25 +981,28 @@ void TestTopologicalSort() {
 }
 
 
+/*!
+ * @brief **测试-图-关键路径**
+ */
 void TestCriticalPaths() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                     Test CriticalPaths                       |"<<endl;
-    cout<<"|                         测试关键路径                    |"<<endl;
+    cout<<"|                  Test Graph CriticalPaths                 |"<<endl;
+    cout<<"|                      测试-图-关键路径                     |"<<endl;
     cout<<"|                                                           |"<<endl;
-    cout<<"|                           北京                             |"<<endl;
-    cout<<"|                           / \\                               |"<<endl;
-    cout<<"|                          /   \\                              |"<<endl;
-    cout<<"|                        0.1   0.12                          |"<<endl;
-    cout<<"|                        /       \\                            |"<<endl;
-    cout<<"|                       /         \\                           |"<<endl;
-    cout<<"|                    上海---0.01---广州                       |"<<endl;
-    cout<<"|                     / \\         / \\                         |"<<endl;
-    cout<<"|                    /   \\       /   \\                        |"<<endl;
-    cout<<"|                 0.13  0.14   0.05  0.17                    |"<<endl;
-    cout<<"|                  /       \\   /       \\                      |"<<endl;
-    cout<<"|                 /         \\ /         \\                     |"<<endl;
-    cout<<"|              杭州-- 0.09 --深圳-- 0.11 --成都                 |"<<endl;
+    cout<<"|                           北京                            |"<<endl;
+    cout<<"|                           / \\                             |"<<endl;
+    cout<<"|                          /   \\                            |"<<endl;
+    cout<<"|                        0.1   0.12                         |"<<endl;
+    cout<<"|                        /       \\                          |"<<endl;
+    cout<<"|                       /         \\                         |"<<endl;
+    cout<<"|                    上海---0.01---广州                     |"<<endl;
+    cout<<"|                     / \\         / \\                       |"<<endl;
+    cout<<"|                    /   \\       /   \\                      |"<<endl;
+    cout<<"|                 0.13  0.14   0.05  0.17                   |"<<endl;
+    cout<<"|                  /       \\   /       \\                    |"<<endl;
+    cout<<"|                 /         \\ /         \\                   |"<<endl;
+    cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
 

@@ -33,6 +33,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
+    /*
     // 测试-图-基础函数
     TestBaseFunctions();
 
@@ -54,16 +55,17 @@ int main(int argc, char** argv) {
     // 测试克努斯卡尔(Kruskal)最小生成树
     TestKruskal();
 
-    /*
     // 测试迪杰斯特拉(Dijkstra)最短路径
     TestDijkstra();
 
     // 测试贝尔曼福特(BellmanFord)最短路径
     TestBellmanFord();
+     */
 
     // 测试弗洛伊德(Floyd-Warshall)最短路径
     TestFloyd();
 
+    /*
     // 测试拓扑排序
     TestTopologicalSort();
 
