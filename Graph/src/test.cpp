@@ -907,6 +907,24 @@ void TestFloyd() {
 
 /*!
  * @brief **测试-图-拓扑排序**
+ * @note
+ * 测试-图-拓扑排序
+ * --------------
+ * --------------
+ *
+ * --------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试邻接表有向图拓扑排序**\n\n
+ * 初始化adj_list_directed_graph(邻接表有向图)\n
+ * 打印拓扑排序结果\n\n
+ * + **3 测试矩阵无向图拓扑排序**\n\n
+ * 初始化matrix_undirected_graph(矩阵无向图)\n
+ * 打印拓扑排序结果\n
+ *
+ *
+ * --------------
  */
 void TestTopologicalSort() {
     cout<<endl;
@@ -929,13 +947,14 @@ void TestTopologicalSort() {
     cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
+    // ---------- 1 初始化图的基本信息 ----------
 
-    unsigned int edge_count = 9;
-
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
+    // 初始化边信息
+    unsigned int edge_count = 9;
+
     vector<string> starting_vertices{ "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices  { "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights          {  0.1,   0.12,   0.01,  0.14,   0.13,  0.05,  0.17,   0.09,  0.11  };
@@ -946,36 +965,44 @@ void TestTopologicalSort() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(1, 10, 1000, edges, vertices); // 构造邻接表图
-    MatrixGraph<string, double> matrix_graph(1, 10, 1000, edges, vertices);                // 构造矩阵图
-
-    cout<<endl<<"**邻接表图测试**"<<endl<<endl;
-
     vector<string> topology_sorted_list;
-    bool res = TopologicalSort(adjacency_list_graph, vertices[0], topology_sorted_list);
 
-    if (res) {
-        for (auto iter = topology_sorted_list.begin(); iter != topology_sorted_list.end(); iter++) {
-            cout<<*iter<<' ';
-        }
-        cout<<endl;
-    } else {
+    // ---------- 2 测试邻接表有向图拓扑排序 ----------
+
+    cout << "---------- 邻接表图 ----------" << endl;
+
+    // 初始化adj_list_directed_graph(邻接表有向图)
+    AdjacencyListGraph<string, double> adj_list_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
+    bool res = TopologicalSort(adj_list_directed_graph, vertices[0], topology_sorted_list);
+    if (!res) {
+        cout<<"拓扑排序失败"<<endl;
+        return;
+    }
+
+    // 打印拓扑排序结果
+    for (auto iter = topology_sorted_list.begin(); iter != topology_sorted_list.end(); iter++) {
+        cout<<*iter<<' ';
+    }
+    cout<<endl;
+
+    topology_sorted_list.clear();   // 清空topology_sorted_list
+
+    // ---------- 3 测试矩阵无向图拓扑排序 ----------
+
+    cout << endl << endl << "---------- 矩阵图 ----------" << endl;
+
+    // 初始化matrix_undirected_graph(矩阵无向图)
+    MatrixGraph<string, double> matrix_undirected_graph(Graph<string, double>::UNDIRECTED, 10, 1000, edges, vertices);
+    res = TopologicalSort(matrix_undirected_graph, vertices[0], topology_sorted_list);
+    if (!res) {
         cout<<"拓扑排序失败"<<endl;
     }
 
-    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-
-    topology_sorted_list.clear();
-    res = TopologicalSort(matrix_graph, vertices[0], topology_sorted_list);
-
-    if (res) {
-        for (auto iter = topology_sorted_list.begin(); iter != topology_sorted_list.end(); iter++) {
-            cout<<*iter<<' ';
-        }
-        cout<<endl;
-    } else {
-        cout<<"拓扑排序失败"<<endl;
+    // 打印拓扑排序结果
+    for (auto iter = topology_sorted_list.begin(); iter != topology_sorted_list.end(); iter++) {
+        cout<<*iter<<' ';
     }
+    cout<<endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -983,6 +1010,26 @@ void TestTopologicalSort() {
 
 /*!
  * @brief **测试-图-关键路径**
+ * @note
+ * 测试-图-关键路径
+ * --------------
+ * --------------
+ *
+ * --------------
+ * + **1 初始化图的基本信息**\n\n
+ * 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)\n
+ * 初始化边信息\n\n
+ * + **2 测试邻接表有向图关键路径**\n\n
+ * 初始化adj_list_directed_graph(邻接表有向图)\n
+ * 调用GetCriticalPath, 求"北京"到各城市的关键路径\n
+ * 打印各关键路径\n\n
+ * + **3 测试矩阵有向图关键路径**\n\n
+ * 初始化matrix_directed_graph(矩阵有向图)\n
+ * 调用GetCriticalPath, 求"北京"到各城市的关键路径\n
+ * 打印各关键路径\n
+ *
+ *
+ * --------------
  */
 void TestCriticalPaths() {
     cout<<endl;
@@ -1005,13 +1052,13 @@ void TestCriticalPaths() {
     cout<<"|             杭州--0.09-- 深圳 --0.11--成都                |"<<endl;
     cout<<endl;
 
+    // ---------- 1 初始化图的基本信息 ----------
 
-    unsigned int edge_count = 9;
-
-    // 结点信息
+    // 初始化结点信息(北京, 上海, 广州, 深圳, 杭州, 成都 6座城市)
     vector<string> vertices{ "北京", "上海", "广州", "深圳", "杭州", "成都" };
 
-    // 边信息
+    // 初始化边信息
+    unsigned int edge_count = 9;
     vector<string> starting_vertices{ "北京", "北京", "上海", "上海", "上海", "广州", "广州", "深圳", "深圳" };
     vector<string> ending_vertices  { "上海", "广州", "广州", "深圳", "杭州", "深圳", "成都", "杭州", "成都" };
     vector<double> weights          {  0.1,   0.12,   0.01,  0.14,   0.13,  0.05,  0.17,   0.09,  0.11  };
@@ -1022,19 +1069,30 @@ void TestCriticalPaths() {
         edges.push_back(edge);
     }
 
-    AdjacencyListGraph<string, double> adjacency_list_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices); // 构造邻接表图
-    MatrixGraph<string, double> matrix_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);                // 构造矩阵图
-
     string starting_vertex = vertices[0];
 
-    cout<<endl<<"**邻接表图测试**"<<endl<<endl;
-    vector<double> critical_paths = GetCriticalPath(adjacency_list_graph, starting_vertex);
+    // ---------- 2 测试邻接表有向图关键路径 ----------
+
+    cout << "---------- 邻接表图 ----------" << endl;
+    // 初始化adj_list_directed_graph(邻接表有向图)
+    AdjacencyListGraph<string, double> adj_list_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
+
+    // 调用GetCriticalPath, 求"北京"到各城市的关键路径
+    vector<double> critical_paths = GetCriticalPath(adj_list_directed_graph, starting_vertex);
+    // 打印各关键路径
     for (unsigned int i = 0; i < critical_paths.size(); i++) {
         cout<<"北京 ---> "<<vertices[i]<<" 关键路径长度: "<<critical_paths[i]<<endl;
     }
 
-    cout<<endl<<"**矩阵图测试**"<<endl<<endl;
-    critical_paths = GetCriticalPath(matrix_graph, starting_vertex);
+    // ---------- 3 测试矩阵有向图关键路径 ----------
+
+    cout << endl << endl << "---------- 矩阵图 ----------" << endl;
+    // 初始化matrix_directed_graph(矩阵有向图)
+    MatrixGraph<string, double> matrix_directed_graph(Graph<string, double>::DIRECTED, 10, 1000, edges, vertices);
+
+    // 调用GetCriticalPath, 求"北京"到各城市的关键路径
+    critical_paths = GetCriticalPath(matrix_directed_graph, starting_vertex);
+    // 打印各关键路径
     for (unsigned int i = 0; i < critical_paths.size(); i++) {
         cout<<"北京 ---> "<<vertices[i]<<" 关键路径长度: "<<critical_paths[i]<<endl;
     }
