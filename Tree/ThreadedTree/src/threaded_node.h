@@ -13,8 +13,8 @@
 #include <cstddef>
 
 
-const int CHILD_POINTER = 0;                    //!< 子结点指针类型
-const int THREADED_NODE_POINTER = 1;            //!< 线索结点指针类型
+const int CHILD_POINTER = 0;                    //!< **子结点指针类型**
+const int THREADED_NODE_POINTER = 1;            //!< **线索结点指针类型**
 
 
 /*!

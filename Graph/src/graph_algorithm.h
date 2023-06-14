@@ -21,7 +21,7 @@ using namespace std;
 
 
 /*!
- * @brief 最小生成树模板类
+ * @brief **最小生成树模板类**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  */
@@ -107,9 +107,9 @@ public:
     }
 
 protected:
-    Edge<TVertex, TWeight>* mst_edges_; //!< 最小生成树边数组
-    int max_size_;                      //!< 边数上限
-    int size_;                          //!< 当前边数量
+    Edge<TVertex, TWeight>* mst_edges_; //!< **最小生成树边数组**
+    int max_size_;                      //!< **边数上限**
+    int size_;                          //!< **当前边数量**
 };
 
 

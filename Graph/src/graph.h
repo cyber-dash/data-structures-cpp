@@ -119,9 +119,9 @@ public:
      */
     bool operator<(const Edge<TVertex, TWeight>& edge) { return weight < edge.weight; }
 
-    TVertex starting_vertex;  //!< 起点
-    TVertex ending_vertex;    //!< 终点
-    TWeight weight;           //!< 边权重
+    TVertex starting_vertex;  //!< **起点**
+    TVertex ending_vertex;    //!< **终点**
+    TWeight weight;           //!< **边权重**
 };
 
 
@@ -137,9 +137,9 @@ public:
     Path(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
       starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
 
-    TWeight weight;             //!< 路径权值
-    TVertex starting_vertex;    //!< 起点
-    TVertex ending_vertex;      //!< 终点
+    TWeight weight;             //!< **路径权值**
+    TVertex starting_vertex;    //!< **起点**
+    TVertex ending_vertex;      //!< **终点**
 };
 
 
@@ -201,6 +201,10 @@ public:
      */
     virtual const vector<Edge<TVertex, TWeight> >& Edges() const { return this->edges_; }
 
+    /*!
+     * @brief **获取结点vector**
+     * @return 结点vector
+     */
     virtual const vector<TVertex>& Vertices() const { return this->vertices_; }
 
     /*!
@@ -246,7 +250,7 @@ public:
     virtual bool GetWeight(const TVertex& starting_vertex, const TVertex& ending_vertex, TWeight& weight) const = 0;
 
     /*!
-     * @brief 获取边权值(by结点索引)
+     * @brief **获取边权值(by结点索引)**
      * @param weight 边权值保存变量
      * @param starting_vertex_index 起点索引
      * @param ending_vertex_index 终点索引
@@ -294,36 +298,90 @@ public:
                                        TVertex& next_neighbor) const = 0;
 
 
+    /**!
+     * @brief **获取结点的度**
+     * @param vertex 结点
+     * @return 度
+     * @note
+     * 获取结点的度
+     * ----------
+     * ----------
+     *
+     * ----------
+     * **if** 有向图 :\n
+     * &emsp; 返回-1(有向图应获取出度入度)\n\n
+     * 获取vertex_index(结点索引)\n\n
+     * 返回this->degrees_[vertex_index]\n
+     *
+     *
+     * ----------
+     */
     int GetVertexDegree(TVertex vertex) {
-       if (this->type_ == DIRECTED) {
-           return -1;
+       if (this->type_ == DIRECTED) {                                           // if 有向图
+           return -1;                                                           // 返回-1(有向图应获取出度入度)
        }
 
-       int vertex_index = GetVertexIndex(vertex);
+       int vertex_index = GetVertexIndex(vertex);                               // 获取vertex_index(结点索引)
 
-       return this->degrees_[vertex_index];
+       return this->degrees_[vertex_index];                                     // 返回this->degrees_[vertex_index]
     }
 
 
+    /**!
+     * @brief **获取结点的入度**
+     * @param vertex 结点
+     * @return 入度
+     * @note
+     * 获取结点的入度
+     * ------------
+     * ------------
+     *
+     * ------------
+     * **if** 无向图 :\n
+     * &emsp; 返回-1(无向图应获取度)\n\n
+     * 获取vertex_index(结点索引)\n\n
+     * 返回this->in_degrees_[vertex_index]\n
+     *
+     *
+     * ----------
+     */
     int GetVertexInDegree(const TVertex& vertex) const {
-        if (this->type_ == UNDIRECTED) {
-            return -1;
+        if (this->type_ == UNDIRECTED) {                                        // if 无向图
+            return -1;                                                          // 返回-1(无向图应获取度)
         }
 
-        int vertex_index = GetVertexIndex(vertex);
+        int vertex_index = GetVertexIndex(vertex);                              // 获取vertex_index(结点索引)
 
-        return this->in_degrees_[vertex_index];
+        return this->in_degrees_[vertex_index];                                 // 返回this->in_degrees_[vertex_index]
     }
 
 
+    /**!
+     * @brief **获取结点的出度**
+     * @param vertex 结点
+     * @return 出度
+     * @note
+     * 获取结点的出度
+     * ------------
+     * ------------
+     *
+     * ------------
+     * **if** 无向图 :\n
+     * &emsp; 返回-1(无向图应获取度)\n\n
+     * 获取vertex_index(结点索引)\n\n
+     * 返回this->out_degrees_[vertex_index]\n
+     *
+     *
+     * ----------
+     */
     int GetVertexOutDegree(TVertex vertex) {
-        if (this->type_ == UNDIRECTED) {
-            return -1;
+        if (this->type_ == UNDIRECTED) {                                        // if 无向图
+            return -1;                                                          // 返回-1(无向图应获取度)
         }
 
-        int vertex_index = GetVertexIndex(vertex);
+        int vertex_index = GetVertexIndex(vertex);                              // 获取vertex_index(结点索引)
 
-        return this->out_degrees_[vertex_index];
+        return this->out_degrees_[vertex_index];                                // 返回this->out_degrees_[vertex_index]
     }
 
 
@@ -396,20 +454,20 @@ public:
      */
     virtual int GetVertexIndex(const TVertex& vertex) const = 0;
 
-    static const int DIRECTED = 1; //!< 有向
-    static const int UNDIRECTED = 2; //!< 无向
+    static const int DIRECTED = 1;            //!< **有向**
+    static const int UNDIRECTED = 2;          //!< **无向**
 protected:
-    int max_vertex_count_{};                //!< 图结点数量上限
-    TWeight max_weight_;                    //!< 边权值上限
-    int edge_count_{};                      //!< 边数量
-    int vertex_count_{};                    //!< 结点数量
-    int type_{};                            //!< 1: 有向, 2: 无向
+    int max_vertex_count_;                    //!< **图结点数量上限**
+    TWeight max_weight_;                      //!< **边权值上限**
+    int edge_count_;                          //!< **边数量**
+    int vertex_count_;                        //!< **结点数量**
+    int type_;                                //!< **类型(1:有向, 2:无向)**
 
-    vector<TVertex> vertices_;              //!< 结点vector
-    vector<Edge<TVertex, TWeight> > edges_ {}; //!< 边vector
-    vector<int> degrees_;                   //!< 度vector(无向图使用)
-    vector<int> in_degrees_;                //!< 入度vector(有向图使用)
-    vector<int> out_degrees_;               //!< 出度vector(有向图使用)
+    vector<TVertex> vertices_;                //!< **结点vector**
+    vector<Edge<TVertex, TWeight> > edges_;   //!< **边vector**
+    vector<int> degrees_;                     //!< **度vector(无向图使用)**
+    vector<int> in_degrees_;                  //!< **入度vector(有向图使用)**
+    vector<int> out_degrees_;                 //!< **出度vector(有向图使用)**
 };
 
 

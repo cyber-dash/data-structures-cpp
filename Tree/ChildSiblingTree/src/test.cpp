@@ -55,6 +55,9 @@ void NodeVisit(ChildSiblingNode<TData>* node) {
  * + **1 使用前根遍历字符串(使用括号)建树**\n
  * + **2 打印结点数量**\n
  * + **3 打印树**\n
+ *
+ *
+ * -----------------
  */
 void TestChildSiblingTreeCreateTreeByStr() {
 	cout<<endl;

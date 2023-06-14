@@ -117,7 +117,7 @@ public:
     void Clear() { min_heap_.Clear(); }
 
 private:
-    MinHeap<TElement> min_heap_;    //!< 小顶堆
+    MinHeap<TElement> min_heap_;    //!< **小顶堆**
 };
 
 

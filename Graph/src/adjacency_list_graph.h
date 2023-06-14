@@ -108,10 +108,10 @@ struct Adjacency {
       this->next = adjacency.next;
   }
 
-  int ending_vertex_index;            //!< 邻接点索引
-  TVertex ending_vertex;              //!< 邻结点
-  TWeight weight;                     //!< 邻接边权重
-  Adjacency<TVertex, TWeight>* next;  //!< 下一邻接项
+  int ending_vertex_index;            //!< **邻接点索引**
+  TVertex ending_vertex;              //!< **邻结点**
+  TWeight weight;                     //!< **邻接边权重**
+  Adjacency<TVertex, TWeight>* next;  //!< **下一邻接项**
 };
 
 

@@ -43,8 +43,8 @@ public:
     // 查找
     int Find(int index);
 private:
-    int size_;                //!< 大小
-    int* parents_;            //!< 父节点数组
+    int size_;                //!< **大小**
+    int* parents_;            //!< **父节点数组**
 };
 
 

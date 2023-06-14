@@ -34,6 +34,9 @@ void visit(ThreadedNode<int>* node) {
  * 获取根结点\n
  * 对根结点调用First()\n
  * 打印首结点数据项\n
+ *
+ *
+ * -------------------------------
  */
 void TestInorderThreadedTreeFirst() {
 
@@ -91,6 +94,9 @@ void TestInorderThreadedTreeFirst() {
  * 获取根结点\n
  * 对根结点调用Last()\n
  * 打印最后的线索结点数据项\n
+ *
+ *
+ * -----------------------------------
  */
 void TestInorderThreadedTreeLast() {
 
@@ -145,6 +151,9 @@ void TestInorderThreadedTreeLast() {
  * 获取根结点\n
  * 对根结点调用Last()\n
  * 打印最后的线索结点数据项\n
+ *
+ *
+ * --------------------------
  */
 void TestInorderThreadedTreeNext() {
 

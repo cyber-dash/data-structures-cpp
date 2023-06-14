@@ -98,7 +98,7 @@ public:
     // 打印邻接数组
     void PrintMatrix();
 private:
-    TWeight** adjacency_matrix_; //!< 邻接矩阵
+    TWeight** adjacency_matrix_;                                //!< **邻接矩阵**
 };
 
 
