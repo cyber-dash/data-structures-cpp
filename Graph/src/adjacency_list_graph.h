@@ -239,7 +239,7 @@ public:
         prior = NULL;                                                               // 初始化prior(前驱邻接项)为NULL
         Adjacency<TVertex, TWeight>* cur = this->first_adjacency;                   // 初始化cur(邻接项遍历指针), 指向first_adjacency(第1个邻接项)
 
-        while (cur != NULL && cur->ending_vertex_index != vertex_index) {           // while loop** cur不为NULL && cur的ending_vertex_index不等于vertex_index
+        while (cur != NULL && cur->ending_vertex_index != vertex_index) {           // while loop cur不为NULL && cur的ending_vertex_index不等于vertex_index
             prior = cur;                                                            // prior(前驱)指向cur
             cur = cur->next;                                                        // cur向后移动1位
         }
