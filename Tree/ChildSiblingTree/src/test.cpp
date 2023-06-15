@@ -52,7 +52,7 @@ void NodeVisit(ChildSiblingNode<TData>* node) {
  * ```
  *
  * -----------------
- * + **1 使用前根遍历字符串(使用括号)建树**\n
+ * + **1 使用先根遍历字符串(使用括号)建树**\n
  * + **2 打印结点数量**\n
  * + **3 打印树**\n
  *
@@ -63,7 +63,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
 	cout<<endl;
 	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
 	cout<<"|          Test ChildSiblingTree CreateByPreorderStr        |"<<endl;
-	cout<<"|            测试使用前根(前序)遍历字符串创建子女兄弟树           |"<<endl<<endl;
+	cout<<"|            测试使用先根(前序)遍历字符串创建子女兄弟树           |"<<endl<<endl;
     cout<<"            c                                       c        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
     cout<<"          /                                       / | \\     "<<endl;
@@ -75,7 +75,7 @@ void TestChildSiblingTreeCreateTreeByStr() {
     cout<<"    /                                       /   \\           "<<endl;
     cout<<"   e --- r                                 e     r           "<<endl;
 
-    // ---------- 1 使用前根遍历字符串(使用括号)建树 ----------
+    // ---------- 1 使用先根遍历字符串(使用括号)建树 ----------
 
 	char* preorder_str = (char*)"(c(y(b(e)(r)))(d(a)(s))(h))";
 
@@ -120,8 +120,11 @@ void TestChildSiblingTreeCreateTreeByStr() {
  * ```
  *
  * -----------------
- * + **1 使用前根遍历字符串(使用括号)建树**\n
+ * + **1 使用先根遍历字符串(使用括号)建树**\n
  * + **2 打印树的高度**\n
+ *
+ *
+ * -----------------
  */
 void TestChildSiblingTreeHeightRecursive() {
 	cout<<endl;
@@ -139,7 +142,7 @@ void TestChildSiblingTreeHeightRecursive() {
     cout<<"    /                                       /   \\           "<<endl;
     cout<<"   e --- r                                 e     r           "<<endl;
 
-    // ---------- 1 使用前根遍历字符串(使用括号)建树 ----------
+    // ---------- 1 使用先根遍历字符串(使用括号)建树 ----------
 
     char* preorder_str = (char*)"(c(y(b(e)(r)))(d(a)(s))(h))";
 
@@ -178,8 +181,11 @@ void TestChildSiblingTreeHeightRecursive() {
  * 调用NodeCountRecursive求结点数量\n
  *
  * --------------------
- * + **1 使用前根遍历字符串(使用括号)建树**\n
+ * + **1 使用先根遍历字符串(使用括号)建树**\n
  * + **2 打印结点数量**\n
+ *
+ *
+ * --------------------
  */
 void TestChildSiblingTreeNodeCount() {
 	cout<<endl;
@@ -197,7 +203,7 @@ void TestChildSiblingTreeNodeCount() {
     cout<<"    /                                       /   \\           "<<endl;
     cout<<"   e --- r                                 e     r           "<<endl;
 
-    // ---------- 1 使用前根遍历字符串(使用括号)建树 ----------
+    // ---------- 1 使用先根遍历字符串(使用括号)建树 ----------
 
     char* preorder_str = (char*)"(c(y(b(e)(r)))(d(a)(s))(h))";
 
@@ -214,9 +220,9 @@ void TestChildSiblingTreeNodeCount() {
 
 
 /*!
- * @brief **测试-子女兄弟树-前根遍历**
+ * @brief **测试-子女兄弟树-先根遍历**
  * @note
- * 测试-子女兄弟树-前根遍历
+ * 测试-子女兄弟树-先根遍历
  * --------------------
  * --------------------
  *
@@ -233,17 +239,20 @@ void TestChildSiblingTreeNodeCount() {
  *    /                                            /   \
  *   4 --- 5                                      4     5
  * ```
- * 调用PreOrderRecursive进行前根遍历\n
+ * 调用PreOrderRecursive进行先根遍历\n
  *
  * --------------------
- * + **1 使用前根遍历字符串(使用括号)建树**\n
- * + **2 进行前根遍历**\n
+ * + **1 使用先根遍历字符串(使用括号)建树**\n
+ * + **2 进行先根遍历**\n
+ *
+ *
+ * --------------------
  */
 void TestChildSiblingTreePreorder() {
 	cout<<endl;
 	cout<<"|------------------------ CyberDash ------------------------|"<<endl;
 	cout<<"|           Test ChildSiblingTree PreOrderRecursive         |"<<endl;
-	cout<<"|                         测试前根遍历                        |"<<endl<<endl;
+	cout<<"|                         测试先根遍历                        |"<<endl<<endl;
     cout<<"            0                                       0        "<<endl;
     cout<<"           /                                       /|\\      "<<endl;
     cout<<"          /                                       / | \\     "<<endl;
@@ -255,16 +264,16 @@ void TestChildSiblingTreePreorder() {
     cout<<"    /                                       /   \\           "<<endl;
     cout<<"   4 --- 5                                 4     5           "<<endl;
 
-    // ---------- 1 使用前根遍历字符串(使用括号)建树 ----------
+    // ---------- 1 使用先根遍历字符串(使用括号)建树 ----------
 
     char* preorder_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
 	ChildSiblingTree<char> child_sibling_tree;
     child_sibling_tree.CreateByPreorderStr(preorder_str);
 
-    // ---------- 2 进行前根遍历 ----------
+    // ---------- 2 进行先根遍历 ----------
 
-    cout << "前根遍历: " << endl;
+    cout << "先根遍历: " << endl;
     child_sibling_tree.PreOrderRecursive(NodeVisit);
 
 	cout << endl;
@@ -296,8 +305,11 @@ void TestChildSiblingTreePreorder() {
  * 调用PostOrderRecursive进行后根遍历\n
  *
  * --------------------
- * + **1 使用前根遍历字符串(使用括号)建树**\n
+ * + **1 使用先根遍历字符串(使用括号)建树**\n
  * + **2 进行后根遍历**\n
+ *
+ *
+ * --------------------
  */
 void TestChildSiblingTreePostOrder() {
 	cout<<endl;
@@ -315,7 +327,7 @@ void TestChildSiblingTreePostOrder() {
     cout<<"    /                                       /   \\           "<<endl;
     cout<<"   4 --- 5                                 4     5           "<<endl;
 
-    // ---------- 1 使用前根遍历字符串(使用括号)建树 ----------
+    // ---------- 1 使用先根遍历字符串(使用括号)建树 ----------
 
     char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 
@@ -356,8 +368,11 @@ void TestChildSiblingTreePostOrder() {
  * 调用LevelOrder进行层序遍历\n
  *
  * --------------------
- * + **1 使用前根遍历字符串(使用括号)建树**\n
+ * + **1 使用先根遍历字符串(使用括号)建树**\n
  * + **2 进行层序遍历**\n
+ *
+ *
+ * --------------------
  */
 void TestChildSiblingTreeLevelOrder() {
 	cout << endl;
@@ -375,7 +390,7 @@ void TestChildSiblingTreeLevelOrder() {
     cout<<"    /                                       /   \\           "<<endl;
     cout<<"   4 --- 5                                 4     5           "<<endl;
 
-    // ---------- 1 使用前根遍历字符串(使用括号)建树 ----------
+    // ---------- 1 使用先根遍历字符串(使用括号)建树 ----------
 
     char* pre_order_str = (char*)"(0(1(2(4)(5)))(3(7)(8))(6))";
 

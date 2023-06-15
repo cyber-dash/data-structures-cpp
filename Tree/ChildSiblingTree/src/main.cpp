@@ -25,7 +25,7 @@ using namespace std;
  * 测试-子女兄弟树-高度\n\n
  * 测试-子女兄弟树-结点数量\n\n
  * 测试-子女兄弟树-后根遍历\n\n
- * 测试-子女兄弟树-前根遍历\n\n
+ * 测试-子女兄弟树-先根遍历\n\n
  * 测试-子女兄弟树-层序遍历\n
  *
  *
@@ -45,7 +45,7 @@ int main() {
     // 测试-子女兄弟树-后根遍历
 	TestChildSiblingTreePostOrder();
 
-    // 测试-子女兄弟树-前根遍历
+    // 测试-子女兄弟树-先根遍历
     TestChildSiblingTreePreorder();
 
     // 测试-子女兄弟树-层序遍历

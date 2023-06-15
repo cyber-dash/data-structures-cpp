@@ -26,7 +26,7 @@ void TestChildSiblingTreeHeightRecursive();
 // 测试-子女兄弟树-结点数量
 void TestChildSiblingTreeNodeCount();
 
-// 测试-子女兄弟树-前根遍历
+// 测试-子女兄弟树-先根遍历
 void TestChildSiblingTreePreorder();
 
 // 测试-子女兄弟树-后根遍历

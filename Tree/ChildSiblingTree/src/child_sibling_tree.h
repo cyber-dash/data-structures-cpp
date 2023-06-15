@@ -42,9 +42,9 @@ struct ChildSiblingNode {
                               ChildSiblingNode<TData>* next_sibling = NULL) :
         data(data), first_child(first_child), next_sibling(next_sibling) {}
 
-    TData data;                             //!< 数据项
+    TData data;                              //!< 数据项
     ChildSiblingNode<TData>* first_child;    //!< 长子结点
-    ChildSiblingNode<TData>* next_sibling;  //!< 下一兄弟结点
+    ChildSiblingNode<TData>* next_sibling;   //!< 下一兄弟结点
 };
 
 
@@ -77,6 +77,9 @@ public:
      *
      * ----------------------------------
      * 调用CreateSubTreeByPreorderStrRecursive_\n
+     *
+     *
+     * ----------------------------------
      */
     void CreateByPreorderStr(TData*& str) { this->CreateSubTreeByPreorderStrRecursive_(this->root_, str); }
 
@@ -95,6 +98,9 @@ public:
      *
      * --------------
      * 对根结点调用NodeCountOfSubTreeRecursive_, 返回结果
+     *
+     *
+     * --------------
      */
     int NodeCountRecursive() { return this->NodeCountOfSubTreeRecursive_(this->root_); }
 
@@ -108,6 +114,9 @@ public:
      *
      * ------------
      * 对根结点调用HeightOfSubTreeRecursive_, 返回结果
+     *
+     *
+     * ------------
      */
     int HeightRecursive() { return this->MaxHeightWithYoungerSiblingTreesRecursive_(this->root_); }
 
@@ -127,6 +136,9 @@ public:
      *
      * -------
      * 对root_调用PreOrderInSubTreeRecursive_
+     *
+     *
+     * -------
      */
     void PreOrderRecursive(void (*visit)(ChildSiblingNode<TData>*)) { PreOrderOfSubTreeRecursive_(root_, visit); }
 
@@ -140,6 +152,9 @@ public:
      *
      * -------
      * 对root_调用PostOrderInSubTreeRecursive_
+     *
+     *
+     * -------
      */
     void PostOrder(void (*visit)(ChildSiblingNode<TData>*)) { PostOrderOfSubTreeRecursive_(root_, visit); }
 
@@ -153,6 +168,9 @@ public:
      *
      * -------
      * 对root_调用LevelOrderInSubTreeRecursive_
+     *
+     *
+     * -------
      */
     void LevelOrder(void (*visit)(ChildSiblingNode<TData>*)) { LevelOrderOfSubTree_(root_, visit); }
 
@@ -165,6 +183,9 @@ public:
      *
      * ---------
      * 对root_调用PrintSubTreeRecursive_
+     *
+     *
+     * ---------
      */
     void PrintRecursive() { this->PrintSubTreeRecursive_(this->root_); }
 
@@ -217,6 +238,9 @@ private:
  * 对下一兄弟结点, 递归调用RemoveSubTreeRecursive_\n\n
  * + **3 删除根结点**\n\n
  * 释放subtree_root\n
+ *
+ *
+ * ------------
  */
 template<typename TData>
 void ChildSiblingTree<TData>::RemoveSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root) {
@@ -256,6 +280,9 @@ void ChildSiblingTree<TData>::RemoveSubTreeRecursive_(ChildSiblingNode<TData>* s
  * 访问当前子树根结点\n\n
  * 对长子结点递归后根遍历\n
  * 对下一兄弟结点递归后根遍历\n
+ *
+ *
+ * ---------------
  */
 template <typename TData>
 void ChildSiblingTree<TData>::PreOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root,
@@ -294,6 +321,9 @@ void ChildSiblingTree<TData>::PreOrderOfSubTreeRecursive_(ChildSiblingNode<TData
  * 对长子结点递归后根遍历\n
  * 访问当前子树根结点\n
  * 对下一兄弟结点递归后根遍历\n
+ *
+ *
+ * ----------------
  */
 template <typename TData>
 void ChildSiblingTree<TData>::PostOrderOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root,
@@ -339,6 +369,9 @@ void ChildSiblingTree<TData>::PostOrderOfSubTreeRecursive_(ChildSiblingNode<TDat
  * &emsp; 访问结点\n\n
  * &emsp; **while loop** 遍历front_node的所有孩子结点 :\n
  * &emsp;&emsp; 当前孩子结点入队\n
+ *
+ *
+ * ----------
  */
 template <typename TData>
 void ChildSiblingTree<TData>::LevelOrderOfSubTree_(ChildSiblingNode<TData>* subtree_root,
@@ -390,6 +423,9 @@ void ChildSiblingTree<TData>::LevelOrderOfSubTree_(ChildSiblingNode<TData>* subt
  * 递归获取next_sibling(下一兄弟结点)对应的子树的结点数, 加到node_count\n\n
  * + **3 返回结果**\n\n
  * 返回count\n
+ *
+ *
+ * ---------------
  */
 template <typename TData>
 int ChildSiblingTree<TData>::NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root) {
@@ -432,6 +468,9 @@ int ChildSiblingTree<TData>::NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData
  * 取max_height, 为MAX(self_height, max_younger_sibling_height)\n\n
  * + **3 返回结果**\n\n
  * 返回max_height\n
+ *
+ *
+ * -----------------------------
  */
 template <typename TData>
 int ChildSiblingTree<TData>::MaxHeightWithYoungerSiblingTreesRecursive_(ChildSiblingNode<TData>* subtree_root) {
@@ -488,6 +527,9 @@ int ChildSiblingTree<TData>::MaxHeightWithYoungerSiblingTreesRecursive_(ChildSib
  * + **5 对长子结点和兄弟节点递归构造子树**\n\n
  * 对first_child递归创建子树\n
  * 对next_sibling递归创建子树\n
+ *
+ *
+ * ----------------------------------
  */
 template <typename TData>
 void ChildSiblingTree<TData>::CreateSubTreeByPreorderStrRecursive_(ChildSiblingNode<TData>*& subtree_root, TData*& str) {
@@ -554,6 +596,9 @@ void ChildSiblingTree<TData>::CreateSubTreeByPreorderStrRecursive_(ChildSiblingN
  * **for loop** 子树根结点的所有孩子结点 :\n
  * &emsp; 递归打印以当前孩子结点为根结点的子树\n\n
  * + **4 打印')'**\n\n
+ *
+ *
+ * ------------
  */
 template <typename TData>
 void ChildSiblingTree<TData>::PrintSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root) {
