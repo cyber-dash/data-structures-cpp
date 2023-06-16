@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(main)
+project(Stack)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 

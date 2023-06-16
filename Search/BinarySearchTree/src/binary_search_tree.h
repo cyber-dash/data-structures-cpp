@@ -472,7 +472,7 @@ bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key,
 
 
 /**
- * @brief 子树删除结点(递归)
+ * @brief **子树删除结点(递归)**
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值类型模板参数
  * @param subtree_root 子树根结点

@@ -10,23 +10,23 @@
 #define CYBER_DASH_STACK_TEST_H
 
 
-// 测试-链式队列-入栈
-void Test_LinkedStack_Push();
+// 测试-链式栈-入栈
+void TestLinkedStackPush();
 
-// 测试-链式队列-出栈
-void Test_LinkedStack_Pop();
+// 测试-链式栈-出栈
+void TestLinkedStackPop();
 
-// 测试-链式队列-取栈顶
-void Test_LinkedStack_Top();
+// 测试-链式栈-取栈顶
+void TestLinkedStackTop();
 
-// 测试-顺序队列-入栈
-void Test_SeqStack_Push();
+// 测试-顺序栈-入栈
+void TestSeqStackPush();
 
-// 测试-顺序队列-出栈
-void Test_SeqStack_Pop();
+// 测试-顺序栈-出栈
+void TestSeqStackPop();
 
-// 测试-顺序队列-取栈顶
-void Test_SeqStack_Top();
+// 测试-顺序栈-取栈顶
+void TestSeqStackTop();
 
 
 

@@ -75,9 +75,9 @@ public:
     friend ostream& operator<< <>(ostream& os, const SeqStack<TData>& stack);
 
 private:
-    TData* mem_data_;    //!< 元素数组
-    int capacity_;       //!< 容量
-    int top_;            //!< 栈顶索引
+    TData* mem_data_;    //!< **元素数组**
+    int capacity_;       //!< **容量**
+    int top_;            //!< **栈顶索引**
 };
 
 
@@ -91,6 +91,9 @@ private:
  *
  * -------
  * 释放mem_data_
+ *
+ *
+ * -------
  */
 template <typename TData>
 SeqStack<TData>::~SeqStack() {
@@ -117,6 +120,9 @@ SeqStack<TData>::~SeqStack() {
  * mem_data_[top_]的值设为data\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ---
  */
 template <typename TData>
 bool SeqStack<TData>::Push(const TData& data) {
@@ -157,6 +163,9 @@ bool SeqStack<TData>::Push(const TData& data) {
  * top_减1\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ------------
  */
 template <typename TData>
 bool SeqStack<TData>::Pop(TData& data) {
@@ -196,6 +205,9 @@ bool SeqStack<TData>::Pop(TData& data) {
  * top_减1\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ------------
  */
 template <typename TData>
 bool SeqStack<TData>::Pop() {
@@ -227,6 +239,9 @@ bool SeqStack<TData>::Pop() {
  * mem_data_[top_]的值赋给参数data\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * --------
  */
 template <typename TData>
 bool SeqStack<TData>::Top(TData& data) const {
@@ -258,6 +273,9 @@ bool SeqStack<TData>::Top(TData& data) const {
  *
  * ------------
  * 返回top_ == -1
+ *
+ *
+ * ------------
  */
 template <typename TData>
 bool SeqStack<TData>::IsEmpty() const {
@@ -276,6 +294,9 @@ bool SeqStack<TData>::IsEmpty() const {
  *
  * ----------
  * 返回top_ == capacity_ - 1
+ *
+ *
+ * ----------
  */
 template <typename TData>
 bool SeqStack<TData>::IsFull() const {
@@ -294,6 +315,9 @@ bool SeqStack<TData>::IsFull() const {
  *
  * --------
  * 返回top_ + 1
+ *
+ *
+ * --------
  */
 template <typename TData>
 int SeqStack<TData>::Length() const {
@@ -317,6 +341,9 @@ int SeqStack<TData>::Length() const {
  * + **2 循环出栈**\n\n
  * **for loop** 遍历length次 :\n
  * &emsp; 调用Pop()\n\n
+ *
+ *
+ * ---
  */
 template <typename TData>
 void SeqStack<TData>::Clear() {
@@ -337,7 +364,7 @@ void SeqStack<TData>::Clear() {
 
 
 /*!
- * @brief **重载<<**
+ * @brief **重载<&lt;**
  * @tparam TData 数据项类型模板参数
  * @param os 输出流
  * @param seq_stack 顺序栈
@@ -352,6 +379,9 @@ void SeqStack<TData>::Clear() {
  * **for loop** 从栈顶向下遍历 :\n
  * &emsp; 打印当前元素\n\n
  * 返回os\n
+ *
+ *
+ * ------
  */
 template<typename TData>
 ostream& operator<<(ostream& os, const SeqStack<TData>& seq_stack) {

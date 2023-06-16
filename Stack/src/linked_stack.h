@@ -127,6 +127,9 @@ private:
  *
  * -------
  * 调用Clear()函数
+ *
+ *
+ * -------
  */
 template<typename TData>
 LinkedStack<TData>::~LinkedStack() {
@@ -153,6 +156,9 @@ LinkedStack<TData>::~LinkedStack() {
  * top_指向node\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ----
  */
 template <typename TData>
 bool LinkedStack<TData>::Push(const TData& data) {
@@ -197,6 +203,9 @@ bool LinkedStack<TData>::Push(const TData& data) {
  * temp置NULL\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * --------------
  */
 template <typename TData>
 bool LinkedStack<TData>::Pop(TData& data) {
@@ -243,6 +252,9 @@ bool LinkedStack<TData>::Pop(TData& data) {
  * temp置NULL\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ----------------
  */
 template <typename TData>
 bool LinkedStack<TData>::Pop() {
@@ -284,6 +296,9 @@ bool LinkedStack<TData>::Pop() {
  * top_->data赋给参数data\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ------------
  */
 template <typename TData>
 bool LinkedStack<TData>::Top(TData& data) const {
@@ -320,6 +335,9 @@ bool LinkedStack<TData>::Top(TData& data) const {
  * &emsp; length加1\n
  * &emsp; cur指向cur->next\n\n
  * 返回length\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 int LinkedStack<TData>::Length() const {
@@ -347,6 +365,9 @@ int LinkedStack<TData>::Length() const {
  *
  * ---------
  * 返回 top_ == NULL\n
+ *
+ *
+ * ---------
  */
 template<typename TData>
 bool LinkedStack<TData>::IsEmpty() const {
@@ -372,6 +393,9 @@ bool LinkedStack<TData>::IsEmpty() const {
  * &emsp; top_指向top_->next\n\n
  * &emsp; 释放deletion_node\n
  * &emsp; deletion_node置NULL\n
+ *
+ *
+ * ----
  */
 template<typename TData>
 void LinkedStack<TData>::Clear() {
@@ -402,6 +426,9 @@ void LinkedStack<TData>::Clear() {
  * &emsp; 打印cur->data\n
  * &emsp; cur指向cur->next\n\n
  * 返回os\n
+ *
+ *
+ * ------
  */
 template<typename TData>
 ostream& operator<<(ostream& os, const LinkedStack<TData>& stack) {
