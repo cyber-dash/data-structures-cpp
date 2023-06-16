@@ -72,7 +72,7 @@ public:
     void Clear();
 
     // 重载<<
-    friend ostream& operator<< <>(ostream& os, const SeqStack<TData>& stack);
+    friend ostream& operator<< <>(ostream& os, const SeqStack<TData>& seq_stack);
 
 private:
     TData* mem_data_;    //!< **元素数组**

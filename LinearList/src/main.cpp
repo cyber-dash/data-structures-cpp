@@ -13,18 +13,43 @@
 using namespace std;
 
 
+/*!
+ * @brief **main函数**
+ * @return 0
+ * @note
+ * main函数
+ * -------
+ * -------
+ *
+ * -------
+ * 测试-顺序表-插入\n
+ * 测试-顺序表-复制构造\n
+ * 测试-顺序表-容量\n
+ * 测试-顺序表-Empty\n
+ *
+ *
+ * -------
+ */
 int main() {
 
+    /*
+    // 测试-顺序表-插入
 	SeqListTest::TestInsert();
 
+    // 测试-顺序表-复制构造
     SeqListTest::TestCopyConstructor();
 
-	SeqListTest::TestSize();
+    // 测试-顺序表-容量
+    SeqListTest::TestCapacity();
 
+    // 测试-顺序表-Empty
 	SeqListTest::TestEmpty();
+     */
 
+    // 测试-顺序表-长度
 	SeqListTest::TestLength();
 
+    /*
 	SeqListTest::TestSearch();
 
 	SeqListTest::TestGetData();
@@ -37,7 +62,6 @@ int main() {
 
 	SeqListTest::TestIntersection();
 
-    /*
     DoublyLinkedListTest::TestInsert();
 
     DoublyLinkedListTest::TestRemove();
@@ -47,7 +71,6 @@ int main() {
     DoublyLinkedListTest::TestLength();
 
     DoublyLinkedListTest::TestClear();
-     */
 
     CircularSinglyLinkedListTest::TestInsert();
 
@@ -71,7 +94,6 @@ int main() {
 
 	CircularDoublyLinkedListTest::TestSearch();
 
-    /*
 	SinglyLinkListTest::TestCopyConstructor();
 
 	SinglyLinkListTest::TestRemove();

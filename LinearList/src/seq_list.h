@@ -72,7 +72,7 @@ public:
     bool Insert(int prev_pos, const TData& data);
 
     // 删除位置pos的数据
-    bool Remove(int pos, TData& data);
+    bool Remove(int target_pos, TData& data);
 
     // 是否为空
     bool IsEmpty() const;
@@ -365,18 +365,21 @@ bool SeqList<TData>::SetData(int pos, const TData& data) {
  * 当pos为0时, 表示插入位置1
  *
  * -------
- * + **1 非法情况判断**\n
+ * + **1 非法情况判断**\n\n
  * **if** last_index_等于size_ - 1 :\n
  * &emsp; 返回false\n
  * **if** prev_pos < 0 或者 prev_pos > last_index_ + 1 :\n
- * &emsp; 返回false\n
- * + **2 插入**\n
+ * &emsp; 返回false\n\n
+ * + **2 插入**\n\n
  * **for loop** 遍历mem_data_数组索引, 从last_index_到prev_pos :\n
  * &emsp; mem_data_[i + 1]等于mem_data_[i](前一位置元素)\n
  * 参数data赋值给mem_data_[prev_pos]\n
- * last_index_加1\n
- * + **3 退出函数**\n
+ * last_index_加1\n\n
+ * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
@@ -410,7 +413,7 @@ bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
 /*!
  * @brief **删除结点**
  * @tparam TData 数据项类型模板参数
- * @param pos 位置
+ * @param target_pos 位置
  * @param data 数据项保存变量
  * @return 执行结果
  * @note
@@ -592,7 +595,7 @@ void SeqList<TData>::Print() {
     // ---------- 2 按顺序打印 ----------
 
     for (int i = 0; i <= last_index_; i++) {                    // for loop 遍历mem_data_的数据项部分
-        cout << "#" << i + 1 << ":" << mem_data_[i] << endl;    // 打印当前元素
+        cout << "位置(非数组索引)" << i + 1 << ": " << mem_data_[i] << endl;    // 打印当前元素
     }
 }
 

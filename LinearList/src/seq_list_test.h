@@ -23,74 +23,98 @@ using namespace std;
  */
 class SeqListTest {
 public:
-    /*! @brief 测试插入 */
+    // 测试-顺序表-插入
     static void TestInsert();
-    /*! @brief 测试复制构造 */
+
+    // 测试-顺序表-复制构造
     static void TestCopyConstructor();
-    /*! @brief 测试删除 */
     static void TestRemove();
-    /*! @brief 测试总长度 */
-    static void TestSize();
-    /*! @brief 测试当前长度 */
+
+    // 测试-顺序表-容量
+    static void TestCapacity();
+
+    // 测试-顺序表-长度
     static void TestLength();
-    /*! @brief 测试是否为空 */
+
+    // 测试-顺序表-Empty
     static void TestEmpty();
-    /*! @brief 测试搜索 */
     static void TestSearch();
-    /*! @brief 测试获取数据 */
     static void TestGetData();
-    /*! @brief 测试设置数据 */
     static void TestSetData();
-    /*! @brief 测试排序 */
     static void TestSort();
-    /*! @brief 测试两个顺序表并集 */
     static void TestUnion();
-    /*! @brief 测试两个顺序表交集 */
     static void TestIntersection();
 };
 
 
+/*!
+ * @brief **测试-顺序表-插入**
+ * @note
+ * 测试-顺序表-插入
+ * -------------
+ * -------------
+ *
+ * -------------
+ * 声明seq_list(顺序表)\n\n
+ * 位置0后边插入1(插入首位置)\n
+ * 位置1后边插入2\n
+ * 位置2后边插入3\n\n
+ * 打印seq_list\n
+ *
+ *
+ * -------------
+ */
 void SeqListTest::TestInsert() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList Insert                     " << endl;
-    cout << "                         测试顺序表插入                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test SeqList Insert                    |" << endl;
+    cout << "|                      测试-顺序表-插入                     |" << endl << endl << endl;
 
-    SeqList<int> seq_list(3);
+    SeqList<int> seq_list(3);                                   // 声明seq_list(顺序表)
 
-    int num1 = 1;
-    int num2 = 2;
-    int num3 = 3;
+    seq_list.Insert(0, 1);                                      // 位置0后边插入1(插入首位置)
+    seq_list.Insert(1, 2);                                      // 位置1后边插入2
+    seq_list.Insert(2, 3);                                      // 位置2后边插入3
 
-    seq_list.Insert(0, num1);
-    seq_list.Insert(1, num2);
-    seq_list.Insert(2, num3);
-
-    seq_list.Print();
+    seq_list.Print();                                           // 打印seq_list
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
+/*!
+ * @brief **测试-顺序表-复制构造**
+ * @note
+ * 测试-顺序表-复制构造
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * 声明seq_list(顺序表)\n\n
+ * 位置0后边插入1(插入首位置)\n
+ * 位置1后边插入2\n
+ * 位置2后边插入3\n\n
+ * 使用seq_list初始化seq_list_2\n\n
+ * 打印seq_list_2\n
+ *
+ *
+ * -----------------
+ */
 void SeqListTest::TestCopyConstructor() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                 Test SeqList CopyConstructor                " << endl;
-    cout << "                         测试复制构造                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                Test SeqList CopyConstructor               |" << endl;
+    cout << "|                    测试-顺序表-复制构造                   |" << endl << endl << endl;
 
-    SeqList<int> seq_list(3);
+    SeqList<int> seq_list(3);                                   // 声明seq_list(顺序表)
 
-    int num1 = 1;
-    int num2 = 2;
-    int num3 = 3;
+    seq_list.Insert(0, 1);                                      // 位置0后边插入1(插入首位置)
+    seq_list.Insert(1, 2);                                      // 位置1后边插入2
+    seq_list.Insert(2, 3);                                      // 位置2后边插入3
 
-    seq_list.Insert(0, num1);
-    seq_list.Insert(1, num2);
-    seq_list.Insert(2, num3);
+    SeqList<int> seq_list_2 = seq_list;                         // 使用seq_list初始化seq_list_2
 
-    SeqList<int> seq_list_2 = seq_list;
-
-    seq_list_2.Print();
+    seq_list_2.Print();                                         // 打印seq_list_2
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -122,25 +146,55 @@ void SeqListTest::TestRemove() {
 }
 
 
-void SeqListTest::TestSize() {
+/*!
+ * @brief **测试-顺序表-容量**
+ * @note
+ * 测试-顺序表-容量
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 声明seq_list(顺序表), 容量设置为3\n\n
+ * 打印容量\n
+ *
+ *
+ * --------------
+ */
+void SeqListTest::TestCapacity() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                      Test SeqList Capacity                      " << endl;
-    cout << "                        测试顺序表Size                         " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                   Test SeqList Capacity                   |" << endl;
+    cout << "|                      测试-顺序表-容量                     |" << endl << endl << endl;
 
     SeqList<double> seq_list(3);
 
-    cout << "seq_list size: " << seq_list.Capacity() << endl;
+    cout << "seq_list capacity: " << seq_list.Capacity() << endl << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
+/*!
+ * @brief **测试-顺序表-长度**
+ * @note
+ * 测试-顺序表-长度
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 声明seq_list(顺序表), 容量设置为3\n
+ * 打印长度\n\n
+ * 插入两个结点\n
+ * 打印长度\n\n
+ *
+ *
+ * --------------
+ */
 void SeqListTest::TestLength() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList Length                     " << endl;
-    cout << "                       测试顺序表Length                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test SeqList Length                    |" << endl;
+    cout << "|                      测试-顺序表-长度                     |" << endl << endl << endl;
 
     SeqList<string> seq_list(3);
 
@@ -158,28 +212,44 @@ void SeqListTest::TestLength() {
 }
 
 
+/*!
+ * @brief **测试-顺序表-Empty**
+ * @note
+ * 测试-顺序表-Empty
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * 声明seq_list(顺序表)\n
+ * 打印seq_list是否为空表\n\n
+ *
+ * 插入1个元素\n
+ * 打印seq_list是否为空表\n\n
+ *
+ *
+ * ---------------
+ */
 void SeqListTest::TestEmpty() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList Empty                      " << endl;
-    cout << "                        测试顺序表Empty                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                     Test SeqList Empty                    |" << endl;
+    cout << "|                     测试-顺序表-Empty                     |" << endl << endl << endl;
 
     SeqList<string> seq_list(3);
 
-    cout << "Before insert any string:" << endl;
+    cout << "Before inserting any string:" << endl;
 
     bool isEmpty = seq_list.IsEmpty();
     if (isEmpty) {
         cout << "The seq_list is empty." << endl;
-    }
-    else {
+    } else {
         cout << "The seq_list isn't empty." << endl;
     }
 
     string BJ = "Beijing";
     seq_list.Insert(0, BJ);
 
-    cout << "After insert the string \"Beijing\":" << endl;
+    cout << endl << "After inserting the string \"Beijing\":" << endl;
 
     isEmpty = seq_list.IsEmpty();
     if (isEmpty) {
