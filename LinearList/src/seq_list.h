@@ -60,7 +60,7 @@ public:
     int Length() const { return last_index_ + 1; }
 
     // 搜索
-    int Search(TData& data) const;
+    int Search(const TData& data) const;
 
     // 获取位置pos的数据
     bool GetData(int pos, TData& data) const;
@@ -83,9 +83,6 @@ public:
     // 重制容量
     bool ResetCapacity(int capacity);
 
-    // 输入顺序表
-    void Input();
-
     // 排序
     void Sort();
 
@@ -99,9 +96,9 @@ public:
     void CyberDashShow();
 
 private:
-    TData* mem_data_;    //!< 数据项数组
-    int capacity_;           //!< 顺序表总长度
-    int last_index_;     //!< 最后一项的数组索引
+    TData* mem_data_;        //!< **数据项数组**
+    int capacity_;           //!< **容量**
+    int last_index_;         //!< **最后一项的数组索引**
 };
 
 
@@ -260,7 +257,7 @@ bool SeqList<TData>::ResetCapacity(int capacity) {
  * 返回0\n
  */
 template<typename TData>
-int SeqList<TData>::Search(TData& data) const {
+int SeqList<TData>::Search(const TData& data) const {
 
     for (int i = 0; i <= last_index_; i++) {                // for loop 遍历mem_data_
         if (mem_data_[i] == data) {                         // if 当前元素等于参数data

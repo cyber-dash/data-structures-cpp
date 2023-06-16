@@ -33,6 +33,7 @@ using namespace std;
 int main() {
 
     /*
+     */
     // 测试-顺序表-插入
 	SeqListTest::TestInsert();
 
@@ -44,16 +45,17 @@ int main() {
 
     // 测试-顺序表-Empty
 	SeqListTest::TestEmpty();
-     */
 
     // 测试-顺序表-长度
 	SeqListTest::TestLength();
 
-    /*
+    // 测试-顺序表-查找
 	SeqListTest::TestSearch();
 
+    // 测试-顺序表-获取结点数据
 	SeqListTest::TestGetData();
 
+    /*
 	SeqListTest::TestSetData();
 
 	SeqListTest::TestSort();

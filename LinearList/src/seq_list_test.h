@@ -38,7 +38,11 @@ public:
 
     // 测试-顺序表-Empty
     static void TestEmpty();
+
+    // 测试-顺序表-查找
     static void TestSearch();
+
+    // 测试-顺序表-获取结点数据
     static void TestGetData();
     static void TestSetData();
     static void TestSort();
@@ -263,51 +267,82 @@ void SeqListTest::TestEmpty() {
 }
 
 
+/*!
+ * @brief **测试-顺序表-查找**
+ * @note
+ * 测试-顺序表-查找
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 声明seq_list(顺序表)\n\n
+ * 位置0后边插入1(插入首位置)\n
+ * 位置1后边插入2\n
+ * 位置2后边插入3\n\n
+ * 搜索3的位置\n
+ * 打印结果\n\n
+ * 搜索4的位置\n
+ * 打印结果\n\n
+ *
+ *
+ * --------------
+ */
 void SeqListTest::TestSearch() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList Search                     " << endl;
-    cout << "                         测试顺序表查找                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test SeqList Search                    |" << endl;
+    cout << "|                      测试-顺序表-查找                     |" << endl << endl << endl;
 
-    SeqList<int> seq_list(3);
+    SeqList<int> seq_list(3);                                               // 声明seq_list(顺序表)
 
-    int num1 = 1;
-    int num2 = 2;
-    int num3 = 3;
+    seq_list.Insert(0, 1);                                                  // 位置0后边插入1(插入首位置)
+    seq_list.Insert(1, 2);                                                  // 位置1后边插入2
+    seq_list.Insert(2, 3);                                                  // 位置2后边插入3
 
-    seq_list.Insert(0, num1);
-    seq_list.Insert(1, num2);
-    seq_list.Insert(2, num3);
+    int pos = seq_list.Search(3);                                           // 搜索3的位置
+    cout << "The pos of " << 3 << " is " << pos << endl;                    // 打印结果
 
-    int pos = seq_list.Search(num3);
-    cout << "The pos of " << num3 << " is " << pos << endl;
-    pos = seq_list.Search(num1);
-    cout << "The pos of " << num1 << " is " << pos << endl;
+    pos = seq_list.Search(4);                                               // 搜索1的位置
+    cout << "The pos of " << 1 << " is " << pos << endl;                    // 打印结果
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
+/*!
+ * @brief **测试-顺序表-获取结点数据**
+ * @note
+ * 测试-顺序表-获取结点数据
+ * ---------------------
+ * ---------------------
+ *
+ * ---------------------
+ * 声明seq_list(顺序表)\n\n
+ * 位置0后边插入1.1(插入首位置)\n
+ * 位置1后边插入2.2\n
+ * 位置2后边插入3.3\n\n
+ * 获取first_node_data(位置1结点的data)\n
+ * 打印first_node_data\n
+ *
+ *
+ * --------------
+ */
 void SeqListTest::TestGetData() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList Search                    " << endl;
-    cout << "                       测试顺序表GetData                       " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test SeqList Search                    |" << endl;
+    cout << "|                  测试-顺序表-获取结点数据                 |" << endl << endl << endl;
 
-    SeqList<double> seq_list(3);
+    SeqList<double> seq_list(3);                                                // 声明seq_list(顺序表)
 
-    double num1 = 1.1;
-    double num2 = 2.2;
-    double num3 = 3.3;
+    seq_list.Insert(0, 1.1);                                                    // 位置0后边插入1.1(插入首位置)
+    seq_list.Insert(1, 2.2);                                                    // 位置1后边插入2.2
+    seq_list.Insert(2, 3.3);                                                    // 位置2后边插入3.3
 
-    seq_list.Insert(0, num1);
-    seq_list.Insert(1, num2);
-    seq_list.Insert(2, num3);
+    double first_node_data;
+    seq_list.GetData(1, first_node_data);                                       // 获取first_node_data(位置1结点的data)
 
-    double num_of_pos_1;
-    seq_list.GetData(1, num_of_pos_1);
-
-    cout << "The num of pos 1 is: " << num_of_pos_1 << endl;
+    cout << "The num of pos 1 is: " << first_node_data << endl;                 // 打印first_node_data
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
