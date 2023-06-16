@@ -6,7 +6,6 @@
  * @date 2023-02-25
  */
 
-
 #include "test.h"
 
 
@@ -14,39 +13,46 @@ using namespace std;
 
 
 /*!
- * @brief main函数
+ * @brief **main函数**
  * @return 0
  * @note
  * main函数
- * -------
- * -------
+ * --------
+ * --------
  *
- * -------
+ * --------
+ * 测试二分搜索树插入\n
+ * 测试AVL树插入\n\n
+ * 测试二分搜索树删除\n
+ * 测试AVL树删除\n
+ * 测试AVL树删除(递归)\n\n
+ * 测试二分搜索树搜索\n
+ * 测试AVL树搜索\n
+ * 测试二分搜索树和AVL树的高度\n\n
+ * 测试二分搜索树最大最小值\n
+ * 测试AVL树最大最小值\n\n
+ * 测试二分搜索树清空
+ *
+ *
+ * --------
  */
-int main()
-{
-	/// 测试插入
-    TestBstInsert();
-    TestAvlInsert();
+int main() {
+    TestBstInsert();                                    // 测试二分搜索树插入
+    TestAvlInsert();                                    // 测试AVL树插入
 
-	/// 测试删除
-    TestBstRemove();
-    TestAvlInsertAndRemove();
-    TestAvlInsertAndRemoveRecursive();
+    TestBstRemove();                                    // 测试二分搜索树删除
+    TestAvlInsertAndRemove();                           // 测试AVL树删除
+    TestAvlInsertAndRemoveRecursive();                  // 测试AVL树删除(递归)
 
-	/// 测试搜索
-    TestBstSearch();
-    TestAvlSearch();
+    TestBstSearch();                                    // 测试二分搜索树搜索
+    TestAvlSearch();                                    // 测试AVL树搜索
 
-	/// 测试高度
-    TestBstAndAvlHeight();
+    TestBstAndAvlHeight();                              // 测试二分搜索树和AVL树的高度
 
-	/// 测试最大最小值
-	TestBSTMaxAndMin();
-	TestAVLMaxAndMin();
+	TestBSTMaxAndMin();                                 // 测试二分搜索树最大最小值
+	TestAVLMaxAndMin();                                 // 测试AVL树最大最小值
 
-	/// 测试清空
-    TestBstClear();
+    TestBstClear();                                     // 测试二分搜索树清空
 
 	return 0;
 }

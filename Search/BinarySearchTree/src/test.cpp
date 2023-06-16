@@ -7,21 +7,21 @@
  */
 
 
+#include <vector>
 #include "test.h"
-#include "vector"
 
 
 /*!
- * @brief **搜索二叉树结点打印**
+ * @brief **搜索二叉树结点打印函数**
  * @tparam Key 关键字类型模板参数
  * @tparam Value 值类型模板参数
  * @param node 结点
  * @note
- * 搜索二叉树结点打印
- * ---------------
- * ---------------
+ * 搜索二叉树结点打印函数
+ * ------------------
+ * ------------------
  *
- * ---------------
+ * ------------------
  */
 template<typename Key, typename Value>
 void BstNodePrint(BstNode<Key, Value>* node) {
@@ -77,6 +77,9 @@ void AvlNodeKeyVisit(AvlNode<Key, Value>* node) {
  * 插入3个结点\n\n
  * 复制binary_search_tree给new_bst\n\n
  * 打印new_bst\n\n
+ *
+ *
+ * ---------------------
  */
 void TestBstInsert() {
     cout << endl;
@@ -122,13 +125,16 @@ void TestBstInsert() {
  * ---------------------
  *
  * ---------------------
- * + **1 构造二叉搜索树**\n
+ * + **1 构造二叉搜索树**\n\n
  * 声明binary_search_tree(二叉搜索树)\n
  * 8个问答, 插入binary_search_tree\n
  * 打印binary_search_tree\n\n
- * + **2 测试删除结点**\n
+ * + **2 测试删除结点**\n\n
  * 删除第1个问答\n
  * 打印binary_search_tree\n\n
+ *
+ *
+ * ---------------------
  */
 void TestBstRemove() {
     cout << endl;
@@ -211,6 +217,9 @@ void TestBstRemove() {
  * 删除问答9\n\n
  * 搜索问答9, 并打印搜索结果\n
  * 搜索问答8, 并打印搜索结果\n
+ *
+ *
+ * -----------------
  */
 void TestBstSearch() {
     cout << endl;
@@ -307,6 +316,9 @@ void TestBstSearch() {
  * 删除问答9\n\n
  * 搜索问答9, 并打印搜索结果\n
  * 搜索问答8, 并打印搜索结果\n
+ *
+ *
+ * -------------
  */
 void TestAvlSearch() {
     cout << endl;
@@ -317,11 +329,9 @@ void TestAvlSearch() {
     // ---------- 1 构造二叉搜索树 ----------
 
     // 声明binary_search_tree(二叉搜索树)
-
     AvlTree<string, string>* avl_tree = new AvlTree<string, string>();
 
     // 9个问答, 插入binary_search_tree
-
     string question1 = "最爱的乐队";
     string answer1 = "林肯公园";
 
@@ -403,6 +413,9 @@ void TestAvlSearch() {
  * + **2 测试最大Key结点/最小Key结点**\n
  * 打印最大Key结点的值\n
  * 打印最小Key结点的值\n
+ *
+ *
+ * ------------------------
  */
 void TestBSTMaxAndMin() {
     cout << endl;
@@ -485,6 +498,9 @@ void TestBSTMaxAndMin() {
  * + **2 测试最大Key结点/最小Key结点**\n
  * 打印最大Key结点的值\n
  * 打印最小Key结点的值\n
+ *
+ *
+ * --------------------
  */
 void TestAVLMaxAndMin() {
     cout << endl;
@@ -569,6 +585,9 @@ void TestAVLMaxAndMin() {
  * 9个问答, 插入binary_search_tree\n\n
  * 清除binary_search_tree\n\n
  * 打印binary_search_tree\n
+ *
+ *
+ * -----------------
  */
 void TestBstClear() {
     cout << endl;
@@ -642,6 +661,9 @@ void TestBstClear() {
  * 声明avl_tree(平衡二叉树)\n\n
  * 4个问答, 插入avl_tree\n\n
  * 打印avl_tree\n\n
+ *
+ *
+ * -----------------
  */
 void TestAvlInsert() {
     cout << endl;
@@ -694,6 +716,9 @@ void TestAvlInsert() {
  * 初始化30对key/value\n\n
  * 每次插入1对key/value, 打印当前avl_tree\n\n
  * 每次删除1对key/value, 打印当前avl_tree\n
+ *
+ *
+ * --------------------------
  */
 void TestAvlInsertAndRemove() {
     cout << endl;
@@ -749,6 +774,9 @@ void TestAvlInsertAndRemove() {
  * 初始化30对key/value\n\n
  * 每次插入(使用递归方法)1对key/value, 打印当前avl_tree\n\n
  * 每次删除(使用递归方法)1对key/value, 打印当前avl_tree\n
+ *
+ *
+ * -------------------------------------
  */
 void TestAvlInsertAndRemoveRecursive() {
     cout << endl;
@@ -804,6 +832,9 @@ void TestAvlInsertAndRemoveRecursive() {
  * 初始化bst_tree(二叉搜索树)和avl_tree(平衡二叉树)\n\n
  * 对两棵树插入26对key/value\n\n
  * 打印两棵树的高度\n
+ *
+ *
+ * -------------------------
  */
 void TestBstAndAvlHeight() {
     cout << endl;

@@ -38,11 +38,11 @@ public:
     BstNode(): left_child_(NULL), right_child_(NULL) {}
 
     /*!
-     * @brief **构造函数(关键字/值)**
+     * @brief **构造函数(关键字,值)**
      * @param key 关键字
      * @param value 值
      * @note
-     * 构造函数(关键字/值)
+     * 构造函数(关键字,值)
      * -----------------
      * -----------------
      *
@@ -114,11 +114,11 @@ public:
 
 protected:
 
-    BstNode<TKey, TValue>* left_child_;    //!< 左孩子(指针)
-    BstNode<TKey, TValue>* right_child_;   //!< 右孩子(指针)
+    BstNode<TKey, TValue>* left_child_;    //!< **左孩子(指针)**
+    BstNode<TKey, TValue>* right_child_;   //!< **右孩子(指针)**
 
-    TKey key_;                             //!< 关键字
-    TValue value_;                         //!< 值
+    TKey key_;                             //!< **关键字**
+    TValue value_;                         //!< **值**
 };
 
 
@@ -176,12 +176,15 @@ public:
      * @param value 值
      * @return 执行结果
      * @note
-     * 插入结点
-     * -------
-     * -------
+     * 插入结点(递归)
+     * ------------
+     * ------------
      *
-     * -------
+     * ------------
      * 调用InsertInSubTree_
+     *
+     *
+     * ------------
      */
     virtual bool InsertRecursive(TKey key, TValue value) { return this->InsertInSubTree_(key, value, this->root_); }
 
@@ -196,6 +199,9 @@ public:
      *
      * -------
      * 对root_调用RemoveInSubTree_
+     *
+     *
+     * -------
      */
     virtual bool RemoveRecursive(const TKey& key) { return RemoveInSubTree_(root_, key); }
 
@@ -210,6 +216,9 @@ public:
      *
      * ---
      * 对根结点调用SearchInSubTree_
+     *
+     *
+     * ---
      */
     virtual BstNode<TKey, TValue>* Search(TKey key) { return SearchInSubTree_(this->root_, key); }
 
@@ -223,6 +232,9 @@ public:
      *
      * -------
      * 对根结点调用HeightOfSubtreeRecursive_
+     *
+     *
+     * -------
      */
     virtual int Height() { return this->HeightOfSubtreeRecursive_(this->root_); }
 
@@ -246,6 +258,9 @@ public:
      *
      * ---
      * 对根结点调用ClearSubTree_
+     *
+     *
+     * ---
      */
     virtual void Clear() { ClearSubTree_(root_); }
 
@@ -259,6 +274,9 @@ public:
      *
      * --------
      * 对根结点调用PrintSubTree_
+     *
+     *
+     * --------
      */
     void Print(void (*NodePrint)(BstNode<TKey, TValue>*)) { this->PrintSubTreeRecursive_(this->root_, NodePrint); }
 
@@ -297,7 +315,7 @@ protected:
     // 获取结点的(中序)前一结点
     BstNode<TKey, TValue>* NextNode_(BstNode<TKey, TValue>* node);
 
-    BstNode<TKey, TValue>* root_; //!< 根节点
+    BstNode<TKey, TValue>* root_; //!< **根节点**
 };
 
 
@@ -328,6 +346,9 @@ protected:
  * &emsp; **else if** 搜索关键字 > 子树根节点关键字 :\n
  * &emsp;&emsp; 对子树的右子树, 递归执行SearchInSubTree_, 返回结果\n\n
  * &emsp; 返回子树根节点(根结点既是对应的结点)\n
+ *
+ *
+ * --------------
  */
 template <typename TKey, typename TValue>
 BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::SearchInSubTree_(BstNode<TKey, TValue>* subtree_root, TKey key) {
@@ -370,6 +391,9 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::SearchInSubTree_(BstNode<
  * &emsp; 返回false\n\n
  * node的value_赋给min_value\n\n
  * 返回true\n
+ *
+ *
+ * -------------------
  */
 template<typename TKey, typename TValue>
 bool BinarySearchTree<TKey, TValue>::Min(TValue& min_value) {
@@ -411,6 +435,9 @@ bool BinarySearchTree<TKey, TValue>::Min(TValue& min_value) {
  * &emsp; 对根结点右孩子, 递归调用InsertInSubTree_, 返回结果\n\n
  * + **3 返回**\n
  * 返回false(递归失败, 重复插入)
+ *
+ *
+ * ---------------
  */
 template <typename TKey, typename TValue>
 bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key,
@@ -478,6 +505,9 @@ bool BinarySearchTree<TKey, TValue>::InsertInSubTree_(TKey key,
  * &emsp;&emsp; subtree_node指向自身左孩子\n\n
  * &emsp; 释放remove_node\n\n
  * &emsp; 返回true\n
+ *
+ *
+ * ----------------
  */
 template <typename TKey, typename TValue>
 bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(BstNode<TKey, TValue>*& subtree_root, TKey key) {
@@ -544,6 +574,9 @@ bool BinarySearchTree<TKey, TValue>::RemoveInSubTree_(BstNode<TKey, TValue>*& su
  * + **3 重置根结点**\n\n
  * 释放subtree_root\n
  * subtree_root置空\n
+ *
+ *
+ * ------------
  */
 template <typename TKey, typename TValue>
 void BinarySearchTree<TKey, TValue>::ClearSubTree_(BstNode<TKey, TValue>*& subtree_root) {
@@ -594,6 +627,9 @@ void BinarySearchTree<TKey, TValue>::ClearSubTree_(BstNode<TKey, TValue>*& subtr
  * 打印','\n
  * 递归调用PrintSubTreeRecursive_, 对右子树进行打印\n
  * 打印')'\n
+ *
+ *
+ * ------------
  */
 template <typename TKey, typename TValue>
 void BinarySearchTree<TKey, TValue>::PrintSubTreeRecursive_(BstNode<TKey, TValue>* subtree_root,
@@ -652,6 +688,9 @@ void BinarySearchTree<TKey, TValue>::PrintSubTreeRecursive_(BstNode<TKey, TValue
  * 右子树递归调用CopySubTreeRecursive_, 生成新右子树\n\n
  * + **4 退出函数**\n\n
  * 返回new_bst_root\n
+ *
+ *
+ * -------
  */
 template <typename TKey, typename TValue>
 BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(const BstNode<TKey, TValue>* src_bst_root) {
@@ -702,6 +741,9 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::CopySubTreeRecursive_(con
  * &emsp; cur指向自身左孩子\n\n
  * + **3 返回结果**\n\n
  * 返回cur\n
+ *
+ *
+ * -----------------------
  */
 template <typename TKey, typename TValue>
 BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MinInSubTree_(BstNode<TKey, TValue>* subtree_root) const {
@@ -747,6 +789,9 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MinInSubTree_(BstNode<TKe
  * &emsp; cur指向自身右孩子\n
  * + **3 返回结果**\n\n
  * 返回cur\n
+ *
+ *
+ * -----------------------
  */
 template <typename TKey, typename TValue>
 BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MaxInSubTree_(BstNode<TKey, TValue>* subtree_root) const {
@@ -788,6 +833,9 @@ BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::MaxInSubTree_(BstNode<TKe
  * 对src_bst的根结点调用CopySubTreeRecursive_, 返回值赋给root_\n\n
  * + **3 退出函数**\n\n
  * 返回*this\n
+ *
+ *
+ * ------
  */
 template<typename TKey, typename TValue>
 BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const BinarySearchTree<TKey, TValue>& src_bst) {
@@ -812,7 +860,7 @@ BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const 
  * @brief **获取最大关键字对应的值**
  * @tparam TKey 关键字类型模板参数
  * @tparam TValue 值类型模板参数
- * @param min_value 值保存变量
+ * @param max_value 值保存变量
  * @return 执行结果
  * @note
  * 获取最大关键字对应的值
@@ -825,6 +873,9 @@ BinarySearchTree<TKey, TValue>& BinarySearchTree<TKey, TValue>::operator=(const 
  * &emsp; 返回false\n\n
  * node的value_赋给max_value\n\n
  * 返回true\n
+ *
+ *
+ * -------------------
  */
 template<typename TKey, typename TValue>
 bool BinarySearchTree<TKey, TValue>::Max(TValue& max_value) {
@@ -861,6 +912,9 @@ bool BinarySearchTree<TKey, TValue>::Max(TValue& max_value) {
  * &emsp; 返回right_subtree_height + 1\n
  * **else** (left_subtree_height >= right_subtree_height) :\n
  * &emsp; 返回left_subtree_height + 1\n
+ *
+ *
+ * -------
  */
 template<typename TKey, typename TValue>
 int BinarySearchTree<TKey, TValue>::HeightOfSubtreeRecursive_(BstNode<TKey, TValue>* subtree_root) {
@@ -895,8 +949,6 @@ int BinarySearchTree<TKey, TValue>::HeightOfSubtreeRecursive_(BstNode<TKey, TVal
  * ---------------------
  * ---------------------
  *
- *
- *
  * ---------------------
  * + **1 合法性判断**\n
  * &emsp; **if** node为NULL :\n
@@ -907,6 +959,9 @@ int BinarySearchTree<TKey, TValue>::HeightOfSubtreeRecursive_(BstNode<TKey, TVal
  * &emsp;&emsp; cur指向左孩子\n\n
  * + **3 退出函数**\n\n
  * &emsp; 返回cur\n
+ *
+ *
+ * ---------------------
  */
 template<typename TKey, typename TValue>
 BstNode<TKey, TValue>* BinarySearchTree<TKey, TValue>::NextNode_(BstNode<TKey, TValue>* node) {
