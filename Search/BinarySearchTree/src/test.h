@@ -40,10 +40,10 @@ void TestAvlSearch();
 void TestAvlInsert();
 
 // AVL树_插入结点和删除结点_测试
-void TestAvlInsertAndRemove();
+void TestAvlRemove();
 
 // AVL树_插入结点(递归)和删除结点(递归)_测试
-void TestAvlInsertAndRemoveRecursive();
+void TestAvlRemoveRecursive();
 
 // 二叉搜索树和AVL树_树高度_测试
 void TestBstAndAvlHeight();

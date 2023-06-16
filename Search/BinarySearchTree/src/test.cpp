@@ -85,7 +85,7 @@ void TestBstInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test BinarySearchTree CopyConstructor          |" << endl;
-    cout << "|                  测试搜索二叉树的复制构造函数                 |" << endl;
+    cout << "|                  测试-搜索二叉树-插入结点                 |" << endl << endl;
 
     // 声明binary_search_tree(搜索二叉树)
     BinarySearchTree<string, string>* binary_search_tree = new BinarySearchTree<string, string>();
@@ -112,7 +112,6 @@ void TestBstInsert() {
     new_bst.Print(BstNodePrint);
 
     cout << endl;
-
     cout << "-------------------------------------------------------------" << endl;
 }
 
@@ -140,7 +139,7 @@ void TestBstRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test BinarySearchTree Remove               |" << endl;
-    cout << "|                     测试搜索二叉树的删除                     |" << endl;
+    cout << "|                    测试-搜索二叉树-删除                   |" << endl << endl;
 
     // ---------- 1 构造二叉搜索树 ----------
 
@@ -196,8 +195,7 @@ void TestBstRemove() {
     // 打印binary_search_tree
     binary_search_tree->Print(BstNodePrint);
 
-    cout << endl;
-
+    cout << endl << endl;
     cout << "-------------------------------------------------------------" << endl;
 }
 
@@ -225,7 +223,7 @@ void TestBstSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test BinarySearchTree Search               |" << endl;
-    cout << "|                     测试搜索二叉树的搜索                     |" << endl;
+    cout << "|                    测试-搜索二叉树-搜索                   |" << endl;
 
     // ---------- 1 构造二叉搜索树 ----------
 
@@ -324,7 +322,7 @@ void TestAvlSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test AVL Search                      |" << endl;
-    cout << "|                       测试AVL树的搜索                       |" << endl;
+    cout << "|                      测试-AVL树-搜索                      |" << endl << endl;
 
     // ---------- 1 构造二叉搜索树 ----------
 
@@ -421,7 +419,7 @@ void TestBSTMaxAndMin() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinarySearchTree Max and Min            |" << endl;
-    cout << "|                  测试搜索二叉树的最大Key值/最小Key值                |" << endl;
+    cout << "|             测试-搜索二叉树-最大Key值/最小Key值           |" << endl << endl;
 
     // ---------- 1 构造二叉搜索树 ----------
 
@@ -480,7 +478,7 @@ void TestBSTMaxAndMin() {
     res = binary_search_tree->Min(min_data);
     cout << "min_data: " << min_data << endl;
 
-    cout << "-------------------------------------------------------------" << endl;
+    cout << endl << "-------------------------------------------------------------" << endl;
 }
 
 
@@ -506,7 +504,7 @@ void TestAVLMaxAndMin() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                     Test AVL Max & Min                    |" << endl;
-    cout << "|                    测试AVL树的最大值/最小值                  |" << endl;
+    cout << "|                  测试-AVL树-最大值/最小值                 |" << endl << endl;
 
     // ---------- 1 构造avl树 ----------
 
@@ -569,7 +567,7 @@ void TestAVLMaxAndMin() {
         cout << "min_data: " << min_data << endl;
     }
 
-    cout << "-------------------------------------------------------------" << endl;
+    cout << endl << "-------------------------------------------------------------" << endl;
 }
 
 
@@ -592,8 +590,8 @@ void TestAVLMaxAndMin() {
 void TestBstClear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                Test BinarySearchTree Clear            |" << endl;
-    cout << "|                      测试搜索二叉树的清除                    |" << endl;
+    cout << "|                Test BinarySearchTree Clear                |" << endl;
+    cout << "|                    测试-搜索二叉树-清除                   |" << endl << endl;
 
     // ----- 声明binary_search_tree(搜索二叉树) -----
 
@@ -646,7 +644,7 @@ void TestBstClear() {
 
     binary_search_tree->Print(BstNodePrint);
 
-    cout << "-------------------------------------------------------------" << endl;
+    cout << endl << "-------------------------------------------------------------" << endl;
 }
 
 
@@ -669,7 +667,7 @@ void TestAvlInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test AVL Insert                      |" << endl;
-    cout << "|                     测试平衡二叉树的插入                     |" << endl;
+    cout << "|                      测试-AVL树-插入                      |" << endl << endl;
 
     // 声明avl_tree(平衡二叉树)
 
@@ -705,26 +703,26 @@ void TestAvlInsert() {
 
 
 /*!
- * @brief **AVL树_插入结点和删除结点_测试**
+ * @brief **AVL树_删除结点_测试**
  * @note
- * AVL树_插入结点和删除结点_测试
- * --------------------------
- * --------------------------
+ * AVL树_删除结点_测试
+ * -----------------
+ * -----------------
  *
- * --------------------------
+ * -----------------
  * 声明avl_tree(平衡二叉树)\n\n
  * 初始化30对key/value\n\n
  * 每次插入1对key/value, 打印当前avl_tree\n\n
  * 每次删除1对key/value, 打印当前avl_tree\n
  *
  *
- * --------------------------
+ * -----------------
  */
-void TestAvlInsertAndRemove() {
+void TestAvlRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                   Test AVL Insert/Remove                  |" << endl;
-    cout << "|                    测试平衡二叉树的插入/删除                  |" << endl;
+    cout << "|                      Test AVL Remove                      |" << endl;
+    cout << "|                    测试-平衡二叉树-删除                   |" << endl;
 
     // ----- 声明avl_tree(平衡二叉树) -----
 
@@ -740,7 +738,10 @@ void TestAvlInsertAndRemove() {
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
           21, 6, 4, 24, 11, 19, 3, 1, 29, 10, 10 };
-    int count = 30;
+
+    // int count = 30;
+    int count = 15;
+    // int count = 10;
 
     // ----- 每次插入1对key/value, 打印当前avl_tree -----
 
@@ -763,9 +764,9 @@ void TestAvlInsertAndRemove() {
 
 
 /*!
- * @brief **AVL树_插入结点(递归)和删除结点(递归)_测试**
+ * @brief **AVL树_删除结点(递归)_测试**
  * @note
- * AVL树_插入结点(递归)和删除结点(递归)_测试
+ * AVL树_删除结点(递归)_测试
  * -------------------------------------
  * -------------------------------------
  *
@@ -778,11 +779,11 @@ void TestAvlInsertAndRemove() {
  *
  * -------------------------------------
  */
-void TestAvlInsertAndRemoveRecursive() {
+void TestAvlRemoveRecursive() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|              Test AVL Insert/Remove recursive             |" << endl;
-    cout << "|                 测试平衡二叉树的插入/删除(递归)               |" << endl;
+    cout << "|                 Test AVL Remove recursive                 |" << endl;
+    cout << "|                 测试-平衡二叉树-删除(递归)                |" << endl << endl;
 
     // ----- 声明avl_tree(平衡二叉树) -----
 
@@ -798,7 +799,10 @@ void TestAvlInsertAndRemoveRecursive() {
         { 9, 15, 5, 23, 27, 22, 7, 17, 8, 28,
           25, 12, 13, 14, 2, 26, 30, 18, 16, 20,
           21, 6, 4, 24, 11, 19, 3, 1, 29, 10 };
-    int count = 30;
+
+    // int count = 30;
+    int count = 15;
+    // int count = 10;
 
     // ----- 每次插入(使用递归方法)1对key/value, 打印当前avl_tree -----
 
@@ -840,7 +844,7 @@ void TestBstAndAvlHeight() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|              Test BinarySearchTree & AVL Height           |" << endl;
-    cout << "|                   测试搜索二叉树/AVL树的高度                 |" << endl;
+    cout << "|                 测试-搜索二叉树/AVL树-高度                |" << endl << endl;
 
     // ----- 初始化26对key/value -----
 
@@ -882,5 +886,5 @@ void TestBstAndAvlHeight() {
     cout << "BST树高度: " << bst_tree->Height() << endl;
     cout << "AVL树高度: " << avl_tree->Height() << endl;
 
-    cout << "-------------------------------------------------------------" << endl;
+    cout << endl << "-------------------------------------------------------------" << endl;
 }
