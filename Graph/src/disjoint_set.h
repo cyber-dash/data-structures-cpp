@@ -11,7 +11,7 @@
 
 
 /*!
- * @brief 并查集类
+ * @brief **并查集类**
  */
 class DisjointSet {
 
@@ -28,6 +28,9 @@ public:
      *
      * -------
      * 释放parents_
+     *
+     *
+     * -------
      */
     ~DisjointSet() { delete[] parents_; }
 
@@ -42,6 +45,7 @@ public:
 
     // 查找
     int Find(int index);
+
 private:
     int size_;                //!< **大小**
     int* parents_;            //!< **父节点数组**

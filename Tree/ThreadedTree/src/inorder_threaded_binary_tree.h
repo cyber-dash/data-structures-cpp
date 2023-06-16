@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * @file inorder_threaded_binary_tree.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 中序线索树模板类
@@ -160,7 +160,7 @@ ThreadedNode<TData>* InorderThreadedBinaryTree<TData>::Next(ThreadedNode<TData>*
 
 
 /*!
- * @brief 获取子树最后一个线索结点
+ * @brief **获取子树最后一个线索结点**
  * @tparam TData 数据项类型模板参数
  * @param subtree_root 子树根结点
  * @return 最后一个线索节点的指针

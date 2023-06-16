@@ -215,7 +215,9 @@ public:
      * 获取边(by边索引)
      * --------------
      * --------------
-     * todo: 改为返回bool类型
+     *
+     * todo: 应该改为返回bool类型
+     *
      * --------------
      */
     virtual const Edge<TVertex, TWeight>& GetEdge(int index) const { return this->edges_[index]; }
