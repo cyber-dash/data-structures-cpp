@@ -33,7 +33,6 @@ using namespace std;
 int main() {
 
     /*
-     */
     // 测试-顺序表-插入
 	SeqListTest::TestInsert();
 
@@ -55,45 +54,67 @@ int main() {
     // 测试-顺序表-获取结点数据
 	SeqListTest::TestGetData();
 
-    /*
+    // 测试-顺序表-设置结点数据
 	SeqListTest::TestSetData();
 
+    // 测试-顺序表-排序
 	SeqListTest::TestSort();
 
+    // 测试-顺序表-合并
 	SeqListTest::TestUnion();
 
+    // 测试-顺序表-交集
 	SeqListTest::TestIntersection();
 
+    // 测试-顺序表-删除
+    SeqListTest::TestRemove();
+
+    // 测试-双向链表-插入
     DoublyLinkedListTest::TestInsert();
 
+    // 测试-双向链表-删除结点
     DoublyLinkedListTest::TestRemove();
 
+    // 测试-双向链表-搜索
     DoublyLinkedListTest::TestSearch();
 
+    // 测试-双向链表-长度
     DoublyLinkedListTest::TestLength();
 
+    // 测试-双向链表-清空
     DoublyLinkedListTest::TestClear();
 
+    // 测试-循环单链表-插入
     CircularSinglyLinkedListTest::TestInsert();
 
+    // 测试-循环单链表-删除结点
     CircularSinglyLinkedListTest::TestRemove();
 
+    // 测试-循环单链表-清空
     CircularSinglyLinkedListTest::TestClear();
 
+    // 测试-循环单链表-长度
     CircularSinglyLinkedListTest::TestLength();
 
+    // 测试-循环单链表-搜索
     CircularSinglyLinkedListTest::TestSearch();
 
+    // 测试-循环双向链表-按方向插入
 	CircularDoublyLinkedListTest::TestInsert();
 
+    // 测试-循环双向链表-按方向删除
 	CircularDoublyLinkedListTest::TestRemove();
 
+    // 测试-循环双向链表-长度
 	CircularDoublyLinkedListTest::TestLength();
 
+    // 测试-双向循环链表-获取结点
     CircularDoublyLinkedListTest::TestGetNode();
+     */
 
 	CircularDoublyLinkedListTest::TestEmpty();
 
+    /*
 	CircularDoublyLinkedListTest::TestSearch();
 
 	SinglyLinkListTest::TestCopyConstructor();

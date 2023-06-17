@@ -15,89 +15,137 @@
 
 class CircularSinglyLinkedListTest {
 public:
-    // 测试插入结点
+    // 测试-循环单链表-插入
     static void TestInsert();
 
-    // 测试清空链表
+    // 测试-循环单链表-清空
     static void TestClear();
 
-    // 测试删除结点
+    // 测试-循环单链表-删除结点
     static void TestRemove();
 
-    // 测试链表长度
+    // 测试-循环单链表-长度
     static void TestLength();
 
-    // 测试搜索
+    // 测试-循环单链表-搜索
     static void TestSearch();
 };
 
 
+/*!
+ * @brief **测试-循环单链表-插入**
+ * @note
+ * 测试-循环单链表-插入
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * 初始化band_list(乐队链表)\n
+ * 依次插入5个乐队\n
+ * 打印band_list\n
+ *
+ *
+ * -----------------
+ */
 void CircularSinglyLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|             Test CircularSinglyLinkedList Insert          |" << endl;
-    cout << "|                      测试循环单链表插入                     |" << endl << endl << endl;
+    cout << "|            Test CircularSinglyLinkedList Insert           |" << endl;
+    cout << "|                    测试-循环单链表-插入                   |" << endl << endl << endl;
 
-    CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
+    // 初始化band_list(乐队链表)
+    CircularSinglyLinkedList<string>* band_list = new CircularSinglyLinkedList<string>();
 
-    string singer1("The Script");
-    string singer2("Linkin Park");
-    string singer3("Starship");
-    string singer4("Coldplay");
-    string singer5("黑豹");
+    // 依次插入5个乐队
+    string band1("The Script");
+    string band2("Linkin Park");
+    string band3("Starship");
+    string band4("Coldplay");
+    string band5("黑豹");
 
-    singer_list->Insert(0, singer1);
-    singer_list->Insert(1, singer2);
-    singer_list->Insert(2, singer3);
-    singer_list->Insert(3, singer4);
-    singer_list->Insert(4, singer5);
+    band_list->Insert(0, band1);
+    band_list->Insert(1, band2);
+    band_list->Insert(2, band3);
+    band_list->Insert(3, band4);
+    band_list->Insert(4, band5);
 
-    singer_list->Print();
-
-    cout << "-------------------------------------------------------------" << endl << endl;
-}
-
-
-void CircularSinglyLinkedListTest::TestClear() {
-    cout << endl;
-    cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|             Test CircularSinglyLinkedList Clear           |" << endl;
-    cout << "|                     测试循环单链表清空链表                   |" << endl << endl << endl;
-
-    CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
-
-    string singer1("The Script");
-    string singer2("Linkin Park");
-    string singer3("Queen");
-    string singer4("Coldplay");
-    string singer5("黑豹");
-
-    singer_list->Insert(0, singer1);    // 插入"The Script"作为首结点
-    singer_list->Insert(0, singer2);    // 插入"Linkin Park"作为首结点
-    singer_list->Insert(0, singer3);    // 插入"Queen"作为首结点
-    singer_list->Insert(0, singer4);    // 插入"Coldplay"作为首结点
-    singer_list->Insert(0, singer5);    // 插入"黑豹"作为首结点
-
-    cout << "歌手链表:" << endl;
-    singer_list->Print();
-
-    singer_list->Clear();
-
-    cout << "清空后的歌手链表:" << endl;
-    singer_list->Print();
+    // 打印band_list
+    band_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
 /*!
- * @brief **测试循环单链表删除结点**
+ * @brief **测试-循环单链表-清空**
+ * @note
+ * 测试-循环单链表-清空
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * 初始化band_list(乐队链表)\n\n
+ * 依次插入5个乐队\n
+ * 打印band_list\n\n
+ * 清空乐队\n
+ * 打印band_list\n
+ *
+ *
+ * -----------------
+ */
+void CircularSinglyLinkedListTest::TestClear() {
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|             Test CircularSinglyLinkedList Clear           |" << endl;
+    cout << "|                    测试-循环单链表-清空                   |" << endl << endl << endl;
+
+    CircularSinglyLinkedList<string>* band_list = new CircularSinglyLinkedList<string>();
+
+    string band1("The Script");
+    string band2("Linkin Park");
+    string band3("Queen");
+    string band4("Coldplay");
+    string band5("黑豹");
+
+    band_list->Insert(0, band1);    // 插入"The Script"作为首结点
+    band_list->Insert(0, band2);    // 插入"Linkin Park"作为首结点
+    band_list->Insert(0, band3);    // 插入"Queen"作为首结点
+    band_list->Insert(0, band4);    // 插入"Coldplay"作为首结点
+    band_list->Insert(0, band5);    // 插入"黑豹"作为首结点
+
+    cout << "乐队链表:" << endl;
+    band_list->Print();
+
+    band_list->Clear();
+
+    cout << "清空后的乐队链表:" << endl;
+    band_list->Print();
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+/*!
+ * @brief **测试-循环单链表-删除结点**
+ * @note
+ * 测试-循环单链表-删除结点
+ * ---------------------
+ * ---------------------
+ *
+ * ---------------------
+ * 声明singer_list(歌手链表)\n\n
+ * 依次插入5个歌手\n
+ * 打印singer_list\n\n
+ * 依次删除某个歌手并打印singer_list, 执行5次\n
+ *
+ *
+ * ---------------------
  */
 void CircularSinglyLinkedListTest::TestRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularSinglyLinkedList Remove           |" << endl;
-    cout << "|                     测试循环单链表删除结点                   |" << endl << endl << endl;
+    cout << "|                  测试-循环单链表-删除结点                 |" << endl << endl << endl;
 
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
 
@@ -142,11 +190,27 @@ void CircularSinglyLinkedListTest::TestRemove() {
 }
 
 
+/*!
+ * @brief **测试-循环单链表-长度**
+ * @note
+ * 测试-循环单链表-长度
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * 初始化singer_list(歌手链表)\n\n
+ * 依次插入5个歌手\n
+ * 打印singer_list\n
+ * 打印singer_list长度\n
+ *
+ *
+ * -----------------
+ */
 void CircularSinglyLinkedListTest::TestLength() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularSinglyLinkedList Length           |" << endl;
-    cout << "|                      测试循环单链表长度                      |" << endl << endl << endl;
+    cout << "|                    测试-循环单链表-长度                   |" << endl << endl << endl;
 
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
 
@@ -173,11 +237,26 @@ void CircularSinglyLinkedListTest::TestLength() {
 }
 
 
+/*!
+ * @brief **测试-循环单链表-搜索**
+ * @note
+ * 测试-循环单链表-搜索
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * 初始化singer_list(歌手链表)\n\n
+ * 依次插入5个歌手\n
+ * 打印"张雨生"结点和"莫文蔚"结点的地址\n
+ *
+ *
+ * -----------------
+ */
 void CircularSinglyLinkedListTest::TestSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularSinglyLinkedList Search           |" << endl;
-    cout << "|                      测试循环单链表搜索                      |" << endl << endl << endl;
+    cout << "|                    测试-循环单链表-搜索                   |" << endl << endl << endl;
 
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
 

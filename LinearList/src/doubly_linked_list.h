@@ -561,9 +561,10 @@ bool DoublyLinkedList<TData>::Remove(int target_pos, TData& data) {
  */
 template<typename TData>
 void DoublyLinkedList<TData>::Clear() {
-    for (int i = 1; i <= length_; i++) {                                                    // for loop 遍历结点数量次数
-        TData deletion_data;
-        this->Remove(1, deletion_data);                                                     // 删除位置1的结点
+    int length = this->length_;
+    for (int i = 1; i <= length; i++) {                                                    // for loop 遍历结点数量次数
+        TData target_data;
+        this->Remove(1, target_data);                                                     // 删除位置1的结点
     }
 }
 
@@ -601,7 +602,7 @@ void DoublyLinkedList<TData>::Print() {
 
     // ---------- 2 打印 ----------
 
-    cout << "打印循环单链表: { ";
+    cout << "打印双向链表: { ";
     DoublyLinkedNode<TData>* cur = this->head_->next;                                       // 初始化cur(遍历指针), 指向head_->next
     for (int pos = 1; pos <= Length(); pos++) {                                             // for loop 位置从1到length_
         cout << cur->data;                                                                  // 打印当前结点的data

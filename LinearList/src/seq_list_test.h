@@ -28,6 +28,8 @@ public:
 
     // 测试-顺序表-复制构造
     static void TestCopyConstructor();
+
+    // 测试-顺序表-删除
     static void TestRemove();
 
     // 测试-顺序表-容量
@@ -44,9 +46,17 @@ public:
 
     // 测试-顺序表-获取结点数据
     static void TestGetData();
+
+    // 测试-顺序表-设置结点数据
     static void TestSetData();
+
+    // 测试-顺序表-排序
     static void TestSort();
+
+    // 测试-顺序表-合并
     static void TestUnion();
+
+    // 测试-顺序表-交集
     static void TestIntersection();
 };
 
@@ -124,27 +134,37 @@ void SeqListTest::TestCopyConstructor() {
 }
 
 
+/*!
+ * @brief **测试-顺序表-删除**
+ * @note
+ * 测试-顺序表-删除
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 声明seq_list(顺序表)\n\n
+ * 位置0后边插入1(插入首位置)\n
+ * 位置1后边插入2\n
+ * 位置2后边插入3\n\n
+ * 删除位置3的元素\n\n
+ * 打印seq_list\n
+ */
 void SeqListTest::TestRemove() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList Remove                     " << endl;
-    cout << "                         测试顺序表删除                         " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test SeqList Remove                    |" << endl;
+    cout << "|                      测试-顺序表-删除                     |" << endl << endl << endl;
 
-    SeqList<int> seq_list(3);
+    SeqList<int> seq_list(3);                                       // 声明seq_list(顺序表)
 
-    int num1 = 1;
-    int num2 = 2;
-    int num3 = 3;
+    seq_list.Insert(0, 1);                                          // 位置0后边插入1(插入首位置)
+    seq_list.Insert(1, 2);                                          // 位置1后边插入2
+    seq_list.Insert(2, 3);                                          // 位置2后边插入3
 
-    seq_list.Insert(0, num1);
-    seq_list.Insert(1, num2);
-    seq_list.Insert(2, num3);
+    int target_num;
+    seq_list.Remove(3, target_num);                                 // 删除位置3的元素
 
-    // 删除位置3(注意本实现是从1开始计数)的数据
-    int delete_num;
-    seq_list.Remove(3, delete_num);
-
-    seq_list.Print();
+    seq_list.Print();                                               // 打印seq_list
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -348,103 +368,178 @@ void SeqListTest::TestGetData() {
 }
 
 
+/*!
+ * @brief **测试-顺序表-设置结点数据**
+ * @note
+ * 测试-顺序表-设置结点数据
+ * ---------------------
+ * ---------------------
+ *
+ * ---------------------
+ * 声明seq_list(顺序表)\n\n
+ * 位置0后边插入1.1(插入首位置)\n
+ * 位置1后边插入2.2\n
+ * 位置2后边插入3.3\n\n
+ * 打印first_node_data\n\n
+ * 位置2结点数据设置为4.4\n
+ * 打印first_node_data\n
+ *
+ *
+ * --------------
+ */
 void SeqListTest::TestSetData() {
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                     Test SeqList SetData                    " << endl;
-    cout << "                       测试顺序表SetData                       " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                    Test SeqList SetData                   |" << endl;
+    cout << "|                  测试-顺序表-设置结点数据                 |" << endl << endl << endl;
 
-    SeqList<double> seq_list(3);
+    SeqList<double> seq_list(3);                                                // 声明seq_list(顺序表)
 
-    cout << "Init the seq list:" << endl;
+    cout << "初始化顺序表:" << endl;
 
-    seq_list.Insert(0, 1.1);
-    seq_list.Insert(1, 2.2);
-    seq_list.Insert(2, 3.3);
+    seq_list.Insert(0, 1.1);                                                    // 位置0后边插入1.1(插入首位置)
+    seq_list.Insert(1, 2.2);                                                    // 位置1后边插入2.2
+    seq_list.Insert(2, 3.3);                                                    // 位置2后边插入3.3
 
-    seq_list.Print();
+    seq_list.Print();                                                           // 打印first_node_data
 
     cout << endl;
 
-    cout << "Set the item of pos 2 to 4.4:" << endl;
-
-    seq_list.SetData(2, 4.4);
-
-    seq_list.Print();
+    cout << "位置2的结点数据设置为4.4:" << endl;
+    seq_list.SetData(2, 4.4);                                                   // 位置2结点数据设置为4.4
+    seq_list.Print();                                                           // 打印first_node_data
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
+/*!
+ * @brief **测试-顺序表-排序**
+ * @note
+ * 测试-顺序表-排序
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 声明seq_list(顺序表)\n
+ * 依次插入4.4, 2.2, 3.3, 6.6, 5.5\n\n
+ * 执行排序\n
+ * 打印seq_list\n
+ */
 void SeqListTest::TestSort() {
 
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                      Test SeqList Sort                      " << endl;
-    cout << "                         测试顺序表Sort                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                     Test SeqList Sort                     |" << endl;
+    cout << "|                     测试-顺序表-排序                      |" << endl << endl << endl;
 
+    // 声明seq_list(顺序表)
     SeqList<double> seq_list(5);
 
+    // 依次插入4.4, 2.2, 3.3, 6.6, 5.5
     seq_list.Insert(0, 4.4);
     seq_list.Insert(1, 2.2);
     seq_list.Insert(2, 3.3);
     seq_list.Insert(3, 6.6);
     seq_list.Insert(4, 5.5);
 
+    // 执行排序
     seq_list.Sort();
 
+    // 打印seq_list
     seq_list.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
+/*!
+ * @brief **测试-顺序表-合并**
+ * @note
+ * 测试-顺序表-合并
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 声明seq_list_a(顺序表a)\n
+ * 声明seq_list_b(顺序表b)\n\n
+ * seq_list_a依次插入1, 3, 5\n
+ * seq_list_b依次插入2, 4, 6\n\n
+ * 合并seq_list_a和seq_list_b, 结果保存在seq_list_a\n\n
+ * 打印seq_list_a\n
+ */
 void SeqListTest::TestUnion() {
 
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "                      Test SeqList Union                     " << endl;
-    cout << "                        测试顺序表Union                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                     Test SeqList Union                    |" << endl;
+    cout << "|                     测试-顺序表-合并                     |" << endl << endl << endl;
 
+    // 声明seq_list_a(顺序表a) ,seq_list_b(顺序表b)
     SeqList<int> seq_list_a(10);
     SeqList<int> seq_list_b(10);
 
+    // seq_list_a依次插入1, 3, 5
     seq_list_a.Insert(0, 1);
     seq_list_a.Insert(1, 3);
     seq_list_a.Insert(2, 5);
 
+    // seq_list_b依次插入2, 4, 6
     seq_list_b.Insert(0, 2);
     seq_list_b.Insert(1, 4);
     seq_list_b.Insert(2, 6);
 
+    // 合并seq_list_a和seq_list_b, 结果保存在seq_list_a
     SeqListUnion(seq_list_a, seq_list_b);
 
+    // 打印seq_list_a
     seq_list_a.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
 
 
+/*!
+ * @brief **测试-顺序表-交集**
+ * @note
+ * 测试-顺序表-交集
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 声明seq_list_a(顺序表a)\n
+ * 声明seq_list_b(顺序表b)\n\n
+ * seq_list_a依次插入1, 2, 3\n
+ * seq_list_b依次插入2, 4, 6\n\n
+ * 求seq_list_a和seq_list_b的交集, 结果保存在seq_list_a\n\n
+ * 打印seq_list_a\n
+ */
 void SeqListTest::TestIntersection() {
 
     cout << endl;
-    cout << "------------------------- CyberDash -------------------------" << endl;
-    cout << "               Test SeqList SeqListIntersection              " << endl;
-    cout << "                         测试顺序表交集                        " << endl << endl << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                 Test SeqList Intersection                 |" << endl;
+    cout << "|                      测试-顺序表-交集                     |" << endl << endl << endl;
 
+    // 声明seq_list_a(顺序表a)
     SeqList<int> seq_list_a(10);
+    // 声明seq_list_b(顺序表b)
     SeqList<int> seq_list_b(10);
 
+    // seq_list_a依次插入1, 2, 3
     seq_list_a.Insert(0, 1);
     seq_list_a.Insert(1, 2);
     seq_list_a.Insert(2, 3);
 
+    // seq_list_b依次插入2, 4, 6
     seq_list_b.Insert(0, 2);
     seq_list_b.Insert(1, 4);
     seq_list_b.Insert(2, 6);
 
+    // 求seq_list_a和seq_list_b的交集, 结果保存在seq_list_a
     SeqListIntersection(seq_list_a, seq_list_b);
 
+    // 打印seq_list_a
     seq_list_a.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
