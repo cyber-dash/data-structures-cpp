@@ -110,21 +110,26 @@ int main() {
 
     // 测试-双向循环链表-获取结点
     CircularDoublyLinkedListTest::TestGetNode();
-     */
 
+    // 测试-循环双向链表-是否为空
 	CircularDoublyLinkedListTest::TestEmpty();
 
-    /*
+    // 测试-循环双向链表-搜索
 	CircularDoublyLinkedListTest::TestSearch();
 
+    // 测试-单向链表-复制构造
 	SinglyLinkListTest::TestCopyConstructor();
 
+    // 测试-单向链表-删除结点
 	SinglyLinkListTest::TestRemove();
 
+    // 测试-单向链表-清空
     SinglyLinkListTest::TestClear();
+     */
 
 	SinglyLinkListTest::TestLocate();
 
+    /*
 	SinglyLinkListTest::TestGetDataAndSetData();
 
     StaticLinkedListTest::TestInsert();

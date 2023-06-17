@@ -20,37 +20,46 @@
   */
 class SinglyLinkListTest {
 public:
-	/*! @brief 测试复制构造函数 */
+    // 测试-单向链表-复制构造
 	static void TestCopyConstructor();
 
-	/*! @brief 测试插入 */
 	static void TestInsert();
-
-	/*! @brief 测试长度 */
 	static void TestLength();
 
-	/*! @brief 测试删除 */
+    // 测试-单向链表-删除结点
 	static void TestRemove();
 
-	/*! @brief 测试清除链表 */
+    // 测试-单向链表-清空
 	static void TestClear();
 
-	/*! @brief 测试查找 */
 	static void TestSearch();
-
-	/*! @brief 测试定位 */
 	static void TestLocate();
-
-	/*! @brief 测试设置和获取数据 */
 	static void TestGetDataAndSetData();
 };
 
 
+/*!
+ * @brief **测试-单向链表-复制构造**
+ * @note
+ * 测试-单向链表-复制构造
+ * -------------------
+ * -------------------
+ *
+ * -------------------
+ * 声明singly_linked_list\n
+ * 依次插入3个结点\n
+ * 打印singly_linked_list\n\n
+ * 使用singly_linked_list构造singly_linked_list_2\n
+ * 打印singly_linked_list_2\n
+ *
+ *
+ * -------------------
+ */
 void SinglyLinkListTest::TestCopyConstructor() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|             Test SinglyLinkList CopyConstructor           |" << endl;
-	cout << "|                      测试单链表复制构造                      |" << endl << endl << endl;
+	cout << "|                   测试-单向链表-复制构造                  |" << endl << endl << endl;
 
 	SinglyLinkedList<string> singly_linked_list;
 
@@ -104,11 +113,27 @@ void SinglyLinkListTest::TestLength() {
 }
 
 
+/*!
+ * @brief **测试-单向链表-删除结点**
+ * @note
+ * 测试-单向链表-删除结点
+ * -------------------
+ * -------------------
+ *
+ * -------------------
+ * 声明singly_linked_list\n\n
+ * 依次插入5个结点\n
+ * 打印singly_linked_list\n\n
+ * 执行3次删除, 打印每次删除结点后的singly_linked_list\n
+ *
+ *
+ * -------------------
+ */
 void SinglyLinkListTest::TestRemove() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                 Test SinglyLinkList Remove                |" << endl;
-	cout << "|                      测试单链表删除结点                      |" << endl << endl << endl;
+	cout << "|                   测试-单向链表-删除结点                  |" << endl << endl << endl;
 
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();
 
@@ -135,11 +160,28 @@ void SinglyLinkListTest::TestRemove() {
 }
 
 
+/*!
+ * @brief **测试-单向链表-清空**
+ * @note
+ * 测试-单向链表-清空
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * 声明singly_linked_list\n\n
+ * 依次插入5个结点\n
+ * 打印singly_linked_list\n\n
+ * 清空\n
+ * 打印singly_linked_list\n
+ *
+ *
+ * ---------------
+ */
 void SinglyLinkListTest::TestClear() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                 Test SinglyLinkList Clear                 |" << endl;
-	cout << "|                        测试单链表清空                       |" << endl << endl << endl;
+	cout << "|                     测试-单向链表-清空                    |" << endl << endl << endl;
 
 	SinglyLinkedList<double>* singly_linked_list = new SinglyLinkedList<double>();
 
@@ -188,7 +230,7 @@ void SinglyLinkListTest::TestLocate() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|               Test SinglyLinkedList GetNode               |" << endl;
-	cout << "|                      测试单链表获取结点                      |" << endl << endl << endl;
+	cout << "|                      测试-单向链表-获取结点                      |" << endl << endl << endl;
 
 	SinglyLinkedList<string>* city_linked_list = new SinglyLinkedList<string>();    // 城市链表city_linked_list
 

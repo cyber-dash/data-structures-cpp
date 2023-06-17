@@ -30,7 +30,11 @@ public:
 
     // 测试-循环双向链表-长度
     static void TestLength();
+
+    // 测试-循环双向链表-是否为空
     static void TestEmpty();
+
+    // 测试-循环双向链表-搜索
     static void TestSearch();
 
     // 测试-双向循环链表-获取结点
@@ -203,7 +207,7 @@ void CircularDoublyLinkedListTest::TestEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|             Test CircularDoublyLinkedList Empty           |" << endl;
-    cout << "|                     测试-循环双向链表-是否为空                     |" << endl << endl << endl;
+    cout << "|                 测试-循环双向链表-是否为空                |" << endl << endl << endl;
 
     // ---------- 1 初始化city_list(城市列表) ----------
 
@@ -239,12 +243,28 @@ void CircularDoublyLinkedListTest::TestEmpty() {
 }
 
 
+/*!
+ * @brief **测试-循环双向链表-搜索**
+ * @note
+ * 测试-循环双向链表-搜索
+ * -------------------
+ * -------------------
+ *
+ * -------------------
+ * 声明double_list\n
+ * 依次插入1,2,3\n
+ * 取1和3对应的结点地址\n
+ * 打印结点地址\n
+ *
+ *
+ * -------------------
+ */
 void CircularDoublyLinkedListTest::TestSearch() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularDoublyLinkedList Search           |" << endl;
-    cout << "|                       测试双向链表查找                    |" << endl << endl << endl;
+    cout << "|                   测试-循环双向链表-搜索                  |" << endl << endl << endl;
 
     CircularDoublyLinkedList<int>* double_list;
     double_list = new CircularDoublyLinkedList<int>();
