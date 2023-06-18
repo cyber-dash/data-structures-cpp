@@ -96,10 +96,10 @@ public:
     friend ostream& operator<< <>(ostream& os, const CircularQueue<TData>& seq_queue);
 
 private:
-    TData* mem_data_;               //!< 元素数组
-    int capacity_;                  //!< 容量
-    int front_;                     //!< 队头索引
-    int rear_;                      //!< 队尾索引
+    TData* mem_data_;               //!< **元素数组**
+    int capacity_;                  //!< **容量**
+    int front_;                     //!< **队头索引**
+    int rear_;                      //!< **队尾索引**
 };
 
 

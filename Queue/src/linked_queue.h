@@ -94,6 +94,9 @@ public:
      *
      * -------
      * 调用Clear()
+     *
+     *
+     * -------
      */
     ~LinkedQueue() { Clear(); }
 
@@ -475,7 +478,7 @@ void LinkedQueue<TData>::Clear() {
 
 
 /*!
- * @brief **重载<<**
+ * @brief **重载<&lt;**
  * @tparam TData 数据项类型模板参数
  * @param os 输出流
  * @param linked_queue 链式队列

@@ -10,51 +10,61 @@
 #define CYBER_DASH_QUEUE_TEST_H
 
 
- /*! @brief 测试获取队列长度 */
+// 测试-链式队列-入队
 void Test_LinkedQueue_Length();
 
-/*! @brief 测试入队 */
+// 测试-链式队列-入队
 void Test_LinkedQueue_EnQueue();
 
-/*! @brief 测试出队 */
+// 测试-链式队列-出队
 void Test_LinkedQueue_DeQueue();
 
-/*! @brief 测试获取队列头/尾节点 */
+// 测试-链式队列-获取队头/获取队尾
 void Test_LinkedQueue_GetFrontAndGetRear();
 
-/*! @brief 测试队列是否为空 */
+// 测试-链式队列-清空
 void Test_LinkedQueue_IsEmpty();
 
-/*! @brief 测试重载<< */
+// 测试-链式队列-operator<<
 void Test_LinkedQueue_Print();
 
-
+// 测试-循环队列-长度
 void Test_CircularQueue_Length();
 
+// 测试-循环队列-入队
 void Test_CircularQueue_EnQueue();
 
+// 测试-循环队列-出队
 void Test_CircularQueue_DeQueue();
 
+// 测试-循环队列-获取队头/获取队尾
 void Test_CircularQueue_GetFrontAndGetRear();
 
-void Test_CircularQueue_IsEmpty();
+// 测试-循环队列-清空
+void Test_CircularQueue_Clear();
 
+// 测试-循环队列-operator<<
 void Test_CircularQueue_Print();
 
-
+// 测试-双端队列-长度
 void Test_DoubleEndedQueue_Length();
 
+// 测试-双端队列-入队
 void Test_DoubleEndedQueue_EnQueue();
 
+// 测试-双端队列-出队
 void Test_DoubleEndedQueue_DeQueue();
 
+// 测试-双端队列-获取队头/获取队尾
 void Test_DoubleEndedQueue_GetFrontAndGetRear();
 
+// 测试-双端队列-清空
 void Test_DoubleEndedQueue_IsEmpty();
 
+// 测试-双端队列-operator<<
 void Test_DoubleEndedQueue_Print();
 
-// 测试-循环队列-队尾出队和队头入队
+// 测试-双端队列-双向Push/双向Pop
 void Test_DoubleEndedQueue_PushAndPop();
 
 

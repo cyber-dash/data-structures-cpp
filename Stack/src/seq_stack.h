@@ -26,6 +26,12 @@ template <typename TData> ostream& operator<<(ostream& os, const SeqStack<TData>
 /*!
  * @brief **顺序栈模板类**
  * @tparam TData 数据项类型模板参数
+ * @note
+ * 顺序栈模板类
+ * ----------
+ * ----------
+ *
+ * ----------
  */
 template <typename TData>
 class SeqStack: public Stack<TData> {

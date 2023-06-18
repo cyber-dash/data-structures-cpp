@@ -106,10 +106,10 @@ public:
     friend ostream& operator<< <>(ostream& os, const DoubleEndedQueue<TData>& seq_queue);
 
 private:
-    TData* mem_data_;               //<! 元素数组
-    int capacity_;                  //<! 容量
-    int front_;                     //<! 队头索引
-    int rear_;                      //<! 队尾索引
+    TData* mem_data_;               //!< **元素数组**
+    int capacity_;                  //!< **容量**
+    int front_;                     //!< **队头索引**
+    int rear_;                      //!< **队尾索引**
 };
 
 
@@ -598,7 +598,7 @@ void DoubleEndedQueue<TData>::Clear() {
 
 
 /*!
- * @brief **重载<<**
+ * @brief **重载<&lt;**
  * @tparam TData 数据项类型模板参数
  * @param os 输出流
  * @param circular_queue 循环队列

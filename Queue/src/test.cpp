@@ -40,16 +40,7 @@ void Test_LinkedQueue_Length() {
 
     // ---------- 2 数据入队队列 ----------
 
-    string old_memory[12] = {
-        "反反复复月光太迷惑", "却还挂在天一边嘲笑我",
-        "过分在意别人给的冷漠", "我该开始为自己而活",
-
-        "轻轻把沉重的过去上锁", "离开曾经被你溺爱的我",
-        "离开那离不开你的懦弱", "继续往前找另一个自我",
-
-        "终于把心痛的过去挣脱", "离开自己看清真假对错",
-        "不是飞蛾没资格扑火", "伤到了底总有清醒时候"
-    };
+    string old_memory[12] = { "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月" };
 
     for (int i = 0; i < 12; i++) {
         cout << "old_memory_queue enqueue: " << old_memory[i] << endl;
@@ -169,12 +160,15 @@ void Test_LinkedQueue_DeQueue() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队头/队尾数据**\n
+ *
+ *
+ * --------------------------
  */
 void Test_LinkedQueue_GetFrontAndGetRear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                  Test Queue Front & Rear                  |" << endl;
-    cout << "|                   测试队列获取队头/获取队尾                  |" << endl << endl << endl;
+    cout << "|              测试-链式队列-获取队头/获取队尾              |" << endl << endl << endl;
 
     LinkedQueue<string> string_queue;
 
@@ -210,12 +204,15 @@ void Test_LinkedQueue_GetFrontAndGetRear() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 清空**\n
+ *
+ *
+ * ---------------
  */
 void Test_LinkedQueue_IsEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                     Test Queue Clear                      |" << endl;
-    cout << "|                        测试清空队列                        |" << endl << endl << endl;
+    cout << "|                   Test LinkedQueue Clear                  |" << endl;
+    cout << "|                     测试-链式队列-清空                    |" << endl << endl << endl;
     LinkedQueue<string> LinkinPark_song_queue;
 
     LinkinPark_song_queue.EnQueue("<In the end>");
@@ -255,12 +252,15 @@ void Test_LinkedQueue_IsEmpty() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
+ *
+ *
+ * ---------------
  */
 void Test_LinkedQueue_Print() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test Operator <<                     |" << endl;
-    cout << "|                      测试队列operator<<                    |" << endl << endl << endl;
+    cout << "|                Test LinkedQueue Operator<<                |" << endl;
+    cout << "|                  测试-链式队列-operator<<                 |" << endl << endl << endl;
 
     LinkedQueue<string> string_queue;
 
@@ -289,13 +289,16 @@ void Test_LinkedQueue_Print() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列长度**\n
+ *
+ *
+ * ---------------
  */
 void Test_CircularQueue_Length() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                  Test CircularQueue Length                     |" << endl;
-    cout << "|                        测试队列Size                        |" << endl << endl << endl;
+    cout << "|                 Test CircularQueue Length                 |" << endl;
+    cout << "|                     测试-循环队列-长度                    |" << endl << endl << endl;
 
     // ---------- 1 声明队列 ----------
 
@@ -303,16 +306,7 @@ void Test_CircularQueue_Length() {
 
     // ---------- 2 数据入队队列 ----------
 
-    string old_memory[12] = {
-            "反反复复月光太迷惑", "却还挂在天一边嘲笑我",
-            "过分在意别人给的冷漠", "我该开始为自己而活",
-
-            "轻轻把沉重的过去上锁", "离开曾经被你溺爱的我",
-            "离开那离不开你的懦弱", "继续往前找另一个自我",
-
-            "终于把心痛的过去挣脱", "离开自己看清真假对错",
-            "不是飞蛾没资格扑火", "伤到了底总有清醒时候"
-    };
+    string old_memory[12] = { "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月" };
 
     for (int i = 0; i < 12; i++) {
         cout << "Old memory enqueue: " << old_memory[i] << endl;
@@ -338,15 +332,19 @@ void Test_CircularQueue_Length() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
+ *
+ * ---------------
  */
 void Test_CircularQueue_EnQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                 Test CircularQueue Enqueue                |" << endl;
-    cout << "|                        测试队列入队                        |" << endl << endl << endl;
+    cout << "|                     测试-循环队列-入队                    |" << endl << endl << endl;
 
+    // 1 声明队列
     CircularQueue<int> int_queue;
 
+    // 2 数据入队队列
     cout << "Enqueue 4 integers." << endl << endl;
 
     int_queue.EnQueue(1);
@@ -354,6 +352,7 @@ void Test_CircularQueue_EnQueue() {
     int_queue.EnQueue(3);
     int_queue.EnQueue(4);
 
+    // 3 打印队列
     cout << int_queue;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -372,15 +371,20 @@ void Test_CircularQueue_EnQueue() {
  * + **2 数据入队队列**\n
  * + **3 队头出队**\n
  * + **4 打印队列**\n
+ *
+ *
+ * ---------------
  */
 void Test_CircularQueue_DeQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                 Test CircularQueue Dequeue                |" << endl;
-    cout << "|                        测试队列出队                        |" << endl << endl << endl;
+    cout << "|                     测试-循环队列-出队                    |" << endl << endl << endl;
 
+    // 1 声明队列
     CircularQueue<double> double_queue;
 
+    // 2 数据入队队列
     cout << "double_queue enqueue 4 numbers." << endl;
 
     double_queue.EnQueue(1.1);
@@ -392,15 +396,16 @@ void Test_CircularQueue_DeQueue() {
 
     cout << "double_queue dequeue." << endl << endl;
 
+    // 3 队头出队
     double frontData;
     double_queue.DeQueue(frontData);
 
     cout << double_queue;
-
     double_queue.DeQueue(frontData);
     double_queue.DeQueue(frontData);
     double_queue.DeQueue(frontData);
 
+    // 4 打印队列
     cout << double_queue;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -418,15 +423,20 @@ void Test_CircularQueue_DeQueue() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队头/队尾数据**\n
+ *
+ *
+ * --------------------------
  */
 void Test_CircularQueue_GetFrontAndGetRear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|               Test CircularQueue Front & Rear                  |" << endl;
-    cout << "|                   测试队列获取队头/获取队尾                  |" << endl << endl << endl;
+    cout << "|               Test CircularQueue Front & Rear             |" << endl;
+    cout << "|               测试-循环队列-获取队头/获取队尾             |" << endl << endl << endl;
 
+    // 1 声明队列
     CircularQueue<string> string_queue;
 
+    // 2 数据入队队列
     string_queue.EnQueue("听我的");
     string_queue.EnQueue("买买买");
     string_queue.EnQueue("买冰箱");
@@ -435,6 +445,7 @@ void Test_CircularQueue_GetFrontAndGetRear() {
     string_queue.EnQueue("我不要你觉得");
     string_queue.EnQueue("我要我觉得");
 
+    // 3 打印队头/队尾数据
     string front_data;
     string rear_data;
 
@@ -458,20 +469,28 @@ void Test_CircularQueue_GetFrontAndGetRear() {
  * ---------------
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
- * + **3 清空**\n
+ * + **3 测试队列是否为空**\n
+ * + **4 清空**\n
+ * + **5 测试队列是否为空**\n
+ *
+ *
+ * ---------------
  */
-void Test_CircularQueue_IsEmpty() {
+void Test_CircularQueue_Clear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                  Test CircularQueue Clear                      |" << endl;
-    cout << "|                        测试清空队列                        |" << endl << endl << endl;
+    cout << "|                  Test CircularQueue Clear                 |" << endl;
+    cout << "|                     测试-循环队列-清空                    |" << endl << endl << endl;
 
+    // 1 声明队列
     CircularQueue<string> LinkinPark_song_queue;
 
+    // 2 数据入队队列
     LinkinPark_song_queue.EnQueue("<In the end>");
     LinkinPark_song_queue.EnQueue("<Crawling>");
     LinkinPark_song_queue.EnQueue("<One more light>");
 
+    // 3 测试队列是否为空
     bool is_empty = LinkinPark_song_queue.IsEmpty();
     if (is_empty) {
         cout << "LinkinPark_song_queue is empty." << endl;
@@ -481,8 +500,10 @@ void Test_CircularQueue_IsEmpty() {
 
     cout << endl << "call function Clear." << endl << endl;
 
+    // 4 清空
     LinkinPark_song_queue.Clear();
 
+    // 5 测试队列是否为空
     is_empty = LinkinPark_song_queue.IsEmpty();
     if (is_empty) {
         cout << "LinkinPark_song_queue is empty." << endl;
@@ -505,15 +526,20 @@ void Test_CircularQueue_IsEmpty() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
+ *
+ *
+ * ---------------
  */
 void Test_CircularQueue_Print() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test Operator <<                     |" << endl;
-    cout << "|                      测试队列operator<<                    |" << endl << endl << endl;
+    cout << "|                Test CircularQueue Operator<<              |" << endl;
+    cout << "|                  测试-循环队列-operator<<                 |" << endl << endl << endl;
 
+    // 1 声明队列
     LinkedQueue<string> string_queue;
 
+    // 2 数据入队队列
     string_queue.EnQueue("听我的");
     string_queue.EnQueue("买买买");
     string_queue.EnQueue("买冰箱");
@@ -522,6 +548,7 @@ void Test_CircularQueue_Print() {
     string_queue.EnQueue("我不要你觉得");
     string_queue.EnQueue("我要我觉得");
 
+    // 3 打印队列
     cout << string_queue;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -529,9 +556,9 @@ void Test_CircularQueue_Print() {
 
 
 /*!
- * @brief **测试-循环队列-长度**
+ * @brief **测试-双端队列-长度**
  * @note
- * 测试-循环队列-长度
+ * 测试-双端队列-长度
  * ---------------
  * ---------------
  *
@@ -539,13 +566,16 @@ void Test_CircularQueue_Print() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列长度**\n
+ *
+ *
+ * ---------------
  */
 void Test_DoubleEndedQueue_Length() {
 
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                  Test DoubleEndedQueue Length                     |" << endl;
-    cout << "|                        测试队列Size                        |" << endl << endl << endl;
+    cout << "|                Test DoubleEndedQueue Length               |" << endl;
+    cout << "|                    测试-双端队列-长度                     |" << endl << endl << endl;
 
     // ---------- 1 声明队列 ----------
 
@@ -553,16 +583,7 @@ void Test_DoubleEndedQueue_Length() {
 
     // ---------- 2 数据入队队列 ----------
 
-    string old_memory[12] = {
-            "反反复复月光太迷惑", "却还挂在天一边嘲笑我",
-            "过分在意别人给的冷漠", "我该开始为自己而活",
-
-            "轻轻把沉重的过去上锁", "离开曾经被你溺爱的我",
-            "离开那离不开你的懦弱", "继续往前找另一个自我",
-
-            "终于把心痛的过去挣脱", "离开自己看清真假对错",
-            "不是飞蛾没资格扑火", "伤到了底总有清醒时候"
-    };
+    string old_memory[12] = { "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月" };
 
     for (int i = 0; i < 12; i++) {
         cout << "Old memory enqueue: " << old_memory[i] << endl;
@@ -578,25 +599,30 @@ void Test_DoubleEndedQueue_Length() {
 
 
 /*!
- * @brief **测试-循环队列-入队**
+ * @brief **测试-双端队列-尾部入队**
  * @note
- * 测试-循环队列-入队
- * ---------------
- * ---------------
+ * 测试-双端队列-尾部入队
+ * -------------------
+ * -------------------
  *
- * ---------------
+ * -------------------
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
+ *
+ *
+ * -------------------
  */
 void Test_DoubleEndedQueue_EnQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test DoubleEndedQueue Enqueue                |" << endl;
-    cout << "|                        测试队列入队                        |" << endl << endl << endl;
+    cout << "|               Test DoubleEndedQueue PushBack              |" << endl;
+    cout << "|                   测试-双端队列-尾部入队                  |" << endl << endl << endl;
 
+    // 1 声明队列
     DoubleEndedQueue<int> int_queue;
 
+    // 2 数据入队队列
     cout << "Enqueue 4 integers." << endl << endl;
 
     int_queue.PushBack(1);
@@ -604,6 +630,7 @@ void Test_DoubleEndedQueue_EnQueue() {
     int_queue.PushBack(3);
     int_queue.PushBack(4);
 
+    // 3 打印队列
     cout << int_queue;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -622,16 +649,20 @@ void Test_DoubleEndedQueue_EnQueue() {
  * + **2 数据入队队列**\n
  * + **3 队头出队**\n
  * + **4 打印队列**\n
+ *
+ *
+ * ---------------
  */
 void Test_DoubleEndedQueue_DeQueue() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test DoubleEndedQueue Dequeue                |" << endl;
-    cout << "|                        测试队列出队                        |" << endl << endl << endl;
+    cout << "|               Test DoubleEndedQueue Dequeue               |" << endl;
+    cout << "|                     测试-双端队列-出队                    |" << endl << endl << endl;
 
-
+    // 1 声明队列
     CircularQueue<double> double_queue;
 
+    // 2 数据入队队列
     cout << "double_queue enqueue 4 numbers." << endl;
 
     double_queue.EnQueue(1.1);
@@ -643,15 +674,16 @@ void Test_DoubleEndedQueue_DeQueue() {
 
     cout << "double_queue dequeue." << endl << endl;
 
+    // 3 队头出队
     double frontData;
     double_queue.DeQueue(frontData);
-
     cout << double_queue;
 
     double_queue.DeQueue(frontData);
     double_queue.DeQueue(frontData);
     double_queue.DeQueue(frontData);
 
+    // 4 打印队列
     cout << double_queue;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -659,9 +691,9 @@ void Test_DoubleEndedQueue_DeQueue() {
 
 
 /*!
- * @brief **测试-循环队列-获取队头/队尾数据**
+ * @brief **测试-双端队列-获取队头/队尾数据**
  * @note
- * 测试-循环队列-获取队头/队尾数据
+ * 测试-双端队列-获取队头/队尾数据
  * --------------------------
  * --------------------------
  *
@@ -669,15 +701,20 @@ void Test_DoubleEndedQueue_DeQueue() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队头/队尾数据**\n
+ *
+ *
+ * --------------------------
  */
 void Test_DoubleEndedQueue_GetFrontAndGetRear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|               Test DoubleEndedQueue Front & Rear                  |" << endl;
-    cout << "|                   测试队列获取队头/获取队尾                  |" << endl << endl << endl;
+    cout << "|             Test DoubleEndedQueue Front & Rear            |" << endl;
+    cout << "|               测试-双端队列-获取队头/获取队尾             |" << endl << endl << endl;
 
+    // 1 声明队列
     DoubleEndedQueue<string> string_queue;
 
+    // 2 数据入队队列
     string_queue.PushBack("听我的");
     string_queue.PushBack("买买买");
     string_queue.PushBack("买冰箱");
@@ -686,6 +723,7 @@ void Test_DoubleEndedQueue_GetFrontAndGetRear() {
     string_queue.PushBack("我不要你觉得");
     string_queue.PushBack("我要我觉得");
 
+    // 3 打印队头/队尾数据
     string front_data;
     string rear_data;
 
@@ -700,29 +738,37 @@ void Test_DoubleEndedQueue_GetFrontAndGetRear() {
 
 
 /*!
- * @brief **测试-循环队列-清空**
+ * @brief **测试-双端队列-清空**
  * @note
- * 测试-循环队列-清空
+ * 测试-双端队列-清空
  * ---------------
  * ---------------
  *
  * ---------------
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
- * + **3 清空**\n
+ * + **3 打印队列是否为空**\n
+ * + **4 清空**\n
+ * + **5 打印队列是否为空**\n
+ *
+ *
+ * ---------------
  */
 void Test_DoubleEndedQueue_IsEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                 Test DoubleEndedQueue Clear                      |" << endl;
-    cout << "|                        测试清空队列                        |" << endl << endl << endl;
+    cout << "|                Test DoubleEndedQueue Clear                |" << endl;
+    cout << "|                    测试-双端队列-清空                     |" << endl << endl << endl;
 
+    // 1 声明队列
     DoubleEndedQueue<string> LinkinPark_song_queue;
 
+    // 2 数据入队队列
     LinkinPark_song_queue.PushBack("<In the end>");
     LinkinPark_song_queue.PushBack("<Crawling>");
     LinkinPark_song_queue.PushBack("<One more light>");
 
+    // 3 打印队列是否为空
     bool is_empty = LinkinPark_song_queue.IsEmpty();
     if (is_empty) {
         cout << "LinkinPark_song_queue is empty." << endl;
@@ -730,10 +776,12 @@ void Test_DoubleEndedQueue_IsEmpty() {
         cout << "LinkinPark_song_queue isn't empty." << endl;
     }
 
+    // 4 清空
     cout << endl << "call function Clear." << endl << endl;
 
     LinkinPark_song_queue.Clear();
 
+    // 5 打印队列是否为空
     is_empty = LinkinPark_song_queue.IsEmpty();
     if (is_empty) {
         cout << "LinkinPark_song_queue is empty." << endl;
@@ -756,15 +804,20 @@ void Test_DoubleEndedQueue_IsEmpty() {
  * + **1 声明队列**\n
  * + **2 数据入队队列**\n
  * + **3 打印队列**\n
+ *
+ *
+ * ---------------
  */
 void Test_DoubleEndedQueue_Print() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test Operator <<                     |" << endl;
-    cout << "|                      测试队列operator<<                    |" << endl << endl << endl;
+    cout << "|              Test DoubleEndedQueue Operator<<             |" << endl;
+    cout << "|                  测试-双端队列-operator<<                 |" << endl << endl << endl;
 
+    // 1 声明队列
     DoubleEndedQueue<string> string_queue;
 
+    // 2 数据入队队列
     string_queue.PushBack("听我的");
     string_queue.PushBack("买买买");
     string_queue.PushBack("买冰箱");
@@ -773,6 +826,7 @@ void Test_DoubleEndedQueue_Print() {
     string_queue.PushBack("我不要你觉得");
     string_queue.PushBack("我要我觉得");
 
+    // 3 打印队列
     cout << string_queue;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -790,15 +844,20 @@ void Test_DoubleEndedQueue_Print() {
  * + **1 声明队列**\n
  * + **2 数据入队队列并打印**\n
  * + **3 部分元素出队并打印**\n
+ *
+ *
+ * ---------------------------
  */
 void Test_DoubleEndedQueue_PushAndPop() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
-    cout << "|                      Test Operator <<                     |" << endl;
-    cout << "|                      测试队列operator<<                    |" << endl << endl << endl;
+    cout << "|              Test DoubleEndedQueue Push & Pop             |" << endl;
+    cout << "|              测试-双端队列-双向Push/双向Pop               |" << endl << endl << endl;
 
+    // 1 声明队列
     DoubleEndedQueue<int> int_queue;
 
+    // 2 数据入队队列并打印
     int_queue.PushBack(4);
     int_queue.PushBack(3);
     int_queue.PushBack(2);
@@ -810,6 +869,7 @@ void Test_DoubleEndedQueue_PushAndPop() {
 
     cout << int_queue;
 
+    // 3 部分元素出队并打印
     int_queue.PopFront();
     int_queue.PopFront();
     int_queue.PopBack();
