@@ -89,8 +89,8 @@ public:
     void Print();
 
 private:
-    LinkedNode<TData>* head_; //!< 链表头结点
-    int length_;              //!< 链表长度
+    LinkedNode<TData>* head_; //!< **链表头结点**
+    int length_;              //!< **链表长度**
 };
 
 
@@ -110,6 +110,9 @@ private:
  * first_<b>(头结点)</b>分配内存, length_<b>(长度)</b>设置为0\n
  * **if* head_内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
@@ -146,6 +149,9 @@ SinglyLinkedList<TData>::SinglyLinkedList(): length_(0) {
  * &emsp; src_list_cur向后移动1位\n
  * &emsp; 链表长度加1\n
  * cur->next置为NULL\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& src_linked_list): length_(0) {
@@ -190,6 +196,9 @@ SinglyLinkedList<TData>::SinglyLinkedList(const SinglyLinkedList<TData>& src_lin
  * -------
  * + **1 清空链表**\n
  * + **2 释放head_指针并置NULL**\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 SinglyLinkedList<TData>::~SinglyLinkedList() {
@@ -222,6 +231,9 @@ SinglyLinkedList<TData>::~SinglyLinkedList() {
  * &emsp;&emsp; pos减1\n\n
  * **III 获取数据项**\n
  * cur->data赋给参数data\n
+ *
+ *
+ * -----------
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::GetData(int pos, TData& data) const {
@@ -268,6 +280,9 @@ bool SinglyLinkedList<TData>::GetData(int pos, TData& data) const {
  * &emsp;&emsp; pos减1\n
  * **III 设置数据项**\n
  * data赋给cur->data\n
+ *
+ *
+ * -----------
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::SetData(int pos, const TData& data) {
@@ -313,6 +328,9 @@ bool SinglyLinkedList<TData>::SetData(int pos, const TData& data) {
  * &emsp;&emsp; 释放cur指向的结点\n
  * &emsp; **III** 调整链表长度\n
  * &emsp;&emsp; 链表长度减1\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 void SinglyLinkedList<TData>::Clear() {
@@ -353,6 +371,9 @@ void SinglyLinkedList<TData>::Clear() {
  * &emsp; **while** cur不为NULL:\n
  * &emsp;&emsp; 屏幕打印cur指向结点的数据项\n
  * &emsp;&emsp; cur指向下一结点cur->next\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 void SinglyLinkedList<TData>::Print() {
@@ -412,6 +433,9 @@ void SinglyLinkedList<TData>::Print() {
  * &emsp; (此时待插入结点插入到cur后边)\n
  * **V&nbsp; 调整链表长度**\n
  * &emsp; 链表长度加1\n
+ *
+ *
+ * ---------
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
@@ -481,6 +505,9 @@ bool SinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * &emsp; (此时待插入结点插入到cur后边)\n
  * **V&nbsp; 调整链表长度**\n
  * &emsp; 链表长度加1\n
+ *
+ *
+ * ---------
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::Insert(int prev_pos, LinkedNode<TData>* node) {
@@ -532,6 +559,9 @@ bool SinglyLinkedList<TData>::Insert(int prev_pos, LinkedNode<TData>* node) {
  * &emsp; 则为空链表\n
  * **else**\n
  * &emsp; 不是空链表\n
+ *
+ *
+ * -----------
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::IsEmpty() const {
@@ -568,6 +598,9 @@ bool SinglyLinkedList<TData>::IsEmpty() const {
  * &emsp;&emsp;&emsp; 搜索到相应数据, 跳出循环\n
  * &emsp;&emsp; cur指向cur->next\n
  * **III 返回搜索结果**\n
+ *
+ *
+ * --------------------
  */
 template<typename TData>
 LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) {
@@ -606,7 +639,7 @@ LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) {
  * 时间复杂度O(1)
  * </span>
  *
- * ---------------
+ * -------
  * **I&nbsp;&nbsp; 非法位置处理**\n
  * &emsp; **if** pos < 1 或者 pos > Length():\n
  * &emsp;&emsp; 返回NULL(范围[1, Length()])\n
@@ -615,6 +648,9 @@ LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) {
  * &emsp; **for loop** 循环pos次:\n
  * &emsp;&emsp; cur指向cur->next\n
  * **III 返回cur**\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 LinkedNode<TData>* SinglyLinkedList<TData>::GetNode(int pos) {
@@ -662,6 +698,9 @@ LinkedNode<TData>* SinglyLinkedList<TData>::GetNode(int pos) {
  * &emsp; 删除待删除结点\n
  * **IV 调整链表长度**\n
  * &emsp; 链表长度减1\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool SinglyLinkedList<TData>::Remove(int target_pos, TData& data) {

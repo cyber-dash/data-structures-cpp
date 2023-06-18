@@ -134,6 +134,9 @@ private:
  * tail_的next(下一结点), 为NULL\n
  * tail_的prev(前一结点), 指向head_\n\n
  * length_设为0\n
+ *
+ *
+ * -----------
  */
 template<typename TData>
 DoublyLinkedList<TData>::DoublyLinkedList() {
@@ -172,6 +175,9 @@ DoublyLinkedList<TData>::DoublyLinkedList() {
  *
  * ------
  * 调用Clear()\n
+ *
+ *
+ * ------
  */
 template<typename TData>
 DoublyLinkedList<TData>::~DoublyLinkedList() {
@@ -194,6 +200,9 @@ DoublyLinkedList<TData>::~DoublyLinkedList() {
  * &emsp; **if** 当前结点data等于参数data :\n
  * &emsp;&emsp; 返回cur\n\n
  * return NULL(未搜索到时返回NULL)\n
+ *
+ *
+ * ----
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::Search(const TData& data) const {
@@ -219,6 +228,9 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::Search(const TData& data) cons
  * 
  * ---------
  * 对head_(头结点)调用SearchInSubListRecursive_, 返回结果\n
+ *
+ *
+ * ---------
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchRecursive(const TData &data) const {
@@ -249,6 +261,9 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchRecursive(const TData &d
  * &emsp; 返回该结点(指针)\n\n
  * + **3 递归搜索**\n\n
  * 对sub_list_first_element->next(子链表首个元素结点的下一结点)递归调用SearchInSubListRecursive_, 返回结果\n
+ *
+ *
+ * --------------
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(DoublyLinkedNode<TData>* sub_list_first_element,
@@ -301,6 +316,9 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::SearchInSubListRecursive_(Doub
  * length_加1\n\n
  * + **5 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
@@ -357,6 +375,9 @@ bool DoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * &emsp; cur指向cur的next结点\n\n
  * + **3 返回结果**\n\n
  * 返回cur\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
@@ -403,6 +424,9 @@ DoublyLinkedNode<TData>* DoublyLinkedList<TData>::GetNode(int pos) const {
  * 取cur->data值, 赋给参数data\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -----------
  */
 template<typename TData>
 bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
@@ -453,6 +477,9 @@ bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
  * data赋给cur->data\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * --------
  */
 template<typename TData>
 bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
@@ -510,6 +537,9 @@ bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
  * length_减1\n\n
  * + **5 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool DoublyLinkedList<TData>::Remove(int target_pos, TData& data) {
@@ -558,6 +588,9 @@ bool DoublyLinkedList<TData>::Remove(int target_pos, TData& data) {
  * ---
  * **for loop** 遍历结点数量次数 :\n
  * &emsp; 删除位置1的结点\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 void DoublyLinkedList<TData>::Clear() {
@@ -589,6 +622,9 @@ void DoublyLinkedList<TData>::Clear() {
  * &emsp; **if** 不是最后一个结点: \n
  * &emsp;&emsp; 打印 "<-->"\n\n
  * &emsp; cur指向cur->next\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 void DoublyLinkedList<TData>::Print() {

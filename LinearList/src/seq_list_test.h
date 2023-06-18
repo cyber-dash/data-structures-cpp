@@ -148,6 +148,9 @@ void SeqListTest::TestCopyConstructor() {
  * 位置2后边插入3\n\n
  * 删除位置3的元素\n\n
  * 打印seq_list\n
+ *
+ *
+ * --------------
  */
 void SeqListTest::TestRemove() {
     cout << endl;
@@ -190,9 +193,9 @@ void SeqListTest::TestCapacity() {
     cout << "|                   Test SeqList Capacity                   |" << endl;
     cout << "|                      测试-顺序表-容量                     |" << endl << endl << endl;
 
-    SeqList<double> seq_list(3);
+    SeqList<double> seq_list(3);                                                    // 声明seq_list(顺序表), 容量设置为3
 
-    cout << "seq_list capacity: " << seq_list.Capacity() << endl << endl;
+    cout << "seq_list capacity: " << seq_list.Capacity() << endl << endl;           // 打印容量
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
@@ -220,9 +223,13 @@ void SeqListTest::TestLength() {
     cout << "|                    Test SeqList Length                    |" << endl;
     cout << "|                      测试-顺序表-长度                     |" << endl << endl << endl;
 
+    // 声明seq_list(顺序表), 容量设置为3
     SeqList<string> seq_list(3);
 
+    // 打印长度
     cout << "seq_list length: " << seq_list.Length() << endl;
+
+    // 插入两个结点
 
     string BJ = "Beijing";
     string SH = "ShangHai";
@@ -230,6 +237,7 @@ void SeqListTest::TestLength() {
     seq_list.Insert(0, BJ);
     seq_list.Insert(1, SH);
 
+    // 打印长度
     cout << "seq_list length: " << seq_list.Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -246,7 +254,6 @@ void SeqListTest::TestLength() {
  * ---------------
  * 声明seq_list(顺序表)\n
  * 打印seq_list是否为空表\n\n
- *
  * 插入1个元素\n
  * 打印seq_list是否为空表\n\n
  *
@@ -259,8 +266,10 @@ void SeqListTest::TestEmpty() {
     cout << "|                     Test SeqList Empty                    |" << endl;
     cout << "|                     测试-顺序表-Empty                     |" << endl << endl << endl;
 
+    // 声明seq_list(顺序表)
     SeqList<string> seq_list(3);
 
+    // 打印seq_list是否为空表
     cout << "Before inserting any string:" << endl;
 
     bool isEmpty = seq_list.IsEmpty();
@@ -270,16 +279,17 @@ void SeqListTest::TestEmpty() {
         cout << "The seq_list isn't empty." << endl;
     }
 
+    // 插入1个元素
     string BJ = "Beijing";
     seq_list.Insert(0, BJ);
 
     cout << endl << "After inserting the string \"Beijing\":" << endl;
 
+    // 打印seq_list是否为空表
     isEmpty = seq_list.IsEmpty();
     if (isEmpty) {
         cout << "The seq_list is empty." << endl;
-    }
-    else {
+    } else {
         cout << "The seq_list isn't empty." << endl;
     }
 

@@ -66,16 +66,21 @@ void SinglyLinkListTest::TestCopyConstructor() {
 	cout << "|             Test SinglyLinkList CopyConstructor           |" << endl;
 	cout << "|                   测试-单向链表-复制构造                  |" << endl << endl << endl;
 
+    // 声明singly_linked_list
 	SinglyLinkedList<string> singly_linked_list;
 
+    // 依次插入3个结点
 	singly_linked_list.Insert(0, "Beijing");
 	singly_linked_list.Insert(1, "Shanghai");
 	singly_linked_list.Insert(2, "Guangzhou");
 
+    // 打印singly_linked_list
     singly_linked_list.Print();
 
+    // 使用singly_linked_list构造singly_linked_list_2
 	SinglyLinkedList<string> singly_linked_list_2 = singly_linked_list;
 
+    // 打印singly_linked_list_2
     singly_linked_list_2.Print();
 
 	cout << "-------------------------------------------------------------" << endl << endl;
@@ -140,25 +145,29 @@ void SinglyLinkListTest::TestRemove() {
 	cout << "|                 Test SinglyLinkList Remove                |" << endl;
 	cout << "|                   测试-单向链表-删除结点                  |" << endl << endl << endl;
 
+    // 声明singly_linked_list
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();
 
+    // 依次插入5个结点
 	singly_linked_list->Insert(0, "Beijing");
 	singly_linked_list->Insert(1, "Shanghai");
 	singly_linked_list->Insert(2, "Guangzhou");
 	singly_linked_list->Insert(3, "Shenzhen");
 	singly_linked_list->Insert(4, "Caoxian");
 
+    // 打印singly_linked_list
 	cout << "删除前的链表:" << endl;
     singly_linked_list->Print();
 
+    // 执行3次删除, 打印每次删除结点后的singly_linked_list
 	cout << "测试删除功能:" << endl;
 
-	string remove_str;
-	singly_linked_list->Remove(1, remove_str);
+	string target_str;
+	singly_linked_list->Remove(1, target_str);
     singly_linked_list->Print();
-	singly_linked_list->Remove(4, remove_str);
+	singly_linked_list->Remove(4, target_str);
     singly_linked_list->Print();
-	singly_linked_list->Remove(2, remove_str);
+	singly_linked_list->Remove(2, target_str);
     singly_linked_list->Print();
 
 	cout << "-------------------------------------------------------------" << endl << endl;
@@ -188,18 +197,23 @@ void SinglyLinkListTest::TestClear() {
 	cout << "|                 Test SinglyLinkList Clear                 |" << endl;
 	cout << "|                     测试-单向链表-清空                    |" << endl << endl << endl;
 
+    // 声明singly_linked_list
 	SinglyLinkedList<double>* singly_linked_list = new SinglyLinkedList<double>();
 
+    // 依次插入5个结点
 	singly_linked_list->Insert(0, 135.34);
 	singly_linked_list->Insert(1, 305.43);
 	singly_linked_list->Insert(2, 304.83);
 	singly_linked_list->Insert(3, 405.31);
 	singly_linked_list->Insert(4, 804.54);
 
+    // 打印singly_linked_list
     singly_linked_list->Print();
 
+    // 清空
     singly_linked_list->Clear();
 
+    // 打印singly_linked_list
     singly_linked_list->Print();
 
 	cout << "-------------------------------------------------------------" << endl << endl;
@@ -253,17 +267,21 @@ void SinglyLinkListTest::TestGetNode() {
 	cout << "|               Test SinglyLinkedList GetNode               |" << endl;
 	cout << "|                  测试-单向链表-获取结点                   |" << endl << endl << endl;
 
+    // 声明city_linked_list
 	SinglyLinkedList<string>* city_linked_list = new SinglyLinkedList<string>();    // 城市链表city_linked_list
 
+    // 依次插入5个城市
 	city_linked_list->Insert(0, "Beijing");     // 位置1插入北京
 	city_linked_list->Insert(1, "Shanghai");    // 位置2插入上海
 	city_linked_list->Insert(2, "Guangzhou");   // 位置3插入广州
 	city_linked_list->Insert(3, "Shenzhen");    // 位置4插入深圳
 	city_linked_list->Insert(4, "Caoxian");     // 位置5插入曹县
 
+    // 获取位置1和位置2的城市
 	LinkedNode<string>* pos_1_node = city_linked_list->GetNode(1);
 	LinkedNode<string>* pos_2_node = city_linked_list->GetNode(2);
 
+    // 打印结点信息
 	cout << "pos_1_node->data: " << pos_1_node->data << endl;
 	cout << "pos_2_node->data: " << pos_2_node->data << endl;
 
@@ -294,18 +312,23 @@ void SinglyLinkListTest::TestGetDataAndSetData() {
 	cout << "|            Test SinglyLinkList GetDataAndSetData          |" << endl;
 	cout << "|                测试-单向链表-设置和获取数据               |" << endl << endl << endl;
 
+    // 声明singly_linked_list
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();
 
+    // 依次插入3个结点
 	singly_linked_list->Insert(0, "Beijing");
 	singly_linked_list->Insert(1, "Shanghai");
 	singly_linked_list->Insert(2, "Guangzhou");
 
+    // 获取第2个结点并打印
 	string city;
 	singly_linked_list->GetData(2, city);
 	cout << city << endl;
 
+    // 将第2个结点设置成"Shenzhen"
 	singly_linked_list->SetData(2, "Shenzhen");
 
+    // 打印链表
     singly_linked_list->Print();
 
 

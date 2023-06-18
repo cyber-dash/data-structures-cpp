@@ -50,6 +50,12 @@ struct CircularDoublyLinkedNode {
 /*!
  * @brief **循环双向链表模板类**
  * @tparam TData 数据项类型模板参数
+ * @note
+ * 循环双向链表模板类
+ * ---------------
+ * ---------------
+ *
+ * ---------------
  */
 template<typename TData>
 class CircularDoublyLinkedList: public LinearList<TData> {
@@ -129,6 +135,9 @@ private:
  * &emsp; cur_target_node置NULL\n\n
  * + **2 调整长度**\n\n
  * length_设置为0\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 void CircularDoublyLinkedList<TData>::Clear() {
@@ -159,6 +168,9 @@ void CircularDoublyLinkedList<TData>::Clear() {
  *
  * -------
  * 调用Clear()函数\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 CircularDoublyLinkedList<TData>::~CircularDoublyLinkedList() {
@@ -181,6 +193,9 @@ CircularDoublyLinkedList<TData>::~CircularDoublyLinkedList() {
  * **if** cur->data等于参数data :\n
  * &emsp; 返回cur\n\n
  * 返回NULL(没有对应结点)\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const TData& data) {
@@ -224,6 +239,9 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::Search(const T
  * &emsp;&emsp; cur指向cur->next\n\n
  * + **3 返回结果** \n\n
  * 返回cur\n
+ *
+ *
+ * --------------
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirection(int step, int direction) {
@@ -268,6 +286,9 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNodeByDirec
  * + **2 调用GetDataByDirection**\n\n
  * 计算step = pos - 1\n
  * 按照FORWARD_DIRECTION方向, 调用GetDataByDirection\n
+ *
+ *
+ * -------------------
  */
 template<typename TData>
 CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNode(int pos) {
@@ -328,6 +349,9 @@ CircularDoublyLinkedNode<TData>* CircularDoublyLinkedList<TData>::GetNode(int po
  * length_加1\n\n
  * + **5 返回**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
@@ -427,6 +451,9 @@ bool CircularDoublyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * 链表长度减1\n\n
  * + **5 返回结果**\n\n
  * 返回true\n
+ *
+ *
+ * -------------------
  */
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::RemoveByDirection(int step, TData &data, int direction) {
@@ -500,6 +527,9 @@ bool CircularDoublyLinkedList<TData>::RemoveByDirection(int step, TData &data, i
  * ------
  * 初始化step等于target_pos - 1\n
  * 调用RemoveByDirection, 返回执行结果\n
+ *
+ *
+ * ------
  */
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::Remove(int target_pos, TData& data) {
@@ -538,6 +568,9 @@ bool CircularDoublyLinkedList<TData>::Remove(int target_pos, TData& data) {
  * cur->data赋给参数data\n\n
  * + **5 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::GetData(int pos, TData& data) const {
@@ -596,6 +629,9 @@ bool CircularDoublyLinkedList<TData>::GetData(int pos, TData& data) const {
  * 参数data赋给cur->data\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 bool CircularDoublyLinkedList<TData>::SetData(int pos, const TData& data) {
@@ -646,6 +682,9 @@ bool CircularDoublyLinkedList<TData>::SetData(int pos, const TData& data) {
  * **for loop** 从位置1开始, prev方向遍历链表 :\n
  * &emsp; 打印当前结点data和';'\n
  * &emsp; cur指向前一结点\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 void CircularDoublyLinkedList<TData>::Print() {

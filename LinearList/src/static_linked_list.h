@@ -137,6 +137,9 @@ private:
  * HEAD结点的next指向HEAD<b>(0, 自身)</b>\n
  * **for loop** 数组索引从1到capacity :\n
  * &emsp; 当前数组元素的next值为NONE<b>(-1, 表示该数组元素不在静态链表中使用)</b>\n
+ *
+ *
+ * ------------
  */
 template <typename TData>
 StaticLinkedList<TData>::StaticLinkedList(int capacity) {
@@ -197,6 +200,9 @@ StaticLinkedList<TData>::StaticLinkedList(int capacity) {
  * cur_index的值赋给index\n
  * + **4 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ----------------------
  */
 template<typename TData>
 bool StaticLinkedList<TData>::GetIndexByPos_(int pos, int& index) const {
@@ -252,6 +258,9 @@ bool StaticLinkedList<TData>::GetIndexByPos_(int pos, int& index) const {
  * &emsp; cur_pos加1\n\n
  * + **3 退出函数**\n
  * 返回false\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
@@ -320,6 +329,9 @@ bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
  * 链表长度+1\n\n
  * + **6 返回结果**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template <typename TData>
 bool StaticLinkedList<TData>::Insert(int pos, const TData& data) {
@@ -398,6 +410,9 @@ bool StaticLinkedList<TData>::Insert(int pos, const TData& data) {
  * \n
  * + **4 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool StaticLinkedList<TData>::Remove(int pos, TData& data) {
@@ -454,6 +469,9 @@ bool StaticLinkedList<TData>::Remove(int pos, TData& data) {
  * &emsp; 打印当前结点的data\n
  * &emsp; **if** 不是最后一个结点 :\n
  * &emsp;&emsp; 打印"-->"(表示next指向)\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 void StaticLinkedList<TData>::Print() const {
@@ -505,6 +523,9 @@ void StaticLinkedList<TData>::Print() const {
  * mem_data_指向新内存\n\n
  * + **5 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ---
  */
 template <typename TData>
 bool StaticLinkedList<TData>::Extend_(int increased_capacity) {
@@ -563,6 +584,9 @@ bool StaticLinkedList<TData>::Extend_(int increased_capacity) {
  * &emsp;&emsp; 返回true\n\n
  * + **3 退出函数**\n
  * 返回false(失败情况处理)\n
+ *
+ *
+ * ------------------
  */
 template <typename TData>
 bool StaticLinkedList<TData>::GetInsertionIndex_(int& index) const {

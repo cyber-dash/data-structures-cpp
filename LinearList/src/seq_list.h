@@ -144,6 +144,9 @@ SeqList<TData>::SeqList(int capacity) : capacity_(capacity), last_index_(-1) {
  * &emsp; 声明变量cur_data\n
  * seq_list位置pos的变量赋给cur_data\n\n
  * cur_data赋给this->mem_data_[pos - 1]\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
@@ -203,6 +206,9 @@ SeqList<TData>::SeqList(const SeqList<TData>& seq_list) {
  * capacity_调整\n
  * + **6 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 bool SeqList<TData>::ResetCapacity(int capacity) {
@@ -255,6 +261,9 @@ bool SeqList<TData>::ResetCapacity(int capacity) {
  * &emsp; **if** 当前元素等于参数data :\n
  * &emsp;&emsp; 返回i + 1\n
  * 返回0\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 int SeqList<TData>::Search(const TData& data) const {
@@ -288,6 +297,9 @@ int SeqList<TData>::Search(const TData& data) const {
  * mem_data_[pos - 1]赋给data\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 bool SeqList<TData>::GetData(int pos, TData& data) const {
@@ -328,6 +340,8 @@ bool SeqList<TData>::GetData(int pos, TData& data) const {
  * + **3 退出函数**\n
  * 返回true\n
  *
+ *
+ * ----------
  */
 template<typename TData>
 bool SeqList<TData>::SetData(int pos, const TData& data) {
@@ -432,6 +446,9 @@ bool SeqList<TData>::Insert(int prev_pos, const TData& data) {
  * last_index_减1\n
  * + **4 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ------
  */
 template<typename TData>
 bool SeqList<TData>::Remove(int target_pos, TData& data) {
@@ -477,6 +494,9 @@ bool SeqList<TData>::Remove(int target_pos, TData& data) {
  * **if** last_index_为-1 :\n
  * &emsp; 返回true\n
  * 返回false\n
+ *
+ *
+ * -------------
  */
 template<typename TData>
 bool SeqList<TData>::IsEmpty() const {
@@ -501,6 +521,9 @@ bool SeqList<TData>::IsEmpty() const {
  * **if** last_index_为size_ - 1 :\n
  * &emsp; 返回true\n
  * 返回false\n
+ *
+ *
+ * -----------
  */
 template<typename TData>
 bool SeqList<TData>::IsFull() const {
@@ -534,6 +557,9 @@ bool SeqList<TData>::IsFull() const {
  * &emsp; curData赋给this的当前位置元素\n\n
  * + **3 退出函数**\n
  * 返回*this\n
+ *
+ *
+ * ----
  */
 template<typename TData>
 SeqList<TData>& SeqList<TData>::operator=(const SeqList<TData>& seq_list) {
@@ -578,6 +604,9 @@ SeqList<TData>& SeqList<TData>::operator=(const SeqList<TData>& seq_list) {
  * + **2 按顺序打印**\n
  * **for loop** 遍历mem_data_的数据项部分 :\n
  * &emsp; 打印当前元素\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 void SeqList<TData>::Print() {

@@ -102,8 +102,10 @@ void CircularSinglyLinkedListTest::TestClear() {
     cout << "|             Test CircularSinglyLinkedList Clear           |" << endl;
     cout << "|                    测试-循环单链表-清空                   |" << endl << endl << endl;
 
+    // 初始化band_list(乐队链表)
     CircularSinglyLinkedList<string>* band_list = new CircularSinglyLinkedList<string>();
 
+    // 依次插入5个乐队
     string band1("The Script");
     string band2("Linkin Park");
     string band3("Queen");
@@ -116,11 +118,14 @@ void CircularSinglyLinkedListTest::TestClear() {
     band_list->Insert(0, band4);    // 插入"Coldplay"作为首结点
     band_list->Insert(0, band5);    // 插入"黑豹"作为首结点
 
+    // 打印band_list
     cout << "乐队链表:" << endl;
     band_list->Print();
 
+    // 清空乐队
     band_list->Clear();
 
+    // 打印band_list
     cout << "清空后的乐队链表:" << endl;
     band_list->Print();
 
@@ -150,8 +155,10 @@ void CircularSinglyLinkedListTest::TestRemove() {
     cout << "|            Test CircularSinglyLinkedList Remove           |" << endl;
     cout << "|                  测试-循环单链表-删除结点                 |" << endl << endl << endl;
 
+    // 声明singer_list(歌手链表)
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
 
+    // 依次插入5个歌手
     string singer1("Madonna");
     string singer2("张雨生");
     string singer3("杨坤");
@@ -163,30 +170,33 @@ void CircularSinglyLinkedListTest::TestRemove() {
     singer_list->Insert(2, singer3);
     singer_list->Insert(3, singer4);
     singer_list->Insert(4, singer5);
+
+    // 打印singer_list
     cout<<"歌手链表:"<<endl;
     singer_list->Print();
 
     cout<<endl;
 
-    string data;
+    // 依次删除某个歌手并打印singer_list, 执行5次
+    string target_data;
     cout << "删除当前第2个结点: " << singer_list->GetNode(2)->data << endl;
-    singer_list->Remove(2, data);
+    singer_list->Remove(2, target_data);
     singer_list->Print();
 
     cout << "删除当前第4个结点: " << singer_list->GetNode(4)->data << endl;
-    singer_list->Remove(4, data);
+    singer_list->Remove(4, target_data);
     singer_list->Print();
 
     cout << "删除当前第2个结点: " << singer_list->GetNode(1)->data << endl;
-    singer_list->Remove(1, data);
+    singer_list->Remove(1, target_data);
     singer_list->Print();
 
     cout << "删除当前第1个结点: " << singer_list->GetNode(2)->data << endl;
-    singer_list->Remove(1, data);
+    singer_list->Remove(1, target_data);
     singer_list->Print();
 
     cout << "删除当前第1个(唯一1个)结点: " << singer_list->GetNode(1)->data << endl;
-    singer_list->Remove(1, data);
+    singer_list->Remove(1, target_data);
     singer_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -215,8 +225,10 @@ void CircularSinglyLinkedListTest::TestLength() {
     cout << "|            Test CircularSinglyLinkedList Length           |" << endl;
     cout << "|                    测试-循环单链表-长度                   |" << endl << endl << endl;
 
+    // 初始化singer_list(歌手链表)
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
 
+    // 依次插入5个歌手
     string singer1("Madonna");
     string singer2("张雨生");
     string singer3("杨坤");
@@ -228,11 +240,14 @@ void CircularSinglyLinkedListTest::TestLength() {
     singer_list->Insert(2, singer3);
     singer_list->Insert(3, singer4);
     singer_list->Insert(4, singer5);
+
+    // 打印singer_list
     cout<<"歌手链表:"<<endl;
     singer_list->Print();
 
     cout<<endl;
 
+    // 打印singer_list长度
     string data;
     cout << "链表长度: " << singer_list->Length()<< endl;
 
@@ -250,6 +265,7 @@ void CircularSinglyLinkedListTest::TestLength() {
  * -----------------
  * 初始化singer_list(歌手链表)\n\n
  * 依次插入5个歌手\n
+ * 打印singer_list\n
  * 打印"张雨生"结点和"莫文蔚"结点的地址\n
  *
  *
@@ -261,8 +277,10 @@ void CircularSinglyLinkedListTest::TestSearch() {
     cout << "|            Test CircularSinglyLinkedList Search           |" << endl;
     cout << "|                    测试-循环单链表-搜索                   |" << endl << endl << endl;
 
+    // 初始化singer_list(歌手链表)
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
 
+    // 依次插入5个歌手
     string singer1("Madonna");
     string singer2("张雨生");
     string singer3("杨坤");
@@ -274,11 +292,14 @@ void CircularSinglyLinkedListTest::TestSearch() {
     singer_list->Insert(2, singer3);
     singer_list->Insert(3, singer4);
     singer_list->Insert(4, singer5);
+
+    // 打印singer_list
     cout<<"歌手链表:"<<endl;
     singer_list->Print();
 
     cout<<endl;
 
+    // 打印"张雨生"结点和"莫文蔚"结点的地址
     string data;
     cout << "张雨生结点的地址: " << singer_list->Search(singer2)<< endl;
     cout << "莫文蔚结点的地址: " << singer_list->Search(singer5)<< endl;

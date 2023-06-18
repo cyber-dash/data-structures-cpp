@@ -37,7 +37,7 @@ public:
     // 测试-循环双向链表-搜索
     static void TestSearch();
 
-    // 测试-双向循环链表-获取结点
+    // 测试-循环双向链表-获取结点
     static void TestGetNode();
 };
 
@@ -63,8 +63,10 @@ void CircularDoublyLinkedListTest::TestInsert() {
     cout << "|       Test CircularDoublyLinkedList InsertByDirection     |" << endl;
     cout << "|                测试-循环双向链表-按方向插入               |" << endl << endl << endl;
 
+    // 声明band_list(乐队链表)
     CircularDoublyLinkedList<string>* band_list = new CircularDoublyLinkedList<string>();
 
+    // 依次插入5个乐队
     string band1("The Script");
     string band2("Linkin Park");
     string band3("Starship");
@@ -77,6 +79,7 @@ void CircularDoublyLinkedListTest::TestInsert() {
     band_list->Insert(0, band4);
     band_list->Insert(0, band5);
 
+    // 打印band_list
     band_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -105,8 +108,10 @@ void CircularDoublyLinkedListTest::TestRemove() {
     cout << "|       Test CircularDoublyLinkedList RemoveByDirection     |" << endl;
     cout << "|                测试-循环双向链表-按方向删除               |" << endl << endl << endl;
 
+    // 声明city_list(城市链表)
     CircularDoublyLinkedList<string>* city_list = new CircularDoublyLinkedList<string>();
 
+    // 依次插入6个城市
     city_list->Insert(0, "北京");
     city_list->Insert(1, "上海");
     city_list->Insert(2, "广州");
@@ -114,18 +119,20 @@ void CircularDoublyLinkedListTest::TestRemove() {
     city_list->Insert(4, "成都");
     city_list->Insert(5, "珠海");
 
+    // 打印city_list
     city_list->Print();
 
-    string delete_item;
 
+    // 测试2次删除结点
+    string target_city;
     int step = 2;
-    city_list->RemoveByDirection(step, delete_item, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
+    city_list->RemoveByDirection(step, target_city, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
 
     cout << endl << "向后删除, 首结点城市" << step << "个结点之后的城市: " << endl;
     city_list->Print();
 
     step = 0;
-    city_list->RemoveByDirection(step, delete_item, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
+    city_list->RemoveByDirection(step, target_city, CircularDoublyLinkedList<int>::FORWARD_DIRECTION);
 
     cout << "向后删除, 首结点城市" << step << "个结点之后的城市: " << endl;
     city_list->Print();
@@ -156,13 +163,15 @@ void CircularDoublyLinkedListTest::TestLength() {
     cout << "|             Test CircularDoublyLinkedList Length          |" << endl;
     cout << "|                   测试-循环双向链表-长度                  |" << endl << endl << endl;
 
-    CircularDoublyLinkedList<int>* double_list;
-    double_list = new CircularDoublyLinkedList<int>();
+    // 声明double_list
+    CircularDoublyLinkedList<int>* double_list = new CircularDoublyLinkedList<int>();
 
+    // 依次插入3个结点
     double_list->Insert(0, 1);
     double_list->Insert(1, 2);
     double_list->Insert(2, 3);
 
+    // 打印double_list长度
     cout << "双向链表长度: " << double_list->Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -266,16 +275,19 @@ void CircularDoublyLinkedListTest::TestSearch() {
     cout << "|            Test CircularDoublyLinkedList Search           |" << endl;
     cout << "|                   测试-循环双向链表-搜索                  |" << endl << endl << endl;
 
-    CircularDoublyLinkedList<int>* double_list;
-    double_list = new CircularDoublyLinkedList<int>();
+    // 声明double_list
+    CircularDoublyLinkedList<int>* double_list = new CircularDoublyLinkedList<int>();
 
+    // 依次插入1,2,3
     double_list->Insert(0, 1);
     double_list->Insert(1, 2);
     double_list->Insert(2, 3);
 
+    // 取1和3对应的结点地址
     CircularDoublyLinkedNode<int>* node_1 = double_list->Search(1);
     CircularDoublyLinkedNode<int>* node_3 = double_list->Search(3);
 
+    // 打印结点地址
     cout << "The address of node with data 1: " << 1 << " is " << node_1 << endl;
     cout << "The address of node with data 3: " << 1 << " is " << node_3 << endl;
 
@@ -284,9 +296,9 @@ void CircularDoublyLinkedListTest::TestSearch() {
 
 
 /*!
- * @brief **测试-双向循环链表-获取结点**
+ * @brief **测试-循环双向链表-获取结点**
  * @note
- * 测试-双向循环链表-获取结点
+ * 测试-循环双向链表-获取结点
  * ----------------------
  * ----------------------
  *
@@ -303,10 +315,12 @@ void CircularDoublyLinkedListTest::TestGetNode() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularDoublyLinkedList GetNode          |" << endl;
-    cout << "|                 测试-双向循环链表-获取结点                |" << endl << endl << endl;
+    cout << "|                 测试-循环双向链表-获取结点                |" << endl << endl << endl;
 
+    // 声明circular_doubly_linked_list
     CircularDoublyLinkedList<int>* circular_doubly_linked_list = new CircularDoublyLinkedList<int>();
 
+    // 依次插入6个结点
     circular_doubly_linked_list->Insert(0, 1);
     circular_doubly_linked_list->Insert(1, 2);
     circular_doubly_linked_list->Insert(2, 3);
@@ -315,11 +329,13 @@ void CircularDoublyLinkedListTest::TestGetNode() {
     circular_doubly_linked_list->Insert(5, 5);
     circular_doubly_linked_list->Insert(6, 7);
 
+    // 取位置1, 4, 7, 0的结点
     CircularDoublyLinkedNode<int>* pos1_node = circular_doubly_linked_list->GetNode(1);
     CircularDoublyLinkedNode<int>* pos4_node = circular_doubly_linked_list->GetNode(4);
     CircularDoublyLinkedNode<int>* pos7_node = circular_doubly_linked_list->GetNode(7);
     CircularDoublyLinkedNode<int>* pos0_node = circular_doubly_linked_list->GetNode(0);
 
+    // 打印结点的信息
     cout << "Get position 1 node, node->data: " << pos1_node->data << endl;
     cout << "Get position 4 node, node->data: " << pos4_node->data << endl;
     cout << "Get position 7 node, node->data: " << pos7_node->data << endl;

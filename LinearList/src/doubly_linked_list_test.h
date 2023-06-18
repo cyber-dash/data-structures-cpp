@@ -206,14 +206,17 @@ void DoublyLinkedListTest::TestLength() {
     cout << "|                Test DoublyLinkedList Length               |" << endl;
     cout << "|                     测试-双向链表-长度                    |" << endl << endl << endl;
 
+    // 初始化number_list(整形链表)
     DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();
 
+    // 依次插入1至5
     for (int i = 1; i <= 5; i++) {
         int pos = i - 1;
         int data = i;
         number_list->Insert(pos, data);
     }
 
+    // 打印链表长度
     cout << "链表长度: " << number_list->Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -243,18 +246,23 @@ void DoublyLinkedListTest::TestClear() {
     cout << "|                 Test DoublyLinkedList Clear               |" << endl;
     cout << "|                     测试-双向链表-清空                    |" << endl << endl << endl;
 
+    // 初始化number_list
     DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();
 
+    // 依次插入1至5
     for (int i = 1; i <= 5; i++) {
         int pos = i - 1;
         int data = i;
         number_list->Insert(pos, data);
     }
 
+    // 打印链表长度
     cout << "清空前链表长度: " << number_list->Length() << endl;
 
+    // 清空链表
     number_list->Clear();
 
+    // 打印链表长度
     cout << "清空后链表长度: " << number_list->Length() << endl;
 
     cout << "-------------------------------------------------------------" << endl << endl;

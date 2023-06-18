@@ -55,8 +55,10 @@ void StaticLinkedListTest::TestInsert() {
     cout << "|                Test StaticLinkedList Insert               |" << endl;
     cout << "|                     测试-静态链表-插入                    |" << endl << endl << endl;
 
+    // 声明static_link_list
     StaticLinkedList<int>* static_link_list = new StaticLinkedList<int>(1);
 
+    // 插入7个结点
     static_link_list->Insert(0, 2);
     static_link_list->Insert(1, 8);
     static_link_list->Insert(2, 5);
@@ -64,6 +66,7 @@ void StaticLinkedListTest::TestInsert() {
     static_link_list->Insert(0, 4);
     static_link_list->Insert(0, 1);
 
+    // 打印static_link_list
     static_link_list->Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
@@ -92,8 +95,10 @@ void StaticLinkedListTest::TestSearch() {
     cout << "|                Test StaticLinkedList Search               |" << endl;
     cout << "|                     测试-静态链表-搜索                    |" << endl << endl << endl;
 
+    // 声明static_link_list
     StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>(1);
 
+    // 插入6个结点
     string str1("Cyber");
     string str2("Dash");
     string str3("Yuan");
@@ -108,10 +113,12 @@ void StaticLinkedListTest::TestSearch() {
     static_link_list->Insert(4, str5);
     static_link_list->Insert(5, str6);
 
+    // 打印static_link_list
     static_link_list->Print();
 
     cout << endl;
 
+    // 搜索3个字符串在链表中的位置, 并打印
     int pos = 0;
     string search_str_1("Yuan");
     string search_str_2("Hello");
@@ -171,8 +178,10 @@ void StaticLinkedListTest::TestRemove() {
     cout << "|                Test StaticLinkedList Remove               |" << endl;
     cout << "|                     测试-静态链表-删除                    |" << endl << endl << endl;
 
+    // 声明static_link_list
     StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>(1);
 
+    // 插入6个结点
     string str1("Cyber");
     string str2("Dash");
     string str3("Yuan");
@@ -189,11 +198,13 @@ void StaticLinkedListTest::TestRemove() {
 
     static_link_list->Print();
 
-    string str;
+    // 删除2个结点
+    string target_str;
 
-    static_link_list->Remove(2, str);
-    static_link_list->Remove(1, str);
+    static_link_list->Remove(2, target_str);
+    static_link_list->Remove(1, target_str);
 
+    // 打印static_link_list
     cout << "删除前两个节点后:" << endl;
 
     static_link_list->Print();

@@ -125,6 +125,9 @@ private:
  * last_置NULL\n\n
  * + **4 长度调整**\n\n
  * length_设置为0\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 void CircularSinglyLinkedList<TData>::Clear() {
@@ -173,6 +176,9 @@ void CircularSinglyLinkedList<TData>::Clear() {
  * &emsp;&emsp; 返回cur\n\n
  * &emsp; cur指向cur->next\n\n
  * 返回NULL\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::Search(const TData& data) {
@@ -200,6 +206,9 @@ CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::Search(const T
  *
  * -------
  * 调用Clear()\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 CircularSinglyLinkedList<TData>::~CircularSinglyLinkedList() {
@@ -232,6 +241,9 @@ CircularSinglyLinkedList<TData>::~CircularSinglyLinkedList() {
  * &emsp; cur指向自身next结点\n\n
  * + **4 返回结点指针**\n\n
  * 返回cur\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int pos) {
@@ -302,6 +314,9 @@ CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int po
  * 链表长度加1\n\n
  * + **6退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ------
  */
 template<typename TData>
 bool CircularSinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
@@ -404,6 +419,9 @@ bool CircularSinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * 链表长度减1\n\n
  * + **5 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ------------
  */
 template<typename TData>
 bool CircularSinglyLinkedList<TData>::Remove(int target_pos, TData& data) {
@@ -491,6 +509,9 @@ bool CircularSinglyLinkedList<TData>::Remove(int target_pos, TData& data) {
  * &emsp;&emsp; 打印", "\n
  * &emsp; cur指向cur->next\n\n
  * 打印 " }"\n
+ *
+ *
+ * ---
  */
 template<typename TData>
 void CircularSinglyLinkedList<TData>::Print() {
@@ -543,6 +564,9 @@ void CircularSinglyLinkedList<TData>::Print() {
  * cur->data赋给参数data\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * --------
  */
 template<typename TData>
 bool CircularSinglyLinkedList<TData>::GetData(int pos, TData& data) const {
@@ -593,6 +617,9 @@ bool CircularSinglyLinkedList<TData>::GetData(int pos, TData& data) const {
  * 参数data赋给cur->data\n\n
  * + **4 退出函数**\n
  * 返回true\n
+ *
+ *
+ * --------
  */
 template<typename TData>
 bool CircularSinglyLinkedList<TData>::SetData(int pos, const TData& data) {
