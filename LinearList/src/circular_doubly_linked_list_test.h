@@ -18,7 +18,7 @@ using namespace std;
 
 
 /*!
- * @brief 双向链表测试类
+ * @brief **循环双向链表测试类**
  */
 class CircularDoublyLinkedListTest {
 public:

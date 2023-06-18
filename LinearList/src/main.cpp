@@ -33,6 +33,7 @@ using namespace std;
 int main() {
 
     /*
+     */
     // 测试-顺序表-插入
 	SeqListTest::TestInsert();
 
@@ -125,18 +126,22 @@ int main() {
 
     // 测试-单向链表-清空
     SinglyLinkListTest::TestClear();
-     */
 
-	SinglyLinkListTest::TestLocate();
+    // 测试-单向链表-获取结点
+    SinglyLinkListTest::TestGetNode();
 
-    /*
+    // 测试-单向链表-设置和获取数据
 	SinglyLinkListTest::TestGetDataAndSetData();
 
+    // 测试-静态链表-插入
     StaticLinkedListTest::TestInsert();
 
+    // 测试-静态链表-搜索
     StaticLinkedListTest::TestSearch();
 
+    // 测试-静态链表-删除
     StaticLinkedListTest::TestRemove();
+    /*
 	*/
 
 	return 0;

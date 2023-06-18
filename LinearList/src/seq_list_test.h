@@ -19,7 +19,7 @@ using namespace std;
 
 
 /*!
- * @brief 顺序表测试类
+ * @brief **顺序表测试类**
  */
 class SeqListTest {
 public:

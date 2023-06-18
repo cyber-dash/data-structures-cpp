@@ -13,6 +13,9 @@
 #include "circular_singly_linked_list.h"
 
 
+/*!
+ * @brief **循环单向链表测试类**
+ */
 class CircularSinglyLinkedListTest {
 public:
     // 测试-循环单链表-插入

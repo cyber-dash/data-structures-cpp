@@ -18,22 +18,42 @@
 using namespace std;
 
 
+/*!
+ * @brief **静态链表测试类**
+ */
 class StaticLinkedListTest {
 public:
-    // 测试静态链表插入
+    // 测试-静态链表-插入
     static void TestInsert();
-    // 测试静态链表搜索
+
+    // 测试-静态链表-搜索
     static void TestSearch();
-    // 测试静态链表删除结点
+
+    // 测试-静态链表-删除
     static void TestRemove();
 };
 
 
+/*!
+ * @brief **测试-静态链表-插入**
+ * @note
+ * 测试-静态链表-插入
+ * ----------------
+ * ----------------
+ *
+ * ----------------
+ * 声明static_link_list\n
+ * 插入7个结点\n
+ * 打印static_link_list\n
+ *
+ *
+ * ----------------
+ */
 void StaticLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test StaticLinkedList Insert               |" << endl;
-    cout << "|                       测试静态链表插入                      |" << endl << endl << endl;
+    cout << "|                     测试-静态链表-插入                    |" << endl << endl << endl;
 
     StaticLinkedList<int>* static_link_list = new StaticLinkedList<int>(1);
 
@@ -50,11 +70,27 @@ void StaticLinkedListTest::TestInsert() {
 }
 
 
+/*!
+ * @brief **测试-静态链表-搜索**
+ * @note
+ * 测试-静态链表-搜索
+ * ----------------
+ * ----------------
+ *
+ * ----------------
+ * 声明static_link_list\n
+ * 插入6个结点\n
+ * 打印static_link_list\n
+ * 搜索3个字符串在链表中的位置, 并打印\n
+ *
+ *
+ * ----------------
+ */
 void StaticLinkedListTest::TestSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test StaticLinkedList Search               |" << endl;
-    cout << "|                       测试静态链表搜索                      |" << endl << endl << endl;
+    cout << "|                     测试-静态链表-搜索                    |" << endl << endl << endl;
 
     StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>(1);
 
@@ -112,11 +148,28 @@ void StaticLinkedListTest::TestSearch() {
 }
 
 
+/*!
+ * @brief **测试-静态链表-删除**
+ * @note
+ * 测试-静态链表-删除
+ * ----------------
+ * ----------------
+ *
+ * ----------------
+ * 声明static_link_list\n\n
+ * 插入6个结点\n
+ * 打印static_link_list\n\n
+ * 删除2个结点\n
+ * 打印static_link_list\n
+ *
+ *
+ * ----------------
+ */
 void StaticLinkedListTest::TestRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test StaticLinkedList Remove               |" << endl;
-    cout << "|                       测试静态链表删除                      |" << endl << endl << endl;
+    cout << "|                     测试-静态链表-删除                    |" << endl << endl << endl;
 
     StaticLinkedList<string>* static_link_list = new StaticLinkedList<string>(1);
 
@@ -147,5 +200,6 @@ void StaticLinkedListTest::TestRemove() {
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }
+
 
 #endif // CYBER_DASH_STATIC_LINKED_LIST_TEST_H

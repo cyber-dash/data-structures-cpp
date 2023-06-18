@@ -16,7 +16,7 @@
 
 
  /*!
-  * @brief 单链表测试类
+  * @brief **单向链表测试类**
   */
 class SinglyLinkListTest {
 public:
@@ -24,6 +24,7 @@ public:
 	static void TestCopyConstructor();
 
 	static void TestInsert();
+
 	static void TestLength();
 
     // 测试-单向链表-删除结点
@@ -33,7 +34,11 @@ public:
 	static void TestClear();
 
 	static void TestSearch();
-	static void TestLocate();
+
+    // 测试-单向链表-获取结点
+	static void TestGetNode();
+
+    // 测试-单向链表-设置和获取数据
 	static void TestGetDataAndSetData();
 };
 
@@ -206,7 +211,7 @@ void SinglyLinkListTest::TestSearch() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                 Test SinglyLinkList Search                |" << endl;
-	cout << "|                        测试单链表搜索                       |" << endl << endl << endl;
+	cout << "|                     测试-单向链表-搜索                    |" << endl << endl << endl;
 
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();
 
@@ -226,11 +231,27 @@ void SinglyLinkListTest::TestSearch() {
 }
 
 
-void SinglyLinkListTest::TestLocate() {
+/*!
+ * @brief **测试-单向链表-获取结点**
+ * @note
+ * 测试-单向链表-获取结点
+ * -------------------
+ * -------------------
+ *
+ * -------------------
+ * 声明city_linked_list\n
+ * 依次插入5个城市\n
+ * 获取位置1和位置2的城市\n
+ * 打印结点信息\n
+ *
+ *
+ * -------------------
+ */
+void SinglyLinkListTest::TestGetNode() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|               Test SinglyLinkedList GetNode               |" << endl;
-	cout << "|                      测试-单向链表-获取结点                      |" << endl << endl << endl;
+	cout << "|                  测试-单向链表-获取结点                   |" << endl << endl << endl;
 
 	SinglyLinkedList<string>* city_linked_list = new SinglyLinkedList<string>();    // 城市链表city_linked_list
 
@@ -250,11 +271,28 @@ void SinglyLinkListTest::TestLocate() {
 }
 
 
+/*!
+ * @brief **测试-单向链表-设置和获取数据**
+ * @note
+ * 测试-单向链表-设置和获取数据
+ * ------------------------
+ * ------------------------
+ *
+ * ------------------------
+ * 声明singly_linked_list\n
+ * 依次插入3个结点\n
+ * 获取第2个结点并打印\n
+ * 将第2个结点设置成"Shenzhen"\n
+ * 打印链表\n
+ *
+ *
+ * ------------------------
+ */
 void SinglyLinkListTest::TestGetDataAndSetData() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|            Test SinglyLinkList GetDataAndSetData          |" << endl;
-	cout << "|                     测试单链表设置和获取数据                  |" << endl << endl << endl;
+	cout << "|                测试-单向链表-设置和获取数据               |" << endl << endl << endl;
 
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();
 
@@ -273,5 +311,6 @@ void SinglyLinkListTest::TestGetDataAndSetData() {
 
 	cout << "-------------------------------------------------------------" << endl << endl;
 }
+
 
 #endif // CYBER_DASH_LINK_LIST_TEST_H

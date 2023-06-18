@@ -23,7 +23,7 @@
   * @note
   * 遍历顺序表b, 对每个元素, 如果在表a中不存在, 则插入到表a中
   */
-template<class TData>
+template<typename TData>
 void SeqListUnion(SeqList<TData>& seq_list_a, SeqList<TData>& seq_list_b) {
     int a_length = seq_list_a.Length();
     int b_length = seq_list_b.Length();
@@ -43,10 +43,12 @@ void SeqListUnion(SeqList<TData>& seq_list_a, SeqList<TData>& seq_list_b) {
 
 
 /*!
- * @brief 顺序表求交集, todo: 换个实现方法, 返回新的集合
+ * @brief 顺序表求交集
  * @tparam TData 类型模板参数
  * @param seq_list_a 顺序表a(交运算后的表)
  * @param seq_list_b 顺序表b
+ * @note
+ * todo: 换个实现方法, 返回新的集合
  */
 template<class TData>
 void SeqListIntersection(SeqList<TData>& seq_list_a, SeqList<TData>& seq_list_b) {
