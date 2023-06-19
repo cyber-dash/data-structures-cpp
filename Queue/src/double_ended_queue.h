@@ -81,7 +81,7 @@ public:
 
     // 队头出队(保存数据)
     bool PopBack(TData& data);
-    // 队头出队(不保存数据)
+    // 队头出队
     bool PopBack();
 
     // 获取队头数据
@@ -320,30 +320,30 @@ bool DoubleEndedQueue<TData>::PopFront() {
 
 
 /*!
- * @brief **队尾出队**
+ * @brief **队尾出队(保存数据)**
  * @tparam TData 数据项类型模板参数
  * @return 执行结果
  * @note
- * 队尾出队
- * -------
- * -------
+ * 队尾出队(保存数据)
+ * ---------------
+ * ---------------
  *
- * -------
+ * ---------------
  * + **1 合法性判断**\n\n
  * **if** 空队 :\n
  * &emsp; 返回false\n\n
  * + **2 取队尾值和索引处理**\n\n
  * mem_data_[rear_]赋给参数data\n\n
  * **if** 队列长度为1 :\n
- * &emsp; front设为-1\n
- * &emsp; rear设为-1\n
+ * &emsp; front设置为-1\n
+ * &emsp; rear设置为-1\n
  * **else**\n
  * &emsp; rear_设置为(rear_ - 1 + capacity_) % capacity_\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
  *
  *
- * -------
+ * ---------------
  */
 template<typename TData>
 bool DoubleEndedQueue<TData>::PopBack(TData& data) {
@@ -386,8 +386,8 @@ bool DoubleEndedQueue<TData>::PopBack(TData& data) {
  * &emsp; 返回false\n\n
  * + **2 索引处理**\n\n
  * **if** 队列长度为1 :\n
- * &emsp; front设为-1\n
- * &emsp; rear设为-1\n
+ * &emsp; front设置为-1\n
+ * &emsp; rear设置为-1\n
  * **else**\n
  * &emsp; rear_设置为(rear_ - 1 + capacity_) % capacity_\n\n
  * + **3 退出函数**\n\n
