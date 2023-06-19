@@ -4,8 +4,6 @@
  * @brief 测试函数cpp文件
  * @version 0.2.1
  * @date 2021-09-19
- * @copyright Copyright (c) 2021
- *  CyberDash
  */
 
 #include "test.h"
@@ -25,56 +23,112 @@
 using namespace std;
 
 
+/*!
+ * @brief **测试-排序-冒泡排序**
+ * @note
+ * 测试-排序-冒泡排序
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行冒泡排序\n
+ * 打印数组\n
+ *
+ *
+ * ---------------
+ */
 void TestBubbleSort() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Bubble Sort                     |" << endl;
-	cout << "|                        测试冒泡排序                         |" << endl;
+	cout << "|                     测试-排序-冒泡排序                    |" << endl << endl << endl;
 
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
-	cout << "排序后:" << endl;
+	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
+
+    cout << endl;
 
 	BubbleSort<int>(array, array_size);
 
-	cout << "排序前:" << endl;
+	cout << "排序后:" << endl;
 	PrintArray(array, array_size);
 
 	cout << "------------------------- CyberDash -------------------------" << endl;
 }
 
 
+/*!
+ * @brief **测试-排序-选择排序**
+ * @note
+ * 测试-排序-选择排序
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行选择排序\n
+ * 打印数组\n
+ *
+ *
+ * ---------------
+ */
 void TestSelectionSort() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Select Sort                     |" << endl;
-	cout << "|                        测试选择排序                         |" << endl;
+	cout << "|                     测试-排序-选择排序                    |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
-	cout << "排序后:" << endl;
+    // 打印数组
+	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
+    cout << endl;
+
+    // 执行选择排序
 	SelectionSort<int>(array, array_size);
 
-	cout << "排序前:" << endl;
+    // 打印数组
+	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
 	cout << "------------------------- CyberDash -------------------------" << endl;
 }
 
 
+/*!
+ * @brief **测试-排序-插入排序**
+ * @note
+ * 测试-排序-插入排序
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行插入排序\n
+ * 打印数组\n
+ *
+ *
+ * ---------------
+ */
 void TestInsertSort() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Insert Sort                     |" << endl;
-	cout << "|                         测试插入排序                        |" << endl;
+	cout << "|                     测试-排序-插入排序                    |" << endl;
 
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
@@ -91,6 +145,22 @@ void TestInsertSort() {
 }
 
 
+/*!
+ * @brief **测试-排序-归并排序**
+ * @note
+ * 测试-排序-归并排序
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行归并排序\n
+ * 打印数组\n
+ *
+ *
+ * ---------------
+ */
 void TestMergeSort() {
 
 	cout << endl;
@@ -113,12 +183,28 @@ void TestMergeSort() {
 }
 
 
+/*!
+ * @brief **测试-排序-归并排序**
+ * @note
+ * 测试-排序-归并排序
+ * ---------------
+ * ---------------
+ *
+ * ---------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行归并排序\n
+ * 打印数组\n
+ *
+ *
+ * ---------------
+ */
 void TestMergeSortNonRecursive() {
 
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|               Test Merge Sort(NonRecursive)               |" << endl;
-	cout << "|                     测试快速排序(非递归)                     |" << endl;
+	cout << "|                     测试归并排序                     |" << endl;
 
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
@@ -135,7 +221,7 @@ void TestMergeSortNonRecursive() {
 }
 
 
-void TestQuickSort() {
+void TestQuickSortRecursive() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Quick Sort                      |" << endl;
