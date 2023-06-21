@@ -18,34 +18,51 @@
  * -------
  *
  * -------
+ * 测试-排序-冒泡排序\n
+ * 测试-排序-选择排序\n
+ * 测试-排序-插入排序\n
+ * 测试-排序-归并排序(递归)\n
+ * 测试-排序-归并排序\n
+ * 测试-排序-快速排序(递归)\n
+ * 测试-排序-堆排序\n
+ * 测试-排序-希尔排序\n
+ * 测试-排序-基数排序(链表)\n
+ * 测试-排序-基数排序(数组)\n
+ *
+ *
+ * -------
  */
 int main() {
 
-    /*
-     */
     // 测试-排序-冒泡排序
 	TestBubbleSort();
 
-    // 测试-排序-冒泡排序
+    // 测试-排序-选择排序
 	TestSelectionSort();
 
+    // 测试-排序-插入排序
 	TestInsertSort();
 
+    // 测试-排序-归并排序(递归)
+    TestMergeSortRecursive();
+
+    // 测试-排序-归并排序
     TestMergeSort();
 
-	TestMergeSortNonRecursive();
-
+    // 测试-排序-快速排序(递归)
 	TestQuickSortRecursive();
 
+    // 测试-排序-堆排序
 	TestHeapSort();
 
+    // 测试-排序-希尔排序
 	TestShellSort();
 
+    // 测试-排序-基数排序(链表)
 	TestRadixSort();
 
+    // 测试-排序-基数排序(数组)
     TestRadixSortForArray();
-    /*
-     */
 
 	return 0;
 }

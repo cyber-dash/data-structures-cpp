@@ -21,9 +21,9 @@ void TestSelectionSort();
 
 void TestInsertSort();
 
-void TestMergeSort();
+void TestMergeSortRecursive();
 
-void TestMergeSortNonRecursive();
+void TestMergeSort();
 
 void TestQuickSortRecursive();
 
