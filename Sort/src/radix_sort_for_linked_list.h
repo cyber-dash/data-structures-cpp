@@ -44,7 +44,7 @@ void DistributeIntoBuckets(radix_static_linked_list_t<DIGIT_TYPE>* static_linked
     for (int i = elements[0].next; i != 0; i = elements[i].next) {
 
         /// &emsp;&emsp; 取第i个元素, 数位place_of_digit的数位值\n
-        int place_value = (int)static_linked_list->elements[i].key[place_index] - 48; // todo: 只是搬移了代码, 之后再修整
+        int place_value = (int)static_linked_list->elements[i].key[place_index] - 48;
 
         /// &emsp;&emsp; **if** 该数位对应的桶(队列)为空 :\n
         if (!digit_bucket_heads[place_value]) {

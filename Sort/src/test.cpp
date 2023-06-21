@@ -130,14 +130,18 @@ void TestInsertSort() {
 	cout << "|                      Test Insert Sort                     |" << endl;
 	cout << "|                     测试-排序-插入排序                    |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
+    // 打印数组
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
+    // 执行插入排序
 	InsertionSort<int>(array, array_size);
 
+    // 打印数组
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
@@ -146,20 +150,20 @@ void TestInsertSort() {
 
 
 /*!
- * @brief **测试-排序-归并排序**
+ * @brief **测试-排序-归并排序(递归)**
  * @note
- * 测试-排序-归并排序
- * ---------------
- * ---------------
+ * 测试-排序-归并排序(递归)
+ * --------------------
+ * --------------------
  *
- * ---------------
+ * --------------------
  * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
  * 打印数组\n\n
- * 执行归并排序\n
+ * 执行归并排序(递归)\n
  * 打印数组\n
  *
  *
- * ---------------
+ * --------------------
  */
 void TestMergeSort() {
 
@@ -168,14 +172,18 @@ void TestMergeSort() {
 	cout << "|                      Test Merge Sort                      |" << endl;
 	cout << "|                         测试归并排序                        |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
+    // 打印数组
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
+    // 执行归并排序(递归)
     MergeSortRecursive<int>(array, array_size);
 
+    // 打印数组
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
@@ -206,14 +214,18 @@ void TestMergeSortNonRecursive() {
 	cout << "|               Test Merge Sort(NonRecursive)               |" << endl;
 	cout << "|                     测试归并排序                     |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
+    // 打印数组
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
+    // 执行归并排序
     MergeSort<int>(array, array_size);
 
+    // 打印数组
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
@@ -221,20 +233,40 @@ void TestMergeSortNonRecursive() {
 }
 
 
+/*!
+ * @brief **测试-排序-快速排序(递归)**
+ * @note
+ * 测试-排序-快速排序(递归)
+ * --------------------
+ * --------------------
+ *
+ * --------------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行快速排序(递归)\n
+ * 打印数组\n
+ *
+ *
+ * --------------------
+ */
 void TestQuickSortRecursive() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Quick Sort                      |" << endl;
 	cout << "|                        测试快速排序                         |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
+    // 打印数组
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
+    // 执行快速排序(递归)
     QuickSortRecursive<int>(array, array_size);
 
+    // 打印数组
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
@@ -242,20 +274,40 @@ void TestQuickSortRecursive() {
 }
 
 
+/*!
+ * @brief **测试-排序-堆排序**
+ * @note
+ * 测试-排序-堆排序
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行堆排序\n
+ * 打印数组\n
+ *
+ *
+ * --------------------
+ */
 void TestHeapSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                       Test Heap Sort                      |" << endl;
 	cout << "|                         测试堆排序                          |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
 	int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
+    // 打印数组
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
+    // 执行堆排序
 	HeapSort<int>(array, array_size);
 
+    // 打印数组
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
@@ -263,23 +315,43 @@ void TestHeapSort() {
 }
 
 
+/*!
+ * @brief **测试-排序-希尔排序**
+ * @note
+ * 测试-排序-希尔排序
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行希尔排序\n
+ * 打印数组\n
+ *
+ *
+ * --------------------
+ */
 void TestShellSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Shell Sort                      |" << endl;
 	cout << "|                        测试希尔排序                        |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
 	int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
 
+    // 打印数组
 	cout << "排序前:" << endl;
 	PrintArray<int>(array, array_size);
 
+    // 执行希尔排序
 	int gaps[3] = { 3, 2, 1 };
     int gaps_count = 3;
 
 	ShellSort<int>(array, gaps, array_size, gaps_count);
 
+    // 打印数组
 	cout << "排序后:" << endl;
 	PrintArray<int>(array, array_size);
 
@@ -287,6 +359,15 @@ void TestShellSort() {
 }
 
 
+/*!
+ * @brief **测试-排序-基数排序(链表)**
+ * @note
+ * 测试-排序-基数排序(链表)
+ * --------------
+ * --------------
+ *
+ * --------------
+ */
 void TestRadixSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
@@ -364,20 +445,40 @@ void TestRadixSort() {
 }
 
 
+/*!
+ * @brief **测试-排序-基数排序(数组)**
+ * @note
+ * 测试-排序-基数排序(数组)
+ * --------------
+ * --------------
+ *
+ * --------------
+ * 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }\n
+ * 打印数组\n\n
+ * 执行基数排序(数组)\n
+ * 打印数组\n
+ *
+ *
+ * --------------------
+ */
 void TestRadixSortForArray() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test Radix Sort                      |" << endl;
     cout << "|                        测试基数排序                        |" << endl;
 
+    // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
     int array_size = sizeof(array) / sizeof(int);
 
+    // 打印数组
     cout << "排序前:" << endl;
     PrintArray<int>(array, array_size);
 
+    // 执行基数排序(数组)
     RadixSort(array, array_size);
 
+    // 打印数组
     cout << "排序后:" << endl;
     PrintArray<int>(array, array_size);
 

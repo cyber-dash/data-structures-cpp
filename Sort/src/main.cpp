@@ -22,16 +22,15 @@
 int main() {
 
     /*
+     */
     // 测试-排序-冒泡排序
 	TestBubbleSort();
 
     // 测试-排序-冒泡排序
 	TestSelectionSort();
-     */
 
 	TestInsertSort();
 
-    /*
     TestMergeSort();
 
 	TestMergeSortNonRecursive();
@@ -45,6 +44,7 @@ int main() {
 	TestRadixSort();
 
     TestRadixSortForArray();
+    /*
      */
 
 	return 0;
