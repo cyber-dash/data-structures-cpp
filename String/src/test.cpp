@@ -18,6 +18,16 @@
  * -----------------
  *
  * -----------------
+ * 测试重载==\n
+ * 测试重载!=\n
+ * 测试复制构造函数\n
+ * 测试重载+=\n
+ * 测试重载[]\n
+ * 测试重载>,>=,<,<=\n
+ * 测试重载<<\n
+ *
+ *
+ * -----------------
  */
 void TestStringBaseFunctions() {
 
@@ -29,33 +39,33 @@ void TestStringBaseFunctions() {
     String str1("cyber");
     String str2("dash");
 
-    /// - 测试重载==
+    // - 测试重载==
     cout << "测试重载==" << endl;
     bool is_same = str1 == str2;
     cout << is_same << endl << endl;
 
-    /// - 测试重载!=
+    // - 测试重载!=
     cout << "测试重载!=" << endl;
     bool is_not_same = str1 != str2;
     cout << is_not_same << endl << endl;
 
-    /// - 测试复制构造函数
+    // - 测试复制构造函数
     cout << "测试复制构造" << endl;
     String str3 = str1;
     cout << str3 << endl << endl;
 
-    /// - 测试重载+=
+    // - 测试重载+=
     cout << "测试重载+=" << endl;
     str1 += str2;
     cout << str1 <<endl << endl;
 
-    /// - 测试重载[]
+    // - 测试重载[]
     cout << "测试重载[]" << endl;
     cout << str1[0] << endl;
     str1[0] = 'C';
     cout << str1 << endl << endl;
 
-    /// - 测试重载>,>=,<,<=
+    // - 测试重载>,>=,<,<=
     cout << "测试重载>,>=,<,<=" << endl;
     String str4("elements");
     String str5("element");
@@ -71,7 +81,7 @@ void TestStringBaseFunctions() {
     cout << (str6 < str7) << endl;
     cout << (str6 <= str7) << endl << endl;
 
-    /// - 测试重载<<
+    // - 测试重载<<
     cout << "测试重载<<" << endl;
     String str8;
     cout << str8 << endl;

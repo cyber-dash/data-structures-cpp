@@ -91,6 +91,9 @@ private:
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()\n\n
  * mem_data_数据置0\n
+ *
+ *
+ * ---------------
  */
 String::String(size_t size) {
 
@@ -162,6 +165,9 @@ String::String(const char* mem_data) {
  * **for loop** 遍历源字符串 :\n
  * &emsp; 设置mem_data_[i]\n
  * mem_data_[this->Length()]置'\0'\n
+ *
+ *
+ * ----------
  */
 String::String(const String& str) {
 
@@ -259,6 +265,9 @@ String& String::operator=(const String& src_str) {
  * 更新size_\n
  * + **3 返回自身**\n
  * 返回*this\n
+ *
+ *
+ * -----
  */
 String& String::operator+=(String& str) {
 
@@ -314,6 +323,9 @@ String& String::operator+=(String& str) {
  * **if** 索引值 >= 字符串长度 :\n
  * &emsp; 抛出异常\n\n
  * 返回mem_data_[index]\n
+ *
+ *
+ * -----
  */
 char& String::operator[] (size_t index) {
     if ((int)index >= Length()) {                                               // if 索引值 >= 字符串长度
@@ -380,6 +392,9 @@ ostream& operator<<(ostream& os, const String& str) {
  * &emsp; **if** 当前位置的str1[i] != str2[i] :
  * &emsp;&emsp; 返回false\n\n
  * 返回true\n
+ *
+ *
+ * -----
  */
 bool operator==(const String& str1, const String& str2) {
     if (str1.Length() != str2.Length()) {                                               // if str1和str2的长度不同
@@ -520,6 +535,9 @@ bool operator<=(const String& str1, const String& str2) {
  * &emsp;&emsp; match_idx设为i\n
  * &emsp;&emsp; 跳出目标串遍历循环\n\n
  * 返回match_idx\n
+ *
+ *
+ * ----------
  */
 int String::BruteForceMatch(const String& pattern, int offset) const {
 
@@ -603,6 +621,9 @@ int String::BruteForceMatch(const String& pattern, int offset) const {
  * &emsp;&emsp; starting_index <-- next[starting_index]\n\n
  * + **3 退出函数**\n\n
  * 返回next数组\n
+ *
+ *
+ * ---------
  */
 int* String::KmpNext() const {
 
@@ -701,6 +722,9 @@ int* String::KmpNext() const {
  * &emsp;&emsp;&emsp; starting_index <-- next[starting_index]\n\n
  * + **5 退出函数**\n
  * 返回next数组\n
+ *
+ *
+ * -----------------------
  */
 int* String::KmpNextByCyberDash() const {
 
@@ -780,6 +804,9 @@ int* String::KmpNextByCyberDash() const {
  * &emsp; match_idx <--- target_idx - pattern.Length()\n\n
  * + **4 返回结果**\n
  * 返回match_idx\n
+ *
+ *
+ * ------------------------
  */
 int String::KmpMatchByCyberdash(const String& pattern, int offset) const {
 
@@ -852,6 +879,9 @@ int String::KmpMatchByCyberdash(const String& pattern, int offset) const {
  * &emsp; match_idx <--- target_idx - pattern.Length()\n\n
  * + **4 返回结果**\n
  * 返回match_idx\n
+ *
+ *
+ * --------------
  */
 int String::KmpMatch(const String& pattern, int offset) const {
 
