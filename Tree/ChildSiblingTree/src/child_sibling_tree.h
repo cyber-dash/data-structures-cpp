@@ -190,7 +190,7 @@ public:
     void PrintRecursive() { this->PrintSubTreeRecursive_(this->root_); }
 
 private:
-    ChildSiblingNode<TData>* root_; //!< 根结点
+    ChildSiblingNode<TData>* root_; //!< **根结点**
 
     // 子树删除(递归)
     void RemoveSubTreeRecursive_(ChildSiblingNode<TData>* subtree_root);
@@ -450,11 +450,11 @@ int ChildSiblingTree<TData>::NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData
 
 
 /*!
- * @brief **自身和所有弟弟子树的最大高度(递归)**
+ * @brief **自身和所有兄弟子树的最大高度(递归)**
  * @tparam TData 数据项类型模板参数
  * @param subtree_root 子树根结点
  * @return 高度
- * 自身和所有弟弟子树的最大高度(递归)
+ * 自身和所有兄弟子树的最大高度(递归)
  * -----------------------------
  * -----------------------------
  *
@@ -464,7 +464,7 @@ int ChildSiblingTree<TData>::NodeCountOfSubTreeRecursive_(ChildSiblingNode<TData
  * &emsp; 返回0\n\n
  * + **2 递归**\n\n
  * 求self_height, 自身(以node为根结点的子树)的高度\n
- * 求max_younger_sibling_height, 所有弟弟子树的最大的高度\n
+ * 求max_younger_sibling_height, 所有兄弟子树的最大的高度\n
  * 取max_height, 为MAX(self_height, max_younger_sibling_height)\n\n
  * + **3 返回结果**\n\n
  * 返回max_height\n
@@ -484,7 +484,7 @@ int ChildSiblingTree<TData>::MaxHeightWithYoungerSiblingTreesRecursive_(ChildSib
     // ---------- 2 递归 ----------
 
     int self_height = MaxHeightWithYoungerSiblingTreesRecursive_(subtree_root->first_child) + 1;                // 求self_height, 自身(以node为根结点的子树)的高度
-    int max_younger_sibling_height = MaxHeightWithYoungerSiblingTreesRecursive_(subtree_root->next_sibling);    // 求max_younger_sibling_height, 所有弟弟子树的最大的高度
+    int max_younger_sibling_height = MaxHeightWithYoungerSiblingTreesRecursive_(subtree_root->next_sibling);    // 求max_younger_sibling_height, 所有兄弟子树的最大的高度
 
     int max_height = (self_height > max_younger_sibling_height) ? self_height : max_younger_sibling_height;     // 取max_height, 为MAX(self_height, max_younger_sibling_height)
 
