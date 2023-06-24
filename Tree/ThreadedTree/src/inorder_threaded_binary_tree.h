@@ -31,6 +31,10 @@ public:
     /*!
      * @brief **获取根结点**
      * @return 根结点
+     * @note
+     * 获取根结点
+     * --------
+     * --------
      */
     ThreadedNode<TData>* Root() { return root_; }
 
