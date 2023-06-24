@@ -87,6 +87,9 @@ struct Compare {
      *
      * ----------
      * 返回node1->weight > node2->weight
+     *
+     *
+     * ----------
      */
     bool operator()(HuffmanTreeNode<TKey, TWeight>* node1, HuffmanTreeNode<TKey, TWeight>* node2) {
         return node1->weight > node2->weight;
@@ -128,6 +131,9 @@ public:
      * -------
      * 对root_调用ClearSubTreeRecursive_\n
      * root_置NULL\n
+     *
+     *
+     * -------
      */
 	~HuffmanTree() {
         ClearSubTreeRecursive_(root_);
@@ -146,6 +152,9 @@ public:
      * ----
      * 对root_调用PrintSubTreeRecursive_\n
      * 换行\n
+     *
+     *
+     * ----
      */
 	void PrintTree() { PrintSubTreeRecursive_(root_); cout << endl; }
 
@@ -198,6 +207,9 @@ protected:
  * &emsp; 使用first和second建子树, 该子树根结点为cur_parent\n
  * &emsp; cur_parent入队min_priority_queue\n\n
  * cur_parent赋值root_\n
+ *
+ *
+ * -------
  */
 template <typename TKey, typename TWeight>
 HuffmanTree<TKey, TWeight>::HuffmanTree(const TKey* keys, const TWeight* weights, int count) {
@@ -251,6 +263,9 @@ HuffmanTree<TKey, TWeight>::HuffmanTree(const TKey* keys, const TWeight* weights
  * + **3 释放根结点**\n
  * delete subtree_root\n
  * subtree_root置空\n
+ *
+ *
+ * ------------
  */
 template <typename TKey, typename TWeight>
 void HuffmanTree<TKey, TWeight>::ClearSubTreeRecursive_(HuffmanTreeNode<TKey, TWeight>* subtree_root) {
@@ -289,6 +304,8 @@ void HuffmanTree<TKey, TWeight>::ClearSubTreeRecursive_(HuffmanTreeNode<TKey, TW
  * 构造新子树根结点\n\n
  * 两个子树根结点的parent指向新子树根结点\n
  *
+ *
+ * -------
  */
 template <typename TKey, typename TWeight>
 void HuffmanTree<TKey, TWeight>::MergeSubTree_(HuffmanTreeNode<TKey, TWeight>* subtree_root_1,
@@ -330,6 +347,9 @@ void HuffmanTree<TKey, TWeight>::MergeSubTree_(HuffmanTreeNode<TKey, TWeight>* s
  * 打印','\n
  * 对右子树调用PrintSubTreeRecursive_\n
  * 打印')'\n
+ *
+ *
+ * ------------
  */
 template <typename TKey, typename TWeight>
 void HuffmanTree<TKey, TWeight>::PrintSubTreeRecursive_(HuffmanTreeNode<TKey, TWeight>* subtree_root) {
@@ -369,6 +389,9 @@ void HuffmanTree<TKey, TWeight>::PrintSubTreeRecursive_(HuffmanTreeNode<TKey, TW
  * 声明huffman_codes\n
  * 调用GenerateHuffmanCodeOfSubTreeRecursive_, 生成哈夫曼编码\n
  * 返回huffman_codes\n
+ *
+ *
+ * ------------
  */
 template <typename TKey, typename TWeight>
 unordered_map<TKey, string> HuffmanTree<TKey, TWeight>::GenerateHuffmanCodes() {
@@ -405,6 +428,9 @@ unordered_map<TKey, string> HuffmanTree<TKey, TWeight>::GenerateHuffmanCodes() {
  * + **3 非叶子结点处理**\n
  * current_prefix_code扩展0, 向左子树递归执行GenerateHuffmanCodeOfSubTreeRecursive_\n
  * current_prefix_code扩展1, 向右子树递归执行GenerateHuffmanCodeOfSubTreeRecursive_\n
+ *
+ *
+ * ---------------
  */
 template <typename TKey, typename TWeight>
 void HuffmanTree<TKey, TWeight>::GenerateHuffmanCodeOfSubTreeRecursive_(HuffmanTreeNode<TKey, TWeight>* node,
