@@ -23,9 +23,9 @@ using namespace std;
  */
 template<typename TValue>
 struct TriTuple {
-    int row;         //!< 行索引
-    int col;         //!< 列索引
-    TValue value;    //!< 值
+    int row;         //!< **行索引**
+    int col;         //!< **列索引**
+    TValue value;    //!< **值**
 
     /*!
      * @brief **重载=**
@@ -86,27 +86,27 @@ public:
   // 复制构造函数
   SparseMatrix(const SparseMatrix<TValue>& sparse_matrix);
 
-  /*! @brief 析构函数 */
+  /*! @brief **析构函数** */
   virtual ~SparseMatrix() { delete[] elements_; }
 
-  /*! @brief 获取行数 */
+  /*! @brief **获取行数** */
   int Rows() const { return this->rows_; }
-  /*! @brief 设置行数 */
+  /*! @brief **设置行数** */
   void SetRows(int rows) { this->rows_ = rows; }
 
-  /*! @brief 获取列数 */
+  /*! @brief **获取列数** */
   int Cols() const { return this->cols_; };
-  /*! @brief 设置行数 */
+  /*! @brief **设置行数** */
   void SetCols(int cols) { this->cols_ = cols; };
 
-  /*! @brief 获取元素数 */
+  /*! @brief **获取元素数** */
   int Size() const { return this->size_; }
-  /*! @brief 设置元素数 */
+  /*! @brief **设置元素数** */
   void SetSize(int size) { this->size_ = size; }
 
-  /*! @brief 获取容量 */
+  /*! @brief **获取容量** */
   int Capacity() const { return this->capacity_; }
-  /*! @brief 设置最大元素数 */
+  /*! @brief **设置最大元素数** */
   void SetCapacity(int capacity) { this->capacity_ = capacity; }
 
   // 获取元素
