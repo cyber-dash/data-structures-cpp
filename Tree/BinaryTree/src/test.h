@@ -51,8 +51,15 @@ public:
 
 
 /*!
- * @brief 结点打印函数
+ * @brief **结点打印函数**
  * @param node 二叉树结点
+ * @note
+ * 结点打印函数
+ * ----------
+ * ----------
+ *
+ *
+ * ----------
  */
 void VisitAndCout(BinaryTreeNode<int>* node) {
     cout << node->data << " ";
@@ -74,6 +81,9 @@ void VisitAndCout(BinaryTreeNode<int>* node) {
  * 对binary_tree调用复制构造函数, 初始化binary_tree_2\n\n
  * + **3 打印binary_tree_2**\n
  * 打印\n
+ *
+ *
+ * ---------------------
  */
 void BinaryTreeTest::TestCopyConstructor() {
 
@@ -127,6 +137,9 @@ void BinaryTreeTest::TestCopyConstructor() {
  * 调用Height(), 获取高度\n\n
  * + **3 打印高度**\n
  * 打印高度\n
+ *
+ *
+ * ------------------
  */
 void BinaryTreeTest::TestHeight() {
 
@@ -183,6 +196,9 @@ void BinaryTreeTest::TestHeight() {
  * node_parent指向结点3的父节点\n\n
  * + **3 打印测试结点信息**\n
  * 打印信息\n
+ *
+ *
+ * -------------------
  */
 void BinaryTreeTest::TestParent() {
 
@@ -246,6 +262,9 @@ void BinaryTreeTest::TestParent() {
  * + **2 前序遍历测试**\n
  * 前序遍历测试\n
  * 前序遍历(递归)测试\n
+ *
+ *
+ * -----------------
  */
 void BinaryTreeTest::TestPreorderTraversal() {
 
@@ -299,6 +318,9 @@ void BinaryTreeTest::TestPreorderTraversal() {
  * + **2 中序遍历测试**\n
  * 中序遍历测试\n
  * 中序遍历(递归)测试\n
+ *
+ *
+ * -----------------
  */
 void BinaryTreeTest::TestInorderTraversal() {
     cout << endl;
@@ -350,6 +372,9 @@ void BinaryTreeTest::TestInorderTraversal() {
  * + **2 后序遍历测试**\n
  * 后序遍历测试\n
  * 后序遍历(递归)测试\n
+ *
+ *
+ * -----------------
  */
 void BinaryTreeTest::TestPostorderTraversal() {
     cout << endl;
@@ -401,6 +426,9 @@ void BinaryTreeTest::TestPostorderTraversal() {
  * &emsp; 插入i \n\n
  * + **2 层遍历测试**\n
  * 层序遍历测试\n
+ *
+ *
+ * -----------------
  */
 void BinaryTreeTest::TestLevelOrderTraversal() {
 
@@ -449,6 +477,9 @@ void BinaryTreeTest::TestLevelOrderTraversal() {
  * + **2 是否存在结点测试**\n
  * 测试5是否存在于树中\n
  * 测试7是否存在于树中\n
+ *
+ *
+ * ---------------------
  */
 void BinaryTreeTest::TestExist() {
 
@@ -513,6 +544,9 @@ void BinaryTreeTest::TestExist() {
  * 调用CreateByPreorderAndInorderList, 建树\n\n
  * + **3 打印树**\n
  * 打印二叉树\n
+ *
+ *
+ * ----------------------------------
  */
 void BinaryTreeTest::TestCreateByPreorderAndInorderList() {
     cout << endl;

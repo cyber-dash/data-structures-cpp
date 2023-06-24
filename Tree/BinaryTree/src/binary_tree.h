@@ -85,7 +85,7 @@ template<typename TData> ostream& operator<<(ostream& out, BinaryTree<TData>& bi
 
 
 /*!
- * @brief 二叉树模板类
+ * @brief **二叉树模板类**
  * @tparam TData 数据项类型模板参数
  */
 template <typename TData>
@@ -103,6 +103,9 @@ public:
      *
      * ------------------
      * 对root_调用InsertInSubTreeRecursive_
+     *
+     *
+     * ------------------
      */
     explicit BinaryTree(const TData& data) { this->InsertInSubtreeRecursive_(this->root_, data); }
 
@@ -122,6 +125,9 @@ public:
      *
      * ------
      * 对root_调用RemoveSubtreeRecursive_
+     *
+     *
+     * ------
      */
     ~BinaryTree() { this->DeleteSubtreeRecursive_(root_); }
 
@@ -145,6 +151,9 @@ public:
      * &emsp; 返回NULL\n
      * **else** :\n
      * &emsp; 返回this->GetParentInSubtreeRecursive_(this->root_, node)\n
+     *
+     *
+     * --------
      */
     BinaryTreeNode<TData>* Parent(BinaryTreeNode<TData>* node) const {
         return (this->root_ == NULL || this->root_ == node) ? NULL : this->GetParentInSubtreeRecursive_(this->root_, node);
@@ -159,6 +168,9 @@ public:
      *
      * ------------
      * 调用HeightOfSubtreeRecursive_
+     *
+     *
+     * ------------
      */
     int Height() { return this->HeightOfSubtreeRecursive_(this->root_); }
 
@@ -172,6 +184,9 @@ public:
      *
      * ------------
      * 调用SizeOfSubTreeRecursive_
+     *
+     *
+     * ------------
      */
     int Size() { return this->SizeOfSubTreeRecursive_(this->root_); }
 
@@ -186,6 +201,9 @@ public:
      *
      * ------------
      * 调用InsertInSubtreeRecursive_
+     *
+     *
+     * ------------
      */
     bool InsertRecursive(const TData& data) { return this->InsertInSubtreeRecursive_(this->root_, data); }
 
@@ -200,6 +218,9 @@ public:
      *
      * ----------
      * 调用ExistInSubTree_
+     *
+     *
+     * ----------
      */
     bool Exist(TData data) { return this->ExistInSubTree_(this->root_, data); }
 
@@ -213,6 +234,9 @@ public:
      *
      * ------------
      * 调用PreorderTraversalOfSubtreeRecursive_
+     *
+     *
+     * ------------
      */
     void PreorderTraversalRecursive(void (*visit)(BinaryTreeNode<TData>*)) {
         this->PreorderTraversalOfSubtreeRecursive_(this->root_, visit);
@@ -228,6 +252,9 @@ public:
      *
      * -------
      * 调用PreorderTraversalOfSubtree_
+     *
+     *
+     * -------
      */
     void PreorderTraversal(void (*visit)(BinaryTreeNode<TData>*)) {
         this->PreorderTraversalOfSubtree_(this->root_, visit);
@@ -243,6 +270,9 @@ public:
      *
      * -----------
      * 调用InorderTraversalOfSubtreeRecursive_
+     *
+     *
+     * -----------
      */
     void InorderTraversalRecursive(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->InorderTraversalOfSubtreeRecursive_(this->root_, visit);
@@ -258,6 +288,9 @@ public:
      *
      * ------
      * 调用InorderTraversalOfSubtree_
+     *
+     *
+     * ------
      */
     void InorderTraversal(void (*visit)(BinaryTreeNode<TData>* node)) {
         this->InorderTraversalOfSubtree_(this->root_, visit);
@@ -273,6 +306,9 @@ public:
      *
      * -----------
      * 调用PostorderTraversalOfSubtreeRecursive_
+     *
+     *
+     * -----------
      */
     void PostorderTraversalRecursive(void (*visit)(BinaryTreeNode<TData>*)) {
         this->PostorderTraversalOfSubtreeRecursive_(this->root_, visit);
@@ -288,6 +324,9 @@ public:
      *
      * ------
      * 调用PostorderTraversalOfSubtree_
+     *
+     *
+     * ------
      */
     void PostorderTraversal(void (*visit)(BinaryTreeNode<TData>*)) {
         this->PostorderTraversalOfSubtree_(this->root_, visit);
@@ -303,6 +342,9 @@ public:
      *
      * ------
      * 调用LevelOrderTraversalOfSubtree_
+     *
+     *
+     * ------
      */
     void LevelOrderTraversal(void (*Visit)(BinaryTreeNode<TData>*)) {
         this->LevelOrderTraversalOfSubtree_(this->root_, Visit);
@@ -321,6 +363,9 @@ public:
      *
      * ----------------------
      * 调用CreateSubtreeByPreorderAndInorderList_\n
+     *
+     *
+     * ----------------------
      */
     bool CreateByPreorderAndInorderList(TData* preorder_list, TData* inorder_list, int length) {
         bool res = this->CreateSubtreeByPreorderAndInorderList_(preorder_list, inorder_list, length, this->root_);
@@ -336,6 +381,9 @@ public:
      * 
      * ---
      * 对root_调用PrintSubTreeRecursive_
+     *
+     *
+     * ---
      */
     void Print() { this->PrintSubTreeRecursive_(this->root_); };
 
@@ -403,6 +451,9 @@ protected:
  * 调用DuplicateSubTreeRecursive_\n
  * **if** 调用失败 :\n
  * &emsp; 抛出logic_error\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 BinaryTree<TData>::BinaryTree(const BinaryTree<TData>& src_binary_tree) {
@@ -444,6 +495,9 @@ BinaryTree<TData>::BinaryTree(const BinaryTree<TData>& src_binary_tree) {
  * &emsp;&emsp; 返回false\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * ---------------
  */
 template<typename TData>
 bool BinaryTree<TData>::InsertInSubtreeRecursive_(BinaryTreeNode<TData>*& subtree_root, const TData& data) {
@@ -500,6 +554,9 @@ bool BinaryTree<TData>::InsertInSubtreeRecursive_(BinaryTreeNode<TData>*& subtre
  * + **3 删除子树根结点**\n
  * 释放subtree_root\n
  * subtree_root置NULL\n
+ *
+ *
+ * -----------
  */
 template <typename TData>
 void BinaryTree<TData>::DeleteSubtreeRecursive_(BinaryTreeNode<TData>*& subtree_root) {
@@ -548,6 +605,9 @@ void BinaryTree<TData>::DeleteSubtreeRecursive_(BinaryTreeNode<TData>*& subtree_
  * &emsp; 返回true\n\n
  * + **4 退出函数**\n
  * 返回false\n
+ *
+ *
+ * ------------------
  */
 template<typename TData>
 bool BinaryTree<TData>::ExistInSubTree_(BinaryTreeNode<TData>* subtree_root, TData data) const {
@@ -611,6 +671,9 @@ bool BinaryTree<TData>::ExistInSubTree_(BinaryTreeNode<TData>* subtree_root, TDa
   * &emsp; 返回false\n\n
   * + **4 退出函数**\n
   * 返回true\n
+  *
+  *
+  * --------
   */
 template<typename TData>
 bool BinaryTree<TData>::DuplicateSubTreeRecursive_(BinaryTreeNode<TData>* src_subtree_root,
@@ -670,6 +733,9 @@ bool BinaryTree<TData>::DuplicateSubTreeRecursive_(BinaryTreeNode<TData>* src_su
  * 计算subtree_height, 等于1 + 最高子树的高度\n\n
  * + **3 返回结果**\n
  * 返回subtree_height\n
+ *
+ *
+ * --------------
  */
 template<typename TData>
 int BinaryTree<TData>::HeightOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root) const {
@@ -713,6 +779,9 @@ int BinaryTree<TData>::HeightOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_
  * 计算subtree_size, 等于1 + left_subtree_size + right_subtree_size\n\n
  * + **3 返回结果**\n
  * 返回subtree_size\n
+ *
+ *
+ * -------------
  */
 template<typename TData>
 int BinaryTree<TData>::SizeOfSubTreeRecursive_(BinaryTreeNode<TData>* subtree_root) const {
@@ -758,6 +827,9 @@ int BinaryTree<TData>::SizeOfSubTreeRecursive_(BinaryTreeNode<TData>* subtree_ro
  * **if** 未找到父节点 :\n
  * &emsp; 右子树递归调用ParentInSubtree_\n
  * 返回调用结果\n
+ *
+ *
+ * ---------------
  */
 template<typename TData>
 BinaryTreeNode<TData>* BinaryTree<TData>::GetParentInSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
@@ -805,6 +877,9 @@ BinaryTreeNode<TData>* BinaryTree<TData>::GetParentInSubtreeRecursive_(BinaryTre
   * 访问subtree_root\n\n
   * 左子树递归\n
   * 右子树递归\n
+  *
+  *
+  * ---------------
   */
 template<typename TData>
 void BinaryTree<TData>::PreorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
@@ -845,6 +920,9 @@ void BinaryTree<TData>::PreorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDat
  * &emsp;&emsp; cur右孩子入栈\n
  * &emsp; **if** cur存在左孩子 :\n
  * &emsp;&emsp; cur左孩子入栈\n
+ *
+ *
+ * -----------------
  */
 template<typename TData>
 void BinaryTree<TData>::PreorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
@@ -889,6 +967,9 @@ void BinaryTree<TData>::PreorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtr
  * 左子树递归\n
  * 访问subtree_root\n
  * 右子树递归\n
+ *
+ *
+ * ---------------
  */
 template<typename TData>
 void BinaryTree<TData>::InorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
@@ -932,6 +1013,9 @@ void BinaryTree<TData>::InorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData
  * &emsp;&emsp; 栈顶出栈\n
  * &emsp;&emsp; 访问cur\n
  * &emsp;&emsp; cur指向自身右孩子\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 void BinaryTree<TData>::InorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
@@ -979,6 +1063,9 @@ void BinaryTree<TData>::InorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtre
  * 左子树递归\n
  * 右子树递归\n
  * 访问subtree_root\n
+ *
+ *
+ * ---------------
  */
 template<typename TData>
 void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TData>* subtree_root,
@@ -1033,6 +1120,9 @@ void BinaryTree<TData>::PostorderTraversalOfSubtreeRecursive_(BinaryTreeNode<TDa
  * &emsp;&emsp; **else** (cur_backtrack_node的tag为右侧回溯) :\n
  * &emsp;&emsp;&emsp; 访问cur_tree_node\n\n
  * **while loop** 回溯栈不为空\n
+ *
+ *
+ * ----------
  */
 template <typename TData>
 void BinaryTree<TData>::PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
@@ -1096,6 +1186,9 @@ void BinaryTree<TData>::PostorderTraversalOfSubtree_(BinaryTreeNode<TData>* subt
  * &emsp;&emsp; cur->left_child入队\n
  * &emsp; **if** cur的右孩子不为NULL :\n
  * &emsp;&emsp; cur->right_child入队\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 void BinaryTree<TData>::LevelOrderTraversalOfSubtree_(BinaryTreeNode<TData>* subtree_root,
@@ -1147,6 +1240,9 @@ void BinaryTree<TData>::LevelOrderTraversalOfSubtree_(BinaryTreeNode<TData>* sub
  * &emsp; 打印','\n
  * &emsp; 对subtree_root->right_child递归调用PrintSubTreeRecursive_\n
  * &emsp; 打印','\n
+ *
+ *
+ * -------
  */
 template<typename TData>
 void BinaryTree<TData>::PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_root) {
@@ -1219,6 +1315,9 @@ void BinaryTree<TData>::PrintSubTreeRecursive_(BinaryTreeNode<TData>* subtree_ro
  * &emsp; 返回false\n\n
  * 调用CreateSubtreeByPreorderAndInorderList_, 使用preorder_sub_list[inorder_sub_list_pivot + 1, length - 1] 和 inorder_sub_list[inorder_sub_list_pivot + 1, length - 1], 构造sub_tree的右子树\n
  * 返回调用结果\n
+ *
+ *
+ * --------------------------------------
  */
 template<typename TData>
 bool BinaryTree<TData>::CreateSubtreeByPreorderAndInorderList_(TData* preorder_sub_list,
@@ -1297,6 +1396,9 @@ bool BinaryTree<TData>::CreateSubtreeByPreorderAndInorderList_(TData* preorder_s
  * &emsp; 返回true\n\n
  * + **3 退出函数**\n
  * 返回false\n
+ *
+ *
+ * -----------------------
  */
 template<typename TData>
 bool BinaryTree<TData>::Equal(BinaryTreeNode<TData>* root1, BinaryTreeNode<TData>* root2) {
@@ -1334,6 +1436,9 @@ bool BinaryTree<TData>::Equal(BinaryTreeNode<TData>* root1, BinaryTreeNode<TData
   *
   * -----
   * 调用BinaryTree<TData>::Equal(binary_tree_1.Root(), binary_tree_2.Root()), 返回结果\n
+  *
+  *
+  * -----
   */
 template<typename TData>
 bool operator==(const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>& binary_tree_2) {
@@ -1356,6 +1461,9 @@ bool operator==(const BinaryTree<TData>& binary_tree_1, const BinaryTree<TData>&
  *
  * -----
  * 调用binary_tree.Print()\n
+ *
+ *
+ * -----
  */
 template<typename TData>
 ostream& operator<<(ostream& out, BinaryTree<TData>& binary_tree) {
