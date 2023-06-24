@@ -96,7 +96,7 @@ void SimpleGenList::CreateByString(const string& gen_list_string) {
 
     queue<char> char_queue;                                                         // 声明char_queue(字符队列)
 
-    for (int i = 0; i < gen_list_string.length(); i++) {                            // for loop 遍历gen_list_string(广义表字符串)
+    for (unsigned int i = 0; i < gen_list_string.length(); i++) {                            // for loop 遍历gen_list_string(广义表字符串)
         char chr = gen_list_string[i];
         char_queue.push(chr);                                                       // 当前字符入队
     }
@@ -297,10 +297,10 @@ int SimpleGenList::SubGenListDepthRecursive_(SimpleGenListNode* node) {
 
 
 /*!
- * @brief **求深度**
+ * @brief **获取深度**
  * @return 深度
  * @note
- * 求深度
+ * 获取深度
  * -----
  * -----
  *
@@ -330,8 +330,8 @@ int SimpleGenList::Depth() {
  * + **1 空结点处理**\n
  * **if** node为NULL\n
  * &emsp; 返回0\n\n
- * + **2 递归求长度**\n
- * 递归调用SubGenListLengthRecursive_求长度\n\n
+ * + **2 递归获取长度**\n
+ * 递归调用SubGenListLengthRecursive_获取长度\n\n
  * + **3 返回结果**\n
  * 返回长度\n
  *
@@ -346,9 +346,9 @@ int SimpleGenList::SubGenListLengthRecursive_(SimpleGenListNode* node) {
         return 0;                                                                   // 返回0
     }
 
-    // ---------- 2 递归求长度 ----------
+    // ---------- 2 递归获取长度 ----------
 
-    int sub_list_length = SubGenListLengthRecursive_(node->next) + 1;               // 递归调用SubGenListLengthRecursive_求长度
+    int sub_list_length = SubGenListLengthRecursive_(node->next) + 1;               // 递归调用SubGenListLengthRecursive_获取长度
 
     // ---------- 3 返回结果 ----------
 
@@ -357,10 +357,10 @@ int SimpleGenList::SubGenListLengthRecursive_(SimpleGenListNode* node) {
 
 
 /*!
- * @brief **求长度**
+ * @brief **获取长度**
  * @return 长度
  * @note
- * 求长度
+ * 获取长度
  * -----
  * -----
  *

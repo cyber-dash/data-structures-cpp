@@ -102,6 +102,18 @@ void TestLength() {
 
 /*!
  * @brief **测试-简单广义表-深度**
+ * @note
+ * 测试-简单广义表-深度
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * 构造简单广义表\n
+ * 打印简单广义表\n
+ * 打印简单广义表的深度\n
+ *
+ *
+ * -----------------
  */
 void TestSimpleGenListDepth() {
 
@@ -110,16 +122,19 @@ void TestSimpleGenListDepth() {
     cout<<"|                  Test SimpleGenList Depth                 |"<<endl;
     cout<<"|                     测试-简单广义表-深度                  |"<<endl<<endl<<endl;
 
+    // 构造简单广义表
     string str("(a,b,(c,d,(e)),())");
 
     SimpleGenList simple_gen_list;
 
     simple_gen_list.CreateByString(str);
 
+    // 打印简单广义表
     string output_str = simple_gen_list.ToString();
 
     cout<<"广义表格式化字符串: "<<output_str<<endl;
 
+    // 打印简单广义表的深度
     int depth = simple_gen_list.Depth();
 
     cout<<"广义表深度: "<<depth<<endl;
@@ -130,6 +145,18 @@ void TestSimpleGenListDepth() {
 
 /*!
  * @brief **测试-简单广义表-长度**
+ * @note
+ * 测试-简单广义表-长度
+ * -----------------
+ * -----------------
+ *
+ * -----------------
+ * 构造简单广义表\n
+ * 打印简单广义表\n
+ * 打印简单广义表的长度\n
+ *
+ *
+ * -----------------
  */
 void TestSimpleGenListLength() {
 
@@ -138,16 +165,19 @@ void TestSimpleGenListLength() {
     cout<<"|                 Test SimpleGenList Length                 |"<<endl;
     cout<<"|                     测试-简单广义表-长度                  |"<<endl<<endl<<endl;
 
+    // 构造简单广义表
     string str("(a,b,(c,d,(e)),())");
 
     SimpleGenList simple_gen_list;
 
     simple_gen_list.CreateByString(str);
 
+    // 打印简单广义表
     string output_str = simple_gen_list.ToString();
 
     cout<<"广义表格式化字符串: "<<output_str<<endl;
 
+    // 打印简单广义表的长度
     int length = simple_gen_list.Length();
 
     cout<<"广义表长度: "<<length<<endl;

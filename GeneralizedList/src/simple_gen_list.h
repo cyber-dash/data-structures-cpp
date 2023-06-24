@@ -116,17 +116,21 @@ public:
     // 生成字符串
     string ToString();
 
+    // 获取深度
     int Depth();
+    // 获取长度
     int Length();
 
 
 private:
     // 使用队列创建广义表(递归)
     void CreateByQueueRecursive_(queue<char>& char_queue, SimpleGenListNode*& node);
-
+    // 子表构造字符队列(递归)
     bool ToCharQueueRecursive_(queue<char>& char_queue, SimpleGenListNode* node);
 
+    // 求子表深度(递归)
     int SubGenListDepthRecursive_(SimpleGenListNode* node);
+    // 求子表长度(递归)
     int SubGenListLengthRecursive_(SimpleGenListNode* node);
 
     SimpleGenListNode* list_node_;       //!< **表结点**
