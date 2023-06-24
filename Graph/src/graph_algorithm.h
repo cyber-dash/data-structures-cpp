@@ -41,6 +41,9 @@ public:
      * mst_edges_分配内存\n
      * **if** 内存分配失败 :\n
      * &emsp; 抛出bad_alloc()\n
+     *
+     *
+     * -------
      */
     explicit MinimumSpanTree(int max_size): max_size_(max_size), size_(0) {
         this->mst_edges_ = new Edge<TVertex, TWeight>[max_size];                            // mst_edges_分配内存
@@ -65,6 +68,9 @@ public:
      * + **2 执行插入**\n
      * &emsp; 插入到最后一项\n
      * &emsp; size_加1\n
+     *
+     *
+     * -----
      */
     int Insert(Edge<TVertex, TWeight>& edge) {
         // ---------- 1 合法性判断 ----------
@@ -93,6 +99,9 @@ public:
      * &emsp; 获取当前边权值\n
      * &emsp; 打印当前边信息\n
      * 打一段文本\n
+     *
+     *
+     * -------------
      * */
     void Print() {
         TWeight total_weight = 0;                                                           // 初始化total_weight(总权值)

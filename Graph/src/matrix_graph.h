@@ -137,6 +137,9 @@ private:
  * &emsp;&emsp; 抛出bad_alloc()错误\n
  * &emsp; **for loop** 遍历当前行 :\n
  * &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
+ *
+ *
+ * ---------------------------
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_weight) {
@@ -204,6 +207,9 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
  * &emsp;&emsp; 抛出bad_alloc()错误\n
  * &emsp; **for loop** 遍历当前行 :\n
  * &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n
+ *
+ *
+ * ---------------------------------
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeight max_weight) {
@@ -279,6 +285,9 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
  * ( 3.2 使用edges插入边 )\n
  * **for loop** 遍历vertices :\n
  * &emsp; 调用InsertEdge, 插入当前边edges[i]\n
+ *
+ *
+ * ------------------------------------------------
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
@@ -375,6 +384,9 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
  * ( 3.2 使用edges插入边 )\n
  * **for loop** 遍历vertices :\n
  * &emsp; 调用InsertEdge, 插入当前边edges[i]\n
+ *
+ *
+ * ----------------------------------------------
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
@@ -444,6 +456,9 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type,
  * **for loop** 遍历adjacency_matrix_各行 :\n
  * &emsp; delete[]当前行\n
  * delete[] adjacency_matrix_\n
+ *
+ *
+ * -------
  */
 template<typename TVertex, typename TWeight>
 MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
@@ -473,6 +488,9 @@ MatrixGraph<TVertex, TWeight>::~MatrixGraph() {
  * vertices_[vertex_index]赋给参数vertex\n\n
  * - **3 返回结果**\n\n
  * 返回true\n
+ *
+ *
+ * -----------------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& vertex) const {
@@ -520,6 +538,9 @@ bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& 
  * &emsp; 返回false\n\n
  * - **3 返回结果**\n\n
  * 返回true\n
+ *
+ *
+ * ----------------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
@@ -572,6 +593,9 @@ bool MatrixGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
  * adjacency_matrix_<b>[</b>starting_vertex_index<b>][</b>ending_vertex_index<b>]</b>赋给参数weight\n
  * - **3 返回结果**\n\n
  * 返回true\n
+ *
+ *
+ * -------------------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_index,
@@ -628,6 +652,9 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
  * &emsp;&emsp; 返回true\n\n
  * + **3 退出函数**\n\n
  * 返回false\n
+ *
+ *
+ * --------------------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex, TVertex& first_neighbor) const {
@@ -695,6 +722,9 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
  * &emsp;&emsp; 返回true\n\n
  * + **3 退出函数**\n
  * 返回false\n
+ *
+ *
+ * -----------------------------------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
@@ -759,6 +789,9 @@ bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
  * vertex_count_加1\n\n
  * - **3** 退出函数\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
@@ -852,6 +885,9 @@ bool MatrixGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
  * &emsp; 边终点的入度加1\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -----
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
@@ -1013,6 +1049,9 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
  * vertex_count_(结点数)减1**\n
  * + **6 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
@@ -1152,6 +1191,9 @@ bool MatrixGraph<TVertex, TWeight>::RemoveVertex(const TVertex& vertex) {
  * &emsp; 边起点的出度减1\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -----
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
@@ -1284,6 +1326,9 @@ istream& operator>>(istream& in, MatrixGraph<TVertex, TWeight>& graph) {
  *  - **1.1 打印结点信息**\n
  *  - **1.2 打印边信息**\n
  * + **2 打印邻接矩阵信息**\n
+ *
+ *
+ * -----
  */
 template<typename TVertex, typename TWeight>
 ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
@@ -1343,6 +1388,9 @@ ostream& operator<<(ostream& out, MatrixGraph<TVertex, TWeight>& graph) {
  * &emsp; **if** i(当前索引)对应的结点等于vertex :\n
  * &emsp;&emsp; 返回i\n
  * 返回-1(如果没有找到对应索引)\n
+ *
+ *
+ * ----------
  */
 template<typename TVertex, typename TWeight>
 int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
@@ -1369,6 +1417,9 @@ int MatrixGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {
  * **for loop** 遍历行索引: \n
  * &emsp; **for loop** 遍历列索引:\n
  * &emsp;&emsp; 打印adjacency_matrix_[row][col](当前矩阵元素)\n
+ *
+ *
+ * ------------
  */
 template<typename TVertex, typename TWeight>
 void MatrixGraph<TVertex, TWeight>::PrintMatrix() {

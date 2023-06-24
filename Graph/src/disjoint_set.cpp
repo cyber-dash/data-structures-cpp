@@ -21,6 +21,9 @@
  * parent_分配内存\n
  * **for loop** 遍历parents_ :\n
  * &emsp; parents_[i]初始化为-1(本身为1个并查集, 自己为自身并查集的根结点)\n
+ *
+ *
+ * -------------
  */
 DisjointSet::DisjointSet(int size) {
     size_ = size;                                                                       // size_赋值
@@ -44,6 +47,9 @@ DisjointSet::DisjointSet(int size) {
  * **while loop** index存在父结点 :\n
  * &emsp; index更新为父结点索引值\n\n
  * 返回index\n
+ *
+ *
+ * ---
  */
 int DisjointSet::Find(int index) {
 
@@ -68,6 +74,9 @@ int DisjointSet::Find(int index) {
  * **if** index结点没有父结点 :\n
  * &emsp; 返回index\n\n
  * 返回FindRecursive(parents_[index])\n
+ *
+ *
+ * ---------
  */
 int DisjointSet::FindRecursive(int index) {
   if (parents_[index] < 0) {                                                            // if index结点没有父结点
@@ -79,7 +88,7 @@ int DisjointSet::FindRecursive(int index) {
 
 
 /**
- * @brief 合并集合(Weighted)
+ * @brief **合并集合(Weighted)**
  * @param node1 结点1
  * @param node2 结点2
  * @note
@@ -102,6 +111,9 @@ int DisjointSet::FindRecursive(int index) {
  * **else**\n
  * &emsp; root2结点的父结点设为root1\n
  * &emsp; root1对应的并查集的weight更新为new_weight\n
+ *
+ *
+ * -----------------
  */
 void DisjointSet::WeightedUnion(int node1, int node2) {
     // ---------- 1 获取各自的根结点 ----------
@@ -148,6 +160,9 @@ void DisjointSet::WeightedUnion(int node1, int node2) {
  * + **3 合并**\n\n
  * parents_[root1]更新(root1作为合并后集合的根结点)\n
  * root1成为结点root2的父结点\n
+ *
+ *
+ * ----
  */
 void DisjointSet::Union(int node1, int node2) {
 

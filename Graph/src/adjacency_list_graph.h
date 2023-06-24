@@ -178,6 +178,9 @@ public:
      * &emsp; cur的值赋给adjacency\n
      * &emsp; 返回true\n\n
      * 返回false\n
+     *
+     *
+     * ----------------------
      */
     bool FindAdjacencyAndPrior(const TVertex& vertex,
                                Adjacency<TVertex, TWeight>*& adjacency,
@@ -229,6 +232,9 @@ public:
      * &emsp; cur的值赋给adjacency\n
      * &emsp; 返回true\n\n
      * 返回false\n
+     *
+     *
+     * --------------------------------
      */
     bool FindAdjacencyAndPriorByIndex(int vertex_index,
                                       Adjacency<TVertex, TWeight>*& adjacency,
@@ -276,6 +282,9 @@ public:
      * &emsp; 返回true\n\n
      * + **3 退出函数**\n
      * 返回false\n
+     *
+     *
+     * ---------
      */
     bool FindAdjacency(const TVertex& vertex, Adjacency<TVertex, TWeight>*& adjacency) {
 
@@ -321,6 +330,9 @@ public:
      * &emsp; 返回true\n\n
      * + **3 退出函数**\n
      * 返回false\n
+     *
+     *
+     * ---------
      */
     bool FindAdjacencyByIndex(int vertex_index, Adjacency<TVertex, TWeight>*& adjacency) {
 
@@ -362,6 +374,9 @@ public:
      * + **2 处理成员变量**\n
      * first_adjacency设为NULL\n
      * starting_vertex设为TVertex()\n
+     *
+     *
+     * ---
      */
     void Clear() {
 
@@ -543,6 +558,9 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(unsigned int max_vertex
  *  邻接表分配内存并初始化\n
  *  **if** 内存分配失败 :\n
  *  &emsp; 抛出bad_alloc()错误\n
+ *
+ *
+ * ---------------------------------
  */
 template<typename TVertex, typename TWeight>
 AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type, unsigned int max_vertex_count, TWeight max_weight) {
@@ -602,6 +620,9 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type, unsigned int 
  * &emsp; 初始化ending_vertex, 为当前边的ending_vertex\n
  * &emsp; 初始化weight, 为当前边的weight\n\n
  * &emsp; 调用InsertEdge, 插入当前边\n
+ *
+ *
+ * ----------------------------------------------
  */
 template<typename TVertex, typename TWeight>
 AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(unsigned int max_vertex_count,
@@ -689,6 +710,9 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(unsigned int max_vertex
  * &emsp; 初始化ending_vertex, 为当前边的ending_vertex\n
  * &emsp; 初始化weight, 为当前边的weight\n\n
  * &emsp; 调用InsertEdge, 插入当前边\n
+ *
+ *
+ * ---------------------------------------------------
  */
 template<typename TVertex, typename TWeight>
 AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type,
@@ -752,6 +776,9 @@ AdjacencyListGraph<TVertex, TWeight>::AdjacencyListGraph(int type,
  * **for loop** 遍历邻接表 :\n
  * &emsp; 当前邻接表项调用Clear()\n\n
  * 释放邻接表\n
+ *
+ *
+ * -------
  */
 template<typename TVertex, typename TWeight>
 AdjacencyListGraph<TVertex, TWeight>::~AdjacencyListGraph() {
@@ -783,6 +810,9 @@ AdjacencyListGraph<TVertex, TWeight>::~AdjacencyListGraph() {
  * 将adjacency_list_[vertex_index].starting_vertex赋给vertex\n\n
  * + **3 退出函数**\n
  * 返回true\n
+ *
+ *
+ * -----------------
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& vertex) const {
@@ -831,6 +861,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TV
  * &emsp; 返回false\n
  * cur->weight赋给weight\n
  * 返回true\n
+ *
+ *
+ * ----------------
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_vertex,
@@ -893,6 +926,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetWeight(const TVertex& starting_ver
  * \n
  * - **3** 退出函数\n
  * 返回false\n
+ *
+ *
+ * --------------------
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_index,
@@ -951,6 +987,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_v
  * vertex_count_加1\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::InsertVertex(const TVertex& vertex) {
@@ -1437,6 +1476,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_ve
  * &emsp; 边起点的出度减1\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -----
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, const TVertex& ending_vertex) {
@@ -1628,6 +1670,9 @@ bool AdjacencyListGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex&
  * cur->next->ending_vertex赋给next_neighbor(下一相邻结点)\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ---------------
  */
 template<typename TVertex, typename TWeight>
 bool AdjacencyListGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
@@ -1795,6 +1840,9 @@ ostream& operator<<(ostream& out, AdjacencyListGraph<TVertex, TWeight>& graph) {
  * &emsp;&emsp; 返回i\n
  * \n
  * 返回-1(此时没有找到对应结点)\n
+ *
+ *
+ * ----------
  */
 template<typename TVertex, typename TWeight>
 int AdjacencyListGraph<TVertex, TWeight>::GetVertexIndex(const TVertex& vertex) const {

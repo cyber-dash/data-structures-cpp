@@ -121,7 +121,6 @@ void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& v
  * DFS的方式
  *
  * ------
- * <p>
  * 声明visited_vertex_set(已访问结点集合)\n\n
  * **if** 有向图 :\n
  * &emsp; 获取起点入度\n
@@ -129,8 +128,9 @@ void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& v
  * &emsp;&emsp; 返回false\n\n
  * 对起点调用TopologicalSortRecursive_\n\n
  * 返回true\n
- * </p>
- * <hr>
+ *
+ *
+ * ------
  */
 template<typename TVertex, typename TWeight>
 bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
@@ -168,7 +168,6 @@ bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
  * DFS的方式
  *
  * ------------
- * <p>
  * + **1 起点插入已遍历结点集合**\n\n
  * 将starting_vertex插入到visited_vertex_set\n
  * 将starting_vertex插入到topology_sorted_list\n\n
@@ -184,8 +183,9 @@ bool TopologicalSort(const Graph<TVertex, TWeight>& graph,
  * &emsp; 获取next_neighbor_vertex, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists\n\n
  * &emsp; **if** 下一新邻接点存在 :\n
  * &emsp;&emsp; 更新neighbor_vertex\n
- * </p>
- * <hr>
+ *
+ *
+ * ------------
  */
 template<typename TVertex, typename TWeight>
 void TopologicalSortRecursive_(const Graph<TVertex, TWeight>& graph,
