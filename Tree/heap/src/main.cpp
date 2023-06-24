@@ -1,32 +1,32 @@
-﻿//
-// Created by alei_go@163.com(: cyberdash_yuan) on 2020/11/1.
-//
+﻿/*!
+ * @file main.cpp
+ * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
+ * @brief main函数文件
+ * @version 0.2.1
+ * @date 2021-07-14
+ */
 
-#include <iostream>
+#include "test.h"
 
-using namespace std;
 
-#include "min_heap.h"
-#include "min_heap.cpp"
+/*!
+ * @brief **main函数**
+ * @return 0
+ * @note
+ * main函数
+ * -------
+ * -------
+ *
+ * -------
+ * 测试-堆
+ *
+ *
+ * -------
+ */
+int main() {
 
-int main(void) {
-    int arr[] = { 3,2,6,7,8,4,5,34 };
-
-    MinHeap<int> heap(arr, sizeof(arr) / sizeof(arr[0]));
-
-    heap.Insert(99);
-    heap.Insert(0);
-    heap.Insert(100);
-
-    cout << "is full:" << heap.IsFull() << endl;
-    cout << "is empty:" << heap.IsEmpty() << endl;
-
-    int item;
-
-    while (!heap.IsEmpty()) {
-        heap.RemoveMin(item);
-        cout << item << " ";
-    }
+    // 测试-堆
+    TestHeap();
 
     return 0;
 }

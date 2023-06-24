@@ -74,6 +74,9 @@ public:
      *
      * ---
      * 执行min_heap_.Pop()
+     *
+     *
+     * ---
      */
     bool Dequeue(TElement& item) { return min_heap_.Pop(item); }
 
@@ -88,6 +91,9 @@ public:
      *
      * -------
      * min_heap_调用Top
+     *
+     *
+     * -------
      */
     bool Front(TElement& item) { return min_heap_.Top(item); }
 
@@ -101,6 +107,9 @@ public:
      *
      * ----------
      * 返回min_heap_.Size()
+     *
+     *
+     * ----------
      */
     int Size() { return min_heap_.Size(); }
 
@@ -113,6 +122,9 @@ public:
      *
      * -------
      * 调用min_heap_.Clear()
+     *
+     *
+     * -------
      */
     void Clear() { min_heap_.Clear(); }
 

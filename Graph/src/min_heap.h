@@ -27,7 +27,7 @@ template<typename TElement>
 class MinHeap {
 public:
   explicit MinHeap(int capacity = DEFAULT_CAPACITY);
-  MinHeap(TElement* elements, int capacity);
+  MinHeap(TElement* elements, int length, int capacity);
   ~MinHeap() { delete[] elements_; }
 
   // 插入
@@ -45,6 +45,9 @@ public:
    *
    * -----
    * 返回size_ == 0
+   *
+   *
+   * -----
    */
   bool IsEmpty() const { return size_ == 0; }
 
@@ -58,6 +61,9 @@ public:
    *
    * -------
    * 返回size_ == capacity_
+   *
+   *
+   * -------
    */
   bool IsFull() const { return size_ == capacity_; }
 
@@ -71,6 +77,9 @@ public:
    *
    * --------
    * 返回size_
+   *
+   *
+   * --------
    */
   int Size() { return size_; }
 
@@ -83,13 +92,16 @@ public:
    *
    * -----
    * size_调整为0
+   *
+   *
+   * -----
    */
   void Clear() { size_ = 0; }
 
 private:
-  TElement* elements_;    //!< 堆元素数组
-  int size_;    //!< 当前堆size
-  int capacity_;     //!< 容量
+  TElement* elements_;    //!< **堆元素数组**
+  int size_;    //!< **当前堆size**
+  int capacity_;     //!< **容量**
   void SiftDown_(int index);
   void SiftUp_(int index);
   void Swap_(TElement& element1, TElement& element2);
@@ -111,6 +123,9 @@ private:
  * elements_分配内存\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()错误\n
+ *
+ *
+ * ------------
  */
 template <typename TElement>
 MinHeap<TElement>::MinHeap(int capacity) {
@@ -124,19 +139,20 @@ MinHeap<TElement>::MinHeap(int capacity) {
 
 
 /*!
- * @brief **构造函数(元素数组, 容量)**
+ * @brief **构造函数(元素数组, 数组长度, 容量)**
  * @tparam TElement 元素类型模板参数
  * @param elements 元素数组首地址
+ * @param length 元素数组长度
  * @param capacity 容量
  * @note
- * 构造函数(元素数组, 容量)
- * --------------------
- * --------------------
+ * 构造函数(元素数组, 数组长度, 容量)
+ * ------------------------------
+ * ------------------------------
  *
- * --------------------
+ * ------------------------------
  * + **1 初始化**\n\n
  * 设置capacity_<span style="color:#283593;font-weight:bold">(容量)</span>\n
- * 设置size_<span style="color:#283593;font-weight:bold">(当前堆大小)</span>为0\n\n
+ * 设置size_<span style="color:#283593;font-weight:bold">(当前堆大小)</span>为length\n\n
  * elements_分配内存\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()错误\n\n
@@ -145,14 +161,17 @@ MinHeap<TElement>::MinHeap(int capacity) {
  * + **2 建堆**\n\n
  * **for loop** 从索引(size_ - 2) / 2 到 0 :\n
  * &emsp; 对i<span style="color:#283593;font-weight:bold">(当前索引)</span>执行SiftDown_;\n
+ *
+ *
+ * ------------------------------
  */
 template <typename TElement>
-MinHeap<TElement>::MinHeap(TElement* elements, int capacity) {
+MinHeap<TElement>::MinHeap(TElement* elements, int length, int capacity) {
 
     // ---------- 1 初始化 ----------
 
     capacity_ = (capacity > DEFAULT_CAPACITY) ? capacity : DEFAULT_CAPACITY;                // 设置capacity_(容量)
-    size_ = 0;                                                                              // 设置size_(当前堆大小)为0
+    size_ = length;                                                                              // 设置size_(当前堆大小)为0
 
     elements_ = new TElement[capacity_];                                                    // elements_分配内存
     if (elements_ == NULL) {                                                                // if 内存分配失败
@@ -187,6 +206,9 @@ MinHeap<TElement>::MinHeap(TElement* elements, int capacity) {
  * &emsp; **if** index(当前结点索引)元素 <= 最小孩子元素 :\n
  * &emsp;&emsp; 跳出循环\n\n
  * &emsp; 交换(当前结点, 最小孩子结点)\n
+ *
+ *
+ * -------
  */
 template <typename TElement>
 void MinHeap<TElement>::SiftDown_(int index) {
@@ -218,6 +240,9 @@ void MinHeap<TElement>::SiftDown_(int index) {
  * &emsp; **if** 当前父节点元素 <= 当前结点元素 :\n
  * &emsp;&emsp; 退出循环\n\n
  * &emsp; 交换(当前父节点, 当前结点)\n
+ *
+ *
+ * -------
  */
 template <typename TElement>
 void MinHeap<TElement>::SiftUp_(int index) {
@@ -243,6 +268,9 @@ void MinHeap<TElement>::SiftUp_(int index) {
  *
  * ---
  * 常规交换操作
+ *
+ *
+ * ---
  */
 template <typename TElement>
 void MinHeap<TElement>::Swap_(TElement& element1, TElement& element2) {
@@ -273,6 +301,9 @@ void MinHeap<TElement>::Swap_(TElement& element1, TElement& element2) {
  * 堆size加1\n\n
  * + **4 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * ---
  */
 template <typename TElement>
 bool MinHeap<TElement>::Insert(const TElement& element) {
@@ -320,6 +351,9 @@ bool MinHeap<TElement>::Insert(const TElement& element) {
  * 对堆顶执行SiftDown_\n
  * + **5 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template <typename TElement>
 bool MinHeap<TElement>::Pop(TElement& element) {
@@ -366,6 +400,9 @@ bool MinHeap<TElement>::Pop(TElement& element) {
  * element保存堆顶值\n\n
  * + **3 退出函数**\n\n
  * 返回true\n
+ *
+ *
+ * -------
  */
 template <typename TElement>
 bool MinHeap<TElement>::Top(TElement& element) {
