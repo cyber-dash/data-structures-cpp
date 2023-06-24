@@ -45,6 +45,9 @@ struct TriTuple {
      * col赋值\n
      * value赋值\n\n
      * 返回*this\n
+     *
+     *
+     * -----
      */
     TriTuple<TValue>& operator=(const TriTuple<TValue>& tri_tuple) {
 
@@ -152,6 +155,9 @@ private:
  * elements_分配内存并初始化\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()异常\n
+ *
+ *
+ * -----------------
  */
 template<typename TData>
 SparseMatrix<TData>::SparseMatrix(int capacity): rows_(0), cols_(0), size_(0), capacity_(capacity) {
@@ -182,6 +188,9 @@ SparseMatrix<TData>::SparseMatrix(int capacity): rows_(0), cols_(0), size_(0), c
  * &emsp; 抛出bad_alloc()\n\n
  * **for loop** 遍历非0元素个数 :\n
  * &emsp; elements_[i]赋值\n
+ *
+ *
+ * ----------
  */
 template<typename TData>
 SparseMatrix<TData>::SparseMatrix(const SparseMatrix<TData>& sparse_matrix) :
@@ -217,6 +226,9 @@ SparseMatrix<TData>::SparseMatrix(const SparseMatrix<TData>& sparse_matrix) :
  * &emsp; 当前元素的value赋给参数value\n
  * &emsp; 返回true\n
  * 返回false\n
+ *
+ *
+ * -------
  */
 template<typename TValue>
 bool SparseMatrix<TValue>::Element(int row, int col, TValue& value) {
@@ -387,7 +399,7 @@ void Swap(TriTuple<TValue>* a, TriTuple<TValue>* b) {
  * 返回out\n
  *
  *
- * -------------------
+ * ------
  */
 template<typename TData>
 ostream& operator<<(ostream& out, SparseMatrix<TData>& sparse_matrix) {
