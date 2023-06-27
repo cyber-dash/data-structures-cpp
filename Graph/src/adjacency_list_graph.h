@@ -1750,7 +1750,7 @@ istream& operator>>(istream& in, AdjacencyListGraph<TVertex, TWeight>& adjacency
  *
  * ----------
  * + **1 打印基本信息**\n\n
- * 1.1 打印结点信息**\n
+ * **1.1 打印结点信息**\n
  * &emsp; 打印文本\n
  * &emsp; **for loop** 遍历结点索引 :\n
  * &emsp;&emsp; 获取当前结点\n

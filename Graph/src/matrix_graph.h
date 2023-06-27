@@ -120,11 +120,11 @@ private:
  *
  * ---------------------------
  * + **1** 设置部分成员变量\n\n
- * type_(**图类型**)设为UNDIRECTED(**无向**)\n\n
- * max_vertex_count_(**结点数上限**)使用参数赋值\n
- * max_weight_(**边权值上限**)使用参数赋值\n\n
- * vertex_count_(**结点数量**)设为0\n
- * edge_count_(**边数量**)设为0\n\n
+ * type_<span style="color:#283593;font-weight:bold">(图类型)</span>设为UNDIRECTED<span style="color:#283593;font-weight:bold">(无向)</span>\n\n
+ * max_vertex_count_<span style="color:#283593;font-weight:bold">(结点数上限)</span>使用参数赋值\n
+ * max_weight_<span style="color:#283593;font-weight:bold">(边权值上限)</span>使用参数赋值\n\n
+ * vertex_count_<span style="color:#283593;font-weight:bold">(结点数量)</span>设为0\n
+ * edge_count_<span style="color:#283593;font-weight:bold">(边数量)</span>设为0\n\n
  * + **2** 设置邻接矩阵\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
  * adjacency_matrix_分配内存并初始化\n
@@ -158,7 +158,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
 
     // ( 2.1 分配邻接矩阵内存 )
     this->adjacency_matrix_ = new TWeight*[this->max_vertex_count_];                            // adjacency_matrix_分配内存并初始化
-    if (!this->adjacency_matrix_) {                                                             //if 内存分配失败
+    if (!this->adjacency_matrix_) {                                                             // if 内存分配失败
         throw bad_alloc();                                                                      // 抛出bad_alloc()错误
     }
 
@@ -190,11 +190,11 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count, TWeight max_wei
  *
  * ---------------------------------
  * + **1** 设置部分成员变量\n\n
- * type_(**图类型**)使用参数赋值\n\n
- * max_vertex_count_(**结点数上限**)使用参数赋值\n
- * max_weight_(**边权值上限**)使用参数赋值\n\n
- * vertex_count_(**结点数量**)设为0\n
- * edge_count_(**边数量**)设为0\n\n
+ * type_<span style="color:#283593;font-weight:bold">(图类型)</span>使用参数赋值\n\n
+ * max_vertex_count_<span style="color:#283593;font-weight:bold">(结点数上限)</span>使用参数赋值\n
+ * max_weight_<span style="color:#283593;font-weight:bold">(边权值上限)</span>使用参数赋值\n\n
+ * vertex_count_<span style="color:#283593;font-weight:bold">(结点数量)</span>设为0\n
+ * edge_count_<span style="color:#283593;font-weight:bold">(边数量)</span>设为0\n\n
  * + **2** 设置邻接矩阵\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
  * adjacency_matrix_分配内存并初始化\n
@@ -261,11 +261,11 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int type, int max_vertex_count, TWeig
  *
  * ------------------------------------------------
  * + **1** 设置部分成员变量\n
- * type_(**图类型**)设为UNDIRECTED(**无向**)\n\n
- * max_vertex_count_(**结点数上限**)使用参数赋值\n
- * max_weight_(**边权值上限**)使用参数赋值\n\n
- * vertex_count_(**结点数量**)设为0\n
- * edge_count_(**边数量**)设为0\n\n
+ * type_<span style="color:#283593;font-weight:bold">(图类型)</span>设为UNDIRECTED<span style="color:#283593;font-weight:bold">(无向)</span>\n\n
+ * max_vertex_count_<span style="color:#283593;font-weight:bold">(结点数上限)</span>使用参数赋值\n
+ * max_weight_<span style="color:#283593;font-weight:bold">(边权值上限)</span>使用参数赋值\n\n
+ * vertex_count_<span style="color:#283593;font-weight:bold">(结点数量)</span>设为0\n
+ * edge_count_<span style="color:#283593;font-weight:bold">(边数量)</span>设为0\n\n
  * + **2** 设置邻接矩阵\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
  * adjacency_matrix_分配内存并初始化\n
@@ -359,13 +359,13 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
  * </span>
  *
  * ----------------------------------------------
- * + **1** 设置部分成员变量\n\n
- * type_(**图类型**)使用参数赋值\n\n
- * max_vertex_count_(**结点数上限**)使用参数赋值\n
- * max_weight_(**边权值上限**)使用参数赋值\n\n
- * vertex_count_(**结点数量**)设为0\n
- * edge_count_(**边数量**)设为0\n\n
- * + **2** 设置邻接矩阵\n\n
+ * + **1 设置部分成员变量**\n\n
+ * type_<span style="color:#283593;font-weight:bold">(图类型)</span>使用参数赋值\n\n
+ * max_vertex_count_<span style="color:#283593;font-weight:bold">(结点数上限)</span>使用参数赋值\n
+ * max_weight_<span style="color:#283593;font-weight:bold">(边权值上限)</span>使用参数赋值\n\n
+ * vertex_count_<span style="color:#283593;font-weight:bold">(结点数量)</span>设为0\n
+ * edge_count_<span style="color:#283593;font-weight:bold">(边数量)</span>设为0\n\n
+ * + **2 设置邻接矩阵**\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.1 分配邻接矩阵内存 )</span>\n
  * adjacency_matrix_分配内存并初始化\n
  * **if** 内存分配失败 :\n
@@ -377,7 +377,7 @@ MatrixGraph<TVertex, TWeight>::MatrixGraph(int max_vertex_count,
  * &emsp;&emsp; 抛出bad_alloc()错误\n
  * &emsp; **for loop** 遍历当前行 :\n
  * &emsp;&emsp; 对当前矩阵元素adjacency_matrix_[row][col]初始化\n\n
- * + **3** 插入结点和边\n\n
+ * + **3 插入结点和边**\n\n
  * ( 3.1 使用vertices插入结点 )\n
  * **for loop** 遍历vertices :\n
  * &emsp; 调用InsertVertex, 插入当前节点vertices[i]\n\n
@@ -528,8 +528,8 @@ bool MatrixGraph<TVertex, TWeight>::GetVertexByIndex(int vertex_index, TVertex& 
  *
  * ----------------
  * - **1 判断合法性**\n\n
- * 获取starting_vertex_index(起点索引)\n
- * 获取ending_vertex_index(终点索引)\n\n
+ * 获取starting_vertex_index<span style="color:#283593;font-weight:bold">(起点索引)</span>\n
+ * 获取ending_vertex_index<span style="color:#283593;font-weight:bold">(终点索引)</span>\n\n
  * **if** 起点索引 < 0 || 终点索引 < 0 || 起点索引等于终点索引 || 邻接矩阵内对应元素为初始值 :\n
  * &emsp; 返回false\n\n
  * - **2 获取边权值**\n\n
@@ -641,9 +641,9 @@ bool MatrixGraph<TVertex, TWeight>::GetWeightByVertexIndex(int starting_vertex_i
  * &emsp; 返回false\n\n
  * + **2 遍历找到第一个相邻结点**\n\n
  * **for loop** 遍历结点索引 :\n
- * &emsp; 声明weight(边权值)\n
- * &emsp; 声明cur_vertex(当前结点)\n\n
- * &emsp; 获取i(当前结点索引)对应的结点\n
+ * &emsp; 声明weight<span style="color:#283593;font-weight:bold">(边权值)</span>\n
+ * &emsp; 声明cur_vertex<span style="color:#283593;font-weight:bold">(当前结点)</span>\n\n
+ * &emsp; 获取i<span style="color:#283593;font-weight:bold">(当前结点索引)</span>对应的结点\n
  * &emsp; **if** 当前索引无对应结点 :\n
  * &emsp;&emsp; continue\n\n
  * &emsp; 获取邻接边(vertex ---> cur_vertex)的权值\n\n
@@ -705,15 +705,15 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
  *
  * -----------------------------------
  * + **1 判断合法性**\n\n
- * 获取vertex_index(结点索引)\n
- * 获取neighbor_vertex_index(相邻某结点的结点索引)\n
+ * 获取vertex_index<span style="color:#283593;font-weight:bold">(结点索引)</span>\n
+ * 获取neighbor_vertex_index<span style="color:#283593;font-weight:bold">(相邻某结点的结点索引)</span>\n
  * **if** 结点索引 < 0 || 某相邻结点索引 < 0 :\n
  * &emsp; 返回false\n\n
  * + **2 遍历结点找到下一个相邻结点**\n
  * **for loop** 遍历结点索引, 从(neighbor_vertex_index + 1)到(vertex_count_ - 1) :\n
- * &emsp; 声明weight(边权值)\n
- * &emsp; 声明cur_vertex(当前结点)\n\n
- * &emsp; 获取i(当前索引)对应的结点\n
+ * &emsp; 声明weight<span style="color:#283593;font-weight:bold">(边权值)</span>\n
+ * &emsp; 声明cur_vertex<span style="color:#283593;font-weight:bold">(当前结点)</span>\n\n
+ * &emsp; 获取i<span style="color:#283593;font-weight:bold">(当前索引)</span>对应的结点\n
  * &emsp; **if** 当前索引无对应结点 :\n
  * &emsp;&emsp; continue\n\n
  * &emsp; 获取边(vertex ---> cur_vertex)的权值\n

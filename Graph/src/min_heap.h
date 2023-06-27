@@ -1,7 +1,7 @@
 ﻿/*!
  * @file min_heap.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
- * @brief 小顶堆
+ * @brief 最小堆
  * @version 0.2.1
  * @date 2021-07-14
  */
@@ -20,7 +20,7 @@ using namespace std;
 
 
 /*!
- * @brief 最小堆模板类
+ * @brief **最小堆模板类**
  * @tparam TElement 类型模板参数
  */
 template<typename TElement>
@@ -100,8 +100,8 @@ public:
 
 private:
   TElement* elements_;    //!< **堆元素数组**
-  int size_;    //!< **当前堆size**
-  int capacity_;     //!< **容量**
+  int size_;              //!< **当前堆大小**
+  int capacity_;          //!< **容量**
   void SiftDown_(int index);
   void SiftUp_(int index);
   void Swap_(TElement& element1, TElement& element2);
@@ -118,8 +118,8 @@ private:
  * ------------
  *
  * ------------
- * 设置capacity_(容量)\n\n
- * 设置size_(当前堆大小)为0\n\n
+ * 设置capacity_<span style="color:#283593;font-weight:bold">(容量)</span>\n\n
+ * 设置size_<span style="color:#283593;font-weight:bold">(当前堆大小)</span>为0\n\n
  * elements_分配内存\n
  * **if** 内存分配失败 :\n
  * &emsp; 抛出bad_alloc()错误\n
@@ -171,7 +171,7 @@ MinHeap<TElement>::MinHeap(TElement* elements, int length, int capacity) {
     // ---------- 1 初始化 ----------
 
     capacity_ = (capacity > DEFAULT_CAPACITY) ? capacity : DEFAULT_CAPACITY;                // 设置capacity_(容量)
-    size_ = length;                                                                              // 设置size_(当前堆大小)为0
+    size_ = length;                                                                         // 设置size_(当前堆大小)为0
 
     elements_ = new TElement[capacity_];                                                    // elements_分配内存
     if (elements_ == NULL) {                                                                // if 内存分配失败
@@ -201,11 +201,11 @@ MinHeap<TElement>::MinHeap(TElement* elements, int length, int capacity) {
  *
  * -------
  * **for loop** 遍历索引index的后代结点 :\n\n
- * &emsp; **if** child_index(当前左孩子结点索引) + 1 < 堆大小 && 左孩子节点元素 > 右孩子结点元素 :\n
+ * &emsp; **if** child_index<span style="color:#283593;font-weight:bold">(当前左孩子结点索引)</span> + 1 < 堆大小 && 左孩子节点元素 > 右孩子结点元素 :\n
  * &emsp;&emsp; child_index调整为右孩子结点索引(自加1), 此时child_index元素为孩子结点中最小孩子元素\n\n
- * &emsp; **if** index(当前结点索引)元素 <= 最小孩子元素 :\n
+ * &emsp; **if** index<span style="color:#283593;font-weight:bold">(当前结点索引)</span>元素 <= 最小孩子元素 :\n
  * &emsp;&emsp; 跳出循环\n\n
- * &emsp; 交换(当前结点, 最小孩子结点)\n
+ * &emsp; 交换(当前结点, 最小孩子结点, 做交换)\n
  *
  *
  * -------
@@ -239,7 +239,7 @@ void MinHeap<TElement>::SiftDown_(int index) {
  * **for loop** 遍历索引index的祖先结点 :\n\n
  * &emsp; **if** 当前父节点元素 <= 当前结点元素 :\n
  * &emsp;&emsp; 退出循环\n\n
- * &emsp; 交换(当前父节点, 当前结点)\n
+ * &emsp; 交换(当前父节点, 当前结点, 做交换)\n
  *
  *
  * -------
@@ -339,16 +339,16 @@ bool MinHeap<TElement>::Insert(const TElement& element) {
  * -------
  *
  * -------
- * + **1 合法性判断**\n
+ * + **1 合法性判断**\n\n
  * **if** 空堆 :\n
- * &emsp; 返回false\n
- * + **2 保存堆顶**\n
- * element保存堆顶值\n
- * + **3 替换堆顶**\n
- * elements_[size_ - 1](最后一个元素)替换elements_[0]\n
- * 堆size_减1\n
- * + **4 调整堆**\n
- * 对堆顶执行SiftDown_\n
+ * &emsp; 返回false\n\n
+ * + **2 保存堆顶**\n\n
+ * element保存堆顶值\n\n
+ * + **3 替换堆顶**\n\n
+ * elements_[size_ - 1]<span style="color:#283593;font-weight:bold">(最后一个元素)</span>替换elements_[0]\n
+ * 堆size_减1\n\n
+ * + **4 调整堆**\n\n
+ * 对堆顶执行SiftDown_\n\n
  * + **5 退出函数**\n\n
  * 返回true\n
  *
