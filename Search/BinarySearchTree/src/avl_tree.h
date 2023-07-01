@@ -267,18 +267,18 @@ public:
     int Height() { return this->root_->Height(); }
 
     /*!
-     * @brief **获取高度(递归)**
+     * @brief **获取高度(调用递归)**
      * @return 高度
      * @note
-     * 获取高度(递归)
-     * ------------
-     * ------------
+     * 获取高度(调用递归)
+     * ---------------
+     * ---------------
      *
-     * ------------
+     * ---------------
      * 对根结点调用HeightOfSubtreeRecursive_, 返回高度
      *
      *
-     * ------------
+     * ---------------
      */
     int HeightRecursive() { return this->HeightOfSubtreeRecursive_(this->root_); }
 

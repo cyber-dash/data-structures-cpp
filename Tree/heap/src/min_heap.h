@@ -32,7 +32,9 @@ public:
 
   // 插入
   bool Insert(const TElement& element);
+  // 堆顶出堆
   bool Pop(TElement& element);
+  // 获取堆顶
   bool Top(TElement& element);
 
   /*!

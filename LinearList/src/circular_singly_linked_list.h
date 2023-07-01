@@ -92,7 +92,7 @@ public:
     // 设置结点数据
     bool SetData(int pos, const TData& data);
 
-    // 打印双向链表
+    // 打印
     void Print();
 
 private:

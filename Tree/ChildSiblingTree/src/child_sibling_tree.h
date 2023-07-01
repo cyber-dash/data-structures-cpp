@@ -127,10 +127,10 @@ public:
     ChildSiblingNode<TData>* Root() { return this->root_; }
 
     /*!
-     * @brief **前序遍历**
+     * @brief **先根遍历**
      * @param visit 结点访问函数
      * @note
-     * 前序遍历
+     * 先根遍历
      * -------
      * -------
      *
@@ -143,10 +143,10 @@ public:
     void PreOrderRecursive(void (*visit)(ChildSiblingNode<TData>*)) { PreOrderOfSubTreeRecursive_(root_, visit); }
 
     /*!
-     * @brief **后序遍历**
+     * @brief **后根遍历**
      * @param visit 结点访问函数
      * @note
-     * 后序遍历
+     * 后根遍历
      * -------
      * -------
      *

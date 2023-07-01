@@ -79,9 +79,9 @@ public:
     // 队头出队(不保存数据)
     bool PopFront();
 
-    // 队头出队(保存数据)
+    // 队尾出队(保存数据)
     bool PopBack(TData& data);
-    // 队头出队
+    // 队尾出队
     bool PopBack();
 
     // 获取队头数据

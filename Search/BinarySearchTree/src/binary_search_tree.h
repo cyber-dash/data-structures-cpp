@@ -169,22 +169,22 @@ public:
     virtual ~BinarySearchTree() { delete this->root_; };
 
     /*!
-     * @brief **插入结点(递归)**
+     * @brief **插入结点(调用递归)**
      * @tparam TKey 关键字类型模板参数
      * @tparam TValue 值类型模板参数
      * @param key 关键字
      * @param value 值
      * @return 执行结果
      * @note
-     * 插入结点(递归)
-     * ------------
-     * ------------
+     * 插入结点(调用递归)
+     * ----------------
+     * ----------------
      *
-     * ------------
+     * ----------------
      * 调用InsertInSubTree_
      *
      *
-     * ------------
+     * ----------------
      */
     virtual bool InsertRecursive(TKey key, TValue value) { return this->InsertInSubTree_(key, value, this->root_); }
 
@@ -206,19 +206,19 @@ public:
     virtual bool RemoveRecursive(const TKey& key) { return RemoveInSubTree_(root_, key); }
 
     /*!
-     * @brief **搜索**
+     * @brief **搜索(调用递归)**
      * @param key 关键字
      * @return 结点
      * @note
-     * 搜索
-     * ---
-     * ---
+     * 搜索(调用递归)
+     * ------------
+     * ------------
      *
-     * ---
+     * ------------
      * 对根结点调用SearchInSubTree_
      *
      *
-     * ---
+     * ------------
      */
     virtual BstNode<TKey, TValue>* Search(TKey key) { return SearchInSubTree_(this->root_, key); }
 

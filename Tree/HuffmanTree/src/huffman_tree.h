@@ -140,6 +140,7 @@ public:
         root_ = NULL;
     }
 
+    // 生成哈夫曼编码
     unordered_map<TKey, string> GenerateHuffmanCodes();
 
     /*!
