@@ -428,14 +428,16 @@ public:
     // 构造函数(结点数上限,边权值上限)
     AdjacencyListGraph(unsigned int max_vertex_count, TWeight max_weight);
 
-    // 构造函数(图类型/结点数上限/边权值上限)
+    // 构造函数(图类型,结点数上限,边权值上限)
     AdjacencyListGraph(int type, unsigned int max_vertex_count, TWeight max_weight);
 
+    // 构造函数(结点数上限,边权值上限,边vector,结点vector)
     AdjacencyListGraph(unsigned int max_vertex_count,
                        TWeight max_weight,
                        const vector<Edge<TVertex, TWeight> >& edges,
                        const vector<TVertex>& vertices);
 
+    // 构造函数(图类型,结点数上限,边权值上限,边vector,结点vector)
     AdjacencyListGraph(int type,
                        unsigned int max_vertex_count,
                        TWeight max_weight,
@@ -448,10 +450,10 @@ public:
     // 使用结点索引获取结点
     bool GetVertexByIndex(int vertex_index, TVertex& vertex) const;
 
-    // 获取边权值()
+    // 获取边权值
     bool GetWeight(const TVertex& starting_vertex, const TVertex& ending_vertex, TWeight& weight) const;
 
-    // (由边的两个结点索引)获取边权值
+    // 获取边权值(by结点索引)
     bool GetWeightByVertexIndex(int starting_vertex_index, int ending_vertex_index, TWeight& weight) const;
 
     // 插入结点

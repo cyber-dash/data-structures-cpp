@@ -122,12 +122,12 @@ protected:
 };
 
 
-// 图深度优先遍历
+// 深度优先遍历
 template<typename TVertex, typename TWeight>
 void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 
 
-// 图深度优先遍历(递归)
+// 深度优先遍历(递归)
 template<typename TVertex, typename TWeight>
 void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex, set<TVertex>& visited_vertex_set);
 
@@ -149,12 +149,12 @@ template<typename TVertex, typename TWeight>
 int Components(const Graph<TVertex, TWeight>& graph);
 
 
-// Prim算法
+// 最小生成树Prim
 template<typename TVertex, typename TWeight>
 bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree);
 
 
-// Kruskal最小生成树(优先队列)
+// 最小生成树Kruskal
 template<typename TVertex, typename TWeight>
 void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight>& min_span_tree);
 
