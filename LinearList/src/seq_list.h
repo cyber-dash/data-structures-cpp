@@ -49,7 +49,6 @@ public:
     // 析构函数
     ~SeqList() { delete[] mem_data_; }
 
-    // 获取总长度
     /*!
      * @brief **获取容量**
      * @return 容量
@@ -62,16 +61,16 @@ public:
     // 搜索
     int Search(const TData& data) const;
 
-    // 获取位置pos的数据
+    // 获取结点数据
     bool GetData(int pos, TData& data) const;
 
-    // 设置位置pos的数据
+    // 设置结点数据
     bool SetData(int pos, const TData& data);
 
-    // 位置pos插入数据data
+    // 插入结点
     bool Insert(int prev_pos, const TData& data);
 
-    // 删除位置pos的数据
+    // 删除结点
     bool Remove(int target_pos, TData& data);
 
     // 是否为空
