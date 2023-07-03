@@ -124,7 +124,7 @@ protected:
 
 // 深度优先遍历
 template<typename TVertex, typename TWeight>
-void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
+void Dfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex);
 
 
 // 深度优先遍历(递归)

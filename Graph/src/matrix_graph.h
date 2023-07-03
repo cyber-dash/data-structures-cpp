@@ -691,7 +691,7 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
 
 
 /*!
- * @brief **获取结点相对于某一相邻结点的下一个相邻结点**
+ * @brief **获取下一个相邻结点**
  * @tparam TVertex 结点类型模板参数
  * @tparam TWeight 边权值类型模板参数
  * @param vertex 结点
@@ -699,11 +699,11 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
  * @param next_neighbor_vertex 下一相邻结点保存变量
  * @return 执行结果
  * @note
- * 获取结点相对于某一相邻结点的下一个相邻结点
- * -----------------------------------
- * -----------------------------------
+ * 获取下一个相邻结点
+ * ---------------
+ * ---------------
  *
- * -----------------------------------
+ * ---------------
  * + **1 判断合法性**\n\n
  * 获取vertex_index<span style="color:#283593;font-weight:bold">(结点索引)</span>\n
  * 获取neighbor_vertex_index<span style="color:#283593;font-weight:bold">(相邻某结点的结点索引)</span>\n
@@ -724,7 +724,7 @@ bool MatrixGraph<TVertex, TWeight>::GetFirstNeighborVertex(const TVertex& vertex
  * 返回false\n
  *
  *
- * -----------------------------------
+ * ----------------
  */
 template<typename TVertex, typename TWeight>
 bool MatrixGraph<TVertex, TWeight>::GetNextNeighborVertex(const TVertex& vertex,
@@ -1279,7 +1279,7 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
 }
 
 
-/*!
+/**
  * @brief **重载>>**
  * @tparam TVertex 结点模板参数
  * @tparam TWeight 边权值模板参数

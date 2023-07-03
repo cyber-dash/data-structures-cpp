@@ -10,24 +10,27 @@
 
 
 /*!
- * @brief **快速排序(递归)**
+ * @brief **快速排序**
  * @tparam TElement 数组元素类型模板参数
  * @param elements 数组
  * @param size 数组长度
  * @note
- * 快速排序(递归)
- * ------------
- * ------------
+ * 快速排序
+ * -------
+ * -------
  *
- * ------------
+ * -------
  * + **1 初始化左右边界**\n
  * left(左边界)设为0\n
  * right(右边界)设为size - 1\n\n
  * + **2 调用子数组递归函数排序**\n
  * 调用QuickSortInSubArrayRecursive\n
+ *
+ *
+ * -------
  */
 template<typename TElement>
-void QuickSortRecursive(TElement* elements, int size) {
+void QuickSort(TElement* elements, int size) {
 
     // ---------- 1 初始化左右边界 ----------
 
@@ -80,6 +83,9 @@ void QuickSortRecursive(TElement* elements, int size) {
   * &emsp;&emsp;&emsp; pivot修改为left(左边界)\n\n
   * &emsp;&emsp;&emsp; break跳出循环(本轮从左向右逼近结束)\n\n
   * 返回pivot\n
+  *
+  *
+  * ---------------
   */
 template<typename TElement>
 int Partition(TElement* elements, int left, int right) {
@@ -139,6 +145,9 @@ int Partition(TElement* elements, int left, int right) {
  * + **3 分治递归**\n
  * 对轴的左侧区域进行递归\n
  * 对轴的右侧区域进行递归\n
+ *
+ *
+ * -----------------
  */
 template<typename TElement>
 void QuickSortInSubArrayRecursive(TElement* elements, int left, int right) {

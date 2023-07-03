@@ -16,25 +16,25 @@
 
 
 /*!
- * @brief **图深度优先遍历(递归)**
+ * @brief **图深度优先遍历**
  * @tparam TVertex 结点类型模版参数
  * @tparam TWeight 边权值类型模板参数
  * @param graph 图
  * @param vertex 遍历起点
  * @note
- * 图深度优先遍历(递归)
- * -----------------
- * -----------------
+ * 图深度优先遍历
+ * ------------
+ * ------------
  *
- * -----------------
+ * ------------
  * 声明已访问结点集合visited_vertex_set\n\n
  * 对vertex(遍历起点)调用DfsOnVertexRecursive\n
  *
  *
- * -----------------
+ * ------------
  */
 template<typename TVertex, typename TWeight>
-void DfsRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
+void Dfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
 
     set<TVertex> visited_vertex_set;                                            // 声明已访问结点集合visited_vertex_set
 

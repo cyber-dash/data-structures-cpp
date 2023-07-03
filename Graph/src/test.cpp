@@ -216,7 +216,7 @@ void TestMatrixGraphPrintMatrix() {
 void TestDfsRecursive() {
     cout<<endl;
     cout<<"|------------------------ CyberDash ------------------------|"<<endl;
-    cout<<"|                  Test Graph DfsRecursive                  |"<<endl;
+    cout<<"|                  Test Graph Dfs                  |"<<endl;
     cout<<"|                 测试-图-深度优先遍历(递归)                |"<<endl;
     cout<<"|                                                           |"<<endl;
     cout<<"|                           北京                            |"<<endl;
@@ -256,13 +256,13 @@ void TestDfsRecursive() {
 
     cout<<"---------- 邻接表图 ----------"<<endl;
     AdjacencyListGraph<string, double> adjacency_list_graph(10, 1000, edges, vertices); // 构造adjacency_list_graph(邻接表无向图)
-    DfsRecursive(adjacency_list_graph, vertices[0]);                                    // "北京"为起点进行深度优先遍历
+    Dfs(adjacency_list_graph, vertices[0]);                                    // "北京"为起点进行深度优先遍历
 
     // ---------- 3 测试矩阵图深度优先遍历 ----------
 
     cout<<endl<<"---------- 矩阵图 ----------"<<endl;
     MatrixGraph<string, double> matrix_graph(10, 1000, edges, vertices);                // 构造matrix_graph(矩阵无向图)
-    DfsRecursive(matrix_graph, vertices[0]);                                            // 以"北京"为起点进行深度优先遍历
+    Dfs(matrix_graph, vertices[0]);                                            // 以"北京"为起点进行深度优先遍历
 
     cout<<"-------------------------------------------------------------"<<endl;
 }

@@ -252,7 +252,7 @@ void TestMergeSort() {
 void TestQuickSortRecursive() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                  Test QuickSortRecursive                  |" << endl;
+	cout << "|                  Test QuickSort                  |" << endl;
 	cout << "|                  测试-排序-快速排序(递归)                 |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
@@ -264,7 +264,7 @@ void TestQuickSortRecursive() {
 	PrintArray<int>(array, array_size);
 
     // 执行快速排序(递归)
-    QuickSortRecursive<int>(array, array_size);
+    QuickSort<int>(array, array_size);
 
     // 打印数组
 	cout << "排序后:" << endl;
