@@ -1,8 +1,6 @@
-﻿## 1 简介
-### 1.1 配套书籍
-通用C++数据结构书籍，如果使用C++模板，那是最好的:-)  
+﻿## 1 环境与代码规范
 
-### 1.2 代码运行环境  
+### 1.1 代码运行环境  
 目前在Linux和Mac环境已经测试通过。
 
 **Linux测试环境**
@@ -17,7 +15,7 @@
     doxygen: 1.9.2
 
 
-### 1.3 代码规范与风格
+### 1.2 代码规范与风格
 **代码规范**  
 标准编码规范，参考文档连接:  
 https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
@@ -43,10 +41,10 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 
 ## 3 Doxygen生成文档
 ### 3.1 Doxygen配置文件
-每个代码目录下的cyber_dash_doxygen_config文件为doxygen的配置文件
+每个代码目录下的CyberDash_DataStructuresCpp_doxygen_config文件为doxygen的配置文件
 ### 3.2 Doxygen生成文件
 可以使用doxygen命令生成每个测试项目的文档
-    doxygen cyber_dash_doxygen_config
+    doxygen CyberDash_DataStructuresCpp_doxygen_config
 执行成功之后可以去html目录下打开index.html阅读使用说明
 
 ### 3.3 生成PDF文件
