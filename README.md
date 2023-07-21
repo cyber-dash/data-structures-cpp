@@ -1,9 +1,9 @@
 ﻿# 1 简介
 
-- 通用于各类**数据结构与算法(C++语言)教材**
-- 可**直接运行调试**，没有伪代码不能运行的烦恼
+- 通用于各类**数据结构与算法(C++语言)教材**，适用于**自学**、**课程设计/毕业设计**和**考研复习**等
+- 完整的**代码实现**，可**直接运行调试**，使用**模板**，方便灵活
 - 代码**注释完整**，可生成网页版/PDF文档，效果丰富
-- CyberDash团队持续化的维护
+- CyberDash团队持续化的维护, **抖音二维码**如下, 您的关注点赞收藏是对我们的鼓励和鞭策！
 
 <div style="text-align: center">
 <img src="Doc/images/cyberdash_douyin_qr.png" alt="image.png" style="zoom: 33%;" />
@@ -98,4 +98,4 @@
 
 **感谢下列朋友发现代码bug**
 
-LLcu2019205455@163.com 鲁子傲, 1723004698@qq.com 蔡博文, qiaoge77@163.com, 连菜菜 kukakatoo@gmail.com
+鲁子傲 LLcu2019205455@163.com, 蔡博文 1723004698@qq.com, qiaoge77@163.com, 连菜菜 kukakatoo@gmail.com
