@@ -39,10 +39,10 @@
 
 ## 数组和广义表
 
-| <nobr>编号</nobr> | <nobr>结构/</nobr>                                                 | 操作                                                                                                                                                                                                                                       |
-|-----------------|------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1               | <nobr>[稀疏矩阵](/Array/src/sparse_matrix.h#L80)</nobr>              | [转置&emsp;](/Array/src/sparse_matrix.h#L514)  [快速转置&emsp;](/Array/src/sparse_matrix.h#L629)                                                                                                                                               |
-| 2               | <nobr>[广义表](/GeneralizedList/src/simple_gen_list.cpp#L98)</nobr> | [建表&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L373)  [长度&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L93) [深度&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L313) [序列化&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L213) |
+| <nobr>编号</nobr> | <nobr>结构/</nobr>                                               | 操作                                                                                                                                                                                                                                       |
+|-----------------|----------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1               | <nobr>[稀疏矩阵](/Array/src/sparse_matrix.h#L80)</nobr>            | [转置&emsp;](/Array/src/sparse_matrix.h#L514)  [快速转置&emsp;](/Array/src/sparse_matrix.h#L629)                                                                                                                                               |
+| 2               | <nobr>[广义表](/GeneralizedList/src/simple_gen_list.h#L98)</nobr> | [建表&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L93)  [长度&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L373) [深度&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L313) [序列化&emsp;](/GeneralizedList/src/simple_gen_list.cpp#L213) |
 
 ## 字符串
 | 编号 | 结构                                        | 操作                                                                                                                                                               |
