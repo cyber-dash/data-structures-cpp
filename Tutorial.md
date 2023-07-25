@@ -1,7 +1,7 @@
 ﻿## 1 环境与代码规范
 
 ### 1.1 代码运行环境  
-目前在Linux和Mac环境已经测试通过。
+目前在Windows, Linux和Mac环境已经测试通过。
 
 **Linux测试环境**
 
@@ -21,17 +21,17 @@
 https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-cpp-styleguide
 
 **使用STL**  
-部分代码(例如图)(大量)使用STL, 参考文档或者<C++ Primer>
+很多内容使用STL, 参考C++官方文档或者<C++ Primer>
 
 **C++特性**  
-考虑很多读者是学生和初学者, 使用C++98
+考虑很多读者是学生和初学者, 使用C++98为主
 
 ## 2 使用方式
 为了方便分类, 项目主目录下, 每个目录对应一个独立的项目
 ### 2.1 构建与运行
     git clone https://gitee.com/cyberdash/data-structure-cpp.git
     # 进入目录
-    cd data-structure-cpp/<dir>
+    cd data-structure-cpp/<某数据结构目录>
     # 构建
     cmake3 .
     make
