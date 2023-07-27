@@ -433,40 +433,40 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
 
     // ---------- 1 初始化min_priority_queue(最小优先队列)和disjoint_set(并查集) ----------
 
-    MinPriorityQueue<Edge<TVertex, TWeight> > min_priority_queue;                                   // 声明min_priority_queue(最小优先队列)
-    DisjointSet disjoint_set(graph.VertexCount());                                                  // 初始化disjoint_set(并查集), size为图结点数
+    MinPriorityQueue<Edge<TVertex, TWeight> > min_priority_queue;                                           // 声明min_priority_queue(最小优先队列)
+    DisjointSet disjoint_set(graph.VertexCount());                                                          // 初始化disjoint_set(并查集), size为图结点数
 
     // ---------- 2 将所有边入队到最小优先队列 ----------
 
-    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {                                          // for loop 遍历边索引
-        TVertex cur_starting_vertex = graph.GetEdge(i).starting_vertex;                             // 获取cur_starting_vertex(当前边起点)
-        TVertex cur_ending_vertex = graph.GetEdge(i).ending_vertex;                                 // 获取cur_ending_vertex(当前边起点)
+    for (unsigned int i = 0; i < graph.EdgeCount(); i++) {                                                  // for loop 遍历边索引
+        TVertex cur_starting_vertex = graph.GetEdge(i).starting_vertex;                                     // 获取cur_starting_vertex(当前边起点)
+        TVertex cur_ending_vertex = graph.GetEdge(i).ending_vertex;                                         // 获取cur_ending_vertex(当前边终点)
 
-        TWeight weight;                                                                             // 声明weight(当前边权重)
-        bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, weight);                 // 获取weight
-        if (res) {                                                                                  // if weight存在(即当前边存在)
-            Edge<TVertex, TWeight> mst_edge(cur_starting_vertex, cur_ending_vertex, weight);        // 声明并初始化mst_edge(最小生成树边)
-            min_priority_queue.Enqueue(mst_edge);                                                   // 入队到min_priority_queue
+        TWeight weight;                                                                                     // 声明weight(当前边权重)
+        bool res = graph.GetWeight(cur_starting_vertex, cur_ending_vertex, weight);                         // 获取weight
+        if (res) {                                                                                          // if weight存在(即当前边存在)
+            Edge<TVertex, TWeight> mst_edge(cur_starting_vertex, cur_ending_vertex, weight);                // 声明并初始化mst_edge(最小生成树边)
+            min_priority_queue.Enqueue(mst_edge);                                                           // 入队到min_priority_queue
         }
     }
 
     // ---------- 3 贪心 ----------
 
-    for (unsigned int i = 0; i < graph.VertexCount() - 1;) {                                        // for loop 循环(图结点数 - 1)次
-        Edge<TVertex, TWeight> cur_edge;                                                            // 声明cur_edge(当前边)
-        min_priority_queue.Dequeue(cur_edge);                                                       // min_priority_queue队头出队, 赋给cur_edge
+    for (unsigned int i = 0; i < graph.VertexCount() - 1;) {                                                // for loop 循环(图结点数 - 1)次
+        Edge<TVertex, TWeight> cur_edge;                                                                    // 声明cur_edge(当前边)
+        min_priority_queue.Dequeue(cur_edge);                                                               // min_priority_queue队头出队, 赋给cur_edge
 
-        int cur_starting_vertex_index = graph.GetVertexIndex(cur_edge.starting_vertex);             // 取cur_starting_vertex_index(当前边的起点索引)
-        int cur_ending_vertex_index = graph.GetVertexIndex(cur_edge.ending_vertex);                 // 取cur_ending_vertex_index(当前边终点索引)
+        int cur_starting_vertex_index = graph.GetVertexIndex(cur_edge.starting_vertex);                     // 取cur_starting_vertex_index(当前边的起点索引)
+        int cur_ending_vertex_index = graph.GetVertexIndex(cur_edge.ending_vertex);                         // 取cur_ending_vertex_index(当前边终点索引)
 
-        int cur_starting_vertex_root_index = disjoint_set.FindRecursive(cur_ending_vertex_index);            // 取cur_starting_vertex_root_index(当前边的起点所在并查集的根结点索引)
-        int cur_ending_vertex_root_index = disjoint_set.FindRecursive(cur_starting_vertex_index);            // 取cur_ending_vertex_root_index(当前边的终点所在并查集的根结点索引)
+        int cur_starting_vertex_root_index = disjoint_set.FindRecursive(cur_ending_vertex_index);           // 取cur_starting_vertex_root_index(当前边的起点所在并查集的根结点索引)
+        int cur_ending_vertex_root_index = disjoint_set.FindRecursive(cur_starting_vertex_index);           // 取cur_ending_vertex_root_index(当前边的终点所在并查集的根结点索引)
 
-        if (cur_starting_vertex_root_index != cur_ending_vertex_root_index) {                       // if 当前边起点和当前边终点, 不在一个并查集
-            disjoint_set.Union(cur_starting_vertex_root_index, cur_ending_vertex_root_index);       // 将cur_edge的起点所在的并查集, 与cur_edge终点所在的并查集合并
-            min_span_tree.Insert(cur_edge);                                                         // cur_edge插入到min_span_tree(最小生成树增加1条边)
+        if (cur_starting_vertex_root_index != cur_ending_vertex_root_index) {                               // if 当前边起点和当前边终点, 不在一个并查集
+            disjoint_set.Union(cur_starting_vertex_root_index, cur_ending_vertex_root_index);               // 将cur_edge的起点所在的并查集, 与cur_edge终点所在的并查集合并
+            min_span_tree.Insert(cur_edge);                                                                 // cur_edge插入到min_span_tree(最小生成树增加1条边)
 
-            i++;                                                                                    // 循环计数加1
+            i++;                                                                                            // 循环计数加1
         }
     }
 }
