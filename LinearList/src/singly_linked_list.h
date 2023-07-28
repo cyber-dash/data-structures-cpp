@@ -400,7 +400,7 @@ void SinglyLinkedList<TData>::Print() {
 /*!
  * @brief **插入(数据)**
  * @tparam TData 数据项类型模板参数
- * @param pos 位置
+ * @param prev_pos 插入位置的前一位置
  * @param data 数据项值
  * @return 执行结果
  * @note
@@ -409,14 +409,14 @@ void SinglyLinkedList<TData>::Print() {
  * ---------
  *
  * <span style="color:#FF8100">
- * 在位置pos后插入, 作为pos + 1位置的数据\n
- * pos + 1和其后的数据的所有位置加1\n
+ * 在位置prev_pos后插入, 作为位prev_pos + 1位置的数据\n
+ * prev_pos + 1和其后的数据的所有位置加1\n\n
  * 从1开始, 区别从0开始\n
  * </span>
  *
  * ---------
  * **I&nbsp;&nbsp; 非法位置处理**\n
- * &emsp; **if** pos < 0 或者 pos > Length():\n
+ * &emsp; **if** prev_pos < 0 或者 prev_pos > Length():\n
  * &emsp;&emsp; 返回false\n
  * **II&nbsp; 构造插入结点**\n
  * &emsp; 使用插入数据初始化结点\n
@@ -424,9 +424,9 @@ void SinglyLinkedList<TData>::Print() {
  * &emsp;&emsp; 返回false\n
  * **III 遍历至插入位置**\n
  * &emsp; 声明指针cur, 指向head_->next\n
- * &emsp; **while** pos > 0 (遍历pos次):\n
+ * &emsp; **while** prev_pos > 0 (遍历prev_pos次):\n
  * &emsp;&emsp; cur指向cur->next\n
- * &emsp;&emsp; pos减1\n
+ * &emsp;&emsp; prev_pos减1\n
  * **IV 执行插入**\n
  * &emsp; 待插入结点的next指向cur->next\n
  * &emsp; cur->next指向待插入结点\n
@@ -473,7 +473,7 @@ bool SinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
 /*!
  * @brief **插入(结点)**
  * @tparam TData 数据项类型模板参数
- * @param pos 位置pos
+ * @param prev_pos 插入位置的前一
  * @param node 结点
  * @return 执行结果
  * @note
@@ -482,23 +482,23 @@ bool SinglyLinkedList<TData>::Insert(int prev_pos, const TData& data) {
  * ---------
  *
  * <span style="color:#FF8100">
- * 在位置pos后插入, 作为pos + 1位置的数据\n
- * pos + 1和其后的数据的所有位置加1\n
+ * 在位置prev_pos后插入, 作为prev_pos + 1位置的结点\n
+ * prev_pos + 1和其后的数据的所有位置加1\n\n
  * 从1开始, 区别从0开始\n
  * </span>
  *
  * ---------
  * **I&nbsp;&nbsp; 非法位置处理**\n
- * &emsp; **if** pos < 0 或者 pos > Length():\n
+ * &emsp; **if** prev_pos < 0 或者 prev_pos > Length():\n
  * &emsp;&emsp; 返回false\n
  * **II&nbsp; 插入空节点处理**\n
  * &emsp; **if** 结点为NULL:\n
  * &emsp;&emsp; 返回false\n
  * **III 遍历至插入位置**\n
  * &emsp; 声明指针cur, 指向head_->next\n
- * &emsp; **while** pos > 0 (遍历pos次):\n
+ * &emsp; **while** prev_pos > 0 (遍历prev_pos次):\n
  * &emsp;&emsp; cur指向cur->next\n
- * &emsp;&emsp; pos减1\n
+ * &emsp;&emsp; prev_pos减1\n
  * **IV 执行插入**\n
  * &emsp; 待插入结点的next指向cur->next\n
  * &emsp; cur->next指向待插入结点\n
