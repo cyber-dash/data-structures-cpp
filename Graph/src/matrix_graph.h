@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * @file matrix_graph.h
  * @author CyberDash计算机考研, cyberdash@163.com(抖音id:cyberdash_yuan)
  * @brief 矩阵图模板类
@@ -981,7 +981,7 @@ bool MatrixGraph<TVertex, TWeight>::InsertEdge(const TVertex& starting_vertex,
         this->out_degrees_[starting_vertex_index]++;                                                    // 边起点的出度加1
     }
 
-    // ---------- 4 更新edge_count_ ----------
+    // ---------- 4 退出函数 ----------
 
     return true;                                                                                        // 返回true
 }
