@@ -44,7 +44,7 @@ void TestBubbleSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Bubble Sort                     |" << endl;
-	cout << "|                     测试-排序-冒泡排序                    |" << endl << endl << endl;
+	cout << "|                      测试-排序-冒泡排序                      |" << endl << endl << endl;
 
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
 	int array_size = sizeof(array) / sizeof(int);
@@ -84,7 +84,7 @@ void TestSelectionSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Select Sort                     |" << endl;
-	cout << "|                     测试-排序-选择排序                    |" << endl;
+	cout << "|                      测试-排序-选择排序                      |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
@@ -128,7 +128,7 @@ void TestInsertSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Insert Sort                     |" << endl;
-	cout << "|                     测试-排序-插入排序                    |" << endl;
+	cout << "|                      测试-排序-插入排序                      |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
@@ -170,7 +170,7 @@ void TestMergeSortRecursive() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                  Test MergeSortRecursive                  |" << endl;
-	cout << "|                  测试-排序-归并排序(递归)                 |" << endl;
+	cout << "|                   测试-排序-归并排序(递归)                   |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
@@ -212,7 +212,7 @@ void TestMergeSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                       Test MergeSort                      |" << endl;
-	cout << "|                     测试-排序-归并排序                    |" << endl;
+	cout << "|                      测试-排序-归并排序                      |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
@@ -252,8 +252,8 @@ void TestMergeSort() {
 void TestQuickSortRecursive() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
-	cout << "|                  Test QuickSort                  |" << endl;
-	cout << "|                  测试-排序-快速排序(递归)                 |" << endl;
+	cout << "|                      Test QuickSort                       |" << endl;
+	cout << "|                   测试-排序-快速排序(递归)                   |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
@@ -294,7 +294,7 @@ void TestHeapSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                       Test Heap Sort                      |" << endl;
-	cout << "|                         测试-堆排序                       |" << endl;
+	cout << "|                         测试-堆排序                         |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
 	int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
@@ -335,7 +335,7 @@ void TestShellSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Shell Sort                      |" << endl;
-	cout << "|                     测试-排序-希尔排序                    |" << endl;
+	cout << "|                      测试-排序-希尔排序                      |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
 	int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };
@@ -372,7 +372,7 @@ void TestRadixSort() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                      Test Radix Sort                      |" << endl;
-	cout << "|                测试-排序-基数(链表)排序                   |" << endl;
+	cout << "|                    测试-排序-基数排序(链表)                  |" << endl;
 
 
     /// ### 1 初始化静态链表 ###
@@ -465,7 +465,7 @@ void TestRadixSortForArray() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                      Test Radix Sort                      |" << endl;
-    cout << "|                  测试-排序-基数排序(数组)                 |" << endl;
+    cout << "|                    测试-排序-基数排序(数组)                  |" << endl;
 
     // 初始化无序数组{ 3, 1, 4, 1, 5, 9, 2, 6 }
     int array[] = { 3, 1, 4, 1, 5, 9, 2, 6 };

@@ -16,24 +16,52 @@
 using namespace std;
 
 
-// 交换
-template<typename TValue>
-void Swap(TValue* a, TValue* b) {
+/*!
+ * @brief **交换**
+ * @tparam TElement 元素类型模板参数
+ * @param a a元素
+ * @param b b元素
+ * @note
+ * 交换
+ * ---
+ * ---
+ *
+ * ---
+ *
+ *
+ * ---
+ */
+template<typename TElement>
+void Swap(TElement* a, TElement* b) {
 
     if (*a == *b) {
         return;
     }
 
-    TValue tmp = *a;
+    TElement tmp = *a;
     *a = *b;
     *b = tmp;
 }
 
-/* 打印数组 */
-template<typename TValue>
-void PrintArray(TValue* array, int array_size) {
+/*!
+ * @brief **打印数组**
+ * @tparam TElement 数组元素类型模板参数
+ * @param array 数组
+ * @param size 数组长度
+ * @note
+ * 打印数组
+ * -------
+ * -------
+ *
+ * -------
+ *
+ *
+ * -------
+ */
+template<typename TElement>
+void PrintArray(TElement* array, int size) {
 
-    for (int i = 0; i < array_size; i++) {
+    for (int i = 0; i < size; i++) {
         cout << array[i] << " ";
     }
 

@@ -33,6 +33,9 @@
   * &emsp;&emsp;&emsp; 当前元素设置为当前选择元素\n
   * &emsp;&emsp;&emsp; 当前选择元素的索引值为i\n
   * &emsp; 当前无序区首元素与(最终的)选择元素交换位置(交换后无序区收缩, 有序区扩展)\n
+  *
+  *
+  * ---------------
   */
 template<typename TElement>
 void SelectionSort(TElement* elements, int size) {
