@@ -1283,7 +1283,7 @@ bool MatrixGraph<TVertex, TWeight>::RemoveEdge(const TVertex& starting_vertex, c
  * @brief **重载>>**
  * @tparam TVertex 结点模板参数
  * @tparam TWeight 边权值模板参数
- * @param out 输入流
+ * @param in 输入流
  * @param graph 图
  * @return 输入流
  * @note

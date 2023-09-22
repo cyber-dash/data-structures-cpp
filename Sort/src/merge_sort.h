@@ -205,9 +205,9 @@ void MergeSortRecursive(TElement* elements, int size) {
  * 
  * ----------------------
  * + **1 求子数组数量除以2的余数**\n\n
- * 声明变量next_turn_subarray_count(下一趟的子数组数量)\n\n
- * 初始化rem(余数) = subarray_count % 2\n
- * 初始化quotient(商) = subarray_count / 2\n\n
+ * 声明变量next_turn_subarray_count<span style="color:#283593;font-weight:bold">(下一趟的子数组数量)</span>\n\n
+ * 初始化rem<span style="color:#283593;font-weight:bold">(余数)</span> = subarray_count % 2\n
+ * 初始化quotient<span style="color:#283593;font-weight:bold">(商)</span> = subarray_count / 2\n\n
  * + **2 余数分情况计算**\n\n
  * **if** rem等于0 :\n
  * &emsp; next_turn_subarray_count <-- quotient\n
@@ -221,18 +221,24 @@ void MergeSortRecursive(TElement* elements, int size) {
  */
 int GetNextTurnSubArrayCount(int subarray_count) {
 
-    int next_turn_subarray_count;
+    // ---------- 1 求子数组数量除以2的余数 ----------
 
-    int rem = subarray_count % 2;
-    int quotient = subarray_count / 2;
+    int next_turn_subarray_count;                                   // 声明变量next_turn_subarray_count(下一趟的子数组数量)
 
-    if (rem == 0) {
-        next_turn_subarray_count = quotient;
-    } else {
-        next_turn_subarray_count = quotient + 1;
+    int rem = subarray_count % 2;                                   // 初始化rem(余数) = subarray_count % 2
+    int quotient = subarray_count / 2;                              // 初始化quotient(商) = subarray_count / 2
+
+    // ---------- 2 余数分情况计算 ----------
+
+    if (rem == 0) {                                                 // if rem等于0
+        next_turn_subarray_count = quotient;                        // next_turn_subarray_count <-- quotient
+    } else {                                                        // else (rem != 0)
+        next_turn_subarray_count = quotient + 1;                    // next_turn_subarray_count <-- quotient + 1
     }
 
-    return next_turn_subarray_count;
+    // ---------- 3 返回结果 ----------
+
+    return next_turn_subarray_count;                                // 返回next_turn_subarray_count
 }
 
 

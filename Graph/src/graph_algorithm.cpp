@@ -409,7 +409,7 @@ int Components(const Graph<TVertex, TWeight>& graph) {
  * &emsp; 获取cur_ending_vertex<span style="color:#283593;font-weight:bold">(当前边终点)</span>\n\n
  * &emsp; 声明weight<span style="color:#283593;font-weight:bold">(当前边权重)</span>\n
  * &emsp; 获取weight\n
- * &emsp; **if** weight存在(即边存在) :\n
+ * &emsp; **if** weight存在<span style="color:#008040;font-weight:bold">(即边存在)</span> :\n
  * &emsp;&emsp; 声明并初始化mst_edge<span style="color:#283593;font-weight:bold">(最小生成树边)</span>\n
  * &emsp;&emsp; 入队到min_priority_queue\n\n
  * + **3 贪心**\n\n
@@ -521,22 +521,22 @@ void Kruskal(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWei
  * 声明min_priority_queue<span style="color:#283593;font-weight:bold">(边的最小优先队列)</span>\n\n
  * + **3 贪心**\n\n
  * **while loop** 最小生成树结点集合的结点数 < 图结点数<span style="color:#008040;font-weight:bold">(即最小生成树未完成)</span> :\n\n
- * <span style="color:#E76600;font-weight:bold">( 3.1 最小优先队列队头出队, 进入最小生成树 )</span>\n
+ * &emsp; <span style="color:#E76600;font-weight:bold">( 3.1 最小优先队列队头出队, 进入最小生成树 )</span>\n
  * &emsp; **if** min_priority_queue不为空 :\n
  * &emsp;&emsp; 声明cur_min_edge<span style="color:#283593;font-weight:bold">(当前最小边)</span>\n
  * &emsp;&emsp; 队头出队, 赋值给cur_min_edge\n\n
  * &emsp;&emsp; cur_min_edge插入min_span_tree<span style="color:#283593;font-weight:bold">(最小生成树)</span>\n
  * &emsp;&emsp; cur_min_edge的终点, 插入mst_vertex_set\n\n
- * <span style="color:#E76600;font-weight:bold">( 3.2 最小优先队列队头出队, 进入最小生成树 )</span>\n
+ * &emsp; <span style="color:#E76600;font-weight:bold">( 3.2 最小优先队列队头出队, 进入最小生成树 )</span>\n
  * &emsp; **for loop** 遍历mst_vertex_set :\n
  * &emsp;&emsp; 取cur_mst_vertex<span style="color:#283593;font-weight:bold">(当前最小生成树结点)</span>\n\n
  * &emsp;&emsp; 声明cur_neighbor_vertex<span style="color:#283593;font-weight:bold">(当前邻接结点)</span>\n
  * &emsp;&emsp; 取cur_mst_vertex的首个邻接结点, 赋给cur_neighbor_vertex, 执行结果赋值给new_neighbor_exists<span style="color:#283593;font-weight:bold">(存在新的邻接结点)</span>\n\n
  * &emsp;&emsp; **while loop** 存在新的邻接结点 :\n
  * &emsp;&emsp;&emsp; **if** cur_neighbor_vertex不在最小生成树结点集合中 :\n
- * &emsp;&emsp;&emsp;&emsp; 声明cur_weight(当前边权重)\n
+ * &emsp;&emsp;&emsp;&emsp; 声明cur_weight<span style="color:#283593;font-weight:bold">(当前边权重)</span>\n
  * &emsp;&emsp;&emsp;&emsp; 获取 边(cur_mst_vertex ---> cur_neighbor_vertex) 的权重, 赋给cur_weight\n\n
- * &emsp;&emsp;&emsp;&emsp; 使用 边(cur_mst_vertex --- cur_neighbor_vertex) 生成cur_edge\n
+ * &emsp;&emsp;&emsp;&emsp; 使用 边(cur_mst_vertex ---> cur_neighbor_vertex) 生成cur_edge\n
  * &emsp;&emsp;&emsp;&emsp; cur_edge入队到min_priority_queue\n\n
  * &emsp;&emsp;&emsp; 获取next_neighbor_vertex<span style="color:#283593;font-weight:bold">(下一邻接结点)</span>, 并将执行结果赋给new_neighbor_exists\n\n
  * &emsp;&emsp;&emsp; **if** 下一邻接结点存在 :\n
@@ -654,30 +654,30 @@ bool Prim(const Graph<TVertex, TWeight>& graph, MinimumSpanTree<TVertex, TWeight
  * ------------------------
  * + **1 初始化**\n\n
  * <span style="color:#FF9900;font-weight:bold">( 1.1 distance数组(起点到各点的最短路径长度)初始化 )</span>\n
- * 获取starting_vertex_index(起点索引)\n
+ * 获取starting_vertex_index<span style="color:#283593;font-weight:bold">(起点索引)</span>\n
  * **for loop** 遍历结点 :\n
- * &emsp; 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值(不存在最短路径)\n\n
+ * &emsp; 路径(起点 ---> 当前结点)的最短路径, 长度设为上限值<span style="color:#008040;font-weight:bold">(不存在最短路径)</span>\n\n
  * 路径(起点 ---> 起点)的最短路径, 长度设为0\n\n
  * <span style="color:#FF9900;font-weight:bold">( 1.2 min_priority_queue(最短路径的最小优先队列)初始化 )</span>\n
  * 路径(起点 ---> 起点)入队\n\n
  * <span style="color:#FF9900;font-weight:bold">( 1.3 predecessor数组(最短路径终点的前驱结点索引)初始化 )</span>\n
- * 路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1(即起点不存在前驱结点)\n\n
+ * 路径(起点 ---> 起点)的最短路径, 起点的前驱结点索引为-1<span style="color:#008040;font-weight:bold">(即起点不存在前驱结点)</span>\n\n
  * + **2 贪心** &emsp;&emsp;&emsp;<span style="color:#d40000">两层对结点的循环, 故时间复杂度: O(V^2)</span>\n\n
  * **while loop** 最短路径的最小优先队列不为空 :\n\n
- * &emsp; min_priority_queue队头出队, 赋给cur_min_path(从起点开始到各个结点, 当前最短的路径)\n
+ * &emsp; min_priority_queue队头出队, 赋给cur_min_path<span style="color:#283593;font-weight:bold">(从起点开始到各个结点, 当前最短的路径)</span>\n
  * &emsp; 获取cur_min_path的终点索引, 赋给cur_min_path_ending_vertex_index\n\n
  * &emsp; **for loop** 遍历结点 :\n
- * &emsp;&emsp; 声明cur_vertex(当前结点)\n
+ * &emsp;&emsp; 声明cur_vertex<span style="color:#283593;font-weight:bold">(当前结点)</span>\n
  * &emsp;&emsp; 获取cur_vertex\n
  * &emsp;&emsp; 声明weight(边(cur_min_path的终点 ---> 当前结点)的权值)\n
- * &emsp;&emsp; 获取 边(cur_min_path.ending_vertex ---> cur_vertex) (即: 当前最短的路径的终点 ---> 当前遍历结点)\n\n
+ * &emsp;&emsp; 获取 边(cur_min_path.ending_vertex ---> cur_vertex) <span style="color:#283593;font-weight:bold">(当前最短的路径的终点 ---> 当前遍历结点)</span>\n\n
  * &emsp;&emsp; **if** 边(cur_min_path.ending_vertex ---> cur_vertex)不存在 :\n
  * &emsp;&emsp;&emsp; continue(不做处理)\n\n
  * &emsp;&emsp; **if** 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值 < 路径(起点 ---> 当前遍历结点) :\n
  * &emsp;&emsp;&emsp; 路径(起点 ---> 当前遍历结点) = 路径(起点 ---> 当前最短路径的终点) + 边(当前最短路径的终点, 当前遍历结点)权值\n
  * &emsp;&emsp;&emsp; 路径(起点 ---> 当前遍历结点)中  , 当前遍历结点的前一结点的索引, 设为cur_min_path_ending_vertex_index\n\n
- * &emsp;&emsp;&emsp; 生成路径new_min_distance_path(起点 ---> 当前遍历结点)\n
- * &emsp;&emsp;&emsp; 将new_min_distance_path插入min_priority_queue(路径的最小优先队列)\n
+ * &emsp;&emsp;&emsp; 生成路径new_min_distance_path<span style="color:#283593;font-weight:bold">(起点 ---> 当前遍历结点)</span>\n
+ * &emsp;&emsp;&emsp; 将new_min_distance_path插入min_priority_queue<span style="color:#283593;font-weight:bold">(路径的最小优先队列)</span>\n
  *
  *
  * ------------------------
@@ -799,7 +799,7 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  *
  * ---------------------------
  * + **1 初始化**\n\n
- * 初始化starting_vertex_index(起点索引)\n
+ * 初始化starting_vertex_index<span style="color:#283593;font-weight:bold">(起点索引)</span>\n
  * **while loop** 遍历结点索引 :\n
  * &emsp; 路径(起点 ---> 索引i结点)的最短路径, 权值(长度)初始化为MaxWeight()<span style="color:#008040;font-weight:bold">(即初始化为不存在最短路径)</span>\n\n
  * 路径(起点 ---> 起点)的最短路径, 权值(长度)初始化为0\n
@@ -807,11 +807,11 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  * + **2 动态规划**  &emsp;&emsp;&emsp;<span style="color:#d40000">1层对结点的循环, 1层对边的循环, 故时间复杂度: O(V*E)</span>\n\n
  * **while loop** 循环(结点数 - 1)次<span style="color:#008040;font-weight:bold">(最小生成树边的数量)</span> :\n
  * &emsp; **while loop** 循环每条边 :\n\n
- * &emsp;&emsp; 取cur_starting_vertex(当前边起点)\n
- * &emsp;&emsp; 取cur_ending_vertex(当前边终点)\n\n
- * &emsp;&emsp; 取cur_starting_vertex_index(当前边起点索引)\n
- * &emsp;&emsp; 取cur_ending_vertex_index(当前边终点索引)\n\n
- * &emsp;&emsp; 声明cur_edge_weight(当前边权值)\n
+ * &emsp;&emsp; 取cur_starting_vertex<span style="color:#283593;font-weight:bold">(当前边起点)</span>\n
+ * &emsp;&emsp; 取cur_ending_vertex<span style="color:#283593;font-weight:bold">(当前边终点)\n\n
+ * &emsp;&emsp; 取cur_starting_vertex_index<span style="color:#283593;font-weight:bold">(当前边起点索引)</span>\n
+ * &emsp;&emsp; 取cur_ending_vertex_index<span style="color:#283593;font-weight:bold">(当前边终点索引)</span>\n\n
+ * &emsp;&emsp; 声明cur_edge_weight<span style="color:#283593;font-weight:bold">(当前边权值)</span>\n
  * &emsp;&emsp; 取cur_edge_weight\n
  * &emsp;&emsp; **if** 获取失败<span style="color:#008040;font-weight:bold">(即边(cur_starting_vertex ---> cur_ending_vertex)不存在)</span> :\n
  * &emsp;&emsp;&emsp; continue\n\n
@@ -822,11 +822,11 @@ void Dijkstra(const Graph<TVertex, TWeight>& graph,
  * + **3 检查是否有负权重的回路**\n\n
  * 初始化negative_weight_cycle_exists(存在负环)为false<span style="color:#008040;font-weight:bold">(初始化为没有负权环)</span>\n\n
  * **for loop** 遍历每条边 :\n\n
- * &emsp; 取cur_starting_vertex(当前边起点)\n
- * &emsp; 取cur_ending_vertex(当前边终点)\n\n
- * &emsp; 取cur_starting_vertex_index(当前边起点索引)\n
- * &emsp; 取cur_ending_vertex_index(当前边终点索引)\n\n
- * &emsp; 声明cur_weight(当前边权值)\n
+ * &emsp; 取cur_starting_vertex<span style="color:#283593;font-weight:bold">(当前边起点)</span>\n
+ * &emsp; 取cur_ending_vertex<span style="color:#283593;font-weight:bold">(当前边终点)</span>\n\n
+ * &emsp; 取cur_starting_vertex_index<span style="color:#283593;font-weight:bold">(当前边起点索引)</span>\n
+ * &emsp; 取cur_ending_vertex_index<span style="color:#283593;font-weight:bold">(当前边终点索引)</span>\n\n
+ * &emsp; 声明cur_weight<span style="color:#283593;font-weight:bold">(当前边权值)</span>\n
  * &emsp; 取cur_weight\n
  * &emsp; **if** 获取失败<span style="color:#008040;font-weight:bold">(即边(cur_starting_vertex ---> cur_ending_vertex)不存在)</span> :\n
  * &emsp;&emsp; continue\n\n
@@ -954,13 +954,13 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
  * --------------------------------
  *
  * - **1 使用图的信息填充distance和predecessor数组**\n\n
- * **for loop** 遍历start(起点) :\n
- * &emsp; **for loop** 遍历end(终点) :\n
+ * **for loop** 遍历start<span style="color:#283593;font-weight:bold">(起点)</span> :\n
+ * &emsp; **for loop** 遍历end<span style="color:#283593;font-weight:bold">(终点)</span> :\n
  * &emsp;&emsp; **if** start等于end :\n
  * &emsp;&emsp;&emsp; 路径(start ---> end)长度初始化\n
  * &emsp;&emsp;&emsp; 路径(start ---> end), start的前一结点为start\n
  * &emsp;&emsp; **else** (start不等于end):\n
- * &emsp;&emsp;&emsp; 获取边(start ---> end)的权值(长度)\n
+ * &emsp;&emsp;&emsp; 获取边(start ---> end)的权值<span style="color:#283593;font-weight:bold">(长度)</span>\n
  * &emsp;&emsp;&emsp; **if** 存在边 :\n
  * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)的长度为边权值\n
  * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end), end的前一结点为start\n
@@ -968,7 +968,7 @@ bool BellmanFord(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end)的长度为边权值上限\n
  * &emsp;&emsp;&emsp;&emsp; 路径(start ---> end), end的前一结点不存在(predecessor[start][end]设为-1)\n\n
  * - **2 动态规划**\n\n
- * **for loop** 遍历intermediate(中间点) :\n
+ * **for loop** 遍历intermediate<span style="color:#283593;font-weight:bold">(中间点)</span> :\n
  * &emsp; **for loop** 遍历起点 :\n
  * &emsp;&emsp; **for loop** 遍历终点 :\n
  * &emsp;&emsp;&emsp; (松弛)\n
@@ -1051,12 +1051,12 @@ void Floyd(const Graph<TVertex, TWeight>& graph, vector<vector<TWeight> >& dista
  * --------------------
  * 打印一段文本\n\n
  * 获取起点索引\n
- * 声明inverted_predecessors(反向前驱数组), 并分配内存\n\n
+ * 声明inverted_predecessors<span style="color:#283593;font-weight:bold">(反向前驱数组)</span>, 并分配内存\n\n
  * **for loop** 遍历结点索引(当前索引作为路径终点索引) :\n\n
  * &emsp; **if** 起点索引 == 终点索引 :\n
  * &emsp;&emsp; continue\n\n
- * &emsp; 初始化cur_predecessor_index(最短路径当前结点的前驱结点索引)为ending_vertex_index(终点索引)\n
- * &emsp; 初始化i(inverted_predecessors的数组索引)为0\n\n
+ * &emsp; 初始化cur_predecessor_index<span style="color:#283593;font-weight:bold">(最短路径当前结点的前驱结点索引)</span>为ending_vertex_index(终点索引)\n
+ * &emsp; 初始化i<span style="color:#283593;font-weight:bold">(inverted_predecessors的数组索引)</span>为0\n\n
  * &emsp; **while loop** 当前结点的前驱结点 不等于 起点 :\n
  * &emsp;&emsp; inverted_predecessors[i]被赋值为当前结点的前驱结点\n
  * &emsp;&emsp; cur_predecessor_index更新为predecessor[cur_predecessor_index](向前驱方向进行)\n
@@ -1151,12 +1151,12 @@ void PrintSingleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * &emsp; 返回false\n\n
  * + **2 递归执行**\n\n
  * **if** 起点索引 不等于 终点索引 :\n
- * &emsp; 对最短路径中的(**起点索引**)starting_vertex_index和
- * (**终点的前一结点索引**)predecessor[starting_vertex_index][ending_vertex_index], 调用PrintSsspInMsspRecursive\n\n
+ * &emsp; 对最短路径中的starting_vertex_index<span style="color:#283593;font-weight:bold">(起点索引)</span>和
+ * predecessor[starting_vertex_index][ending_vertex_index]<span style="color:#283593;font-weight:bold">(终点的前一结点索引)</span>, 调用PrintSsspInMsspRecursive\n\n
  * &emsp; **if** 执行结果失败 :\n
  * &emsp;&emsp; 返回false\n\n
  * + **3 打印结点**\n\n
- * 声明ending_vertex(终点)\n
+ * 声明ending_vertex<span style="color:#283593;font-weight:bold">(终点)</span>\n
  * 获取ending_vertex\n
  * 打印终点\n\n
  * + **4 退出函数**\n\n
@@ -1226,7 +1226,7 @@ bool PrintSsspInMsspRecursive(const Graph<TVertex, TWeight>& graph,
  * &emsp;&emsp;&emsp; continue\n
  * &emsp;&emsp; 获取j对应的结点, 作为当前路径终点\n
  * &emsp;&emsp; 打印一段文字\n
- * &emsp;&emsp; 对i(当前路径起点索引)和j(当前路径终点索引)调用PrintSsspInMsspRecursive\n
+ * &emsp;&emsp; 对i<span style="color:#283593;font-weight:bold">(当前路径起点索引)</span>和j<span style="color:#283593;font-weight:bold">(当前路径终点索引)</span>调用PrintSsspInMsspRecursive\n
  * &emsp;&emsp; **if** 存在最短路径 :\n
  * &emsp;&emsp;&emsp; 打印最短路径长度\n
  *
@@ -1279,24 +1279,24 @@ void PrintMultipleSourceShortestPath(const Graph<TVertex, TWeight>& graph,
  * -------
  * <p>
  * + **1 初始化**\n\n
- * 声明critical_paths(起点索引到各结点索引的关键路径数组)\n
- * 声明visited_vertex_index_set(已访问结点索引的集合)\n
- * 声明vertex_index_queue(结点索引队列)\n\n
- * 初始化starting_vertex_index(起点的结点索引)\n\n
+ * 声明critical_paths<span style="color:#283593;font-weight:bold">(起点索引到各结点索引的关键路径数组)</span>\n
+ * 声明visited_vertex_index_set<span style="color:#283593;font-weight:bold">(已访问结点索引的集合)</span>\n
+ * 声明vertex_index_queue<span style="color:#283593;font-weight:bold">(结点索引队列)</span>\n\n
+ * 初始化starting_vertex_index<span style="color:#283593;font-weight:bold">(起点的结点索引)</span>\n\n
  * 将starting_vertex_index插入visited_vertex_index_set\n
  * 将starting_vertex_index插入vertex_index_queue\n\n
  * **for loop** 遍历图的结点索引 :\n
  * &emsp; critical_paths各元素值初始化\n\n
  * + **2 BFS**\n\n
  * **while loop** vertex_index_queue不为空 :\n
- * &emsp; 获取队头, 作为cur_start_index(当前起点)\n
+ * &emsp; 获取队头, 作为cur_start_index<span style="color:#283593;font-weight:bold">(当前起点)</span>\n
  * &emsp; 队头出队\n\n
- * &emsp;&emsp; **for loop** 遍历图结点索引, 作为cur_end_index(当前终点) :\n
- * &emsp;&emsp;&emsp; 声明cur_weight(当前边权重)\n
- * &emsp;&emsp;&emsp; 获取边(cur_start_index ---> cur_end_index)的权重, 赋给cur_weight\n
- * &emsp;&emsp;&emsp; **if** 存在边 && 参数起点到当前边起点的关键路径距离 + 当前边权重(边长) > 参数起点到当前边终点的关键路径距离 :\n
- * &emsp;&emsp;&emsp;&emsp; 当前边终点入队\n\n
- * &emsp;&emsp;&emsp; cur_end_index插入到visited_vertex_index_set\n\n
+ * &emsp; **for loop** 遍历图结点索引, 作为cur_end_index<span style="color:#283593;font-weight:bold">(当前终点)</span> :\n
+ * &emsp;&emsp; 声明cur_weight<span style="color:#283593;font-weight:bold">(当前边权重)</span>\n
+ * &emsp;&emsp; 获取边(cur_start_index ---> cur_end_index)的权重, 赋给cur_weight\n
+ * &emsp;&emsp; **if** 存在边 && 参数起点到当前边起点的关键路径距离 + 当前边权重<span style="color:#283593;font-weight:bold">(边长)</span> > 参数起点到当前边终点的关键路径距离 :\n
+ * &emsp;&emsp;&emsp; 当前边终点入队\n\n
+ * &emsp;&emsp; cur_end_index插入到visited_vertex_index_set\n\n
  * + **3 退出函数**\n\n
  * 返回critical_paths\n
  * </p>

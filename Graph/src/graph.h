@@ -133,7 +133,17 @@ public:
 template<typename TVertex, typename TWeight>
 class Path: public Edge<TVertex, TWeight> {
 public:
+    /*!
+     * @brief **默认构造函数**
+     */
     Path(): starting_vertex(TVertex()), ending_vertex(TVertex()), weight(TWeight()) {};
+
+    /*!
+     * @brief **构造函数**
+     * @param starting_vertex 起点
+     * @param ending_vertex 终点
+     * @param weight 边权值
+     */
     Path(TVertex starting_vertex, TVertex ending_vertex, TWeight weight):
       starting_vertex(starting_vertex), ending_vertex(ending_vertex), weight(weight) {}
 
