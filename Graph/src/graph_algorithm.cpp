@@ -60,14 +60,14 @@ void Dfs(const Graph<TVertex, TWeight>& graph, const TVertex& vertex) {
  * + **1 初始化visited_vertex_set(已访问结点集合)**\n\n
  * vertex插入到visited_vertex_set\n\n
  * + **2 遍历vertex(起点)的邻接点, 执行递归**\n\n
- * <span style="color:#E76600;font-weight:bold">( 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点) )</span>\n
- * 声明neighbor_vertex(新邻结点)\n
- * 调用GetFirstNeighborVertex,初始化neighbor_vertex和new_neighbor_exists\n\n
+ * <span style="color:#E76600;font-weight:bold">( 2.1 初始化neighbor_vertex<span style="color:#283593;font-weight:bold">(新邻接点)</span>和new_neighbor_exists<span style="color:#283593;font-weight:bold">(是否存在新邻接点)</span> )</span>\n
+ * 声明neighbor_vertex\n
+ * 调用GetFirstNeighborVertex, 初始化neighbor_vertex和new_neighbor_exists\n\n
  * <span style="color:#E76600;font-weight:bold">( 2.2 遍历执行递归 )</span>\n
  * **while loop** 存在新邻接点 :\n\n
  * &emsp; **if** 新邻接点不在visit_vertex_set中 :\n
  * &emsp;&emsp; 对新邻接点调用DfsOnVertexRecursive<span style="color:#008040;font-weight:bold">(递归)</span>\n\n
- * &emsp; 获取下一新邻接点, 并将执行结果(是否存在下一新邻接点)赋给new_neighbor_exists\n
+ * &emsp; 获取下一新邻接点, 并将执行结果<span style="color:#283593;font-weight:bold">(是否存在下一新邻接点)</span>赋给new_neighbor_exists\n
  * &emsp; **if** 下一新邻接点存在 :\n
  * &emsp;&emsp; 更新neighbor_vertex\n\n
  *
@@ -86,7 +86,7 @@ void DfsOnVertexRecursive(const Graph<TVertex, TWeight>& graph, const TVertex& v
     // ---------- 2 遍历起点的邻接点, 执行递归 ----------
 
     // ( 2.1 初始化neighbor_vertex(新邻接点)和new_neighbor_exists(是否存在新邻接点) )
-    TVertex neighbor_vertex;                                                                                // 声明neighbor_vertex(新邻结点)
+    TVertex neighbor_vertex;                                                                                // 声明neighbor_vertex
     bool new_neighbor_exists = graph.GetFirstNeighborVertex(vertex, neighbor_vertex);                       // 调用GetFirstNeighborVertex, 初始化neighbor_vertex和new_neighbor_exists
 
     // ( 2.2 遍历执行递归 )

@@ -470,7 +470,7 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
  *                node                       pivot
  *                /                           / \
  *               /                           /   \
- *            pivot          ----->          node2  node
+ *            pivot          ----->       node2  node
  *             / \                               /
  *            /   \                             /
  *        node2  node3                       node3
@@ -483,7 +483,7 @@ int AvlTree<TKey, TValue>::LeftRotate_(AvlNode<TKey, TValue>*& node) {
  *               node                         pivot
  *                /                            / \
  *               /                            /   \
- *            pivot          ----->          node2  node
+ *            pivot          ----->        node2  node
  *             /
  *            /
  *         node2
@@ -593,7 +593,7 @@ int AvlTree<TKey, TValue>::RightRotate_(AvlNode<TKey, TValue>*& node) {
  *          node2  node3                             pivot  node3                               node2  node
  *             / \                                     /                                         / \     \
  *            /   \             ----左旋1次---->      /               ----右旋1次---->          /   \     \
- *        node4  pivot                              node2                                   node4 node5  node3
+ *        node4  pivot                             node2                                     node4 node5  node3
  *                /                                 / \
  *               /                                 /   \
  *            node5                             node4 node5
