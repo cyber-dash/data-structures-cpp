@@ -28,5 +28,5 @@ int main() {
     // 测试-哈夫曼编码
     TestHuffmanCode();
 
-	return 0;
+    return 0;
 }
