@@ -43,7 +43,7 @@ https://github.com/zh-google-styleguide/zh-google-styleguide/tree/master/google-
 ### 3.1 Doxygen配置文件
 每个代码目录下的CyberDash_DataStructuresCpp_doxygen_config文件为doxygen的配置文件
 ### 3.2 生成网页
-可以使用doxygen命令生成每个测试项目的文档
+可以使用doxygen(需要安装doxygen)生成每个测试项目的文档
     doxygen CyberDash_DataStructuresCpp_doxygen_config
 执行成功之后可以去html目录下打开index.html阅读使用说明
 
