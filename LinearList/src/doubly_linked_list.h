@@ -182,6 +182,8 @@ DoublyLinkedList<TData>::DoublyLinkedList() {
 template<typename TData>
 DoublyLinkedList<TData>::~DoublyLinkedList() {
     this->Clear();
+    delete this->head_;
+    delete this->tail_;
 }
 
 

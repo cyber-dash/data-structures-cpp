@@ -70,7 +70,7 @@ public:
     /*! @brief **获取链表头结点** */
     LinkedNode<TData>* Head() const { return this->head_; }
     // 搜索
-    LinkedNode<TData>* Search(TData data);
+    LinkedNode<TData>* Search(TData data) const;
     // 获取结点
     LinkedNode<TData>* GetNode(int pos);
     // 获取结点数据
@@ -592,7 +592,7 @@ bool SinglyLinkedList<TData>::IsEmpty() const {
  * --------------------
  *
  * <span style="color:#FF8100">
- * 时间复杂度O(1)
+ * 时间复杂度O(n)
  * </span>
  *
  * --------------------
@@ -612,7 +612,7 @@ bool SinglyLinkedList<TData>::IsEmpty() const {
  * --------------------
  */
 template<typename TData>
-LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) {
+LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) const {
 
     // ---------- I 初始化遍历指针 ----------
 
@@ -648,7 +648,7 @@ LinkedNode<TData>* SinglyLinkedList<TData>::Search(TData data) {
  * -------
  *
  * <span style="color:#FF8100">
- * 时间复杂度O(1)
+ * 时间复杂度O(n)
  * </span>
  *
  * -------
