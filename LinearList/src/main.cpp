@@ -97,6 +97,9 @@ int main() {
     // 测试-顺序表-交集
 	SeqListTest::TestIntersection();
 
+    // 测试-顺序表-operator=
+    SeqListTest::TestOperatorAssignment();
+
     // 测试-顺序表-删除
     SeqListTest::TestRemove();
 

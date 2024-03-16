@@ -473,7 +473,7 @@ bool DoublyLinkedList<TData>::GetData(int pos, TData& data) const {
  * &emsp; 返回NULL\n\n
  * + **2 遍历至pos位置结点**\n\n
  * 初始化cur(遍历指针), 指向head_(头结点)\n
- * **for loop** 1至pos :\n
+ * **for loop** 0至pos :\n
  * &emsp; cur指向cur的next结点\n\n
  * + **3 赋值**\n\n
  * data赋给cur->data\n\n
@@ -495,7 +495,7 @@ bool DoublyLinkedList<TData>::SetData(int pos, const TData& data) {
     // ---------- 2 遍历至pos位置结点 ----------
 
     DoublyLinkedNode<TData>* cur = head_;                                   // 初始化cur(遍历指针), 指向head_(头结点)
-    for (int i = 1; i < pos; i++) {                                         // for loop 1至pos :\n
+    for (int i = 0; i < pos; i++) {                                         // for loop 0至pos :\n
         cur = cur->next;                                                    // cur指向cur的next结点
     }
 

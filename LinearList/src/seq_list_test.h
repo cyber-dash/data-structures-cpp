@@ -58,6 +58,9 @@ public:
 
     // 测试-顺序表-交集
     static void TestIntersection();
+
+    // 测试-顺序表-operator=
+    static void TestOperatorAssignment();
 };
 
 
@@ -82,7 +85,7 @@ void SeqListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test SeqList Insert                    |" << endl;
-    cout << "|                      测试-顺序表-插入                     |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-插入                       |" << endl << endl << endl;
 
     SeqList<int> seq_list(3);                                   // 声明seq_list(顺序表)
 
@@ -118,7 +121,7 @@ void SeqListTest::TestCopyConstructor() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test SeqList CopyConstructor               |" << endl;
-    cout << "|                    测试-顺序表-复制构造                   |" << endl << endl << endl;
+    cout << "|                     测试-顺序表-复制构造                     |" << endl << endl << endl;
 
     SeqList<int> seq_list(3);                                   // 声明seq_list(顺序表)
 
@@ -156,7 +159,7 @@ void SeqListTest::TestRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test SeqList Remove                    |" << endl;
-    cout << "|                      测试-顺序表-删除                     |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-删除                       |" << endl << endl << endl;
 
     SeqList<int> seq_list(3);                                       // 声明seq_list(顺序表)
 
@@ -191,7 +194,7 @@ void SeqListTest::TestCapacity() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                   Test SeqList Capacity                   |" << endl;
-    cout << "|                      测试-顺序表-容量                     |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-容量                       |" << endl << endl << endl;
 
     SeqList<double> seq_list(3);                                                    // 声明seq_list(顺序表), 容量设置为3
 
@@ -221,7 +224,7 @@ void SeqListTest::TestLength() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test SeqList Length                    |" << endl;
-    cout << "|                      测试-顺序表-长度                     |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-长度                       |" << endl << endl << endl;
 
     // 声明seq_list(顺序表), 容量设置为3
     SeqList<string> seq_list(3);
@@ -264,7 +267,7 @@ void SeqListTest::TestEmpty() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                     Test SeqList Empty                    |" << endl;
-    cout << "|                     测试-顺序表-Empty                     |" << endl << endl << endl;
+    cout << "|                      测试-顺序表-Empty                      |" << endl << endl << endl;
 
     // 声明seq_list(顺序表)
     SeqList<string> seq_list(3);
@@ -321,7 +324,7 @@ void SeqListTest::TestSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test SeqList Search                    |" << endl;
-    cout << "|                      测试-顺序表-查找                     |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-查找                       |" << endl << endl << endl;
 
     SeqList<int> seq_list(3);                                               // 声明seq_list(顺序表)
 
@@ -361,7 +364,7 @@ void SeqListTest::TestGetData() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test SeqList Search                    |" << endl;
-    cout << "|                  测试-顺序表-获取结点数据                 |" << endl << endl << endl;
+    cout << "|                    测试-顺序表-获取结点数据                   |" << endl << endl << endl;
 
     SeqList<double> seq_list(3);                                                // 声明seq_list(顺序表)
 
@@ -401,7 +404,7 @@ void SeqListTest::TestSetData() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                    Test SeqList SetData                   |" << endl;
-    cout << "|                  测试-顺序表-设置结点数据                 |" << endl << endl << endl;
+    cout << "|                    测试-顺序表-设置结点数据                   |" << endl << endl << endl;
 
     SeqList<double> seq_list(3);                                                // 声明seq_list(顺序表)
 
@@ -441,7 +444,7 @@ void SeqListTest::TestSort() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                     Test SeqList Sort                     |" << endl;
-    cout << "|                     测试-顺序表-排序                      |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-排序                       |" << endl << endl << endl;
 
     // 声明seq_list(顺序表)
     SeqList<double> seq_list(5);
@@ -483,7 +486,7 @@ void SeqListTest::TestUnion() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                     Test SeqList Union                    |" << endl;
-    cout << "|                     测试-顺序表-合并                     |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-合并                       |" << endl << endl << endl;
 
     // 声明seq_list_a(顺序表a) ,seq_list_b(顺序表b)
     SeqList<int> seq_list_a(10);
@@ -529,7 +532,7 @@ void SeqListTest::TestIntersection() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                 Test SeqList Intersection                 |" << endl;
-    cout << "|                      测试-顺序表-交集                     |" << endl << endl << endl;
+    cout << "|                       测试-顺序表-交集                       |" << endl << endl << endl;
 
     // 声明seq_list_a(顺序表a)
     SeqList<int> seq_list_a(10);
@@ -551,6 +554,45 @@ void SeqListTest::TestIntersection() {
 
     // 打印seq_list_a
     seq_list_a.Print();
+
+    cout << "-------------------------------------------------------------" << endl << endl;
+}
+
+
+/*!
+ * @brief **测试-顺序表-operator=**
+ * @note
+ * 测试-顺序表-交集
+ * --------------
+ * --------------
+ *
+ * --------------
+ *
+ */
+void SeqListTest::TestOperatorAssignment() {
+
+    cout << endl;
+    cout << "|------------------------ CyberDash ------------------------|" << endl;
+    cout << "|                  Test SeqList operator=                   |" << endl;
+    cout << "|                     测试-顺序表-oprator=                    |" << endl << endl << endl;
+
+    // 声明seq_list(顺序表)
+    SeqList<double> seq_list(5);
+
+    // 依次插入4.4, 2.2, 3.3, 6.6, 5.5
+    seq_list.Insert(0, 4.4);
+    seq_list.Insert(1, 2.2);
+    seq_list.Insert(2, 3.3);
+    seq_list.Insert(3, 6.6);
+    seq_list.Insert(4, 5.5);
+
+    SeqList<double> new_seq_list(1);
+
+    // 使用operator=进行变量赋值
+    new_seq_list = seq_list;
+
+    // 打印new_seq_list
+    new_seq_list.Print();
 
     cout << "-------------------------------------------------------------" << endl << endl;
 }

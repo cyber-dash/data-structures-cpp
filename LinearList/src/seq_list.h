@@ -233,8 +233,8 @@ bool SeqList<TData>::ResetCapacity(int capacity) {
 
     // ----------- 4 释放旧内存使用新内存 -----------
 
-    delete[] mem_data_;                                     // 释放mem_data_
-    mem_data_ = new_mem_data;                               // mem_data_指向new_mem_data
+    delete[] this->mem_data_;                                     // 释放mem_data_
+    this->mem_data_ = new_mem_data;                               // mem_data_指向new_mem_data
 
     // ----------- 5 容量调整 -----------
 
@@ -347,7 +347,7 @@ bool SeqList<TData>::SetData(int pos, const TData& data) {
 
     // ---------- 1 非法位置判断 ----------
 
-    if (pos <= 0 || pos > last_index_ + 1) {                    // if pos <= 0 <b>||</b> pos > last_index_ + 1
+    if (pos <= 0 || pos > last_index_ + 1) {                    // if pos <= 0 <b>||</b> pos > last_index_ + 2
         return false;                                           // 返回false
     }
 
@@ -548,7 +548,9 @@ bool SeqList<TData>::IsFull() const {
  * + **1 自身赋值处理**\n
  * **if** 自身赋值 :\n
  * &emsp; 返回*this\n\n
- * + **2 复制**\n
+ * + **2 内存重新分配**\n
+ * 使用seq_list的容量重新分配内存\n\n
+ * + **3 复制**\n
  * size_复制\n
  * 变量length, 取seq_list.Length()\n
  * **for loop** 遍历seq_list :\n
@@ -569,19 +571,27 @@ SeqList<TData>& SeqList<TData>::operator=(const SeqList<TData>& seq_list) {
         return *this;                                                   // 返回*this
     }
 
-    // ---------- 2 复制 ----------
+    // ---------- 2 内存重新分配 ----------
 
-    this->capacity_ = seq_list.Capacity();                              // size_复制
-    int length = seq_list.Length();                                     // 变量length, 取seq_list.Length()
-
-    for (int i = 0; i < length; i++) {                                  // for loop 遍历seq_list
-        int curData;
-        seq_list.GetData(i, curData);                                   // 取seq_list当前元素数据项, 赋给curData
-
-        this->SetData(i, curData);                                      // curData赋给this的当前位置元素
+    bool res = this->ResetCapacity(seq_list.Capacity());                // 使用seq_list的容量重新分配内存
+    if (!res) {
+        throw length_error("seq_list length wrong");
     }
 
-    // ---------- 3 退出函数 ----------
+    // ---------- 3 复制 ----------
+
+    int length = seq_list.Length();                                     // 变量length, 取seq_list.Length()
+
+    for (int i = 1; i <= length; i++) {                                 // for loop 遍历seq_list
+        TData cur_data;
+        seq_list.GetData(i, cur_data);                                  // 取seq_list当前元素数据项, 赋给cur_data
+
+        this->mem_data_[i - 1] = cur_data;                              // data赋给mem_data_[pos - 1]
+
+        this->last_index_++;                                            // last_index_调整
+    }
+
+    // ---------- 4 退出函数 ----------
 
     return *this;                                                       // 返回*this
 }
