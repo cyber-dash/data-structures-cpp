@@ -347,7 +347,7 @@ bool SeqList<TData>::SetData(int pos, const TData& data) {
 
     // ---------- 1 非法位置判断 ----------
 
-    if (pos <= 0 || pos > last_index_ + 1) {                    // if pos <= 0 <b>||</b> pos > last_index_ + 2
+    if (pos <= 0 || pos > last_index_ + 1) {                    // if pos <= 0 <b>||</b> pos > last_index_ + 1
         return false;                                           // 返回false
     }
 
@@ -556,7 +556,7 @@ bool SeqList<TData>::IsFull() const {
  * **for loop** 遍历seq_list :\n
  * &emsp; 取seq_list当前元素数据项, 赋给curData\n
  * &emsp; curData赋给this的当前位置元素\n\n
- * + **3 退出函数**\n
+ * + **4 退出函数**\n
  * 返回*this\n
  *
  *

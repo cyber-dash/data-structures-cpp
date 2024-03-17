@@ -64,7 +64,7 @@ void SinglyLinkListTest::TestCopyConstructor() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|             Test SinglyLinkList CopyConstructor           |" << endl;
-	cout << "|                   测试-单向链表-复制构造                  |" << endl << endl << endl;
+	cout << "|                    测试-单向链表-复制构造                    |" << endl << endl << endl;
 
     // 声明singly_linked_list
 	SinglyLinkedList<string> singly_linked_list;
@@ -143,7 +143,7 @@ void SinglyLinkListTest::TestRemove() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                 Test SinglyLinkList Remove                |" << endl;
-	cout << "|                   测试-单向链表-删除结点                  |" << endl << endl << endl;
+	cout << "|                     测试-单向链表-删除结点                   |" << endl << endl << endl;
 
     // 声明singly_linked_list
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();
@@ -195,7 +195,7 @@ void SinglyLinkListTest::TestClear() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                 Test SinglyLinkList Clear                 |" << endl;
-	cout << "|                     测试-单向链表-清空                    |" << endl << endl << endl;
+	cout << "|                      测试-单向链表-清空                     |" << endl << endl << endl;
 
     // 声明singly_linked_list
 	SinglyLinkedList<double>* singly_linked_list = new SinglyLinkedList<double>();
@@ -225,7 +225,7 @@ void SinglyLinkListTest::TestSearch() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|                 Test SinglyLinkList Search                |" << endl;
-	cout << "|                     测试-单向链表-搜索                    |" << endl << endl << endl;
+	cout << "|                      测试-单向链表-搜索                     |" << endl << endl << endl;
 
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();
 
@@ -265,7 +265,7 @@ void SinglyLinkListTest::TestGetNode() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|               Test SinglyLinkedList GetNode               |" << endl;
-	cout << "|                  测试-单向链表-获取结点                   |" << endl << endl << endl;
+	cout << "|                    测试-单向链表-获取结点                    |" << endl << endl << endl;
 
     // 声明city_linked_list
 	SinglyLinkedList<string>* city_linked_list = new SinglyLinkedList<string>();    // 城市链表city_linked_list
@@ -310,7 +310,7 @@ void SinglyLinkListTest::TestGetDataAndSetData() {
 	cout << endl;
 	cout << "|------------------------ CyberDash ------------------------|" << endl;
 	cout << "|            Test SinglyLinkList GetDataAndSetData          |" << endl;
-	cout << "|                测试-单向链表-设置和获取数据               |" << endl << endl << endl;
+	cout << "|                  测试-单向链表-设置和获取数据                 |" << endl << endl << endl;
 
     // 声明singly_linked_list
 	SinglyLinkedList<string>* singly_linked_list = new SinglyLinkedList<string>();

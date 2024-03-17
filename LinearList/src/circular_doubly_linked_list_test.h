@@ -61,7 +61,7 @@ void CircularDoublyLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|       Test CircularDoublyLinkedList InsertByDirection     |" << endl;
-    cout << "|                测试-循环双向链表-按方向插入               |" << endl << endl << endl;
+    cout << "|                  测试-循环双向链表-按方向插入                 |" << endl << endl << endl;
 
     // 声明band_list(乐队链表)
     CircularDoublyLinkedList<string>* band_list = new CircularDoublyLinkedList<string>();
@@ -106,7 +106,7 @@ void CircularDoublyLinkedListTest::TestRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|       Test CircularDoublyLinkedList RemoveByDirection     |" << endl;
-    cout << "|                测试-循环双向链表-按方向删除               |" << endl << endl << endl;
+    cout << "|                  测试-循环双向链表-按方向删除                 |" << endl << endl << endl;
 
     // 声明city_list(城市链表)
     CircularDoublyLinkedList<string>* city_list = new CircularDoublyLinkedList<string>();
@@ -161,7 +161,7 @@ void CircularDoublyLinkedListTest::TestLength() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|             Test CircularDoublyLinkedList Length          |" << endl;
-    cout << "|                   测试-循环双向链表-长度                  |" << endl << endl << endl;
+    cout << "|                    测试-循环双向链表-长度                    |" << endl << endl << endl;
 
     // 声明double_list
     CircularDoublyLinkedList<int>* double_list = new CircularDoublyLinkedList<int>();
@@ -273,7 +273,7 @@ void CircularDoublyLinkedListTest::TestSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularDoublyLinkedList Search           |" << endl;
-    cout << "|                   测试-循环双向链表-搜索                  |" << endl << endl << endl;
+    cout << "|                    测试-循环双向链表-搜索                    |" << endl << endl << endl;
 
     // 声明double_list
     CircularDoublyLinkedList<int>* double_list = new CircularDoublyLinkedList<int>();
@@ -315,7 +315,7 @@ void CircularDoublyLinkedListTest::TestGetNode() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularDoublyLinkedList GetNode          |" << endl;
-    cout << "|                 测试-循环双向链表-获取结点                |" << endl << endl << endl;
+    cout << "|                   测试-循环双向链表-获取结点                 |" << endl << endl << endl;
 
     // 声明circular_doubly_linked_list
     CircularDoublyLinkedList<int>* circular_doubly_linked_list = new CircularDoublyLinkedList<int>();

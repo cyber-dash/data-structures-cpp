@@ -57,7 +57,7 @@ void DoublyLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test DoublyLinkedList Insert               |" << endl;
-    cout << "|                    测试-双向链表-插入                     |" << endl << endl << endl;
+    cout << "|                      测试-双向链表-插入                     |" << endl << endl << endl;
 
     // 声明band_list(乐队链表)
     DoublyLinkedList<string>* band_list = new DoublyLinkedList<string>();
@@ -102,7 +102,7 @@ void DoublyLinkedListTest::TestRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test DoublyLinkedList Remove               |" << endl;
-    cout << "|                  测试-双向链表-删除结点                   |" << endl << endl << endl;
+    cout << "|                    测试-双向链表-删除结点                    |" << endl << endl << endl;
 
     // 声明band_list(乐队链表)
     DoublyLinkedList<string>* band_list = new DoublyLinkedList<string>();
@@ -160,7 +160,7 @@ void DoublyLinkedListTest::TestSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test DoublyLinkedList Search               |" << endl;
-    cout << "|                     测试-双向链表-搜索                    |" << endl << endl << endl;
+    cout << "|                      测试-双向链表-搜索                     |" << endl << endl << endl;
 
     // 初始化number_list(整形链表)
     DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();
@@ -204,7 +204,7 @@ void DoublyLinkedListTest::TestLength() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                Test DoublyLinkedList Length               |" << endl;
-    cout << "|                     测试-双向链表-长度                    |" << endl << endl << endl;
+    cout << "|                      测试-双向链表-长度                     |" << endl << endl << endl;
 
     // 初始化number_list(整形链表)
     DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();
@@ -244,7 +244,7 @@ void DoublyLinkedListTest::TestClear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|                 Test DoublyLinkedList Clear               |" << endl;
-    cout << "|                     测试-双向链表-清空                    |" << endl << endl << endl;
+    cout << "|                      测试-双向链表-清空                     |" << endl << endl << endl;
 
     // 初始化number_list
     DoublyLinkedList<int>* number_list = new DoublyLinkedList<int>();

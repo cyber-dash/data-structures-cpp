@@ -54,7 +54,7 @@ void CircularSinglyLinkedListTest::TestInsert() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularSinglyLinkedList Insert           |" << endl;
-    cout << "|                    测试-循环单链表-插入                   |" << endl << endl << endl;
+    cout << "|                     测试-循环单链表-插入                     |" << endl << endl << endl;
 
     // 初始化band_list(乐队链表)
     CircularSinglyLinkedList<string>* band_list = new CircularSinglyLinkedList<string>();
@@ -100,7 +100,7 @@ void CircularSinglyLinkedListTest::TestClear() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|             Test CircularSinglyLinkedList Clear           |" << endl;
-    cout << "|                    测试-循环单链表-清空                   |" << endl << endl << endl;
+    cout << "|                     测试-循环单链表-清空                     |" << endl << endl << endl;
 
     // 初始化band_list(乐队链表)
     CircularSinglyLinkedList<string>* band_list = new CircularSinglyLinkedList<string>();
@@ -153,7 +153,7 @@ void CircularSinglyLinkedListTest::TestRemove() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularSinglyLinkedList Remove           |" << endl;
-    cout << "|                  测试-循环单链表-删除结点                 |" << endl << endl << endl;
+    cout << "|                    测试-循环单链表-删除结点                  |" << endl << endl << endl;
 
     // 声明singer_list(歌手链表)
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
@@ -223,7 +223,7 @@ void CircularSinglyLinkedListTest::TestLength() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularSinglyLinkedList Length           |" << endl;
-    cout << "|                    测试-循环单链表-长度                   |" << endl << endl << endl;
+    cout << "|                     测试-循环单链表-长度                     |" << endl << endl << endl;
 
     // 初始化singer_list(歌手链表)
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
@@ -275,7 +275,7 @@ void CircularSinglyLinkedListTest::TestSearch() {
     cout << endl;
     cout << "|------------------------ CyberDash ------------------------|" << endl;
     cout << "|            Test CircularSinglyLinkedList Search           |" << endl;
-    cout << "|                    测试-循环单链表-搜索                   |" << endl << endl << endl;
+    cout << "|                     测试-循环单链表-搜索                     |" << endl << endl << endl;
 
     // 初始化singer_list(歌手链表)
     CircularSinglyLinkedList<string>* singer_list = new CircularSinglyLinkedList<string>();
