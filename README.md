@@ -98,4 +98,4 @@
 
 **感谢下列朋友发现代码bug**
 
-鲁子傲 LLcu2019205455@163.com, 蔡博文 1723004698@qq.com, qiaoge77@163.com, 连菜菜 kukakatoo@gmail.com
+鲁子傲 LLcu2019205455@163.com, 蔡博文 1723004698@qq.com, qiaoge77@163.com, 连菜菜 kukakatoo@gmail.com, 黄彬彬 1928947271@qq.com
