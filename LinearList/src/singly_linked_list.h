@@ -101,7 +101,7 @@ private:
  * 默认构造函数
  * ----------
  * ----------
- * 
+ *
  * <span style="color:#FF8100">
  * 我来组成头部:-)
  * </span>
@@ -202,8 +202,10 @@ template<typename TData>
 SinglyLinkedList<TData>::~SinglyLinkedList() {
     this->Clear();                                                          // 清空链表
 
-    delete this->head_;                                                     // 释放head_指针并置NULL
-    this->head_ = NULL;
+    if (this->head_ != NULL) {
+        delete this->head_;                                                     // 释放head_指针并置NULL
+        this->head_ = NULL;
+    }
 }
 
 

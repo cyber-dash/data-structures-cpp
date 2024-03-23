@@ -75,10 +75,10 @@ public:
     void Clear();
 
     // 搜索
-    CircularSinglyLinkedNode<TData>* Search(const TData& data);
+    CircularSinglyLinkedNode<TData>* Search(const TData& data) const;
 
     // 获取结点
-    CircularSinglyLinkedNode<TData>* GetNode(int pos);
+    CircularSinglyLinkedNode<TData>* GetNode(int pos) const;
 
     // 插入结点
     bool Insert(int prev_pos, const TData& data);
@@ -181,7 +181,7 @@ void CircularSinglyLinkedList<TData>::Clear() {
  * ---
  */
 template<typename TData>
-CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::Search(const TData& data) {
+CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::Search(const TData& data) const {
 
     CircularSinglyLinkedNode<TData>* cur = first_;                                      // 初始化cur(遍历指针), 指向first_
 
@@ -246,7 +246,7 @@ CircularSinglyLinkedList<TData>::~CircularSinglyLinkedList() {
  * -------
  */
 template<typename TData>
-CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int pos) {
+CircularSinglyLinkedNode<TData>* CircularSinglyLinkedList<TData>::GetNode(int pos) const {
 
     // ---------- 1 非法位置处理 ----------
 

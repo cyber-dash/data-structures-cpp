@@ -47,7 +47,7 @@ public:
     SeqList(const SeqList<TData>& seq_list);
 
     // 析构函数
-    ~SeqList() { delete[] mem_data_; }
+    ~SeqList() { if (mem_data_ != NULL) { delete[] mem_data_; } }
 
     /*!
      * @brief **获取容量**

@@ -88,7 +88,7 @@ public:
     bool Search(const TData& data, int& pos) const;
 
     // 插入结点
-    bool Insert(int pos, const TData& data);
+    bool Insert(int prev_pos, const TData& data);
 
     // 删除结点
     bool Remove(int pos, TData& data);
@@ -293,7 +293,7 @@ bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
  * @brief **插入结点**
  * @tparam TData 数据项类型模板参数
  * @param data 待插入数据项
- * @param pos 插入位置的前一位置
+ * @param prev_pos 插入位置的前一位置
  * @return 执行结果
  * @note
  * 插入结点
@@ -301,21 +301,21 @@ bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
  * -------
  * 
  * <span style="color:#038575">
- * pos等于0为头结点, 从1开始是数据元素结点 \n
+ * prev_pos等于0为头结点, 从1开始是数据元素结点 \n
  * </span>
  * <span style="color:#FF8100">
- * 在数组pos位置的后面, 执行插入 \n
+ * 在数组prev_pos位置的后面, 执行插入 \n
  * </span>
  * 
  * -------
  * + **1 非法位置处理**\n
- * **if** pos < 0 <b>||</b> pos大于链表长度 :\n
+ * **if** prev_pos < 0 <b>||</b> pos大于链表长度 :\n
  * &emsp; 返回false\n\n
  * + **2 扩容处理**\n
  * **if** 链表长度等于容量 :\n
  * &emsp; 扩容1倍\n\n
  * + **3 获取插入位置前一位置的数组索引**\n
- * 对pos调用GetIndexByPos_, 获取prev_index<b>(插入位置前一位置的数组索引)</b>\n
+ * 对prev_pos调用GetIndexByPos_, 获取prev_index<b>(插入位置前一位置的数组索引)</b>\n
  * **if** 获取失败 :\n
  * &emsp; 返回false\n\n
  * + **4 获取插入位置的数组索引**\n
@@ -323,8 +323,8 @@ bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
  * **if** 获取失败: \n
  * &emsp; 返回false\n\n
  * + **5 执行插入**\n
- * 插入位置数组元素的next, 指向pos位置数组元素的next\n
- * pos位置数组元素的next, 指向插入位置\n
+ * 插入位置数组元素的next, 指向prev_pos位置数组元素的next\n
+ * prev_pos位置数组元素的next, 指向插入位置\n
  * 插入位置的data, 等于参数data\n\n
  * 链表长度+1\n\n
  * + **6 返回结果**\n
@@ -334,11 +334,11 @@ bool StaticLinkedList<TData>::Search(const TData& data, int& pos) const {
  * -------
  */
 template <typename TData>
-bool StaticLinkedList<TData>::Insert(int pos, const TData& data) {
+bool StaticLinkedList<TData>::Insert(int prev_pos, const TData& data) {
 
     // ---------- 1 非法位置处理 ----------
 
-    if (pos < 0 || pos > length_) {                                 // if pos < 0 || pos大于链表长度
+    if (prev_pos < 0 || prev_pos > length_) {                       // if prev_pos < 0 || pos大于链表长度
         return false;                                               // 返回false
     }
 
@@ -350,7 +350,7 @@ bool StaticLinkedList<TData>::Insert(int pos, const TData& data) {
 
     // ---------- 3 获取插入位置前一位置的数组索引 ----------
     int prev_index;
-    bool res = GetIndexByPos_(pos, prev_index);                     // 对pos调用GetIndexByPos_, 获取prev_index(插入位置前一位置的数组索引)
+    bool res = GetIndexByPos_(prev_pos, prev_index);             // 对pos调用GetIndexByPos_, 获取prev_index(插入位置前一位置的数组索引)
     if (!res) {                                                     // if 获取失败
         return false;                                               // 返回false
     }
@@ -358,7 +358,7 @@ bool StaticLinkedList<TData>::Insert(int pos, const TData& data) {
     // ---------- 4 获取插入位置的数组索引 ----------
 
     int insertion_index;
-    res = GetInsertionIndex_(insertion_index);                      // 调用GetInsertionIndex_, 获取insertion_index(执行插入的索引)
+    res = GetInsertionIndex_(insertion_index);                   // 调用GetInsertionIndex_, 获取insertion_index(执行插入的索引)
     if (!res) {                                                     // if 获取失败
         return false;                                               // 返回false
     }
